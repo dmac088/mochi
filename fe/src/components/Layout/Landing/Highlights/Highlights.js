@@ -6,7 +6,7 @@ import { categoryMaster } from './Categories';
 function Highlights() {
 
   const [stateObject, setObjectState] = useState({
-    selectedCategory: categoryMaster[0],
+    selectedCategoryCode: categoryMaster[0],
   });
 
   const showTab = (e) => {
@@ -14,7 +14,7 @@ function Highlights() {
     console.log(e.currentTarget.id);
     setObjectState((prevState) => ({
       ...prevState,
-      selectedCategory: e.currentTarget.id
+      selectedCategoryCode: e.currentTarget.id
     }));
   }
 
@@ -22,13 +22,13 @@ function Highlights() {
   useEffect(() => {
     setObjectState((prevState) => ({
       ...prevState,
-      selectedCategory: categoryMaster[0],
+      selectedCategoryCode: categoryMaster[0],
     }));
   }, []);
 
   const categories = useSelector(state => state.categories.list);
 
-  const renderCategoryTabs = (categories) => {
+  const renderCategoryTabHeaders = (categories) => {
     if(!categories) { return null; }
     return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map(c => {
       // <a className="nav-item nav-link active" data-toggle="tab" href="#" role="tab" aria-selected="true">
@@ -46,6 +46,24 @@ function Highlights() {
     }) 
   }
 
+  const renderCategoryTabs = (categories) => {
+    if(!categories) { return null; }
+    return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map(c => {
+      const isActive = (c.data.categoryCode === stateObject.selectedCategoryCode);
+      return (
+        <div key={c.data.categoryCode}
+             className={"tab-pane fade "  + ((isActive) ? " show active" : "")}
+             id={c.data.categoryCode}
+             role="tabpanel"
+             aria-labelledby="featured-tab">
+          <Category
+            category={c}
+          />
+        </div>
+      )
+    });
+  }
+
   return (
     <div className="slider tab-slider mb-35">
       <div className="container">
@@ -54,13 +72,12 @@ function Highlights() {
             <div className="tab-slider-wrapper">
               <nav>
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                  {renderCategoryTabs(categories)}
+                  {renderCategoryTabHeaders(categories)}
                 </div>
               </nav>
               <div className="tab-content" id="nav-tabContent">
                 <div className="tab-pane fade show active" role="tabpanel" aria-labelledby="featured-tab">
-                  <Category 
-                    category={stateObject.selectedCategory}/>
+                  {renderCategoryTabs(categories)}
                 </div>
               </div>
             </div>
