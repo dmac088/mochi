@@ -6,7 +6,7 @@ import { categoryMaster } from './Categories';
 function Highlights() {
 
   const [stateObject, setObjectState] = useState({
-    selectedCategory: null,
+    selectedCategory: categoryMaster[0],
   });
 
   const showTab = (e) => {
@@ -14,9 +14,17 @@ function Highlights() {
     console.log(e.currentTarget.id);
     setObjectState((prevState) => ({
       ...prevState,
-      "selectedCategory": e.currentTarget.id
+      selectedCategory: e.currentTarget.id
     }));
- }
+  }
+
+  //on mounting set the selected category to the first in our master list 
+  useEffect(() => {
+    setObjectState((prevState) => ({
+      ...prevState,
+      selectedCategory: categoryMaster[0],
+    }));
+  }, []);
 
   const categories = useSelector(state => state.categories.list);
 
