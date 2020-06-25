@@ -59,7 +59,8 @@ const previous = () => {
   this.slider.slickPrev();
 }
 
-function Category() {
+function Category(props) {
+  const { category } = props;
   let slider;
   return (
     <div key={0} className="tab-slider-container">
