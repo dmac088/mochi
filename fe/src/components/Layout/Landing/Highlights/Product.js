@@ -1,7 +1,9 @@
 import React from 'react';
 import product04 from "../../../../assets/images/products/product04.jpg"
 
-function Product() {
+function Product(props) {
+  console.log(props);
+  const { product } = props.product;
   return (
     <div className="gf-product tab-slider-sub-product">
       <div className="image">
@@ -25,7 +27,7 @@ function Product() {
         </div>
         <h3 className="product-title">
           <a id="#test" href="#">
-            Test product description
+            {product.productDesc}
             </a>
         </h3>
         <div className="price-box">

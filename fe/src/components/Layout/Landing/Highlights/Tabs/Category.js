@@ -1,5 +1,6 @@
 import React, { useState, useEffect }  from 'react';
 import { instance as axios } from '../../../Helpers/api/axios';
+import { chunkArray } from '../../../../../services/Generic';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../HeroSlider/sliderHelper';
 import Column from '../Column'
@@ -67,7 +68,6 @@ function Category(props) {
     if(!category) { return; }
     axios.get(category._links.products.href)
     .then((payload) => {
-      console.log(payload);
       setObjectState(() => ({
         products: payload.data._embedded.productResources,
       }));
@@ -78,19 +78,25 @@ function Category(props) {
     getProducts();
   }, []);
 
-  console.log(stateObject.products);
+  const renderColumns = (products, category) => {
+    if (!products) { return null; }
+    const chunks = chunkArray(products, 3);
+    return chunks.map(chunk => {
+      return (
+        <Column
+          key={chunks.indexOf(chunk)}
+          category={category}
+          products={chunk}
+        />
+      )
+    })
+  }
 
   let slider;
   return (
     <div key={0} className="tab-slider-container">
       <Slider ref={c => (slider = c)} {...settings}>
-        <Column />
-        <Column />
-        <Column />
-        <Column />
-        <Column />
-        <Column />
-        <Column />  
+        {renderColumns(stateObject.products, category)}
       </Slider>
     </div>
   );
