@@ -27,7 +27,6 @@ public class Product {
 	
 	private String productImage;
 
-	@JsonIgnore
 	private ProductCategory primaryCategory;
 	
 	private String lclCd;
@@ -40,7 +39,6 @@ public class Product {
 	@JsonIgnore
 	private Department department;
 	
-	@JsonIgnore
 	private Brand brand;
 	
 	@JsonIgnore

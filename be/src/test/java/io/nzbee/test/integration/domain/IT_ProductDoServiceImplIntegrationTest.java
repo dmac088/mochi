@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -82,7 +84,10 @@ public class IT_ProductDoServiceImplIntegrationTest {
     	assertThat(((Food) found).getCountryOfOrigin())
     	.isEqualTo("NZL");
 
+	    assertNotNull(found.getPrimaryCategory());
 	    
+	    assertNotNull(found.getBrand());
+    	
 	    assertThat(found.getProductDesc())
 	    .isEqualTo("Test Product Description");
     }
