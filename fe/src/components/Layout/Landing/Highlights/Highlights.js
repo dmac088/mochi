@@ -1,18 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import { useSelector } from 'react-redux';
 import Category from './Tabs/Category';
 import { categoryMaster } from './Categories';
 
 function Highlights() {
 
+  const [stateObject, setObjectState] = useState({
+    selectedCategory: null,
+  });
+
+  const showTab = (e) => {
+    e.preventDefault();
+    console.log(e.currentTarget.id);
+    setObjectState((prevState) => ({
+      ...prevState,
+      "selectedCategory": e.currentTarget.id
+    }));
+ }
+
   const categories = useSelector(state => state.categories.list);
 
-  const renderCategories = (categories) => {
+  const renderCategoryTabs = (categories) => {
     if(!categories) { return null; }
     return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map(c => {
       // <a className="nav-item nav-link active" data-toggle="tab" href="#" role="tab" aria-selected="true">
         return (
-          <a className="nav-item nav-link" data-toggle="tab" href="#" role="tab" aria-selected="true">
+          <a  className="nav-item nav-link" 
+              id={c.data.categoryCode}
+              onClick={showTab}
+              data-toggle="tab" 
+              href="#" 
+              role="tab" 
+              aria-selected="true">
             {c.data.categoryDesc}
           </a>
         )
@@ -27,7 +46,7 @@ function Highlights() {
             <div className="tab-slider-wrapper">
               <nav>
                 <div className="nav nav-tabs" id="nav-tab" role="tablist">
-                  {renderCategories(categories)}
+                  {renderCategoryTabs(categories)}
                 </div>
               </nav>
               <div className="tab-content" id="nav-tabContent">
