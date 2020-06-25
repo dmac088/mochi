@@ -34,7 +34,7 @@ function Container(props) {
         if(prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
             dispatch(initialize());
         }
-    }, lang, curr);
+    }, [lang, curr]);
 
     return (
         <React.Fragment>

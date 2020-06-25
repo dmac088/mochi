@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect, useRef }  from 'react';
 import { instance as axios } from '../../../Helpers/api/axios';
 import { chunkArray } from '../../../../../services/Generic';
 import Slider from "react-slick";
@@ -55,11 +55,24 @@ const settings = {
 
 function Category(props) {
   const { category } = props;
+  const {lang, curr} = props.match.params;
+  const prevParams = usePrevious({lang, curr});
+  console.log(lang);
+  console.log(curr);
 
   //we need local state to store products 
   const [stateObject, setObjectState] = useState({
     products: null,
   });
+
+
+  function usePrevious(value) {
+    const ref = useRef();
+    useEffect(() => {
+        ref.current = value;
+    });
+    return ref.current;
+  }
 
 
   //first create a local function that takes the product url and uses 
@@ -78,6 +91,12 @@ function Category(props) {
     getProducts();
   }, []);
 
+  useEffect(() => {
+    if(prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
+      getProducts();
+    }
+  }, [lang, curr]);
+
   const renderColumns = (products, category) => {
     if (!products) { return null; }
     const chunks = chunkArray(products, 3);
@@ -85,7 +104,6 @@ function Category(props) {
       return (
         <Column
           key={chunks.indexOf(chunk)}
-          category={category}
           products={chunk}
         />
       )

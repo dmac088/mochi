@@ -13,7 +13,8 @@ function Landing(props) {
       <HeroSlider 
         {...props}/>
       <Policy />
-      <Highlights />
+      <Highlights 
+        {...props}/>
       <Banner />
       <BestSeller />
       <BrandSlider />
