@@ -47,10 +47,10 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 																		category.getLocale(), 
 																	 	category.getCurrency(), 
 																	 	category.getCategoryCode(),
-																	 	null,
-																	 	null,
+																	 	"0",
+																	 	"10",
 																	 	parAssembler
-																)).withRel("products").expand());
+																)).withRel("products"));
 		}
 			
 		return cr;
