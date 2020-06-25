@@ -3,6 +3,7 @@ import product04 from "../../../../assets/images/products/product04.jpg"
 
 function Product(props) {
   const { product } = props.product;
+  console.log(product);
   return (
     <div className="gf-product tab-slider-sub-product">
       <div className="image">
@@ -21,8 +22,8 @@ function Product(props) {
       </div>
       <div className="product-content">
         <div className="product-categories">
-          <a id="#test" href="#">Dummy Category</a>,<span> </span>
-          <a id="#test" href="#">Dummy Brand</a>
+          <a id="#test" href="#">{product.brand.primaryCategory}</a>,<span> </span>
+          <a id="#test" href="#">{product.brand.brandDesc}</a>
         </div>
         <h3 className="product-title">
           <a id="#test" href="#">
@@ -30,8 +31,8 @@ function Product(props) {
             </a>
         </h3>
         <div className="price-box">
-          <span className="main-price">10</span>
-          <span className="discounted-price">8</span>
+          <span className="main-price">{product.productRetail}</span>
+          <span className="discounted-price">{product.productMarkdown}</span>
         </div>
       </div>
     </div>

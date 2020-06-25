@@ -52,7 +52,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Autowired
 	private Globals globalVars;
 
-	
 	@Override
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
