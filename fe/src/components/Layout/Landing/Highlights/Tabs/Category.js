@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect }  from 'react';
+import { instance as axios } from '../../../Helpers/api/axios';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../HeroSlider/sliderHelper';
 import Column from '../Column'
@@ -52,24 +53,34 @@ const settings = {
 };
 
 function Category(props) {
-
-
+  
   const { category } = props;
-  console.log(category);
+  console.log(category._links.products.href);
 
+  //we need local state to store products 
+  const [stateObject, setObjectState] = useState({
+    products: null,
+  });
+
+
+  //first create a local function that takes the product url and uses 
+  //axios to fetch the products, then later move this into productService class
+  const getProducts = () => {
+    if(!category) { return; }
+    axios.get(category._links.products.href)
+    .then((payload) => {
+      console.log(payload);
+      setObjectState(() => ({
+        products: payload.data._embedded.productResources,
+      }));
+    });
+  }
 
   useEffect(() => {
-  
+    getProducts();
   }, []);
-  
-  const next = () => {
-    this.slider.slickNext();
-  }
-  
-  const previous = () => {
-    this.slider.slickPrev();
-  }
 
+  console.log(stateObject.products);
 
   let slider;
   return (
