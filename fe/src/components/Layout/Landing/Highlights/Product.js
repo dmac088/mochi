@@ -3,7 +3,6 @@ import product04 from "../../../../assets/images/products/product04.jpg"
 
 function Product(props) {
   const { product } = props.product;
-  console.log(product);
   return (
     <div className="gf-product tab-slider-sub-product">
       <div className="image">

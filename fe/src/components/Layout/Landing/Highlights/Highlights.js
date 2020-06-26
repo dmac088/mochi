@@ -31,10 +31,11 @@ function Highlights(props) {
   const renderCategoryTabHeaders = (categories) => {
     if(!categories) { return null; }
     return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map((c, index) => {
+      const isActive = (c.data.categoryCode === stateObject.selectedCategoryCode);
       // <a className="nav-item nav-link active" data-toggle="tab" href="#" role="tab" aria-selected="true">
         return (
           <a  key={index}
-              className="nav-item nav-link" 
+              className={"nav-item nav-link" + ((isActive) ? " active" : "")}
               id={c.data.categoryCode}
               onClick={showTab}
               data-toggle="tab" 
