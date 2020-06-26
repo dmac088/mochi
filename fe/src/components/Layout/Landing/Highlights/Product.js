@@ -1,5 +1,6 @@
 import React from 'react';
-import product04 from "../../../../assets/images/products/product04.jpg"
+
+const images = require.context('../../../../assets/images/products', true);
 
 function Product(props) {
   const { product } = props.product;
@@ -8,7 +9,7 @@ function Product(props) {
       <div className="image">
         <a id="#test" href="#">
           <span className="onsale">Sale!</span>
-          <img src={product04} className="img-fluid" alt="" />
+          <img src={images(`./${product.productImage}`)} className="img-fluid" alt="" />
         </a>
         <div className="product-hover-icons">
           <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
