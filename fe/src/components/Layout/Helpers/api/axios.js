@@ -5,7 +5,7 @@ import { getAccountPath } from '../../Helpers/Route/Route';
 import { history, params } from '.././../Helpers/Route/History';
 import { matchPath } from 'react-router'
 import { refreshTokens, logoutSession } from '../../../../actions/SessionActions';
-import * as apiConfig from '../../../../services/api'; 
+import * as apiConfig from '../../../../services/api';
 
 export const instance = axios.create({
     baseURL: '',
@@ -20,7 +20,7 @@ const localStorageService = LocalStorageService.getService();
 
 //Add a request interceptor
 instance.interceptors.request.use(config => {
-    
+
     const state = store.getState();
     let { url } = config;
 
@@ -49,10 +49,27 @@ instance.interceptors.request.use(config => {
         Promise.reject(error)
     });
 
+
+// for multiple requests
+let isRefreshing = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+    failedQueue.forEach(prom => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    })
+
+    failedQueue = [];
+}
+
 //Add a response interceptor
 instance.interceptors.response.use((response) => {
     return response
-}, function (error, dispatch) {
+}, function (error) {
 
     let state = store.getState();
 
@@ -70,39 +87,59 @@ instance.interceptors.response.use((response) => {
 
     //when we get 2 or more 401 at the same time, the a duplicate request with the same refresh token is fired
     //to the token endpoint, resulting in a 500 error
-    if (error.response && error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 401 && !originalRequest._retry) {
         console.log('using refresh token to obtain new access token.....');
 
+        //if the token is refreshing then add to the failed queue
+        if (isRefreshing) {
+            return new Promise(function (resolve, reject) {
+                failedQueue.push({ resolve, reject })
+            }).then(() => {
+                return instance(originalRequest);
+            }).catch(err => {
+                return Promise.reject(err);
+            })
+        }
+
         originalRequest._retry = true;
+        isRefreshing = true;
+
         const refreshToken = state.session.refresh_token;
 
         const form = new FormData();
         form.append('refresh_token', refreshToken);
         form.append('grant_type', 'refresh_token');
 
-        if(!refreshToken) {
+        if (!refreshToken) {
             console.log("No refresh token found in session state, redirecting to login...");
             store.dispatch(logoutSession())
-            .then(() => {
-                history.push(getAccountPath(match));
-            });
+                .then(() => {
+                    history.push(getAccountPath(match));
+                });
             return Promise.reject(error);
         }
 
-        return axios.post(
-            tokenLink,
-            form,
-            apiConfig.config,)
-            .then(response => {
-                if (response.status === 200) {
-                    console.log('assigning new access token to further requests.....');
-                    store.dispatch(refreshTokens(response.data));
-                    localStorageService.setToken(response.data);
-                    instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
-                    return instance(originalRequest);
-                }
-            })
+        return new Promise(function (resolve, reject) {
+            axios.post(
+                tokenLink,
+                form,
+                apiConfig.config)
+                .then(response => {
+                    if (response.status === 200) {
+                        console.log('assigning new access token to further requests.....');
+                        store.dispatch(refreshTokens(response.data));
+                        localStorageService.setToken(response.data);
+                        instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
+                        processQueue(null, response.data.access_token);
+                        resolve(instance(originalRequest));
+                    }
+                })
+                .catch((err) => {
+                    processQueue(err, null);
+                    reject(err);
+                })
+                .finally(() => { isRefreshing = false })
+        });
     }
     return Promise.reject(error);
-
 });

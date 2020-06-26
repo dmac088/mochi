@@ -9,7 +9,6 @@ function Highlights(props) {
     selectedCategoryCode: categoryMaster[0],
   });
 
-
   const showTab = (e) => {
     e.preventDefault();
     setObjectState((prevState) => ({
