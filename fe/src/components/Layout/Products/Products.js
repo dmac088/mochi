@@ -1,6 +1,8 @@
 import React from 'react';
 import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
+import ShopBanner from './ShopBanner';
+import ShopHeader from './ShopHeader';
 
 function Products(props) {
 
@@ -13,9 +15,14 @@ function Products(props) {
                             <CategorySidebar 
                                 {...props}
                                 name={"category"}/>
-                            
                         </div>
                     </div>
+                    <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
+                        <ShopBanner/>
+                        <ShopHeader />
+
+                    </div>
+
                 </div>
             </div>
         </div>
