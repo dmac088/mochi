@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import CategoryMenu from "./CategoryMenu";
 import { useSelector } from 'react-redux';
 import 'velocity-animate/velocity.ui';
+import CategoryMenu from "./CategoryMenu";
+import { findByCode } from '../../../../../services/Category';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
 import { localization } from '../../../../Layout/Localization/Localization';
 
@@ -31,11 +32,6 @@ function CategoryMenuContainer(props) {
         }));
     }
 
-    const getCategory = (categories, code) => {
-        if(!categories) { return; }
-        return categories.filter( o => o.data.categoryCode === code )[0];
-    }
-
     useEffect(() => {
         renderMenu(!isMobile());
 
@@ -60,7 +56,7 @@ function CategoryMenuContainer(props) {
             <nav className="category-menu" >
                 <CategoryMenu
                     {...props}
-                    category={getCategory(categories, 'FRT01')}
+                    category={findByCode(categories, 'FRT01')}
                     categories={categories}
                     in={stateObject.menuVisible}
                     isMobile={stateObject.isMobile} />
