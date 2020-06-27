@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { logoutSession } from '../../../../actions/SessionActions';
-import { findByUserName } from '../../../../actions/CustomerActions';
+import { logoutSession } from '../../../../services/Session';
+import { findByUserName } from '../../../../services/Customer';
 import { getAccountPath, getAccountSubPath } from "../../Helpers/Route/Route";
 import { matchPath } from 'react-router'
 import { Link } from 'react-router-dom';

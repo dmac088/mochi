@@ -2,9 +2,9 @@ import axios from "axios";
 import store from '../../../../store';
 import LocalStorageService from "../Storage/LocalStorageService";
 import { getAccountPath } from '../../Helpers/Route/Route';
-import { history, params } from '.././../Helpers/Route/History';
+import { history } from '.././../Helpers/Route/History';
 import { matchPath } from 'react-router'
-import { refreshTokens, logoutSession } from '../../../../actions/SessionActions';
+import { refreshTokens, logoutSession } from '../../../../services/Session';
 import * as apiConfig from '../../../../services/api';
 
 export const instance = axios.create({
