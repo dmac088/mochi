@@ -1,4 +1,6 @@
 import React from 'react';
+import Product from './Product/Grid/Product';
+import { Sidebar } from './Sidebars/Sidebar';
 
 function Products() {
 
@@ -8,7 +10,12 @@ function Products() {
                 <div className="row">
                     <div className="col-lg-3 order-2 order-lg-1">
                         <div className="sidebar-area">
-                            
+                            <Sidebar 
+                                name={"category"}/>
+                            <Sidebar 
+                                name={"brand"}/>
+                            <Sidebar
+                                name={"tag"} />
                         </div>
                     </div>
                 </div>
