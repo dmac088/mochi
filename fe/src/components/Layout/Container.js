@@ -6,7 +6,7 @@ import BreadCrumb from "./BreadCrumb/BreadCrumb";
 import Scroller from "../Layout/Scroller/Scroller";
 import { isHomePath } from './Helpers/Route/Route';
 import { initialize } from "../../actions/DiscoveryActions";
-import { reauthenticate } from "../../actions/SessionActions";
+import { reauthenticate } from "../../services/Session";
 
 function Container(props) {
     const { path, params } = props.match;
