@@ -3,6 +3,7 @@ import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
+import Pagination from './Pagination';
 
 function Products(props) {
 
@@ -20,9 +21,22 @@ function Products(props) {
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
                         <ShopBanner/>
                         <ShopHeader />
-
+                        <div className="shop-product-wrap grid row no-gutters mb-35">
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                            <Product />
+                        </div>
+                        <Pagination />
                     </div>
-
                 </div>
             </div>
         </div>
