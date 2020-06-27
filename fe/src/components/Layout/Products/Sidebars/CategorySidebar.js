@@ -6,17 +6,22 @@ import { findByDesc, getChildren } from '../../../../services/Category';
 
 function CategorySidebar(props) {
 
-
+   const items = [];
    const categories = useSelector(state => state.categories);
-
-   console.log(categories);
    const { categoryDesc } = props.match.params;
    const children = [];
-   console.log(getChildren(findByDesc(categories.list, categoryDesc), categories.list, children));
+   getChildren(findByDesc(categories.list, categoryDesc), categories.list, children);
+   
+   children.map(c => {
+        items.push({
+            name: c.data.categoryDesc + ' (' + c.data.count + ')',
+        });
+   })
 
     return (
         <Sidebar
-            name={"category"} />
+            filterType={"category"}
+            items={items} />
     )
 }
 
