@@ -43,12 +43,12 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	@Override
 	public ISearchDimension getPayload() {
 	   return this.entity;
-	} 
+	}
 	
 	public void setPayload(ISearchDimension domainObject) {
 		this.entity = domainObject;
 	}
-	
+
 	@Override
 	public String getFacetingName() {
 		return delegate.getFacetingName();

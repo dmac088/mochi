@@ -351,6 +351,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
 		.setParameter("categoryCode", categoryCode);
 		
+		if(!categoryCodes.isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes);
+		}
+		
 		if(!brandCodes.isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);
 		}
@@ -389,6 +393,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		//.setParameter("orderby", "1")
 		.setParameter("limit", pageable.getPageSize())
 		.setParameter("offset", pageable.getOffset());
+		
+		if(!categoryCodes.isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes);
+		}
 		
 		if(!brandCodes.isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);

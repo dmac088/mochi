@@ -250,6 +250,8 @@ public class PostgresProductAdapter implements IProductPortService {
 	public Page<Product> findAll(String locale, String currency, Double price, int page, int size, String categoryDesc,
 			Set<IFacet> selectedFacets, String sortBy) {
 
+		
+		
 		@SuppressWarnings("unused")
 		Set<IFacet> returnFacets = new HashSet<IFacet>();
 
@@ -273,15 +275,22 @@ public class PostgresProductAdapter implements IProductPortService {
 	public Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size,
 			Set<IFacet> selectedFacets, String sortBy) {
 
-		LOGGER.debug("call PostgresProductAdapter.findAll parameters : {}, {}, {}, {}, {}", locale, currency, categoryDesc, page, size);
+		LOGGER.debug("call PostgresProductAdapter.findAll parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryDesc, page, size, selectedFacets.size());
+		
+		selectedFacets.stream().forEach(c -> {
+			System.out.println(c.getFacetingName());
+		});
 		
 		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, currency, "MKD01",
 				PageRequest.of(page, size), categoryDesc,
-				selectedFacets.stream().filter(c -> c.getType().equals("category")).map(c -> c.getPayload().getCode())
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> {
+					System.out.println("Category code: " + c.getId());
+					return c.getId();
+				})
 						.collect(Collectors.toList()),
-				selectedFacets.stream().filter(c -> c.getType().equals("brand")).map(c -> c.getPayload().getCode())
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
 						.collect(Collectors.toList()),
-				selectedFacets.stream().filter(c -> c.getType().equals("tag")).map(c -> c.getPayload().getCode())
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
 						.collect(Collectors.toList()));
 
 		return new PageImpl<Product>(

@@ -1,33 +1,49 @@
 package io.nzbee.search.dto.facet;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("EntityFacet")
 public class EntityFacet implements IFacet {
 
-	private final ISearchDimension payload;
+	private ISearchDimension payload;
+
+	private String Id;
+	
+	private String facetingName;
+	
+	private String displayValue;
+	
+	private String payloadType;
+	
+	public EntityFacet() {
+		super();
+	}
 
 	public EntityFacet(ISearchDimension entity) {
 		this.payload = entity;
+		this.facetingName = entity.getClass().getSimpleName().toLowerCase().trim();
+		this.Id = entity.getCode();
+		this.displayValue = entity.getDesc();
+		this.payloadType = entity.getClass().getSimpleName();
 	}
 	
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return this.payload.getCode();
+		return this.Id;
+	}
+
+	public void setId(String id) {
+		Id = id;
 	}
 
 	@Override
 	public String getDisplayValue() {
-		// TODO Auto-generated method stub
-		return this.payload.getDesc() + " (" + this.payload.getCount() + ")";
+		return this.displayValue;
 	}
 
 	@Override
 	public boolean isHierarchical() {
-		// TODO Auto-generated method stub
 		return this.payload.isHierarchical();
 	}
 
@@ -43,7 +59,7 @@ public class EntityFacet implements IFacet {
 	
 	@Override
 	public String getPayloadType() {
-		return this.getPayload().getClass().getSimpleName();
+		return this.payloadType;
 	}
 
 	@Override
@@ -58,7 +74,10 @@ public class EntityFacet implements IFacet {
 
 	@Override
 	public String getFacetingName() {
-		return this.getPayload().getClass().getSimpleName().toLowerCase().trim();
+		return this.facetingName;
 	}
 	
+	public void setFacetingName(String name) {
+		this.facetingName = name;
+	}
 }
