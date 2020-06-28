@@ -164,6 +164,9 @@ public class ProductController {
 										@RequestBody final 				FacetContainer selectedFacets,
 			    						@SuppressWarnings("rawtypes") 	PagedResourcesAssembler assembler) {
 		
+		
+		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, category, page, size, sortBy, selectedFacets.getFacets().size());
+		
 		final Page<Product> pages = productService.findAll(		locale, 
 																currency, 
 																category, 
