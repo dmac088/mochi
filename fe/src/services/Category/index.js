@@ -7,6 +7,7 @@ export const findByCode = (categories, code) => {
 
 export const findByDesc = (categories, desc) => {
     if (!categories) { return; }
+    if(!desc) { return; }
     return categories.filter(o => o.data.categoryDesc === desc)[0];
 }
 

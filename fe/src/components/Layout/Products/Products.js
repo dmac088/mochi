@@ -1,4 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState, useRef } from "react";
+import { useSelector } from 'react-redux';
+import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
+import { findByDesc } from '../../../services/Category';
 import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import ShopBanner from './ShopBanner';
@@ -6,6 +9,44 @@ import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 
 function Products(props) {
+
+    const [stateObject, setObjectState] = useState({
+        products: [],
+    });
+
+    const categories = useSelector(state => state.categories);
+    const prevCategories = usePrevious(categories);
+
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
+
+    useEffect(() => {    
+        if(categories !== prevCategories) {    
+            const { categoryDesc } = props.match.params;
+            const currentCategory = findByDesc(categories.list, categoryDesc);
+            if(!currentCategory) { return; }
+            axios.get(currentCategory._links.products.href)
+            .then((response) => {
+                setObjectState({
+                    products: response.data._embedded.productResources,
+                })
+            });
+        }
+    }, [categories]);
+
+    const renderProducts = (products) => {
+        return products.map(p => {
+            return (
+                <Product 
+                    product={p}/>
+            )
+        })
+    }
 
     return (
         <div className="shop-page-container mb-50">
@@ -22,18 +63,7 @@ function Products(props) {
                         <ShopBanner/>
                         <ShopHeader />
                         <div className="shop-product-wrap grid row no-gutters mb-35">
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
-                            <Product />
+                            {renderProducts(stateObject.products)}
                         </div>
                         <Pagination />
                     </div>
