@@ -359,6 +359,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			query.setParameter("brandCodes", brandCodes);
 		}
 		
+		if(!tagCodes.isEmpty()) {
+			query.setParameter("tagCodes", brandCodes);
+		}
+		
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
 		
@@ -400,6 +404,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		if(!brandCodes.isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);
+		}
+		
+		if(!tagCodes.isEmpty()) {
+			query.setParameter("tagCodes", tagCodes);
 		}
 		
 		@SuppressWarnings("unchecked")

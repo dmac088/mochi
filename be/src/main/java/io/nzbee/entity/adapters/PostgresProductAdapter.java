@@ -277,16 +277,9 @@ public class PostgresProductAdapter implements IProductPortService {
 
 		LOGGER.debug("call PostgresProductAdapter.findAll parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryDesc, page, size, selectedFacets.size());
 		
-		selectedFacets.stream().forEach(c -> {
-			System.out.println(c.getFacetingName());
-		});
-		
 		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, currency, "MKD01",
 				PageRequest.of(page, size), categoryDesc,
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> {
-					System.out.println("Category code: " + c.getId());
-					return c.getId();
-				})
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
 						.collect(Collectors.toList()),
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
 						.collect(Collectors.toList()),
