@@ -3,13 +3,13 @@ import React from 'react';
 const images = require.context('../../../../assets/images/products', true);
 
 function Product(props) {
-  const { product } = props.product;
+  const { data } = props.product;
   return (
     <div className="gf-product tab-slider-sub-product">
       <div className="image">
         <a id="#test" href="#">
           <span className="onsale">Sale!</span>
-          <img src={images(`./${product.productImage}`)} className="img-fluid" alt="" />
+          <img src={images(`./${data.productImage}`)} className="img-fluid" alt="" />
         </a>
         <div className="product-hover-icons">
           <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
@@ -22,17 +22,17 @@ function Product(props) {
       </div>
       <div className="product-content">
         <div className="product-categories">
-          <a id="#test" href="#">{product.primaryCategory.categoryDesc}</a>,<span> </span>
-          <a id="#test" href="#">{product.brand.brandDesc}</a>
+          <a id="#test" href="#">{data.primaryCategory.categoryDesc}</a>,<span> </span>
+          <a id="#test" href="#">{data.brand.brandDesc}</a>
         </div>
         <h3 className="product-title">
           <a id="#test" href="#">
-            {product.productDesc}
+            {data.productDesc}
             </a>
         </h3>
         <div className="price-box">
-          <span className="main-price">{product.productRetail}</span>
-          <span className="discounted-price">{product.productMarkdown}</span>
+          <span className="main-price">{data.productRetail}</span>
+          <span className="discounted-price">{data.productMarkdown}</span>
         </div>
       </div>
     </div>
