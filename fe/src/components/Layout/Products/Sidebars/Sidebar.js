@@ -14,7 +14,6 @@ const renderItems = (items) => {
 }
 
 export const Sidebar = (props) => {
-  console.log(props);
   return (
     <div className="sidebar mb-35">
       <h3 className="sidebar-title">Filter By {props.filterType}</h3>
