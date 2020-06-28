@@ -30,14 +30,18 @@ function Products(props) {
         return ref.current;
     }
 
+    //this should be moved to a service class later on 
     const retrieveProducts = (categoryCode) => {
         const currentCategory = findByCode(categories.list, categoryCode);
             if(!currentCategory) { return; }
             axios.get(currentCategory._links.products.href)
             .then((response) => {
+                console.log(response);
                 setObjectState((prevState) => ({
                     ...prevState,
-                    products: response.data._embedded.productResources,
+                    products: (response.data._embedded) 
+                              ? response.data._embedded.productResources
+                              : [],
                     loading: false,
                 }));
             });
