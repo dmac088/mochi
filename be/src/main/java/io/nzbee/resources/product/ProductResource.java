@@ -5,14 +5,14 @@ import io.nzbee.domain.product.Product;
 
 public class ProductResource  extends RepresentationModel<ProductResource> {
 
-	private final Product product;
+	private final Product data;
 	
 	public ProductResource(final Product product) {
-		this.product = product;
+		this.data = product;
 	}
 	
-	public Product getProduct() {
-		return product;
+	public Product getData() {
+		return data;
 	}
 	
 }
