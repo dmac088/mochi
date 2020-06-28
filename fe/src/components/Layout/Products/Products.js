@@ -40,9 +40,10 @@ function Products(props) {
     }, [categories]);
 
     const renderProducts = (products) => {
-        return products.map(p => {
+        return products.map((p, index) => {
             return (
                 <Product 
+                    key={index}
                     product={p}/>
             )
         })
