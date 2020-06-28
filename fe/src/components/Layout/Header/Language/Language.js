@@ -8,12 +8,11 @@ function Language(props) {
 
     const changeLang = (e, match, history) => {
         e.preventDefault();
-        
         const lang = e.currentTarget.id;
-        const { curr } = match.params; 
         const { path } = match;
-        const newPath = generatePath(path, { lang: lang,
-                                             curr: curr } );
+        const newPath = generatePath(path, {    ...match.params,
+                                                lang: lang,
+                                            } );
            
         history.replace(newPath);
     }
