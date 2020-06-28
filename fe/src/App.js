@@ -83,7 +83,7 @@ function App() {
             render={(props) => renderContainer(Auth, props)} />
 
           <Route
-            exact path="/:lang/:curr/category/:categoryDesc"
+            exact path="/:lang/:curr/category/:categoryCode"
             render={(props) => renderContainer(Products, props)} /> 
 
       

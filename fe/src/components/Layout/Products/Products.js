@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
-import { findByDesc } from '../../../services/Category';
+import { findByCode } from '../../../services/Category';
 import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import ShopBanner from './ShopBanner';
@@ -27,8 +27,8 @@ function Products(props) {
 
     useEffect(() => {    
         if(categories !== prevCategories) {    
-            const { categoryDesc } = props.match.params;
-            const currentCategory = findByDesc(categories.list, categoryDesc);
+            const { categoryCode } = props.match.params;
+            const currentCategory = findByCode(categories.list, categoryCode);
             if(!currentCategory) { return; }
             axios.get(currentCategory._links.products.href)
             .then((response) => {

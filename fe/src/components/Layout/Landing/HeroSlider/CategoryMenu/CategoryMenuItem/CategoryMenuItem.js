@@ -60,7 +60,7 @@ function CategoryMenuItem(props) {
             }>
 
             <Link 
-                to={getCategoryPath(category.data.categoryDesc, match)}
+                to={getCategoryPath(category.data.categoryCode, match)}
                 style={(isMobile)
                     ? { "--my-cat-indent": getIndent(category.data.categoryLevel) }
                     : { "": "" }}>
