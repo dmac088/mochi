@@ -36,7 +36,6 @@ function Products(props) {
             if(!currentCategory) { return; }
             axios.get(currentCategory._links.products.href)
             .then((response) => {
-                console.log(response);
                 setObjectState((prevState) => ({
                     ...prevState,
                     products: (response.data._embedded) 
