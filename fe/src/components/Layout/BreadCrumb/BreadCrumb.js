@@ -16,8 +16,8 @@ const BreadCrumb = (props) => {
                     <div className="col">
                         <div className="breadcrumb-container">
                             <ul>
-                                <Route exact path='/:lang/:curr/category/:path' component={BreadcrumbsItem} />
-                                <Route exact path='/:lang/:curr/:path' component={BreadcrumbsItem} />
+                                <Route exact path='/:lang/:curr/category/:path'  component={BreadcrumbsItem} />
+                                <Route exact path='/:lang/:curr/:path'           component={BreadcrumbsItem} />
                                 <Route exact path='/:lang/:curr/myaccount/:path' component={BreadcrumbsItem} />
                             </ul>
                         </div>
@@ -44,7 +44,7 @@ const renderBreadCrumb = (array, match) => {
     const { lang } = match.params;
     
     return(
-        array.map(function(s, index) {
+        array.map((s, index) => {
             return (
                 <li key={index} className={match.isExact ? 'breadcrumb-active' : undefined}>
                     <Link to={match.url || ''}>

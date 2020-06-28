@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { getCategoryPath } from '../../../../components/Layout/Helpers/Route/Route';
 import { Sidebar } from './Sidebar';
 import { findByCode, getChildren } from '../../../../services/Category';
 
@@ -15,13 +16,19 @@ function CategorySidebar(props) {
    children.map(c => {
         items.push({
             name: c.data.categoryDesc + ' (' + c.data.count + ')',
+            code: c.data.categoryCode,
+            path: getCategoryPath(c.data.categoryCode, props.match),
         });
    })
 
     return (
-        <Sidebar
-            filterType={"category"}
-            items={items} />
+        <React.Fragment>
+            {(items.length > 0)
+            ? <Sidebar
+                filterType={"category"}
+                items={items} />
+            : <React.Fragment/>}
+        </React.Fragment>
     )
 }
 
