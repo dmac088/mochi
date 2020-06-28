@@ -9,8 +9,8 @@ export const getHomePath = (match) => {
     return '/' + lang + '/' + curr;
 }
 
-export const getCategoryPath = (categoryDesc, match) => {
-    return getHomePath(match) + '/category/' + categoryDesc;
+export const getCategoryPath = (categoryCode, match) => {
+    return getHomePath(match) + '/category/' + categoryCode;
 }
 
 export const getContactPath = (match) => {

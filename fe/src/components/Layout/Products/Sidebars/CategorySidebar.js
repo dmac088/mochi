@@ -1,16 +1,16 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Sidebar } from './Sidebar';
-import { findByDesc, getChildren } from '../../../../services/Category';
+import { findByCode, getChildren } from '../../../../services/Category';
 
 
 function CategorySidebar(props) {
 
    const items = [];
    const categories = useSelector(state => state.categories);
-   const { categoryDesc } = props.match.params;
+   const { categoryCode } = props.match.params;
    const children = [];
-   getChildren(findByDesc(categories.list, categoryDesc), categories.list, children);
+   getChildren(findByCode(categories.list, categoryCode), categories.list, children);
    
    children.map(c => {
         items.push({
