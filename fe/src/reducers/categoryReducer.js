@@ -3,6 +3,7 @@ import { GET_CATEGORIES_STARTED,
          GET_CATEGORIES_FAILURE } from "../actions/ActionTypes";
 
   const initialState = {
+    list: [] ,
     loading: false,
     error: null,
   };

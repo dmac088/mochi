@@ -12,10 +12,15 @@ function Products(props) {
 
     const [stateObject, setObjectState] = useState({
         products: [],
+        loading: false,
     });
 
+    const { categoryCode } = props.match.params;
     const categories = useSelector(state => state.categories);
-    const prevCategories = usePrevious(categories);
+    const { loading } = categories;
+
+    const prevCategoryCode = usePrevious(categoryCode);
+    const prevCategoryLoading = usePrevious(loading);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -25,19 +30,24 @@ function Products(props) {
         return ref.current;
     }
 
-    useEffect(() => {    
-        if(categories !== prevCategories) {    
-            const { categoryCode } = props.match.params;
-            const currentCategory = findByCode(categories.list, categoryCode);
+    const retrieveProducts = (categoryCode) => {
+        const currentCategory = findByCode(categories.list, categoryCode);
             if(!currentCategory) { return; }
             axios.get(currentCategory._links.products.href)
             .then((response) => {
-                setObjectState({
+                setObjectState((prevState) => ({
+                    ...prevState,
                     products: response.data._embedded.productResources,
-                })
+                    loading: false,
+                }));
             });
+    }
+
+    useEffect(() => {    
+        if(categoryCode !== prevCategoryCode || loading !== prevCategoryLoading) {   
+            retrieveProducts(categoryCode);
         }
-    }, [categories]);
+    }, [categoryCode, loading]);
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
