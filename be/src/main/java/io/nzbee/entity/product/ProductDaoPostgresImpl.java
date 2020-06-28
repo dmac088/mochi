@@ -306,7 +306,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 									List<String> tagCodes, 
 									String orderby) {
 		
-		LOGGER.debug("call ProductDaoPostgresImpl.findAll with  parameters : {}, {}, {}, {}, {}, {}", locale, currency, pageable, categoryCode, brandCodes, tagCodes, orderby);
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with  parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, pageable, categoryCode, categoryCodes, brandCodes, tagCodes, orderby);
 		
 		//first get the result count
 		return this.findAll(locale, 
