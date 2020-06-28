@@ -12,6 +12,7 @@ function Products(props) {
 
     const [stateObject, setObjectState] = useState({
         products: [],
+        facets: [],
         loading: false,
     });
 
@@ -28,6 +29,20 @@ function Products(props) {
             ref.current = value;
         });
         return ref.current;
+    }
+
+    const addFacet = (facetId, facetName) => {
+        const newArray = [...stateObject.facets];
+        newArray.push({
+            "type": "EntityFacet",
+			"facetingName": facetName,
+			"id": facetId,
+        })
+        setObjectState((prevState) => ({
+            ...prevState,
+            facets: newArray,
+        }));
+        console.log(stateObject.facets);
     }
 
     //this should be moved to a service class later on 
@@ -70,7 +85,8 @@ function Products(props) {
                         <div className="sidebar-area">
                             <CategorySidebar 
                                 {...props}
-                                name={"category"}/>
+                                name={"category"}
+                                addFacet={addFacet}/>
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">

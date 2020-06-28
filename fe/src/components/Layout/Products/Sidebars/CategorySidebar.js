@@ -6,7 +6,7 @@ import { findByCode, getChildren } from '../../../../services/Category';
 
 
 function CategorySidebar(props) {
-
+   const { addFacet } = props;
    const items = [];
    const categories = useSelector(state => state.categories);
    const { categoryCode } = props.match.params;
@@ -26,7 +26,8 @@ function CategorySidebar(props) {
             {(items.length > 0)
             ? <Sidebar
                 filterType={"category"}
-                items={items} />
+                items={items} 
+                addFacet={addFacet}/>
             : <React.Fragment/>}
         </React.Fragment>
     )
