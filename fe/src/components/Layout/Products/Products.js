@@ -15,6 +15,7 @@ function Products(props) {
         products: [],
         facets: [],
         loading: false,
+        changedFacets: false,
     });
 
     const { categoryCode } = props.match.params;
@@ -23,6 +24,7 @@ function Products(props) {
 
     const prevCategoryCode = usePrevious(categoryCode);
     const prevCategoryLoading = usePrevious(loading);
+    const prevChangedFacets = usePrevious(stateObject.changedFacets);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -38,15 +40,18 @@ function Products(props) {
         setObjectState((prevState) => ({
             ...prevState,
             facets: na,
+            changedFacets: true,
         }));
-    }
+    } 
 
     console.log(stateObject.facets);
     //this should be moved to a service class later on 
     const retrieveProducts = (categoryCode) => {
         const currentCategory = findByCode(categories.list, categoryCode);
             if(!currentCategory) { return; }
-            axios.get(currentCategory._links.products.href)
+            console.log(stateObject.facets);
+            axios.post(currentCategory._links.products.href,
+                    { facets: stateObject.facets })
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
@@ -54,15 +59,16 @@ function Products(props) {
                               ? response.data._embedded.productResources
                               : [],
                     loading: false,
+                    changedFacets: false,
                 }));
             });
     }
 
     useEffect(() => {    
-        if(categoryCode !== prevCategoryCode || loading !== prevCategoryLoading) {   
+        if(categoryCode !== prevCategoryCode || loading !== prevCategoryLoading || stateObject.changedFacets !== prevChangedFacets) {   
             retrieveProducts(categoryCode);
         }
-    }, [categoryCode, loading]);
+    }, [categoryCode, loading, stateObject.changedFacets]);
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
