@@ -15,7 +15,6 @@ function Products(props) {
         products: [],
         facets: [],
         loading: false,
-        changedFacets: false,
     });
 
     const { categoryCode } = props.match.params;
@@ -24,7 +23,6 @@ function Products(props) {
 
     const prevCategoryCode = usePrevious(categoryCode);
     const prevCategoryLoading = usePrevious(loading);
-    const prevChangedFacets = usePrevious(stateObject.changedFacets);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -36,39 +34,33 @@ function Products(props) {
 
     const addFacet= (facetId, facetName) => {
         const na = [...stateObject.facets];
-        na.push(newFacet(facetId, facetName))
-        setObjectState((prevState) => ({
-            ...prevState,
-            facets: na,
-            changedFacets: true,
-        }));
+        na.push(newFacet(facetId, facetName));
+        retrieveProducts(categoryCode, na);
     } 
 
-    console.log(stateObject.facets);
     //this should be moved to a service class later on 
-    const retrieveProducts = (categoryCode) => {
+    const retrieveProducts = (categoryCode, facets) => {
         const currentCategory = findByCode(categories.list, categoryCode);
             if(!currentCategory) { return; }
-            console.log(stateObject.facets);
             axios.post(currentCategory._links.products.href,
-                    { facets: stateObject.facets })
+                    { facets: facets })
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
                     products: (response.data._embedded) 
                               ? response.data._embedded.productResources
                               : [],
+                    facets: facets,
                     loading: false,
-                    changedFacets: false,
                 }));
             });
     }
 
     useEffect(() => {    
-        if(categoryCode !== prevCategoryCode || loading !== prevCategoryLoading || stateObject.changedFacets !== prevChangedFacets) {   
-            retrieveProducts(categoryCode);
+        if(categoryCode !== prevCategoryCode || loading !== prevCategoryLoading) {   
+            retrieveProducts(categoryCode, []);
         }
-    }, [categoryCode, loading, stateObject.changedFacets]);
+    }, [categoryCode, loading]);
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
