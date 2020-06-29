@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from "react";
 import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
 import { findByCode } from '../../../services/Category';
+import { newFacet } from '../../../services/Product';
 import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import ShopBanner from './ShopBanner';
@@ -31,20 +32,16 @@ function Products(props) {
         return ref.current;
     }
 
-    const addFacet = (facetId, facetName) => {
-        const newArray = [...stateObject.facets];
-        newArray.push({
-            "type": "EntityFacet",
-			"facetingName": facetName,
-			"id": facetId,
-        })
+    const addFacet= (facetId, facetName) => {
+        const na = [...stateObject.facets];
+        na.push(newFacet(facetId, facetName))
         setObjectState((prevState) => ({
             ...prevState,
-            facets: newArray,
+            facets: na,
         }));
-        console.log(stateObject.facets);
     }
 
+    console.log(stateObject.facets);
     //this should be moved to a service class later on 
     const retrieveProducts = (categoryCode) => {
         const currentCategory = findByCode(categories.list, categoryCode);
