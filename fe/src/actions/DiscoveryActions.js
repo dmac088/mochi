@@ -38,7 +38,6 @@ import { getAllCategories } from './CategoryActions'
     payload: {
       ...links,
       loading: false,
-      loaded: true,
     }
   });
   
@@ -46,6 +45,5 @@ import { getAllCategories } from './CategoryActions'
     type: GET_DISCOVERY_FAILURE,
     payload: {
       error,
-      loaded: false,
     }
   });

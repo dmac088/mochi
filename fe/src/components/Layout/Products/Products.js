@@ -5,6 +5,7 @@ import { findByCode } from '../../../services/Category';
 import { newFacet } from '../../../services/Product';
 import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
+import BrandSidebar from './Sidebars/BrandSidebar';
 import SelectionSidebar from './Sidebars/SelectionSidebar';
 import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
@@ -20,6 +21,7 @@ function Products(props) {
 
     const { categoryCode } = props.match.params;
     const categories = useSelector(state => state.categories);
+    const links = useSelector(state => state.discovery.links);
     const { loading } = categories;
 
     const prevCategoryCode = usePrevious(categoryCode);
@@ -98,6 +100,11 @@ function Products(props) {
                                 name={"category"}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}/>
+                            <BrandSidebar
+                                {...props}
+                                name={"brand"}
+                                selectedFacets={stateObject.selectedFacets}
+                                addFacet={addFacet} />
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">

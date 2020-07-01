@@ -290,6 +290,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 	}
 	
+	
 	@Override
 	public List<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}, {}", locale, currency, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','));
