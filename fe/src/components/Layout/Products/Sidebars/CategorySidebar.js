@@ -28,7 +28,8 @@ function CategorySidebar(props) {
         <React.Fragment>
             {(items.length > 0)
             ? <Sidebar
-                filterType={"filter by category"}
+                filterType={"category"}
+                heading={"filter by category"}
                 items={items} 
                 modFacet={addFacet}/>
             : <React.Fragment/>}

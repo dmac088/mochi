@@ -19,7 +19,7 @@ const renderItems = (items, modFacet, filterType) => {
 export const Sidebar = (props) => {
   return (
     <div className="sidebar mb-35">
-      <h3 className="sidebar-title">{props.filterType}</h3>
+      <h3 className="sidebar-title">{props.heading}</h3>
       <ul className="product-categories">
         {renderItems(props.items, props.modFacet, props.filterType)}
       </ul>

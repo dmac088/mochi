@@ -17,7 +17,7 @@ function SelectionSidebar(props) {
     return (
         <React.Fragment>
              <Sidebar
-                filterType={"selection"}
+                heading={"selection"}
                 items={items} 
                 modFacet={removeFacet}/>
         </React.Fragment>
