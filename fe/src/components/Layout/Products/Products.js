@@ -45,7 +45,7 @@ function Products(props) {
     } 
 
     const removeFacet= (facetId) => {
-        const na = stateObject.selectedFacets.filter(f => f.Id !== facetId);
+        const na = stateObject.selectedFacets.filter(f => f.id !== facetId);
         retrieveProducts(categoryCode, na);
     } 
 

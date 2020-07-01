@@ -14,14 +14,12 @@ function SelectionSidebar(props) {
         });
    })
 
-console.log(items);
-
     return (
         <React.Fragment>
              <Sidebar
-                filterType={"category"}
+                filterType={"selection"}
                 items={items} 
-                removeFacet={removeFacet}/>
+                modFacet={removeFacet}/>
         </React.Fragment>
     )
 }
