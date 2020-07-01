@@ -37,12 +37,7 @@ function Products(props) {
 
     const addFacet= (facetId, facetName, display) => {
         const na = [...stateObject.selectedFacets];
-        na.push({
-            "type":         "EntityFacet",
-            "facetingName": facetName,
-            "id":           facetId,
-            "display":      display,
-        });
+        na.push(newFacet(facetId, facetName, display));
         retrieveProducts(categoryCode, na);
     } 
 
