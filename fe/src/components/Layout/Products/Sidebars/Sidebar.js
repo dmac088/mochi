@@ -6,8 +6,8 @@ const renderItems = (items, addFacet, filterType) => {
     return (
       <li key={index}>
         <a onClick={(e) => {  e.preventDefault();
-                              addFacet(i.code, filterType);
-                    }}>{i.name}</a>
+                              addFacet(i.code, filterType, i.display);
+                    }}>{i.display}</a>
         {/* <Link to={i.path}>
           {i.name}
         </Link> */}
