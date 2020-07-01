@@ -53,7 +53,6 @@ function Products(props) {
     const retrieveProducts = (categoryCode, facets) => {
         const currentCategory = findByCode(categories.list, categoryCode);
             if(!currentCategory) { return; }
-            console.log(facets);
             axios.post(currentCategory._links.products.href,
                     { facets: facets })
             .then((response) => {
