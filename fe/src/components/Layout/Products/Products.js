@@ -21,7 +21,6 @@ function Products(props) {
 
     const { categoryCode } = props.match.params;
     const categories = useSelector(state => state.categories);
-    const links = useSelector(state => state.discovery.links);
     const { loading } = categories;
 
     const prevCategoryCode = usePrevious(categoryCode);
