@@ -15,6 +15,7 @@ function Products(props) {
     const [stateObject, setObjectState] = useState({
         products: [],
         facets: [],
+        selectedFacets: [],
         loading: false,
     });
 
@@ -34,13 +35,13 @@ function Products(props) {
     }
 
     const addFacet= (facetId, facetName) => {
-        const na = [...stateObject.facets];
+        const na = [...stateObject.selectedFacets];
         na.push(newFacet(facetId, facetName));
         retrieveProducts(categoryCode, na);
     } 
 
     const removeFacet= (facetId) => {
-        const na = stateObject.facets.filter(f => f.Id !== facetId);
+        const na = stateObject.selectedFacets.filter(f => f.Id !== facetId);
         retrieveProducts(categoryCode, na);
     } 
 
@@ -56,7 +57,7 @@ function Products(props) {
                     products: (response.data._embedded) 
                               ? response.data._embedded.productResources
                               : [],
-                    facets: facets,
+                    selectedFacets: facets,
                     loading: false,
                 }));
             });
@@ -64,7 +65,7 @@ function Products(props) {
 
     useEffect(() => {    
         if(categoryCode !== prevCategoryCode || loading !== prevCategoryLoading) {   
-            retrieveProducts(categoryCode, []);
+            retrieveProducts(categoryCode, stateObject.selectedFacets);
         }
     }, [categoryCode, loading]);
 
@@ -86,7 +87,7 @@ function Products(props) {
                         <div className="sidebar-area">
                             <SelectionSidebar 
                                 {...props}
-                                facets={stateObject.facets}
+                                selectedFacets={stateObject.selectedFacets}
                                 removeFacet={removeFacet} />
                             <CategorySidebar 
                                 {...props}
