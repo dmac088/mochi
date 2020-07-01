@@ -4,16 +4,17 @@ import { Sidebar } from './Sidebar';
 function SelectionSidebar(props) {
     const { removeFacet, selectedFacets } = props;
     const items = [];
-
-    console.log(selectedFacets)
-
+    
+    //mapFacetsToSidebar
     selectedFacets.map(f => {
         items.push({
-            name: f.facetingName,
+            display: f.display,
             code: f.id,
-            type: f.type,
+            path: f.type,
         });
    })
+
+console.log(items);
 
     return (
         <React.Fragment>

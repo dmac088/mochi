@@ -14,7 +14,6 @@ function Products(props) {
 
     const [stateObject, setObjectState] = useState({
         products: [],
-        facets: [],
         selectedFacets: [],
         loading: false,
     });
@@ -34,9 +33,14 @@ function Products(props) {
         return ref.current;
     }
 
-    const addFacet= (facetId, facetName) => {
+    const addFacet= (facetId, facetName, display) => {
         const na = [...stateObject.selectedFacets];
-        na.push(newFacet(facetId, facetName));
+        na.push({
+            "type":         "EntityFacet",
+            "facetingName": facetName,
+            "id":           facetId,
+            "display":      display,
+        });
         retrieveProducts(categoryCode, na);
     } 
 
@@ -92,6 +96,7 @@ function Products(props) {
                             <CategorySidebar 
                                 {...props}
                                 name={"category"}
+                                selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}/>
                         </div>
                     </div>

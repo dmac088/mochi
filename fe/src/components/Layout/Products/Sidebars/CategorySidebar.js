@@ -6,16 +6,19 @@ import { findByCode, getChildren } from '../../../../services/Category';
 
 
 function CategorySidebar(props) {
-   const { addFacet } = props;
+   const { addFacet, selectedFacets } = props;
    const items = [];
    const categories = useSelector(state => state.categories);
    const { categoryCode } = props.match.params;
    const children = [];
    getChildren(findByCode(categories.list, categoryCode), categories.list, children);
    
-   children.map(c => {
+
+   //mapCategoriesToSidebar
+   children.filter(({data}) => !selectedFacets.some(x => x.id === data.categoryCode))
+        .map(c => {
         items.push({
-            name: c.data.categoryDesc + ' (' + c.data.count + ')',
+            display: c.data.categoryDesc + ' (' + c.data.count + ')',
             code: c.data.categoryCode,
             path: getCategoryPath(c.data.categoryCode, props.match),
         });
