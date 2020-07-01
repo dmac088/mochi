@@ -5,6 +5,7 @@ import { findByCode } from '../../../services/Category';
 import { newFacet } from '../../../services/Product';
 import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
+import SelectionSidebar from './Sidebars/SelectionSidebar';
 import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
@@ -35,6 +36,11 @@ function Products(props) {
     const addFacet= (facetId, facetName) => {
         const na = [...stateObject.facets];
         na.push(newFacet(facetId, facetName));
+        retrieveProducts(categoryCode, na);
+    } 
+
+    const removeFacet= (facetId) => {
+        const na = stateObject.facets.filter(f => f.Id !== facetId);
         retrieveProducts(categoryCode, na);
     } 
 
@@ -78,6 +84,10 @@ function Products(props) {
                 <div className="row">
                     <div className="col-lg-3 order-2 order-lg-1">
                         <div className="sidebar-area">
+                            <SelectionSidebar 
+                                {...props}
+                                facets={stateObject.facets}
+                                removeFacet={removeFacet} />
                             <CategorySidebar 
                                 {...props}
                                 name={"category"}
