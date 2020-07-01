@@ -250,13 +250,15 @@ public class PostgresProductAdapter implements IProductPortService {
 	public Page<Product> findAll(String locale, String currency, Double price, int page, int size, String categoryDesc,
 			Set<IFacet> selectedFacets, String sortBy) {
 
-		
-		
 		@SuppressWarnings("unused")
 		Set<IFacet> returnFacets = new HashSet<IFacet>();
 
-		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, currency, new Double(0), price,
-				"RET01", PageRequest.of(page, size), categoryDesc,
+		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, 
+																		  currency, 
+																		  new Double(0), 
+																		  price,
+																		  "RET01", 
+																		  PageRequest.of(page, size), categoryDesc,
 				selectedFacets.stream().filter(c -> c.getType().equals("category")).map(c -> c.getPayload().getCode())
 						.collect(Collectors.toList()),
 				selectedFacets.stream().filter(c -> c.getType().equals("brand")).map(c -> c.getPayload().getCode())
