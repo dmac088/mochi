@@ -89,7 +89,7 @@ import io.nzbee.search.ISearchDimension;
 	        @EntityResult(
 	                entityClass = CategoryType.class,
 	                fields = {
-	                    @FieldResult(name = "categoryTypeId",			column = "cat_typ_id"),
+	                    @FieldResult(name = "categoryTypeId",				column = "cat_typ_id"),
 	                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
 	                }),

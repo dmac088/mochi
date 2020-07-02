@@ -42,7 +42,8 @@ import io.nzbee.search.ISearchDimension;
 	                    fields = {
 	                        @FieldResult(name = "brandId", 			column = "bnd_id"),
 	                        @FieldResult(name = "brandCode", 		column = "bnd_cd"),
-	                        @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
+	                        @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id"),
+	                        @FieldResult(name = "attributes", 		column = "bnd_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = BrandAttribute.class,
@@ -88,6 +89,9 @@ public class Brand implements ISearchDimension {
 	@Transient
 	private String currency;
 	
+	@Transient
+	private int objectCount;
+
 	public String getLocale() {
 		return locale;
 	}
@@ -189,6 +193,14 @@ public class Brand implements ISearchDimension {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+	
+	public int getObjectCount() {
+		return objectCount;
+	}
+
+	public void setObjectCount(int objectCount) {
+		this.objectCount = objectCount;
 	}
 
 	@Override
