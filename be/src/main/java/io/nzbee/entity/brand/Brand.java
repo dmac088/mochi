@@ -32,7 +32,7 @@ import io.nzbee.search.ISearchDimension;
 @Entity
 @Table(name = "brand", schema = "mochi")
 @SqlResultSetMapping(
-	    name = "CategoryMapping",
+	    name = "BrandMapping",
 	    columns = {
 	    		@ColumnResult(name = "object_count")
 	    },
