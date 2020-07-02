@@ -41,9 +41,7 @@ import io.nzbee.search.ISearchDimension;
 	                    entityClass = Brand.class,
 	                    fields = {
 	                        @FieldResult(name = "brandId", 			column = "bnd_id"),
-	                        @FieldResult(name = "brandCode", 		column = "bnd_cd"),
-	                        @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id"),
-	                        @FieldResult(name = "attributes", 		column = "bnd_id")
+	                        @FieldResult(name = "brandCode", 		column = "bnd_cd")
 	                    }),
 	            @EntityResult(
 	                    entityClass = BrandAttribute.class,
