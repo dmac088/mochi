@@ -11,7 +11,7 @@ public abstract class BrandAttribute_ {
 
 	public static volatile SingularAttribute<BrandAttribute, String> brandDesc;
 	public static volatile SingularAttribute<BrandAttribute, String> lclCd;
-	public static volatile SingularAttribute<BrandAttribute, Long> Id;
+	public static volatile SingularAttribute<BrandAttribute, Long> brandAttributeId;
 	public static volatile SingularAttribute<BrandAttribute, Brand> brand;
 
 }

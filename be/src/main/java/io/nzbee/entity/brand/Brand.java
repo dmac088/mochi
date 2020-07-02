@@ -8,6 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,15 +39,18 @@ import io.nzbee.search.ISearchDimension;
 	    entities = {
 	            @EntityResult(
 	                    entityClass = Brand.class,
-	                    discriminatorColumn="cat_typ_id",
 	                    fields = {
-	                        //@FieldResult(name = "categoryId", 					column = "cat_id")
+	                        @FieldResult(name = "brandId", 			column = "bnd_id"),
+	                        @FieldResult(name = "brandCode", 		column = "bnd_cd"),
+	                        @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id")
 	                    }),
 	            @EntityResult(
 	                    entityClass = BrandAttribute.class,
 	                    fields = {
-	                        //@FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
-	                        
+	                        @FieldResult(name = "brandAttributeId", column = "bnd_lcl_id"),
+	                        @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
+	                        @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+	                        @FieldResult(name = "brand", 			column = "bnd_id")
 	                    })
 		    })
 public class Brand implements ISearchDimension {

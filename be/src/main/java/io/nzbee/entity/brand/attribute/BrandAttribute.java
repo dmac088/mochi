@@ -23,7 +23,7 @@ public class BrandAttribute {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bnd_lcl_id")
-	private Long Id;
+	private Long brandAttributeId;
 
 	@Column(name="bnd_desc")
 	@Field(analyze = Analyze.YES, store=Store.YES)
@@ -37,11 +37,11 @@ public class BrandAttribute {
 	private Brand brand;
 	
 	public Long getId() {
-		return Id;
+		return brandAttributeId;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		brandAttributeId = id;
 	}
 
 	public Brand getBrand() {
