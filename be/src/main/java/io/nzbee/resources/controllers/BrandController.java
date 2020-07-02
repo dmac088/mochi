@@ -46,8 +46,13 @@ public class BrandController {
     	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
     	
-    	final List<BrandResource> collection = 
-    			brandService.findAll(locale, currency, categoryCode).stream()
+    	final List<BrandResource> collection =
+    			brandService.findAll(locale, 
+    								 currency, 
+    								 categoryCode,
+    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet())
+    			).stream()
         		.map(b -> brandResourceAssembler.toModel(b))
         		.collect(Collectors.toList());
     	
