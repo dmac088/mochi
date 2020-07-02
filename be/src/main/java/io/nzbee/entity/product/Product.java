@@ -208,7 +208,7 @@ filters = {
 	            @EntityResult(
 	                    entityClass = BrandAttribute.class,
 	                    fields = {
-	                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
+	                    	@FieldResult(name = "brandAttributeId", column = "bnd_lcl_id"),
 		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
 		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
 		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
