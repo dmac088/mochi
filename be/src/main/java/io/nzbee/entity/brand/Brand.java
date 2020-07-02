@@ -5,12 +5,15 @@ import java.util.List;
 import java.util.Optional;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.NaturalId;
@@ -20,7 +23,6 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
@@ -28,6 +30,25 @@ import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "brand", schema = "mochi")
+@SqlResultSetMapping(
+	    name = "CategoryMapping",
+	    columns = {
+	    		@ColumnResult(name = "object_count")
+	    },
+	    entities = {
+	            @EntityResult(
+	                    entityClass = Brand.class,
+	                    discriminatorColumn="cat_typ_id",
+	                    fields = {
+	                        //@FieldResult(name = "categoryId", 					column = "cat_id")
+	                    }),
+	            @EntityResult(
+	                    entityClass = BrandAttribute.class,
+	                    fields = {
+	                        //@FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
+	                        
+	                    })
+		    })
 public class Brand implements ISearchDimension {
 
 	@Id
