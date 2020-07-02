@@ -292,36 +292,45 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, Set<String> categoryCodes, Set<String> tagCodes) {
-		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}, {}", locale, currency, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','));
+	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes) {
+		LOGGER.debug("call BrandDaoImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','));
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Brand> root = cq.from(Brand.class);
-		
-		Join<Brand, Product> product = root.join(Brand_.products);
-		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
+		Join<Brand, Product> brand = root.join(Brand_.products);
+		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
+		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
+		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
+		
 		if(categoryCodes.size() > 0) {
-			Join<Product, CategoryProduct> category = product.join(Product_.categories);
+			Join<Product, CategoryProduct> category = brand.join(Product_.categories);
 			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
 		}
 		if(tagCodes.size() > 0) {
-			Join<Product, Tag> productTag = product.join(Product_.tags);
+			Join<Product, Tag> productTag = brand.join(Product_.tags);
 			conditions.add(productTag.get(Tag_.tagCode).in(tagCodes));
 		}
 		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
-		
-		TypedQuery<Brand> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
 
-		return query.getResultList();
+		cq.distinct(true);
+		
+		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
+						root.get(Brand_.brandCode).alias("brandCode"),
+						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
+		).where(conditions.toArray(new Predicate[] {}));
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
+		List<Tuple> tuples = query.getResultList();
+		
+		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 	
 	@Override
