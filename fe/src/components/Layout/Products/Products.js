@@ -34,13 +34,13 @@ function Products(props) {
         return ref.current;
     }
 
-    const addFacet= (facetId, facetName, display) => {
+    const addFacet = (facetId, facetName, display) => {
         const na = [...stateObject.selectedFacets];
         na.push(newFacet(facetId, facetName, display));
         retrieveProducts(categoryCode, na);
     } 
 
-    const removeFacet= (facetId) => {
+    const removeFacet = (facetId) => {
         const na = stateObject.selectedFacets.filter(f => f.id !== facetId);
         retrieveProducts(categoryCode, na);
     } 
