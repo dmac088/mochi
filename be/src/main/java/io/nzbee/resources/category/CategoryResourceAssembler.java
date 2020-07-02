@@ -38,7 +38,8 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 			cr.add(linkTo(methodOn(BrandController.class).getBrands(		
 																		category.getLocale(),
 																		category.getCurrency(), 
-																		category.getCategoryCode()
+																		category.getCategoryCode(),
+																		null
 																)).withRel("brands"));
 		}
 		
