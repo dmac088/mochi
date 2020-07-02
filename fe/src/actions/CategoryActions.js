@@ -9,7 +9,8 @@ export const getAllCategories = () => {
     dispatch(getCategoriesStarted());
 
     const state = getState();
-    axios.get(state.discovery.links.allCategories.href)
+    console.log(state.discovery);
+    axios.get(state.discovery.links.allProductCategories.href)
     .then((payload) => {
       return payload.data._embedded.categoryResources;
     }).then((categories) => {
