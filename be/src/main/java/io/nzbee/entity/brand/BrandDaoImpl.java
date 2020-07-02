@@ -378,12 +378,7 @@ public class BrandDaoImpl  implements IBrandDao {
 	
 	private String constructSQL(
 			boolean hasCategories,
-			boolean hasBrands,
-			boolean hasTags,
-			boolean withChildren,
-			boolean hasCategoryDesc,
-			boolean hasCategoryId,
-			boolean hasType
+			boolean hasTags
 		) {
 	String sql = "WITH recursive descendants AS " + 
 			"( " + 
@@ -398,9 +393,9 @@ public class BrandDaoImpl  implements IBrandDao {
 			"          FROM      mochi.category            AS t " + 
 			"          LEFT JOIN mochi.category_attr_lcl a " + 
 			"          ON        t.cat_id = a.cat_id " + 
-			"          AND       a.lcl_cd = 'en-GB' " + 
+			"          AND       a.lcl_cd = :locale " + 
 			"          WHERE     0=0 " + 
-			"           AND t.cat_cd = 'FRT01'" + 
+			"           AND t.cat_cd = :categoryCode " + 
 			"          UNION ALL " + 
 			"          SELECT t.cat_id, " + 
 			"                 t.cat_cd, " + 
@@ -456,7 +451,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			"						 " + 
 			"	left join mochi.brand_attr_lcl lcl" + 
 			"		on b.bnd_id = lcl.bnd_id" + 
-			"		and lcl.lcl_cd = 'zh-HK'" + 
+			"		and lcl.lcl_cd = :locale " + 
 			"						 " + 
 			"	left join mochi.product_tag pt" + 
 			"		on p.prd_id = pt.prd_id" + 
@@ -465,8 +460,8 @@ public class BrandDaoImpl  implements IBrandDao {
 			"		on pt.tag_id = t.tag_id" + 
 			"						 " + 
 			"where 0=0" + 
-			"-- and c.cat_cd = 'POM01'" + 
-			"-- and t.tag_cd = 'GFR01'" + 
+			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes" : "") +
+			((hasTags) ? 	" 		AND t.tag_cd in 	:tagCodes" : "") +
 			"group by b.bnd_id, " + 
 			"	   b.bnd_cd," + 
 			"	   lcl.bnd_desc," + 
