@@ -58,7 +58,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
 						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
@@ -94,7 +94,7 @@ public class BrandDaoImpl  implements IBrandDao {
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
 						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
@@ -131,7 +131,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
 						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
@@ -176,7 +176,7 @@ public class BrandDaoImpl  implements IBrandDao {
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
 						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
@@ -208,7 +208,7 @@ public class BrandDaoImpl  implements IBrandDao {
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
 						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
@@ -234,7 +234,7 @@ public class BrandDaoImpl  implements IBrandDao {
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
 						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
@@ -276,7 +276,7 @@ public class BrandDaoImpl  implements IBrandDao {
 
 		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
 						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
+						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
 						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
 		);
 		
@@ -299,11 +299,15 @@ public class BrandDaoImpl  implements IBrandDao {
 															 !categoryCodes.isEmpty(),
 															 !tagCodes.isEmpty()), "BrandMapping")
 				 .setParameter("locale", locale)
-				 //.setParameter("currency", currency)
-				 .setParameter("categoryCode", categoryCode)
-				 .setParameter("categoryCodes", categoryCodes)
-				 .setParameter("tagCodes", tagCodes);
+				 .setParameter("categoryCode", categoryCode);
 		
+		if(!categoryCodes.isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes);
+		}
+		
+		if(!tagCodes.isEmpty()) {
+			query.setParameter("tagCodes", tagCodes);
+		}
 		
 		
 		@SuppressWarnings("unchecked")
@@ -442,8 +446,8 @@ public class BrandDaoImpl  implements IBrandDao {
 				: "") + 
 			"						 " + 
 			"where 0=0" + 
-			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes" : "") +
-			((hasTags) ? 	" 		AND t.tag_cd in 	:tagCodes" : "") +
+			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
+			((hasTags) ? 	" 		AND t.tag_cd in 	:tagCodes " : "") +
 			"group by b.bnd_id, " + 
 			"	   b.bnd_cd," + 
 			"	   lcl.bnd_desc," + 
