@@ -7,6 +7,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -14,6 +15,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.hibernate.Session;
 import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,16 +26,12 @@ import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.CategoryBrand_;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
-import io.nzbee.entity.tag.Tag_;
-import io.nzbee.entity.tag.Tag;
 
 @Component
 public class BrandDaoImpl  implements IBrandDao { 
@@ -295,42 +293,24 @@ public class BrandDaoImpl  implements IBrandDao {
 	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','));
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		Query query = session.createNativeQuery(constructSQL(
+															 !categoryCodes.isEmpty(),
+															 !tagCodes.isEmpty()), "BrandMapping")
+				 .setParameter("locale", locale)
+				 //.setParameter("currency", currency)
+				 .setParameter("categoryCode", categoryCode)
+				 .setParameter("categoryCodes", categoryCodes)
+				 .setParameter("tagCodes", tagCodes);
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
-		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 		
-		if(categoryCodes.size() > 0) {
-			Join<Product, CategoryProduct> category = brand.join(Product_.categories);
-			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
-		}
-		if(tagCodes.size() > 0) {
-			Join<Product, Tag> productTag = brand.join(Product_.tags);
-			conditions.add(productTag.get(Tag_.tagCode).in(tagCodes));
-		}
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
-
-		cq.distinct(true);
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
 		
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.Id).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		).where(conditions.toArray(new Predicate[] {}));
+		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
-		List<Tuple> tuples = query.getResultList();
-		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 	
 	@Override
