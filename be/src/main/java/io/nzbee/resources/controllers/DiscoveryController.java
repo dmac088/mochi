@@ -18,7 +18,7 @@ public class DiscoveryController {
 	
 	@GetMapping("/Discovery")
 	public ResponseEntity<DiscoveryResource> getDiscovery() {
-		DiscoveryResource dr = new DiscoveryResource(globalVars.getBaseURL(), null, null);
+		DiscoveryResource dr = new DiscoveryResource(globalVars.getBaseURL());
 		return ResponseEntity.ok(dr);
 	}
 	

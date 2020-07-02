@@ -10,7 +10,7 @@ import io.nzbee.resources.controllers.ProductController;
 
 public class DiscoveryResource extends RepresentationModel<DiscoveryResource>{
 
-	public DiscoveryResource(String rootURL, String locale, String currency) {
+	public DiscoveryResource(String rootURL) {
 		this.add(linkTo(methodOn(BrandController.class).getBrands(null, null)).withRel("allBrands"));
 		this.add(linkTo(methodOn(CategoryController.class).getCategories(null, null)).withRel("allCategories"));
 		this.add(linkTo(methodOn(CategoryController.class).getProductCategories(null, null)).withRel("allProductCategories"));
