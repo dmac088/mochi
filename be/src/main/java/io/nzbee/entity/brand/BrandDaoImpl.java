@@ -1,5 +1,7 @@
 package io.nzbee.entity.brand;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -313,7 +315,7 @@ public class BrandDaoImpl  implements IBrandDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
+		return results.stream().map(b -> this.objectToEntity(b, locale, currency)).collect(Collectors.toList());
 		
 	}
 	
@@ -356,8 +358,15 @@ public class BrandDaoImpl  implements IBrandDao {
 
 	@Override
 	public Brand objectToEntity(Object[] o, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		Brand brand = (Brand) o[0];
+		brand.setBrandAttribute(((BrandAttribute) o[1]));
+		
+		brand.setObjectCount(((BigInteger)o[2]).intValue());
+		
+		brand.setLocale(locale);
+		brand.setCurrency(currency);
+		
+		return brand;
 	}
 	
 	private String constructSQL(
