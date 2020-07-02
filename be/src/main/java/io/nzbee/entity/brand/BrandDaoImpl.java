@@ -367,5 +367,4 @@ public class BrandDaoImpl  implements IBrandDao {
 		return null;
 	}
 
-
 }

@@ -10,6 +10,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,6 +19,7 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.brand.BrandResourceAssembler;
+import io.nzbee.search.dto.facet.FacetContainer;
 
 @RestController
 @RequestMapping("/api")
@@ -34,9 +37,14 @@ public class BrandController {
         super();
     }
     
-    @GetMapping("/Brand/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
+    @PostMapping("/Brand/{locale}/{currency}/category/{categoryCode}")
+    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale, 
+    																@PathVariable String currency, 
+    																@PathVariable String categoryCode,
+    																@RequestBody final FacetContainer selectedFacets) {
+    	
     	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	
     	
     	final List<BrandResource> collection = 
     			brandService.findAll(locale, currency, categoryCode).stream()
@@ -50,7 +58,8 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale, @PathVariable String currency) {
+    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale, 
+    																@PathVariable String currency) {
     	LOGGER.debug("Fetching brands for parameters : {}, {}", locale, currency);
     	final List<BrandResource> collection = 
     			 brandService.findAll(locale, currency).stream()
