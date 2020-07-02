@@ -453,11 +453,13 @@ public class BrandDaoImpl  implements IBrandDao {
 			"		on b.bnd_id = lcl.bnd_id" + 
 			"		and lcl.lcl_cd = :locale " + 
 			"						 " + 
-			"	left join mochi.product_tag pt" + 
-			"		on p.prd_id = pt.prd_id" + 
-			"" + 
-			"	left join mochi.tag t " + 
-			"		on pt.tag_id = t.tag_id" + 
+			((hasTags) ?
+				"	left join mochi.product_tag pt" + 
+				"		on p.prd_id = pt.prd_id" + 
+				"" + 
+				"	left join mochi.tag t " + 
+				"		on pt.tag_id = t.tag_id" 
+				: "") + 
 			"						 " + 
 			"where 0=0" + 
 			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes" : "") +
