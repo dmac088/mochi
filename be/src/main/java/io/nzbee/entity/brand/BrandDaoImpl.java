@@ -401,7 +401,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			"          GROUP BY  cc.cat_id," + 
 			"					cc.cat_cd," + 
 			"					cc.node" + 
-			"), categories AS (" + 
+			" ), categories AS ( " + 
 			"" + 
 			"          SELECT    s1.node," + 
 			"		  			s1.cat_id," + 
@@ -418,8 +418,9 @@ public class BrandDaoImpl  implements IBrandDao {
 			"	   b.bnd_cd," + 
 			"	   lcl.bnd_lcl_id," + 
 			"	   lcl.bnd_desc," + 
-			"	   count(distinct p.upc_cd) as object_count" + 
-			"from categories c" + 
+			"	   lcl.lcl_cd, " +		
+			"	   count(distinct p.upc_cd) as object_count " + 
+			"from categories c " + 
 			"	inner join mochi.product_category pc" + 
 			"		on c.cat_id = pc.cat_id" + 
 			"	" + 
@@ -445,13 +446,14 @@ public class BrandDaoImpl  implements IBrandDao {
 				"		on pt.tag_id = t.tag_id" 
 				: "") + 
 			"						 " + 
-			"where 0=0" + 
+			"where 0=0 " + 
 			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
 			((hasTags) ? 	" 		AND t.tag_cd in 	:tagCodes " : "") +
 			"group by b.bnd_id, " + 
 			"	   b.bnd_cd," + 
 			"	   lcl.bnd_desc," + 
-			"	   lcl.bnd_lcl_id";
+			"	   lcl.bnd_lcl_id, " +
+			"		lcl.lcl_cd"	;
 		
 	return sql;
 }
