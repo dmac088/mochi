@@ -375,5 +375,104 @@ public class BrandDaoImpl  implements IBrandDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	private String constructSQL(
+			boolean hasCategories,
+			boolean hasBrands,
+			boolean hasTags,
+			boolean withChildren,
+			boolean hasCategoryDesc,
+			boolean hasCategoryId,
+			boolean hasType
+		) {
+	String sql = "WITH recursive descendants AS " + 
+			"( " + 
+			"          SELECT    t.cat_id, " + 
+			"                    t.cat_cd, " + 
+			"                    t.cat_lvl, " + 
+			"                    t.cat_prnt_id, " + 
+			"                    t.cat_typ_id, " + 
+			"                    cast('/' " + 
+			"                              || cast(t.cat_id AS text) " + 
+			"                              || '/' AS text) node " + 
+			"          FROM      mochi.category            AS t " + 
+			"          LEFT JOIN mochi.category_attr_lcl a " + 
+			"          ON        t.cat_id = a.cat_id " + 
+			"          AND       a.lcl_cd = 'en-GB' " + 
+			"          WHERE     0=0 " + 
+			"           AND t.cat_cd = 'FRT01'" + 
+			"          UNION ALL " + 
+			"          SELECT t.cat_id, " + 
+			"                 t.cat_cd, " + 
+			"                 t.cat_lvl, " + 
+			"                 t.cat_prnt_id, " + 
+			"                 t.cat_typ_id, " + 
+			"                 cast(d.node " + 
+			"                        || cast(t.cat_id AS text) " + 
+			"                        || '/' AS text) node " + 
+			"          FROM   mochi.category         AS t " + 
+			"          JOIN   descendants            AS d " + 
+			"          ON     t.cat_prnt_id = d.cat_id )" + 
+			", summary AS " + 
+			"( " + 
+			"          SELECT    cc.cat_id," + 
+			"					cc.cat_cd," + 
+			"					cc.node" + 
+			"          FROM      descendants cc 	" + 
+			"          GROUP BY  cc.cat_id," + 
+			"					cc.cat_cd," + 
+			"					cc.node" + 
+			"), categories AS (" + 
+			"" + 
+			"          SELECT    s1.node," + 
+			"		  			s1.cat_id," + 
+			"					s1.cat_cd" + 
+			"          FROM      summary s1 " + 
+			"          LEFT JOIN summary s2 " + 
+			"          ON        s1.node <> s2.node " + 
+			"          AND       LEFT(s2.node, length(s1.node)) = s1.node " + 
+			"          GROUP BY  s1.node," + 
+			"					s1.cat_id," + 
+			"					s1.cat_cd" + 
+			")" + 
+			"select b.bnd_id, " + 
+			"	   b.bnd_cd," + 
+			"	   lcl.bnd_lcl_id," + 
+			"	   lcl.bnd_desc," + 
+			"	   count(distinct p.upc_cd) as object_count" + 
+			"from categories c" + 
+			"	inner join mochi.product_category pc" + 
+			"		on c.cat_id = pc.cat_id" + 
+			"	" + 
+			"	inner join mochi.product p" + 
+			"		on pc.prd_id = p.prd_id" + 
+			"	" + 
+			"	inner join mochi.product_status ps" + 
+			"		on p.prd_sts_id = ps.prd_sts_id" + 
+			"		and ps.prd_sts_cd = 'ACT01'" + 
+			"						 " + 
+			"	inner join mochi.brand b" + 
+			"		on p.bnd_id = b.bnd_id" + 
+			"						 " + 
+			"	left join mochi.brand_attr_lcl lcl" + 
+			"		on b.bnd_id = lcl.bnd_id" + 
+			"		and lcl.lcl_cd = 'zh-HK'" + 
+			"						 " + 
+			"	left join mochi.product_tag pt" + 
+			"		on p.prd_id = pt.prd_id" + 
+			"" + 
+			"	left join mochi.tag t " + 
+			"		on pt.tag_id = t.tag_id" + 
+			"						 " + 
+			"where 0=0" + 
+			"-- and c.cat_cd = 'POM01'" + 
+			"-- and t.tag_cd = 'GFR01'" + 
+			"group by b.bnd_id, " + 
+			"	   b.bnd_cd," + 
+			"	   lcl.bnd_desc," + 
+			"	   lcl.bnd_lcl_id";
+		
+	return sql;
+}
 
 }
