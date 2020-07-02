@@ -1,6 +1,5 @@
 package io.nzbee.entity.brand;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
