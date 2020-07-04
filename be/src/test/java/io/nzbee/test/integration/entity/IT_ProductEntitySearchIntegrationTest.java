@@ -121,8 +121,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
-							  PageRequest.of(0, 10),
 							  "Ignored",
+							  0,
+							  10,
 							  "Fruit",
 							  facetPayload,
 							  returnFacets);
@@ -140,9 +141,10 @@ public class IT_ProductEntitySearchIntegrationTest {
 		Page<io.nzbee.domain.product.Product> 
 						pp = productService.search(
 							  "zh-HK", 
-							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "HKD",
+							  "Ignored",
+							  0,
+							  10,
 							  "水果", 
 							  facetPayload,
 							  returnFacets);
@@ -164,8 +166,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10, 
 							  "Vegetables",
 							  facetPayload,
 							  returnFacets);
@@ -185,8 +188,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Apple",	
 							  facetPayload,
 							  returnFacets);
@@ -206,8 +210,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10, 
 							  "Cauliflower", 					
 							  facetPayload,
 							  returnFacets);
@@ -227,8 +232,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "All", 						
 							  facetPayload,
 							  returnFacets);
@@ -248,8 +254,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Nuts", 					
 							  facetPayload,
 							  returnFacets);
@@ -269,8 +276,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Organic", 					
 							  facetPayload,
 							  returnFacets);
@@ -290,8 +298,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "有機", 						
 							  facetPayload,
 							  returnFacets);
@@ -311,8 +320,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "不含麩質", 						
 							  facetPayload,
 							  returnFacets);
@@ -332,8 +342,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Gluten Free", 				
 							  facetPayload,
 							  returnFacets);
@@ -353,8 +364,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Glorys", 				
 							  facetPayload,
 							  returnFacets);
@@ -374,8 +386,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Enza", 					
 							  facetPayload,
 							  returnFacets);
@@ -395,8 +408,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Planters", 						
 							  facetPayload,
 							  returnFacets);
@@ -416,8 +430,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10, 
 							  "Dole", 						
 							  facetPayload,
 							  returnFacets);
@@ -437,8 +452,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10,
 							  "Driscolls", 					
 							  facetPayload,
 							  returnFacets);
@@ -460,8 +476,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  PageRequest.of(0, 10),
-							  "Ignored", 
+							  "Ignored",
+							  0,
+							  10, 
 							  "Cashews",						
 							  facetPayload,
 							  returnFacets);
@@ -481,8 +498,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 		// when
 		productService.search( 	"en-GB", 
 								"HKD", 
-								PageRequest.of(0, 10),
-								"Ignored", 
+								"Ignored",
+								  0,
+								  10, 
 								"Fruit", 
 								facetPayload,
 								returnFacets);
@@ -495,8 +513,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 		Page<io.nzbee.domain.product.Product> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
-								PageRequest.of(0, 10),
-								"Ignored", 
+								"Ignored",
+								  0,
+								  10, 
 								"Fruit", 
 								fp,
 								returnFacets);
@@ -516,8 +535,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 		Page<io.nzbee.domain.product.Product> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
-								PageRequest.of(0, 10),
-								"all", 
+								"Ignored",
+								  0,
+								  10,
 								"Fruit", 		
 								facetPayload,
 								returnFacets);
@@ -542,8 +562,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 		pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
-								PageRequest.of(0, 10),
-								"Ignored", 
+								"Ignored",
+								  0,
+								  10,
 								"Fruit", 
 								fp,
 								returnFacets);
