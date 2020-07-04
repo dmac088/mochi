@@ -16,6 +16,39 @@ public class PostgresTagAdapter  implements ITagPortService {
 	private ITagService tagService;
 
 	@Override
+	public Tag findByCode(String locale, String currency, String code) {
+		io.nzbee.entity.tag.Tag t = tagService.findByCode(locale, currency, code)
+				.orElseThrow(() -> new TagNotFoundException("Tag with code " + code + " not found!"));
+		return this.entityToDo(t);
+	}
+
+	@Override
+	public Tag findByDesc(String locale, String currency, String desc) {
+		io.nzbee.entity.tag.Tag t = tagService.findByDesc(locale, currency, desc)
+				.orElseThrow(() -> new TagNotFoundException("Tag with desc " + desc + " not found!"));
+		return this.entityToDo(t);
+	}
+	
+	@Override
+	public Set<Tag> findAll(String locale, String currency) {
+		return tagService.findAll(locale, currency)
+				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
+	}
+
+	@Override
+	public Set<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes) {
+		return tagService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes)
+				.stream().map(b -> (Tag) this.entityToDo(b)).collect(Collectors.toSet());
+	}
+
+	@Override
+	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
+		return tagService.findAll(locale, currency, codes)
+				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
+	}
+	
+	@Override
 	public void save(Tag tag) {
 		
 		io.nzbee.entity.tag.Tag t = new io.nzbee.entity.tag.Tag();
@@ -32,42 +65,14 @@ public class PostgresTagAdapter  implements ITagPortService {
 		
 		tagService.save(t);
 	}
-
-	@Override
-	public Tag findByCode(String locale, String currency, String code) {
-		io.nzbee.entity.tag.Tag t = tagService.findByCode(locale, currency, code)
-				.orElseThrow(() -> new TagNotFoundException("Tag with code " + code + " not found!"));
-		return this.entityToDo(t);
-	}
-
-	@Override
-	public Tag findByDesc(String locale, String currency, String desc) {
-		io.nzbee.entity.tag.Tag t = tagService.findByDesc(locale, currency, desc)
-				.orElseThrow(() -> new TagNotFoundException("Tag with desc " + desc + " not found!"));
-		return this.entityToDo(t);
-	}
-
-	@Override
-	public Set<Tag> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
-		return tagService.findAll(locale, currency, codes)
-				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
-	}
 	
 	private Tag entityToDo(io.nzbee.entity.tag.Tag te) {
-		Tag tO = null;
-		tO = new Tag(
+		return new Tag(
 				te.getCode(),
-				te.getAttributes().stream().filter(t -> t.getLclCd().equals(te.getLocale())).findFirst().get().getTagDesc(),
-				"en-GB",
-				"HKD"
+				te.getTagAttribute().getTagDesc(),
+				te.getLocale(),
+				te.getCurrency()
 				);
-		return tO;
 	}
 
 	@Override
