@@ -292,7 +292,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@Override
 	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
-		LOGGER.debug("call BrandDaoImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','));
+		LOGGER.debug("call BrandDaoImpl.findAll with parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
 		
