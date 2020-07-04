@@ -4,8 +4,11 @@ import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
+import javax.persistence.EntityResult;
 import javax.persistence.FetchType;
+import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,6 +17,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.NaturalId;
@@ -22,13 +26,33 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "tag", schema = "mochi")
+@SqlResultSetMapping(
+	    name = "TagMapping",
+	    columns = {
+	    		@ColumnResult(name = "object_count")
+	    },
+	    entities = {
+	            @EntityResult(
+	                    entityClass = Tag.class,
+	                    fields = {
+	                        @FieldResult(name = "tagId", 			column = "tag_id"),
+	                        @FieldResult(name = "tagCode", 			column = "tag_cd")
+	                    }),
+	            @EntityResult(
+	                    entityClass = TagAttribute.class,
+	                    fields = {
+	                        @FieldResult(name = "tagAttributeId", 	column = "tag_lcl_id"),
+	                        @FieldResult(name = "tagDesc", 			column = "tag_desc"),
+	                        @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+	                        @FieldResult(name = "tag", 				column = "tag_id")
+	                    })
+		    })
 public class Tag implements ISearchDimension {
 	
 	@Id
@@ -59,7 +83,10 @@ public class Tag implements ISearchDimension {
 	private String currency;
 	
 	@Transient 
-	private TagAttribute attribute;
+	private TagAttribute tagAttribute;
+	
+	@Transient
+	private int objectCount;
 
 	public Long getTagId() {
 		return tagId;
@@ -83,12 +110,12 @@ public class Tag implements ISearchDimension {
 		this.tagCode = tagCode;
 	}
 	
-	public TagAttribute getAttribute() {
-		return attribute;
+	public TagAttribute getTagAttribute() {
+		return tagAttribute;
 	}
 
-	public void setAttribute(TagAttribute attribute) {
-		this.attribute = attribute;
+	public void setTagAttribute(TagAttribute attribute) {
+		this.tagAttribute = attribute;
 	}
 
 	public Set<Product> getProducts() {
@@ -119,6 +146,14 @@ public class Tag implements ISearchDimension {
 		return currency;
 	}
 	
+	public int getObjectCount() {
+		return objectCount;
+	}
+
+	public void setObjectCount(int objectCount) {
+		this.objectCount = objectCount;
+	}
+	
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
 	public String getTagDescENGB() {
@@ -143,7 +178,7 @@ public class Tag implements ISearchDimension {
 
 	@Override
 	public String getDesc() {
-		return this.getAttribute().getTagDesc();
+		return this.getTagAttribute().getTagDesc();
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package io.nzbee.entity.tag;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,6 +9,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -15,6 +17,11 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.hibernate.Session;
+import org.mockito.internal.util.StringUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -44,7 +51,9 @@ import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.entity.tag.attribute.TagAttribute_;
 
 @Component 
-public class TagDaoImpl implements ITagDao {
+public class TagDaoPostgresImpl implements ITagDao {
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -199,7 +208,7 @@ public class TagDaoImpl implements ITagDao {
 
 		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
 						root.get(Tag_.tagCode).alias("tagCode"),
-						attribute.get(TagAttribute_.Id).alias("tagAttributeId"),
+						attribute.get(TagAttribute_.tagAttributeId).alias("tagAttributeId"),
 						attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
 		);
 				
@@ -236,8 +245,16 @@ public class TagDaoImpl implements ITagDao {
 
 	@Override
 	public Tag objectToEntity(Object[] o, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		Tag tag = (Tag) o[0];
+	
+		tag.setTagAttribute(((TagAttribute) o[1]));
+		
+		tag.setObjectCount(((BigInteger)o[2]).intValue());
+		
+		tag.setLocale(locale);
+		tag.setCurrency(currency);
+		
+		return tag;
 	}
 
 	@Override
@@ -251,7 +268,7 @@ public class TagDaoImpl implements ITagDao {
 		tagAttribute.setLclCd(locale);
 				
 		tagEntity.addTagAttribute(tagAttribute);
-		tagEntity.setAttribute(tagAttribute);
+		tagEntity.setTagAttribute(tagAttribute);
 		tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
 		tagEntity.setCode(t.get("tagCode").toString());
 		
@@ -259,7 +276,131 @@ public class TagDaoImpl implements ITagDao {
 		tagEntity.setCurrency(currency);
 		return tagEntity;
 	}
+	
+	@Override
+	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes) {
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','));
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(
+															 !categoryCodes.isEmpty(),
+															 !brandCodes.isEmpty()), "TagMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("categoryCode", categoryCode);
+		
+		if(!categoryCodes.isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes);
+		}
+		
+		if(!brandCodes.isEmpty()) {
+			query.setParameter("brandCodes", brandCodes);
+		}
+		
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(b -> this.objectToEntity(b, locale, currency)).collect(Collectors.toList());
+		
+	}
+	
 
+	private String constructSQL(
+			boolean hasCategories,
+			boolean hasBrands
+		) {
+	String sql = "WITH recursive descendants AS  " + 
+			"			(  " + 
+			"			          SELECT    t.cat_id,  " + 
+			"			                    t.cat_cd,  " + 
+			"			                    t.cat_lvl,  " + 
+			"			                    t.cat_prnt_id,  " + 
+			"			                    t.cat_typ_id,  " + 
+			"			                    cast('/'  " + 
+			"			                              || cast(t.cat_id AS text)  " + 
+			"			                              || '/' AS text) node  " + 
+			"			          FROM      mochi.category            AS t  " + 
+			"			          LEFT JOIN mochi.category_attr_lcl a  " + 
+			"			          ON        t.cat_id = a.cat_id  " + 
+			"			          AND       a.lcl_cd =  :locale " + 
+			"			          WHERE     0=0  " + 
+			"			           AND t.cat_cd = :categoryCode " + 
+			"			          UNION ALL  " + 
+			"			          SELECT t.cat_id,  " + 
+			"			                 t.cat_cd,  " + 
+			"			                 t.cat_lvl,  " + 
+			"			                 t.cat_prnt_id,  " + 
+			"			                 t.cat_typ_id,  " + 
+			"			                 cast(d.node  " + 
+			"			                        || cast(t.cat_id AS text)  " + 
+			"			                        || '/' AS text) node  " + 
+			"			          FROM   mochi.category         AS t  " + 
+			"			          JOIN   descendants            AS d  " + 
+			"			          ON     t.cat_prnt_id = d.cat_id ) " + 
+			"			, summary AS  " + 
+			"			(  " + 
+			"			          SELECT    cc.cat_id, " + 
+			"								cc.cat_cd, " + 
+			"								cc.node " + 
+			"			          FROM      descendants cc 	 " + 
+			"			          GROUP BY  cc.cat_id, " + 
+			"								cc.cat_cd, " + 
+			"								cc.node " + 
+			"			 ), categories AS (  " + 
+			"			 " + 
+			"			          SELECT    s1.node, " + 
+			"					  			s1.cat_id, " + 
+			"								s1.cat_cd " + 
+			"			          FROM      summary s1  " + 
+			"			          LEFT JOIN summary s2  " + 
+			"			          ON        s1.node <> s2.node  " + 
+			"			          AND       LEFT(s2.node, length(s1.node)) = s1.node  " + 
+			"			          GROUP BY  s1.node, " + 
+			"								s1.cat_id, " + 
+			"								s1.cat_cd " + 
+			"			) " + 
+			"			select t.tag_id,  " + 
+			"				   t.tag_cd, " + 
+			"				   lcl.tag_lcl_id, " + 
+			"				   lcl.tag_desc, " + 
+			"				   lcl.lcl_cd, 		" + 
+			"				   count(distinct p.upc_cd) as object_count  " + 
+			"			from categories c  " + 
+			"				inner join mochi.product_category pc " + 
+			"					on c.cat_id = pc.cat_id " + 
+			"				 " + 
+			"				inner join mochi.product p " + 
+			"					on pc.prd_id = p.prd_id " + 
+			"				 " + 
+			"				inner join mochi.product_status ps " + 
+			"					on p.prd_sts_id = ps.prd_sts_id " + 
+			"					and ps.prd_sts_cd = 'ACT01' " + 
+			"									  " + 
+			"				inner join mochi.brand b " +
+			" 				on p.bnd_id = b.bnd_id " +
+			"				" +			
+			"				inner join mochi.product_tag pt " + 
+			"					on p.prd_id = pt.prd_id " + 
+			"									 " + 
+			"				inner join mochi.tag t " + 
+			"					on pt.tag_id = t.tag_id " + 
+			"									  " + 
+			"				inner join mochi.tag_attr_lcl lcl " + 
+			"					on t.tag_id = lcl.tag_id " + 
+			"					and lcl.lcl_cd = :locale  " + 
+			"			" + 
+			"			where 0=0  " +			
+			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
+			((hasBrands) ? 	" 		AND b.bnd_cd in 	:brandCodes " : "") +
+			"			group by t.tag_id,  " + 
+			"				   t.tag_cd, " + 
+			"				   lcl.tag_lcl_id, " + 
+			"				   lcl.tag_desc, " + 
+			"				   lcl.lcl_cd"	;
+		
+	return sql;
+	}
 
 
 }
