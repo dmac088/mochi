@@ -11,5 +11,8 @@ public abstract class Currency_ {
 	public static volatile SingularAttribute<Currency, String> code;
 	public static volatile SingularAttribute<Currency, Long> currencyId;
 
+	public static final String CODE = "code";
+	public static final String CURRENCY_ID = "currencyId";
+
 }
 

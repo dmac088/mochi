@@ -12,5 +12,9 @@ public abstract class ProductStatus_ {
 	public static volatile SingularAttribute<ProductStatus, String> productStatusDesc;
 	public static volatile SingularAttribute<ProductStatus, String> productStatusCode;
 
+	public static final String PRODUCT_STATUS_ID = "productStatusId";
+	public static final String PRODUCT_STATUS_DESC = "productStatusDesc";
+	public static final String PRODUCT_STATUS_CODE = "productStatusCode";
+
 }
 

@@ -12,5 +12,9 @@ public abstract class CategoryType_ {
 	public static volatile SingularAttribute<CategoryType, Long> categoryTypeId;
 	public static volatile SingularAttribute<CategoryType, String> categoryTypeCode;
 
+	public static final String CATEGORY_TYPE_DESC = "categoryTypeDesc";
+	public static final String CATEGORY_TYPE_ID = "categoryTypeId";
+	public static final String CATEGORY_TYPE_CODE = "categoryTypeCode";
+
 }
 

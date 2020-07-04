@@ -30,5 +30,17 @@ public abstract class Product_ {
 	public static volatile SingularAttribute<Product, Brand> brand;
 	public static volatile SetAttribute<Product, Tag> tags;
 
+	public static final String PRODUCT_ID = "productId";
+	public static final String PRODUCT_UP_C = "productUPC";
+	public static final String PRODUCT_STATUS = "productStatus";
+	public static final String PRODUCT_CREATE_DT = "productCreateDt";
+	public static final String ATTRIBUTES = "attributes";
+	public static final String CATEGORIES = "categories";
+	public static final String DEPARTMENT = "department";
+	public static final String PRICES = "prices";
+	public static final String PRIMARY_CATEGORY_INDEX = "primaryCategoryIndex";
+	public static final String BRAND = "brand";
+	public static final String TAGS = "tags";
+
 }
 

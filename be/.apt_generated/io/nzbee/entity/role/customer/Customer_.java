@@ -10,5 +10,7 @@ public abstract class Customer_ extends io.nzbee.entity.role.Role_ {
 
 	public static volatile SingularAttribute<Customer, String> CustomerNumber;
 
+	public static final String CUSTOMER_NUMBER = "CustomerNumber";
+
 }
 

@@ -11,5 +11,8 @@ public abstract class RoleType_ {
 	public static volatile SingularAttribute<RoleType, Long> roleTypeId;
 	public static volatile SingularAttribute<RoleType, String> roleTypeDesc;
 
+	public static final String ROLE_TYPE_ID = "roleTypeId";
+	public static final String ROLE_TYPE_DESC = "roleTypeDesc";
+
 }
 

@@ -8,5 +8,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Jewellery_ extends io.nzbee.entity.product.Product_ {
 
 
+
 }
 

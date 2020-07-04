@@ -12,5 +12,9 @@ public abstract class ProductPriceType_ {
 	public static volatile SingularAttribute<ProductPriceType, Long> Id;
 	public static volatile SingularAttribute<ProductPriceType, String> desc;
 
+	public static final String CODE = "code";
+	public static final String ID = "Id";
+	public static final String DESC = "desc";
+
 }
 

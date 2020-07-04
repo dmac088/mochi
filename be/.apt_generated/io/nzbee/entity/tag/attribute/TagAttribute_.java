@@ -14,5 +14,10 @@ public abstract class TagAttribute_ {
 	public static volatile SingularAttribute<TagAttribute, Tag> tag;
 	public static volatile SingularAttribute<TagAttribute, String> tagDesc;
 
+	public static final String TAG_ATTRIBUTE_ID = "tagAttributeId";
+	public static final String LCL_CD = "lclCd";
+	public static final String TAG = "tag";
+	public static final String TAG_DESC = "tagDesc";
+
 }
 

@@ -15,5 +15,10 @@ public abstract class Role_ {
 	public static volatile SingularAttribute<Role, Date> RoleStart;
 	public static volatile SingularAttribute<Role, RoleType> roleType;
 
+	public static final String ROLE_ID = "roleId";
+	public static final String ROLE_PARTY = "roleParty";
+	public static final String ROLE_START = "RoleStart";
+	public static final String ROLE_TYPE = "roleType";
+
 }
 

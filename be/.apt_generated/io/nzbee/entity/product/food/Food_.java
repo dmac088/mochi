@@ -12,5 +12,8 @@ public abstract class Food_ extends io.nzbee.entity.product.Product_ {
 	public static volatile SingularAttribute<Food, Date> expiryDate;
 	public static volatile SingularAttribute<Food, String> countryOfOrigin;
 
+	public static final String EXPIRY_DATE = "expiryDate";
+	public static final String COUNTRY_OF_ORIGIN = "countryOfOrigin";
+
 }
 

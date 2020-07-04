@@ -15,5 +15,10 @@ public abstract class Department_ {
 	public static volatile SingularAttribute<Department, String> departmentCode;
 	public static volatile ListAttribute<Department, DepartmentAttribute> attributes;
 
+	public static final String DEPARTMENT_CLASS = "departmentClass";
+	public static final String DEPARTMENT_ID = "departmentId";
+	public static final String DEPARTMENT_CODE = "departmentCode";
+	public static final String ATTRIBUTES = "attributes";
+
 }
 

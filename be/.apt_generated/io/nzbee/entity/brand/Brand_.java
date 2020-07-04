@@ -18,5 +18,11 @@ public abstract class Brand_ {
 	public static volatile SingularAttribute<Brand, String> brandCode;
 	public static volatile ListAttribute<Brand, Product> products;
 
+	public static final String BRAND_ID = "brandId";
+	public static final String ATTRIBUTES = "attributes";
+	public static final String CATEGORIES = "categories";
+	public static final String BRAND_CODE = "brandCode";
+	public static final String PRODUCTS = "products";
+
 }
 

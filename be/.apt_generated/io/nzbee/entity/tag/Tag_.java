@@ -16,5 +16,10 @@ public abstract class Tag_ {
 	public static volatile SetAttribute<Tag, TagAttribute> attributes;
 	public static volatile SetAttribute<Tag, Product> products;
 
+	public static final String TAG_CODE = "tagCode";
+	public static final String TAG_ID = "tagId";
+	public static final String ATTRIBUTES = "attributes";
+	public static final String PRODUCTS = "products";
+
 }
 
