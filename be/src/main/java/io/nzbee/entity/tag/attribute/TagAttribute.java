@@ -21,7 +21,7 @@ public class TagAttribute {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="tag_lcl_id")
-	private Long Id;
+	private Long tagAttributeId;
 
 	@Column(name="tag_desc")
 	private String tagDesc;
@@ -34,15 +34,15 @@ public class TagAttribute {
 	private Tag tag;
 	
 	public Long getTagId() {
-		return Id;
+		return tagAttributeId;
 	}
 	
 	public Long getId() {
-		return Id;
+		return tagAttributeId;
 	}
 
 	public void setId(Long id) {
-		Id = id;
+		tagAttributeId = id;
 	}
 	
 	public Tag getTag() {

@@ -35,7 +35,7 @@ import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
 
 @Component
-public class BrandDaoImpl  implements IBrandDao { 
+public class BrandDaoPostgresImpl  implements IBrandDao { 
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -387,7 +387,7 @@ public class BrandDaoImpl  implements IBrandDao {
 			"          ON        t.cat_id = a.cat_id " + 
 			"          AND       a.lcl_cd = :locale " + 
 			"          WHERE     0=0 " + 
-			"           AND t.cat_cd = :categoryCode " + 
+			"          AND t.cat_cd = :categoryCode " + 
 			"          UNION ALL " + 
 			"          SELECT t.cat_id, " + 
 			"                 t.cat_cd, " + 
@@ -464,6 +464,6 @@ public class BrandDaoImpl  implements IBrandDao {
 			"		lcl.lcl_cd"	;
 		
 	return sql;
-}
+	}
 
 }
