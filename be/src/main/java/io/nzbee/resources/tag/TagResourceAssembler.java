@@ -1,6 +1,6 @@
 package io.nzbee.resources.tag;
 
-//import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.tag.Tag;
@@ -16,7 +16,7 @@ public class TagResourceAssembler extends RepresentationModelAssemblerSupport<Ta
 
 	@Override
 	public TagResource toModel(Tag t) {
-		TagResource tr = new TagResource();
+		TagResource tr = new TagResource(t);
 //		tr.add(linkTo(methodOn(TagController.class).get(	t.getLocale(),
 //															t.getCurrency(),
 //															t.getTagCode())).withSelfRel());
