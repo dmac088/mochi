@@ -58,5 +58,11 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void delete(Department domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

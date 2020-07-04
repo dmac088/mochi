@@ -39,6 +39,13 @@ public class BrandServiceImpl implements IBrandService {
 		return brandService.findAll(locale, currency, codes);
 	}
     
+    @Override
+    @Transactional(readOnly=true)
+	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> tagCodes) {
+		return brandService.findAll(locale, currency, categoryCode, categoryCodes, tagCodes);
+	}
+    
 	@Override
 	public Brand findByProductCode(String locale, String currency, String productCode) {
 		return brandService.findByProductCode(locale, currency, productCode);
@@ -54,6 +61,14 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void update(Brand object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
 
 
 }

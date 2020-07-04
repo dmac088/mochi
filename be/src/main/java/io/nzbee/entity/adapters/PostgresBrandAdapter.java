@@ -94,6 +94,12 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		
 	}
 
+	@Override
+	public void delete(Brand domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 
 

@@ -6,4 +6,6 @@ public interface IPortService<X> {
 
 	void update(X domainObject);
 	
+	void delete(X domainObject);
+	
 }

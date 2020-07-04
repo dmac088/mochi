@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.search.dto.facet.FacetContainer;
@@ -36,7 +36,7 @@ public class ProductController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private IProductPortService productService;
+    private IProductService productService;
     
     @Autowired
     private RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler;
@@ -60,10 +60,11 @@ public class ProductController {
     									locale, 
     									currency,
     									categoryCode, 
-    									Integer.parseInt(page), 
-    									Integer.parseInt(size),
-    									new HashSet<IFacet>(), 
-    									"1");
+    									page,
+    									size,
+    									"1",
+    									new HashSet<IFacet>() 
+    									);
     			
 
     	//convert the page of products to a page of product resources
@@ -116,40 +117,7 @@ public class ProductController {
         return ResponseEntity.ok(resources);
     }
     
-    
-	
-	@SuppressWarnings("unchecked")
-	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}/maxPrice/{price}/sortBy/{sortBy}",
-				 params = { "page", "size" })
-	public ResponseEntity<PagedModel<ProductResource>> getProducts(	
-										@PathVariable String locale, 
-										@PathVariable String currency, 
-										@PathVariable String category,
-										@PathVariable Double price, 
-										@RequestParam("page") int page,
-								    	@RequestParam("size") int size, 
-										@PathVariable String sortBy,
-										@RequestBody final FacetContainer selectedFacets,
-			    						@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
-			    						RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler) {
-		
-		final Page<Product> pages = productService.findAll(	locale, 
-																currency, 
-																price, 
-																page, 
-																size, 
-																category, 
-																selectedFacets.getFacets(), 
-																sortBy);
-		
-		final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-				.map(p -> prodAssembler.toModel(p))
-				.collect(Collectors.toList()),
-				pages.getPageable(),
-				pages.getTotalElements());
-	   	
-		return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK); 
-	}
+  
 
 	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}",
@@ -157,23 +125,23 @@ public class ProductController {
 	public ResponseEntity<PagedModel<ProductResource>> getProducts(	
 										@PathVariable String 			locale, 
 										@PathVariable String 			currency, 
-										@PathVariable 					String 	category,
-										@RequestParam("page")			int page,
-								    	@RequestParam("size") 			int size, 
+										@PathVariable 					String 	categoryCode,
+										@RequestParam("page")			String page,
+								    	@RequestParam("size") 			String size, 
 								    	@RequestParam("sort") 			String 	sortBy,
 										@RequestBody final 				FacetContainer selectedFacets,
 			    						@SuppressWarnings("rawtypes") 	PagedResourcesAssembler assembler) {
 		
 		
-		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, category, page, size, sortBy, selectedFacets.getFacets().size());
+		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, sortBy, selectedFacets.getFacets().size());
 		
 		final Page<Product> pages = productService.findAll(		locale, 
 																currency, 
-																category, 
+																categoryCode, 
 																page, 
 																size, 
-																selectedFacets.getFacets(), 
-																sortBy);
+																sortBy,
+																selectedFacets.getFacets());
 		
 		final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
 				.map(p -> new ProductResource(p))

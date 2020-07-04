@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.customer.Customer;
-import io.nzbee.domain.ports.ICustomerPortService;
+import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTO;
 
@@ -21,7 +21,7 @@ public class CustomerController {
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private ICustomerPortService customerService;
+    private ICustomerService customerService;
 
     public CustomerController() {
         super();
@@ -41,13 +41,13 @@ public class CustomerController {
     
     @PostMapping("/Customer/Update")
     public GenericResponse updateCustomer(@RequestBody final CustomerDTO customer) {
-    	customerService.updateCustomer(customer);
+    	customerService.update(customer);
     	return new GenericResponse("success");
 	}
     
     @PostMapping("/Customer/Delete/{username}")
     public GenericResponse deleteCustomer(@PathVariable String username) {
-    	customerService.deleteCustomer(username);
+    	customerService.delete(username);
     	return new GenericResponse("success");
 	}
 }

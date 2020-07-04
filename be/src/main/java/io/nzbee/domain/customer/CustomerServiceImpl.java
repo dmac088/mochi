@@ -26,8 +26,13 @@ public class CustomerServiceImpl implements ICustomerService {
 
 	@Override
 	public void delete(Customer object) {
-		// TODO Auto-generated method stub
+		customerService.delete(object);
 		
+	}
+	
+	@Override
+	public void update(Customer object) {
+		customerService.update(object);
 	}
 
 	@Override
@@ -35,6 +40,15 @@ public class CustomerServiceImpl implements ICustomerService {
 		return customerService.findByUsername(userName);
 	}
 
-	
+	@Override
+	public void delete(String userName) {
+		customerService.delete(userName);
+		
+	}
+
+	@Override
+	public void update(CustomerDTO customerDTO) {
+		customerService.update(customerDTO);
+	}
 
 }

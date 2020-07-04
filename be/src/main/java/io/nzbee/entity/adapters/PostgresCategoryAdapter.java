@@ -121,6 +121,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 	}
 
+	@Override
+	public void delete(Category domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 
 }

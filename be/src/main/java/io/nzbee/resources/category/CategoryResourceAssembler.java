@@ -48,8 +48,8 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 																		null,
 																		null,
 																		category.getCategoryCode(),
-																		0,
-																		10,
+																		"0",
+																		"10",
 																		"",
 																		null,
 																		parAssembler

@@ -81,5 +81,11 @@ public class PostgresTagAdapter  implements ITagPortService {
 		
 	}
 
+	@Override
+	public void delete(Tag domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

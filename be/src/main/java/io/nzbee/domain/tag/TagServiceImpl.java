@@ -2,12 +2,11 @@ package io.nzbee.domain.tag;
 
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import io.nzbee.domain.ports.ITagPortService;
 
 public class TagServiceImpl implements ITagService {
 
 	@Autowired
-	private ITagPortService tagService;
+	private ITagService tagService;
 	
 	@Override
 	public Tag findByCode(String locale, String currency, String code) {
@@ -36,7 +35,11 @@ public class TagServiceImpl implements ITagService {
 
 	@Override
 	public void delete(Tag object) {
-		// TODO Auto-generated method stub
-		
+		tagService.delete(object);
+	}
+
+	@Override
+	public void update(Tag object) {
+		tagService.update(object);
 	}
 }
