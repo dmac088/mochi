@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.search.dto.facet.FacetContainer;
@@ -28,7 +28,7 @@ public class BrandController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private IBrandPortService brandService;
+    private IBrandService brandService;
     
     @Autowired
     private BrandResourceAssembler brandResourceAssembler;

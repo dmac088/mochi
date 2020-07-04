@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.web.PagedResourcesAssembler;
 
 
@@ -40,9 +39,10 @@ public class SearchResource extends RepresentationModel<SearchResource> {
 		
     	//get the resulting pages of product
     	final Page<Product> pages = ipps.search(	locale, 
-    												currency, 
-    												PageRequest.of(page, size),
+    												currency,
     												category, 
+    												page, 
+    												size,
     												term, 
     												searchFacets,
     												returnFacets);

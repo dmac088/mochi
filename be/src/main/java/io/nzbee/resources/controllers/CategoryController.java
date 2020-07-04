@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.category.Category;
-import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.resources.category.CategoryResource;
 import io.nzbee.resources.category.CategoryResourceAssembler;
 
@@ -25,7 +25,7 @@ public class CategoryController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private ICategoryPortService categoryService;
+    private ICategoryService categoryService;
     
     @Autowired
     private CategoryResourceAssembler categoryResourceAssember;

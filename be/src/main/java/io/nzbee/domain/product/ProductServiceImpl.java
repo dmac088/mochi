@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.search.dto.facet.IFacet;
@@ -39,69 +39,34 @@ public class ProductServiceImpl implements IProductService {
 		return productService.findAll(locale, currency, codes);	
 	}
 
-	@Override
-	@Transactional(readOnly=true)
-	public Page<Product> findAll(	String locale, 
-									String currency, 
-									Pageable pageable, 
-									String categoryDesc,
-									Set<IFacet> facets, 
-									String sortBy) {
-
-		Page<Product> pp =
-			productService.findAll(locale, 
-								   currency, 
-								   pageable, 
-								   categoryDesc, 
-								   facets.stream().map(f -> (Product)f.getPayload()).collect(Collectors.toList()), 
-								   sortBy);
-				
-		    return new PageImpl<Product>(
-			pp.stream().collect(Collectors.toList()),
-			pageable,
-			pp.getTotalElements());
-	}
+	
 	
 	@Override
 	@Transactional(readOnly=true)
 	public Page<Product> findAll(	String locale, 
 									String currency, 
-									Double price, 
-									Pageable pageable, 
-									String categoryDesc,
-									Set<IFacet> facets, 
-									String sortBy) {
+									String categoryCode, 
+									String page,
+									String size,
+									String sortBy,
+									Set<IFacet> selectedFacets) {
 
     	Page<Product> pp =
-		   productService.findAll(	 locale, 
-										 currency, 
-										 price, 
-										 pageable, 
-										 categoryDesc, 
-										 facets.stream().map(f -> (Product)f.getPayload()).collect(Collectors.toList()), 
-										 sortBy);
+		   productService.findAll(	 	 locale, 
+										 currency,
+										 categoryCode, 
+										 Integer.parseInt(page),
+										 Integer.parseInt(size),
+										 sortBy,
+										 selectedFacets);
 		
      	return new PageImpl<Product>(pp.stream().collect(Collectors.toList()),
-									 pageable,
+									 PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
 								 	 pp.getTotalElements());
     	
 	}
 	
-	@Override
-	@Transactional(readOnly=true)
-	public Page<Product> findAllByBrand(	
-									String locale, 
-									String currency, 
-									Double price, 
-									Pageable pageable, 
-									String categoryDesc,
-									String brandCode,
-									String sortBy) {
-	
-		
-     	return null;
-    	
-	}
+
 
 	@Override
 	public void save(Product object) {
@@ -110,8 +75,14 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public void delete(Product object) {
-		// TODO Auto-generated method stub
+		productService.delete(object);
 	}
+
+	@Override
+	public void update(Product object) {
+		productService.update(object);
+	}
+
 
 	
 

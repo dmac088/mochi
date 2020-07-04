@@ -10,4 +10,9 @@ public interface ICustomerService extends IService<Customer> {
 	Customer findByUsername(String userName);
 
 	void registerNewCustomer(final CustomerDTO customer);
+
+	void delete(String userName);
+	
+	void update(CustomerDTO customerDTO);
+	
 }

@@ -94,18 +94,6 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		personService.save(p);
 	}
 	
-	@Override
-	public void updateCustomer(CustomerDTO dto) {
-		Customer customerDo = new Customer(	dto.getGivenName(),
-						    				dto.getFamilyName(),
-						    				dto.getUserName(),
-						    				dto.getCustomerId(),
-						    				dto.isEnabled());
-		
-		customerDo.setPassword(dto.getPassword(), dto.getConfirmPassword());
-		
-		this.update(customerDo);
-	}
 	
 	@Override
 	public void update(Customer domainObject) {
@@ -117,14 +105,33 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		personService.save(p);
 	}
-	
+
 
 	@Override
-	public void deleteCustomer(String userName) {
+	public void delete(Customer object) {
+		Person t = personService.findByUsernameAndRole(object.getUserName(), io.nzbee.entity.role.customer.Customer.class)
+				.orElseThrow(() -> new CustomerException("Customer with username " + object.getUserName() + " not found!"));
+		personService.delete(t);
+		
+	}
+
+	@Override
+	public void update(CustomerDTO dto) {
+		Customer customerDo = new Customer(	dto.getGivenName(),
+				dto.getFamilyName(),
+				dto.getUserName(),
+				dto.getCustomerId(),
+				dto.isEnabled());
+
+		customerDo.setPassword(dto.getPassword(), dto.getConfirmPassword());
+		
+		this.update(customerDo);
+	}
+
+	@Override
+	public void delete(String userName) {
 		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
 		personService.delete(t);
 	}
-	
-
 }

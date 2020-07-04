@@ -1,18 +1,15 @@
 package io.nzbee.entity.adapters;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
@@ -213,25 +210,11 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public Page<Product> findAll(String locale, String currency, Double price, Pageable pageable, String categoryDesc,
-			List<Product> collect, String sortBy) {
+	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String searchTerm,
+			Set<IFacet> selectedFacets, Set<IFacet> returnFacets) {
 
-		return null;
-	}
-
-	@Override
-	public Page<Product> findAll(String locale, String currency, Pageable pageable, String categoryDesc,
-			List<Product> collect, String sortBy) {
-
-		return null;
-	}
-
-	@Override
-	public Page<Product> search(String locale, String currency, Pageable pageable, String category, String searchTerm,
-			Set<IFacet> facetPayload, Set<IFacet> returnFacets) {
-
-		return searchService.findAll(locale, currency, category, searchTerm, pageable.getPageNumber(),
-				pageable.getPageSize(), "", facetPayload, returnFacets).map(p -> {
+		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
+					size, "", selectedFacets, returnFacets).map(p -> {
 					Brand b = brandMapper.entityToDo(p.getBrand(), locale, currency);
 					Department d = departmentMapper.entityToDo(p.getDepartment(), locale, currency);
 					ProductCategory pc = (ProductCategory) categoryMapper.entityToDo(p.getPrimaryCategory());
@@ -247,40 +230,13 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public Page<Product> findAll(String locale, String currency, Double price, int page, int size, String categoryDesc,
-			Set<IFacet> selectedFacets, String sortBy) {
+	public Page<Product> findAll(String locale, String currency, String categoryCode, int page, int size, String sortBy, 
+			Set<IFacet> selectedFacets) {
 
-		@SuppressWarnings("unused")
-		Set<IFacet> returnFacets = new HashSet<IFacet>();
-
-		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, 
-																		  currency, 
-																		  new Double(0), 
-																		  price,
-																		  "RET01", 
-																		  PageRequest.of(page, size), categoryDesc,
-				selectedFacets.stream().filter(c -> c.getType().equals("category")).map(c -> c.getPayload().getCode())
-						.collect(Collectors.toList()),
-				selectedFacets.stream().filter(c -> c.getType().equals("brand")).map(c -> c.getPayload().getCode())
-						.collect(Collectors.toList()),
-				selectedFacets.stream().filter(c -> c.getType().equals("tag")).map(c -> c.getPayload().getCode())
-						.collect(Collectors.toList()));
-
-		return new PageImpl<Product>(
-				// receive a list of entities and map to domain objects
-				pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(page, size),
-				pp.getTotalElements());
-
-	}
-
-	@Override
-	public Page<Product> findAll(String locale, String currency, String categoryDesc, int page, int size,
-			Set<IFacet> selectedFacets, String sortBy) {
-
-		LOGGER.debug("call PostgresProductAdapter.findAll parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryDesc, page, size, selectedFacets.size());
+		LOGGER.debug("call PostgresProductAdapter.findAll parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, selectedFacets.size());
 		
 		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, currency, "MKD01",
-				PageRequest.of(page, size), categoryDesc,
+				PageRequest.of(page, size), categoryCode,
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
 						.collect(Collectors.toList()),
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
@@ -293,7 +249,8 @@ public class PostgresProductAdapter implements IProductPortService {
 				pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(page, size),
 				pp.getTotalElements());
 	}
-
+	
+	
 	private Product mapHelper(io.nzbee.entity.product.Product pe) {
 		io.nzbee.entity.brand.Brand be = pe.getBrand();
 		io.nzbee.entity.product.department.Department de = pe.getDepartment();
@@ -315,5 +272,15 @@ public class PostgresProductAdapter implements IProductPortService {
 	public String[] getSuggestion(String searchTerm, String locale, String currency) {
 		return searchService.getSuggestions(searchTerm, locale, currency);
 	}
+
+	@Override
+	public void delete(Product domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	
+
+
 
 }

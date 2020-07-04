@@ -42,9 +42,12 @@ public class DepartmentServiceImpl implements IDepartmentService {
 
 	@Override
 	public void delete(Department object) {
-		// TODO Auto-generated method stub
-		
+		departmentService.delete(object);
 	}
 
+	@Override
+	public void update(Department object) {
+		departmentService.update(object);
+	}
 
 }
