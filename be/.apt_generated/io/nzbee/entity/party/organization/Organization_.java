@@ -10,5 +10,7 @@ public abstract class Organization_ extends io.nzbee.entity.party.Party_ {
 
 	public static volatile SingularAttribute<Organization, String> organizationName;
 
+	public static final String ORGANIZATION_NAME = "organizationName";
+
 }
 

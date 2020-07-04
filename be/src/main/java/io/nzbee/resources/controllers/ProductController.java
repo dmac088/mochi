@@ -120,7 +120,7 @@ public class ProductController {
   
 
 	@SuppressWarnings("unchecked")
-	@PostMapping(value = "/Product/{locale}/{currency}/category/{category}",
+	@PostMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}",
 			 	 params = { "page", "size", "sort" })
 	public ResponseEntity<PagedModel<ProductResource>> getProducts(	
 										@PathVariable String 			locale, 
@@ -128,7 +128,7 @@ public class ProductController {
 										@PathVariable 					String 	categoryCode,
 										@RequestParam("page")			String page,
 								    	@RequestParam("size") 			String size, 
-								    	@RequestParam("sort") 			String 	sortBy,
+								    	@RequestParam("sort") 			String sortBy,
 										@RequestBody final 				FacetContainer selectedFacets,
 			    						@SuppressWarnings("rawtypes") 	PagedResourcesAssembler assembler) {
 		

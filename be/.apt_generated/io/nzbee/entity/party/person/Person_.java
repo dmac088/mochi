@@ -12,5 +12,9 @@ public abstract class Person_ extends io.nzbee.entity.party.Party_ {
 	public static volatile SingularAttribute<Person, String> givenName;
 	public static volatile SingularAttribute<Person, Boolean> enabled;
 
+	public static final String FAMILY_NAME = "FamilyName";
+	public static final String GIVEN_NAME = "givenName";
+	public static final String ENABLED = "enabled";
+
 }
 

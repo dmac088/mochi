@@ -11,5 +11,7 @@ public abstract class CategoryBrand_ extends io.nzbee.entity.category.Category_ 
 
 	public static volatile SetAttribute<CategoryBrand, Brand> brands;
 
+	public static final String BRANDS = "brands";
+
 }
 

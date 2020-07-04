@@ -16,5 +16,11 @@ public abstract class ProductPrice_ {
 	public static volatile SingularAttribute<ProductPrice, Long> id;
 	public static volatile SingularAttribute<ProductPrice, ProductPriceType> type;
 
+	public static final String PRODUCT = "product";
+	public static final String PRICE_VALUE = "priceValue";
+	public static final String CURRENCY = "currency";
+	public static final String ID = "id";
+	public static final String TYPE = "type";
+
 }
 

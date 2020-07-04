@@ -14,5 +14,10 @@ public abstract class CategoryAttribute_ {
 	public static volatile SingularAttribute<CategoryAttribute, Category> category;
 	public static volatile SingularAttribute<CategoryAttribute, String> categoryDesc;
 
+	public static final String LCL_CD = "lclCd";
+	public static final String CATEGORY_ATTRIBUTE_ID = "categoryAttributeId";
+	public static final String CATEGORY = "category";
+	public static final String CATEGORY_DESC = "categoryDesc";
+
 }
 

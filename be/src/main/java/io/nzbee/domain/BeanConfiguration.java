@@ -1,4 +1,4 @@
-package io.nzbee;
+package io.nzbee.domain;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -39,7 +39,7 @@ public class BeanConfiguration {
         return new TagServiceImpl();
     }
     
-    @Bean
+    @Bean(name="customerDomainService")
     public ICustomerService customerService() {
         return new CustomerServiceImpl();
     }
