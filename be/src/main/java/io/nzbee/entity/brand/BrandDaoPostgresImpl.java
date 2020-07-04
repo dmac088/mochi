@@ -291,14 +291,15 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes) {
+	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','));
 		
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(
 															 !categoryCodes.isEmpty(),
-															 !tagCodes.isEmpty()), "BrandMapping")
+															 !tagCodes.isEmpty(),
+															 !(maxPrice == null)), "BrandMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode);
 		
@@ -309,7 +310,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		if(!tagCodes.isEmpty()) {
 			query.setParameter("tagCodes", tagCodes);
 		}
-		
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -370,7 +370,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	private String constructSQL(
 			boolean hasCategories,
-			boolean hasTags
+			boolean hasTags,
+			boolean hasPrice
 		) {
 	String sql = "WITH recursive descendants AS " + 
 			"( " + 

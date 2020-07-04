@@ -7,8 +7,9 @@ public interface IBrandService extends ILocalizedService<Brand> {
 	
 	Set<Brand> findAll(String locale, String currency, String category);
 	
-	Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes);
-	
 	Brand findByProductCode(String locale, String currency, String productCode);
+
+	Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> tagCodes, Double maxPrice);
 	
 }

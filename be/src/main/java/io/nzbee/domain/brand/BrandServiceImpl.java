@@ -42,8 +42,8 @@ public class BrandServiceImpl implements IBrandService {
     @Override
     @Transactional(readOnly=true)
 	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> tagCodes) {
-		return brandService.findAll(locale, currency, categoryCode, categoryCodes, tagCodes);
+			Set<String> tagCodes, Double maxPrice) {
+		return brandService.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
 	}
     
 	@Override

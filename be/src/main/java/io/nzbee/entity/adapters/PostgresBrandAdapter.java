@@ -44,8 +44,8 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> tagCodes) {
-		return brandService.findAll(locale, currency, categoryCode, categoryCodes, tagCodes)
+			Set<String> tagCodes, Double maxPrice) {
+		return brandService.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice)
 				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
 	}
 
@@ -99,6 +99,8 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 
 
