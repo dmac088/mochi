@@ -1,6 +1,6 @@
 package io.nzbee.resources.tag;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+//import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.tag.Tag;
