@@ -2,7 +2,6 @@ package io.nzbee;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.CategoryServiceImpl;
@@ -20,32 +19,32 @@ import io.nzbee.domain.tag.TagServiceImpl;
 @Configuration
 public class BeanConfiguration {
  
-    @Bean(value="productDomainService")
+    @Bean
     public IProductService productService() {
         return new ProductServiceImpl();
     }
     
-    @Bean(value="categoryDomainService")
+    @Bean
     public ICategoryService categoryService() {
         return new CategoryServiceImpl();
     }
     
-    @Bean(value="brandDomainService")
+    @Bean
     public IBrandService brandService() {
         return new BrandServiceImpl();
     }
     
-    @Bean(value="tagDomainService")
+    @Bean
     public ITagService tagService() {
         return new TagServiceImpl();
     }
     
-    @Bean(value="customerDomainService")
+    @Bean
     public ICustomerService customerService() {
         return new CustomerServiceImpl();
     }
     
-    @Bean(value="departmentDomainService")
+    @Bean
     public IDepartmentService departmentService() {
         return new DepartmentServiceImpl();
     }
