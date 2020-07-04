@@ -13,4 +13,5 @@ public interface ITagDao  extends ILocalizedDao<Tag> {
 
 	List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes);
+
 }
