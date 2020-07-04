@@ -42,7 +42,7 @@ public class TagController {
     	
     	
     	final List<TagResource> collection =
-    			tagService.findAll(locale, 
+    			tagService.findAll(	locale, 
     								 currency, 
     								 categoryCode,
     								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
