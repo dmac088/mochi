@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.exceptions.brand.BrandNotFoundException;
+import io.nzbee.search.dto.facet.IFacet;
 
 @Component
 public class PostgresBrandAdapter implements IBrandPortService {
@@ -43,9 +45,18 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 
 	@Override
-	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> tagCodes, Double maxPrice) {
-		return brandService.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice)
+	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
+		
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Double maxPrice = null;
+    	if(oMaxPrice.isPresent()) {
+    		maxPrice = new Double(oMaxPrice.get());
+    	}
+    	
+		return brandService.findAll(locale, currency, categoryCode, 
+									selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
+				 					selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()),
+				 					maxPrice)
 				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
 	}
 
