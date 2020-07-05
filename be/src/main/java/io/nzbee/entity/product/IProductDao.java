@@ -12,30 +12,11 @@ public interface IProductDao extends ILocalizedDao<Product> {
 							Pageable pageable,
 							String orderby);
 
-	//with price range
-	Page<Product> findAll( 
-							String locale,
-							String currency,
-							Double priceStart, 
-							Double priceEnd,
-							Pageable pageable,
-							String categoryCode,
-							List<String> categoryCodes,
-							List<String> brandCodes, 
-							List<String> tagCodes, 
-							String orderby);
-
-	Page<Product> findAll(	
-							String locale, 
-							String currency,
-							Pageable pageable,
-							String categoryCode,
-							List<String> categoryCodes, 
-							List<String> brandCodes, 
-							List<String> tagCodes,
-							String orderby);
-
 	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
+
+	Page<Product> findAll(String locale, String currency, Pageable pageable, String categoryCode,
+			List<String> categoryCodes, List<String> brandCodes, List<String> tagCodes, Double maxPrice,
+			String orderby);
 
 	
 

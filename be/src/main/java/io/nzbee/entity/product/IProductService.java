@@ -7,26 +7,8 @@ import io.nzbee.entity.ILocalizedService;
 
 public interface IProductService extends ILocalizedService<Product> {
 	
-	public Page<Product> findAll(	String locale, 
-									String currency, 
-									String priceType, 
-									Pageable pageable, 
-									String categoryDesc,
-									List<String> categoryCodes,
-									List<String> brandCodes,
-									List<String> tagCodes);
+	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
 
-	public Page<Product> findAll(	String locale, 
-									String currency, 
-									Double priceStart, 
-									Double priceEnd, 
-									String priceType,
-									Pageable pageable, 
-									String categoryDesc, 
-									List<String> categoryCodes,
-									List<String> brandCodes,
-									List<String> tagCodes);
-	
-	
-	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls); 
+	Page<Product> findAll(String locale, String currency, Pageable pageable, String categoryDesc,
+			List<String> categoryCodes, List<String> brandCodes, List<String> tagCodes, Double maxPrice); 
 }

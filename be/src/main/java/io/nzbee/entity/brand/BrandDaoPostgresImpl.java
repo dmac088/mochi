@@ -314,7 +314,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		if(!(maxPrice == null)) {
 			query.setParameter("maxPrice", maxPrice);
 			query.setParameter("currency", currency);
-			query.setParameter("markdownPriceCode", "MKD01");
+			query.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 		}
 		
 		@SuppressWarnings("unchecked")
