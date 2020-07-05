@@ -10,7 +10,6 @@ public interface IBrandService extends ILocalizedService<Brand> {
 	
 	Brand findByProductCode(String locale, String currency, String productCode);
 
-
 	Set<Brand> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets);
 	
 }

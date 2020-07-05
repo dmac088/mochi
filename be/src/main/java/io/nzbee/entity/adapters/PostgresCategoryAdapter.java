@@ -1,7 +1,10 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.BrandCategory;
@@ -17,10 +20,13 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
+import io.nzbee.search.dto.facet.IFacet;
 
 @Component
 public class PostgresCategoryAdapter implements ICategoryPortService {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired 
 	private ICategoryService categoryService;
 	
@@ -44,7 +50,27 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		return categoryService.findAll(locale, currency, codes)
 				.stream().map(c -> (Category) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
-	
+
+	@Override
+	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
+		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : {}, {}, {}, {}", locale, currency, categoryCode, selectedFacets.size());
+		
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Double maxPrice = null;
+    	if(oMaxPrice.isPresent()) {
+    		maxPrice = new Double(oMaxPrice.get());
+    	}
+    	
+    	Set<Category> sc = categoryService.findAll(locale, currency, categoryCode,
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
+						.collect(Collectors.toList()),
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
+						.collect(Collectors.toList()),
+				maxPrice).stream().map(c -> mapHelper(c)).collect(Collectors.toSet());
+    	
+    	return sc;
+	}
+
 	@Override
 	public Category findByCode(String locale, String currency, String code) {
 		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, currency, code)
@@ -114,6 +140,10 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		}
 	
 	}
+	
+	private Category mapHelper(io.nzbee.entity.category.Category c) {
+		return categoryMapper.entityToDo(c);
+	}
 
 	@Override
 	public void update(Category domainObject) {
@@ -127,6 +157,5 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 	}
 
-	
 
 }

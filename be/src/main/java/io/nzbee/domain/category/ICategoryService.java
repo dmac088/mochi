@@ -2,10 +2,13 @@ package io.nzbee.domain.category;
 
 import java.util.Set;
 import io.nzbee.domain.ILocalizedService;
+import io.nzbee.search.dto.facet.IFacet;
 
 public interface ICategoryService extends ILocalizedService<Category> {
 
 	Set<Category> findAll(String locale, String currency);
+	
+	Set<Category> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets);
 
 	Set<Category> findByParent(String locale, String currency, String parentCategoryCode);
 

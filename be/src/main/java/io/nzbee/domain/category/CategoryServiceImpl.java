@@ -4,6 +4,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.search.dto.facet.IFacet;
 
 public class CategoryServiceImpl implements ICategoryService {
     
@@ -14,6 +15,12 @@ public class CategoryServiceImpl implements ICategoryService {
     @Transactional(readOnly=true)
 	public Set<Category> findAll(String locale, String currency) {
     	return categoryService.findAll(locale, currency);
+	}
+    
+    @Override
+	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
@@ -78,7 +85,5 @@ public class CategoryServiceImpl implements ICategoryService {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 
 }
