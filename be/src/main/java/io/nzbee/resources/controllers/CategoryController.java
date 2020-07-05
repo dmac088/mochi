@@ -86,15 +86,16 @@ public class CategoryController {
     	return ResponseEntity.ok(cr);
     }
     
-//    @PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
-//    public ResponseEntity<CategoryResource> getChildCategories(@PathVariable String locale, 
-//    														   @PathVariable String currency, 
-//    														   @PathVariable String categoryCode, 
-//    														   @RequestBody final FacetContainer selectedFacets) {
-//    	LOGGER.debug("Fetching child categories for parameters : {}, {}, {}", locale, currency, categoryCode);
-//    	Category c = categoryService.find
-//    	CategoryResource cr = categoryResourceAssember.toModel(c);
-//    	return ResponseEntity.ok(cr);
-//    }
+    @PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
+    public ResponseEntity<CollectionModel<CategoryResource>> getChildCategories(@PathVariable String locale, 
+    														   @PathVariable String currency, 
+    														   @PathVariable String categoryCode, 
+    														   @RequestBody final FacetContainer selectedFacets) {
+    	LOGGER.debug("Fetching child categories for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	final List<CategoryResource> collection = categoryService.findAll(locale, currency, categoryCode, selectedFacets.getFacets())
+    			.stream().map(c -> categoryResourceAssember.toModel(c)).collect(Collectors.toList());
+    	final CollectionModel<CategoryResource> resources = new CollectionModel <> (collection);
+    	return ResponseEntity.ok(resources);
+    }
    
 }
