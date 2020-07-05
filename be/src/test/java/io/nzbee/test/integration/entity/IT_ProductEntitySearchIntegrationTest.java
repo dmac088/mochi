@@ -51,31 +51,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 
 	@TestConfiguration
     static class ProductEntityRepositoryIntegrationTest {
-        
-//        @Bean(value = "productEntityService")
-//        public io.nzbee.entity.product.IProductService productService() {
-//            return new io.nzbee.entity.product.ProductServiceImpl();
-//        }
-//        
-//        @Bean(value = "productEntityBeanFactory")
-//        public ProductEntityBeanFactory productFactoryBean() {
-//            return new ProductEntityBeanFactory();
-//        }
-//        
-//        @Bean(value = "categoryDomainService")
-//        public CategoryServiceImpl getCategoryService() {
-//        	return new CategoryServiceImpl();
-//        }
-//        
-//        @Bean(value = "brandDomainService")
-//        public BrandServiceImpl getBrandService() {
-//        	return new BrandServiceImpl();
-//        }
-//        
-//        @Bean(value = "tagDomainService")
-//        public TagServiceImpl getTagService() {
-//        	return new TagServiceImpl();
-//        }
      
     }
 	

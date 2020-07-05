@@ -44,11 +44,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@TestConfiguration
     static class CategoryEntityRepositoryIntegrationTest {
         
-//        @Bean(value = "categoryEntityService")
-//        public io.nzbee.entity.category.ICategoryService categoryService() {
-//            return new io.nzbee.entity.category.CategoryServiceImpl();
-//        }
-        
     }
 	
 	@Autowired
