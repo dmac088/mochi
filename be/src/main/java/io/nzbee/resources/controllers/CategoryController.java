@@ -2,6 +2,8 @@ package io.nzbee.resources.controllers;
 
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.tomcat.util.buf.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -91,7 +93,7 @@ public class CategoryController {
     														   @PathVariable String currency, 
     														   @PathVariable String categoryCode, 
     														   @RequestBody final FacetContainer selectedFacets) {
-    	LOGGER.debug("Fetching child categories for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency, categoryCode);
     	final List<CategoryResource> collection = categoryService.findAll(locale, currency, categoryCode, selectedFacets.getFacets())
     			.stream().map(c -> categoryResourceAssember.toModel(c)).collect(Collectors.toList());
     	final CollectionModel<CategoryResource> resources = new CollectionModel <> (collection);
