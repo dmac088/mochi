@@ -99,7 +99,6 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	
 	
 	@Test
-	@Rollback(false)
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
     	Product found = productService.findByCode(globalVars.getLocaleENGB(), 
