@@ -213,7 +213,7 @@ public class Brand implements ISearchDimension {
 
 	@Override
 	public int getCount() {
-		return 0;
+		return this.getObjectCount();
 	}
 
 	@Override

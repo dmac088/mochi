@@ -12,7 +12,7 @@ public class BrandMapper implements IBrandMapper {
 				new io.nzbee.domain.brand.Brand(
 						 e.getBrandCode(),
 						 e.getBrandAttribute().getBrandDesc(),
-						 0,
+						 e.getCount(),
 						 locale, 
 						 currency);
 	
