@@ -20,6 +20,8 @@ public class Brand implements ILocalizedDomainObject {
 	
 	private String currency;
 	
+	private int objectCount;
+	
 	@JsonIgnore
 	private List<Product> products;
 	
@@ -37,8 +39,13 @@ public class Brand implements ILocalizedDomainObject {
 			 	 this.categories = new ArrayList<BrandCategory>();
 			 	 this.locale = locale;
 			 	 this.currency = currency;
+			 	 this.objectCount = objectCount;
 	}
 	
+	public int getObjectCount() {
+		return objectCount;
+	}
+
 	public List<Product> getProducts() {
 		return products;
 	}
