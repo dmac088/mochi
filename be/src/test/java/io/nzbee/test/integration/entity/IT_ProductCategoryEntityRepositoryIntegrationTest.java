@@ -137,7 +137,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<Category> found = categoryService.findAll(globalVars.getLocaleENGB(), 
+    	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
     												globalVars.getCurrencyUSD(), 
     												"FRT01", 
     												brands, 
@@ -145,7 +145,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     												null);
      
         //then
-    	assertFound(found);
+    	assertNotNull(lc);
+    	assertThat(lc.size())
+        .isEqualTo(8);
     }
     
     @Test
@@ -156,7 +158,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<Category> found = categoryService.findAll(globalVars.getLocaleENGB(), 
+    	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
     												globalVars.getCurrencyUSD(), 
     												"FRT01", 
     												brands, 
@@ -164,7 +166,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     												null);
      
         //then
-    	assertFound(found);
+    	assertNotNull(lc);
+    	assertThat(lc.size())
+        .isEqualTo(8);
     }
     
     @Test
@@ -175,7 +179,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	tags.add("GFR01");
     	
     	//when
-    	List<Category> found = categoryService.findAll(globalVars.getLocaleENGB(), 
+    	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
     												globalVars.getCurrencyUSD(), 
     												"FRT01", 
     												brands, 
@@ -183,7 +187,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     												null);
      
         //then
-    	assertFound(found);
+		assertNotNull(lc);
+    	assertThat(lc.size())
+        .isEqualTo(8);
     }
     
   
@@ -198,12 +204,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc())
 	    .isEqualTo("test product category");
     }
-    
-    private void assertFound(final List<Category> found) {
-		assertNotNull(found);
-    	assertThat(found.size())
-        .isEqualTo(8);
-    }
+
  
     @After
     public void closeConnection() {
