@@ -19,8 +19,7 @@ public class CategoryServiceImpl implements ICategoryService {
     
     @Override
 	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryService.findAll(locale, currency, categoryCode, selectedFacets);
 	}
 
 	@Override
