@@ -57,43 +57,21 @@ public class ProductServiceImpl implements IProductService {
 	public Page<Product> findAll(	
 									String locale, 
 									String currency, 
-									Double priceStart, 
-									Double priceEnd, 
-									String priceType, 
 									Pageable pageable,
-									String categoryDesc,
+									String categoryCode,
 									List<String> categoryCodes,
 									List<String> brandCodes,
-									List<String> tagCodes) {
-		
-		return productDAO.findAll(locale,
-						 		  currency,
-						 		  pageable,
-						 		  categoryDesc,
-						 		  categoryCodes,
-						 		  brandCodes, 
-						 		  tagCodes,
-						 		  "1");
-	}
-	
-	@Override
-	public Page<Product> findAll(	
-									String locale, 
-									String currency, 
-									String priceType, 
-									Pageable pageable,
-									String categoryDesc,
-									List<String> categoryCodes,
-									List<String> brandCodes,
-									List<String> tagCodes) {
+									List<String> tagCodes,
+									Double maxPrice) {
 		
 			return productDAO.findAll(locale,
 							 		  currency,
 							 		  pageable,
-							 		  categoryDesc,
+							 		  categoryCode,
 							 		  categoryCodes,
 							 		  brandCodes, 
 							 		  tagCodes,
+							 		  maxPrice,
 							 		  "1");
 	}
 
@@ -114,5 +92,6 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

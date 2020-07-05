@@ -295,42 +295,16 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		return new PageImpl<Product>(lp, pageable, total);
 	}
-	
-	@Override
-	public Page<Product> findAll(	String locale, 
-									String currency, 
-									Pageable pageable,
-									String categoryCode,
-									List<String> categoryCodes, 
-									List<String> brandCodes, 
-									List<String> tagCodes, 
-									String orderby) {
-		
-		LOGGER.debug("call ProductDaoPostgresImpl.findAll with  parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, pageable, categoryCode, categoryCodes, brandCodes, tagCodes, orderby);
-		
-		//first get the result count
-		return this.findAll(locale, 
-							currency, 
-							new Double(-1), 
-							new Double(-1), 
-							pageable, 
-							categoryCode, 
-							categoryCodes, 
-							brandCodes, 
-							tagCodes, 
-							orderby);
-	}
 
 	@Override
 	public Page<Product> findAll(String locale,
-								 String currency,
-								 Double priceStart,
-								 Double priceEnd, 
+								 String currency, 
 								 Pageable pageable,
 								 String categoryCode,
 								 List<String> categoryCodes,
 								 List<String> brandCodes, 
 								 List<String> tagCodes,
+								 Double maxPrice, 
 								 String orderby) {
 		
 		// TODO Auto-generated method stub
@@ -340,7 +314,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 categoryCodes.size()>=1, 
 															 brandCodes.size()>=1,
   				 											 tagCodes.size()>=1,
-  				 											 (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1))))),
+  				 											 !(maxPrice == null),
   				 											 false,
   				 											 true,
   				 											 false), "ProductMapping.count")
@@ -363,10 +337,14 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			query.setParameter("tagCodes", brandCodes);
 		}
 		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
+		}
+		
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
 		
-		boolean hasPrices = (!(priceStart.equals(new Double(-1)) && (priceEnd.equals(new Double(-1)))));
+		
 		
 		query = em.createNativeQuery(this.constructSQL(	false,
 														false,
@@ -374,7 +352,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 														categoryCodes.size()>=1, 
 														brandCodes.size()>=1,
 					   									tagCodes.size()>=1,
-					   									hasPrices,
+					   									!(maxPrice == null),
 					   									false,
 					   									false,
 					   									true), "ProductMapping")
@@ -385,12 +363,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
 		.setParameter("categoryCode", categoryCode);
 		
-		//filtering is hardcoded to markdown price
-		if(hasPrices) {
-			query.setParameter("priceTypeCode", globalVars.getMarkdownPriceCode())
-				 .setParameter("priceStart", priceStart)
-				 .setParameter("priceEnd", priceEnd);
-		}
+		
 		
 		//these should contain default values for these parameters
 		query
@@ -408,6 +381,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		if(!tagCodes.isEmpty()) {
 			query.setParameter("tagCodes", tagCodes);
+		}
+		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
 		}
 		
 		@SuppressWarnings("unchecked")
@@ -463,7 +440,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								boolean hasCategories,
 								boolean hasBrands,
 								boolean hasTags,
-								boolean hasPrices,
+								boolean hasPrice,
 								boolean hasType,
 								boolean countOnly,
 								boolean offset) {
@@ -619,13 +596,14 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	INNER JOIN mochi.currency rcurr " +  
 		"	ON         rprc.ccy_id = rcurr.ccy_id " +  
 		"	AND        rcurr.ccy_cd = :currency " + 
+		
 		"	INNER JOIN mochi.price_type rpt " + 
 		"	ON         rprc.prc_typ_id = rpt.prc_typ_id " +  
 		"	AND        rpt.prc_typ_cd = :retailPriceCode " +  
 		"	) rprc " + 
 		"	ON prd.prd_id = rprc.prd_id " +  
 		
-		"	LEFT JOIN  ( " +
+		"	INNER JOIN  ( " +
 		"	SELECT prd_id, " +  
 		"		   prc_val " + 
 		"		FROM mochi.price mprc " + 
@@ -636,7 +614,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"		ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
 		"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
 		"		) mprc  " +
-		"		ON prd.prd_id = mprc.prd_id  " + 
+		"		ON prd.prd_id = mprc.prd_id  " +
+		
+		((hasPrice) ?
+		"		AND mprc.prc_val <= :maxPrice " 
+		: "") +
 		
 		"	LEFT JOIN mochi.product_food food " + 
 		"	ON prd.prd_id = food.prd_id    " + 
@@ -655,6 +637,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	ON ptags.tag_id = tag.tag_id "
 				   : 	"") +
 		
+		
 		"WHERE 0=0 " +
 		"AND prd_sts_cd = 			:activeProductCode  " + 
 		"AND bal.lcl_cd = 			:locale " +
@@ -662,16 +645,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		((hasBrands) 
 					? "AND bnd.bnd_cd in 		:brandCodes " 
 					: "") +
-		((hasPrices) 
-				?   "	   AND  case  " + 
-					"	   		when rpt.prc_typ_cd = :priceTypeCode  " + 
-					"	   		then rprc.prc_val  " + 
-					"			when mpt.prc_typ_cd = :priceTypeCode  "	+
-					"			then mprc.prc_val " + 		
-					"	   		else 0  " + 
-					"	   		end between :priceStart AND :priceEnd " 
-				: 	"") +
-		 
+		
 		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
 		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
 		((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
