@@ -603,7 +603,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	) rprc " + 
 		"	ON prd.prd_id = rprc.prd_id " +  
 		
-		"	INNER JOIN  ( " +
+		"	LEFT JOIN  ( " +
 		"	SELECT prd_id, " +  
 		"		   prc_val " + 
 		"		FROM mochi.price mprc " + 
@@ -617,7 +617,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"		ON prd.prd_id = mprc.prd_id  " +
 		
 		((hasPrice) ?
-		"		AND mprc.prc_val <= :maxPrice " 
+		"		AND coalesce(mprc.prc_val, rprc.prc_val, 0) <= :maxPrice " 
 		: "") +
 		
 		"	LEFT JOIN mochi.product_food food " + 
