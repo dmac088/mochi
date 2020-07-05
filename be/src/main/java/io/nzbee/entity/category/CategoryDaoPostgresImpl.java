@@ -105,6 +105,16 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
 	}
+	
+
+
+	@Override
+	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> brandCodes,
+			Set<String> tagCodes, Double maxPrice) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	@Override
 	public List<Category> findAll(String locale, String currency, Set<String> categoryCodes) {
