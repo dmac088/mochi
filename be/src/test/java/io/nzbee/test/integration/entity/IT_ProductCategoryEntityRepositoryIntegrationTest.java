@@ -48,15 +48,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 	@TestConfiguration
     static class ProductCategoryEntityRepositoryIntegrationTest {
         
-//        @Bean(value = "categoryEntityService")
-//        public io.nzbee.entity.category.ICategoryService categoryService() {
-//            return new io.nzbee.entity.category.CategoryServiceImpl();
-//        }
-//        
-//        @Bean(value = "categoryEntityBeanFactory")
-//        public CategoryEntityBeanFactory categoryFactoryBean() {
-//            return new CategoryEntityBeanFactory();
-//        }
     }
 	
 	@Autowired
