@@ -1,6 +1,12 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -101,7 +107,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
- // write test cases here
+    // write test cases here
     @Test
     public void whenFindByDesc_thenReturnBrand() {
     	
@@ -114,6 +120,47 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
+    @Test
+    public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
+    	
+    	Set<String> categoryCodes 	= new HashSet<String>();
+    	Set<String> tagCodes 		= new HashSet<String>();
+    	
+        // when
+    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
+				  								globalVars.getCurrencyUSD(), 
+				  								"FRT01", 
+				  								categoryCodes, 
+				  								tagCodes, 
+				  								null);
+     
+        //then
+    	assertNotNull(lb);
+    	assertThat(lb.size()).isEqualTo(7);
+    }
+    
+    @Test
+    public void whenFindAllWithCategoryFacet_thenReturnCorrectResultCount() {
+    	
+    	Set<String> categoryCodes 	= new HashSet<String>();
+    	Set<String> tagCodes 		= new HashSet<String>();
+    	
+    	categoryCodes.add("POM01");
+    	
+        // when
+    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
+				  								globalVars.getCurrencyUSD(), 
+				  								"FRT01", 
+				  								categoryCodes, 
+				  								tagCodes, 
+				  								null);
+     
+        //then
+    	assertNotNull(lb);
+    	assertThat(lb.size()).isEqualTo(3);
+    }
+    
+    
     private void assertFound(final Brand found) {
     	
     	assertThat(found.getBrandCode())
@@ -121,6 +168,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	    assertThat(found.getBrandAttribute().getBrandDesc())
 	    .isEqualTo("test brand");
     }
+    
     
     @After
     public void closeConnection() {
