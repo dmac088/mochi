@@ -42,7 +42,7 @@ public class Brand implements ILocalizedDomainObject {
 			 	 this.objectCount = objectCount;
 	}
 	
-	public int getObjectCount() {
+	public int getCount() {
 		return objectCount;
 	}
 
