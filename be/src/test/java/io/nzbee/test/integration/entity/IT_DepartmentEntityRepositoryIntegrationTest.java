@@ -42,11 +42,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	
 	@TestConfiguration
     static class ProductProductTypeEntityRepositoryIntegrationTest {
-          
-//        @Bean(value = "productTypeEntityBeanFactory")
-//        public DepartmentEntityBeanFactory productTypeFactoryBean() {
-//            return new DepartmentEntityBeanFactory();
-//        }
+
     }
 	
 	@Autowired
