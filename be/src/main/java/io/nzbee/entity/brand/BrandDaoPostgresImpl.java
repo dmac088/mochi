@@ -311,6 +311,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			query.setParameter("tagCodes", tagCodes);
 		}
 		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
+			query.setParameter("currency", currency);
+			query.setParameter("markdownPriceCode", "MKD01");
+		}
+		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
@@ -447,6 +453,22 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"		on b.bnd_id = lcl.bnd_id" + 
 			"		and lcl.lcl_cd = :locale " + 
 			"						 " + 
+			((hasPrice) ?
+			"inner join  ( " +
+					"	SELECT prd_id, " +  
+					"		   prc_val " + 
+					"		FROM mochi.price mprc " + 
+					"		INNER JOIN mochi.currency mcurr " + 
+				    "		ON         mprc.ccy_id = mcurr.ccy_id  " + 
+					"		AND        mcurr.ccy_cd = :currency  " +
+					"		INNER JOIN mochi.price_type mpt " +
+					"		ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
+					"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
+					"		) mprc  " +
+			"		ON p.prd_id = mprc.prd_id  " +
+			"		AND prc_val <= :maxPrice " 
+			: "") +
+			
 			((hasTags) ?
 				"	left join mochi.product_tag pt" + 
 				"		on p.prd_id = pt.prd_id" + 
