@@ -21,10 +21,10 @@ function Products(props) {
 
     const { categoryCode } = props.match.params;
     const categories = useSelector(state => state.categories);
-    const { loading } = categories;
+    const categoriesLoading = categories.loading;
 
     const prevCategoryCode = usePrevious(categoryCode);
-    const prevCategoryLoading = usePrevious(loading);
+    const prevCategoriesLoading = usePrevious(categoriesLoading);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -37,37 +37,41 @@ function Products(props) {
     const addFacet = (facetId, facetName, display) => {
         const na = [...stateObject.selectedFacets];
         na.push(newFacet(facetId, facetName, display));
-        retrieveProducts(categoryCode, na);
+        setObjectState((prevState) => ({
+            ...prevState,
+            selectedFacets: na,
+            loading: true,
+        }));
     } 
 
     const removeFacet = (facetId) => {
-        const na = stateObject.selectedFacets.filter(f => f.id !== facetId);
-        retrieveProducts(categoryCode, na);
+        setObjectState((prevState) => ({
+            ...prevState,
+            selectedFacets: stateObject.selectedFacets.filter(f => f.id !== facetId),
+            loading: true,
+        }));
     } 
 
     //this should be moved to a service class later on 
-    const retrieveProducts = (categoryCode, facets) => {
+    const retrieveProducts = (categoryCode) => {
         const currentCategory = findByCode(categories.list, categoryCode);
             if(!currentCategory) { return; }
             axios.post(currentCategory._links.products.href,
-                    { facets: facets })
+                    { facets: stateObject.selectedFacets })
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
-                    products: (response.data._embedded) 
-                              ? response.data._embedded.productResources
-                              : [],
-                    selectedFacets: facets,
+                    products: response.data._embedded.productResources || [],
                     loading: false,
                 }));
             });
     }
 
-    useEffect(() => {    
-        if(categoryCode !== prevCategoryCode || loading !== prevCategoryLoading) {   
-            retrieveProducts(categoryCode, stateObject.selectedFacets);
+    useEffect(() => {
+        if(categoryCode !== prevCategoryCode || categoriesLoading !== prevCategoriesLoading || stateObject.loading) {   
+            retrieveProducts(categoryCode);
         }
-    }, [categoryCode, loading]);
+    }, [categoryCode, categoriesLoading, stateObject.loading]);
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
@@ -99,7 +103,7 @@ function Products(props) {
                                 name={"brand"}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
-                                categoriesLoading={loading} />
+                                categoriesLoading={categoriesLoading} />
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">

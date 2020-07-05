@@ -50,7 +50,7 @@ function CategorySidebar(props) {
     }
 
    //mapBrandsToSidebar
-   stateObject.brands.filter(({data}) => !selectedFacets.some(x => x.id === data.brandCode))
+   stateObject.brands.filter(({data}) => !(selectedFacets).some(x => x.id === data.brandCode))
         .map(c => {
         items.push({
             display: c.data.brandDesc + ' (' + c.data.count + ')',

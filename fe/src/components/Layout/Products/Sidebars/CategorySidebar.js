@@ -15,7 +15,7 @@ function CategorySidebar(props) {
    
 
    //mapCategoriesToSidebar
-   children.filter(({data}) => !selectedFacets.some(x => x.id === data.categoryCode))
+   (children || []).filter(({data}) => !selectedFacets.some(x => x.id === data.categoryCode))
         .map(c => {
         items.push({
             display: c.data.categoryDesc + ' (' + c.data.count + ')',
