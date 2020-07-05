@@ -10,6 +10,8 @@ import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -17,6 +19,7 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.resources.category.CategoryResource;
 import io.nzbee.resources.category.CategoryResourceAssembler;
+import io.nzbee.search.dto.facet.FacetContainer;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")
@@ -82,5 +85,16 @@ public class CategoryController {
     	CategoryResource cr = categoryResourceAssember.toModel(c);
     	return ResponseEntity.ok(cr);
     }
+    
+//    @PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
+//    public ResponseEntity<CategoryResource> getChildCategories(@PathVariable String locale, 
+//    														   @PathVariable String currency, 
+//    														   @PathVariable String categoryCode, 
+//    														   @RequestBody final FacetContainer selectedFacets) {
+//    	LOGGER.debug("Fetching child categories for parameters : {}, {}, {}", locale, currency, categoryCode);
+//    	Category c = categoryService.find
+//    	CategoryResource cr = categoryResourceAssember.toModel(c);
+//    	return ResponseEntity.ok(cr);
+//    }
    
 }
