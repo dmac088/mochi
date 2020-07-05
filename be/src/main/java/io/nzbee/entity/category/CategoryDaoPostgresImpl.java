@@ -62,6 +62,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 true), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -92,6 +93,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -111,8 +113,29 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> brandCodes,
 			Set<String> tagCodes, Double maxPrice) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}", locale, currency);
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(false, 
+															 !brandCodes.isEmpty(),
+															 !tagCodes.isEmpty(),
+															 !(maxPrice == null),
+															 false,
+															 false,
+															 false,
+															 false), "CategoryMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
 	}
 
 
@@ -124,6 +147,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Session session = em.unwrap(Session.class);
 
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false,
 															 false,
 															 false,
@@ -156,6 +180,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		final List<String> categoryCodes = new ArrayList<String>();
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false,
 															 false,
 															 false,
@@ -198,6 +223,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 true,
 															 false,
 															 false), "CategoryMapping")
@@ -237,6 +263,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		categoryCodes.add(code);
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false,
 															 false,
 															 false,
@@ -413,6 +440,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				boolean hasCategories,
 				boolean hasBrands,
 				boolean hasTags,
+				boolean hasPrice,
 				boolean withChildren,
 				boolean hasCategoryDesc,
 				boolean hasCategoryId,
