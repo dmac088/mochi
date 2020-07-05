@@ -1,6 +1,12 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -124,6 +130,62 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
+    @Test
+    public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
+    	
+    	Set<String> brands = new HashSet<String>();
+    	Set<String> tags = new HashSet<String>();
+    	
+    	//when
+    	List<Category> found = categoryService.findAll(globalVars.getLocaleENGB(), 
+    												globalVars.getCurrencyUSD(), 
+    												"FRT01", 
+    												brands, 
+    												tags, 
+    												null);
+     
+        //then
+    	assertFound(found);
+    }
+    
+    @Test
+    public void whenFindAllWithBrandFacet_thenReturnCorrectResultCount() {
+    	
+    	Set<String> brands = new HashSet<String>();
+    	brands.add("ENZ01");
+    	Set<String> tags = new HashSet<String>();
+    	
+    	//when
+    	List<Category> found = categoryService.findAll(globalVars.getLocaleENGB(), 
+    												globalVars.getCurrencyUSD(), 
+    												"FRT01", 
+    												brands, 
+    												tags, 
+    												null);
+     
+        //then
+    	assertFound(found);
+    }
+    
+    @Test
+    public void whenFindAllWithTagFacet_thenReturnCorrectResultCount() {
+    	
+    	Set<String> brands = new HashSet<String>();
+    	Set<String> tags = new HashSet<String>();
+    	tags.add("GFR01");
+    	
+    	//when
+    	List<Category> found = categoryService.findAll(globalVars.getLocaleENGB(), 
+    												globalVars.getCurrencyUSD(), 
+    												"FRT01", 
+    												brands, 
+    												tags, 
+    												null);
+     
+        //then
+    	assertFound(found);
+    }
+    
   
     private void assertFound(final Category found) {
     	
@@ -135,6 +197,12 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 	    .isEqualTo("PRD01");
 	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc())
 	    .isEqualTo("test product category");
+    }
+    
+    private void assertFound(final List<Category> found) {
+		assertNotNull(found);
+    	assertThat(found.size())
+        .isEqualTo(8);
     }
  
     @After
