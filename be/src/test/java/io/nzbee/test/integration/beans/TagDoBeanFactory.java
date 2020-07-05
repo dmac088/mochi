@@ -11,12 +11,10 @@ public class TagDoBeanFactory {
 
 	public final Tag getTagDoBean() {
 		
-		Tag tag = new Tag(	"TST01",
+		return new Tag(	"TST01",
 							"test tag",
 							"en-GB",
 							"HKD");
-		
-		return tag;
 		
 	}
 	
