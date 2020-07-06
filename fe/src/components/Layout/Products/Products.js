@@ -97,13 +97,14 @@ function Products(props) {
                                 {...props}
                                 name={"category"}
                                 selectedFacets={stateObject.selectedFacets}
-                                addFacet={addFacet}/>
+                                addFacet={addFacet}
+                                loading={stateObject.loading}/>
                             <BrandSidebar
                                 {...props}
                                 name={"brand"}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
-                                categoriesLoading={categoriesLoading} />
+                                loading={stateObject.loading} />
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">

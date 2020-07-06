@@ -7,18 +7,16 @@ import { instance as axios } from "../../../../components/Layout/Helpers/api/axi
 
 
 function CategorySidebar(props) {
-   const { addFacet, selectedFacets, categoriesLoading } = props;
+   const { addFacet, selectedFacets, loading } = props;
    const items = [];
    const categories = useSelector(state => state.categories);
    const { categoryCode } = props.match.params;
 
-   const [stateObject, setObjectState] = useState({
+    const [stateObject, setObjectState] = useState({
         brands: [],
-        loading: false,
     });
 
     const prevCategoryCode = usePrevious(categoryCode);
-    const prevCategoriesLoading = usePrevious(categoriesLoading);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -32,10 +30,6 @@ function CategorySidebar(props) {
     const retrieveBrands = (categoryCode, facets) => {
         const currentCategory = findByCode(categories.list, categoryCode);
         if(!currentCategory) { return; }
-        setObjectState((prevState) => ({
-            ...prevState,
-            loading: true,
-        }));
         axios.post(currentCategory._links.brands.href,
                     { facets: facets })
              .then((response) => {
@@ -44,7 +38,6 @@ function CategorySidebar(props) {
                      brands: (response.data._embedded) 
                                ? response.data._embedded.brandResources
                                : [],
-                     loading: false,
                  }));
              });
     }
@@ -60,10 +53,10 @@ function CategorySidebar(props) {
    });
 
    useEffect(() => {
-    if(categoryCode !== prevCategoryCode || categoriesLoading !== prevCategoriesLoading) {  
+    if(categoryCode !== prevCategoryCode || !categories.loading || loading) {  
         retrieveBrands(categoryCode, selectedFacets);
     }
-   }, [categoryCode, categoriesLoading]);
+   }, [categoryCode, categories.loading, loading]);
 
     return (
         <React.Fragment>
