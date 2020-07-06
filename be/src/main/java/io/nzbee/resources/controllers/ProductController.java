@@ -74,6 +74,9 @@ public class ProductController {
 							    											pages.getPageable(),
 							    											pages.getTotalElements());
     	
+    	if(prPages.isEmpty()) {
+    		return new ResponseEntity<> (assembler.toEmptyModel(prPages, ProductResource.class), HttpStatus.OK);
+    	}
     	return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK);
     }
     
@@ -148,8 +151,11 @@ public class ProductController {
 				.collect(Collectors.toList()),
 				pages.getPageable(),
 				pages.getTotalElements());
-		
-		return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK); 
+		 
+		if(prPages.isEmpty()) {
+    		return new ResponseEntity<> (assembler.toEmptyModel(prPages, ProductResource.class), HttpStatus.OK);
+    	}
+    	return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK);
 	}
     
 }
