@@ -1,5 +1,5 @@
 import React from 'react';
-import { Sidebar } from './Sidebar';
+import { ListSidebar } from './ListSidebar';
 
 function SelectionSidebar(props) {
     const { removeFacet, selectedFacets } = props;
@@ -16,7 +16,7 @@ function SelectionSidebar(props) {
 
     return (
         <React.Fragment>
-             <Sidebar
+             <ListSidebar
                 heading={"selection"}
                 items={items} 
                 modFacet={removeFacet}/>
