@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from "react-router-dom";
 
 const renderItems = (items, modFacet, filterType) => {
   return items.map((i, index) => {
@@ -16,7 +15,7 @@ const renderItems = (items, modFacet, filterType) => {
   })
 }
 
-export const Sidebar = (props) => {
+export const ListSidebar = (props) => {
   return (
     <div className="sidebar mb-35">
       <h3 className="sidebar-title">{props.heading}</h3>

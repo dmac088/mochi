@@ -1,7 +1,7 @@
 import React, {useState, useEffect, useRef} from 'react';
 import { useSelector } from 'react-redux';
 import { getCategoryPath } from '../../Helpers/Route/Route';
-import { Sidebar } from './Sidebar';
+import { ListSidebar } from './ListSidebar';
 import { findByCode } from '../../../../services/Category';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 
@@ -61,7 +61,7 @@ function CategorySidebar(props) {
     return (
         <React.Fragment>
             {(items.length > 0)
-            ? <Sidebar
+            ? <ListSidebar
                 filterType={"brand"}
                 heading={"filter by brand"}
                 items={items} 

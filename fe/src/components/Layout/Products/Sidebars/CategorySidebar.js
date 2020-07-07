@@ -1,9 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { getCategoryPath } from '../../../../components/Layout/Helpers/Route/Route';
-import { Sidebar } from './Sidebar';
+import { ListSidebar } from './ListSidebar';
 import { findByCode, getChildren } from '../../../../services/Category';
-import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 
 
 function CategorySidebar(props) {
@@ -53,7 +52,7 @@ function CategorySidebar(props) {
     return (
         <React.Fragment>
             {(stateObject.items.length > 0)
-                ? <Sidebar
+                ? <ListSidebar
                     filterType={"category"}
                     heading={"filter by category"}
                     items={stateObject.items}
