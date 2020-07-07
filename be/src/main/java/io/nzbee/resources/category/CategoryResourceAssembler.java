@@ -61,6 +61,11 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 																		category.getCategoryCode(),
 																		null
 																)).withRel("brands"));
+			
+			cr.add(linkTo(methodOn(CategoryController.class).getChildCategories(category.getLocale(),
+																				category.getCurrency(),  
+																				category.getCategoryCode(), 
+																				null)).withRel("children"));
 		}
 			
 		return cr;
