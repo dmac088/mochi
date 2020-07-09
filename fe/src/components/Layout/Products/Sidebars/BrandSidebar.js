@@ -6,7 +6,7 @@ import { findByCode } from '../../../../services/Category';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 
 
-function CategorySidebar(props) {
+function BrandSidebar(props) {
    const { addFacet, selectedFacets, loading } = props;
    const items = [];
    const categories = useSelector(state => state.categories);
@@ -35,9 +35,7 @@ function CategorySidebar(props) {
              .then((response) => {
                  setObjectState((prevState) => ({
                      ...prevState,
-                     brands: (response.data._embedded) 
-                               ? response.data._embedded.brandResources
-                               : [],
+                     brands: response.data._embedded.brandResources,
                  }));
              });
     }
@@ -72,4 +70,4 @@ function CategorySidebar(props) {
 }
 
 
-export default CategorySidebar;
+export default BrandSidebar;
