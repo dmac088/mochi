@@ -3,16 +3,18 @@ import { useSelector } from 'react-redux';
 import { getCategoryPath } from '../../../../components/Layout/Helpers/Route/Route';
 import { ListSidebar } from './ListSidebar';
 import { findByCode, getChildren } from '../../../../services/Category';
+import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 
 
 function CategorySidebar(props) {
     const { addFacet, selectedFacets, loading } = props;
     const categories = useSelector(state => state.categories);
+    const items = [];
     const { categoryCode } = props.match.params;
     const prevCategoryCode = usePrevious(categoryCode);
 
     const [stateObject, setObjectState] = useState({
-        items: [],
+        categories: [],
     });
 
     function usePrevious(value) {
@@ -24,38 +26,43 @@ function CategorySidebar(props) {
     }
 
     //mapCategoriesToSidebar
-    const retrieveCategories = (children = [], facets) => {
-        const items = [];
-        children.filter(({ data }) => !facets.some(x => x.id === data.categoryCode))
-            .map(c => {
-                items.push({
-                    display: c.data.categoryDesc + ' (' + c.data.count + ')',
-                    code: c.data.categoryCode,
-                    path: getCategoryPath(c.data.categoryCode, props.match)
-                    });
-            });
-            setObjectState(() => ({
-                items: items,
-            })
-        );
-    }   
+    const retrieveCategories = (facets) => {
+        const currentCategory = findByCode(categories.list, categoryCode);
+        if(!currentCategory) { return; }
+        axios.post(currentCategory._links.children.href,
+            { facets: facets })
+             .then((response) => {
+                 setObjectState((prevState) => ({
+                     ...prevState,
+                     categories: response.data._embedded.categoryResources,
+                 }));
+             });
+    }
+
 
     useEffect(() => {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
-            const children = [];
-            getChildren(findByCode(categories.list, categoryCode), categories.list, children);
-            retrieveCategories(children, selectedFacets);
+            retrieveCategories(selectedFacets);
         }
     }, [categoryCode, categories.loading, loading]);
 
-
+    stateObject.categories.filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
+    .map(c => {
+        items.push({
+            display: c.data.categoryDesc + ' (' + c.data.count + ')',
+            code: c.data.categoryCode,
+            path: getCategoryPath(c.data.categoryCode, props.match)
+            });
+    });
+   
+    console.log(items);
     return (
         <React.Fragment>
-            {(stateObject.items.length > 0)
+            {(items.length > 0)
                 ? <ListSidebar
                     filterType={"category"}
                     heading={"filter by category"}
-                    items={stateObject.items}
+                    items={items}
                     modFacet={addFacet} />
                 : <React.Fragment />}
         </React.Fragment>

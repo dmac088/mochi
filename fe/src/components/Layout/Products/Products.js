@@ -59,7 +59,6 @@ function Products(props) {
             axios.post(currentCategory._links.products.href,
                     { facets: stateObject.selectedFacets })
             .then((response) => {
-                console.log(response);
                 setObjectState((prevState) => ({
                     ...prevState,
                     products: response.data._embedded.productResources || [],
