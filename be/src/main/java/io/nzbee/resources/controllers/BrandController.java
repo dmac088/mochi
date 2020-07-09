@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,7 +19,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResource;
-import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.search.dto.facet.FacetContainer;
 
 @RestController
@@ -31,7 +31,7 @@ public class BrandController {
     private IBrandService brandService;
     
     @Autowired
-    private BrandResourceAssembler brandResourceAssembler;
+    private RepresentationModelAssemblerSupport<Brand, BrandResource> brandResourceAssembler;
 
     public BrandController() {
         super();
