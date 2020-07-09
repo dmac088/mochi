@@ -24,8 +24,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.product.IProductService;
-import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
+import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.search.dto.facet.FacetContainer;
 import io.nzbee.search.dto.facet.IFacet;
 
@@ -39,45 +39,33 @@ public class ProductController {
     private IProductService productService;
     
     @Autowired
-    private RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler;
+    private ProductResourceAssembler prodResourceAssembler;
     
     @Autowired
     private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
     
-    @SuppressWarnings("unchecked")
+    
 	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<PagedModel<ProductResource>> getProducts(@PathVariable String locale, 
+    public ResponseEntity<PagedModel<EntityModel<ProductResource>>> getProducts(@PathVariable String locale, 
 															    	   @PathVariable String currency, 
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam(value = "page", defaultValue = "0") String page,
-															    	   @RequestParam(value = "size", defaultValue = "10") String size,
-															    	   @SuppressWarnings("rawtypes") PagedResourcesAssembler assembler) {
+															    	   @RequestParam(value = "size", defaultValue = "10") String size
+															    	   ) {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final Page<Product> pages =
-    					productService.findAll(	
-    									locale, 
-    									currency,
-    									categoryCode, 
-    									page,
-    									size,
-    									"1",
-    									new HashSet<IFacet>() 
-    									);
+    	final Page<ProductResource> pages =	productService.findAll(	
+					    									locale, 
+					    									currency,
+					    									categoryCode, 
+					    									page,
+					    									size,
+					    									"1",
+					    									new HashSet<IFacet>() 
+					    								  ).map(p -> prodResourceAssembler.toModel(p));
     			
-
-    	//convert the page of products to a page of product resources
-    	final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-							    											.map(p -> prodAssembler.toModel(p))
-							    											.collect(Collectors.toList()),
-							    											pages.getPageable(),
-							    											pages.getTotalElements());
-    	
-    	if(prPages.isEmpty()) {
-    		return new ResponseEntity<> (assembler.toEmptyModel(prPages, ProductResource.class), HttpStatus.OK);
-    	}
-    	return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK);
+    	return ResponseEntity.ok(prodPagedAssembler.toModel(pages));
     }
     
 	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
@@ -96,7 +84,7 @@ public class ProductController {
     public ResponseEntity<ProductResource> get(	@PathVariable String locale, 
     											@PathVariable String currency, 
     											@PathVariable String code) {
-    	ProductResource pr = prodAssembler.toModel(productService.findByCode(locale, currency, code));
+    	ProductResource pr = prodResourceAssembler.toModel(productService.findByCode(locale, currency, code));
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
@@ -109,7 +97,7 @@ public class ProductController {
     	
     	final List<ProductResource> collection = 
     			productService.findAll(locale, currency, productCodes)
-    			.stream().map(p -> prodAssembler.toModel(p))
+    			.stream().map(p -> prodResourceAssembler.toModel(p))
     			.collect(Collectors.toList());
     	
     	Page<ProductResource> pages = new PageImpl<>(collection);
@@ -121,41 +109,30 @@ public class ProductController {
     }
     
   
-
-	@SuppressWarnings("unchecked")
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}",
 			 	 params = { "page", "size", "sort" })
-	public ResponseEntity<PagedModel<ProductResource>> getProducts(	
+	public ResponseEntity<PagedModel<EntityModel<ProductResource>>> getProducts(	
 										@PathVariable String 			locale, 
 										@PathVariable String 			currency, 
 										@PathVariable 					String 	categoryCode,
 										@RequestParam("page")			String page,
 								    	@RequestParam("size") 			String size, 
 								    	@RequestParam("sort") 			String sortBy,
-										@RequestBody final 				FacetContainer selectedFacets,
-			    						@SuppressWarnings("rawtypes") 	PagedResourcesAssembler assembler) {
+										@RequestBody final 				FacetContainer selectedFacets) {
 		
 		
 		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, sortBy, selectedFacets.getFacets().size());
 		
-		final Page<Product> pages = productService.findAll(		locale, 
-																currency, 
-																categoryCode, 
-																page, 
-																size, 
-																sortBy,
-																selectedFacets.getFacets());
+		final Page<ProductResource> pages = productService.findAll(		locale, 
+																		currency, 
+																		categoryCode, 
+																		page, 
+																		size, 
+																		sortBy,
+																		selectedFacets.getFacets()
+														  		  ).map(p -> prodResourceAssembler.toModel(p));
 		
-		final Page<ProductResource> prPages = new PageImpl<ProductResource>(pages.stream()
-				.map(p -> new ProductResource(p))
-				.collect(Collectors.toList()),
-				pages.getPageable(),
-				pages.getTotalElements());
-		 
-		if(prPages.isEmpty()) {
-    		return new ResponseEntity<> (assembler.toEmptyModel(prPages, ProductResource.class), HttpStatus.OK);
-    	}
-    	return new ResponseEntity< >(assembler.toModel(prPages), HttpStatus.OK);
+		return ResponseEntity.ok(prodPagedAssembler.toModel(pages));
 	}
     
 }
