@@ -45,8 +45,6 @@ public class BrandController {
     	 
     	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
-    	
-    	
     	final List<BrandResource> collection =
     			brandService.findAll(locale, 
     								 currency, 
