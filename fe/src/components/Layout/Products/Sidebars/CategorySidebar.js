@@ -55,7 +55,6 @@ function CategorySidebar(props) {
             });
     });
    
-    console.log(items);
     return (
         <React.Fragment>
             {(items.length > 0)
