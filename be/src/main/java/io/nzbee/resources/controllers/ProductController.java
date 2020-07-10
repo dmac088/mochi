@@ -1,16 +1,13 @@
 package io.nzbee.resources.controllers;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
@@ -22,8 +19,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.domain.product.IProductService;
+import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.search.dto.facet.FacetContainer;
@@ -89,23 +86,15 @@ public class ProductController {
     }
     
     @PostMapping("/Product/{locale}/{currency}")
-    public ResponseEntity<PagedModel<EntityModel<ProductResource>>> getProducts(	@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<ProductResource>> getProducts(	@PathVariable String locale, 
     																				@PathVariable String currency, 
     																				@RequestBody final Set<String> productCodes) {
     	
     	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
-    	final List<ProductResource> collection = 
-    			productService.findAll(locale, currency, productCodes)
-    			.stream().map(p -> prodResourceAssembler.toModel(p))
-    			.collect(Collectors.toList());
+    	final Set<Product> collection = productService.findAll(locale, currency, productCodes);
     	
-    	Page<ProductResource> pages = new PageImpl<>(collection);
-    	
-    	final PagedModel<EntityModel<ProductResource>> resources = prodPagedAssembler.toModel(pages);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return ResponseEntity.ok(resources);
+        return ResponseEntity.ok(prodResourceAssembler.toCollectionModel(collection));
     }
     
   
