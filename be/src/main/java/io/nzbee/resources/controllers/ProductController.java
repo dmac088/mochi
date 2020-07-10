@@ -9,7 +9,6 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
-import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,9 +70,7 @@ public class ProductController {
 															    	   			@PathVariable String currency, 
 															    	   			@PathVariable String brandCode,
 															    	   			@RequestParam("page") int page,
-															    	   			@RequestParam("size") int size,
-															    	   			@SuppressWarnings("rawtypes") PagedResourcesAssembler assembler,
-															    	   			@SuppressWarnings("rawtypes") RepresentationModelAssemblerSupport prodAssembler) {
+															    	   			@RequestParam("size") int size) {
     	return null;
     }
     
@@ -87,8 +84,8 @@ public class ProductController {
     
     @PostMapping("/Product/{locale}/{currency}")
     public ResponseEntity<CollectionModel<ProductResource>> getProducts(	@PathVariable String locale, 
-    																				@PathVariable String currency, 
-    																				@RequestBody final Set<String> productCodes) {
+    																		@PathVariable String currency, 
+    																		@RequestBody final Set<String> productCodes) {
     	
     	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
