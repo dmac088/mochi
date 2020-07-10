@@ -1,12 +1,10 @@
 package io.nzbee.resources.controllers;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -14,9 +12,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
+import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.resources.category.CategoryResource;
 import io.nzbee.resources.category.CategoryResourceAssembler;
 import io.nzbee.search.dto.facet.FacetContainer;
@@ -40,50 +39,36 @@ public class CategoryController {
     @GetMapping("/Category/{locale}/{currency}")
     public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
     	LOGGER.debug("Fetching all categories for parameters : {}, {}", locale, currency);
-    	final List<CategoryResource> collection = categoryService.findAll(locale, currency).stream().map(c -> categoryResourceAssember.toModel(c)).collect(Collectors.toList());
-        final CollectionModel<CategoryResource> resources = new CollectionModel<CategoryResource> (collection);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return ResponseEntity.ok(resources);
+    	final Set<Category> collection = categoryService.findAll(locale, currency);
+    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
     }
     
     @GetMapping("/ProductCategory/{locale}/{currency}")
     public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale, @PathVariable String currency) {
     	LOGGER.debug("Fetching product categories for parameters : {}, {}", locale, currency);
-    	final List<CategoryResource> collection = categoryService.findAllProductCategories(locale, currency).stream().map(c -> categoryResourceAssember.toModel(c)).collect(Collectors.toList());
-        final CollectionModel<CategoryResource> resources = new CollectionModel<CategoryResource> (collection);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return ResponseEntity.ok(resources);
+    	final Set<ProductCategory> collection = categoryService.findAllProductCategories(locale, currency);
+    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
     }
     
     @GetMapping("/BrandCategory/{locale}/{currency}")
     public ResponseEntity<CollectionModel<CategoryResource>> getBrandCategories(@PathVariable String locale, @PathVariable String currency) {
     	LOGGER.debug("Fetching brand categories for parameters : {}, {}", locale, currency);
-    	final List<CategoryResource> collection = categoryService.findAllBrandCategories(locale, currency).stream().map(c -> categoryResourceAssember.toModel(c)).collect(Collectors.toList());
-        final CollectionModel<CategoryResource> resources = new CollectionModel<CategoryResource> (collection);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "self"));
-        return ResponseEntity.ok(resources);
+    	final Set<BrandCategory> collection = categoryService.findAllBrandCategories(locale, currency);
+    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
     }
     
     @GetMapping("/Category/{locale}/{currency}/product/{productCode}")
     public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency, @PathVariable String productCode) {
     	LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, currency, productCode);
-    	final List<CategoryResource> collection = categoryService.findAllByProductCode(locale, currency, productCode)
-    			.stream().map(c -> categoryResourceAssember.toModel(c)).collect(Collectors.toList());
-        final CollectionModel<CategoryResource> resources = new CollectionModel <> (collection);
-        final String uriString = ServletUriComponentsBuilder.fromCurrentRequest().build().toUriString();
-        resources.add(new Link(uriString, "categories"));
-        return ResponseEntity.ok(resources);
+    	final Set<ProductCategory> collection = categoryService.findAllByProductCode(locale, currency, productCode);
+    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
     } 
     
     @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
     public ResponseEntity<CategoryResource> getCategory(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
     	LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
     	Category c = categoryService.findByCode(locale, currency, categoryCode);
-    	CategoryResource cr = categoryResourceAssember.toModel(c);
-    	return ResponseEntity.ok(cr);
+    	return ResponseEntity.ok(categoryResourceAssember.toModel(c));
     }
     
     @PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
@@ -92,10 +77,8 @@ public class CategoryController {
     														   @PathVariable String categoryCode, 
     														   @RequestBody final FacetContainer selectedFacets) {
     	LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency, categoryCode);
-    	final List<CategoryResource> collection = categoryService.findAll(locale, currency, categoryCode, selectedFacets.getFacets())
-    			.stream().map(c -> categoryResourceAssember.toModel(c)).collect(Collectors.toList());
-    	final CollectionModel<CategoryResource> resources = new CollectionModel <> (collection);
-    	return ResponseEntity.ok(resources);
+    	final Set<Category> collection = categoryService.findAll(locale, currency, categoryCode, selectedFacets.getFacets());
+    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
     }
    
 }
