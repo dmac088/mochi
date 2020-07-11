@@ -35,7 +35,9 @@ function BrandSidebar(props) {
              .then((response) => {
                  setObjectState((prevState) => ({
                      ...prevState,
-                     brands: response.data._embedded.brandResources,
+                     brands: (response.data._embedded) 
+                            ? response.data._embedded.brandResources
+                            : [],
                  }));
              });
     }
