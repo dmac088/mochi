@@ -6,6 +6,7 @@ import { newFacet } from '../../../services/Product';
 import Product from './Product/Grid/Product';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import BrandSidebar from './Sidebars/BrandSidebar';
+import TagSidebar from './Sidebars/TagSidebar';
 import SelectionSidebar from './Sidebars/SelectionSidebar';
 import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
@@ -105,6 +106,13 @@ function Products(props) {
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
+                            <TagSidebar 
+                                {...props}
+                                name={"tag"}
+                                selectedFacets={stateObject.selectedFacets}
+                                addFacet={addFacet}
+                                loading={stateObject.loading}
+                            />
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">

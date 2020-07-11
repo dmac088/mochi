@@ -3,6 +3,8 @@ package io.nzbee.domain.tag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.product.Product;
@@ -18,14 +20,19 @@ public class Tag implements ILocalizedDomainObject {
 	
 	private String currency;
 	
+	private int objectCount;
+
+	@JsonIgnore
 	private List<Product> products;
 
 	public Tag(	String tagCode,
 				String tagDesc,
+				int objectCount,
 				String locale,
 				String currency) {
 		this.tagCode = tagCode;
 		this.tagDesc = tagDesc;
+		this.objectCount = objectCount;
 		this.locale = locale;
 		this.currency = currency;
 		this.products = new ArrayList<Product>();
@@ -50,6 +57,10 @@ public class Tag implements ILocalizedDomainObject {
 	
 	public List<Product> getProducts() {
 		return products;
+	}
+	
+	public int getObjectCount() {
+		return objectCount;
 	}
 	
 	@Override
