@@ -38,7 +38,6 @@ function Products(props) {
     const addFacet = (facetId, facetName, display) => {
         const na = [...stateObject.selectedFacets];
         na.push(newFacet(facetId, facetName, display));
-        console.log(na);
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: na,

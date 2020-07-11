@@ -45,7 +45,6 @@ function TagSidebar(props) {
    //mapBrandsToSidebar
    stateObject.tags.filter(({data}) => !(selectedFacets).some(x => x.id === data.tagCode))
         .map(c => {
-            console.log(c);
         items.push({
             display: c.data.tagDesc + ' (' + c.data.count + ')',
             code: c.data.tagCode,
