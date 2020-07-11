@@ -114,13 +114,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 
 	@Override
-	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> brandCodes,
+	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtils.join(brandCodes), StringUtils.join(tagCodes));
 		
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(false, 
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(), 
 															 !brandCodes.isEmpty(),
 															 !tagCodes.isEmpty(),
 															 !(maxPrice == null),
@@ -136,6 +136,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
 				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 				 
+		if(!categoryCodes.isEmpty()) {
+			 query.setParameter("categoryCodes", categoryCodes);
+		}
+		
 		if(!brandCodes.isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
 		}

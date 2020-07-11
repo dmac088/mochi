@@ -62,6 +62,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
     	}
     	
     	Set<Category> sc = categoryService.findAll(locale, currency, categoryCode,
+    			selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
+				.collect(Collectors.toSet()),
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
 						.collect(Collectors.toSet()),
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())

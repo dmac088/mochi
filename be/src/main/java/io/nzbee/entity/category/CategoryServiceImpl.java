@@ -32,9 +32,9 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> brands,
+	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
 			Set<String> tags, Double maxPrice) {
-		return categoryDAO.findAll(locale, currency, categoryCode, brands, tags, maxPrice);
+		return categoryDAO.findAll(locale, currency, categoryCode, categoryCodes, brands, tags, maxPrice);
 	}
 	
 	@Override

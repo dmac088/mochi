@@ -124,13 +124,15 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     @Test
     public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
     	
+    	Set<String> categories = new HashSet<String>();
     	Set<String> brands = new HashSet<String>();
     	Set<String> tags = new HashSet<String>();
     	
     	//when
     	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
     												globalVars.getCurrencyUSD(), 
-    												"FRT01", 
+    												"FRT01",
+    												categories,
     												brands, 
     												tags, 
     												null);
@@ -144,6 +146,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     @Test
     public void whenFindAllWithBrandFacet_thenReturnCorrectResultCount() {
     	
+    	Set<String> categories = new HashSet<String>();
     	Set<String> brands = new HashSet<String>();
     	brands.add("ENZ01");
     	Set<String> tags = new HashSet<String>();
@@ -152,6 +155,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
     												globalVars.getCurrencyUSD(), 
     												"FRT01", 
+    												categories,
     												brands, 
     												tags, 
     												null);
@@ -165,6 +169,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     @Test
     public void whenFindAllWithTagFacet_thenReturnCorrectResultCount() {
     	
+    	Set<String> categories = new HashSet<String>();
     	Set<String> brands = new HashSet<String>();
     	Set<String> tags = new HashSet<String>();
     	tags.add("GFR01");
@@ -173,6 +178,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
     												globalVars.getCurrencyUSD(), 
     												"FRT01", 
+    												categories,
     												brands, 
     												tags, 
     												null);
