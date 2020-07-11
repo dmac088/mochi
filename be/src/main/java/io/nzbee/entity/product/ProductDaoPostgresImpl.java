@@ -334,7 +334,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 		
 		if(!tagCodes.isEmpty()) {
-			query.setParameter("tagCodes", brandCodes);
+			query.setParameter("tagCodes", tagCodes);
 		}
 		
 		if(!(maxPrice == null)) {
@@ -349,9 +349,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		query = em.createNativeQuery(this.constructSQL(	false,
 														false,
 														false,
-														categoryCodes.size()>=1, 
-														brandCodes.size()>=1,
-					   									tagCodes.size()>=1,
+														!categoryCodes.isEmpty(), 
+														!brandCodes.isEmpty(),
+					   									!tagCodes.isEmpty(),
 					   									!(maxPrice == null),
 					   									false,
 					   									false,
@@ -645,7 +645,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		((hasBrands) 
 					? "AND bnd.bnd_cd in 		:brandCodes " 
 					: "") +
-		
+		((hasTags) 
+				? "AND tag.tag_cd in 		:tagCodes " 
+				: "") +
 		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
 		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
 		((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +

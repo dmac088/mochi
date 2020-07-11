@@ -38,6 +38,7 @@ function Products(props) {
     const addFacet = (facetId, facetName, display) => {
         const na = [...stateObject.selectedFacets];
         na.push(newFacet(facetId, facetName, display));
+        console.log(na);
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: na,
@@ -62,7 +63,9 @@ function Products(props) {
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
-                    products: response.data._embedded.productResources || [],
+                    products: (response.data._embedded) 
+                                ? response.data._embedded.productResources
+                                : [],
                     loading: false,
                 }));
             });

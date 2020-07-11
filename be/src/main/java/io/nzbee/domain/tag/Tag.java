@@ -37,6 +37,10 @@ public class Tag implements ILocalizedDomainObject {
 		this.currency = currency;
 		this.products = new ArrayList<Product>();
 	}
+	
+	public int getCount() {
+		return objectCount;
+	}
 
 	public String getTagCode() {
 		return tagCode;
@@ -57,10 +61,6 @@ public class Tag implements ILocalizedDomainObject {
 	
 	public List<Product> getProducts() {
 		return products;
-	}
-	
-	public int getObjectCount() {
-		return objectCount;
 	}
 	
 	@Override
