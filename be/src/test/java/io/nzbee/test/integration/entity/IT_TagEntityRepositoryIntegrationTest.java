@@ -114,6 +114,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertNotNull(lb);
 		assertThat(lb.size()).isEqualTo(2);
+		assertThat(lb.stream().filter(t->t.getCode().equals("GFR01")).findFirst().get().getCount()).isEqualTo(1);
+		assertThat(lb.stream().filter(t->t.getCode().equals("ORG01")).findFirst().get().getCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -131,12 +133,14 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertNotNull(lb);
 		assertThat(lb.size()).isEqualTo(1);
+		assertThat(lb.stream().findFirst().get().getCount()).isEqualTo(1);
 	}
 
 	private void assertFound(final Tag found) {
 
 		assertThat(found.getCode()).isEqualTo("TST02");
 		assertThat(found.getTagAttribute().getTagDesc()).isEqualTo("test tag");
+		assertNotNull(found.getCount());
 	}
 
 	@After
