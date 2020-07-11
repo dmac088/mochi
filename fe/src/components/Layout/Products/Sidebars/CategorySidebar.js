@@ -48,7 +48,9 @@ function CategorySidebar(props) {
         }
     }, [categoryCode, categories.loading, loading]);
 
-    stateObject.categories.filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
+    stateObject.categories
+    .filter(c => c.data.count > 0)
+    .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
     .map(c => {
         items.push({
             display: c.data.categoryDesc + ' (' + c.data.count + ')',
