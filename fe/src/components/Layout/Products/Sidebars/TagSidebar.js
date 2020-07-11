@@ -35,7 +35,9 @@ function TagSidebar(props) {
              .then((response) => {
                  setObjectState((prevState) => ({
                      ...prevState,
-                     tags: response.data._embedded.tagResources,
+                     tags: (response.data._embedded) 
+                            ? response.data._embedded.tagResources
+                            : [],
                  }));
              });
     }
@@ -43,6 +45,7 @@ function TagSidebar(props) {
    //mapBrandsToSidebar
    stateObject.tags.filter(({data}) => !(selectedFacets).some(x => x.id === data.tagCode))
         .map(c => {
+            console.log(c);
         items.push({
             display: c.data.tagDesc + ' (' + c.data.count + ')',
             code: c.data.tagCode,
@@ -60,8 +63,8 @@ function TagSidebar(props) {
         <React.Fragment>
             {(items.length > 0)
             ? <ButtonSidebar
-                filterType={"brand"}
-                heading={"filter by brand"}
+                filterType={"tag"}
+                heading={"filter by tag"}
                 items={items} 
                 modFacet={addFacet}/>
             : <React.Fragment/>}
