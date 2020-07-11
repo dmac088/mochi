@@ -34,7 +34,9 @@ function CategorySidebar(props) {
              .then((response) => {
                  setObjectState((prevState) => ({
                      ...prevState,
-                     categories: response.data._embedded.categoryResources,
+                     categories: (response.data._embedded) 
+                                ? response.data._embedded.categoryResources
+                                : [],
                  }));
              });
     }
