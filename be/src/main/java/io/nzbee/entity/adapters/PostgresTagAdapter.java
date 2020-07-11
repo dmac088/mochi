@@ -70,6 +70,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 		return new Tag(
 				te.getCode(),
 				te.getTagAttribute().getTagDesc(),
+				te.getCount(),
 				te.getLocale(),
 				te.getCurrency()
 				);

@@ -6,6 +6,7 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
+import io.nzbee.resources.controllers.TagController;
 
 @Component
 public class CategoryResourceAssembler extends RepresentationModelAssemblerSupport<Category, CategoryResource> {
@@ -52,10 +53,19 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 																		null
 																)).withRel("brands"));
 			
-			cr.add(linkTo(methodOn(CategoryController.class).getChildCategories(category.getLocale(),
-																				category.getCurrency(),  
-																				category.getCategoryCode(), 
-																				null)).withRel("children"));
+			cr.add(linkTo(methodOn(TagController.class).getTags(		
+																		category.getLocale(),
+																		category.getCurrency(), 
+																		category.getCategoryCode(),
+																		null
+																)).withRel("tags"));
+			
+			cr.add(linkTo(methodOn(CategoryController.class).getChildCategories(
+																		category.getLocale(),
+																		category.getCurrency(),  
+																		category.getCategoryCode(), 
+																		null
+																)).withRel("children"));
 		}
 			
 		return cr;

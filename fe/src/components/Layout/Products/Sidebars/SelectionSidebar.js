@@ -1,5 +1,5 @@
 import React from 'react';
-import { ListSidebar } from './ListSidebar';
+import { ListSidebar } from './Layout/ListSidebar';
 
 function SelectionSidebar(props) {
     const { removeFacet, selectedFacets } = props;
