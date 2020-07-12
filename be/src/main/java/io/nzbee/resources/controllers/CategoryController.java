@@ -25,60 +25,75 @@ import io.nzbee.search.dto.facet.FacetContainer;
 public class CategoryController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-	
-    @Autowired
-    private ICategoryService categoryService;
-    
-    @Autowired
-    private CategoryResourceAssembler categoryResourceAssember;
 
-    public CategoryController() {
-        super();
-    }
+	@Autowired
+	private ICategoryService categoryService;
+
+	@Autowired
+	private CategoryResourceAssembler categoryResourceAssember;
+
+	public CategoryController() {
+		super();
+	}
+
+	@GetMapping("/Category/{locale}/{currency}")
+	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale,
+			@PathVariable String currency) {
+		LOGGER.debug("Fetching all categories for parameters : {}, {}", locale, currency);
+		final Set<Category> collection = categoryService.findAll(locale, currency);
+		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
+	}
+
+	@GetMapping("/ProductCategory/{locale}/{currency}")
+	public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale,
+			@PathVariable String currency) {
+		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale, currency);
+		final Set<ProductCategory> collection = categoryService.findAllProductCategories(locale, currency);
+		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
+	}
+
+	@GetMapping("/BrandCategory/{locale}/{currency}")
+	public ResponseEntity<CollectionModel<CategoryResource>> getBrandCategories(@PathVariable String locale,
+			@PathVariable String currency) {
+		LOGGER.debug("Fetching brand categories for parameters : {}, {}", locale, currency);
+		final Set<BrandCategory> collection = categoryService.findAllBrandCategories(locale, currency);
+		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
+	}
+
+	@GetMapping("/Category/{locale}/{currency}/product/{productCode}")
+	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale,
+			@PathVariable String currency, @PathVariable String productCode) {
+		LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, currency, productCode);
+		final Set<ProductCategory> collection = categoryService.findAllByProductCode(locale, currency, productCode);
+		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
+	}
+
+	@GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
+	public ResponseEntity<CategoryResource> getCategory(@PathVariable String locale, @PathVariable String currency,
+			@PathVariable String categoryCode) {
+		LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
+		Category c = categoryService.findByCode(locale, currency, categoryCode);
+		return ResponseEntity.ok(categoryResourceAssember.toModel(c));
+	}
+
+	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
+	public ResponseEntity<CollectionModel<CategoryResource>> getChildCategories(@PathVariable String locale,
+			@PathVariable String currency, @PathVariable String categoryCode,
+			@RequestBody final FacetContainer selectedFacets) {
+		LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency,
+				categoryCode);
+		final Set<Category> collection = categoryService.findAll(locale, currency, categoryCode,
+				selectedFacets.getFacets());
+		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
+	}
 	
-    @GetMapping("/Category/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching all categories for parameters : {}, {}", locale, currency);
-    	final Set<Category> collection = categoryService.findAll(locale, currency);
-    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
-    }
-    
-    @GetMapping("/ProductCategory/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching product categories for parameters : {}, {}", locale, currency);
-    	final Set<ProductCategory> collection = categoryService.findAllProductCategories(locale, currency);
-    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
-    }
-    
-    @GetMapping("/BrandCategory/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<CategoryResource>> getBrandCategories(@PathVariable String locale, @PathVariable String currency) {
-    	LOGGER.debug("Fetching brand categories for parameters : {}, {}", locale, currency);
-    	final Set<BrandCategory> collection = categoryService.findAllBrandCategories(locale, currency);
-    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
-    }
-    
-    @GetMapping("/Category/{locale}/{currency}/product/{productCode}")
-    public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String currency, @PathVariable String productCode) {
-    	LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, currency, productCode);
-    	final Set<ProductCategory> collection = categoryService.findAllByProductCode(locale, currency, productCode);
-    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
-    } 
-    
-    @GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
-    public ResponseEntity<CategoryResource> getCategory(@PathVariable String locale, @PathVariable String currency, @PathVariable String categoryCode) {
-    	LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
-    	Category c = categoryService.findByCode(locale, currency, categoryCode);
-    	return ResponseEntity.ok(categoryResourceAssember.toModel(c));
-    }
-    
-    @PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
-    public ResponseEntity<CollectionModel<CategoryResource>> getChildCategories(@PathVariable String locale, 
-    														   @PathVariable String currency, 
-    														   @PathVariable String categoryCode, 
-    														   @RequestBody final FacetContainer selectedFacets) {
-    	LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency, categoryCode);
-    	final Set<Category> collection = categoryService.findAll(locale, currency, categoryCode, selectedFacets.getFacets());
-    	return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
-    }
-   
+	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}/maxPrice")
+	public Double getMaxPrice(@PathVariable String locale,
+			@PathVariable String currency, @PathVariable String categoryCode,
+			@RequestBody final FacetContainer selectedFacets) {
+		LOGGER.debug("call CategoryController.getMaxPrice with parameters : {}, {}, {}", locale, currency,
+				categoryCode);
+		return new Double(0);
+	}
+
 }

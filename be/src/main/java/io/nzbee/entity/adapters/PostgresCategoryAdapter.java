@@ -46,6 +46,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	private ICategoryMapper categoryMapper;
 
 	@Override
+	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
+		//categoryService.
+		return new Double(0);
+	}
+	
+	@Override
 	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
 		return categoryService.findAll(locale, currency, codes)
 				.stream().map(c -> (Category) categoryMapper.entityToDo(c)).collect(Collectors.toSet());

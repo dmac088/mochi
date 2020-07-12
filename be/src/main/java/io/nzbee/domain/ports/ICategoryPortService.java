@@ -25,4 +25,6 @@ public interface ICategoryPortService  extends IProductDimensionService<Category
 
 	Set<BrandCategory> findAllBrandCategories(String locale, String currency);
 
+	Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets);
+
 }

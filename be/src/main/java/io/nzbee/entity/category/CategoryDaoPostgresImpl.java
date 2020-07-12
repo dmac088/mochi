@@ -52,6 +52,48 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	private Globals globalVars;
 
 	@Override
+	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
+			Set<String> tagCodes) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtils.join(brandCodes), StringUtils.join(tagCodes));
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(), 
+															 !brandCodes.isEmpty(),
+															 !tagCodes.isEmpty(),
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false), "CategoryMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+				 
+		if(!categoryCodes.isEmpty()) {
+			 query.setParameter("categoryCodes", categoryCodes);
+		}
+		
+		if(!brandCodes.isEmpty()) {
+			 query.setParameter("brandCodes", brandCodes);
+		}
+			
+		if(!tagCodes.isEmpty()) {
+			 query.setParameter("tagCodes", tagCodes);
+		}
+		
+		query.setParameter("categoryCode", categoryCode);
+		
+		Double result = (Double) query.getSingleResult();
+		
+		return result;
+	}
+	
+	@Override
 	public <T> List<Category> findAllByType(String locale, String currency, Class<T> cls) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
 		
@@ -531,17 +573,18 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		  " +
 				
 				((hasBrands) ?
-				"		 INNER JOIN mochi.brand b " +
-				"		 ON prd.bnd_id = b.bnd_id " +
+				"INNER JOIN mochi.brand b " +
+				"		ON prd.bnd_id = b.bnd_id " +
 				" 		AND b.bnd_cd in 	:brandCodes "
 				: "") +
 				
 				((hasTags) ?
-				"		INNER JOIN mochi.product_tag pt" + 
-				"		on prd.prd_id = pt.prd_id" + 
-				"" + 
-				"		INNER JOIN mochi.tag t " + 
-				"		on pt.tag_id = t.tag_id" +
+				"INNER JOIN mochi.product_tag pt" + 
+				"		ON prd.prd_id = pt.prd_id " + 
+				
+				
+				"INNER JOIN mochi.tag t " + 
+				"		ON pt.tag_id = t.tag_id" +
 				" 		AND t.tag_cd in 	:tagCodes " 
 				: "") +
 				
@@ -561,8 +604,16 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		AND prc_val <= :maxPrice " 
 				: "") +
 				
-				"		 WHERE prd_sts_cd = :activeProductCode " +
-				"		 ) prd  " +
+				((hasCategories) ? 	
+				" INNER JOIN mochi.product_category pc " +
+				"		ON prd.prd_id = pc.prd_id  " +
+				
+				" INNER JOIN mochi.category c " +
+				"		ON  pc.cat_id = c.cat_id  " +
+				" 		AND c.cat_cd in 	:categoryCodes " : "") +
+				
+				" WHERE prd_sts_cd = :activeProductCode " +
+				") prd  " +
 				"		 ON pc.prd_id = prd.prd_id " +
 				"		  " +
 				"LEFT JOIN 	( " +
@@ -723,9 +774,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  then '0' " +
 				"  else :parentCategoryCode" +
 				"  end" +
-				((!withChildren && hasCategories) ? 	" 	AND s.cat_cd in 	:categoryCodes " : "") +
+				//((!withChildren && hasCategories) ? 	" 	AND s.cat_cd in 	:categoryCodes " : "") +
 				((!withChildren && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
-				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : ""));
+				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
+				((!withChildren && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
 			
 		return sql;
 	}

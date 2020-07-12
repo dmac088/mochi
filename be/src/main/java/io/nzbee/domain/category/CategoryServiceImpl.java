@@ -21,6 +21,11 @@ public class CategoryServiceImpl implements ICategoryService {
 	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
 		return categoryService.findAll(locale, currency, categoryCode, selectedFacets);
 	}
+    
+    @Override
+	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
+		return new Double(0);
+	}
 
 	@Override
 	@Transactional(readOnly=true)
