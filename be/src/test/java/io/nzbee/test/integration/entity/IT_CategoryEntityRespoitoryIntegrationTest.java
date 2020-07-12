@@ -94,7 +94,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     }
     
     @Test
-    public void whenGetMaxPriceForFruitCategory_thenReturnCurrectMaxPrice() {
+    public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInHKD() {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
@@ -110,7 +110,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     }
     
     @Test
-    public void whenGetMaxPriceForVegetablesCategory_thenReturnCurrectMaxPrice() {
+    public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInHKD() {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
@@ -126,7 +126,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     }
     
     @Test
-    public void whenGetMaxPriceForAllCategory_thenReturnCurrectMaxPrice() {
+    public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInHKD() {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
@@ -142,7 +142,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     }
     
     @Test
-    public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPrice() {
+    public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceHKD() {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
@@ -157,6 +157,70 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	assertThat(found).isEqualTo(new Double("85.5"));
     }
     
+    
+    @Test
+    public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInUSD() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyHKD(), 
+														   "FRT01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("20.79"));
+    }
+    
+    @Test
+    public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInUSD() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyHKD(), 
+														   "VEG01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("13.86"));
+    }
+    
+    @Test
+    public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInUSD() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyHKD(), 
+														   "PRM01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("109.62"));
+    }
+    
+    @Test
+    public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceUSD() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyHKD(), 
+														   "POM01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("10.98"));
+    }
 	
     private void assertAllCategoriesFound(final List<Category> found) {
     	
