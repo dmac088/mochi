@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.EntityManager;
 
@@ -91,6 +93,70 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	assertAllProductCategoriesFound(found);
     }
     
+    @Test
+    public void whenGetMaxPriceForFruitCategory_thenReturnCurrectMaxPrice() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyUSD(), 
+														   "FRT01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("162.0"));
+    }
+    
+    @Test
+    public void whenGetMaxPriceForVegetablesCategory_thenReturnCurrectMaxPrice() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyUSD(), 
+														   "VEG01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("108.0"));
+    }
+    
+    @Test
+    public void whenGetMaxPriceForAllCategory_thenReturnCurrectMaxPrice() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyUSD(), 
+														   "PRM01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("855.0"));
+    }
+    
+    @Test
+    public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPrice() {
+    	
+        // when
+    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+														   globalVars.getCurrencyUSD(), 
+														   "POM01", 
+														   new HashSet<String>(), 
+														   new HashSet<String>(), 
+														   new HashSet<String>());
+												  		
+     
+        // then
+    	assertThat(found).isEqualTo(new Double("85.5"));
+    }
+    
 	
     private void assertAllCategoriesFound(final List<Category> found) {
     	
@@ -114,5 +180,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void closeConnection() {
     	entityManager.close();
     }
+    
+  
     
 }
