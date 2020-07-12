@@ -47,8 +47,13 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 
 	@Override
 	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		//categoryService.
-		return new Double(0);
+		return categoryService.getMaxPrice(locale, currency, categoryCode, 
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
+				.collect(Collectors.toSet()),
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
+				.collect(Collectors.toSet()),
+				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
+				.collect(Collectors.toSet()));
 	}
 	
 	@Override
@@ -69,7 +74,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
     	
     	Set<Category> sc = categoryService.findAll(locale, currency, categoryCode,
     			selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
-				.collect(Collectors.toSet()),
+						.collect(Collectors.toSet()),
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
 						.collect(Collectors.toSet()),
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())

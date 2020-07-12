@@ -93,7 +93,7 @@ public class CategoryController {
 			@RequestBody final FacetContainer selectedFacets) {
 		LOGGER.debug("call CategoryController.getMaxPrice with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
-		return new Double(0);
+		return categoryService.getMaxPrice(locale, currency, categoryCode, selectedFacets.getFacets());
 	}
 
 }

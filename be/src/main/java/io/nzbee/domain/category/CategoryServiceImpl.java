@@ -24,7 +24,7 @@ public class CategoryServiceImpl implements ICategoryService {
     
     @Override
 	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		return new Double(0);
+		return categoryService.getMaxPrice(locale, currency, categoryCode, selectedFacets);
 	}
 
 	@Override
@@ -81,13 +81,11 @@ public class CategoryServiceImpl implements ICategoryService {
 	@Override
 	public void delete(Category object) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
 	public void update(Category object) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }
