@@ -163,7 +163,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyHKD(), 
+														   globalVars.getCurrencyUSD(), 
 														   "FRT01", 
 														   new HashSet<String>(), 
 														   new HashSet<String>(), 
@@ -179,7 +179,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyHKD(), 
+														   globalVars.getCurrencyUSD(), 
 														   "VEG01", 
 														   new HashSet<String>(), 
 														   new HashSet<String>(), 
@@ -195,7 +195,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyHKD(), 
+														   globalVars.getCurrencyUSD(), 
 														   "PRM01", 
 														   new HashSet<String>(), 
 														   new HashSet<String>(), 
@@ -211,7 +211,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyHKD(), 
+														   globalVars.getCurrencyUSD(), 
 														   "POM01", 
 														   new HashSet<String>(), 
 														   new HashSet<String>(), 
