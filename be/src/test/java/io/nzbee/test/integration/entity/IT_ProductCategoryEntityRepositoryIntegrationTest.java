@@ -138,7 +138,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         //then
     	assertNotNull(lc);
     	assertThat(lc.size())
-        .isEqualTo(8);
+        .isEqualTo(7);
     }
     
     @Test
@@ -161,7 +161,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         //then
     	assertNotNull(lc);
     	assertThat(lc.size())
-        .isEqualTo(8);
+        .isEqualTo(7);
     }
     
     @Test
@@ -184,7 +184,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         //then
 		assertNotNull(lc);
     	assertThat(lc.size())
-        .isEqualTo(8);
+        .isEqualTo(7);
     }
     
   
