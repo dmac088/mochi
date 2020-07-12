@@ -16,6 +16,7 @@ function Products(props) {
 
     const [stateObject, setObjectState] = useState({
         products: [],
+        page: {},
         selectedFacets: [],
         loading: false,
     });
@@ -62,6 +63,7 @@ function Products(props) {
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
+                    page: response.data.page,
                     products: (response.data._embedded) 
                                 ? response.data._embedded.productResources
                                 : [],
@@ -119,7 +121,9 @@ function Products(props) {
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
                         <ShopBanner/>
-                        <ShopHeader />
+                        <ShopHeader
+                            {...props}
+                            page={stateObject.page} />
                         <div className="shop-product-wrap grid row no-gutters mb-35">
                             {renderProducts(stateObject.products)}
                         </div>
