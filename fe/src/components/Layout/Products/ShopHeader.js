@@ -1,6 +1,7 @@
 import React from 'react';
 
-function ShopHeader() {
+function ShopHeader(props) {
+    const { page } = props;
     return (
         <div className="shop-header mb-35">
             <div className="row">
@@ -20,7 +21,7 @@ function ShopHeader() {
                             <option value="priceDesc">Price: High to Low</option>
                         </select>
                     </div>
-                    <p className="result-show-message">Showing x of y results</p>
+                    <p className="result-show-message">Showing {page.number+1} of {page.totalPages} results</p>
                 </div>
             </div>
         </div>

@@ -5,7 +5,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.util.HashSet;
 import java.util.List;
 import javax.persistence.EntityManager;
-
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -211,11 +210,11 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	
         // when
     	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyUSD(), 
-														   "POM01", 
-														   new HashSet<String>(), 
-														   new HashSet<String>(), 
-														   new HashSet<String>());
+												   globalVars.getCurrencyUSD(), 
+												   "POM01", 
+												   new HashSet<String>(), 
+												   new HashSet<String>(), 
+												   new HashSet<String>());
 												  		
      
         // then
