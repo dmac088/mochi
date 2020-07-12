@@ -63,10 +63,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 !tagCodes.isEmpty(),
 															 false,
 															 false,
+															 true,
 															 false,
 															 false,
 															 true,
-															 false), "CategoryMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
@@ -88,7 +89,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		query.setParameter("categoryCode", categoryCode);
 		
-		Double result = (Double) query.getSingleResult();
+		Double result = (new BigDecimal(query.getSingleResult().toString())).doubleValue();
 		
 		return result;
 	}
@@ -100,6 +101,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(false, 
+															 false,
 															 false,
 															 false,
 															 false,
@@ -139,6 +141,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -167,6 +170,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 !tagCodes.isEmpty(),
 															 !(maxPrice == null),
 															 true,
+															 false,
 															 false,
 															 false,
 															 true,
@@ -218,6 +222,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
@@ -245,6 +250,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		final List<String> categoryCodes = new ArrayList<String>();
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false,
 															 false,
 															 false,
@@ -290,6 +296,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 true,
 															 false,
 															 false,
@@ -330,6 +337,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		categoryCodes.add(code);
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
 															 false,
 															 false,
 															 false,
@@ -511,6 +519,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				boolean hasTags,
 				boolean hasPrice,
 				boolean childrenOnly,
+				boolean maxPriceOnly,
 				boolean hasCategoryDesc,
 				boolean hasCategoryId,
 				boolean hasCategoryCd,
@@ -698,7 +707,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.max_retail_price, " +
 				"	s1.max_markdown_price " +
 				") " +
-				"SELECT s.cat_id 				AS cat_id, " +
+				"SELECT " +
+				((maxPriceOnly) ? "MAX(s.max_markdown_price) as max_markdown_price " 
+				:
+				"		s.cat_id 				AS cat_id, " +
 				"       s.cat_cd 				AS cat_cd, " +
 				"       s.cat_lvl 				AS cat_lvl, " +	
 				"		a.cat_lcl_id 			AS cat_lcl_id, "	+	
@@ -725,7 +737,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       ps.object_count			AS cat_prnt_object_count, " +
 				"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
 				"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price, " +
-				"		coalesce(cs.child_cat_count,0)		AS child_cat_count " +
+				"		coalesce(cs.child_cat_count,0)		AS child_cat_count ") +
 
 				"FROM summaries_ptb s " +
 

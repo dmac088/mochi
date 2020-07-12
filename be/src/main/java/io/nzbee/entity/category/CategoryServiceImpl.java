@@ -38,6 +38,12 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
+	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
+			Set<String> tags) {
+		return categoryDAO.getMaxPrice(locale, currency, categoryCode, categoryCodes, brands, tags);
+	}
+	
+	@Override
 	public List<Category> findAll(String locale, String currency) {
 		return categoryDAO.findAll(locale, currency);
 	}
