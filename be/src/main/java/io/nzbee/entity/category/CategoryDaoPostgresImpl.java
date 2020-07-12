@@ -510,7 +510,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				boolean hasBrands,
 				boolean hasTags,
 				boolean hasPrice,
-				boolean withChildren,
+				boolean childrenOnly,
 				boolean hasCategoryDesc,
 				boolean hasCategoryId,
 				boolean hasCategoryCd,
@@ -523,7 +523,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			t.cat_cd, " +
 				"			t.cat_lvl, " +
 				"			t.cat_prnt_id,  " +
-				"			t.cat_typ_id, " +	
+				"			t.cat_typ_id, " +
 				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t " +
 				
@@ -533,7 +533,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				"  WHERE 0=0 " +
 				((hasCategoryDesc)  ? " AND a.cat_desc = :categoryDesc " : "") + 
-				((hasCategories)  	? " AND t.cat_cd in :categoryCodes" : "") +
 				((hasCategoryId)  	? " AND t.cat_id = :categoryId" : "") +
 				((hasCategoryCd  	? " AND t.cat_cd = :categoryCode" : "") +
 				((!hasCategoryCd 	&& !hasCategoryDesc 	&& !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
@@ -563,6 +562,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"FROM descendants cc " +
 				"LEFT JOIN mochi.product_category pc " +
 				"ON cc.cat_id = pc.cat_id " +
+				
 				"LEFT JOIN 	( " +
 				"		 SELECT prd.prd_id,  " +
 				"			upc_cd " +
@@ -662,7 +662,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 AND prd_sts_cd = 		:activeProductCode " +
 				"		 )  markdown_price		  " +
 				"		 ON pc.prd_id = markdown_price.prd_id " +
-				"	 " +
+				" WHERE 0=0 " +
+				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id <> :categoryId " : "") +
+				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd <> :categoryCode " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
@@ -775,9 +777,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  else :parentCategoryCode" +
 				"  end" +
 				//((!withChildren && hasCategories) ? 	" 	AND s.cat_cd in 	:categoryCodes " : "") +
-				((!withChildren && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
-				((!withChildren && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
-				((!withChildren && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
+				((!childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
+				((!childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
+				((!childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
 			
 		return sql;
 	}
