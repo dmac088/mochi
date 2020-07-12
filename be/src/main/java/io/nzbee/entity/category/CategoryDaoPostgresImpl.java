@@ -166,7 +166,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 !brandCodes.isEmpty(),
 															 !tagCodes.isEmpty(),
 															 !(maxPrice == null),
-															 false,
+															 true,
 															 false,
 															 false,
 															 true,
