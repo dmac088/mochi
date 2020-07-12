@@ -20,5 +20,8 @@ public interface ICategoryDao extends ILocalizedDao<Category> {
 
 	List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);
+
+	Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes);
 	
 }

@@ -19,4 +19,6 @@ public interface ICategoryService extends ILocalizedService<Category> {
 	Set<ProductCategory> findAllProductCategories(String locale, String currency);
 	
 	Set<BrandCategory> findAllBrandCategories(String locale, String currency);
+
+	Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets);
 }
