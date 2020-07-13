@@ -49,18 +49,17 @@ const BreadcrumbsItem = (props, categories) => {
 
 const renderBreadCrumb = (array, match, categories) => {
     const { lang } = match.params;
-    console.log('hello');
     
     return (
         array.map((s, index) => {
-            console.log(s);
-            const cat = (categories.list.filter(c => c.data.categoryCode === s));
-            console.log(cat);
+            const item = (categories.list.filter(c => c.data.categoryCode === s));
+            const cat = item[0];
+            const desc = (cat) ? cat.data.categoryDesc : '';
 
             return (
                 <li key={index} className={match.isExact ? 'breadcrumb-active' : ''}>
                     <Link to={match.url || ''}>
-                        {(!localization[lang][s]) ? s : (localization[lang][s])}
+                        {(!localization[lang][s]) ? desc : (localization[lang][s])}
                     </Link>
                 </li>
             );
