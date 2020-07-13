@@ -54,9 +54,10 @@ function CategorySidebar(props) {
     });
 
     const changePrice = (newPrice) => {
-        setObjectState({
+        setObjectState((prevState) => ({
+            ...prevState, 
             currentPrice: newPrice,
-        })
+        }))
     }
 
     return (
