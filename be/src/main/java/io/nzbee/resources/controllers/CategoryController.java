@@ -88,12 +88,13 @@ public class CategoryController {
 	}
 	
 	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}/maxPrice")
-	public Double getMaxPrice(@PathVariable String locale,
+	public ResponseEntity<Double> getMaxPrice(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String categoryCode,
 			@RequestBody final FacetContainer selectedFacets) {
 		LOGGER.debug("call CategoryController.getMaxPrice with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
-		return categoryService.getMaxPrice(locale, currency, categoryCode, selectedFacets.getFacets());
+		 Double result = categoryService.getMaxPrice(locale, currency, categoryCode, selectedFacets.getFacets());
+		return ResponseEntity.ok(result);
 	}
 
 }

@@ -1,8 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getCategoryPath } from '../../../../components/Layout/Helpers/Route/Route';
-import { ListSidebar } from './Layout/ListSidebar';
 import { findByCode } from '../../../../services/Category';
+import { RangeSidebar } from './Layout/RangeSidebar';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 
 function CategorySidebar(props) {
@@ -13,7 +12,7 @@ function CategorySidebar(props) {
     const prevCategoryCode = usePrevious(categoryCode);
 
     const [stateObject, setObjectState] = useState({
-        price: [],
+        price: null,
     });
 
     function usePrevious(value) {
@@ -27,46 +26,37 @@ function CategorySidebar(props) {
     //mapCategoriesToSidebar
     const retrieveMaxPrice = (facets) => {
         const currentCategory = findByCode(categories.list, categoryCode);
-        if(!currentCategory) { return; }
-        axios.post(currentCategory._links.children.href,
+        if (!currentCategory) { return; }
+        axios.post(currentCategory._links.maxPrice.href,
             { facets: facets })
-             .then((response) => {
-                 setObjectState((prevState) => ({
-                     ...prevState,
-                     categories: (response.data._embedded) 
-                                ? response.data._embedded.categoryResources
-                                : [],
-                 }));
-             });
+            .then((response) => {
+                setObjectState((prevState) => ({
+                    ...prevState,
+                    price: response.data,
+                }));
+            });
     }
 
 
     useEffect(() => {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
-            retrieveCategories(selectedFacets);
+            retrieveMaxPrice(selectedFacets);
         }
     }, [categoryCode, categories.loading, loading]);
 
-    stateObject.categories
-    .filter(c => c.data.count > 0)
-    .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
-    .map(c => {
-        items.push({
-            display: c.data.categoryDesc + ' (' + c.data.count + ')',
-            code: c.data.categoryCode,
-            path: getCategoryPath(c.data.categoryCode, props.match)
-            });
+
+    items.push({
+        display: stateObject.price,
+        code: stateObject.price,
+        path: null
     });
-   
+
+
     return (
         <React.Fragment>
-            {(items.length > 0)
-                ? <ListSidebar
-                    filterType={"category"}
-                    heading={"filter by category"}
-                    items={items}
-                    modFacet={addFacet} />
-                : <React.Fragment />}
+             <RangeSidebar
+                    filterType={"price"}
+                    heading={"filter by price"} />
         </React.Fragment>
     )
 }

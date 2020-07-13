@@ -8,6 +8,7 @@ import CategorySidebar from './Sidebars/CategorySidebar';
 import BrandSidebar from './Sidebars/BrandSidebar';
 import TagSidebar from './Sidebars/TagSidebar';
 import SelectionSidebar from './Sidebars/SelectionSidebar';
+import PriceSidebar from './Sidebars/PriceSidebar';
 import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
@@ -110,6 +111,8 @@ function Products(props) {
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
+                            <PriceSidebar 
+                                {...props}/>
                             <TagSidebar 
                                 {...props}
                                 name={"tag"}
