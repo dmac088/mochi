@@ -66,6 +66,14 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 																		category.getCategoryCode(), 
 																		null
 																)).withRel("children"));
+					
+					
+			cr.add(linkTo(methodOn(CategoryController.class).getMaxPrice(
+																		category.getLocale(),
+																		category.getCurrency(),  
+																		category.getCategoryCode(), 
+																		null
+																)).withRel("maxPrice"));
 		}
 			
 		return cr;
