@@ -16,7 +16,14 @@ export const RangeSidebar = () => {
           marginLeft: -14,
           marginTop: -9,
           backgroundColor: 'grey',
-        }}/>
+        }}
+        min={0}
+        max={1000}
+        step={100}
+        defaultValue={1000}
+        //value={1000}
+        railStyle={{ height: 10 }}
+        />
       </div>
     );
   }
