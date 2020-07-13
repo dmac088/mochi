@@ -2,12 +2,14 @@ import React from 'react';
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
 
-export const RangeSidebar = () => {
+export const RangeSidebar = (props) => {
+  const { currentPrice, maxPrice, changePrice } = props;
+  console.log(currentPrice);
     return (
       <div className="sidebar mb-35">
-        <p>Value less than: </p>
+        <p>Value less than: {currentPrice}</p>
         <Slider 
-        onChange={(value) => console.log(value)}
+        onChange={(value) => changePrice(value)}
         trackStyle={{ backgroundColor: '#80bb01', height: 10 }}
         handleStyle={{
           borderColor: '#80bb01',
@@ -18,10 +20,10 @@ export const RangeSidebar = () => {
           backgroundColor: 'grey',
         }}
         min={0}
-        max={1000}
-        step={100}
-        defaultValue={1000}
-        //value={1000}
+        max={maxPrice}
+        step={maxPrice / 5}
+        defaultValue={maxPrice}
+        value={currentPrice}
         railStyle={{ height: 10 }}
         />
       </div>

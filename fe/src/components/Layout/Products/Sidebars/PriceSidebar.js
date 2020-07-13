@@ -12,7 +12,8 @@ function CategorySidebar(props) {
     const prevCategoryCode = usePrevious(categoryCode);
 
     const [stateObject, setObjectState] = useState({
-        price: null,
+        maxPrice: null,
+        currentPrice: null,
     });
 
     function usePrevious(value) {
@@ -32,7 +33,8 @@ function CategorySidebar(props) {
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
-                    price: response.data,
+                    maxPrice: response.data,
+                    currentPrice: (prevState.currentPrice) ? prevState.currentPrice : response.data,
                 }));
             });
     }
@@ -51,12 +53,20 @@ function CategorySidebar(props) {
         path: null
     });
 
+    const changePrice = (newPrice) => {
+        setObjectState({
+            currentPrice: newPrice,
+        })
+    }
 
     return (
         <React.Fragment>
              <RangeSidebar
                     filterType={"price"}
-                    heading={"filter by price"} />
+                    heading={"filter by price"} 
+                    maxPrice={stateObject.maxPrice}
+                    currentPrice={stateObject.currentPrice}
+                    changePrice={changePrice} />
         </React.Fragment>
     )
 }
