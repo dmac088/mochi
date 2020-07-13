@@ -4,7 +4,6 @@ import 'rc-slider/assets/index.css';
 
 export const RangeSidebar = (props) => {
   const { currentPrice, maxPrice, changePrice } = props;
-  console.log(currentPrice);
     return (
       <div className="sidebar mb-35">
         <p>Value less than: {currentPrice}</p>
@@ -19,11 +18,11 @@ export const RangeSidebar = (props) => {
           marginTop: -9,
           backgroundColor: 'grey',
         }}
-        min={0}
+        min={maxPrice / 5}
         max={maxPrice}
         step={maxPrice / 5}
         defaultValue={maxPrice}
-        value={currentPrice}
+        value={(currentPrice) ? currentPrice : maxPrice}
         railStyle={{ height: 10 }}
         />
       </div>
