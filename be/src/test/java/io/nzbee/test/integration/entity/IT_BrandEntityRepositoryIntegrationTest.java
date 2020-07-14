@@ -27,6 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.tag.Tag;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -160,6 +161,50 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	assertThat(lb.size()).isEqualTo(3);
     }
     
+    @Test
+	public void whenFindAllWithPriceFacetHKD_thenReturnCorrectResultCount() {
+
+		Set<String> categoryCodes = new HashSet<String>();
+		Set<String> tagCodes = new HashSet<String>();
+
+		Double price = new Double("32.4");
+
+		// when
+    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
+				  								globalVars.getCurrencyHKD(), 
+				  								"FRT01", 
+				  								categoryCodes, 
+				  								tagCodes, 
+				  								price
+				  								);
+     
+        //then
+    	assertNotNull(lb);
+    	assertThat(lb.size()).isEqualTo(3);
+	}
+    
+    @Test
+	public void whenFindAllWithPriceFacetUSD_thenReturnCorrectResultCount() {
+
+		Set<String> categoryCodes = new HashSet<String>();
+		Set<String> tagCodes = new HashSet<String>();
+
+		Double price = new Double("4.15");
+
+		// when
+    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
+				  								globalVars.getCurrencyUSD(), 
+				  								"FRT01", 
+				  								categoryCodes, 
+				  								tagCodes, 
+				  								price
+				  								);
+     
+        //then
+    	assertNotNull(lb);
+    	assertThat(lb.size()).isEqualTo(3);
+
+	}
     
     private void assertFound(final Brand found) {
     	
