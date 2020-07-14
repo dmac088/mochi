@@ -12,6 +12,6 @@ public interface ITagDao  extends ILocalizedDao<Tag> {
 			Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes);
 
 	List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes);
+			Set<String> brandCodes, Double maxPrice);
 
 }

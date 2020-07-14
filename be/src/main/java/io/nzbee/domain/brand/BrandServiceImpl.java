@@ -2,9 +2,6 @@ package io.nzbee.domain.brand;
 
 import java.util.Set;
 import org.springframework.transaction.annotation.Transactional;
-
-import io.nzbee.search.dto.facet.IFacet;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class BrandServiceImpl implements IBrandService {
@@ -44,8 +41,8 @@ public class BrandServiceImpl implements IBrandService {
     
     @Override
     @Transactional(readOnly=true)
-	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		return brandService.findAll(locale, currency, categoryCode, selectedFacets);
+	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
+		return brandService.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
 	}
     
 	@Override

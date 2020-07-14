@@ -278,14 +278,15 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes) {
+	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','));
 		
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(
 															 !categoryCodes.isEmpty(),
-															 !brandCodes.isEmpty()), "TagMapping")
+															 !brandCodes.isEmpty(),
+															 true),"TagMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode);
 		
@@ -308,7 +309,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	private String constructSQL(
 			boolean hasCategories,
-			boolean hasBrands
+			boolean hasBrands,
+			boolean hasMaxPrice
 		) {
 	String sql = "WITH recursive descendants AS  " + 
 			"			(  " + 

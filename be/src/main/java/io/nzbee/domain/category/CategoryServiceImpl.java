@@ -4,7 +4,6 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.search.dto.facet.IFacet;
 
 public class CategoryServiceImpl implements ICategoryService {
     
@@ -18,13 +17,13 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
     
     @Override
-	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		return categoryService.findAll(locale, currency, categoryCode, selectedFacets);
+	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
+		return categoryService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice);
 	}
     
     @Override
-	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		return categoryService.getMaxPrice(locale, currency, categoryCode, selectedFacets);
+	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
+		return categoryService.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice);
 	}
 
 	@Override

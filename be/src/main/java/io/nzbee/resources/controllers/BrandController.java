@@ -1,6 +1,8 @@
 package io.nzbee.resources.controllers;
 
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +44,20 @@ public class BrandController {
     	 
     	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
+    	Optional<String> oMaxPrice = selectedFacets.getFacets().stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Double maxPrice = null;
+    	if(oMaxPrice.isPresent()) {
+    		maxPrice = new Double(oMaxPrice.get());
+    	}
+    	
     	final Set<Brand> collection =
     			brandService.findAll(locale, 
     								 currency, 
     								 categoryCode,
-    								 selectedFacets.getFacets()
+    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 maxPrice
     			);
 
         return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));

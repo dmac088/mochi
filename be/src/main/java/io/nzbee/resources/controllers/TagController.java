@@ -1,5 +1,6 @@
 package io.nzbee.resources.controllers;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -39,13 +40,19 @@ public class TagController {
     	
     	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
+    	Optional<String> oMaxPrice = selectedFacets.getFacets().stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Double maxPrice = null;
+    	if(oMaxPrice.isPresent()) {
+    		maxPrice = new Double(oMaxPrice.get());
+    	}
     	
     	final Set<Tag> collection =
-    			tagService.findAll(	locale, 
+    			tagService.findAll(	 locale, 
     								 currency, 
     								 categoryCode,
     								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet())
+    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 maxPrice    							  
     			);
     	
     	return ResponseEntity.ok(tagResourceAssembler.toCollectionModel(collection));

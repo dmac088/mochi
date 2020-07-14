@@ -32,13 +32,14 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes) {
+	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		return productTagDAO.findAll(
 									locale, 
 									currency, 
 									categoryCode,
 									categoryCodes, 
-									brandCodes);
+									brandCodes,
+									maxPrice);
 	}
 
 	@Override

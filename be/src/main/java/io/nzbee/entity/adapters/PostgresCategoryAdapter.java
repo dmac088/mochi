@@ -1,6 +1,5 @@
 package io.nzbee.entity.adapters;
 
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -20,7 +19,6 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
-import io.nzbee.search.dto.facet.IFacet;
 
 @Component
 public class PostgresCategoryAdapter implements ICategoryPortService {
@@ -46,14 +44,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	private ICategoryMapper categoryMapper;
 
 	@Override
-	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		return categoryService.getMaxPrice(locale, currency, categoryCode, 
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
-				.collect(Collectors.toSet()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
-				.collect(Collectors.toSet()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
-				.collect(Collectors.toSet()));
+	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes) {
+		return categoryService.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
 	}
 	
 	@Override
@@ -63,25 +55,10 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<IFacet> selectedFacets) {
-		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : {}, {}, {}, {}", locale, currency, categoryCode, selectedFacets.size());
-		
-		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
-    	Double maxPrice = null;
-    	if(oMaxPrice.isPresent()) {
-    		maxPrice = new Double(oMaxPrice.get());
-    	}
-    	
-    	Set<Category> sc = categoryService.findAll(locale, currency, categoryCode,
-    			selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
-						.collect(Collectors.toSet()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
-						.collect(Collectors.toSet()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
-						.collect(Collectors.toSet()),
-				maxPrice).stream().map(c -> mapHelper(c)).collect(Collectors.toSet());
-    	
-    	return sc;
+	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
+		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : {}, {}, {}", locale, currency, categoryCode);
+		return categoryService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice)
+				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 
 	@Override
