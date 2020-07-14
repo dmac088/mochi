@@ -183,7 +183,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 				 
 		if(!categoryCodes.isEmpty()) {
-			 query.setParameter("categoryCodes", categoryCodes);
+		//	 query.setParameter("categoryCodes", categoryCodes);
 		}
 		
 		if(!brandCodes.isEmpty()) {
@@ -618,8 +618,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		ON prd.prd_id = pc.prd_id  " +
 				
 				" INNER JOIN mochi.category c " +
-				"		ON  pc.cat_id = c.cat_id  " +
-				" 		AND c.cat_cd in 	:categoryCodes " : "") +
+				"		ON  pc.cat_id = c.cat_id  " //+
+				//" 		AND c.cat_cd in 	:categoryCodes " 
+				: ""
+					) +
 				
 				" WHERE prd_sts_cd = :activeProductCode " +
 				") prd  " +
@@ -788,7 +790,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  then '0' " +
 				"  else :parentCategoryCode" +
 				"  end" +
-			
+				//((!withChildren && hasCategories) ? 	" 	AND s.cat_cd in 	:categoryCodes " : "") +
 				((!childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
 				((!childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
 				((!childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
