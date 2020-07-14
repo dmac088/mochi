@@ -27,7 +27,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.tag.Tag;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
