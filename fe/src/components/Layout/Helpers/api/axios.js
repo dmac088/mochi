@@ -90,6 +90,8 @@ instance.interceptors.response.use((response) => {
     if (error.response && error.response.status === 401 && !originalRequest._retry) {
         console.log('using refresh token to obtain new access token.....');
 
+        originalRequest._retry = true;
+    
         //if the token is refreshing then add to the failed queue
         if (isRefreshing) {
             return new Promise(function (resolve, reject) {
@@ -101,7 +103,6 @@ instance.interceptors.response.use((response) => {
             })
         }
 
-        originalRequest._retry = true;
         isRefreshing = true;
 
         const refreshToken = state.session.refresh_token;
@@ -126,7 +127,7 @@ instance.interceptors.response.use((response) => {
                 apiConfig.config)
                 .then(response => {
                     if (response.status === 200) {
-                        console.log('assigning new access token to further requests.....');
+                        console.log('assigning new access token for further requests.....');
                         store.dispatch(refreshTokens(response.data));
                         localStorageService.setToken(response.data);
                         instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
