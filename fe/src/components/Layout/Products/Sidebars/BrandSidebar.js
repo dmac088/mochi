@@ -4,6 +4,7 @@ import { getCategoryPath } from '../../Helpers/Route/Route';
 import { ListSidebar } from './Layout/ListSidebar';
 import { findByCode } from '../../../../services/Category';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
+import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 
 function BrandSidebar(props) {
@@ -60,13 +61,13 @@ function BrandSidebar(props) {
 
     return (
         <React.Fragment>
-            {(items.length > 0)
-            ? <ListSidebar
+            {(loading || categories.loading)
+            ? <Spinner />
+            : <ListSidebar
                 filterType={"brand"}
                 heading={"filter by brand"}
                 items={items} 
-                modFacet={addFacet}/>
-            : <React.Fragment/>}
+                modFacet={addFacet}/>}    
         </React.Fragment>
     )
 }

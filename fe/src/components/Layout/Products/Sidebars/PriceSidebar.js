@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { findByCode } from '../../../../services/Category';
 import { RangeSidebar } from './Layout/RangeSidebar';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
+import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 function CategorySidebar(props) {
     const { addFacet, selectedFacets, loading } = props;
@@ -63,12 +64,14 @@ function CategorySidebar(props) {
 
     return (
         <React.Fragment>
-             <RangeSidebar
+             {(loading || categories.loading)
+            ? <Spinner />
+            : <RangeSidebar
                     filterType={"price"}
                     heading={"filter by price"} 
                     maxPrice={stateObject.maxPrice}
                     currentPrice={stateObject.currentPrice}
-                    changePrice={changePrice}/>
+                    changePrice={changePrice}/>}
         </React.Fragment>
     )
 }
