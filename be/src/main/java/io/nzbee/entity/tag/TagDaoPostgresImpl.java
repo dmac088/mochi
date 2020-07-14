@@ -279,14 +279,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
-		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','));
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(
 															 !categoryCodes.isEmpty(),
 															 !brandCodes.isEmpty(),
-															 true),"TagMapping")
+															 !(maxPrice == null)),"TagMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode);
 		
@@ -298,6 +298,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 			query.setParameter("brandCodes", brandCodes);
 		}
 		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
+			query.setParameter("currency", currency);
+			query.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+		}
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -310,7 +315,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	private String constructSQL(
 			boolean hasCategories,
 			boolean hasBrands,
-			boolean hasMaxPrice
+			boolean hasPrice
 		) {
 	String sql = "WITH recursive descendants AS  " + 
 			"			(  " + 
@@ -380,18 +385,34 @@ public class TagDaoPostgresImpl implements ITagDao {
 			"					and ps.prd_sts_cd = 'ACT01' " + 
 			"									  " + 
 			"				inner join mochi.brand b " +
-			" 				on p.bnd_id = b.bnd_id " +
-			"				" +			
+			" 					on p.bnd_id = b.bnd_id " +
+						
 			"				inner join mochi.product_tag pt " + 
 			"					on p.prd_id = pt.prd_id " + 
-			"									 " + 
+			 
 			"				inner join mochi.tag t " + 
 			"					on pt.tag_id = t.tag_id " + 
-			"									  " + 
+			 
 			"				inner join mochi.tag_attr_lcl lcl " + 
 			"					on t.tag_id = lcl.tag_id " + 
 			"					and lcl.lcl_cd = :locale  " + 
-			"			" + 
+			 
+			((hasPrice) ?
+							"inner join  ( " +
+									"	SELECT prd_id, " +  
+									"		   prc_val " + 
+									"		FROM mochi.price mprc " + 
+									"		INNER JOIN mochi.currency mcurr " + 
+								    "		ON         mprc.ccy_id = mcurr.ccy_id  " + 
+									"		AND        mcurr.ccy_cd = :currency  " +
+									"		INNER JOIN mochi.price_type mpt " +
+									"		ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
+									"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
+									"		) mprc  " +
+							"		ON p.prd_id = mprc.prd_id  " +
+							"		AND prc_val <= :maxPrice " 
+							: "") +
+			
 			"			where 0=0  " +			
 			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
 			((hasBrands) ? 	" 		AND b.bnd_cd in 	:brandCodes " : "") +
