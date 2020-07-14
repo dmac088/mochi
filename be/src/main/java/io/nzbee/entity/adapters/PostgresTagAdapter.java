@@ -37,8 +37,8 @@ public class PostgresTagAdapter  implements ITagPortService {
 
 	@Override
 	public Set<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes) {
-		return tagService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes)
+			Set<String> brandCodes, Double maxPrice) {
+		return tagService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice)
 				.stream().map(b -> (Tag) this.entityToDo(b)).collect(Collectors.toSet());
 	}
 

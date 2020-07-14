@@ -108,8 +108,12 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> brandCodes = new HashSet<String>();
 
 		// when
-		List<Tag> lb = tagService.findAll(globalVars.getLocaleENGB(), globalVars.getCurrencyUSD(), "FRT01",
-				categoryCodes, brandCodes);
+		List<Tag> lb = tagService.findAll(globalVars.getLocaleENGB(), 
+										  globalVars.getCurrencyUSD(), 
+										  "FRT01",
+										  categoryCodes, 
+										  brandCodes,
+										  new Double(1000));
 
 		// then
 		assertNotNull(lb);
@@ -127,8 +131,13 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		categoryCodes.add("POM01");
 
 		// when
-		List<Tag> lb = tagService.findAll(globalVars.getLocaleENGB(), globalVars.getCurrencyUSD(), "FRT01",
-				categoryCodes, brandCodes);
+		List<Tag> lb = tagService.findAll(
+				globalVars.getLocaleENGB(), 
+				globalVars.getCurrencyUSD(), 
+				"FRT01",
+				categoryCodes, 
+				brandCodes,
+				new Double(1000));
 
 		// then
 		assertNotNull(lb);
