@@ -6,8 +6,10 @@ const changeCurr = (e, match, history) => {
     const curr = e.currentTarget.id;
     const { lang } = match.params; 
     const { path } = match;
-    const newPath = generatePath(path, { lang: lang,
-                                         curr: curr } );
+    const newPath = generatePath(path, { ...match.params,
+                                        lang: lang,
+                                        curr: curr } );
+                                         
     history.replace(newPath);
 } 
 
