@@ -57,7 +57,8 @@ function CategorySidebar(props) {
         setObjectState((prevState) => ({
             ...prevState, 
             currentPrice: newPrice,
-        }))
+        }));
+        addFacet(newPrice, "maxPrice", `price <= ${newPrice}`);
     }
 
     return (
@@ -67,7 +68,7 @@ function CategorySidebar(props) {
                     heading={"filter by price"} 
                     maxPrice={stateObject.maxPrice}
                     currentPrice={stateObject.currentPrice}
-                    changePrice={changePrice} />
+                    changePrice={changePrice}/>
         </React.Fragment>
     )
 }

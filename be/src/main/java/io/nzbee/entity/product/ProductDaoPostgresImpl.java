@@ -616,10 +616,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"		) mprc  " +
 		"		ON prd.prd_id = mprc.prd_id  " +
 		
-		((hasPrice) ?
-		"		AND coalesce(mprc.prc_val, rprc.prc_val, 0) <= :maxPrice " 
-		: "") +
-		
 		"	LEFT JOIN mochi.product_food food " + 
 		"	ON prd.prd_id = food.prd_id    " + 
 		
@@ -646,7 +642,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					? "AND bnd.bnd_cd in 		:brandCodes " 
 					: "") +
 		((hasTags) 
-				? "AND tag.tag_cd in 		:tagCodes " 
+				? " AND tag.tag_cd in 		:tagCodes " 
+				: "") +
+		((hasPrice) 
+				? " AND coalesce(mprc.prc_val, rprc.prc_val,0) <= :maxPrice " 
 				: "") +
 		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
 		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +

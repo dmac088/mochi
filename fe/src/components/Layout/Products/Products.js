@@ -47,6 +47,16 @@ function Products(props) {
         }));
     } 
 
+    const replaceFacet = (facetId, facetName, display) => {
+        const na = stateObject.selectedFacets.filter(f => f.facetingName !== facetName);
+        na.push(newFacet(facetId, facetName, display));
+        setObjectState((prevState) => ({
+            ...prevState,
+            selectedFacets: na,
+            loading: true,
+        }));
+    }
+
     const removeFacet = (facetId) => {
         setObjectState((prevState) => ({
             ...prevState,
@@ -112,7 +122,8 @@ function Products(props) {
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
                             <PriceSidebar 
-                                {...props}/>
+                                {...props}
+                                addFacet={replaceFacet}/>
                             <TagSidebar 
                                 {...props}
                                 name={"tag"}
