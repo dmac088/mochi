@@ -144,6 +144,51 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		assertThat(lb.size()).isEqualTo(1);
 		assertThat(lb.stream().findFirst().get().getCount()).isEqualTo(1);
 	}
+	
+	
+	@Test
+	public void whenFindAllWithPriceFacetHKD_thenReturnCorrectResultCount() {
+
+		Set<String> categoryCodes = new HashSet<String>();
+		Set<String> brandCodes = new HashSet<String>();
+
+		Double price = new Double("97.2");
+
+		// when
+		List<Tag> lb = tagService.findAll(
+				globalVars.getLocaleENGB(), 
+				globalVars.getCurrencyHKD(), 
+				"FRT01",
+				categoryCodes, 
+				brandCodes,
+				price);
+
+		// then
+		assertNotNull(lb);
+		assertThat(lb.size()).isEqualTo(2);
+	}
+	
+	@Test
+	public void whenFindAllWithPriceFacetUSD_thenReturnCorrectResultCount() {
+
+		Set<String> categoryCodes = new HashSet<String>();
+		Set<String> brandCodes = new HashSet<String>();
+
+		Double price = new Double("12.4");
+
+		// when
+		List<Tag> lb = tagService.findAll(
+				globalVars.getLocaleENGB(), 
+				globalVars.getCurrencyUSD(), 
+				"FRT01",
+				categoryCodes, 
+				brandCodes,
+				price);
+
+		// then
+		assertNotNull(lb);
+		assertThat(lb.size()).isEqualTo(2);
+	}
 
 	private void assertFound(final Tag found) {
 
