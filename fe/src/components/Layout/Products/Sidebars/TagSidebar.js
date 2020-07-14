@@ -4,6 +4,7 @@ import { getCategoryPath } from '../../Helpers/Route/Route';
 import { ButtonSidebar } from './Layout/ButtonSidebar';
 import { findByCode } from '../../../../services/Category';
 import { instance as axios } from "../../Helpers/api/axios";
+import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 
 function TagSidebar(props) {
@@ -60,13 +61,13 @@ function TagSidebar(props) {
 
     return (
         <React.Fragment>
-            {(items.length > 0)
-            ? <ButtonSidebar
+            {(loading || categories.loading)
+            ? <Spinner />
+            : <ButtonSidebar
                 filterType={"tag"}
                 heading={"filter by tag"}
                 items={items} 
-                modFacet={addFacet}/>
-            : <React.Fragment/>}
+                modFacet={addFacet}/>}
         </React.Fragment>
     )
 }

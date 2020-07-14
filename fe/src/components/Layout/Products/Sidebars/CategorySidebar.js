@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { getCategoryPath } from '../../../../components/Layout/Helpers/Route/Route';
 import { ListSidebar } from './Layout/ListSidebar';
 import { findByCode } from '../../../../services/Category';
-import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
+import { instance as axios } from "../../../Layout/Helpers/api/axios";
+import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 
 function CategorySidebar(props) {
@@ -61,13 +62,13 @@ function CategorySidebar(props) {
    
     return (
         <React.Fragment>
-            {(items.length > 0)
-                ? <ListSidebar
+            {(loading || categories.loading)
+                ? <Spinner />
+                : <ListSidebar
                     filterType={"category"}
                     heading={"filter by category"}
                     items={items}
-                    modFacet={addFacet} />
-                : <React.Fragment />}
+                    modFacet={addFacet} />}
         </React.Fragment>
     )
 }
