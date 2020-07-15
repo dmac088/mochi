@@ -618,7 +618,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		AND prc_val <= :maxPrice " 
 				: "") +
 				
-				
 				"LEFT JOIN 	( " +
 				"		 SELECT prd.prd_id,  " +
 				"			prc_typ_cd, " +
@@ -669,6 +668,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id <> :categoryId " : "") +
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd <> :categoryCode " : "") +
 				((hasBrands)   						? " AND b.bnd_cd in :brandCodes " : "") +
+				((hasCategories) ? " AND cc.cat_cd in :categoryCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
