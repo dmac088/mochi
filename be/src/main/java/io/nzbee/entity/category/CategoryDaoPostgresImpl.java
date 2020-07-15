@@ -574,12 +574,17 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				"LEFT JOIN 	( " +
 				"		 SELECT prd.prd_id,  " +
+				"			prd.bnd_id, " +
 				"			upc_cd " +
 				"		 FROM mochi.product prd " +
 				"		  " +
 				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
+								
+				" WHERE prd_sts_cd = :activeProductCode " +
+				") prd  " +
+				"		 ON pc.prd_id = prd.prd_id " +
 				
 				((hasBrands) ?
 				"INNER JOIN mochi.brand b " +
@@ -613,20 +618,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		AND prc_val <= :maxPrice " 
 				: "") +
 				
-				((hasCategories) ? 	
-				" INNER JOIN mochi.product_category pc " +
-				"		ON prd.prd_id = pc.prd_id  " +
 				
-				" INNER JOIN mochi.category c " +
-				"		ON  pc.cat_id = c.cat_id  " //+
-				//" 		AND c.cat_cd in 	:categoryCodes " 
-				: ""
-					) +
-				
-				" WHERE prd_sts_cd = :activeProductCode " +
-				") prd  " +
-				"		 ON pc.prd_id = prd.prd_id " +
-				"		  " +
 				"LEFT JOIN 	( " +
 				"		 SELECT prd.prd_id,  " +
 				"			prc_typ_cd, " +
@@ -676,6 +668,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				" WHERE 0=0 " +
 				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id <> :categoryId " : "") +
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd <> :categoryCode " : "") +
+				((hasBrands)   						? " AND b.bnd_cd in :brandCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
