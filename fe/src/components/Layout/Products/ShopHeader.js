@@ -9,8 +9,9 @@ function ShopHeader(props) {
 
 
     const changeSort = (e) => {
-
-        console.log(e.target.value);
+        e.preventDefault();
+        const sort = e.target.value;
+        console.log(sort);
 
         // e.preventDefault();
         // const curr = e.currentTarget.id;

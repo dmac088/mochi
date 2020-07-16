@@ -541,9 +541,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  AND a.lcl_cd = :locale " +
 				
 				"  WHERE 0=0 " +
-				((hasCategoryDesc)  ? " AND a.cat_desc = :categoryDesc " : "") + 
-				((hasCategoryId)  	? " AND t.cat_id = :categoryId" : "") +
-				((hasCategoryCd  	? " AND t.cat_cd = :categoryCode" : "") +
+				((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " : "") + 
+				((hasCategoryId)  	? " AND t.cat_id 	= :categoryId" : "") +
+				((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode" : "") +
 				((!hasCategoryCd 	&& !hasCategoryDesc 	&& !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
@@ -663,11 +663,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 )  markdown_price		  " +
 				"		 ON pc.prd_id = markdown_price.prd_id " +
 				" WHERE 0=0 " +
-				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id <> :categoryId " : "") +
-				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd <> :categoryCode " : "") +
+				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id	<> :categoryId " : "") +
+				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd 	<> :categoryCode " : "") +
 				((hasBrands)   						? " AND b.bnd_cd in :brandCodes " : "") +
-				((hasCategories) ? " AND cc.cat_cd in :categoryCodes " : "") +
-				((hasTags) ? " 		AND t.tag_cd in 	:tagCodes " : "") +
+				((hasCategories) 					? " AND cc.cat_cd in :categoryCodes " : "") +
+				((hasTags) 							? " 		AND t.tag_cd in 	:tagCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
@@ -782,7 +782,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  then '0' " +
 				"  else :parentCategoryCode" +
 				"  end" +
-				//((!withChildren && hasCategories) ? 	" 	AND s.cat_cd in 	:categoryCodes " : "") +
 				((!childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
 				((!childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
 				((!childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
