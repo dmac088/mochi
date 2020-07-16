@@ -588,8 +588,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				((hasBrands) ?
 				"INNER JOIN mochi.brand b " +
-				"		ON prd.bnd_id = b.bnd_id " +
-				" 		AND b.bnd_cd in 	:brandCodes "
+				"		ON prd.bnd_id = b.bnd_id "
 				: "") +
 				
 				((hasTags) ?
@@ -598,8 +597,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				
 				"INNER JOIN mochi.tag t " + 
-				"		ON pt.tag_id = t.tag_id" +
-				" 		AND t.tag_cd in 	:tagCodes " 
+				"		ON pt.tag_id = t.tag_id" 
 				: "") +
 				
 				((hasPrice) ?
@@ -669,6 +667,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd <> :categoryCode " : "") +
 				((hasBrands)   						? " AND b.bnd_cd in :brandCodes " : "") +
 				((hasCategories) ? " AND cc.cat_cd in :categoryCodes " : "") +
+				((hasTags) ? " 		AND t.tag_cd in 	:tagCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
