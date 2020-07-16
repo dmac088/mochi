@@ -75,9 +75,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
 				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 				 
-//		if(!categoryCodes.isEmpty()) {
-//			 query.setParameter("categoryCodes", categoryCodes);
-//		}
+		if(!categoryCodes.isEmpty()) {
+			 query.setParameter("categoryCodes", categoryCodes);
+		}
 		
 		if(!brandCodes.isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
@@ -182,9 +182,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
 				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 				 
-//		if(!categoryCodes.isEmpty()) {
-//		//	 query.setParameter("categoryCodes", categoryCodes);
-//		}
+		if(!categoryCodes.isEmpty()) {
+			 query.setParameter("categoryCodes", categoryCodes);
+		}
 		
 		if(!brandCodes.isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
