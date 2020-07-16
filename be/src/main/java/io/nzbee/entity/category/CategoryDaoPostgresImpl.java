@@ -597,7 +597,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 				
 				"INNER JOIN mochi.tag t " + 
-				"		ON pt.tag_id = t.tag_id" 
+				"		ON pt.tag_id = t.tag_id " 
 				: "") +
 				
 				((hasPrice) ?
