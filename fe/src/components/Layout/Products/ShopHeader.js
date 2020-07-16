@@ -1,7 +1,28 @@
 import React from 'react';
 
+
+
+
+
 function ShopHeader(props) {
     const { page } = props;
+
+
+    const changeSort = (e) => {
+
+        console.log(e.target.value);
+
+        // e.preventDefault();
+        // const curr = e.currentTarget.id;
+        // const { lang } = match.params; 
+        // const { path } = match;
+        // const newPath = generatePath(path, { ...match.params,
+        //                                     lang: lang,
+        //                                     curr: curr } );
+                                             
+        // history.replace(newPath);
+    } 
+
     return (
         <div className="shop-header mb-35">
             <div className="row">
@@ -14,7 +35,7 @@ function ShopHeader(props) {
                 <div className="col-lg-8 col-md-8 col-sm-12 d-flex flex-column flex-sm-row justify-content-between align-items-left align-items-sm-center">
                     <div className="sort-by-dropdown d-flex align-items-center mb-xs-10">
                         <p className="mr-10">Sort By: </p>
-                        <select name="sort-by" id="sort-by" className="nice-select">
+                        <select onChange={changeSort} name="sort-by" id="sort-by" className="nice-select">
                             <option value="nameAsc">Name [A-Z]</option>
                             <option value="nameDesc">Name [Z-A]</option>
                             <option value="priceAsc">Price: Low to High</option>
