@@ -395,7 +395,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Product> lp = 
 		results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
 		
-		System.out.println(lp.stream().findFirst().get().getProductDescENGB());
 		return new PageImpl<Product>(lp, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
 	}
 	
