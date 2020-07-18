@@ -1,6 +1,9 @@
 package io.nzbee.resources.controllers;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,19 +106,30 @@ public class ProductController {
 										@PathVariable 					String 	categoryCode,
 										@RequestParam("page")			String page,
 								    	@RequestParam("size") 			String size, 
-								    	@RequestParam("sort") 			String sortBy,
+								    	@RequestParam("sort") 			String sort,
 										@RequestBody final 				FacetContainer selectedFacets) {
 		
 		
-		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, sortBy, selectedFacets.getFacets().size());
+		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, sort, selectedFacets.getFacets().size());
 		
-		final Page<ProductResource> pages = productService.findAll(		locale, 
-																		currency, 
-																		categoryCode, 
-																		page, 
-																		size, 
-																		sortBy,
-																		selectedFacets.getFacets()
+		Optional<String> oMaxPrice = selectedFacets.getFacets().stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Double maxPrice = null;
+    	if(oMaxPrice.isPresent()) {
+    		maxPrice = new Double(oMaxPrice.get());
+    	}
+
+			
+		final Page<ProductResource> pages = productService.findAll(locale, currency, categoryCode, 
+																	selectedFacets.getFacets().stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
+																	.collect(Collectors.toSet()), 
+																	selectedFacets.getFacets().stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
+																	.collect(Collectors.toSet()), 
+																	selectedFacets.getFacets().stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
+																	.collect(Collectors.toSet()), 
+																	maxPrice,
+																	page, 
+																	size, 
+																	sort
 														  		  ).map(p -> prodResourceAssembler.toModel(p));
 		
 		return ResponseEntity.ok(prodPagedAssembler.toModel(pages));

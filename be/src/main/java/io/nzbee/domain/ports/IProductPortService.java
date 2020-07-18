@@ -19,7 +19,7 @@ public interface IProductPortService extends IProductDimensionService<Product> {
 	Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String searchTerm,
 			Set<IFacet> selectedFacets, Set<IFacet> returnFacets);
 
-	Page<Product> findAll(String locale, String currency, String categoryCode, int page, int size, String sortBy,
-			Set<IFacet> selectedFacets);
+	Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
 
 }

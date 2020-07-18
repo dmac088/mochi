@@ -3,11 +3,9 @@ package io.nzbee.entity.product;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.ICategoryService;
 
@@ -54,26 +52,23 @@ public class ProductServiceImpl implements IProductService {
 
 	
 	@Override
-	public Page<Product> findAll(	
-									String locale, 
-									String currency, 
-									Pageable pageable,
-									String categoryCode,
-									List<String> categoryCodes,
-									List<String> brandCodes,
-									List<String> tagCodes,
-									Double maxPrice) {
-		
-			return productDAO.findAll(locale,
-							 		  currency,
-							 		  pageable,
-							 		  categoryCode,
-							 		  categoryCodes,
-							 		  brandCodes, 
-							 		  tagCodes,
-							 		  maxPrice,
-							 		  "1");
+	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
+		return productDAO.findAll(
+								  locale,
+						 		  currency,
+						 		  categoryCode,
+						 		  categoryCodes,
+						 		  brandCodes, 
+						 		  tagCodes,
+						 		  maxPrice,
+						 		  page,
+						 		  size,
+						 		  sort
+				 		  	);
+	
 	}
+
 
 	@Override
 	public void save(Product t) {
@@ -92,6 +87,7 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 	
 }
