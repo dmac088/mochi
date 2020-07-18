@@ -61,7 +61,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 true,
 															 false,
-															 false), "ProductMapping")
+															 false,
+															 ""), "ProductMapping")
 				
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
@@ -92,7 +93,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 false), "ProductMapping")
+															 false,
+															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productId", id)
@@ -128,7 +130,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 false), "ProductMapping")
+															 false,
+															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
@@ -164,7 +167,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 false), "ProductMapping")
+															 false,
+															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productDesc", desc)
@@ -202,7 +206,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 false), "ProductMapping")
+															 false,
+															 ""), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
@@ -248,7 +253,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 true,
-															 false), "ProductMapping.count")
+															 false,
+															 ""), "ProductMapping.count")
 				 .setParameter("locale", 			locale)
 				 .setParameter("currency", 			currency)
 				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
@@ -268,7 +274,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  false,
 													  false,
 													  false,
-													  true), "ProductMapping")
+													  true,
+													  ""), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
@@ -305,7 +312,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
   				 											 !(maxPrice == null),
   				 											 false,
   				 											 true,
-  				 											 false), "ProductMapping.count")
+  				 											 false,
+  				 											 ""), "ProductMapping.count")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("activeProductCode", globalVars.getActiveSKUCode())
@@ -343,7 +351,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					   									!(maxPrice == null),
 					   									false,
 					   									false,
-					   									true), "ProductMapping")
+					   									true,
+					   									sort), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("activeProductCode", globalVars.getActiveSKUCode())
@@ -360,7 +369,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
 		//these should contain default values for these parameters
 		query
-		.setParameter("orderby", getOrderby(sort))
+		//.setParameter("orderby", getOrderby(sort))
 		.setParameter("limit", pageable.getPageSize())
 		.setParameter("offset", pageable.getOffset());
 		
@@ -386,6 +395,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Product> lp = 
 		results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
 		
+		System.out.println(lp.stream().findFirst().get().getProductDescENGB());
 		return new PageImpl<Product>(lp, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
 	}
 	
@@ -436,7 +446,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								boolean hasPrice,
 								boolean hasType,
 								boolean countOnly,
-								boolean offset) {
+								boolean offset,
+								String sort) {
 		
 		//now we can implement conditional joins
 		//based on the parameters passed
@@ -646,7 +657,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 		((countOnly || !offset) 
 		? 	""
-		: 	" ORDER BY 	:orderby " + 
+		: 	" ORDER BY " + getOrderby(sort) + 
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
 	}
@@ -655,9 +666,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	private String getOrderby(String param) {
 		switch (param) {
 			case "nameAsc":
-				return "lower(prd_desc) asc";
+				return "lower(attr.prd_desc) asc";
 			case "nameDesc":
-				return "lower(prd_desc) desc";
+				return "lower(attr.prd_desc) desc";
 			case "priceAsc":
 				return "mprc.prc_val asc";
 			case "priceDesc":
