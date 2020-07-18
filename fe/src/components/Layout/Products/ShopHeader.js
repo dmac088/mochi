@@ -2,16 +2,13 @@ import React from 'react';
 import queryString from 'query-string';
 
 function ShopHeader(props) {
-    
+
     const { page, history } = props;
 
     const changeSort = (e) => {
         e.preventDefault();
         const sort = e.target.value;
         const query = queryString.parse(history.location.search);
-
-        console.log(sort);
-        console.log(query);
 
         const newQuery = {
             ...query,
