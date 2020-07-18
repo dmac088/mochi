@@ -35,9 +35,9 @@ instance.interceptors.request.use(config => {
     url = url.replace('{currency}', match.params.curr);
 
     const query = queryString.parse(history.location.search);
-    url = url.replace('{page}', query.page);
-    url = url.replace('{size}', query.size);
-    url = url.replace('{sort}', query.sort);
+    url = url.replace('{page}', query.page || 0);
+    url = url.replace('{size}', query.size || 10);
+    url = url.replace('{sort}', query.sort || 'nameAsc');
 
     //firstly try to retrieve the token from the file system, then try redux
     const token = state.session.access_token;
