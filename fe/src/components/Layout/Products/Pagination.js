@@ -7,7 +7,6 @@ function Pagination(props) {
 
     const changePage = (e) => {
         e.preventDefault();
-
         const page = e.target.id;
 
         const query = queryString.parse(history.location.search);
@@ -16,7 +15,7 @@ function Pagination(props) {
             ...query,
             page,
         }
-        
+
         history.push({
             search: '?' + new URLSearchParams(newQuery).toString(),
         });
