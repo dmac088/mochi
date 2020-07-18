@@ -164,9 +164,12 @@ function Products(props) {
                                 {...props}
                                 page={stateObject.page}
                                 changeGrid={changeLayout} />
-                            <div className="shop-product-wrap grid row no-gutters mb-35">
-                                {renderProducts(stateObject.products)}
-                            </div>
+                                <div className=
+                              {(stateObject.gridLayout)
+                                ? "shop-product-wrap grid row no-gutters mb-35"
+                                : "shop-product-wrap row no-gutters mb-35 list"}>
+                                    {renderProducts(stateObject.products)}
+                                </div>
                             <Pagination 
                                 {...props}
                                 page={stateObject.page} />
