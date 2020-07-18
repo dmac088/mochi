@@ -16,9 +16,7 @@ function Pagination(props) {
             ...query,
             page,
         }
-
-        console.log(newQuery);
-
+        
         history.push({
             search: '?' + new URLSearchParams(newQuery).toString(),
         });
