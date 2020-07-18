@@ -12,9 +12,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Order;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -25,7 +22,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
 import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
@@ -34,11 +30,8 @@ import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.attribute.ProductAttribute_;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
-import io.nzbee.entity.product.price.ProductPrice;
-import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 
 @Component(value = "productEntityDao")
@@ -361,11 +354,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		System.out.println(page);
 		System.out.println(size);
+		System.out.println(sort);
+		System.out.println(getOrderby(sort));
 		
 		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
 		//these should contain default values for these parameters
 		query
-		//.setParameter("orderby", "1")
+		.setParameter("orderby", getOrderby(sort))
 		.setParameter("limit", pageable.getPageSize())
 		.setParameter("offset", pageable.getOffset());
 		
@@ -651,11 +646,27 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			
 		((countOnly || !offset) 
 		? 	""
-		: 	//" ORDER BY 	:orderby " + 
+		: 	" ORDER BY 	:orderby " + 
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
 	}
 
+	
+	private String getOrderby(String param) {
+		switch (param) {
+			case "nameAsc":
+				return "lower(prd_desc) asc";
+			case "nameDesc":
+				return "lower(prd_desc) desc";
+			case "priceAsc":
+				return "mprc.prc_val asc";
+			case "priceDesc":
+			  	return "mprc.prc_val desc";
+			default:
+				return "lower(prd_desc) asc";
+			}
+	}
+	
 	@Override
 	public void save(Product t) {
 		em.persist(t);
@@ -672,22 +683,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public void delete(Product t) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@SuppressWarnings("unused")
-	private Order getOrder(String orderName, Sort.Direction orderDirection, CriteriaBuilder cb, Join<Product, ProductAttribute> attributeJoin, Join<Product, ProductPrice> priceJoin) {
-
-		if(orderName.toLowerCase().equals(ProductAttribute_.productDesc.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.ASC)) {
-			return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
-		} else if (orderName.toLowerCase().equals(ProductAttribute_.productDesc.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.DESC)) {
-		    return cb.desc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
-		} else if (orderName.toLowerCase().equals(ProductPrice_.priceValue.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.ASC)) {
-			return cb.asc(priceJoin.get(ProductPrice_.priceValue.getName()));
-		} else if (orderName.toLowerCase().equals(ProductPrice_.priceValue.getName().toLowerCase()) && orderDirection.equals(Sort.Direction.DESC)) {
-			return cb.desc(priceJoin.get(ProductPrice_.priceValue.getName())); 
-		}
-		
-		return cb.asc(cb.lower(attributeJoin.get(ProductAttribute_.productDesc.getName())));
 	}
 
 	@Override

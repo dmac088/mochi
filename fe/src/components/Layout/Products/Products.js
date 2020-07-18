@@ -32,9 +32,11 @@ function Products(props) {
     const categories = useSelector(state => state.categories);
     const categoriesLoading = categories.loading;
 
-    const prevCategoryCode = usePrevious(categoryCode);
+    const prevCategoryCode      = usePrevious(categoryCode);
     const prevCategoriesLoading = usePrevious(categoriesLoading);
-    const prevPage =  usePrevious(query.page);
+    const prevPage              =  usePrevious(query.page);
+    const prevSize              =  usePrevious(query.size);
+    const prevSort              =  usePrevious(query.sort);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -94,10 +96,12 @@ function Products(props) {
         if( categoryCode !== prevCategoryCode || 
             categoriesLoading !== prevCategoriesLoading || 
             stateObject.loading ||
-            query.page !== prevPage) {   
+            query.page !== prevPage ||
+            query.size !== prevSize ||
+            query.sort !== prevSort) {   
             retrieveProducts(categoryCode);
         }
-    }, [categoryCode, categoriesLoading, stateObject.loading, query.page]);
+    }, [categoryCode, categoriesLoading, stateObject.loading, query.page, query.size, query.sort]);
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
@@ -120,6 +124,8 @@ function Products(props) {
               gridLayout: id === 'grid',
         }));
     }
+
+    console.log(stateObject.products);
 
     return (
         <div className="shop-page-container mb-50">
