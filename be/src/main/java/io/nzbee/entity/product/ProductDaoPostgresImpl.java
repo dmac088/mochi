@@ -360,12 +360,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
 		.setParameter("categoryCode", categoryCode);
 		
-		
-		System.out.println(page);
-		System.out.println(size);
-		System.out.println(sort);
-		System.out.println(getOrderby(sort));
-		
 		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
 		//these should contain default values for these parameters
 		query
