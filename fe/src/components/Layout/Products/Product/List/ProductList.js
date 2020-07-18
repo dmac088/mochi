@@ -16,7 +16,7 @@ function ProductList(props) {
           </a>
           <div className="product-hover-icons">
             <a id={data.productUPC}
-              onClick={() => {}}
+              // onClick={() => {}}
               href="#"
               data-tooltip="Quick view"
               data-toggle="modal"
