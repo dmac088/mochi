@@ -18,7 +18,6 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 function Products(props) {
 
     const query = queryString.parse(props.location.search);
-    console.log(query);
 
     const [stateObject, setObjectState] = useState({
         products: [],
@@ -33,6 +32,7 @@ function Products(props) {
 
     const prevCategoryCode = usePrevious(categoryCode);
     const prevCategoriesLoading = usePrevious(categoriesLoading);
+    const prevPage =  usePrevious(query.page);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -79,8 +79,8 @@ function Products(props) {
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
-                    page: response.data.page,
-                    products: (response.data._embedded) 
+                    page:       response.data.page,
+                    products:   (response.data._embedded) 
                                 ? response.data._embedded.productResources
                                 : [],
                     loading: false,
@@ -89,10 +89,13 @@ function Products(props) {
     }
 
     useEffect(() => {
-        if(categoryCode !== prevCategoryCode || categoriesLoading !== prevCategoriesLoading || stateObject.loading) {   
+        if( categoryCode !== prevCategoryCode || 
+            categoriesLoading !== prevCategoriesLoading || 
+            stateObject.loading ||
+            query.page !== prevPage) {   
             retrieveProducts(categoryCode);
         }
-    }, [categoryCode, categoriesLoading, stateObject.loading]);
+    }, [categoryCode, categoriesLoading, stateObject.loading, query.page]);
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
