@@ -14,7 +14,6 @@ function Product(props) {
         <div className="product-hover-icons">
           <a className="active" href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
           <a id="#test" href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
-          <a id="#test" href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
           <a id="#test" href="#" data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-"} >
             <span className="icon_search" />
           </a>

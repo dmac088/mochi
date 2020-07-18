@@ -12,6 +12,7 @@ import PriceSidebar from './Sidebars/PriceSidebar';
 import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
+import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Products(props) {
 
@@ -134,15 +135,22 @@ function Products(props) {
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
-                        <ShopBanner/>
-                        <ShopHeader
-                            {...props}
-                            page={stateObject.page} />
-                        <div className="shop-product-wrap grid row no-gutters mb-35">
-                            {renderProducts(stateObject.products)}
-                        </div>
-                        <Pagination />
-                    </div>
+                    {(stateObject.loading || categories.loading) 
+                    ?   <Spinner />
+                    :   <React.Fragment>
+                            <ShopBanner/>
+                            <ShopHeader
+                                {...props}
+                                page={stateObject.page} />
+                            <div className="shop-product-wrap grid row no-gutters mb-35">
+                                {renderProducts(stateObject.products)}
+                            </div>
+                            <Pagination 
+                                {...props}
+                                page={stateObject.page} />
+                        </React.Fragment>    
+                    }
+                    </div> 
                 </div>
             </div>
         </div>
