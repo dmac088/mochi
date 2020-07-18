@@ -124,9 +124,7 @@ function Products(props) {
               gridLayout: id === 'grid',
         }));
     }
-
-    console.log(stateObject.products);
-
+    
     return (
         <div className="shop-page-container mb-50">
             <div className="container">
