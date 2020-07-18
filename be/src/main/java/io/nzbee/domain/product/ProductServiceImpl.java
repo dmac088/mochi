@@ -8,7 +8,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.search.dto.facet.IFacet;
 
 public class ProductServiceImpl implements IProductService {
     
@@ -39,34 +38,28 @@ public class ProductServiceImpl implements IProductService {
 		return productService.findAll(locale, currency, codes);	
 	}
 
-	
-	
+
 	@Override
 	@Transactional(readOnly=true)
-	public Page<Product> findAll(	String locale, 
-									String currency, 
-									String categoryCode, 
-									String page,
-									String size,
-									String sortBy,
-									Set<IFacet> selectedFacets) {
-
-    	Page<Product> pp =
-		   productService.findAll(	 	 locale, 
-										 currency,
-										 categoryCode, 
-										 Integer.parseInt(page),
-										 Integer.parseInt(size),
-										 sortBy,
-										 selectedFacets);
-		
-     	return new PageImpl<Product>(pp.stream().collect(Collectors.toList()),
-									 PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
-								 	 pp.getTotalElements());
-    	
+	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
+		Page<Product> pp =
+				 productService.findAll(	 	 locale, 
+												 currency,
+												 categoryCode,
+												 categoryCodes, 
+												 brandCodes,
+												 tagCodes,
+												 maxPrice,
+												 page,
+												 size,
+												 sort
+												 );
+				
+		     	return new PageImpl<Product>(pp.stream().collect(Collectors.toList()),
+											 PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
+										 	 pp.getTotalElements());
 	}
-	
-
 
 	@Override
 	public void save(Product object) {
@@ -82,8 +75,6 @@ public class ProductServiceImpl implements IProductService {
 	public void update(Product object) {
 		productService.update(object);
 	}
-
-
 	
 
 }

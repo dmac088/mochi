@@ -23,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Component;
@@ -295,17 +296,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		return new PageImpl<Product>(lp, pageable, total);
 	}
-
+	
+	
 	@Override
-	public Page<Product> findAll(String locale,
-								 String currency, 
-								 Pageable pageable,
-								 String categoryCode,
-								 List<String> categoryCodes,
-								 List<String> brandCodes, 
-								 List<String> tagCodes,
-								 Double maxPrice, 
-								 String orderby) {
+	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		
 		// TODO Auto-generated method stub
 		Query query = em.createNativeQuery(this.constructSQL(false,
@@ -368,8 +363,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		//these should contain default values for these parameters
 		query
 		//.setParameter("orderby", "1")
-		.setParameter("limit", pageable.getPageSize())
-		.setParameter("offset", pageable.getOffset());
+		.setParameter("limit", size)
+		.setParameter("offset", page);
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -393,7 +388,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		List<Product> lp = 
 		results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
 		
-		return new PageImpl<Product>(lp, pageable, total);
+		return new PageImpl<Product>(lp, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
 	}
 	
 	@Override
@@ -697,7 +692,5 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
 
 }

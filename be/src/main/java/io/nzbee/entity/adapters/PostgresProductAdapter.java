@@ -229,32 +229,55 @@ public class PostgresProductAdapter implements IProductPortService {
 		return null;
 	}
 
+//	@Override
+//	public Page<Product> findAll(String locale, String currency, String categoryCode, int page, int size, String sortBy, 
+//			Set<IFacet> selectedFacets) {
+//
+//		LOGGER.debug("call PostgresProductAdapter.findAll parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, selectedFacets.size());
+//		
+//		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+//    	Double maxPrice = null;
+//    	if(oMaxPrice.isPresent()) {
+//    		maxPrice = new Double(oMaxPrice.get());
+//    	}
+//		
+//		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, currency,
+//				PageRequest.of(page, size), categoryCode,
+//				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
+//						.collect(Collectors.toList()),
+//				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
+//						.collect(Collectors.toList()),
+//				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
+//						.collect(Collectors.toList()),
+//				maxPrice);
+//
+//		return new PageImpl<Product>(
+//				// receive a list of entities and map to domain objects
+//				pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(page, size),
+//				pp.getTotalElements());
+//	}
+	
+
 	@Override
-	public Page<Product> findAll(String locale, String currency, String categoryCode, int page, int size, String sortBy, 
-			Set<IFacet> selectedFacets) {
-
-		LOGGER.debug("call PostgresProductAdapter.findAll parameters : {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, selectedFacets.size());
+	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		
-		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
-    	Double maxPrice = null;
-    	if(oMaxPrice.isPresent()) {
-    		maxPrice = new Double(oMaxPrice.get());
-    	}
-		
-		Page<io.nzbee.entity.product.Product> pp = productService.findAll(locale, currency,
-				PageRequest.of(page, size), categoryCode,
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
-						.collect(Collectors.toList()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
-						.collect(Collectors.toList()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
-						.collect(Collectors.toList()),
-				maxPrice);
-
+		Page<io.nzbee.entity.product.Product> pp = productService.findAll(
+															locale, 
+															currency,
+															categoryCode, 
+															categoryCodes, 
+															brandCodes, 
+															tagCodes, 
+															maxPrice, 
+															page, 
+															size, 
+															sort);
+				
 		return new PageImpl<Product>(
-				// receive a list of entities and map to domain objects
-				pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(page, size),
-				pp.getTotalElements());
+						// receive a list of entities and map to domain objects
+						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
+						pp.getTotalElements());		
 	}
 	
 	
@@ -285,9 +308,6 @@ public class PostgresProductAdapter implements IProductPortService {
 		// TODO Auto-generated method stub
 		
 	}
-
-	
-
 
 
 }
