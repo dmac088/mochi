@@ -6,6 +6,7 @@ import { history } from '.././../Helpers/Route/History';
 import { matchPath } from 'react-router'
 import { refreshTokens, logoutSession } from '../../../../services/Session';
 import * as apiConfig from '../../../../services/api';
+import queryString from 'query-string';
 
 export const instance = axios.create({
     baseURL: '',
@@ -33,7 +34,11 @@ instance.interceptors.request.use(config => {
     url = url.replace('{locale}', match.params.lang);
     url = url.replace('{currency}', match.params.curr);
 
-    console.log(history.location.search);
+    const query = queryString.parse(history.location.search);
+    url = url.replace('{page}', query.page);
+    url = url.replace('{size}', query.size);
+    url = url.replace('{sort}', query.sort);
+
     //firstly try to retrieve the token from the file system, then try redux
     const token = state.session.access_token;
 
