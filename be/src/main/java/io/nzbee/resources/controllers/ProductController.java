@@ -3,7 +3,6 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.search.dto.facet.FacetContainer;
-import io.nzbee.search.dto.facet.IFacet;
 
 @RestController
 @RequestMapping("/api")
@@ -49,20 +47,23 @@ public class ProductController {
 															    	   @PathVariable String currency, 
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam(value = "page", defaultValue = "0") String page,
-															    	   @RequestParam(value = "size", defaultValue = "10") String size
+															    	   @RequestParam(value = "size", defaultValue = "10") String size,
+															    	   @RequestParam(value = "sort", defaultValue = "10") String sort
 															    	   ) {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final Page<ProductResource> pages =	productService.findAll(	
-					    									locale, 
-					    									currency,
-					    									categoryCode, 
-					    									page,
-					    									size,
-					    									"1",
-					    									new HashSet<IFacet>() 
-					    								  ).map(p -> prodResourceAssembler.toModel(p));
+    	final Page<ProductResource> pages = productService.findAll(	locale, 
+    																currency, 
+    																categoryCode, 
+																	new HashSet<String>(), 
+																	new HashSet<String>(),
+																	new HashSet<String>(),
+																	null,
+																	page, 
+																	size, 
+																	sort
+														  		  ).map(p -> prodResourceAssembler.toModel(p));
     			
     	return ResponseEntity.ok(prodPagedAssembler.toModel(pages));
     }
@@ -70,10 +71,10 @@ public class ProductController {
 	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
     			params = { "page", "size" })
     public ResponseEntity<PagedModel<ProductResource>> getProductsByBrand(	@PathVariable String locale, 
-															    	   			@PathVariable String currency, 
-															    	   			@PathVariable String brandCode,
-															    	   			@RequestParam("page") int page,
-															    	   			@RequestParam("size") int size) {
+															    	   		@PathVariable String currency, 
+															    	   		@PathVariable String brandCode,
+															    	   		@RequestParam("page") int page,
+															    	   		@RequestParam("size") int size) {
     	return null;
     }
     
