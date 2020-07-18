@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
+import queryString from 'query-string';
 import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
 import { findByCode } from '../../../services/Category';
@@ -15,6 +16,9 @@ import Pagination from './Pagination';
 import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Products(props) {
+
+    const query = queryString.parse(props.location.search);
+    console.log(query);
 
     const [stateObject, setObjectState] = useState({
         products: [],
