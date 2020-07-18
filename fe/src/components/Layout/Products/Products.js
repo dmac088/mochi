@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
 import { findByCode } from '../../../services/Category';
 import { newFacet } from '../../../services/Product';
-import Product from './Product/Grid/Product';
+import ProductGrid from './Product/Grid/ProductGrid';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import BrandSidebar from './Sidebars/BrandSidebar';
 import TagSidebar from './Sidebars/TagSidebar';
@@ -100,7 +100,7 @@ function Products(props) {
     const renderProducts = (products) => {
         return products.map((p, index) => {
             return (
-                <Product 
+                <ProductGrid
                     key={index}
                     product={p}/>
             )

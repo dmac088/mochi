@@ -2,7 +2,7 @@ import React from 'react';
 
 const images = require.context('../../../../../assets/images/products', true);
 
-function Product(props) {
+function ProductGrid(props) {
   const { data } = props.product;
   
   return (
@@ -41,4 +41,4 @@ function Product(props) {
   )
 }
 
-export default Product;
+export default ProductGrid;
