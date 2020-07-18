@@ -359,12 +359,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("categoryCode", categoryCode);
 		
 		
+		System.out.println(page);
+		System.out.println(size);
 		
+		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
 		//these should contain default values for these parameters
 		query
 		//.setParameter("orderby", "1")
-		.setParameter("limit", size)
-		.setParameter("offset", page);
+		.setParameter("limit", pageable.getPageSize())
+		.setParameter("offset", pageable.getOffset());
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
