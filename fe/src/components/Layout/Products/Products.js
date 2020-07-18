@@ -5,6 +5,7 @@ import { instance as axios } from "../../../components/Layout/Helpers/api/axios"
 import { findByCode } from '../../../services/Category';
 import { newFacet } from '../../../services/Product';
 import ProductGrid from './Product/Grid/ProductGrid';
+import ProductList from './Product/List/ProductList';
 import CategorySidebar from './Sidebars/CategorySidebar';
 import BrandSidebar from './Sidebars/BrandSidebar';
 import TagSidebar from './Sidebars/TagSidebar';
@@ -20,6 +21,7 @@ function Products(props) {
     const query = queryString.parse(props.location.search);
 
     const [stateObject, setObjectState] = useState({
+        gridLayout: true,
         products: [],
         page: {},
         selectedFacets: [],
@@ -99,12 +101,24 @@ function Products(props) {
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
-            return (
-                <ProductGrid
-                    key={index}
-                    product={p}/>
-            )
+            return (stateObject.gridLayout)
+                    ?   <ProductGrid
+                            key={index}
+                            product={p}/>
+                    :   <ProductList
+                            key={index}
+                            product={p}/>
         })
+    }
+
+    const changeLayout = (e) => {
+        e.preventDefault();
+        if(!e.target) { return; }
+        const id = e.target.id;
+        setObjectState((prevState) => ({
+             ...prevState,
+              gridLayout: id === 'grid',
+        }));
     }
 
     return (
@@ -148,7 +162,8 @@ function Products(props) {
                             <ShopBanner/>
                             <ShopHeader
                                 {...props}
-                                page={stateObject.page} />
+                                page={stateObject.page}
+                                changeGrid={changeLayout} />
                             <div className="shop-product-wrap grid row no-gutters mb-35">
                                 {renderProducts(stateObject.products)}
                             </div>
