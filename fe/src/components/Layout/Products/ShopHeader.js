@@ -1,27 +1,26 @@
 import React from 'react';
-
-
-
-
+import queryString from 'query-string';
 
 function ShopHeader(props) {
-    const { page } = props;
-
+    
+    const { page, history } = props;
 
     const changeSort = (e) => {
         e.preventDefault();
         const sort = e.target.value;
-        console.log(sort);
+        const query = queryString.parse(history.location.search);
 
-        // e.preventDefault();
-        // const curr = e.currentTarget.id;
-        // const { lang } = match.params; 
-        // const { path } = match;
-        // const newPath = generatePath(path, { ...match.params,
-        //                                     lang: lang,
-        //                                     curr: curr } );
-                                             
-        // history.replace(newPath);
+        console.log(sort);
+        console.log(query);
+
+        const newQuery = {
+            ...query,
+            sort,
+        }
+
+        history.push({
+            search: '?' + new URLSearchParams(newQuery).toString(),
+        });
     } 
 
     return (
