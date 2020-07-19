@@ -46,6 +46,8 @@ public class FoodMasterSchema {
 	private String EXPIRY_DATE;
 	
 	private String COUNTRY_OF_ORIGIN;
+	
+	private String PRODUCT_TYPE;
 
 	public String get_EXPIRY_DATE() {
 		return EXPIRY_DATE;
@@ -222,6 +224,14 @@ public class FoodMasterSchema {
 	public void set_PRODUCT_STATUS_CODE(String pRODUCT_STATUS_CODE) {
 		PRODUCT_STATUS_CODE = pRODUCT_STATUS_CODE;
 	}
+	
+	public String get_PRODUCT_TYPE() {
+		return PRODUCT_TYPE;
+	}
+
+	public void set_PRODUCT_TYPE(String pRODUCT_TYPE) {
+		PRODUCT_TYPE = pRODUCT_TYPE;
+	}
 
 	@Override
     public String toString() {
@@ -244,7 +254,4 @@ public class FoodMasterSchema {
         return builder.toString();
         
     }
-
-	
-	
 }
