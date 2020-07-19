@@ -78,20 +78,16 @@ public class CategoryMasterService {
 	    try {
 		    	List<Category> categoryList = categoryDomainService.findAll(globalVars.getLocaleENGB(),
 		    														  		globalVars.getCurrencyHKD())
-		    							  .stream()
-		    							  .map(c -> (Category) c)
-		    							  .collect(Collectors.toList());
+		    							  						   .stream().collect(Collectors.toList());
 		    	
 		    	//create a map of categories (full list)
 		    	Map<String, CategoryMasterSchema> map = categoryList
-		    												.stream().collect(Collectors.toMap(c -> ((Category) c).getCategoryCode(), c -> new CategoryMasterSchema()));
+		    												.stream().collect(Collectors.toMap(c -> c.getCategoryCode(), c -> new CategoryMasterSchema()));
 		 
 		    	
 		    	categoryList.addAll(categoryDomainService.findAll(globalVars.getLocaleZHHK(),
 																  globalVars.getCurrencyUSD())
-		    											.stream()
-										    			.map(p -> (Category) p)
-														.collect(Collectors.toList()));
+		    											.stream().collect(Collectors.toList()));
 		    	
 		    	lpms.addAll(categoryList.stream().map(c -> {
 		    		
