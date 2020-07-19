@@ -72,22 +72,27 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Tag> root = cq.from(Tag.class);
-
-		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(Tag_.tagCode), code));
-		
-		TypedQuery<Tag> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
+		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
+				
+		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
+				root.get(Tag_.tagCode).alias("tagCode"),
+				attribute.get(TagAttribute_.tagAttributeId).alias("tagAttributeId"),
+				attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
 		);
 		
+		cq.where(cb.and (cb.equal(attribute.get(TagAttribute_.lclCd), locale),
+				cb.equal(root.get(Tag_.TAG_CODE), code)));
+		
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
 		try {
-			Tag tag = query.getSingleResult();
-			return Optional.ofNullable(tag);
+			
+			Tuple tuple = query.getSingleResult();
+			return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
