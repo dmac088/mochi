@@ -27,16 +27,12 @@ export default function (state = initialState, action) {
             
         case UPDATE_CART_TOTALS:
             return {
-
-            };
-
-        case UPDATE_CART_ITEMS:
-            return {
-
+                ...state,
+                totalItems: action.totalItems,
+                totalAmount: action.totalAmount,
             };
 
         default:
             return state;
     }
-
-
+}
