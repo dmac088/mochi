@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { getProductPath } from '../../../Helpers/Route/Route';
+import { getCategoryProductPath } from '../../../Helpers/Route/Route';
 
 const images = require.context('../../../../../assets/images/products', true);
 
@@ -13,7 +13,7 @@ function ProductGrid(props) {
       <div className="gf-product shop-grid-view-product">
         <div className="image">
 
-        <Link to={`${getProductPath(match)}/${data.productUPC}`}>
+        <Link to={`${getCategoryProductPath(data.productUPC, match)}`}>
           {/* <span className="onsale">Sale!</span> */}
           <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
         </Link>

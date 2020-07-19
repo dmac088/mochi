@@ -13,6 +13,11 @@ export const getCategoryPath = (categoryCode, match) => {
     return getHomePath(match) + '/category/' + categoryCode + '?page=0&size=10&sort=nameAsc';
 }
 
+export const getCategoryProductPath = (productCode, match) => {
+    const { categoryCode } = match.params;
+    return getHomePath(match) + '/category/' + categoryCode + '/product/' + productCode;
+}
+
 export const getContactPath = (match) => {
     return getHomePath(match) + '/contact';
 }
