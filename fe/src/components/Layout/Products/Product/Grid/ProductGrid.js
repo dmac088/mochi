@@ -14,12 +14,9 @@ function ProductGrid(props) {
         <div className="image">
 
         <Link to={`${getProductPath(match)}/${data.productUPC}`}>
+          {/* <span className="onsale">Sale!</span> */}
           <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
         </Link>
-          {/* <a onClick={(e) => { }} id={data.productUPC} href="#">
-            <span className="onsale">Sale!</span>
-            <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
-          </a> */}
           <div className="product-hover-icons">
             <a onClick={(e) => { }} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
             <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
