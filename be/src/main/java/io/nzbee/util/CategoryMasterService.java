@@ -19,6 +19,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Globals;
 import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 
 @Service
@@ -101,6 +102,12 @@ public class CategoryMasterService {
 																c.getCategoryCode()); 
 			    	
 			    cms.set_CATEGORY_CODE(cat.getCategoryCode());
+			    cms.set_CATEGORY_TYPE(cat.getCategoryType());
+			    
+			    if(cat.getCategoryType().equals(ProductCategory.class.getSimpleName().toLowerCase())) {
+			    	cms.set_PARENT_CATEGORY_CODE(((ProductCategory) c).getParentCode());
+			    	cms.set_CATEGORY_LEVEL(((ProductCategory) c).getCategoryLevel().toString());
+			    }
 			    	
 			    if (c.getLocale().equals(globalVars.getLocaleENGB())) {
 			    	cms.set_CATEGORY_DESC_EN(cat.getCategoryDesc());
