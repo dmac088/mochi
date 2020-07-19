@@ -32,6 +32,7 @@ function Products(props) {
     const categories = useSelector(state => state.categories);
     const categoriesLoading = categories.loading;
 
+    //capture previous states
     const prevCategoryCode      = usePrevious(categoryCode);
     const prevCategoriesLoading = usePrevious(categoriesLoading);
     const prevPage              =  usePrevious(query.page);
@@ -107,9 +108,11 @@ function Products(props) {
         return products.map((p, index) => {
             return (stateObject.gridLayout)
                     ?   <ProductGrid
+                            {...props}
                             key={index}
                             product={p}/>
                     :   <ProductList
+                            {...props}
                             key={index}
                             product={p}/>
         })
@@ -124,7 +127,7 @@ function Products(props) {
               gridLayout: id === 'grid',
         }));
     }
-    
+
     return (
         <div className="shop-page-container mb-50">
             <div className="container">
