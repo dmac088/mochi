@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Link } from 'react-router-dom';
-import { getHomePath } from '../Helpers/Route/Route';
+import { getHomePath, getCategoryPath } from '../Helpers/Route/Route';
 import { localization } from '../Localization/Localization';
 
 const stripLocale = (match) => {
@@ -53,7 +53,9 @@ const renderBreadCrumb = (array, match) => {
         array.map((s, index) => {
             return (
                 <li key={index} className={match.isExact ? 'breadcrumb-active' : ''}>
-                    <Link to={match.url || ''}>
+                    <Link to={  array[index-1] === 'category'
+                                ? getCategoryPath(s, match)
+                                : match.url || ''}>
                         {localization[match.params.lang][s] || s}
                     </Link>
                 </li>
