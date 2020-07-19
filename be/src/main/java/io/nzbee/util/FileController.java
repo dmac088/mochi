@@ -14,6 +14,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import io.nzbee.util.brand.BrandMasterService;
 import io.nzbee.util.category.CategoryMasterService;
 import io.nzbee.util.product.ProductMasterService;
+import io.nzbee.util.tag.TagMasterService;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -39,7 +40,10 @@ public class FileController {
     private CategoryMasterService categoryMasterService;
     
     @Autowired
-    private BrandMasterService brandMasterService; 
+    private BrandMasterService brandMasterService;
+    
+    @Autowired
+    private TagMasterService tagMasterService; 
     
 	@Autowired 
 	private FileStorageProperties fileStorageProperties;
@@ -177,6 +181,47 @@ public class FileController {
         
         //write the brand master data to file
         brandMasterService.extractBrandMaster(resource);
+        
+        return ResponseEntity.ok()
+               .contentType(MediaType.parseMediaType(contentType))
+               .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+               .body(resource);
+    }
+    
+    @GetMapping("/Brand/Download/{fileName:.+}")
+    public ResponseEntity<Resource> downloadTagFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
+    	System.out.println(fileStorageProperties.getDownloadDir());
+    	
+    	logger.debug("called downloadBrandFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
+    	
+    	//generate the file for downloading
+    	File file = new File(fileStorageProperties.getDownloadDir() + fileName);
+        
+    	//persist the file
+    	try {
+    		file.createNewFile();
+    	} catch (IOException ex)  {
+    		logger.error(ex.toString());
+    	}
+    	
+        // Load file as Resource
+        Resource resource = fileStorageServiceDownload.loadFileAsResource(file.getName());
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+ 
+ 		//  Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        
+        //write the brand master data to file
+        tagMasterService.extractTagMaster(resource);
         
         return ResponseEntity.ok()
                .contentType(MediaType.parseMediaType(contentType))
