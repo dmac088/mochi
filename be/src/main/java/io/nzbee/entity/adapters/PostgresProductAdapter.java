@@ -32,6 +32,7 @@ import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.exceptions.category.CategoryNotFoundException;
 import io.nzbee.search.ISearchService;
 import io.nzbee.search.dto.facet.IFacet;
 
@@ -177,7 +178,8 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	public Product findByCode(String locale, String currency, String code) {
-		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code).get();
+		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code)
+				.orElseThrow(() -> new CategoryNotFoundException("Product for code " + code + " not found!"));
 		return mapHelper(pe);
 	}
 
