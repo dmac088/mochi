@@ -188,7 +188,7 @@ public class FileController {
                .body(resource);
     }
     
-    @GetMapping("/Brand/Download/{fileName:.+}")
+    @GetMapping("/Tag/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadTagFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println(fileStorageProperties.getDownloadDir());
     	
