@@ -13,6 +13,47 @@ function BreadCrumb(props) {
 
     const categories = useSelector(state => state.categories);
 
+    const renderBreadCrumb = (array, match) => {
+        let categoryDesc = null;
+        return (
+            array.map((s, index) => {
+    
+                //lookup category to get the localized description 
+                if(array[index-1] === 'category') {
+                    const category = categories.list.find(x => x.data.categoryCode === array[index]);
+                    categoryDesc = (category) ? category.data.categoryDesc : '';
+                }
+
+                return (
+                    <li key={index} className={match.isExact ? 'breadcrumb-active' : ''}>
+                        <Link to={  array[index-1] === 'category'
+                                    ? getCategoryPath(s, match)
+                                    : match.url || ''}>
+                            { array[index-1] === 'category'
+                            ? categoryDesc
+                            : localization[match.params.lang][s] || s}
+                        </Link>
+                    </li>
+                );
+            })
+        );
+    }
+
+    const BreadcrumbItem = (props) => {
+        const { match } = props;
+        return (
+            <React.Fragment>
+                <li>
+                    <Link to={getHomePath(match)}>
+                        {localization[match.params.lang]["home"]}
+                    </Link>
+                </li>
+                {renderBreadCrumb(stripLocale(match).split('/'), match)}
+                <Route path={`${match.url}/:path`} component={BreadcrumbItem} />
+            </React.Fragment>
+        );
+    }
+
     return (
         <div className="breadcrumb-area mb-50">
             <div className="container">
@@ -33,35 +74,8 @@ function BreadCrumb(props) {
     );
 };
 
-const BreadcrumbItem = (props) => {
-    const { match } = props;
-    return (
-        <React.Fragment>
-            <li>
-                <Link to={getHomePath(match)}>
-                    {localization[match.params.lang]["home"]}
-                </Link>
-            </li>
-            {renderBreadCrumb(stripLocale(match).split('/'), match)}
-            <Route path={`${match.url}/:path`} component={BreadcrumbItem} />
-        </React.Fragment>
-    );
-}
 
-const renderBreadCrumb = (array, match) => {
-    return (
-        array.map((s, index) => {
-            return (
-                <li key={index} className={match.isExact ? 'breadcrumb-active' : ''}>
-                    <Link to={  array[index-1] === 'category'
-                                ? getCategoryPath(s, match)
-                                : match.url || ''}>
-                        {localization[match.params.lang][s] || s}
-                    </Link>
-                </li>
-            );
-        })
-    );
-}
+
+
 
 export default BreadCrumb;
