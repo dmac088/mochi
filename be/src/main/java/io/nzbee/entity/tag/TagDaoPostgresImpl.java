@@ -239,8 +239,26 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	@Override
 	public List<Tag> findAll(String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+				
+		Root<Tag> root = cq.from(Tag.class);
+		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
+	
+		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
+						root.get(Tag_.tagCode).alias("tagCode"),
+						attribute.get(TagAttribute_.tagAttributeId).alias("tagAttributeId"),
+						attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
+		);
+		
+		cq.where(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
+				
+		TypedQuery<Tuple> query = em.createQuery(cq);
+				
+		List<Tuple> tuples = query.getResultList();
+				
+		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
 	}
 
 	@Override

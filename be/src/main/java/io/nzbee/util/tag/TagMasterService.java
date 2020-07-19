@@ -32,7 +32,7 @@ public class TagMasterService {
 	private Globals globalVars;
 	
 	@Autowired
-	private ITagPortService categoryDomainService; 
+	private ITagPortService tagDomainService; 
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -64,11 +64,11 @@ public class TagMasterService {
 		logger.debug("called persistTagMaster() ");
 		
 		Tag tDo = 
-				categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
+				tagDomainService.findByCode(   globalVars.getLocaleENGB(), 
 													globalVars.getCurrencyHKD(), 
 													t.get_TAG_CODE());
 		
-		categoryDomainService.save(tDo);
+		tagDomainService.save(tDo);
 
 	}
 	
@@ -76,24 +76,24 @@ public class TagMasterService {
 		logger.debug("called extractTagMaster() ");
 		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
 	    try {
-		    	List<io.nzbee.domain.tag.Tag> categoryList = categoryDomainService.findAll(globalVars.getLocaleENGB(),
+		    	List<io.nzbee.domain.tag.Tag> tagList = tagDomainService.findAll(globalVars.getLocaleENGB(),
 		    														  		globalVars.getCurrencyHKD())
 		    							  						   .stream().collect(Collectors.toList());
 		    	
 		    	//create a map of categories (full list)
-		    	Map<String, TagMasterSchema> map = categoryList
+		    	Map<String, TagMasterSchema> map = tagList
 		    												.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
 		 
 		    	
-		    	categoryList.addAll(categoryDomainService.findAll(globalVars.getLocaleZHHK(),
+		    	tagList.addAll(tagDomainService.findAll(globalVars.getLocaleZHHK(),
 																  globalVars.getCurrencyUSD())
 		    											.stream().collect(Collectors.toList()));
 		    	
-		    	lpms.addAll(categoryList.stream().map(c -> {
+		    	lpms.addAll(tagList.stream().map(c -> {
 		    		
 		    	TagMasterSchema cms = map.get(c.getTagCode());
 		    		
-			    Tag cat = categoryDomainService.findByCode(c.getLocale(),
+			    Tag cat = tagDomainService.findByCode(c.getLocale(),
 																c.getCurrency(), 
 																c.getTagCode()); 
 			    	
