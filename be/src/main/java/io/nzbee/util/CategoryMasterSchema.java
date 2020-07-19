@@ -11,6 +11,10 @@ public class CategoryMasterSchema {
 	
 	private String CATEGORY_DESC_HK;
 	
+	private String CATEGORY_TYPE;
+	
+	private String CATEGORY_LEVEL;
+	
 	public String get_CATEGORY_CODE() {
 		return CATEGORY_CODE;
 	}
@@ -43,6 +47,21 @@ public class CategoryMasterSchema {
 		CATEGORY_DESC_HK = pRIMARY_CATEGORY_DESC_HK;
 	}
 	
+	public String get_CATEGORY_TYPE() {
+		return CATEGORY_TYPE;
+	}
+
+	public void set_CATEGORY_TYPE(String cATEGORY_TYPE) {
+		CATEGORY_TYPE = cATEGORY_TYPE;
+	}
+	
+	public String get_CATEGORY_LEVEL() {
+		return CATEGORY_LEVEL;
+	}
+
+	public void set_CATEGORY_LEVEL(String cATEGORY_LEVEL) {
+		CATEGORY_LEVEL = cATEGORY_LEVEL;
+	}
 	
 	@Override
     public String toString() {
