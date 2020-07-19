@@ -11,8 +11,8 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.tag.Tag;
 
 
-public class Product {
-	
+public abstract class Product {
+
 	private String productUPC;
 	
 	private String productStatus;
@@ -32,6 +32,8 @@ public class Product {
 	private String lclCd;
 	
 	private String currency;
+	
+	protected String productType;
 	
 	@JsonIgnore
 	private List<ProductCategory> categories;
@@ -124,6 +126,10 @@ public class Product {
 	
 	public String getCurrency() {
 		return currency;
+	}
+
+	public String getProductType() {
+		return productType;
 	}
 
 	@Override

@@ -226,6 +226,8 @@ public class ProductMasterService {
 		    	if (p.getLclCd().equals(globalVars.getLocaleZHHK())) 
 						{ pms.set_DEPARTMENT_DESC_HK(d.getDepartmentDesc()); } 
 		    	
+		    	pms.set_PRODUCT_TYPE(p.getProductType());
+		    	
 	    	return pms;
 	    	}).collect(Collectors.toSet()));
 	    	
