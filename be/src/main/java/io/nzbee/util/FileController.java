@@ -192,7 +192,7 @@ public class FileController {
     public ResponseEntity<Resource> downloadTagFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println(fileStorageProperties.getDownloadDir());
     	
-    	logger.debug("called downloadBrandFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
+    	logger.debug("called downloadTagFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
     	
     	//generate the file for downloading
     	File file = new File(fileStorageProperties.getDownloadDir() + fileName);
@@ -220,7 +220,7 @@ public class FileController {
             contentType = "application/octet-stream";
         }
         
-        //write the brand master data to file
+        //write the tag master data to file
         tagMasterService.extractTagMaster(resource);
         
         return ResponseEntity.ok()

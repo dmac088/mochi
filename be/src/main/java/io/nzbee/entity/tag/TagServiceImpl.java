@@ -59,13 +59,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	public Optional<Tag> findByCode(String locale, String currency, String code) {
-		// TODO Auto-generated method stub
 		return productTagDAO.findByCode(locale, currency, code);
 	}
 	
 	@Override
 	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
 		return productTagDAO.findByDesc(locale, currency, desc);
 	}
 	
