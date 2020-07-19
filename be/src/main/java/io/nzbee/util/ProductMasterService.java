@@ -60,21 +60,6 @@ public class ProductMasterService {
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-//	public <ProductMasterSchema> List<ProductMasterSchema> loadObjectList(Class<ProductMasterSchema> type/*, String fileName*/) {
-//		logger.debug("called loadObjectList()");
-//	    try {
-//	        CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader();
-//	        CsvMapper mapper = new CsvMapper();
-//	        File file = new ClassPathResource("data/member_master_data.dat").getFile();
-//	        MappingIterator<ProductMasterSchema> readValues = 
-//	          mapper.readerFor(type).with(bootstrapSchema).readValues(file);
-//	        return readValues.readAll();
-//	    } catch (Exception e) {
-//	        //logger.error("Error occurred while loading object list from file " + fileName, e);
-//	        return Collections.emptyList();
-//	    }
-//	}
-	
 	public void writeFoodMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
