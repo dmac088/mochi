@@ -89,25 +89,25 @@ public class TagMasterService {
 																  globalVars.getCurrencyUSD())
 		    											.stream().collect(Collectors.toList()));
 		    	
-		    	lpms.addAll(tagList.stream().map(c -> {
+		    	lpms.addAll(tagList.stream().map(t -> {
 		    		
-		    	TagMasterSchema cms = map.get(c.getTagCode());
+		    	TagMasterSchema tms = map.get(t.getTagCode());
 		    		
-			    Tag cat = tagDomainService.findByCode(c.getLocale(),
-																c.getCurrency(), 
-																c.getTagCode()); 
+			    Tag tag = tagDomainService.findByCode(t.getLocale(),
+																t.getCurrency(), 
+																t.getTagCode()); 
 			    	
-			    cms.set_TAG_CODE(cat.getTagCode());
+			    tms.set_TAG_CODE(tag.getTagCode());
 			    	
-			    if (c.getLocale().equals(globalVars.getLocaleENGB())) {
-			    	cms.set_TAG_DESC_EN(cat.getTagDesc());
+			    if (t.getLocale().equals(globalVars.getLocaleENGB())) {
+			    	tms.set_TAG_DESC_EN(tag.getTagDesc());
 			    }
 			    	
-			    if (c.getLocale().equals(globalVars.getLocaleZHHK())) {
-			    	cms.set_TAG_DESC_HK(cat.getTagDesc());
+			    if (t.getLocale().equals(globalVars.getLocaleZHHK())) {
+			    	tms.set_TAG_DESC_HK(tag.getTagDesc());
 			    }
 			    	
-			    return cms;
+			    return tms;
 		    }).collect(Collectors.toSet()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
