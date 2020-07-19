@@ -1,18 +1,25 @@
 import React from 'react';
+import { Link } from "react-router-dom";
+import { getProductPath } from '../../../Helpers/Route/Route';
 
 const images = require.context('../../../../../assets/images/products', true);
 
 function ProductGrid(props) {
+  const { match } = props;
   const { data } = props.product;
   
   return (
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
         <div className="image">
-          <a onClick={(e) => { }} id={data.productUPC} href="#">
+
+        <Link to={`${getProductPath(match)}/${data.productUPC}`}>
+          <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
+        </Link>
+          {/* <a onClick={(e) => { }} id={data.productUPC} href="#">
             <span className="onsale">Sale!</span>
             <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
-          </a>
+          </a> */}
           <div className="product-hover-icons">
             <a onClick={(e) => { }} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
             <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>

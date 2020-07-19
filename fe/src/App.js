@@ -23,6 +23,7 @@ import WishList from "./components/Layout/WishList/WishList";
 import Checkout from "./components/Layout/Checkout/Checkout";
 import Auth from "./components/Layout/Login/Auth";
 import Products from "./components/Layout/Products/Products";
+import Product from "./components/Layout/Products/Product/Product";
 
 
 function App() {
@@ -86,6 +87,9 @@ function App() {
             exact path="/:lang/:curr/category/:categoryCode"
             render={(props) => renderContainer(Products, props)} /> 
 
+          <Route
+            exact path="/:lang/:curr/product/:productCode"    
+            render={(props) => renderContainer(Product, props)} /> 
       
           <Redirect from="/" to="/en-GB/HKD" />
 
