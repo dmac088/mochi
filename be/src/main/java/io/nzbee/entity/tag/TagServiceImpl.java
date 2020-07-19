@@ -1,10 +1,8 @@
 package io.nzbee.entity.tag;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +13,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Autowired
 	private ITagDao productTagDAO;
-	
-	@Override
-	public List<Tag> findAll(String locale, Double priceStart, Double priceEnd,
-			String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes) {
-		// TODO Auto-generated method stub
-		return productTagDAO.findAll(locale, 
-				priceStart, 
-				priceEnd, 
-				priceType, 
-				currency, 
-				priceDateStart, 
-				priceDateEnd, 
-				categoryCodes, 
-				brandCodes);
-	}
 	
 	@Override
 	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {

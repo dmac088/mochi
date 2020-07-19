@@ -2,7 +2,6 @@ package io.nzbee.entity.tag;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -17,7 +16,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.hibernate.Session;
 import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
@@ -26,24 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.Globals;
-import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.Brand_;
-import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.attribute.ProductAttribute_;
-import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.product.currency.Currency_;
-import io.nzbee.entity.product.price.ProductPrice;
-import io.nzbee.entity.product.price.ProductPriceType;
-import io.nzbee.entity.product.price.ProductPriceType_;
-import io.nzbee.entity.product.price.ProductPrice_;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.tag.Tag_;
@@ -64,6 +46,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@Override
 	public Optional<Tag> findById(String locale, String currency, long id) {
+		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}, {}", locale, currency, id);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
@@ -84,6 +68,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@Override
 	public Optional<Tag> findByCode(String locale, String currency, String code) {
+		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, currency, code);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
@@ -111,7 +97,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@Override
 	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
-		// TODO Auto-generated method stub
+		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}, {}", locale, currency, desc);
+		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
@@ -138,58 +125,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 		}
 	}
 
-	@Override
-	public List<Tag> findAll(String locale, Double priceStart, Double priceEnd, String priceType, String currency, Date priceDateStart, Date priceDateEnd, List<String> categoryCodes, List<String> brandCodes) {
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-	
-		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
-		
-		Root<Tag> root = cq.from(Tag.class);
-		//Join<ProductTagAttribute, ProductTag> tag = root.join(ProductTagAttribute_.tag);
-		Join<Tag, Product> product = root.join(Tag_.products);
-		Join<Product, ProductAttribute> productAttribute = product.join(Product_.attributes);
-		Join<Product, CategoryProduct> category = product.join(Product_.categories);
-		Join<Product, Brand> brand = product.join(Product_.brand);
-		Join<Product, ProductStatus> status = product.join(Product_.productStatus);
-		
-		
-		Join<Brand, BrandAttribute> brandAttribute = brand.join(Brand_.attributes);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = category.join(io.nzbee.entity.category.product.CategoryProduct_.attributes);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		if(!categoryCodes.isEmpty()) {
-			conditions.add(category.get(Category_.categoryCode).in(categoryCodes));
-		}
-		if(!brandCodes.isEmpty()) {
-			conditions.add(brand.get(Brand_.brandCode).in(brandCodes));
-		}
-		if(!(priceStart == null && priceEnd == null)) {
-			Join<Product, ProductPrice> price = product.join(Product_.prices);
-			Join<ProductPrice, ProductPriceType> type = price.join(ProductPrice_.type);
-			Join<ProductPrice, Currency> curr = price.join(ProductPrice_.currency);
-			conditions.add(cb.greaterThanOrEqualTo(price.get(ProductPrice_.priceValue), priceStart));
-			conditions.add(cb.lessThanOrEqualTo(price.get(ProductPrice_.priceValue), priceEnd));
-			conditions.add(cb.equal(type.get(ProductPriceType_.desc), priceType));
-			conditions.add(cb.equal(curr.get(Currency_.code), currency));
-		}
-		
-		conditions.add(cb.equal(brandAttribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(productAttribute.get(ProductAttribute_.lclCd), locale));
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
-
-		TypedQuery<Tag> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(true)
-		);
-		
-		return query.getResultList();
-    }
 
 	@Override
 	public List<Tag> findAll(String locale, String currency, Set<String> codes) {
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtil.join(codes));
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 				
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -239,6 +178,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	@Override
 	public List<Tag> findAll(String locale, String currency) {
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
