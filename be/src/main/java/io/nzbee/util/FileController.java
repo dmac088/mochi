@@ -30,6 +30,9 @@ public class FileController {
     @Autowired
     private ProductMasterService productMasterService;
     
+    @Autowired
+    private CategoryMasterService categoryMasterService; 
+    
 	@Autowired 
 	private FileStorageProperties fileStorageProperties;
     
@@ -60,10 +63,8 @@ public class FileController {
 //    }
 
     @GetMapping("/Product/Download/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println(fileStorageProperties.getDownloadDir());
-    	
-    	logger.debug("called downloadFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
+    public ResponseEntity<Resource> downloadFoodFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
+    	logger.debug("called downloadFoodFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
     	
     	//generate the file for downloading
     	File file = new File(fileStorageProperties.getDownloadDir() + fileName);
@@ -93,6 +94,48 @@ public class FileController {
         
         //write the product master data to file
         productMasterService.extractProductMaster(resource);
+        
+        return ResponseEntity.ok()
+               .contentType(MediaType.parseMediaType(contentType))
+               .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+               .body(resource);
+    }
+    
+    
+    @GetMapping("/Category/Download/{fileName:.+}")
+    public ResponseEntity<Resource> downloadCategoryFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
+    	System.out.println(fileStorageProperties.getDownloadDir());
+    	
+    	logger.debug("called downloadCategoryFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
+    	
+    	//generate the file for downloading
+    	File file = new File(fileStorageProperties.getDownloadDir() + fileName);
+        
+    	//persist the file
+    	try {
+    		file.createNewFile();
+    	} catch (IOException ex)  {
+    		logger.error(ex.toString());
+    	}
+    	
+        // Load file as Resource
+        Resource resource = fileStorageServiceDownload.loadFileAsResource(file.getName());
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+ 
+ 		//  Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        
+        //write the product master data to file
+        categoryMasterService.extractCategoryMaster(resource);
         
         return ResponseEntity.ok()
                .contentType(MediaType.parseMediaType(contentType))
