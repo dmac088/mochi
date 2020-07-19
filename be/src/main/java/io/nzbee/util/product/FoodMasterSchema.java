@@ -1,4 +1,4 @@
-package io.nzbee.util;
+package io.nzbee.util.product;
 
 
 public class FoodMasterSchema {

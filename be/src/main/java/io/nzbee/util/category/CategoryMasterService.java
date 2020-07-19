@@ -1,4 +1,4 @@
-package io.nzbee.util;
+package io.nzbee.util.category;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,6 +21,7 @@ import io.nzbee.Globals;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
 @Transactional
