@@ -1,7 +1,7 @@
-package io.nzbee.util;
+package io.nzbee.util.tag;
 
 
-public class BrandMasterSchema {
+public class TagMasterSchema {
 	
 	private String BRAND_CODE;
 	

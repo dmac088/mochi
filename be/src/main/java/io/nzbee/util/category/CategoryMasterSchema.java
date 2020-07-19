@@ -1,4 +1,4 @@
-package io.nzbee.util;
+package io.nzbee.util.category;
 
 
 public class CategoryMasterSchema {

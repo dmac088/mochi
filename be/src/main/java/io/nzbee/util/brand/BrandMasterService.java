@@ -1,4 +1,4 @@
-package io.nzbee.util;
+package io.nzbee.util.brand;
 
 import java.io.File;
 import java.io.IOException;
@@ -20,6 +20,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Globals;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
 @Transactional
