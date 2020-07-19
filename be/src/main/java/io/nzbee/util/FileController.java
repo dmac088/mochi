@@ -31,7 +31,10 @@ public class FileController {
     private ProductMasterService productMasterService;
     
     @Autowired
-    private CategoryMasterService categoryMasterService; 
+    private CategoryMasterService categoryMasterService;
+    
+    @Autowired
+    private BrandMasterService brandMasterService; 
     
 	@Autowired 
 	private FileStorageProperties fileStorageProperties;
@@ -53,14 +56,6 @@ public class FileController {
         return new UploadFileResponse(fileName, fileDownloadUri,
         		uploadFile.getContentType(), uploadFile.getSize());
     }
-
-//    @PostMapping("/uploadMultipleFiles")
-//    public List<UploadFileResponse> uploadMultipleFiles(@RequestParam("files") MultipartFile[] files) {
-//        return Arrays.asList(files)
-//                .stream()
-//                .map(file -> uploadFile(file))
-//                .collect(Collectors.toList());
-//    }
 
     @GetMapping("/Product/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadFoodFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
@@ -142,4 +137,46 @@ public class FileController {
                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                .body(resource);
     }
+    
+    @GetMapping("/Brand/Download/{fileName:.+}")
+    public ResponseEntity<Resource> downloadBrandFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
+    	System.out.println(fileStorageProperties.getDownloadDir());
+    	
+    	logger.debug("called downloadBrandFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
+    	
+    	//generate the file for downloading
+    	File file = new File(fileStorageProperties.getDownloadDir() + fileName);
+        
+    	//persist the file
+    	try {
+    		file.createNewFile();
+    	} catch (IOException ex)  {
+    		logger.error(ex.toString());
+    	}
+    	
+        // Load file as Resource
+        Resource resource = fileStorageServiceDownload.loadFileAsResource(file.getName());
+
+        // Try to determine file's content type
+        String contentType = null;
+        try {
+            contentType = request.getServletContext().getMimeType(resource.getFile().getAbsolutePath());
+        } catch (IOException ex) {
+            logger.info("Could not determine file type.");
+        }
+ 
+ 		//  Fallback to the default content type if type could not be determined
+        if(contentType == null) {
+            contentType = "application/octet-stream";
+        }
+        
+        //write the brand master data to file
+        brandMasterService.extractBrandMaster(resource);
+        
+        return ResponseEntity.ok()
+               .contentType(MediaType.parseMediaType(contentType))
+               .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
+               .body(resource);
+    }
+    
 }
