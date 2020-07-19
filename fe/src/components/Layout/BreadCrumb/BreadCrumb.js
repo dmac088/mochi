@@ -4,14 +4,16 @@ import { Route, Link } from 'react-router-dom';
 import { getHomePath, getCategoryPath } from '../Helpers/Route/Route';
 import { localization } from '../Localization/Localization';
 
-const stripLocale = (match) => {
-    const { lang, curr } = match.params;
-    return match.url.replace(`/${lang}/${curr}/`, '');
-}
+
 
 function BreadCrumb(props) {
 
     const categories = useSelector(state => state.categories);
+
+    const stripLocale = (match) => {
+        const { lang, curr } = match.params;
+        return match.url.replace(`/${lang}/${curr}/`, '');
+    }
 
     const renderBreadCrumb = (array, match) => {
         let categoryDesc = null;
