@@ -297,7 +297,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 !tagCodes.isEmpty(),
 															 !(maxPrice == null)), "BrandMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("categoryCode", categoryCode);
+				 .setParameter("categoryCode", categoryCode)
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode());
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -440,7 +441,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"	" + 
 			"	inner join mochi.product_status ps" + 
 			"		on p.prd_sts_id = ps.prd_sts_id" + 
-			"		and ps.prd_sts_cd = 'ACT01'" + 
+			"		and ps.prd_sts_cd = :activeProductCode " + 
 			"						 " + 
 			"	inner join mochi.brand b" + 
 			"		on p.bnd_id = b.bnd_id" + 

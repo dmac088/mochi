@@ -42,6 +42,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
+	private Globals globalVars;
+	
+	@Autowired
 	private IProductService productService;
 
 	@Autowired
@@ -127,10 +130,10 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			Currency curr = currencyService.findByCode(food.getCurrency()).get();
 
-			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode("RET01").get();
-			io.nzbee.entity.product.price.ProductPriceType ptm = productPriceTypeService.findByCode("MKD01").get();
+			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode(globalVars.getRetailPriceCode()).get();
+			io.nzbee.entity.product.price.ProductPriceType ptm = productPriceTypeService.findByCode(globalVars.getMarkdownPriceCode()).get();
 
-			io.nzbee.entity.product.status.ProductStatus ps = productStatusService.findByProductStatusCode("ACT01")
+			io.nzbee.entity.product.status.ProductStatus ps = productStatusService.findByProductStatusCode(globalVars.getActiveSKUCode())
 					.get();
 
 			Optional<io.nzbee.entity.product.price.ProductPrice> oprcr = productPriceService
