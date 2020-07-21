@@ -20,6 +20,8 @@ public class DiscoveryResource extends RepresentationModel<DiscoveryResource>{
 		this.add(linkTo(methodOn(ProductController.class).getProducts(null, null, 
 																	  null, "0", "10", 
 																	  null, null)).withRel("allProductsForCategory"));
+		
+		this.add(linkTo(methodOn(ProductController.class).get(null, null, null)).withRel("product"));
 		this.add(new Link(rootURL + "/oauth/token").withRel("accessTokens"));
 	}
 	
