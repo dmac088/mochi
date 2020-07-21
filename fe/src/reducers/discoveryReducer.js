@@ -5,6 +5,7 @@ import { GET_DISCOVERY_STARTED,
 const initialState = {
   links: {},
   loading: false,
+  loaded: false,
 };
 
 export default function(state = initialState, action) {
@@ -21,6 +22,7 @@ export default function(state = initialState, action) {
         ...state,
         links: action.payload,
         loading: false,
+        loaded: true,
       };
 
     case GET_DISCOVERY_FAILURE:

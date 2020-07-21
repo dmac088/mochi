@@ -1,6 +1,37 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
+import { instance as axios } from "../../../Layout/Helpers/api/axios";
+
 
 function Product(props) {
+    
+    const [stateObject, setObjectState] = useState({
+        product: {},
+    });
+
+    const discovery = useSelector(state => state.discovery);
+
+    const retrieveProduct = (id) => {
+        const url = discovery.links.product.href.replace('{code}', id);
+        axios.get(url)
+             .then((response) => {
+                 setObjectState((prevState) => ({
+                     ...prevState,
+                     product: (response.data) 
+                              ? response.data
+                              : {},
+                 }));
+        });
+    }
+
+    useEffect(() => {
+        console.log(discovery);
+        if(discovery.loaded) {
+            retrieveProduct('18911676');
+        }
+    }, [discovery.loaded]);
+
+    console.log(stateObject.product);
 
     return (
         <div className="single-product-content ">
