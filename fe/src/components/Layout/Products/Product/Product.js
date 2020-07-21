@@ -4,18 +4,19 @@ import { instance as axios } from "../../../Layout/Helpers/api/axios";
 
 
 function Product(props) {
+    const { match } = props;
+    const { productCode } = match.params;
     
     const [stateObject, setObjectState] = useState({
         product: {},
     });
 
     const discovery = useSelector(state => state.discovery);
-
     const retrieveProduct = (id) => {
+        
         const url = discovery.links.product.href.replace('{code}', id);
         axios.get(url)
              .then((response) => {
-                 console.log(response);
                  setObjectState((prevState) => ({
                      ...prevState,
                      product: (response.data) 
@@ -27,7 +28,7 @@ function Product(props) {
 
     useEffect(() => {
         if(discovery.loaded) {
-            retrieveProduct('18911676');
+            retrieveProduct(productCode);
         }
     }, [discovery.loaded]);
 
