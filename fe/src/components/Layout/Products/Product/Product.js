@@ -15,24 +15,24 @@ function Product(props) {
         const url = discovery.links.product.href.replace('{code}', id);
         axios.get(url)
              .then((response) => {
+                 console.log(response);
                  setObjectState((prevState) => ({
                      ...prevState,
                      product: (response.data) 
-                              ? response.data
+                              ? response.data.data
                               : {},
                  }));
         });
     }
 
     useEffect(() => {
-        console.log(discovery);
         if(discovery.loaded) {
             retrieveProduct('18911676');
         }
     }, [discovery.loaded]);
 
-    console.log(stateObject.product);
-
+    const { product } = stateObject;
+    
     return (
         <div className="single-product-content ">
             <div className="container">
@@ -178,7 +178,7 @@ function Product(props) {
                         <div className="col-lg-6 col-md-12 col-xs-12">
                             <div className="product-feature-details">
                                 <h2 className="product-title mb-15">
-                                    test desc
+                                    {product.productDesc}
                                 </h2>
 
                                 <p className="product-rating">
