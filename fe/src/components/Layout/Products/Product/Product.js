@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { Spinner } from '../../Helpers/Animation/Spinner';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 
 
@@ -9,33 +10,38 @@ function Product(props) {
     
     const [stateObject, setObjectState] = useState({
         product: {},
+        loading: true,
     });
 
     const discovery = useSelector(state => state.discovery);
     const retrieveProduct = (id) => {
-        
-        const url = discovery.links.product.href.replace('{code}', id);
+        const url = discovery.links.getProduct.href.replace('{code}', id);
         axios.get(url)
              .then((response) => {
+                 console.log(response);
                  setObjectState((prevState) => ({
                      ...prevState,
                      product: (response.data) 
                               ? response.data.data
                               : {},
+                     loading: false,
                  }));
         });
     }
 
     useEffect(() => {
-        if(discovery.loaded) {
+        if(discovery.loaded && stateObject.loading) {
             retrieveProduct(productCode);
         }
-    }, [discovery.loaded]);
+    }, [discovery.loaded, stateObject.loading]);
 
     const { product } = stateObject;
+    const { primaryCategory } = product;
     
     return (
-        <div className="single-product-content ">
+        (stateObject.loading) ?
+            <Spinner />
+        : <div className="single-product-content ">
             <div className="container">
                 <div className="single-product-content-container mb-35">
                     <div className="row">
@@ -182,19 +188,9 @@ function Product(props) {
                                     {product.productDesc}
                                 </h2>
 
-                                <p className="product-rating">
-                                    <i className="fa fa-star active" />
-                                    <i className="fa fa-star active" />
-                                    <i className="fa fa-star active" />
-                                    <i className="fa fa-star active" />
-                                    <i className="fa fa-star" />
-
-                                    <a href="#">(1 customer review)</a>
-                                </p>
-
                                 <h2 className="product-price mb-15">
-                                    <span className="main-price">$10</span>
-                                    <span className="discounted-price"> $8</span>
+                                    <span className="main-price">{product.productRetail}</span>
+                                    <span className="discounted-price"> {product.productMarkdown}</span>
                                 </h2>
 
                                 <p className="product-description mb-20">
@@ -212,7 +208,7 @@ function Product(props) {
                                     </div>
                                     <div className="add-to-cart-btn">
                                         <a onClick={() => console.log("add to cart")} href="#">
-                                            <i className="fa fa-shopping-cart" /> Add to Cart
+                                            <i className="fa fa-shopping-cart" /> Add to Bag
 	                      </a>
                                     </div>
                                 </div>
@@ -228,8 +224,7 @@ function Product(props) {
                                     <h3>
                                         Categories:{" "}
                                         <span>
-                                            <a href="shop-left-sidebar.html">Fast Foods</a>,{" "}
-                                            <a href="shop-left-sidebar.html">Vegetables</a>
+                                            <a href="shop-left-sidebar.html">{(primaryCategory || {}).categoryDesc}</a>,{" "}
                                         </span>
                                     </h3>
                                 </div>
@@ -291,15 +286,7 @@ function Product(props) {
                                             aria-selected="false">
                                             Features
 	                      </a>
-                                        <a
-                                            className="nav-item nav-link"
-                                            id="review-tab"
-                                            data-toggle="tab"
-                                            href="#review"
-                                            role="tab"
-                                            aria-selected="false">
-                                            Reviews (3)
-	                      </a>
+                        
                                     </div>
                                 </nav>
                                 <div className="tab-content" id="nav-tabContent">

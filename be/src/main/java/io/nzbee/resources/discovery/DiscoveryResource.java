@@ -11,17 +11,17 @@ import io.nzbee.resources.controllers.ProductController;
 public class DiscoveryResource extends RepresentationModel<DiscoveryResource>{
 
 	public DiscoveryResource(String rootURL) {
-		this.add(linkTo(methodOn(BrandController.class).getBrands(null, null)).withRel("allBrands"));
-		this.add(linkTo(methodOn(CategoryController.class).getCategories(null, null)).withRel("allCategories"));
-		this.add(linkTo(methodOn(CategoryController.class).getProductCategories(null, null)).withRel("allProductCategories"));
-		this.add(linkTo(methodOn(CategoryController.class).getBrandCategories(null, null)).withRel("allBrandCategories"));
-		this.add(linkTo(methodOn(CustomerController.class).getCustomer(null)).withRel("customer"));
-		this.add(linkTo(methodOn(CustomerController.class).registerNewCustomer(null)).withRel("registerCustomer"));
+		this.add(linkTo(methodOn(BrandController.class).getBrands(null, null)).withRel(					"getAllBrands"));
+		this.add(linkTo(methodOn(CategoryController.class).getCategories(null, null)).withRel(			"getAllCategories"));
+		this.add(linkTo(methodOn(CategoryController.class).getProductCategories(null, null)).withRel(	"getAllProductCategories"));
+		this.add(linkTo(methodOn(CategoryController.class).getBrandCategories(null, null)).withRel(		"getAllBrandCategories"));
+		this.add(linkTo(methodOn(CustomerController.class).getCustomer(null)).withRel(					"getCustomer"));
+		this.add(linkTo(methodOn(CustomerController.class).registerNewCustomer(null)).withRel(			"registerCustomer"));
 		this.add(linkTo(methodOn(ProductController.class).getProducts(null, null, 
 																	  null, "0", "10", 
-																	  null, null)).withRel("allProductsForCategory"));
-		
-		this.add(linkTo(methodOn(ProductController.class).get(null, null, null)).withRel("product"));
+																	  null, null)).withRel(				"getAllProductsForCategory"));
+		this.add(linkTo(methodOn(ProductController.class).getProducts(null, null, null)).withRel(		"getProducts"));
+		this.add(linkTo(methodOn(ProductController.class).get(null, null, null)).withRel(				"getProduct"));
 		this.add(new Link(rootURL + "/oauth/token").withRel("accessTokens"));
 	}
 	
