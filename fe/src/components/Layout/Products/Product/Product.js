@@ -1,17 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Spinner } from '../../Helpers/Animation/Spinner';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 
 function Product(props) {
     const { match } = props;
-    const { productCode } = match.params;
+    const { productCode, lang, curr } = match.params;
     const images = require.context('../../../../assets/images/products', true);
     
     const [stateObject, setObjectState] = useState({
         product: {},
         loading: true,
     });
+
+    const prevLang      = usePrevious(lang);
+    const prevCurr      = usePrevious(curr);
+
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
 
     const discovery = useSelector(state => state.discovery);
     const retrieveProduct = (id) => {
@@ -30,10 +41,12 @@ function Product(props) {
     }
 
     useEffect(() => {
-        if(discovery.loaded && stateObject.loading) {
-            retrieveProduct(productCode);
+        if(discovery.loaded) {
+            if(prevLang !== lang || prevCurr !== curr || stateObject.loading) {
+                retrieveProduct(productCode);
+            }
         }
-    }, [discovery.loaded, stateObject.loading]);
+    }, [discovery.loaded, stateObject.loading, lang, curr]);
 
     const { product } = stateObject;
     const { primaryCategory } = product;
