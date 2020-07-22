@@ -3,10 +3,10 @@ import { useSelector } from 'react-redux';
 import { Spinner } from '../../Helpers/Animation/Spinner';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 
-
 function Product(props) {
     const { match } = props;
     const { productCode } = match.params;
+    const images = require.context('../../../../assets/images/products', true);
     
     const [stateObject, setObjectState] = useState({
         product: {},
@@ -57,7 +57,7 @@ function Product(props) {
                                                 id="single-slide-tab-1"
                                                 href="#single-slide1">
                                                 <img
-                                                    src={"assets/images/big-product-image/product04.jpg"}
+                                                    src={images(`./${product.productImage}`)}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -69,7 +69,7 @@ function Product(props) {
                                                 id="single-slide-tab-2"
                                                 href="#single-slide2">
                                                 <img
-                                                    src="assets/images/big-product-image/product05.jpg"
+                                                    src={images(`./${product.productImage}`)}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -82,7 +82,7 @@ function Product(props) {
                                                 href="#single-slide3"
                                             >
                                                 <img
-                                                    src="assets/images/big-product-image/product06.jpg"
+                                                    src={images(`./${product.productImage}`)}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -95,7 +95,7 @@ function Product(props) {
                                                 href="#single-slide4"
                                             >
                                                 <img
-                                                    src="assets/images/big-product-image/product07.jpg"
+                                                    src={images(`./${product.productImage}`)}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -112,6 +112,7 @@ function Product(props) {
                                     >
                                         <div className="single-product-img easyzoom img-full">
                                             <img
+                                                src={images(`./${product.productImage}`)}
                                                 className="img-fluid"
                                                 alt=""
                                             />
@@ -131,7 +132,7 @@ function Product(props) {
                                     >
                                         <div className="single-product-img easyzoom img-full">
                                             <img
-                                                src="assets/images/big-product-image/product05.jpg"
+                                                src={images(`./${product.productImage}`)}
                                                 className="img-fluid"
                                                 alt=""
                                             />
@@ -149,11 +150,11 @@ function Product(props) {
                                         aria-labelledby="single-slide-tab-3">
                                         <div className="single-product-img easyzoom img-full">
                                             <img
-                                                src="assets/images/big-product-image/product06.jpg"
+                                                src={images(`./${product.productImage}`)}
                                                 className="img-fluid"
                                                 alt="" />
                                             <a
-                                                href="assets/images/big-product-image/product06.jpg"
+                                                href={images(`./${product.productImage}`)}
                                                 className="big-image-popup">
                                                 <i className="fa fa-search-plus" />
                                             </a>
@@ -167,12 +168,12 @@ function Product(props) {
                                     >
                                         <div className="single-product-img easyzoom img-full">
                                             <img
-                                                src="assets/images/big-product-image/product07.jpg"
+                                                src={images(`./${product.productImage}`)}
                                                 className="img-fluid"
                                                 alt=""
                                             />
                                             <a
-                                                href="assets/images/big-product-image/product07.jpg"
+                                                href={images(`./${product.productImage}`)}
                                                 className="big-image-popup"
                                             >
                                                 <i className="fa fa-search-plus" />
