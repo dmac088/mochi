@@ -11,9 +11,6 @@ const LocalStorageService = (function () {
   }
 
   function _addItem(item) {
-    console.log(item);
-    console.log('productCode = ' + item.productCode);
-    console.log('quantity = '    + item.quantity);
     const allItems = JSON.parse(localStorage.getItem("allItems")) || [];
     allItems.push(item);
     localStorage.setItem('allItems', JSON.stringify(allItems));
