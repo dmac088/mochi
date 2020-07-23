@@ -10,8 +10,33 @@ const LocalStorageService = (function () {
     return _service
   }
 
+  var groupBy = function(xs, key) {
+    return xs.reduce(function(rv, x) {
+      (rv[x[key]] = rv[x[key]] || []).push(x);
+      return rv;
+    }, [{}]);
+  };
+
+  const checkProduct = (items, productCode) => {
+		return items.some(function(item) {
+			return item.productCode === productCode;
+		});
+  }
+  
   function _addItem(item) {
     const allItems = JSON.parse(localStorage.getItem("allItems")) || [];
+
+    if (checkProduct(allItems, item.productCode)) {
+      const foundItem = allItems.find(x => x.productCode === item.productCode);
+      const updatedItem = {
+                            ...foundItem,
+                            quantity: Number(foundItem.quantity) + Number(item.quantity),
+                          }
+      const newAllItems = allItems.filter(i => i.productCode !== item.productCode);
+      newAllItems.push(updatedItem)
+      localStorage.setItem('allItems', JSON.stringify(newAllItems));
+      return;
+    }
     allItems.push(item);
     localStorage.setItem('allItems', JSON.stringify(allItems));
   }
