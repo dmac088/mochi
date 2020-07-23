@@ -1,6 +1,6 @@
 import axios from "axios";
 import store from '../../../../store';
-import LocalStorageService from "../Storage/LocalStorageService";
+import LocalStorageService from "../Storage/Token/LocalStorageService";
 import { getAccountPath } from '../../Helpers/Route/Route';
 import { history } from '.././../Helpers/Route/History';
 import { matchPath } from 'react-router'

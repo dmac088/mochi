@@ -2,14 +2,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Spinner } from '../../Helpers/Animation/Spinner';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
+import LocalStorageService from "../../Helpers/Storage/Bag/LocalStorageService";
 
 function Product(props) {
     const { match } = props;
     const { productCode, lang, curr } = match.params;
     const images = require.context('../../../../assets/images/products', true);
     
+    // LocalstorageService
+    const localStorageService = LocalStorageService.getService();
+
     const [stateObject, setObjectState] = useState({
         product: {},
+        quantity: 1,
         loading: true,
     });
 
@@ -38,6 +43,14 @@ function Product(props) {
                      loading: false,
                  }));
         });
+    }
+
+    const addToBag = (e, productCode, quantity) => {
+        e.preventDefault();
+        localStorageService.addItem({
+                                    "productCode": productCode, 
+                                    "quantity": quantity,
+                                });
     }
 
     useEffect(() => {
@@ -221,7 +234,7 @@ function Product(props) {
                                         <a onClick={() => console.log("decrement qty")} href="#" className="dec qty-btn">-</a>
                                     </div>
                                     <div className="add-to-cart-btn">
-                                        <a onClick={() => console.log("add to cart")} href="#">
+                                        <a onClick={(e) => addToBag(e, productCode, stateObject.quantity)} href="#">
                                             <i className="fa fa-shopping-cart" /> Add to Bag
 	                      </a>
                                     </div>
