@@ -4,7 +4,7 @@ import { clearSession,
          getSessionSuccess,
          getSessionFailure } from '../../actions/SessionActions';
 import axios from "axios";
-import LocalStorageService from '../../components/Layout/Helpers/Storage/LocalStorageService';
+import LocalStorageService from '../../components/Layout/Helpers/Storage/Token/LocalStorageService';
 import * as apiConfig from '../api';
 
 export const authenticate = (username, password) => {
