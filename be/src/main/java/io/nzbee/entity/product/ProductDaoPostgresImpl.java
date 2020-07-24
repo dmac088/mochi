@@ -215,11 +215,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
 				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
 				 
-				 //these should contain default values for these parameters
-				 //.setParameter("orderby", "1")
-//				 .setParameter("limit", globalVars.getDefaultPageSize())
-//				 .setParameter("offset", globalVars.getDefaultPage() * globalVars.getDefaultPageSize());
-		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
@@ -230,9 +225,39 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public List<Product> findAll(	String locale, 
 									String currency, 
 									Set<String> codes) {
+		
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes, ','));
-		// TODO Auto-generated method stub
-		return null;
+		
+		List<String> categories = new ArrayList<String>();
+		categories.add(globalVars.getPrimaryRootCategoryCode());
+		
+		
+		Query query = em.createNativeQuery(this.constructSQL(true,
+															 false,
+															 false,
+															 false, 
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 ""), "ProductMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
+				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
+				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
+				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+				 
+		if(!codes.isEmpty()) {
+			query.setParameter("productCodes", codes);
+		}
+		
+		@SuppressWarnings("unchecked")
+		List<Object[]> results = query.getResultList();
+		
+		return results.stream().map(p -> this.objectToEntity(p, locale, currency)).collect(Collectors.toList());
 	}
 
 	
