@@ -2,15 +2,12 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import { Spinner } from '../../Helpers/Animation/Spinner';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
-import LocalStorageService from "../../Helpers/Storage/Bag/LocalStorageService";
+import * as bagService from "../../../../services/Bag/index";
 
 function Product(props) {
     const { match } = props;
     const { productCode, lang, curr } = match.params;
     const images = require.context('../../../../assets/images/products', true);
-    
-    // LocalstorageService
-    const localStorageService = LocalStorageService.getService();
 
     const [stateObject, setObjectState] = useState({
         product: {},
@@ -47,7 +44,7 @@ function Product(props) {
 
     const addToBag = (e, productCode, quantity) => {
         e.preventDefault();
-        localStorageService.addItem({
+        bagService.addItem({
                                     "productCode": productCode, 
                                     "quantity": quantity,
                                 });

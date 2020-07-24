@@ -1,4 +1,5 @@
 import { instance as axios } from "../components/Layout/Helpers/api/axios";
+
 import {  GET_BAG_ITEMS_STARTED,
           GET_BAG_ITEMS_SUCCESS,
           GET_BAG_ITEMS_FAILURE } from "./ActionTypes";
