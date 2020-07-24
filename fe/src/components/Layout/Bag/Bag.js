@@ -1,11 +1,13 @@
 import React from 'react';
-import { useDispatch } from 'react-redux'
-import { getBagItems } from "../../../actions/BagActions";
+import { useSelector } from 'react-redux';
 
 
 
 
 function Bag() {
+
+    const products = useSelector(state => state.bag.items);
+    console.log(products);
 
     return (
         <React.Fragment>

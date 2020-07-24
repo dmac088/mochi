@@ -11,18 +11,13 @@ export const getBagItems = () => {
     dispatch(getBagItemsStarted());
     const state = getState();
 
-    console.log(state.discovery.links.getProducts.href);
-    console.log(bagService.getItems().map(x => x.productCode));
-
     axios.post(state.discovery.links.getProducts.href,
       bagService.getItems().map(x => x.productCode))
     .then((payload) => {
       return payload.data._embedded.productResources;
     }).then((items) => {
-      console.log(items);
       dispatch(getBagItemsSuccess(items));
     }).catch((error) => {
-     console.log(error);
       dispatch(getBagItemsFailure(error.response));
     });
   }
