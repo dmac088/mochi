@@ -211,12 +211,6 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public Set<Product> findAll(String locale, String currency, List<String> productCodes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String searchTerm,
 			Set<IFacet> selectedFacets, Set<IFacet> returnFacets) {
 
@@ -232,8 +226,8 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
+		List<io.nzbee.entity.product.Product> lp =  productService.findAll(locale, currency, codes);
+		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 	
 	@Override

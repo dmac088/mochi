@@ -1,6 +1,12 @@
 import React from 'react';
+import { useDispatch } from 'react-redux'
+import { getBagItems } from "../../../actions/BagActions";
+
+
+
 
 function Bag() {
+
     return (
         <React.Fragment>
             <div className="page-section section mb-50">

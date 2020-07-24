@@ -1,5 +1,7 @@
 import LocalStorageService from "../../components/Layout/Helpers/Storage/Bag/LocalStorageService";
 
+const localStorageService = LocalStorageService.getService();
+
 const checkProduct = (items, productCode) => {
     return items.some(function (item) {
         return item.productCode === productCode;
@@ -7,7 +9,6 @@ const checkProduct = (items, productCode) => {
 }
 
 export function addItem(item) {
-    const localStorageService = LocalStorageService.getService();
     const allItems = localStorageService.getItems("allItems");
 
     if (checkProduct(allItems, item.productCode)) {
@@ -23,4 +24,8 @@ export function addItem(item) {
     }
     allItems.push(item);
     localStorageService.setItems(JSON.stringify(allItems));
+}
+
+export function getItems() {
+    return localStorageService.getItems();
 }

@@ -21,3 +21,6 @@ export const ADD_BAG_ITEM               = 'ADD_BAG_ITEM';
 export const UPDATE_BAG_ITEM            = 'UPDATE_BAG_ITEM';
 export const REMOVE_BAG_ITEM            = 'REMOVE_BAG_ITEM';
 export const UPDATE_BAG_TOTALS          = 'UPDATE_BAG_TOTALS';
+export const GET_BAG_ITEMS_STARTED      = 'GET_BAG_ITEMS_STARTED';
+export const GET_BAG_ITEMS_SUCCESS      = 'GET_BAG_ITEMS_SUCCESS';
+export const GET_BAG_ITEMS_FAILURE      = 'GET_BAG_ITEMS_FAILURE';
