@@ -1,6 +1,5 @@
 package io.nzbee.domain.ports;
 
-import java.util.List;
 import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.domain.product.Product;
@@ -9,8 +8,6 @@ import io.nzbee.search.dto.facet.IFacet;
 public interface IProductPortService extends IProductDimensionService<Product> {
 
 	Set<Product> findAll(String locale, String currency);
-
-	Set<Product> findAll(String locale, String currency, List<String> productCodes);
 
 	String[] getSuggestion(String searchTerm, String locale, String currency);
 

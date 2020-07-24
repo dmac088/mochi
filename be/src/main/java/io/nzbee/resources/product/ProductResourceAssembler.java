@@ -7,7 +7,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
 
-@Component(value = "ProductResourceAssembler")
+@Component
 public class ProductResourceAssembler extends RepresentationModelAssemblerSupport<Product, ProductResource> {
 
     public ProductResourceAssembler() {
@@ -23,7 +23,7 @@ public class ProductResourceAssembler extends RepresentationModelAssemblerSuppor
 									                		product.getCurrency(), 
 									                		product.getProductUPC()
                 										)).withSelfRel(),
-        		linkTo(methodOn(CategoryController.class).getCategories(product.getLclCd(), 
+        	   linkTo(methodOn(CategoryController.class).getCategories(product.getLclCd(), 
 												                		product.getCurrency(), 
 												                		product.getProductUPC()
         												)).withRel("categories"));
