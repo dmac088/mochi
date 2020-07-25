@@ -6,7 +6,6 @@ import {
     getBagItemsFailure,
     removeBagItemStarted,
     removeBagItemSuccess,
-    removeBagItemFailure,
 } from '../../actions/BagActions';
 
 const localStorageService = LocalStorageService.getService();
@@ -36,7 +35,6 @@ export function addItem(item) {
 
     allItems.push(item);
     localStorageService.setItems(JSON.stringify(allItems));
-    getItems(localStorageService.getItems());
 }
 
 
@@ -44,9 +42,7 @@ export const getItems = () => {
     return (dispatch, getState) => {
 
         const state = getState();
-
         const bagItems = localStorageService.getItems();
-
         dispatch(getBagItemsStarted());
 
         axios.post(state.discovery.links.getProducts.href, bagItems.map(i => i.productCode))
