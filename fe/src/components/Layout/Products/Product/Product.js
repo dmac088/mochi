@@ -32,7 +32,6 @@ function Product(props) {
         const url = discovery.links.getProduct.href.replace('{code}', id);
         axios.get(url)
              .then((response) => {
-                 console.log(response);
                  setObjectState((prevState) => ({
                      ...prevState,
                      product: (response.data) 
