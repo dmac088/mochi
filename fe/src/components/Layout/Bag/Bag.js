@@ -43,7 +43,7 @@ function Bag() {
                 </td>
                 <td className="pro-remove">
                   <a id={product.data.productUPC} onClick={removeItem} href="#">
-                    <i className="fa fa-trash-o"></i>
+                    <i id={product.data.productUPC} className="fa fa-trash-o"></i>
                   </a>
                 </td>
               </tr>

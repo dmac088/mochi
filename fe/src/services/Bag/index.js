@@ -72,7 +72,7 @@ export const removeItem = (productCode) => {
         dispatch(removeBagItemStarted());
         const allItems = localStorageService.getItems();
         const newAllItems = allItems.filter(i => i.productCode !== productCode);
-        console.log(productCode);
+        console.log('product code = ' + productCode);
         console.log(newAllItems);
         localStorageService.setItems(JSON.stringify(newAllItems));
         dispatch(removeBagItemSuccess(productCode));
