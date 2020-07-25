@@ -1,5 +1,10 @@
+import { instance as axios } from "../../components/Layout/Helpers/api/axios";
 import LocalStorageService from "../../components/Layout/Helpers/Storage/Bag/LocalStorageService";
-import { getBagItems } from "../../actions/BagActions";
+import {
+    getBagItemsStarted,
+    getBagItemsSuccess,
+    getBagItemsFailure
+} from '../../actions/BagActions';
 import store from '../../store';
 
 const localStorageService = LocalStorageService.getService();
@@ -12,7 +17,7 @@ const checkProduct = (items, productCode) => {
 
 export function addItem(item) {
 
-    const allItems = localStorageService.getItems("allItems") || [];
+    const allItems = localStorageService.getItems("bagItems") || [];
 
     if (checkProduct(allItems, item.productCode)) {
         const foundItem = allItems.find(x => x.productCode === item.productCode);
@@ -23,41 +28,44 @@ export function addItem(item) {
         const newAllItems = allItems.filter(i => i.productCode !== item.productCode);
         newAllItems.push(updatedItem)
         localStorageService.setItems(JSON.stringify(newAllItems));
-        store.dispatch(getBagItems(localStorageService.getItems()));
+        getItems(localStorageService.getItems());
         return;
     }
 
     allItems.push(item);
     localStorageService.setItems(JSON.stringify(allItems));
-    store.dispatch(getBagItems(localStorageService.getItems()));
+    getItems(localStorageService.getItems());
 }
 
 
 export const getItems = () => {
-    store.dispatch(getBagItems(localStorageService.getItems()));
+
+    const bagItems = localStorageService.getItems();
+
+    store.dispatch(getBagItemsStarted());
+    const state = store.getState();
+
+    axios.post(state.discovery.links.getProducts.href, bagItems.map(i => i.productCode))
+        .then((payload) => {
+            return payload.data._embedded.productResources;
+        }).then((products) => {
+            const items = products.map(p => {
+                return {
+                    ...p,
+                    'quantity': bagItems.filter(i => i.productCode === p.data.productUPC)[0].quantity,
+                }
+            });
+            store.dispatch(getBagItemsSuccess(items));
+        }).catch((error) => {
+            store.dispatch(getBagItemsFailure(error.response));
+        });
 }
 
 
 export const removeItem = (productCode) => {
-    const allItems = localStorageService.getItems("allItems");
+    const allItems = localStorageService.getItems("bagItems");
     const newAllItems = allItems.filter(i => i.productCode !== productCode);
     localStorageService.setItems(JSON.stringify(newAllItems));
-    store.dispatch(getBagItems(localStorageService.getItems()));
+    getItems(localStorageService.getItems());
 }
-
-    // if (checkProduct(allItems, item.productCode)) {
-    //     const foundItem = allItems.find(x => x.productCode === item.productCode);
-    //     const updatedItem = {
-    //         ...foundItem,
-    //         quantity: Number(foundItem.quantity) + Number(item.quantity),
-    //     }
-    //     const newAllItems = allItems.filter(i => i.productCode !== item.productCode);
-    //     newAllItems.push(updatedItem)
-    //     localStorageService.setItems(JSON.stringify(newAllItems));
-    //     store.dispatch(getBagItems());
-    //     return;
-    // }
-    // allItems.push(item);
-    // localStorageService.setItems(JSON.stringify(allItems));
-    // store.dispatch(getBagItems());
 
