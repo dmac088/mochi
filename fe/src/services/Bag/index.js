@@ -1,4 +1,6 @@
 import LocalStorageService from "../../components/Layout/Helpers/Storage/Bag/LocalStorageService";
+import { getBagItems } from "../../actions/BagActions";
+import store from '../../store';
 
 const localStorageService = LocalStorageService.getService();
 
@@ -9,6 +11,7 @@ const checkProduct = (items, productCode) => {
 }
 
 export function addItem(item) {
+
     const allItems = localStorageService.getItems("allItems");
 
     if (checkProduct(allItems, item.productCode)) {
@@ -20,10 +23,12 @@ export function addItem(item) {
         const newAllItems = allItems.filter(i => i.productCode !== item.productCode);
         newAllItems.push(updatedItem)
         localStorageService.setItems(JSON.stringify(newAllItems));
+        store.dispatch(getBagItems());
         return;
     }
     allItems.push(item);
     localStorageService.setItems(JSON.stringify(allItems));
+    store.dispatch(getBagItems());
 }
 
 export function getItems() {
