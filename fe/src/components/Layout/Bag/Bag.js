@@ -2,12 +2,45 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 
 
-
-
 function Bag() {
 
     const products = useSelector(state => state.bag.items);
-    console.log(products);
+    const images = require.context('../../../assets/images/products', true);
+
+    const renderCartProducts = (products) => {
+        return products.map(product => {
+            return(
+              <tr key={product.productCode}>
+                <td className="pro-thumbnail">
+                  <a id={product.productCode} href="#" onClick={(e) => console.log(e)}>
+                    <img src={images(`./${product.data.productImage}`)} className="img-fluid" alt="Product" />
+                  </a>
+                </td>
+                <td className="pro-title">
+                  <a id={product.productCode} href="#" onClick={(e) => console.log(e)}>
+                    {product.productDesc}
+                  </a>
+                </td>
+                <td className="pro-price">
+                  <span>${product.productMarkdown}</span>
+                </td>
+                <td className="pro-quantity">
+                  <div className="pro-qty">
+                    <input type="text" defaultValue={product.quantity} />
+                  </div>
+                </td>
+                <td className="pro-subtotal">
+                  <span>${product.quantity * product.productMarkdown}</span>
+                </td>
+                <td className="pro-remove">
+                  <a id={product.productCode} onClick={e => console.log(e)} href="#">
+                    <i className="fa fa-trash-o"></i>
+                  </a>
+                </td>
+              </tr>
+            )
+          });
+      }
 
     return (
         <React.Fragment>
@@ -29,7 +62,7 @@ function Bag() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {/*renderCartProducts({ history, match, location }, props, cart)*/}
+                                            {renderCartProducts(products)}
                                         </tbody>
                                     </table>
                                 </div>
