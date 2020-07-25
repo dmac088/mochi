@@ -12,7 +12,6 @@ function Bag() {
 
     const removeItem = (e) => {
         e.preventDefault();
-        console.log(e.target.id);
         dispatch(bagService.removeItem(e.target.id));
     }
 
@@ -43,7 +42,7 @@ function Bag() {
                 </td>
                 <td className="pro-remove">
                   <a id={product.data.productUPC} onClick={removeItem} href="#">
-                    <i id={product.data.productUPC} className="fa fa-trash-o"></i>
+                    <i id={product.data.productUPC} onClick={removeItem} className="fa fa-trash-o"></i>
                   </a>
                 </td>
               </tr>
