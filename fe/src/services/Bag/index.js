@@ -38,9 +38,12 @@ export const getItems = () => {
 }
 
 
-export function removeItem(item) {
-
+export const removeItem = (productCode) => {
     const allItems = localStorageService.getItems("allItems");
+    const newAllItems = allItems.filter(i => i.productCode !== productCode);
+    localStorageService.setItems(JSON.stringify(newAllItems));
+    store.dispatch(getBagItems(localStorageService.getItems()));
+}
 
     // if (checkProduct(allItems, item.productCode)) {
     //     const foundItem = allItems.find(x => x.productCode === item.productCode);
@@ -57,4 +60,4 @@ export function removeItem(item) {
     // allItems.push(item);
     // localStorageService.setItems(JSON.stringify(allItems));
     // store.dispatch(getBagItems());
-}
+
