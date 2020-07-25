@@ -16,25 +16,38 @@ const checkProduct = (items, productCode) => {
     });
 }
 
-export function addItem(item) {
-
-    const allItems = localStorageService.getItems("bagItems") || [];
-
-    if (checkProduct(allItems, item.productCode)) {
-        const foundItem = allItems.find(x => x.productCode === item.productCode);
-        const updatedItem = {
-            ...foundItem,
-            quantity: Number(foundItem.quantity) + Number(item.quantity),
-        }
-        const newAllItems = allItems.filter(i => i.productCode !== item.productCode);
-        newAllItems.push(updatedItem)
-        localStorageService.setItems(JSON.stringify(newAllItems));
-        getItems(localStorageService.getItems());
-        return;
+export const add = (item) => {
+    return (dispatch) => {
+        return dispatch(addItem(item))
+            .then(() => {
+                dispatch(getItems());
+            })
+            .catch((error) => {
+                console.log(error);
+            })
     }
+}
 
-    allItems.push(item);
-    localStorageService.setItems(JSON.stringify(allItems));
+export const addItem = (item) => {
+    return (dispatch) => {
+        const allItems = localStorageService.getItems("bagItems") || [];
+
+        if (checkProduct(allItems, item.productCode)) {
+            const foundItem = allItems.find(x => x.productCode === item.productCode);
+            const updatedItem = {
+                ...foundItem,
+                quantity: Number(foundItem.quantity) + Number(item.quantity),
+            }
+            const newAllItems = allItems.filter(i => i.productCode !== item.productCode);
+            newAllItems.push(updatedItem)
+            localStorageService.setItems(JSON.stringify(newAllItems));
+            dispatch(getItems());
+            return;
+        }
+        allItems.push(item);
+        localStorageService.setItems(JSON.stringify(allItems));
+        dispatch(getItems());
+    }
 }
 
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Spinner } from '../../Helpers/Animation/Spinner';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 import * as bagService from "../../../../services/Bag/index";
@@ -8,6 +8,7 @@ function Product(props) {
     const { match } = props;
     const { productCode, lang, curr } = match.params;
     const images = require.context('../../../../assets/images/products', true);
+    const dispatch = useDispatch();
 
     const [stateObject, setObjectState] = useState({
         product: {},
@@ -44,10 +45,10 @@ function Product(props) {
 
     const addToBag = (e, productCode, quantity) => {
         e.preventDefault();
-        bagService.addItem({
-                                    "productCode": productCode, 
-                                    "quantity": quantity,
-                                });
+        dispatch(bagService.addItem({
+                                "productCode": productCode, 
+                                "quantity": quantity,
+                            }));
     }
 
     useEffect(() => {
