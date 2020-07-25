@@ -44,7 +44,7 @@ export default function (state = initialState, action) {
         case REMOVE_BAG_ITEM_SUCCESS:
             return {
                 ...state,
-                items: state.items.filter(i => i.productCode !== action.payload.productCode),
+                items: state.items.filter(i => i.data.productUPC !== action.payload.productCode),
             }
 
         default:
