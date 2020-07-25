@@ -3,9 +3,11 @@ import LocalStorageService from "../../components/Layout/Helpers/Storage/Bag/Loc
 import {
     getBagItemsStarted,
     getBagItemsSuccess,
-    getBagItemsFailure
+    getBagItemsFailure,
+    removeBagItemStarted,
+    removeBagItemSuccess,
+    removeBagItemFailure,
 } from '../../actions/BagActions';
-import store from '../../store';
 
 const localStorageService = LocalStorageService.getService();
 
@@ -39,33 +41,41 @@ export function addItem(item) {
 
 
 export const getItems = () => {
+    return (dispatch, getState) => {
 
-    const bagItems = localStorageService.getItems();
+        const state = getState();
 
-    store.dispatch(getBagItemsStarted());
-    const state = store.getState();
+        const bagItems = localStorageService.getItems();
 
-    axios.post(state.discovery.links.getProducts.href, bagItems.map(i => i.productCode))
-        .then((payload) => {
-            return payload.data._embedded.productResources;
-        }).then((products) => {
-            const items = products.map(p => {
-                return {
-                    ...p,
-                    'quantity': bagItems.filter(i => i.productCode === p.data.productUPC)[0].quantity,
-                }
+        dispatch(getBagItemsStarted());
+
+        axios.post(state.discovery.links.getProducts.href, bagItems.map(i => i.productCode))
+            .then((payload) => {
+                return payload.data._embedded.productResources;
+            }).then((products) => {
+                const items = products.map(p => {
+                    return {
+                        ...p,
+                        'quantity': bagItems.filter(i => i.productCode === p.data.productUPC)[0].quantity,
+                    }
+                });
+                dispatch(getBagItemsSuccess(items));
+            }).catch((error) => {
+                dispatch(getBagItemsFailure(error.response));
             });
-            store.dispatch(getBagItemsSuccess(items));
-        }).catch((error) => {
-            store.dispatch(getBagItemsFailure(error.response));
-        });
+    }
 }
 
 
 export const removeItem = (productCode) => {
-    const allItems = localStorageService.getItems("bagItems");
-    const newAllItems = allItems.filter(i => i.productCode !== productCode);
-    localStorageService.setItems(JSON.stringify(newAllItems));
-    getItems(localStorageService.getItems());
+    return dispatch => {
+        dispatch(removeBagItemStarted());
+        const allItems = localStorageService.getItems();
+        const newAllItems = allItems.filter(i => i.productCode !== productCode);
+        console.log(productCode);
+        console.log(newAllItems);
+        localStorageService.setItems(JSON.stringify(newAllItems));
+        dispatch(removeBagItemSuccess(productCode));
+    }
 }
 

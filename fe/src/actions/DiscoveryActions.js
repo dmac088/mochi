@@ -28,7 +28,7 @@ import { getItems } from '../services/Bag/index';
         dispatch(getAllCategories());
       })
       .then(() => {
-        getItems();
+        dispatch(getItems());
       });
     }
   }
