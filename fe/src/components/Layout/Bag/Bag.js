@@ -8,16 +8,16 @@ function Bag() {
     const images = require.context('../../../assets/images/products', true);
 
     const renderCartProducts = (items) => {
-        return items.map(product => {
+        return items.map((product, index) => {
             return(
-              <tr key={product.productCode}>
+              <tr key={index}>
                 <td className="pro-thumbnail">
-                  <a id={product.productCode} href="#" onClick={(e) => console.log(e)}>
+                  <a id={product.data.productCode} href="#" onClick={(e) => console.log(e)}>
                     <img src={images(`./${product.data.productImage}`)} className="img-fluid" alt="Product" />
                   </a>
-                </td>
+                </td> 
                 <td className="pro-title">
-                  <a id={product.productCode} href="#" onClick={(e) => console.log(e)}>
+                  <a id={product.data.productCode} href="#" onClick={(e) => console.log(e)}>
                     {product.data.productDesc}
                   </a>
                 </td>
@@ -30,10 +30,10 @@ function Bag() {
                   </div>
                 </td>
                 <td className="pro-subtotal">
-                  <span>${product.quantity * product.productMarkdown}</span>
+                  <span>${product.quantity * product.data.productMarkdown}</span>
                 </td>
                 <td className="pro-remove">
-                  <a id={product.productCode} onClick={e => console.log(e)} href="#">
+                  <a id={product.data.productCode} onClick={e => console.log(e)} href="#">
                     <i className="fa fa-trash-o"></i>
                   </a>
                 </td>
