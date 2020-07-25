@@ -2,6 +2,7 @@ import {
     ADD_BAG_ITEM,
     GET_BAG_ITEMS_STARTED,
     GET_BAG_ITEMS_SUCCESS,
+    GET_BAG_ITEMS_FAILURE,
     REMOVE_BAG_ITEM_SUCCESS
 } from "../actions/ActionTypes";
 
@@ -30,6 +31,13 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 items: action.payload.items,
+                loading: false,
+            }
+
+        case GET_BAG_ITEMS_FAILURE:
+            return {
+                ...state,
+                error: action.payload.error,
                 loading: false,
             }
 
