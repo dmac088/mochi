@@ -1,22 +1,23 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
-
+import { useDispatch } from 'react-redux';
+import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Bag() {
 
     const bag = useSelector(state => state.bag);
     const images = require.context('../../../assets/images/products', true);
-
+    const dispatch = useDispatch();
 
     const removeItem = (e) => {
         e.preventDefault();
-        bagService.removeItem(e.target.id);
+        console.log(e.target.id);
+        dispatch(bagService.removeItem(e.target.id));
     }
 
     const renderCartProducts = (items) => {
         return items.map((product, index) => {
-            console.log(product.data.productUPC)
             return(
               <tr key={index}>
                 <td className="pro-thumbnail">
@@ -52,6 +53,9 @@ function Bag() {
 
     return (
         <React.Fragment>
+            {(bag.loading) 
+            ? <Spinner />
+            :
             <div className="page-section section mb-50">
                 <div className="container">
                     <div className="row">
@@ -142,7 +146,7 @@ function Bag() {
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>}
         </React.Fragment>
     );
 }

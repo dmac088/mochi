@@ -1,17 +1,18 @@
-import {    ADD_BAG_ITEM, 
-            UPDATE_BAG_ITEM,
-            REMOVE_BAG_ITEM,
-            UPDATE_BAG_TOTALS,
-            GET_BAG_ITEMS_SUCCESS} from "../actions/ActionTypes";
+import {
+    ADD_BAG_ITEM,
+    GET_BAG_ITEMS_STARTED,
+    GET_BAG_ITEMS_SUCCESS,
+    REMOVE_BAG_ITEM_SUCCESS
+} from "../actions/ActionTypes";
 
 const initialState = {
     items: [],
     totalItems: 0,
     totalAmount: 0,
+    loading: false,
 };
 
 export default function (state = initialState, action) {
-
     switch (action.type) {
         case ADD_BAG_ITEM:
             return {
@@ -19,29 +20,23 @@ export default function (state = initialState, action) {
                 items: [...state.items, action.payload.item]
             };
 
-        case UPDATE_BAG_ITEM:
+        case GET_BAG_ITEMS_STARTED:
             return {
                 ...state,
-                items: [...(state.items.filter(i => i !== action.payload.item)), action.payload.item]
-            };
+                loading: true,
+            }
 
-        case REMOVE_BAG_ITEM:
-            return {
-                ...state,
-                items: state.items.filter(i => i !== action.payload.item),
-            };
-            
-        case UPDATE_BAG_TOTALS:
-            return {
-                ...state,
-                totalItems: action.payload.totalItems,
-                totalAmount: action.payload.totalAmount,
-            };
-
-        case GET_BAG_ITEMS_SUCCESS: 
+        case GET_BAG_ITEMS_SUCCESS:
             return {
                 ...state,
                 items: action.payload.items,
+                loading: false,
+            }
+
+        case REMOVE_BAG_ITEM_SUCCESS:
+            return {
+                ...state,
+                items: state.items.filter(i => i.productCode !== action.payload.productCode),
             }
 
         default:
