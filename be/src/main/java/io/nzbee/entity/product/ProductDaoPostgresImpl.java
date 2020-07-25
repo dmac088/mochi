@@ -3,6 +3,7 @@ package io.nzbee.entity.product;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -232,7 +233,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		categories.add(globalVars.getPrimaryRootCategoryCode());
 		
 		
-		Query query = em.createNativeQuery(this.constructSQL(!codes.isEmpty(),
+		Query query = em.createNativeQuery(this.constructSQL(true,
 															 false,
 															 false,
 															 false, 
@@ -249,10 +250,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
 				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
 				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
-				 
+		
 		if(!codes.isEmpty()) {
 			query.setParameter("productCodes", codes);
+		} else {
+			Set<String> dummy = new HashSet<String>();
+			dummy.add("-1");
+			query.setParameter("productCodes", dummy);
 		}
+		
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
