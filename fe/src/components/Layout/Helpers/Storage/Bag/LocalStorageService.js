@@ -11,25 +11,25 @@ const LocalStorageService = (function () {
   }
 
   function _removeItem(item) {
-    const allItems = JSON.parse(localStorage.getItem("allItems")) || [];
-    localStorage.setItem('allItems', allItems.filter(i => i.productCode !== item.productCode));
+    const bagItems = JSON.parse(localStorage.getItem('bagItems')) || [];
+    localStorage.setItem('bagItems', bagItems.filter(i => i.productCode !== item.productCode));
   }
 
   function _clearItems() {
-    localStorage.setItem('allItems', []); 
+    localStorage.setItem('bagItems', []); 
   }
 
   function _getItems() {
-    return JSON.parse(localStorage.getItem('allItems'));
+    return JSON.parse(localStorage.getItem('bagItems')) || [];
   }
 
   function _setItems(items) {
-    return localStorage.setItem('allItems', items);
+    return localStorage.setItem('bagItems', items);
   }
 
   function _getItem(productCode) {
-    const allItems = JSON.parse(localStorage.getItem('allItems'));
-    return allItems.filter(i => i.productCode === productCode);
+    const bagItems = JSON.parse(localStorage.getItem('bagItems'));
+    return bagItems.filter(i => i.productCode === productCode);
   }
 
   return {

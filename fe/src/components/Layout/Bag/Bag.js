@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 
 function Bag() {
 
-    const products = useSelector(state => state.bag.items);
+    const bag = useSelector(state => state.bag);
     const images = require.context('../../../assets/images/products', true);
 
-    const renderCartProducts = (products) => {
-        return products.map(product => {
+    const renderCartProducts = (items) => {
+        return items.map(product => {
             return(
               <tr key={product.productCode}>
                 <td className="pro-thumbnail">
@@ -18,11 +18,11 @@ function Bag() {
                 </td>
                 <td className="pro-title">
                   <a id={product.productCode} href="#" onClick={(e) => console.log(e)}>
-                    {product.productDesc}
+                    {product.data.productDesc}
                   </a>
                 </td>
                 <td className="pro-price">
-                  <span>${product.productMarkdown}</span>
+                  <span>${product.data.productMarkdown}</span>
                 </td>
                 <td className="pro-quantity">
                   <div className="pro-qty">
@@ -62,7 +62,7 @@ function Bag() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {renderCartProducts(products)}
+                                            {renderCartProducts(bag.items)}
                                         </tbody>
                                     </table>
                                 </div>
