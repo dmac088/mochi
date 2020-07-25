@@ -1,5 +1,5 @@
 import { instance as axios } from "../components/Layout/Helpers/api/axios";
-import * as bagService from "../services/Bag/index"
+//import * as bagService from "../services/Bag/index"
 
 import {
   GET_BAG_ITEMS_STARTED,
@@ -7,12 +7,12 @@ import {
   GET_BAG_ITEMS_FAILURE
 } from "./ActionTypes";
 
-export const getBagItems = () => {
+export const getBagItems = (bagItems) => {
   return (dispatch, getState) => {
 
     dispatch(getBagItemsStarted());
     const state = getState();
-    const bagItems = bagService.getItems();
+    //const bagItems = bagService.getItems();
 
     axios.post(state.discovery.links.getProducts.href, bagItems.map(i => i.productCode))
       .then((payload) => {
