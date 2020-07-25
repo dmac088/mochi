@@ -27,6 +27,22 @@ function Product(props) {
         return ref.current;
     }
 
+    const incrementQty = (e) => {
+        e.preventDefault();
+        setObjectState((prevState) => ({
+            ...prevState,
+            quantity: prevState.quantity + 1,
+        }));
+    }
+
+    const decrementQty = (e) => {
+        e.preventDefault();
+        setObjectState((prevState) => ({
+            ...prevState,
+            quantity: prevState.quantity - 1,
+        }));
+    }
+
     const discovery = useSelector(state => state.discovery);
     const retrieveProduct = (id) => {
         const url = discovery.links.getProduct.href.replace('{code}', id);
@@ -104,7 +120,7 @@ function Product(props) {
                                                 id="single-slide-tab-3"
                                                 href="#single-slide3"
                                             >
-                                                <img
+                                                <img 
                                                     src={images(`./${product.productImage}`)}
                                                     className="img-fluid"
                                                     alt=""
@@ -226,9 +242,9 @@ function Product(props) {
 
                                 <div className="cart-buttons mb-20">
                                     <div className="pro-qty mr-20 mb-xs-20">
-                                        <input onChange={() => console.log('change quantity')} type="text" value={10} />
-                                        <a onClick={() => console.log("increment qty")} href="#" className="inc qty-btn">+</a>
-                                        <a onClick={() => console.log("decrement qty")} href="#" className="dec qty-btn">-</a>
+                                        <input onChange={() => console.log('change quantity')} type="text" value={stateObject.quantity} />
+                                        <a onClick={incrementQty} href="#" className="inc qty-btn">+</a>
+                                        <a onClick={decrementQty} href="#" className="dec qty-btn">-</a>
                                     </div>
                                     <div className="add-to-cart-btn">
                                         <a onClick={(e) => addToBag(e, productCode, stateObject.quantity)} href="#">
