@@ -121,7 +121,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		final List<String> productCodes = new ArrayList<String>();
 		productCodes.add(code);
 		
-		Query query = em.createNativeQuery(this.constructSQL(true,
+		Query query = em.createNativeQuery(this.constructSQL(!productCodes.isEmpty(),
 															 false,
 															 false,
 															 false, 
@@ -670,8 +670,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				? " AND coalesce(mprc.prc_val, rprc.prc_val,0) <= :maxPrice " 
 				: "") +
 		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
-		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	= :productDesc " 	: "") +
-		((hasProductId) 	? 	" 	AND prd.prd_id 		= :productId " 		: "") +
+		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
+		((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 		: "") +
 			
 		((countOnly || !offset) 
 		? 	""
