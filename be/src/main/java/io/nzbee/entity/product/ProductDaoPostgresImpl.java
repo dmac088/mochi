@@ -232,7 +232,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		categories.add(globalVars.getPrimaryRootCategoryCode());
 		
 		
-		Query query = em.createNativeQuery(this.constructSQL(true,
+		Query query = em.createNativeQuery(this.constructSQL(!codes.isEmpty(),
 															 false,
 															 false,
 															 false, 
