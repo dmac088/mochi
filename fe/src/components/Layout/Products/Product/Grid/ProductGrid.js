@@ -25,7 +25,7 @@ function ProductGrid(props) {
       <div className="gf-product shop-grid-view-product">
         <div className="image">
 
-        <Link to={`${getCategoryProductPath(data.productUPC, match)}`}>
+        <Link to={`${getCategoryProductPath(match, data.productUPC)}`}>
           {/* <span className="onsale">Sale!</span> */}
           <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
         </Link>
