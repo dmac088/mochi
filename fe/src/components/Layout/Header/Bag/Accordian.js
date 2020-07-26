@@ -20,9 +20,9 @@ function Accordion(props) {
   }
   
   const renderItems = (items) => {
-    return items.map(item => {    
+    return items.map((item, index) => {    
       return (
-        <div className="cart-float-single-item d-flex">
+        <div key={index} className="cart-float-single-item d-flex">
           <span className="remove-item"><a onClick={removeItem} href="#"><i id={item.data.productUPC} className="fa fa-times"></i></a></span>
           <div className="cart-float-single-item-image">
             <a href="single-product.html"><img src={images(`./${item.data.productImage}`)} className="img-fluid" alt="" /></a>
