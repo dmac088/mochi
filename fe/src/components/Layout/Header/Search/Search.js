@@ -1,138 +1,64 @@
-import React, { useState } from "react";
+import React, { useState, Fragment } from "react";
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
-import { Typeahead } from 'react-bootstrap-typeahead';
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
-import { render } from 'react-dom';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
-import { localization } from '../../Localization/Localization';
 
-const PER_PAGE = 50;
 const SEARCH_URI = 'https://localhost:8090/api/Search/en-GB/HKD/Suggest/' + 'pome';
-
-function makeAndHandleRequest(query, page = 1) {
-    console.log('makeAndHandleRequest');
-    return axios.get(`${SEARCH_URI}/${query}+in:login&page=${page}&per_page=50`)
-        .then(resp => {
-            return resp.json()
-        })
-        .then(({ items, total_count }) => {
-            const options = items.map(i => ({
-                avatar_url: i.avatar_url,
-                id: i.id,
-                login: i.login,
-            }));
-            return { options, total_count };
-        });
-}
 
 function Search(props) {
 
     const { match } = props;
     const { lang } = match.params;
 
-    const [stateObject, setObjectState] = useState({
-        isLoading: false,
-        options: [],
-        query: '',
-    });
+    const [isLoading, setIsLoading] = useState(false);
+    const [options, setOptions] = useState([]);
 
-    const _cache = {};
+    const handleSearch = (query) => {
+        setIsLoading(true);
 
-    const _handleInputChange = query => {
-        console.log('_handleInputChange ' + query);
-        setObjectState((prevState) => ({ 
-            ...prevState,
-            query 
-        }));
+        axios.get(`${SEARCH_URI}`)
+            .then((resp) => {
+                return resp.data;
+            })
+            .then((items) => {
+                const options = items.map((i) => ({
+                    suggestion: i,
+                }));
+
+                setOptions(options);
+                setIsLoading(false);
+            });
     };
 
-    const _handlePagination = (e, shownResults) => {
-        const { query } = stateObject;
-        const cachedQuery = _cache[query];
-
-        // Don't make another request if:
-        // - the cached results exceed the shown results
-        // - we've already fetched all possible results
-        if (
-            cachedQuery.options.length > shownResults ||
-            cachedQuery.options.length === cachedQuery.total_count
-        ) {
-            return;
-        }
-
-        setObjectState((prevState) => ({ 
-            ...prevState,
-            isLoading: true,
-        }));
-
-        const page = cachedQuery.page + 1;
-
-        makeAndHandleRequest(query, page).then(resp => {
-            const options = cachedQuery.options.concat(resp.options);
-            _cache[query] = { ...cachedQuery, options, page };
-            setObjectState((prevState) => ({
-                ...prevState,
-                isLoading: false,
-                options,
-            }));
-        });
-    };
-
-    const _handleSearch = query => {
-        console.log('_handleSearch');
-        if (_cache[query]) {
-            setObjectState((prevState) => ({ 
-                ...prevState,
-                options: _cache[query].options 
-            }));
-            return;
-        }
-
-        setObjectState((prevState) => ({ 
-            ...prevState,
-            isLoading: true 
-        }));
-        
-        makeAndHandleRequest(query).then(resp => {
-            _cache[query] = { ...resp, page: 1 };
-            setObjectState((prevState) => ({
-                ...prevState,
-                isLoading: false,
-                options: resp.options,
-            }));
-        });
-    };
-
+    console.log(options);
     return (
-        // <div className="header-advance-search">
         <AsyncTypeahead
-            {...stateObject}
-            id="async-pagination-example"
-            labelKey="login"
-            maxResults={PER_PAGE - 1}
-            minLength={2}
-            onInputChange={_handleInputChange}
-            onPaginate={_handlePagination}
-            onSearch={_handleSearch}
-            paginate
-            placeholder="Search for a product..."
-            renderMenuItemChildren={option => (
-                <div key={option.id}>
-                    <img
-                        alt={option.login}
-                        src={option.avatar_url}
-                        style={{
-                            height: '24px',
-                            marginRight: '10px',
-                            width: '24px',
-                        }}
-                    />
-                    <span>{option.login}</span>
-                </div>
-            )}
-            useCache={false}
+            id="async-example"
+            isLoading={isLoading}
+            labelKey="suggestion"
+            minLength={3}
+            onSearch={handleSearch}
+            options={options}
+            placeholder="Search for products..."
+            renderMenuItemChildren={(option, props) => {
+                console.log(option);
+                return (
+                    <Fragment>
+                        {/* <img
+                            alt={option.value}
+                            src={option.value}
+                            style={{
+                                height: '24px',
+                                marginRight: '10px',
+                                width: '24px',
+                            }} />  */}
+                        {option.suggestion}
+                        {/* <span>{option.suggestion}</span> */}
+                    </Fragment>
+                )
+            }
+            }
         />
-        // </div>
     );
 
 
