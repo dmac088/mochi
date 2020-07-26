@@ -15,8 +15,6 @@ function Bag() {
         dispatch(bagService.removeItem(e.target.id));
     }
 
-   
-
     const renderCartProducts = (items) => {
         return items.map((product, index) => {
             return(
