@@ -3,18 +3,19 @@ import { instance as axios } from "../../../../components/Layout/Helpers/api/axi
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-const SEARCH_URI = 'https://localhost:8090/api/Search/en-GB/HKD/Suggest/' + 'pome';
+
 
 function Search(props) {
-
-    const { match } = props;
-    const { lang } = match.params;
 
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
 
     const handleSearch = (query) => {
+        console.log(query);
+
         setIsLoading(true);
+
+        const SEARCH_URI = `https://localhost:8090/api/Search/{locale}/{currency}/Suggest/${query}`;
 
         axios.get(`${SEARCH_URI}`)
             .then((resp) => {
