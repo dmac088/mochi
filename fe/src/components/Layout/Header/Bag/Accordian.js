@@ -14,7 +14,6 @@ function Accordion(props) {
 
   const renderItems = (items) => {
     return items.map(item => {
-      console.log(item);
       return (
         <div className="cart-float-single-item d-flex">
           <span className="remove-item"><a href="#"><i className="fa fa-times"></i></a></span>
@@ -23,7 +22,7 @@ function Accordion(props) {
           </div>
           <div className="cart-float-single-item-desc">
             <p className="product-title"> <a href="single-product.html">{item.data.productDesc} </a></p>
-      <p className="price"><span className="count">{item.quantity}x</span> ${item.data.productMarkdown}</p>
+            <p className="price"><span className="count">{item.quantity}x</span> ${item.data.productMarkdown}</p>
           </div>
         </div>
       )
