@@ -86,3 +86,17 @@ export const removeItem = (productCode) => {
     }
 }
 
+export const sumTotalItems = (items) => {
+    let total = 0;
+    total = items.length;
+    return total;
+}
+
+export const sumTotalAmount = (items) => {
+    let total = 0;
+    for (var i = 0; i < items.length; i++) {
+        total += items[i].data.productMarkdown * parseInt(items[i].quantity);
+    }
+    return total;
+}
+

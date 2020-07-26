@@ -5,6 +5,7 @@ import {
     GET_BAG_ITEMS_FAILURE,
     REMOVE_BAG_ITEM_SUCCESS
 } from "../actions/ActionTypes";
+import * as bagService from '../services/Bag/index';
 
 const initialState = {
     items: [],
@@ -15,11 +16,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
-        case ADD_BAG_ITEM:
-            return {
-                ...state,
-                items: [...state.items, action.payload.item]
-            };
 
         case GET_BAG_ITEMS_STARTED:
             return {
@@ -31,6 +27,8 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 items: action.payload.items,
+                totalItems: bagService.sumTotalItems(action.payload.items),
+                totalAmount: bagService.sumTotalAmount(action.payload.items),
                 loading: false,
             }
 
@@ -42,9 +40,12 @@ export default function (state = initialState, action) {
             }
 
         case REMOVE_BAG_ITEM_SUCCESS:
+            const newItems = state.items.filter(i => i.data.productUPC !== action.payload.productCode);
             return {
                 ...state,
-                items: state.items.filter(i => i.data.productUPC !== action.payload.productCode),
+                items: newItems,
+                totalItems: bagService.sumTotalItems(newItems),
+                totalAmount: bagService.sumTotalAmount(newItems),
             }
 
         default:
