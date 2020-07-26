@@ -7,12 +7,13 @@ import 'react-bootstrap-typeahead/css/Typeahead.css';
 
 function Search(props) {
 
+    const { match } = props;
+    const { lang } = match.params;
+
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
 
     const handleSearch = (query) => {
-        console.log(query);
-
         setIsLoading(true);
 
         const SEARCH_URI = `https://localhost:8090/api/Search/{locale}/{currency}/Suggest/${query}`;
@@ -37,7 +38,7 @@ function Search(props) {
             id="async-example"
             isLoading={isLoading}
             labelKey="suggestion"
-            minLength={3}
+            minLength={((lang === 'en-GB') ? 3 : 1)}
             onSearch={handleSearch}
             options={options}
             placeholder="Search for products..."
