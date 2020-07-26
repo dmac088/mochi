@@ -1,15 +1,13 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
 import { Link } from "react-router-dom";
 import { getCheckoutPath, getBagPath } from '../../Helpers/Route/Route'
 import { localization } from '../../Localization/Localization';
 const $ = window.$;
 
 function Accordion(props) {
-  const { match } = props;
+  const { match, bag } = props;
   const { lang } = match.params;
 
-  const bag = useSelector(state => state.bag);
   const images = require.context('../../../../assets/images/products', true);
 
   const renderItems = (items) => {
