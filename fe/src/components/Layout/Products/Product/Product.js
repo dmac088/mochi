@@ -252,14 +252,6 @@ function Product(props) {
 	                      </a>
                                     </div>
                                 </div>
-
-                                <div className="single-product-action-btn mb-20">
-                                    <a href="#" data-tooltip="Add to wishlist">
-                                        {" "}
-                                        <span className="icon_heart_alt" /> Add to wishlist
-	                    </a>
-                                </div>
-
                                 <div className="single-product-category mb-20">
                                     <h3>
                                         Categories:{" "}
