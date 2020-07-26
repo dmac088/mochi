@@ -10,10 +10,9 @@ const PER_PAGE = 50;
 const SEARCH_URI = 'https://localhost:8090/api/Search/en-GB/HKD/Suggest/' + 'pome';
 
 function makeAndHandleRequest(query, page = 1) {
+    console.log('makeAndHandleRequest');
     return axios.get(`${SEARCH_URI}/${query}+in:login&page=${page}&per_page=50`)
         .then(resp => {
-            console.log(`${SEARCH_URI}/${query}+in:login&page=${page}&per_page=50`);
-            console.log(resp);
             return resp.json()
         })
         .then(({ items, total_count }) => {
@@ -40,6 +39,7 @@ function Search(props) {
     const _cache = {};
 
     const _handleInputChange = query => {
+        console.log('_handleInputChange ' + query);
         setObjectState((prevState) => ({ 
             ...prevState,
             query 
@@ -79,6 +79,7 @@ function Search(props) {
     };
 
     const _handleSearch = query => {
+        console.log('_handleSearch');
         if (_cache[query]) {
             setObjectState((prevState) => ({ 
                 ...prevState,
@@ -87,7 +88,11 @@ function Search(props) {
             return;
         }
 
-        setObjectState({ isLoading: true });
+        setObjectState((prevState) => ({ 
+            ...prevState,
+            isLoading: true 
+        }));
+        
         makeAndHandleRequest(query).then(resp => {
             _cache[query] = { ...resp, page: 1 };
             setObjectState((prevState) => ({
