@@ -3,8 +3,6 @@ import { instance as axios } from "../../../../components/Layout/Helpers/api/axi
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
-
-
 function Search(props) {
 
     const { match } = props;
@@ -32,7 +30,6 @@ function Search(props) {
             });
     };
 
-    console.log(options);
     return (
         <AsyncTypeahead
             id="async-example"
@@ -43,7 +40,6 @@ function Search(props) {
             options={options}
             placeholder="Search for products..."
             renderMenuItemChildren={option => {
-                console.log(option);
                 return (
                     <div key={option.suggestion}>
                         {/* <img
