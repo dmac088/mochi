@@ -40,21 +40,21 @@ function Search(props) {
             onSearch={handleSearch}
             options={options}
             placeholder="Search for products..."
-            renderMenuItemChildren={(option, props) => {
+            renderMenuItemChildren={option => {
                 console.log(option);
                 return (
-                    <Fragment>
+                    <div key={option.suggestion}>
                         {/* <img
-                            alt={option.value}
-                            src={option.value}
+                            alt={option.login}
+                            src={option.avatar_url}
                             style={{
                                 height: '24px',
                                 marginRight: '10px',
                                 width: '24px',
-                            }} />  */}
-                        {option.suggestion}
-                        {/* <span>{option.suggestion}</span> */}
-                    </Fragment>
+                            }}
+                        /> */}
+                        <span>{option.suggestion}</span>
+                    </div>
                 )
             }
             }
