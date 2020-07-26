@@ -1,13 +1,25 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { getCategoryProductPath } from '../../../Helpers/Route/Route';
+import { useDispatch } from 'react-redux';
+import * as bagService from "../../../../../services/Bag/index";
 
 const images = require.context('../../../../../assets/images/products', true);
 
 function ProductGrid(props) {
   const { match } = props;
   const { data } = props.product;
+
+  const dispatch = useDispatch();
   
+  const addToBag = (e) => {
+    e.preventDefault();
+    dispatch(bagService.addItem({
+                            "productCode": e.target.id, 
+                            "quantity": 1,
+                        }));
+  }
+
   return (
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
@@ -18,8 +30,8 @@ function ProductGrid(props) {
           <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
         </Link>
           <div className="product-hover-icons">
-            <a onClick={(e) => { }} href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
-            <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
+            <a id={data.productUPC} onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={data.productUPC} className="icon_cart_alt" /></a>
+            {/* <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a> */}
             <a id={data.productUPC}
               onClick={(e) => { }}
               href="#"
