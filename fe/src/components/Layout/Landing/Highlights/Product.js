@@ -1,6 +1,6 @@
 import React from 'react';
 import * as bagService from "../../../../services/Bag/index";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 
 function Product(props) {
