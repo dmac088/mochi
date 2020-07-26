@@ -13,14 +13,9 @@ export const getCategoryPath = (categoryCode, match) => {
     return getHomePath(match) + '/category/' + categoryCode + '?page=0&size=10&sort=nameAsc';
 }
 
-export const getCategoryProductPath = (productCode, match) => {
+export const getCategoryProductPath = (match, productCode, catCode) => {
     const { categoryCode } = match.params;
-    return getHomePath(match) + '/category/' + categoryCode + '/product/' + productCode;
-}
-
-export const getCategoryProductPathForCategoryCode = (productCode, categoryCode,  match) => {
-    console.log(match);
-    return getHomePath(match) + '/category/' + categoryCode + '/product/' + productCode;
+    return getHomePath(match) + '/category/' + (categoryCode || catCode) + '/product/' + productCode;
 }
 
 export const getContactPath = (match) => {

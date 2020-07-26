@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { getCategoryProductPathForCategoryCode } from '../../Helpers/Route/Route';
+import { getCategoryProductPath } from '../../Helpers/Route/Route';
 import * as bagService from "../../../../services/Bag/index";
 import { useDispatch } from 'react-redux';
 
@@ -23,7 +23,7 @@ function Product(props) {
   return (
     <div className="gf-product tab-slider-sub-product">
       <div className="image">
-        <Link to={`${getCategoryProductPathForCategoryCode(data.productUPC, category.data.categoryCode, match)}`}>
+        <Link to={`${getCategoryProductPath(match, data.productUPC, category.data.categoryCode)}`}>
           {/* <span className="onsale">Sale!</span> */}
           <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
         </Link>
