@@ -101,7 +101,9 @@ function Category(props) {
     return chunks.map(chunk => {
       return (
         <Column
+          {...props}
           key={chunks.indexOf(chunk)}
+          category={category}
           products={chunk}
         />
       )

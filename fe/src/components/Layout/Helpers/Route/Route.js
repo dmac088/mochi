@@ -18,6 +18,11 @@ export const getCategoryProductPath = (productCode, match) => {
     return getHomePath(match) + '/category/' + categoryCode + '/product/' + productCode;
 }
 
+export const getCategoryProductPathForCategoryCode = (productCode, categoryCode,  match) => {
+    console.log(match);
+    return getHomePath(match) + '/category/' + categoryCode + '/product/' + productCode;
+}
+
 export const getContactPath = (match) => {
     return getHomePath(match) + '/contact';
 }
