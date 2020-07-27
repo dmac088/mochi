@@ -40,7 +40,7 @@ function Login() {
   const data  = (error) ? error.data : null;
 
   return (
-     <form action={() => {}} >
+     <form action="#">
       <div className="login-form">
         <h4 className="login-title">Login</h4>
         <div className="row">
