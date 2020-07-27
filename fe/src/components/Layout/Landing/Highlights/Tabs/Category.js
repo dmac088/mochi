@@ -91,11 +91,9 @@ function Category(props) {
 
   useEffect(() => {
     let isSubscribed = true;
-    if (isSubscribed) {
       if (prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
-        getProducts(category);
+        getProducts(category, isSubscribed);
       }
-    }
     return () => isSubscribed = false
   }, [lang, curr]);
 
