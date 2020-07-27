@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 
 function Product(props) {
-  const { match, category } = props;
+  const { match, category, toggleQuickView } = props;
   const { data } = props.product;
 
   const images = require.context('../../../../assets/images/products', true);
@@ -30,7 +30,7 @@ function Product(props) {
         <div className="product-hover-icons">
           <a id={data.productUPC} href="#" className="active" onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={data.productUPC} className="icon_cart_alt" /></a>
           {/* <a id="#test" href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a> */}
-          <a id="#test" href="#" data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-"} >
+          <a id="#test" href="#" onClick={(e) => toggleQuickView(e, data)} data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-"} >
             <span className="icon_search" />
           </a>
         </div>

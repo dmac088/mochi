@@ -4,6 +4,7 @@ const images = require.context('../../../../../assets/images/products', true);
 
 function ProductList(props) {
   const { data } = props.product;
+  const { toggleQuickView } = props;
 
   return (
 

@@ -15,21 +15,19 @@ import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
-import QuickViewProduct from '../Landing/QuickView/QuickViewProduct';
 
 
 function Products(props) {
+    const { toggleQuickView } = props;
 
     const query = queryString.parse(props.location.search);
 
     const [stateObject, setObjectState] = useState({
-        showQVModal: false,
         gridLayout: true,
         products: [],
         page: {},
         selectedFacets: [],
         loading: false,
-        currentProductId: null,
     });
 
     const { categoryCode } = props.match.params;
@@ -49,15 +47,6 @@ function Products(props) {
             ref.current = value;
         });
         return ref.current;
-    }
-
-    const toggleQuickView = (e, productId) => {
-        e.preventDefault();
-        setObjectState((prevState) => ({
-            ...prevState,
-            showQVModal: !prevState.showQVModal,
-            currentProductId: productId,
-        }));
     }
 
     const addFacet = (facetId, facetName, display) => {
@@ -143,8 +132,6 @@ function Products(props) {
         }));
     }
 
-    const selectedProduct = stateObject.products.filter(p => p.data.productUPC === stateObject.currentProductId)[0];
-        
     return (
         <div className="shop-page-container mb-50">
             <div className="container">
@@ -197,13 +184,13 @@ function Products(props) {
                                 <Pagination
                                     {...props}
                                     page={stateObject.page} />
-                                {(stateObject.showQVModal && selectedProduct)
+                                {/* {(stateObject.showQVModal && selectedProduct)
                                 ? <QuickViewProduct
                                     {...props}
                                     toggleQuickView={toggleQuickView}
                                     showQVModal={stateObject.showQVModal} 
                                     product={selectedProduct} />
-                                : <React.Fragment />}
+                                : <React.Fragment />} */}
                             </React.Fragment>
                         }
                     </div>
