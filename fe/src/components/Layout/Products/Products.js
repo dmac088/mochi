@@ -143,10 +143,8 @@ function Products(props) {
         }));
     }
 
-    console.log(stateObject.currentProductId);
     const selectedProduct = stateObject.products.filter(p => p.data.productUPC === stateObject.currentProductId)[0];
-    console.log(selectedProduct);
-
+        
     return (
         <div className="shop-page-container mb-50">
             <div className="container">
