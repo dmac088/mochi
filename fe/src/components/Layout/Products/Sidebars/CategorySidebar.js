@@ -26,44 +26,39 @@ function CategorySidebar(props) {
         return ref.current;
     }
 
-    //mapCategoriesToSidebar
-    const retrieveCategories = (facets, isSubscribed) => {
-        const currentCategory = findByCode(categories.list, categoryCode);
-        if(!currentCategory) { return; }
-        axios.post(currentCategory._links.children.href,
-            { facets: facets })
-             .then((response) => {
-                 if(isSubscribed) {
-                 setObjectState((prevState) => ({
-                     ...prevState,
-                     categories: (response.data._embedded) 
-                                ? response.data._embedded.categoryResources
-                                : [],
-                 }));
-                 }
-             });
-    }
-
 
     useEffect(() => {
         let isSubscribed = true;
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
-            retrieveCategories(selectedFacets, isSubscribed);
+            const currentCategory = findByCode(categories.list, categoryCode);
+            if (!currentCategory) { return; }
+            axios.post(currentCategory._links.children.href,
+                { facets: selectedFacets })
+                .then((response) => {
+                    if (isSubscribed) {
+                        setObjectState((prevState) => ({
+                            ...prevState,
+                            categories: (response.data._embedded)
+                                ? response.data._embedded.categoryResources
+                                : [],
+                        }));
+                    }
+                });
         }
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
     stateObject.categories
-    .filter(c => c.data.count > 0)
-    .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
-    .map(c => {
-        items.push({
-            display: c.data.categoryDesc + ' (' + c.data.count + ')',
-            code: c.data.categoryCode,
-            path: getCategoryPath(c.data.categoryCode, props.match)
+        .filter(c => c.data.count > 0)
+        .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
+        .map(c => {
+            items.push({
+                display: c.data.categoryDesc + ' (' + c.data.count + ')',
+                code: c.data.categoryCode,
+                path: getCategoryPath(c.data.categoryCode, props.match)
             });
-    });
-   
+        });
+
     return (
         <React.Fragment>
             {(loading || categories.loading)

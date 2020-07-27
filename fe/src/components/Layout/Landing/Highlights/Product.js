@@ -25,7 +25,7 @@ function Product(props) {
       <div className="image">
         <Link to={`${getCategoryProductPath(match, data.productUPC, category.data.categoryCode)}`}>
           {/* <span className="onsale">Sale!</span> */}
-          <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
+          <img src={images(`./${data.productImage}`)} className="img-fluid" />
         </Link>
         <div className="product-hover-icons">
           <a id={data.productUPC} href="#" className="active" onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={data.productUPC} className="icon_cart_alt" /></a>

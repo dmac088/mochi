@@ -27,24 +27,28 @@ function CategorySidebar(props) {
 
     //mapCategoriesToSidebar
     const retrieveMaxPrice = (facets) => {
-        const currentCategory = findByCode(categories.list, categoryCode);
-        if (!currentCategory) { return; }
-        axios.post(currentCategory._links.maxPrice.href,
-            { facets: facets })
-            .then((response) => {
-                setObjectState((prevState) => ({
-                    ...prevState,
-                    maxPrice: response.data,
-                    currentPrice: (prevState.currentPrice) ? prevState.currentPrice : response.data,
-                }));
-            });
+
     }
 
 
     useEffect(() => {
+        let isSubscribed = true;
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
-            retrieveMaxPrice(selectedFacets);
+            const currentCategory = findByCode(categories.list, categoryCode);
+            if (!currentCategory) { return; }
+            axios.post(currentCategory._links.maxPrice.href,
+                { facets: selectedFacets })
+                .then((response) => {
+                    if (isSubscribed) {
+                        setObjectState((prevState) => ({
+                            ...prevState,
+                            maxPrice: response.data,
+                            currentPrice: (prevState.currentPrice) ? prevState.currentPrice : response.data,
+                        }));
+                    }
+                });
         }
+        return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
 
@@ -56,7 +60,7 @@ function CategorySidebar(props) {
 
     const changePrice = (newPrice) => {
         setObjectState((prevState) => ({
-            ...prevState, 
+            ...prevState,
             currentPrice: newPrice,
         }));
         addFacet(newPrice, "maxPrice", `price <= ${newPrice}`);
@@ -64,14 +68,14 @@ function CategorySidebar(props) {
 
     return (
         <React.Fragment>
-             {(loading || categories.loading)
-            ? <Spinner />
-            : <RangeSidebar
+            {(loading || categories.loading)
+                ? <Spinner />
+                : <RangeSidebar
                     filterType={"price"}
-                    heading={"filter by price"} 
+                    heading={"filter by price"}
                     maxPrice={stateObject.maxPrice}
                     currentPrice={stateObject.currentPrice}
-                    changePrice={changePrice}/>}
+                    changePrice={changePrice} />}
         </React.Fragment>
     )
 }
