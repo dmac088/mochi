@@ -164,7 +164,8 @@ import * as sessionService from '../../services/session';
                           <h3>Account Details</h3>
 
                           <div className="account-details-form">
-                            <form action="#">
+                            {/* <form action="#"> */}
+                            <form>
                               <div className="row">
                                 <div className="col-lg-6 col-12 mb-30">
                                   <input id="first-name" placeholder="First Name" type="text" />

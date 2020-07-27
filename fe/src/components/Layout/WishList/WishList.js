@@ -26,7 +26,7 @@ function Wishlist() {
                                                 <td className="pro-thumbnail"><a href="#"><img src={product01} className="img-fluid" alt="Product" /></a></td>
                                                 <td className="pro-title"><a href="#">Cillum dolore tortor nisl fermentum</a></td>
                                                 <td className="pro-price"><span>$29.00</span></td>
-                                                <td className="pro-quantity"><div className="pro-qty"><input type="text" value="1" /></div></td>
+                                                <td className="pro-quantity"><div className="pro-qty"><input type="text" defaultValue="1" /></div></td>
                                                 <td className="pro-subtotal"><span>$29.00</span></td>
                                                 <td className="pro-remove"><a href="#"><i className="fa fa-trash-o"></i></a></td>
                                             </tr>
