@@ -63,7 +63,6 @@ function Category(props) {
     products: null,
   });
 
-
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
@@ -71,12 +70,10 @@ function Category(props) {
     });
     return ref.current;
   }
-
-
   //first create a local function that takes the product url and uses 
   //axios to fetch the products, then later move this into productService class
-  const getProducts = () => {
-    if(!category) { return; }
+  const getProducts = (category) => {
+    if(!category) return;
     axios.get(category._links.products.href)
     .then((payload) => {
       setObjectState(() => ({
@@ -86,13 +83,21 @@ function Category(props) {
   }
 
   useEffect(() => {
-    getProducts();
+    let isSubscribed = true;
+    if (isSubscribed) {
+      getProducts(category);
+    }
+    return () => isSubscribed = false
   }, []);
 
   useEffect(() => {
-    if(prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
-      getProducts();
+    let isSubscribed = true;
+    if(isSubscribed) {
+      if(prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
+        getProducts(category);
+      }
     }
+    return () => isSubscribed = false
   }, [lang, curr]);
 
   const renderColumns = (products, category) => {

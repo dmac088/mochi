@@ -19,10 +19,14 @@ function Highlights(props) {
 
   //on mounting set the selected category to the first in our master list 
   useEffect(() => {
-    setObjectState((prevState) => ({
-      ...prevState,
-      selectedCategoryCode: categoryMaster[0],
-    }));
+    let isSubscribed = true;
+    if(isSubscribed) {
+      setObjectState((prevState) => ({
+        ...prevState,
+        selectedCategoryCode: categoryMaster[0],
+      }));
+    }
+    return () => isSubscribed = false
   }, []);
 
   const categories = useSelector(state => state.categories.list);

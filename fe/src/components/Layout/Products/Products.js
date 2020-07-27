@@ -96,14 +96,18 @@ function Products(props) {
     }
 
     useEffect(() => {
-        if (categoryCode !== prevCategoryCode ||
-            categoriesLoading !== prevCategoriesLoading ||
-            stateObject.loading ||
-            query.page !== prevPage ||
-            query.size !== prevSize ||
-            query.sort !== prevSort) {
-            retrieveProducts(categoryCode);
+        let isSubscribed = true
+        if(isSubscribed) {
+            if (categoryCode !== prevCategoryCode ||
+                categoriesLoading !== prevCategoriesLoading ||
+                stateObject.loading ||
+                query.page !== prevPage ||
+                query.size !== prevSize ||
+                query.sort !== prevSort) {
+                retrieveProducts(categoryCode);
+            }
         }
+        return () => isSubscribed = false
     }, [categoryCode, categoriesLoading, stateObject.loading, query.page, query.size, query.sort]);
 
     const renderProducts = (products) => {
