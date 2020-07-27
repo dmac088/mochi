@@ -26,11 +26,7 @@ function Dashboard(props) {
   }
   
   useEffect(() => {
-    let isSubscribed = true;
-    if(isSubscribed) {
       dispatch(findByUserName());
-    }
-    return () => (isSubscribed = false);
   }, []);
 
   const customer = useSelector(state => state.customer);
