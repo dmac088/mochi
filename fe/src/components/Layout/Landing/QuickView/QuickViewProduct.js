@@ -3,12 +3,19 @@ import Slider from "react-slick";
 
 function QuickViewProduct(props) {
 
-  const { isShowing } = props;
+  const { toggleQuickView, showQVModal } = props;
 
-  const closeModal = (e) => {
-    const { toggleQuickView } = props;
+  const closeModal = (e) => {  
     toggleQuickView(e);
   }
+
+  const changeImage = () => {
+    console.log('changeImage');
+  }
+
+  const currentImage = '';
+  const product = {};
+  const settings = {};
 
   const renderModal = (product) => {
     return (
@@ -50,7 +57,7 @@ function QuickViewProduct(props) {
               </div>
             </div>
             <div className="product-small-image-list">
-              <Slider role="tablist" className="nav small-image-slider" ref={c => (slider = c)} {...settings}>
+              <Slider role="tablist" className="nav small-image-slider"  {...settings}>
                 <div className="single-small-image img-full">
                   <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-1" href="#single-slide1">
                     <img src={product.productImage}
@@ -99,12 +106,12 @@ function QuickViewProduct(props) {
             <p className="product-description mb-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus</p>
             <div className="cart-buttons mb-20">
               <div className="pro-qty mr-10">
-                <input onChange={this.updateQuantity} type="text" value={this.state.quantity} />
-                <a onClick={this.incrementQuantity} href="#" className="inc qty-btn">+</a>
-                <a onClick={this.decrementQuantity} href="#" className="dec qty-btn">-</a>
+                <input onChange={() => console.log('updateQuantity')} type="text" value={1} />
+                <a onClick={() => console.log('incrementQuantity')} href="#" className="inc qty-btn">+</a>
+                <a onClick={() => console.log('decrementQuantity')} href="#" className="dec qty-btn">-</a>
               </div>
               <div className="add-to-cart-btn">
-                <a onClick={this.addToCart} href="#"><i className="fa fa-shopping-cart"></i> Add to Cart</a>
+                <a onClick={() => console.log('addToBag')} href="#"><i className="fa fa-shopping-cart"></i> Add to Bag</a>
               </div>
             </div>
             <div className="social-share-buttons">
@@ -124,17 +131,17 @@ function QuickViewProduct(props) {
 
   return (
     <div className={"modal fade quick-view-modal-container "
-      + ((isShowing) ? " show" : "")}
+      + ((showQVModal) ? " show" : "")}
       id={"modal-" + product.productUPC}
       tabIndex="-1"
       role="dialog"
-      style={(!isShowing)
+      style={(!showQVModal)
         ? { "display": "none" }
         : {
           "display": "block",
           "paddingRight": "17px"
         }}
-      aria-hidden={!isShowing}
+      aria-hidden={!showQVModal}
     >
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content">

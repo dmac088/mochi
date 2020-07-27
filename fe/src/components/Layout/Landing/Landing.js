@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HeroSlider from "./HeroSlider/HeroSlider";
 import Policy from "./Policy/Policy";
 import Highlights from "./Highlights/Highlights";

@@ -15,12 +15,15 @@ import ShopBanner from './ShopBanner';
 import ShopHeader from './ShopHeader';
 import Pagination from './Pagination';
 import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
+import QuickViewProduct from '../Landing/QuickView/QuickViewProduct';
+
 
 function Products(props) {
 
     const query = queryString.parse(props.location.search);
 
     const [stateObject, setObjectState] = useState({
+        showQVModal: false,
         gridLayout: true,
         products: [],
         page: {},
@@ -33,11 +36,11 @@ function Products(props) {
     const categoriesLoading = categories.loading;
 
     //capture previous states
-    const prevCategoryCode      = usePrevious(categoryCode);
+    const prevCategoryCode = usePrevious(categoryCode);
     const prevCategoriesLoading = usePrevious(categoriesLoading);
-    const prevPage              =  usePrevious(query.page);
-    const prevSize              =  usePrevious(query.size);
-    const prevSort              =  usePrevious(query.sort);
+    const prevPage = usePrevious(query.page);
+    const prevSize = usePrevious(query.size);
+    const prevSort = usePrevious(query.sort);
 
     function usePrevious(value) {
         const ref = useRef();
@@ -45,6 +48,14 @@ function Products(props) {
             ref.current = value;
         });
         return ref.current;
+    }
+
+    const toggleQuickView = (e) => {
+        e.preventDefault();
+        setObjectState((prevState) => ({
+            ...prevState,
+            showQVModal: !prevState.showQVModal,
+        }));
     }
 
     const addFacet = (facetId, facetName, display) => {
@@ -55,7 +66,7 @@ function Products(props) {
             selectedFacets: na,
             loading: true,
         }));
-    } 
+    }
 
     const replaceFacet = (facetId, facetName, display) => {
         const na = stateObject.selectedFacets.filter(f => f.facetingName !== facetName);
@@ -73,33 +84,33 @@ function Products(props) {
             selectedFacets: stateObject.selectedFacets.filter(f => f.id !== facetId),
             loading: true,
         }));
-    } 
+    }
 
     //this should be moved to a service class later on 
     const retrieveProducts = (categoryCode) => {
         const currentCategory = findByCode(categories.list, categoryCode);
-            if(!currentCategory) { return; }
-            axios.post(currentCategory._links.products.href,
-                    { facets: stateObject.selectedFacets })
+        if (!currentCategory) { return; }
+        axios.post(currentCategory._links.products.href,
+            { facets: stateObject.selectedFacets })
             .then((response) => {
                 setObjectState((prevState) => ({
                     ...prevState,
-                    page:       response.data.page,
-                    products:   (response.data._embedded) 
-                                ? response.data._embedded.productResources
-                                : [],
+                    page: response.data.page,
+                    products: (response.data._embedded)
+                        ? response.data._embedded.productResources
+                        : [],
                     loading: false,
                 }));
             });
     }
 
     useEffect(() => {
-        if( categoryCode !== prevCategoryCode || 
-            categoriesLoading !== prevCategoriesLoading || 
+        if (categoryCode !== prevCategoryCode ||
+            categoriesLoading !== prevCategoriesLoading ||
             stateObject.loading ||
             query.page !== prevPage ||
             query.size !== prevSize ||
-            query.sort !== prevSort) {   
+            query.sort !== prevSort) {
             retrieveProducts(categoryCode);
         }
     }, [categoryCode, categoriesLoading, stateObject.loading, query.page, query.size, query.sort]);
@@ -107,24 +118,26 @@ function Products(props) {
     const renderProducts = (products) => {
         return products.map((p, index) => {
             return (stateObject.gridLayout)
-                    ?   <ProductGrid
-                            {...props}
-                            key={index}
-                            product={p}/>
-                    :   <ProductList
-                            {...props}
-                            key={index}
-                            product={p}/>
+                ? <ProductGrid
+                    {...props}
+                    key={index}
+                    product={p}
+                    toggleQuickView={toggleQuickView} />
+                : <ProductList
+                    {...props}
+                    key={index}
+                    product={p}
+                    toggleQuickView={toggleQuickView} />
         })
     }
 
     const changeLayout = (e) => {
         e.preventDefault();
-        if(!e.target) { return; }
+        if (!e.target) { return; }
         const id = e.target.id;
         setObjectState((prevState) => ({
-             ...prevState,
-              gridLayout: id === 'grid',
+            ...prevState,
+            gridLayout: id === 'grid',
         }));
     }
 
@@ -134,26 +147,26 @@ function Products(props) {
                 <div className="row">
                     <div className="col-lg-3 order-2 order-lg-1">
                         <div className="sidebar-area">
-                            <SelectionSidebar 
+                            <SelectionSidebar
                                 {...props}
                                 selectedFacets={stateObject.selectedFacets}
                                 removeFacet={removeFacet} />
-                            <CategorySidebar 
+                            <CategorySidebar
                                 {...props}
                                 name={"category"}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
-                                loading={stateObject.loading}/>
+                                loading={stateObject.loading} />
                             <BrandSidebar
                                 {...props}
                                 name={"brand"}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
-                            <PriceSidebar 
+                            <PriceSidebar
                                 {...props}
-                                addFacet={replaceFacet}/>
-                            <TagSidebar 
+                                addFacet={replaceFacet} />
+                            <TagSidebar
                                 {...props}
                                 name={"tag"}
                                 selectedFacets={stateObject.selectedFacets}
@@ -163,26 +176,31 @@ function Products(props) {
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">
-                    {(stateObject.loading || categories.loading) 
-                    ?   <Spinner />
-                    :   <React.Fragment>
-                            <ShopBanner/>
-                            <ShopHeader
-                                {...props}
-                                page={stateObject.page}
-                                changeGrid={changeLayout} />
+                        {(stateObject.loading || categories.loading)
+                            ? <Spinner />
+                            : <React.Fragment>
+                                <ShopBanner />
+                                <ShopHeader
+                                    {...props}
+                                    page={stateObject.page}
+                                    changeGrid={changeLayout} />
                                 <div className=
-                              {(stateObject.gridLayout)
-                                ? "shop-product-wrap grid row no-gutters mb-35"
-                                : "shop-product-wrap row no-gutters mb-35 list"}>
+                                    {(stateObject.gridLayout)
+                                        ? "shop-product-wrap grid row no-gutters mb-35"
+                                        : "shop-product-wrap row no-gutters mb-35 list"}>
                                     {renderProducts(stateObject.products)}
                                 </div>
-                            <Pagination 
-                                {...props}
-                                page={stateObject.page} />
-                        </React.Fragment>    
-                    }
-                    </div> 
+                                <Pagination
+                                    {...props}
+                                    page={stateObject.page} />
+                                <QuickViewProduct
+                                    {...props}
+                                    toggleQuickView={toggleQuickView}
+                                    showQVModal={stateObject.showQVModal} />
+
+                            </React.Fragment>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
