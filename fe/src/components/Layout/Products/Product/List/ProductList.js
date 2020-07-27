@@ -13,7 +13,7 @@ function ProductList(props) {
         <div className="image">
           <a id={data.productUPC} href="#">
             <span className="onsale">Sale!</span>
-            <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
+            <img src={images(`./${data.productImage}`)} className="img-fluid"  />
           </a>
           <div className="product-hover-icons">
             <a id={data.productUPC}

@@ -27,7 +27,7 @@ function ProductGrid(props) {
 
         <Link to={`${getCategoryProductPath(match, data.productUPC)}`}>
           {/* <span className="onsale">Sale!</span> */}
-          <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
+          <img src={images(`./${data.productImage}`)} className="img-fluid" />
         </Link>
           <div className="product-hover-icons">
             <a id={data.productUPC} onClick={addToBag} href="#" data-tooltip="Add to bag"> 

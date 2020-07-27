@@ -70,9 +70,9 @@ function Category(props) {
     });
     return ref.current;
   }
-  //first create a local function that takes the product url and uses 
-  //axios to fetch the products, then later move this into productService class
-  const getProducts = (category, isSubscribed) => {
+
+  useEffect(() => {
+    let isSubscribed = true;
     axios.get(category._links.products.href)
       .then((payload) => {
         if (isSubscribed) {
@@ -81,20 +81,22 @@ function Category(props) {
           }));
         }
       });
-  }
-
-  useEffect(() => {
-    let isSubscribed = true;
-    getProducts(category, isSubscribed);
-    return () => isSubscribed = false
+    return () => (isSubscribed = false);
   }, []);
 
   useEffect(() => {
     let isSubscribed = true;
-      if (prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
-        getProducts(category, isSubscribed);
-      }
-    return () => isSubscribed = false
+    if (prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
+      axios.get(category._links.products.href)
+        .then((payload) => {
+          if (isSubscribed) {
+            setObjectState(() => ({
+              products: payload.data._embedded.productResources,
+            }));
+          }
+        });
+    }
+    return () => (isSubscribed = false);
   }, [lang, curr]);
 
   const renderColumns = (products, category) => {

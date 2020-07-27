@@ -77,26 +77,6 @@ function Products(props) {
         }));
     }
 
-    //this should be moved to a service class later on 
-    const retrieveProducts = (categoryCode, isSubscribed) => {
-        const currentCategory = findByCode(categories.list, categoryCode);
-        if (!currentCategory) { return; }
-        axios.post(currentCategory._links.products.href,
-            { facets: stateObject.selectedFacets })
-            .then((response) => {
-                if (isSubscribed) {
-                    setObjectState((prevState) => ({
-                        ...prevState,
-                        page: response.data.page,
-                        products: (response.data._embedded)
-                            ? response.data._embedded.productResources
-                            : [],
-                        loading: false,
-                    }));
-                }
-            });
-    }
-
     useEffect(() => {
         let isSubscribed = true;
         if (
@@ -106,9 +86,24 @@ function Products(props) {
             query.page !== prevPage ||
             query.size !== prevSize ||
             query.sort !== prevSort) {
-            retrieveProducts(categoryCode, isSubscribed);
+            const currentCategory = findByCode(categories.list, categoryCode);
+            if (!currentCategory) { return; }
+            axios.post(currentCategory._links.products.href,
+                { facets: stateObject.selectedFacets })
+                .then((response) => {
+                    if (isSubscribed) {
+                        setObjectState((prevState) => ({
+                            ...prevState,
+                            page: response.data.page,
+                            products: (response.data._embedded)
+                                ? response.data._embedded.productResources
+                                : [],
+                            loading: false,
+                        }));
+                    }
+                });
         }
-        return () => isSubscribed = false
+        return () => (isSubscribed = false);
     }, [categoryCode, categoriesLoading, stateObject.loading, query.page, query.size, query.sort]);
 
     const renderProducts = (products) => {
