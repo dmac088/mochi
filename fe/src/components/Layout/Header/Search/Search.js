@@ -3,6 +3,7 @@ import { instance as axios } from "../../../../components/Layout/Helpers/api/axi
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 
+
 function Search(props) {
 
     const { match } = props;
@@ -31,6 +32,7 @@ function Search(props) {
     };
 
     return (
+        <div className={"header-advance-search"}>
         <AsyncTypeahead
             id="async-example"
             isLoading={isLoading}
@@ -41,22 +43,26 @@ function Search(props) {
             placeholder="Search for products..."
             renderMenuItemChildren={option => {
                 return (
-                    <div key={option.suggestion}>
-                        {/* <img
-                            alt={option.login}
-                            src={option.avatar_url}
-                            style={{
-                                height: '24px',
-                                marginRight: '10px',
-                                width: '24px',
-                            }}
-                        /> */}
-                        <span>{option.suggestion}</span>
-                    </div>
+                    <React.Fragment>
+                        {option.suggestion}
+                    </React.Fragment>
+                    // <div key={option.suggestion}>
+                    //     {/* <img
+                    //         alt={option.login}
+                    //         src={option.avatar_url}
+                    //         style={{
+                    //             height: '24px',
+                    //             marginRight: '10px',
+                    //             width: '24px',
+                    //         }}
+                    //     /> */}
+                    //     <span>{option.suggestion}</span>
+                    // </div>
                 )
             }
             }
         />
+        </div>
     );
 
 
