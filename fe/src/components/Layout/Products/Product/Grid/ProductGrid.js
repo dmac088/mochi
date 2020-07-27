@@ -7,7 +7,7 @@ import * as bagService from "../../../../../services/Bag/index";
 const images = require.context('../../../../../assets/images/products', true);
 
 function ProductGrid(props) {
-  const { match } = props;
+  const { match, toggleQuickView } = props;
   const { data } = props.product;
 
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ function ProductGrid(props) {
             <a id={data.productUPC} onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={data.productUPC} className="icon_cart_alt" /></a>
             {/* <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a> */}
             <a id={data.productUPC}
-              onClick={(e) => { }}
+              onClick={toggleQuickView}
               href="#"
               data-tooltip="Quick view"
               data-toggle="modal"
