@@ -78,34 +78,35 @@ function Products(props) {
     }
 
     //this should be moved to a service class later on 
-    const retrieveProducts = (categoryCode) => {
+    const retrieveProducts = (categoryCode, isSubscribed) => {
         const currentCategory = findByCode(categories.list, categoryCode);
         if (!currentCategory) { return; }
         axios.post(currentCategory._links.products.href,
             { facets: stateObject.selectedFacets })
             .then((response) => {
-                setObjectState((prevState) => ({
-                    ...prevState,
-                    page: response.data.page,
-                    products: (response.data._embedded)
-                        ? response.data._embedded.productResources
-                        : [],
-                    loading: false,
-                }));
+                if (isSubscribed) {
+                    setObjectState((prevState) => ({
+                        ...prevState,
+                        page: response.data.page,
+                        products: (response.data._embedded)
+                            ? response.data._embedded.productResources
+                            : [],
+                        loading: false,
+                    }));
+                }
             });
     }
 
     useEffect(() => {
-        let isSubscribed = true
-        if(isSubscribed) {
-            if (categoryCode !== prevCategoryCode ||
-                categoriesLoading !== prevCategoriesLoading ||
-                stateObject.loading ||
-                query.page !== prevPage ||
-                query.size !== prevSize ||
-                query.sort !== prevSort) {
-                retrieveProducts(categoryCode);
-            }
+        let isSubscribed = true;
+        if (
+            categoryCode !== prevCategoryCode ||
+            categoriesLoading !== prevCategoriesLoading ||
+            stateObject.loading ||
+            query.page !== prevPage ||
+            query.size !== prevSize ||
+            query.sort !== prevSort) {
+            retrieveProducts(categoryCode, isSubscribed);
         }
         return () => isSubscribed = false
     }, [categoryCode, categoriesLoading, stateObject.loading, query.page, query.size, query.sort]);

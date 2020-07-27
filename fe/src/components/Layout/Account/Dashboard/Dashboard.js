@@ -30,7 +30,7 @@ function Dashboard(props) {
     if(isSubscribed) {
       dispatch(findByUserName());
     }
-    return () => isSubscribed = false
+    return () => (isSubscribed = false);
   }, []);
 
   const customer = useSelector(state => state.customer);

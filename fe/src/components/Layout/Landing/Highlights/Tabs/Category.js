@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef }  from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { instance as axios } from '../../../Helpers/api/axios';
 import { chunkArray } from '../../../../../services/Generic';
 import Slider from "react-slick";
@@ -55,8 +55,8 @@ const settings = {
 
 function Category(props) {
   const { category } = props;
-  const {lang, curr} = props.match.params;
-  const prevParams = usePrevious({lang, curr});
+  const { lang, curr } = props.match.params;
+  const prevParams = usePrevious({ lang, curr });
 
   //we need local state to store products 
   const [stateObject, setObjectState] = useState({
@@ -66,34 +66,33 @@ function Category(props) {
   function usePrevious(value) {
     const ref = useRef();
     useEffect(() => {
-        ref.current = value;
+      ref.current = value;
     });
     return ref.current;
   }
   //first create a local function that takes the product url and uses 
   //axios to fetch the products, then later move this into productService class
-  const getProducts = (category) => {
-    if(!category) return;
+  const getProducts = (category, isSubscribed) => {
     axios.get(category._links.products.href)
-    .then((payload) => {
-      setObjectState(() => ({
-        products: payload.data._embedded.productResources,
-      }));
-    });
+      .then((payload) => {
+        if (isSubscribed) {
+          setObjectState(() => ({
+            products: payload.data._embedded.productResources,
+          }));
+        }
+      });
   }
 
   useEffect(() => {
     let isSubscribed = true;
-    if (isSubscribed) {
-      getProducts(category);
-    }
+    getProducts(category, isSubscribed);
     return () => isSubscribed = false
   }, []);
 
   useEffect(() => {
     let isSubscribed = true;
-    if(isSubscribed) {
-      if(prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
+    if (isSubscribed) {
+      if (prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
         getProducts(category);
       }
     }
