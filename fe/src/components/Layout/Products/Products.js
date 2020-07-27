@@ -29,6 +29,7 @@ function Products(props) {
         page: {},
         selectedFacets: [],
         loading: false,
+        currentProductId: null,
     });
 
     const { categoryCode } = props.match.params;
@@ -193,11 +194,13 @@ function Products(props) {
                                 <Pagination
                                     {...props}
                                     page={stateObject.page} />
-                                <QuickViewProduct
+                                {(stateObject.showQVModal)
+                                ? <QuickViewProduct
                                     {...props}
                                     toggleQuickView={toggleQuickView}
-                                    showQVModal={stateObject.showQVModal} />
-
+                                    showQVModal={stateObject.showQVModal} 
+                                    product={stateObject.products.filter(p => p.data.productUPC === '10688155')[0]} />
+                                : <React.Fragment />}
                             </React.Fragment>
                         }
                     </div>
