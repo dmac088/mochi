@@ -3,9 +3,7 @@ import Slider from "react-slick";
 
 function QuickViewProduct(props) {
 
-  const { toggleQuickView, showQVModal, product } = props;
-
-  console.log(product);
+  const { toggleQuickView, product } = props;
 
   const closeModal = (e) => {
     toggleQuickView(e);
@@ -19,19 +17,15 @@ function QuickViewProduct(props) {
   const settings = {};
 
   return (
-    <div className={"modal fade quick-view-modal-container "
-      + ((showQVModal) ? " show" : "")}
+    <div className={"modal fade quick-view-modal-container show"}
       id={"modal-" + product.data.productUPC}
       tabIndex="-1"
       role="dialog"
-      style={(!showQVModal)
-        ? { "display": "none" }
-        : {
+      style={{
           "display": "block",
           "paddingRight": "17px"
         }}
-      aria-hidden={!showQVModal}
-    >
+      aria-hidden={"false"}>
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content">
           <div className="modal-header">
