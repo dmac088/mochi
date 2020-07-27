@@ -30,15 +30,18 @@ function ProductGrid(props) {
           <img src={images(`./${data.productImage}`)} className="img-fluid" alt />
         </Link>
           <div className="product-hover-icons">
-            <a id={data.productUPC} onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={data.productUPC} className="icon_cart_alt" /></a>
+            <a id={data.productUPC} onClick={addToBag} href="#" data-tooltip="Add to bag"> 
+              <span id={data.productUPC} className="icon_cart_alt" />
+            </a>
             {/* <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a> */}
             <a id={data.productUPC}
-              onClick={toggleQuickView}
+              onClick={(e) => toggleQuickView(e, data.productUPC)}
               href="#"
               data-tooltip="Quick view"
               data-toggle="modal"
-              data-target="#quick-view-modal-container"> <span className="icon_search" />
-            </a>
+              data-target="#quick-view-modal-container"> 
+              <span id={data.productUPC} className="icon_search" />
+              </a>
           </div>
         </div>
         <div className="product-content">

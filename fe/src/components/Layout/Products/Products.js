@@ -51,11 +51,12 @@ function Products(props) {
         return ref.current;
     }
 
-    const toggleQuickView = (e) => {
+    const toggleQuickView = (e, productId) => {
         e.preventDefault();
         setObjectState((prevState) => ({
             ...prevState,
             showQVModal: !prevState.showQVModal,
+            currentProductId: productId,
         }));
     }
 
@@ -142,6 +143,10 @@ function Products(props) {
         }));
     }
 
+    console.log(stateObject.currentProductId);
+    const selectedProduct = stateObject.products.filter(p => p.data.productUPC === stateObject.currentProductId)[0];
+    console.log(selectedProduct);
+
     return (
         <div className="shop-page-container mb-50">
             <div className="container">
@@ -194,12 +199,12 @@ function Products(props) {
                                 <Pagination
                                     {...props}
                                     page={stateObject.page} />
-                                {(stateObject.showQVModal)
+                                {(stateObject.showQVModal && selectedProduct)
                                 ? <QuickViewProduct
                                     {...props}
                                     toggleQuickView={toggleQuickView}
                                     showQVModal={stateObject.showQVModal} 
-                                    product={stateObject.products.filter(p => p.data.productUPC === '10688155')[0]} />
+                                    product={selectedProduct} />
                                 : <React.Fragment />}
                             </React.Fragment>
                         }
