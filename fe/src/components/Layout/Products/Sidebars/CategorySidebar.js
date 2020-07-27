@@ -27,26 +27,30 @@ function CategorySidebar(props) {
     }
 
     //mapCategoriesToSidebar
-    const retrieveCategories = (facets) => {
+    const retrieveCategories = (facets, isSubscribed) => {
         const currentCategory = findByCode(categories.list, categoryCode);
         if(!currentCategory) { return; }
         axios.post(currentCategory._links.children.href,
             { facets: facets })
              .then((response) => {
+                 if(isSubscribed) {
                  setObjectState((prevState) => ({
                      ...prevState,
                      categories: (response.data._embedded) 
                                 ? response.data._embedded.categoryResources
                                 : [],
                  }));
+                 }
              });
     }
 
 
     useEffect(() => {
+        let isSubscribed = true;
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
-            retrieveCategories(selectedFacets);
+            retrieveCategories(selectedFacets, isSubscribed);
         }
+        return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
     stateObject.categories

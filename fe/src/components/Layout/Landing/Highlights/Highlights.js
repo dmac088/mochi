@@ -26,7 +26,7 @@ function Highlights(props) {
         selectedCategoryCode: categoryMaster[0],
       }));
     }
-    return () => isSubscribed = false
+    return () => (isSubscribed = false);
   }, []);
 
   const categories = useSelector(state => state.categories.list);
