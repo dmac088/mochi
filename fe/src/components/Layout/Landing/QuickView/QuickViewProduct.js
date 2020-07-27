@@ -1,9 +1,11 @@
 import React from 'react';
 import Slider from "react-slick";
+import { settings } from './Helper';
 
 function QuickViewProduct(props) {
 
   const { toggleQuickView, product } = props;
+  const images = require.context('../../../../assets/images/products', true);
 
   const closeModal = (e) => {
     toggleQuickView(e);
@@ -13,18 +15,15 @@ function QuickViewProduct(props) {
     console.log('changeImage');
   }
 
-  const currentImage = '';
-  const settings = {};
-
   return (
     <div className={"modal fade quick-view-modal-container show"}
       id={"modal-" + product.productUPC}
       tabIndex="-1"
       role="dialog"
       style={{
-          "display": "block",
-          "paddingRight": "17px"
-        }}
+        "display": "block",
+        "paddingRight": "17px"
+      }}
       aria-hidden={"false"}>
       <div className="modal-dialog modal-dialog-centered" role="document">
         <div className="modal-content">
@@ -40,7 +39,7 @@ function QuickViewProduct(props) {
                   <div className="tab-content product-large-image-list" id="myTabContent">
                     <div className="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
                       <div className="single-product-img img-full">
-                        <img src={currentImage}
+                        <img src={images(`./${product.productImage}`)}
                           className="img-fluid"
                           alt=""
                         />
@@ -48,7 +47,7 @@ function QuickViewProduct(props) {
                     </div>
                     <div className="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
                       <div className="single-product-img img-full">
-                        <img src={product.productImage}
+                        <img src={images(`./${product.productImage}`)}
                           className="img-fluid"
                           alt=""
                         />
@@ -56,7 +55,7 @@ function QuickViewProduct(props) {
                     </div>
                     <div className="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
                       <div className="single-product-img img-full">
-                        <img src="assets/images/products/grapes.jpg"
+                        <img src={images(`./${product.productImage}`)}
                           className="img-fluid"
                           alt=""
                         />
@@ -64,7 +63,7 @@ function QuickViewProduct(props) {
                     </div>
                     <div className="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
                       <div className="single-product-img img-full">
-                        <img src="assets/images/products/pistachio.jpg"
+                        <img src={images(`./${product.productImage}`)}
                           className="img-fluid"
                           alt=""
                         />
@@ -72,37 +71,37 @@ function QuickViewProduct(props) {
                     </div>
                   </div>
                   <div className="product-small-image-list">
-                    <Slider role="tablist" className="nav small-image-slider"  {...settings}>
+                    <Slider role="tablist" className="nav small-image-slider" {...settings}>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-1" href="#single-slide1">
-                          <img src={product.productImage}
+                          <img src={images(`./${product.productImage}`)}
                             className="img-fluid"
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
-                          <img src="assets/images/products/grapes.jpg"
+                          <img src={images(`./${product.productImage}`)}
                             className="img-fluid"
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-3" href="#single-slide3">
-                          <img src={product.productImage}
+                          <img src={images(`./${product.productImage}`)}
                             className="img-fluid"
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-4" href="#single-slide4">
-                          <img src={product.productImage}
+                          <img src={images(`./${product.productImage}`)}
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
-                          <img src="assets/images/products/pistachio.jpg"
+                          <img src={images(`./${product.productImage}`)}
                             className="img-fluid"
                             alt="" />
                         </a>
