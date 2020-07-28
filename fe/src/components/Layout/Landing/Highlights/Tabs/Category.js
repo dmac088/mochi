@@ -74,10 +74,12 @@ function Category(props) {
   useEffect(() => {
     let isSubscribed = true;
     axios.get(category._links.products.href)
-      .then((payload) => {
+      .then((response) => {
         if (isSubscribed) {
-          setObjectState(() => ({
-            products: payload.data._embedded.productResources,
+          setObjectState((prevState) => ({
+            ...prevState,
+            products: (response.data._embedded) ? response.data._embedded.productResources
+              : [],
           }));
         }
       });
@@ -88,10 +90,12 @@ function Category(props) {
     let isSubscribed = true;
     if (prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
       axios.get(category._links.products.href)
-        .then((payload) => {
+        .then((response) => {
           if (isSubscribed) {
-            setObjectState(() => ({
-              products: payload.data._embedded.productResources,
+            setObjectState((prevState) => ({
+              ...prevState,
+              products: (response.data._embedded) ? response.data._embedded.productResources
+                : [],
             }));
           }
         });

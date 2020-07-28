@@ -27,12 +27,6 @@ function BrandSidebar(props) {
         return ref.current;
     }
 
-    //this should be moved to a service class later on 
-    const retrieveBrands = (categoryCode, facets) => {
-
-    }
-
-    //mapBrandsToSidebar
     stateObject.brands.filter(({ data }) => !(selectedFacets).some(x => x.id === data.brandCode))
         .map(c => {
             items.push({
