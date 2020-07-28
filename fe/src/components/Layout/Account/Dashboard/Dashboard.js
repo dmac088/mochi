@@ -1,17 +1,17 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession } from '../../../../services/Session';
 import { findByUserName } from '../../../../services/Customer';
 import { getAccountPath, getAccountSubPath } from "../../Helpers/Route/Route";
 import { matchPath } from 'react-router'
 import { Link } from 'react-router-dom';
-import  Default from "../Default/Default";
-import  Orders from "../Orders/Orders";
-import  Payment from "../Payment/Payment";
-import  Address  from "../Address/Address";
-import  Download  from "../Download/Download";
+import Default from "../Default/Default";
+import Orders from "../Orders/Orders";
+import Payment from "../Payment/Payment";
+import Address  from "../Address/Address";
+import Download  from "../Download/Download";
 import Admin from "../Admin/Admin";
-import  AccountDetails  from "../AccountDetails/AccountDetails";
+import AccountDetails  from "../AccountDetails/AccountDetails";
 
 
 function Dashboard(props) {

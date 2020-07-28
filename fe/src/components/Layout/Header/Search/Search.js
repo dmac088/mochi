@@ -3,11 +3,12 @@ import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import { getSearchPath } from "../../Helpers/Route/Route";
 
 
 function Search(props) {
 
-    const { match } = props;
+    const { history, match } = props;
     const { lang } = match.params;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,9 @@ function Search(props) {
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
             console.log('search....');
+            history.push(getSearchPath(match, e.target.value));
         }
+        
     }
 
     const handleSearch = (query) => {
