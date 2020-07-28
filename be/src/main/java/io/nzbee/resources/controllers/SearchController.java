@@ -67,7 +67,7 @@ public class SearchController {
     												selectedFacets,
     												returnFacets).map(p -> prodResourceAssembler.toModel(p));
 		
-    	return ResponseEntity.ok(new SearchResultDto(prodPagedAssembler.toModel(pages), selectedFacets));
+    	return ResponseEntity.ok(new SearchResultDto(prodPagedAssembler.toModel(pages), returnFacets));
     }
 	
 	@GetMapping(value = "/Search/{locale}/{currency}/Suggest",
