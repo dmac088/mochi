@@ -42,6 +42,11 @@ export const getProductPath = (match) => {
     return getHomePath(match) + '/product';
 }
 
+//:lang/:curr/search/category/:categoryCode
+export const getSearchPath = (match, term) => {
+    return getHomePath(match) + `/search/category/PRM01?q=${term}&page=0&size=10&sort=nameAsc`;
+}
+
 export const getAccountSubPath = (match, suffix) => {
     return getAccountPath(match) + '/' + suffix;
 }
