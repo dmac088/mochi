@@ -2,7 +2,6 @@ import React from 'react';
 import queryString from 'query-string';
 
 function ShopHeader(props) {
-    console.log(props);
 
     const { page, history, changeGrid} = props;
 
