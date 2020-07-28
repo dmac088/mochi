@@ -99,11 +99,11 @@ function Products(props) {
                 stateObject.selectedFacets )
                 .then((response) => {
                     if (isSubscribed) {
-                        //console.log(response);
+                        console.log(response);
                         setObjectState((prevState) => ({
                             ...prevState,
-                            page: response.products.page,
-                            products: response.products._embedded.productResources,
+                            page: response.data.products.page,
+                            products: response.data.products._embedded.productResources,
                             loading: false,
                         }));
                     }
