@@ -47,8 +47,7 @@ function BrandSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.brands.href,
-                { facets: selectedFacets })
+            axios.post(currentCategory._links.brands.href, selectedFacets)
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({

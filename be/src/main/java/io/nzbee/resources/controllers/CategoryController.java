@@ -3,7 +3,6 @@ package io.nzbee.resources.controllers;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +20,7 @@ import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.resources.category.CategoryResource;
 import io.nzbee.resources.category.CategoryResourceAssembler;
-import io.nzbee.search.dto.facet.FacetContainer;
+import io.nzbee.search.dto.facet.IFacet;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")
@@ -82,20 +81,20 @@ public class CategoryController {
 	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getChildCategories(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String categoryCode,
-			@RequestBody final FacetContainer selectedFacets) {
+			@RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
 		
-		Optional<String> oMaxPrice = selectedFacets.getFacets().stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
     	}
 		
 		final Set<Category> collection = categoryService.findAll(locale, currency, categoryCode,
-																 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-																 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
-																 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()),
 																 maxPrice);
 		
 		
@@ -105,15 +104,15 @@ public class CategoryController {
 	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}/maxPrice")
 	public ResponseEntity<Double> getMaxPrice(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String categoryCode,
-			@RequestBody final FacetContainer selectedFacets) {
+			@RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getMaxPrice with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
 		
 		
 		 Double result = categoryService.getMaxPrice(locale, currency, categoryCode, 
-													 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-													 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
-													 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()));
+													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
+													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
+													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()));
 		return ResponseEntity.ok(result);
 	}
 

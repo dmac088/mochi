@@ -28,6 +28,7 @@ function Products(props) {
         products: [],
         page: {},
         selectedFacets: [],
+        facets: [],
         loading: false,
     });
 
@@ -104,6 +105,7 @@ function Products(props) {
                             ...prevState,
                             page: response.data.products.page,
                             products: response.data.products._embedded.productResources,
+                            facets: response.data.facets,
                             loading: false,
                         }));
                     }

@@ -36,8 +36,7 @@ function CategorySidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.maxPrice.href,
-                { facets: selectedFacets })
+            axios.post(currentCategory._links.maxPrice.href, selectedFacets)
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
