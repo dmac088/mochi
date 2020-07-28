@@ -12,6 +12,16 @@ function Search(props) {
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
 
+    const handleClick = () => {
+        console.log('handleClick');
+    }
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            console.log('search....');
+        }
+    }
+
     const handleSearch = (query) => {
         setIsLoading(true);
 
@@ -40,13 +50,14 @@ function Search(props) {
             labelKey="suggestion"
             minLength={((lang === 'en-GB') ? 3 : 1)}
             onSearch={handleSearch}
+            onKeyDown={handleKeyDown}
             options={options}
             placeholder="Search for products..."
             renderMenuItemChildren={option => {
                 return (
-                    <React.Fragment>
+                    <div onClick={(e)=>handleClick(e)}>
                         {option.suggestion}
-                    </React.Fragment>
+                    </div>
                     // <div key={option.suggestion}>
                     //     {/* <img
                     //         alt={option.login}
