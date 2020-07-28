@@ -10,10 +10,8 @@ function Search(props) {
 
     const { history, match } = props;
     const { lang } = match.params;
-
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
-
     const links = useSelector(state => state.discovery.links);
 
     const handleClick = () => {
@@ -22,10 +20,8 @@ function Search(props) {
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            console.log('search....');
             history.push(getSearchPath(match, e.target.value));
         }
-        
     }
 
     const handleSearch = (query) => {

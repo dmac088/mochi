@@ -15,9 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.resources.dto.SearchResultDto;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
-import io.nzbee.resources.search.SearchResource;
 import io.nzbee.search.dto.facet.IFacet;
 
 @RestController
@@ -38,7 +38,7 @@ public class SearchController {
 	
 	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}",
     					params = { "q", "page", "size", "sort" })
-    public ResponseEntity<SearchResource> search(	
+    public ResponseEntity<SearchResultDto> search(	
 						    						@PathVariable String 		 locale,
 						    						@PathVariable String 	  	 currency, 
 						    						@PathVariable String 	  	 category,
@@ -50,7 +50,7 @@ public class SearchController {
 
 		LOGGER.debug("Searching for products with patameters: {}, {}, {}", locale, currency, term);
 		
-    	final SearchResource sr = new SearchResource(locale, 
+    	final SearchResultDto sr = new SearchResultDto(locale, 
 													 currency, 
 													 category, 
 													 term, 

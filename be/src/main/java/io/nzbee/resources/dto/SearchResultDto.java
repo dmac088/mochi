@@ -1,4 +1,4 @@
-package io.nzbee.resources.search;
+package io.nzbee.resources.dto;
 
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
@@ -16,13 +16,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.web.PagedResourcesAssembler;
 
 
-public class SearchResource extends RepresentationModel<SearchResource> {
+public class SearchResultDto extends RepresentationModel<SearchResultDto> {
 	
     private PagedModel<EntityModel<ProductResource>> products;
     
     private Set<IFacet> facets;
     
-	public SearchResource(String locale, 
+	public SearchResultDto(String locale, 
 						  String currency, 
 						  String category,
 						  String term,
