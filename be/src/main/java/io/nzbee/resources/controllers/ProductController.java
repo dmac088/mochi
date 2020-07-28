@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.resources.dto.ProductResultDto;
+import io.nzbee.resources.dto.BrowseResultDto;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.search.dto.facet.IFacet;
@@ -44,7 +44,7 @@ public class ProductController {
     
     
 	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<ProductResultDto> getProducts(@PathVariable String locale, 
+    public ResponseEntity<BrowseResultDto> getProducts(@PathVariable String locale, 
 															    	   @PathVariable String currency, 
 															    	   @PathVariable String categoryCode,
 															    	   @RequestParam(value = "page", defaultValue = "0") String page,
@@ -66,7 +66,7 @@ public class ProductController {
 																	sort
 														  		  ).map(p -> prodResourceAssembler.toModel(p));
     			
-    	return ResponseEntity.ok(new ProductResultDto(prodPagedAssembler.toModel(pages)));
+    	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
     }
     
 	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
@@ -102,7 +102,7 @@ public class ProductController {
   
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}",
 			 	 params = { "page", "size", "sort" })
-	public ResponseEntity<ProductResultDto> getProducts(	
+	public ResponseEntity<BrowseResultDto> getProducts(	
 										@PathVariable String 			locale, 
 										@PathVariable String 			currency, 
 										@PathVariable 					String 	categoryCode,
@@ -134,7 +134,7 @@ public class ProductController {
 																	sort
 														  		  ).map(p -> prodResourceAssembler.toModel(p));
 		
-		return ResponseEntity.ok(new ProductResultDto(prodPagedAssembler.toModel(pages)));
+		return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
 	}
     
 }
