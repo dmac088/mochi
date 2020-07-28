@@ -36,8 +36,8 @@ public class SearchController {
 	private PagedResourcesAssembler<ProductResource> assembler;
 	
 	
-	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}/SortBy/{sortBy}",
-    					params = { "q", "page", "size" })
+	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}",
+    					params = { "q", "page", "size", "sort" })
     public ResponseEntity<SearchResource> search(	
 						    						@PathVariable String 		 locale,
 						    						@PathVariable String 	  	 currency, 
