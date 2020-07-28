@@ -100,11 +100,12 @@ function Products(props) {
                 stateObject.selectedFacets )
                 .then((response) => {
                     if (isSubscribed) {
-                        console.log(response);
                         setObjectState((prevState) => ({
                             ...prevState,
                             page: response.data.products.page,
-                            products: response.data.products._embedded.productResources,
+                            products: (response.data.products._embedded) 
+                                        ? response.data.products._embedded.productResources
+                                        : [],
                             facets: response.data.facets || [],
                             loading: false,
                         }));

@@ -30,14 +30,15 @@ function CategorySidebar(props) {
         if (type === 'browse' && (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.children.href, selectedFacets)
+            axios.post(currentCategory._links.children.href, [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            displayFacets: mapCategoriesToDisplayFacets((response.data._embedded)
-                                ? response.data._embedded.categoryResources
-                                : []),
+                            displayFacets: (response.data._embedded)
+                                ? mapCategoriesToDisplayFacets(response.data._embedded.categoryResources, selectedFacets)
+                                : [],
+                            loading: false,
                         }));
                     }
                 });
@@ -45,8 +46,8 @@ function CategorySidebar(props) {
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
-    //map categories to facets
-    const mapCategoriesToDisplayFacets = (categories) => {
+    const mapCategoriesToDisplayFacets = (categories, selectedFacets) => {
+        console.log(categories);
         return categories
             .filter(c => c.data.count > 0)
             .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
@@ -60,18 +61,18 @@ function CategorySidebar(props) {
 
     }
 
-    const mapSearchFacetsToDisplayFacets = (searchFacets) => {
-        const items = [];
-        searchFacets
+    const mapSearchFacetsToDisplayFacets = (searchFacets, selectedFacets) => {
+        console.log(searchFacets);
+        return searchFacets
             .filter(({ data }) => !selectedFacets.some(x => x.id === data.id))
             .map(f => {
-                items.push({
+                return {
                     display: f.displayValue + ' (' + f.count + ')',
                     code: f.id,
                     path: getCategoryPath(f.id, props.match)
-                });
+                }
             });
-        return items;
+       
     }
 
     return (
@@ -81,7 +82,7 @@ function CategorySidebar(props) {
                 : <ListSidebar
                     filterType={"category"}
                     heading={"filter by category"}
-                    items={(type === 'browse') ? stateObject.displayFacets : mapSearchFacetsToDisplayFacets(facets)}
+                    items={(type === 'browse') ? stateObject.displayFacets : mapSearchFacetsToDisplayFacets(facets, selectedFacets)}
                     modFacet={addFacet} />}
         </React.Fragment>
     )
