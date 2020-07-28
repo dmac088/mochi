@@ -17,7 +17,7 @@ import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.resources.tag.TagResource;
 import io.nzbee.resources.tag.TagResourceAssembler;
-import io.nzbee.search.dto.facet.FacetContainer;
+import io.nzbee.search.dto.facet.IFacet;
 
 
 @RestController
@@ -36,11 +36,11 @@ public class TagController {
     public ResponseEntity<CollectionModel<TagResource>> getTags(@PathVariable String locale, 
     																@PathVariable String currency, 
     																@PathVariable String categoryCode,
-    																@RequestBody final FacetContainer selectedFacets) {
+    																@RequestBody Set<IFacet> selectedFacets) {
     	
     	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
-    	Optional<String> oMaxPrice = selectedFacets.getFacets().stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
@@ -50,8 +50,8 @@ public class TagController {
     			tagService.findAll(	 locale, 
     								 currency, 
     								 categoryCode,
-    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-    								 selectedFacets.getFacets().stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
     								 maxPrice    							  
     			);
     	
