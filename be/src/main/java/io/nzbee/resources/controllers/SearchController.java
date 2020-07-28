@@ -42,7 +42,7 @@ public class SearchController {
 						    						@PathVariable String 		 locale,
 						    						@PathVariable String 	  	 currency, 
 						    						@PathVariable String 	  	 category,
-						    						@RequestParam("q") String 	 term, 
+						    						@RequestParam("q") 	  String term, 
 						    						@RequestParam("page") String page,
 											    	@RequestParam("size") String size, 
 						    						@PathVariable String 	  	 sortBy, 
@@ -67,11 +67,11 @@ public class SearchController {
 	
 	@GetMapping(value = "/Search/{locale}/{currency}/Suggest",
 			params = { "q" })
-	public String[] getSuggestions(	@PathVariable String locale, 
+	public ResponseEntity<String[]> getSuggestions(	@PathVariable String locale, 
 									@PathVariable String currency, 
 									@RequestParam("q") String term) {
 		LOGGER.debug("Searching for suggestions with patameters: {}, {}", locale, term);
-		return productService.getSuggestion(term, locale, currency);
+		return new ResponseEntity< >(productService.getSuggestion(term, locale, currency), HttpStatus.OK);
 	}
 	
 }
