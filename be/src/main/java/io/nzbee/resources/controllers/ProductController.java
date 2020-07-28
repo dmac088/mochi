@@ -102,7 +102,7 @@ public class ProductController {
   
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}",
 			 	 params = { "page", "size", "sort" })
-	public ResponseEntity<PagedModel<EntityModel<ProductResource>>> getProducts(	
+	public ResponseEntity<ProductResultDto> getProducts(	
 										@PathVariable String 			locale, 
 										@PathVariable String 			currency, 
 										@PathVariable 					String 	categoryCode,
@@ -134,7 +134,7 @@ public class ProductController {
 																	sort
 														  		  ).map(p -> prodResourceAssembler.toModel(p));
 		
-		return ResponseEntity.ok(prodPagedAssembler.toModel(pages));
+		return ResponseEntity.ok(new ProductResultDto(prodPagedAssembler.toModel(pages)));
 	}
     
 }

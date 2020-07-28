@@ -102,8 +102,8 @@ function Products(props) {
                         //console.log(response);
                         setObjectState((prevState) => ({
                             ...prevState,
-                            page: (type === 'browse') ? response.data.page : response.data.products.page,
-                            products: (type === 'browse') ? response.data._embedded.productResources : response.data.products._embedded.productResources,
+                            page: response.products.page,
+                            products: response.products._embedded.productResources,
                             loading: false,
                         }));
                     }
