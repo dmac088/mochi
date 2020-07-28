@@ -1,12 +1,10 @@
 package io.nzbee.resources.controllers;
 
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.web.PagedResourcesAssembler;
-import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,8 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
+import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.resources.search.SearchResource;
 import io.nzbee.search.dto.facet.IFacet;
 
@@ -32,7 +30,11 @@ public class SearchController {
     private IProductPortService productService;
 	
 	@Autowired
-    private RepresentationModelAssemblerSupport<Product, ProductResource> prodAssembler;
+    private ProductResourceAssembler prodResourceAssembler;
+	
+	@Autowired
+	private PagedResourcesAssembler<ProductResource> assembler;
+	
 	
 	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}/SortBy/{sortBy}",
     					params = { "q", "page", "size" })
@@ -41,11 +43,10 @@ public class SearchController {
 						    						@PathVariable String 	  	 currency, 
 						    						@PathVariable String 	  	 category,
 						    						@RequestParam("q") String 	 term, 
-						    						@RequestParam("page") int 	 page,
-											    	@RequestParam("size") int 	 size, 
+						    						@RequestParam("page") String page,
+											    	@RequestParam("size") String size, 
 						    						@PathVariable String 	  	 sortBy, 
-						    						@RequestBody  Set<IFacet> 	 selectedFacets,
-						    						PagedResourcesAssembler<ProductResource> assembler) {
+						    						@RequestBody  Set<IFacet> 	 selectedFacets) {
 
 		LOGGER.debug("Searching for products with patameters: {}, {}, {}", locale, currency, term);
 		
@@ -53,12 +54,12 @@ public class SearchController {
 													 currency, 
 													 category, 
 													 term, 
-													 page,
-													 size, 
+													 Integer.parseInt(page),
+													 Integer.parseInt(size), 
 													 sortBy, 
 													 selectedFacets,
 													 assembler,
-													 prodAssembler,
+													 prodResourceAssembler,
 													 productService);
     	
     	return new ResponseEntity< >(sr, HttpStatus.OK);
