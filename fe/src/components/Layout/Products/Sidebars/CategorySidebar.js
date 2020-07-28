@@ -8,14 +8,13 @@ import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 
 function CategorySidebar(props) {
-    const { addFacet, selectedFacets, loading } = props;
+    const { type, addFacet, selectedFacets, loading, facets } = props;
     const categories = useSelector(state => state.categories);
-    const items = [];
     const { categoryCode } = props.match.params;
     const prevCategoryCode = usePrevious(categoryCode);
 
     const [stateObject, setObjectState] = useState({
-        categories: [],
+        displayFacets: [],
     });
 
     function usePrevious(value) {
@@ -26,20 +25,19 @@ function CategorySidebar(props) {
         return ref.current;
     }
 
-
     useEffect(() => {
         let isSubscribed = true;
-        if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
+        if (type === 'browse' && (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.children.href,selectedFacets)
+            axios.post(currentCategory._links.children.href, selectedFacets)
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            categories: (response.data._embedded)
+                            displayFacets: mapCategoriesToDisplayFacets((response.data._embedded)
                                 ? response.data._embedded.categoryResources
-                                : [],
+                                : []),
                         }));
                     }
                 });
@@ -47,16 +45,34 @@ function CategorySidebar(props) {
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
-    stateObject.categories
-        .filter(c => c.data.count > 0)
-        .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
-        .map(c => {
-            items.push({
-                display: c.data.categoryDesc + ' (' + c.data.count + ')',
-                code: c.data.categoryCode,
-                path: getCategoryPath(c.data.categoryCode, props.match)
+    //map categories to facets
+    const mapCategoriesToDisplayFacets = (categories) => {
+        return categories
+            .filter(c => c.data.count > 0)
+            .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
+            .map(c => {
+                return {
+                    display: c.data.categoryDesc + ' (' + c.data.count + ')',
+                    code: c.data.categoryCode,
+                    path: getCategoryPath(c.data.categoryCode, props.match)
+                }
             });
-        });
+
+    }
+
+    const mapSearchFacetsToDisplayFacets = (searchFacets) => {
+        const items = [];
+        searchFacets
+            .filter(({ data }) => !selectedFacets.some(x => x.id === data.id))
+            .map(f => {
+                items.push({
+                    display: f.displayValue + ' (' + f.count + ')',
+                    code: f.id,
+                    path: getCategoryPath(f.id, props.match)
+                });
+            });
+        return items;
+    }
 
     return (
         <React.Fragment>
@@ -65,7 +81,7 @@ function CategorySidebar(props) {
                 : <ListSidebar
                     filterType={"category"}
                     heading={"filter by category"}
-                    items={items}
+                    items={(type === 'browse') ? stateObject.displayFacets : mapSearchFacetsToDisplayFacets(facets)}
                     modFacet={addFacet} />}
         </React.Fragment>
     )

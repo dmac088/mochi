@@ -105,7 +105,7 @@ function Products(props) {
                             ...prevState,
                             page: response.data.products.page,
                             products: response.data.products._embedded.productResources,
-                            facets: response.data.facets,
+                            facets: response.data.facets || [],
                             loading: false,
                         }));
                     }
@@ -148,25 +148,34 @@ function Products(props) {
                         <div className="sidebar-area">
                             <SelectionSidebar
                                 {...props}
+                                type={type}
                                 selectedFacets={stateObject.selectedFacets}
                                 removeFacet={removeFacet} />
                             <CategorySidebar
                                 {...props}
+                                type={type}
                                 name={"category"}
+                                facets={stateObject.facets.filter(f => f.facetingName === 'category')}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
                             <BrandSidebar
                                 {...props}
+                                type={type}
                                 name={"brand"}
+                                facets={stateObject.facets}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
                             <PriceSidebar
                                 {...props}
+                                type={type}
+                                facets={stateObject.facets}
                                 addFacet={replaceFacet} />
                             <TagSidebar
                                 {...props}
+                                type={type}
+                                facets={stateObject.facets}
                                 name={"tag"}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
