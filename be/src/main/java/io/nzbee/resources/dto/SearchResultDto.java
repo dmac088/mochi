@@ -1,19 +1,20 @@
 package io.nzbee.resources.dto;
 
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.search.dto.facet.IFacet;
 import java.util.Set;
-import org.springframework.data.domain.Page;
 
 
 public class SearchResultDto extends RepresentationModel<SearchResultDto> {
 	
-    private Page<ProductResource> products;
+    private PagedModel<EntityModel<ProductResource>> products;
     
     private Set<IFacet> facets;
     
-	public SearchResultDto(	Page<ProductResource> products,
+	public SearchResultDto(	PagedModel<EntityModel<ProductResource>> products,
 							Set<IFacet> facets) {
 
     	this.products = products;
@@ -21,7 +22,7 @@ public class SearchResultDto extends RepresentationModel<SearchResultDto> {
 		this.facets = facets;
     }
 
-	public Page<ProductResource> getProducts() {
+	public PagedModel<EntityModel<ProductResource>> getProducts() {
 		return products;
 	}
 
