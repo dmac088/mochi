@@ -45,7 +45,7 @@ public class SearchController {
 						    						@RequestParam("q") 	  String term, 
 						    						@RequestParam("page") String page,
 											    	@RequestParam("size") String size, 
-						    						@PathVariable String 	  	 sortBy, 
+											    	@RequestParam("sort") String sort, 
 						    						@RequestBody  Set<IFacet> 	 selectedFacets) {
 
 		LOGGER.debug("Searching for products with patameters: {}, {}, {}", locale, currency, term);
@@ -56,7 +56,7 @@ public class SearchController {
 													 term, 
 													 Integer.parseInt(page),
 													 Integer.parseInt(size), 
-													 sortBy, 
+													 sort, 
 													 selectedFacets,
 													 assembler,
 													 prodResourceAssembler,

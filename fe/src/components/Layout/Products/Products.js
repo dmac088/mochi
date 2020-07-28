@@ -19,10 +19,12 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Products(props) {
     const { toggleQuickView, match } = props;
-
-    console.log(match.params);
+    const discovery = useSelector(state => state.discovery);
+    console.log(discovery);
+    // console.log(match.params);
 
     const query = queryString.parse(props.location.search);
+    console.log(query);
 
     const [stateObject, setObjectState] = useState({
         gridLayout: true,
@@ -32,7 +34,7 @@ function Products(props) {
         loading: false,
     });
 
-    const { categoryCode } = match.params;
+    const { categoryCode, type } = match.params;
     const categories = useSelector(state => state.categories);
     const categoriesLoading = categories.loading;
 
@@ -42,6 +44,8 @@ function Products(props) {
     const prevPage = usePrevious(query.page);
     const prevSize = usePrevious(query.size);
     const prevSort = usePrevious(query.sort);
+    //const prevTerm = usePrevious()
+
 
     function usePrevious(value) {
         const ref = useRef();
@@ -90,7 +94,11 @@ function Products(props) {
             query.sort !== prevSort) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.products.href,
+            console.log(stateObject.selectedFacets);
+            axios.post(
+                (type === 'browse') 
+                ? currentCategory._links.products.href
+                : discovery.links.searchProduct.href.replace('{category}', 'PRM01').replace('{q}', query.q),
                 { facets: stateObject.selectedFacets })
                 .then((response) => {
                     if (isSubscribed) {
