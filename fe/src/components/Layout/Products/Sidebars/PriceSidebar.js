@@ -5,7 +5,7 @@ import { RangeSidebar } from './Layout/RangeSidebar';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
-function CategorySidebar(props) {
+function PriceSidebar(props) {
     const { addFacet, selectedFacets, loading } = props;
     const categories = useSelector(state => state.categories);
     const items = [];
@@ -25,18 +25,12 @@ function CategorySidebar(props) {
         return ref.current;
     }
 
-    //mapCategoriesToSidebar
-    const retrieveMaxPrice = (facets) => {
-
-    }
-
-
     useEffect(() => {
         let isSubscribed = true;
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.maxPrice.href, selectedFacets)
+            axios.post(currentCategory._links.maxPrice.href, selectedFacets || [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
@@ -80,4 +74,4 @@ function CategorySidebar(props) {
 }
 
 
-export default CategorySidebar;
+export default PriceSidebar;
