@@ -10,7 +10,7 @@ public class BrowseResultDto  extends RepresentationModel<ProductResource> {
 
 	private PagedModel<EntityModel<ProductResource>> products;
 	
-	public BrowseResultDto(final PagedModel<EntityModel<ProductResource>> products) {
+	public BrowseResultDto(PagedModel<EntityModel<ProductResource>> products) {
 		this.products = products;
 	}
 	
