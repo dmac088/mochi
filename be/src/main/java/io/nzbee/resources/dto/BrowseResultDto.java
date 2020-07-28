@@ -6,11 +6,11 @@ import org.springframework.hateoas.RepresentationModel;
 
 import io.nzbee.resources.product.ProductResource;
 
-public class ProductResultDto  extends RepresentationModel<ProductResource> {
+public class BrowseResultDto  extends RepresentationModel<ProductResource> {
 
 	private PagedModel<EntityModel<ProductResource>> products;
 	
-	public ProductResultDto(final PagedModel<EntityModel<ProductResource>> products) {
+	public BrowseResultDto(final PagedModel<EntityModel<ProductResource>> products) {
 		this.products = products;
 	}
 	
