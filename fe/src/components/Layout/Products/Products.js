@@ -18,7 +18,9 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 
 function Products(props) {
-    const { toggleQuickView } = props;
+    const { toggleQuickView, match } = props;
+
+    console.log(match.params);
 
     const query = queryString.parse(props.location.search);
 
@@ -30,7 +32,7 @@ function Products(props) {
         loading: false,
     });
 
-    const { categoryCode } = props.match.params;
+    const { categoryCode } = match.params;
     const categories = useSelector(state => state.categories);
     const categoriesLoading = categories.loading;
 

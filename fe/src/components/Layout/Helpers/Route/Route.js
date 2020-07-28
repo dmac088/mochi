@@ -10,7 +10,7 @@ export const getHomePath = (match) => {
 }
 
 export const getCategoryPath = (categoryCode, match) => {
-    return getHomePath(match) + '/category/' + categoryCode + '?page=0&size=10&sort=nameAsc';
+    return getHomePath(match) + '/browse/category/' + categoryCode + '?page=0&size=10&sort=nameAsc';
 }
 
 export const getCategoryProductPath = (match, productCode, catCode) => {
