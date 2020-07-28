@@ -32,7 +32,8 @@ function Search(props) {
     };
 
     return (
-        <div className={"header-advance-search"}>
+        // <div className={"header-advance-search"}>
+        <React.Fragment>
         <AsyncTypeahead
             id="async-example"
             isLoading={isLoading}
@@ -59,10 +60,10 @@ function Search(props) {
                     //     <span>{option.suggestion}</span>
                     // </div>
                 )
-            }
-            }
+            }}
         />
-        </div>
+        </React.Fragment>
+        // </div>
     );
 
 

@@ -51,7 +51,7 @@ function CategoryMenu(props) {
     return (
 
         <Transition
-            in={props.in}
+            in={props.in || true}
             timeout={2000}
             onEntering={() => { slide(container, 'slideDown', null); }}
             onEntered={() => { console.log(' entered') }}

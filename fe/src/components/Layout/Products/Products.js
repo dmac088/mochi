@@ -184,13 +184,6 @@ function Products(props) {
                                 <Pagination
                                     {...props}
                                     page={stateObject.page} />
-                                {/* {(stateObject.showQVModal && selectedProduct)
-                                ? <QuickViewProduct
-                                    {...props}
-                                    toggleQuickView={toggleQuickView}
-                                    showQVModal={stateObject.showQVModal} 
-                                    product={selectedProduct} />
-                                : <React.Fragment />} */}
                             </React.Fragment>
                         }
                     </div>
