@@ -41,7 +41,7 @@ function Products(props) {
     const prevPage = usePrevious(query.page);
     const prevSize = usePrevious(query.size);
     const prevSort = usePrevious(query.sort);
-    //const prevTerm = usePrevious()
+    const prevQuery = usePrevious(query.q || '');
 
 
     function usePrevious(value) {
@@ -82,15 +82,16 @@ function Products(props) {
 
     useEffect(() => {
         let isSubscribed = true;
-        if (
+        const currentCategory = findByCode(categories.list, categoryCode);
+        if (currentCategory && (
             categoryCode !== prevCategoryCode ||
             categoriesLoading !== prevCategoriesLoading ||
             stateObject.loading ||
             query.page !== prevPage ||
             query.size !== prevSize ||
-            query.sort !== prevSort) {
-            const currentCategory = findByCode(categories.list, categoryCode);
-            if (!currentCategory) { return; }
+            query.sort !== prevSort ||
+            query.q    !== prevQuery)) {
+            
             axios.post(
                 (type === 'browse') 
                 ? currentCategory._links.products.href
@@ -109,7 +110,7 @@ function Products(props) {
                 });
         }
         return () => (isSubscribed = false);
-    }, [categoryCode, categoriesLoading, stateObject.loading, query.page, query.size, query.sort]);
+    }, [categoryCode, categoriesLoading, stateObject.loading, query.page, query.size, query.sort, query.q]);
 
     const renderProducts = (products) => {
         return products.map((p, index) => {
