@@ -1,4 +1,5 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
+import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
@@ -11,6 +12,8 @@ function Search(props) {
 
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
+
+    const links = useSelector(state => state.discovery.links);
 
     const handleClick = () => {
         console.log('handleClick');
@@ -25,7 +28,8 @@ function Search(props) {
     const handleSearch = (query) => {
         setIsLoading(true);
 
-        const SEARCH_URI = `https://localhost:8090/api/Search/{locale}/{currency}/Suggest/${query}`;
+        const SEARCH_URI = links.searchSuggestion.href.replace('{q}', query);
+        
 
         axios.get(`${SEARCH_URI}`)
             .then((resp) => {
