@@ -25,6 +25,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.search.dto.facet.FacetContainer;
+import io.nzbee.search.dto.facet.IFacet;
 
 @RestController
 @RequestMapping("/api")
@@ -108,12 +109,12 @@ public class ProductController {
 										@RequestParam("page")			String page,
 								    	@RequestParam("size") 			String size, 
 								    	@RequestParam("sort") 			String sort,
-										@RequestBody final 				FacetContainer selectedFacets) {
+										@RequestBody  					Set<IFacet> selectedFacets) {
 		
 		
-		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, sort, selectedFacets.getFacets().size());
+		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, sort, selectedFacets.size());
 		
-		Optional<String> oMaxPrice = selectedFacets.getFacets().stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
@@ -121,11 +122,11 @@ public class ProductController {
 
 			
 		final Page<ProductResource> pages = productService.findAll(locale, currency, categoryCode, 
-																	selectedFacets.getFacets().stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
+																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
 																	.collect(Collectors.toSet()), 
-																	selectedFacets.getFacets().stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
+																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
 																	.collect(Collectors.toSet()), 
-																	selectedFacets.getFacets().stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
+																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
 																	.collect(Collectors.toSet()), 
 																	maxPrice,
 																	page, 

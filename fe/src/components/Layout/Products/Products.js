@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
 import { findByCode } from '../../../services/Category';
-import { newFacet } from '../../../services/Product';
+import { newEntityFacet, newSearchFacet } from '../../../services/Product';
 import ProductGrid from './Product/Grid/ProductGrid';
 import ProductList from './Product/List/ProductList';
 import CategorySidebar from './Sidebars/CategorySidebar';
@@ -20,11 +20,8 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 function Products(props) {
     const { toggleQuickView, match } = props;
     const discovery = useSelector(state => state.discovery);
-    console.log(discovery);
-    // console.log(match.params);
 
     const query = queryString.parse(props.location.search);
-    console.log(query);
 
     const [stateObject, setObjectState] = useState({
         gridLayout: true,
@@ -57,7 +54,7 @@ function Products(props) {
 
     const addFacet = (facetId, facetName, display) => {
         const na = [...stateObject.selectedFacets];
-        na.push(newFacet(facetId, facetName, display));
+        na.push(newEntityFacet(facetId, facetName, display));
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: na,
@@ -67,7 +64,7 @@ function Products(props) {
 
     const replaceFacet = (facetId, facetName, display) => {
         const na = stateObject.selectedFacets.filter(f => f.facetingName !== facetName);
-        na.push(newFacet(facetId, facetName, display));
+        na.push(newEntityFacet(facetId, facetName, display));
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: na,
@@ -94,20 +91,18 @@ function Products(props) {
             query.sort !== prevSort) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            console.log(stateObject.selectedFacets);
             axios.post(
                 (type === 'browse') 
                 ? currentCategory._links.products.href
                 : discovery.links.searchProduct.href.replace('{category}', 'PRM01').replace('{q}', query.q),
-                { facets: stateObject.selectedFacets })
+                stateObject.selectedFacets )
                 .then((response) => {
                     if (isSubscribed) {
+                        console.log(response);
                         setObjectState((prevState) => ({
                             ...prevState,
-                            page: response.data.page,
-                            products: (response.data._embedded)
-                                ? response.data._embedded.productResources
-                                : [],
+                            page: (type === 'browse') ? response.data.page : response.data.products.page,
+                            products: (type === 'browse') ? response.data._embedded.productResources : response.data.products._embedded.productResources,
                             loading: false,
                         }));
                     }
