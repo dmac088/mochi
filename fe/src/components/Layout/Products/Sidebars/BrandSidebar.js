@@ -30,7 +30,9 @@ function BrandSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.brandFacets.href, [])
+            axios.post(currentCategory._links.brandFacets.href, (type === 'browse')
+                                                                ? selectedFacets.map(f => f.data)
+                                                                : [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
@@ -45,8 +47,6 @@ function BrandSidebar(props) {
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
-
-    console.log(stateObject.brandFacets);
     return (
         <React.Fragment>
             {(loading || categories.loading)

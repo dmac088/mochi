@@ -30,7 +30,9 @@ function CategorySidebar(props) {
         if (type === 'browse' && (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.childFacets.href, [])
+            axios.post(currentCategory._links.childFacets.href, (type === 'browse')
+                                                                ? selectedFacets.map(f => f.data)
+                                                                : [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
