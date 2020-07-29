@@ -17,8 +17,7 @@ public class SearchFacetResourceAssembler extends RepresentationModelAssemblerSu
 	
 	@Override
 	public SearchFacetResource toModel(SearchFacet searchFacet) {
-		SearchFacetResource cfr = new SearchFacetResource(searchFacet);
-		return cfr;
+		return new SearchFacetResource(searchFacet);
 	}
 
 	public Set<SearchFacetResource> toCollectionModel(Set<IFacet> returnFacets) {

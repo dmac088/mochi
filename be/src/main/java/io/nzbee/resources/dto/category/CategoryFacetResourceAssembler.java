@@ -13,9 +13,7 @@ public class CategoryFacetResourceAssembler extends RepresentationModelAssembler
 	
 	@Override
 	public CategoryFacetResource toModel(EntityFacet category) {
-		CategoryFacetResource cfr = new CategoryFacetResource(category);
-			
-		return cfr;
+		return new CategoryFacetResource(category);
 	}
     
 }
