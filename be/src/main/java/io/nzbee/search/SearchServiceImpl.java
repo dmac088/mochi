@@ -372,9 +372,9 @@ public class SearchServiceImpl implements ISearchService {
 		});
 		
 		returnFacets.stream()
-		.sorted( (a, b) -> (a.getPayloadType() + a.getValue()).compareTo(b.getPayloadType() + b.getValue()))
+		.sorted( (a, b) -> (a.getObjectType() + a.getValue()).compareTo(b.getObjectType() + b.getValue()))
 		.forEach(f -> {
-			LOGGER.debug(f.getPayloadType() + " " +
+			LOGGER.debug(f.getObjectType() + " " +
 						 f.getDesc() + " -> " +
 						 f.getValue() + " -> " +
 						 f.getCount() + " - " +  

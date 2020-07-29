@@ -40,7 +40,6 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 		return ((ISearchDimension)this.getPayload()).isHierarchical();
 	}
 
-	@Override
 	public ISearchDimension getPayload() {
 	   return this.entity;
 	}
@@ -81,7 +80,7 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	}
 
 	@Override
-	public String getPayloadType() {
+	public String getObjectType() {
 		return this.getPayload().getClass().getSimpleName();
 	}
 	
