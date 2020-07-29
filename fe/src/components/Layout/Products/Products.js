@@ -138,6 +138,7 @@ function Products(props) {
         }));
     }
 
+    console.log(stateObject.selectedFacets);
     return (
         <div className="shop-page-container mb-50">
             <div className="container">
@@ -165,11 +166,13 @@ function Products(props) {
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
-                            {/*<PriceSidebar
+                            <PriceSidebar
                                 {...props}
                                 type={type}
-                                facets={stateObject.facets}
-                                addFacet={replaceFacet} />*/}
+                                facets={stateObject.facets.filter(f => f.data.facetingName === 'price')}
+                                selectedFacets={stateObject.selectedFacets}
+                                addFacet={replaceFacet} 
+                                loading={stateObject.loading}/>
                             <TagSidebar
                                 {...props}
                                 type={type}

@@ -63,6 +63,7 @@ function BreadCrumb(props) {
                     <div className="col">
                         <div className="breadcrumb-container">
                             <ul>
+                                <Route exact path='/:lang/:curr/:type/category/:path'                             component={(props) => BreadcrumbItem(props, categories)} />
                                 <Route exact path='/:lang/:curr/category/:path'                             component={(props) => BreadcrumbItem(props, categories)} />
                                 <Route exact path='/:lang/:curr/:path'                                      component={(props) => BreadcrumbItem(props, categories)} />
                                 <Route exact path='/:lang/:curr/myaccount/:path'                            component={(props) => BreadcrumbItem(props, categories)} />

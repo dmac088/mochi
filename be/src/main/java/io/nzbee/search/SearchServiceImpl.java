@@ -320,7 +320,7 @@ public class SearchServiceImpl implements ISearchService {
 					  .forEach(f -> {
 						LOGGER.debug(f.getClass().getSimpleName() + " - " + f.getValue() + " - " + f.getCount());
 						
-						//apply facets one by on in the order that they are selected
+						//apply facets one by one in the order that they are selected
 						jpaQuery.getFacetManager().getFacetGroup(f.getFacetingName()).selectFacets(FacetCombine.OR, f);
 						
 						//this will not refetch from DB
