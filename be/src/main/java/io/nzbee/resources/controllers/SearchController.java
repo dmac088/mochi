@@ -73,7 +73,7 @@ public class SearchController {
 		    												returnFacets).map(p -> prodResourceAssembler.toModel(p));
     	
     	Set<SearchFacetResource> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
-		
+    	
     	return ResponseEntity.ok(new SearchResultResource(prodPagedAssembler.toModel(pages), ssf));
     }
 	
