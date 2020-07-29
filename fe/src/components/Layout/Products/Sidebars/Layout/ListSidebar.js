@@ -1,12 +1,12 @@
 import React from 'react';
 
-const renderItems = (items, addFacet) => {
+const renderItems = (items, modFacet) => {
   return items.map((i, index) => {
     return (
       <li key={index}>
         <a onClick={(e) => {
                               e.preventDefault();
-                              addFacet(i);
+                              modFacet(i);
                             }}>{`${i.data.desc} (${i.data.count})`}
         </a>
       </li>
@@ -19,7 +19,7 @@ export const ListSidebar = (props) => {
     <div className="sidebar mb-35">
       <h3 className="sidebar-title">{props.heading}</h3>
       <ul className="product-categories">
-        {renderItems(props.items, props.addFacet)}
+        {renderItems(props.items, props.modFacet)}
       </ul>
     </div>
   )
