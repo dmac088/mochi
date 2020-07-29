@@ -8,7 +8,6 @@ import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 function PriceSidebar(props) {
     const { addFacet, selectedFacets, loading } = props;
     const categories = useSelector(state => state.categories);
-    const items = [];
     const { categoryCode } = props.match.params;
     const prevCategoryCode = usePrevious(categoryCode);
 
@@ -43,13 +42,6 @@ function PriceSidebar(props) {
         }
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
-
-
-    items.push({
-        display: stateObject.price,
-        code: stateObject.price,
-        path: null
-    });
 
     const changePrice = (newPrice) => {
         setObjectState((prevState) => ({
