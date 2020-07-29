@@ -61,9 +61,8 @@ function Products(props) {
         }));
     }
 
-    const replaceFacet = (facetId, facetName, display) => {
-        const na = stateObject.selectedFacets.filter(f => f.facetingName !== facetName);
-        na.push(newEntityFacet(facetId, facetName, display));
+    const replaceFacet = (facet) => {
+        const na = [...stateObject.selectedFacets.filter(f => f.data.facetingName !== facet.data.facetName), facet];
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: na,

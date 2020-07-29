@@ -32,7 +32,6 @@ function CategorySidebar(props) {
             if (!currentCategory) { return; }
             axios.post(currentCategory._links.childFacets.href, [])
                 .then((response) => {
-                    console.log(response);
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
@@ -47,8 +46,6 @@ function CategorySidebar(props) {
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
-
-    console.log(facets);
     return (
         <React.Fragment>
             {(loading || categories.loading)
@@ -61,6 +58,5 @@ function CategorySidebar(props) {
         </React.Fragment>
     )
 }
-
 
 export default CategorySidebar;
