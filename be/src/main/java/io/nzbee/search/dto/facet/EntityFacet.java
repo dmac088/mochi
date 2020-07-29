@@ -17,6 +17,8 @@ public class EntityFacet implements IFacet {
 	
 	private boolean isHierarchical;
 	
+	private int count;
+	
 	public EntityFacet() {
 		super();
 	}
@@ -51,9 +53,17 @@ public class EntityFacet implements IFacet {
 		return this.value;
 	}
 
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
+	}
+
 	@Override
 	public int getCount() {
-		return this.getCount();
+		return count;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
 	}
 
 	@Override

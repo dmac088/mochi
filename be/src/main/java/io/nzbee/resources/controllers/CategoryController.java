@@ -18,9 +18,13 @@ import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.resources.category.CategoryFacetResource;
+import io.nzbee.resources.category.CategoryFacetResourceAssembler;
 import io.nzbee.resources.category.CategoryResource;
 import io.nzbee.resources.category.CategoryResourceAssembler;
+import io.nzbee.search.dto.facet.EntityFacet;
 import io.nzbee.search.dto.facet.IFacet;
+import io.nzbee.search.dto.facet.IFacetMapper;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")
@@ -30,9 +34,15 @@ public class CategoryController {
 
 	@Autowired
 	private ICategoryService categoryService;
+	
+	@Autowired
+	private IFacetMapper<Category> facetMapper;
 
 	@Autowired
 	private CategoryResourceAssembler categoryResourceAssember;
+	
+	@Autowired
+	private CategoryFacetResourceAssembler categoryFacetResourceAssembler;
 
 	public CategoryController() {
 		super();
@@ -99,6 +109,29 @@ public class CategoryController {
 		
 		
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
+	}
+	
+	@PostMapping("/CategoryFacet/{locale}/{currency}/code/{categoryCode}")
+	public ResponseEntity<CollectionModel<CategoryFacetResource>> getChildCategoryFacets(@PathVariable String locale,
+			@PathVariable String currency, @PathVariable String categoryCode,
+			@RequestBody Set<IFacet> selectedFacets) {
+		LOGGER.debug("call CategoryController.getChildCategoryFacets with parameters : {}, {}, {}", locale, currency,
+				categoryCode);
+		
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getValue()).findFirst();
+    	Double maxPrice = null;
+    	if(oMaxPrice.isPresent()) {
+    		maxPrice = new Double(oMaxPrice.get());
+    	}
+		
+		final Set<EntityFacet> collection = categoryService.findAll(locale, currency, categoryCode,
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																 maxPrice)
+															.stream().map(c -> facetMapper.toEntityFacet(c)).collect(Collectors.toSet());
+		
+		return ResponseEntity.ok(categoryFacetResourceAssembler.toCollectionModel(collection));
 	}
 	
 	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}/maxPrice")
