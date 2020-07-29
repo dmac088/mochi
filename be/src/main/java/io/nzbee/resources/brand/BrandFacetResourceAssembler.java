@@ -1,4 +1,6 @@
 package io.nzbee.resources.brand;
+
+
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.resources.controllers.BrandController;
@@ -15,5 +17,5 @@ public class BrandFacetResourceAssembler extends RepresentationModelAssemblerSup
 	public BrandFacetResource toModel(EntityFacet brand) {
 		return new BrandFacetResource(brand);
 	}
-    
+
 }

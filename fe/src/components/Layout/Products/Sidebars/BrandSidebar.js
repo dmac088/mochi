@@ -7,8 +7,7 @@ import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 
 function BrandSidebar(props) {
-    const { addFacet, selectedFacets, loading } = props;
-    const items = [];
+    const { type, addFacet, selectedFacets, loading, facets } = props;
     const categories = useSelector(state => state.categories);
     const { categoryCode } = props.match.params;
 
@@ -31,13 +30,13 @@ function BrandSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.brands.href, selectedFacets)
+            axios.post(currentCategory._links.brandFacets.href, [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            brands: (response.data._embedded)
-                                ? response.data._embedded.brandResources
+                            brandFacets: (response.data._embedded)
+                                ? response.data._embedded.brandFacetResources
                                 : [],
                         }));
                     }
@@ -46,6 +45,8 @@ function BrandSidebar(props) {
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
+
+    console.log(stateObject.brandFacets);
     return (
         <React.Fragment>
             {(loading || categories.loading)
@@ -53,7 +54,7 @@ function BrandSidebar(props) {
                 : <ListSidebar
                     filterType={"brand"}
                     heading={"filter by brand"}
-                    items={items}
+                    items={(type === 'browse') ? stateObject.brandFacets.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
                     modFacet={addFacet} />}
         </React.Fragment>
     )

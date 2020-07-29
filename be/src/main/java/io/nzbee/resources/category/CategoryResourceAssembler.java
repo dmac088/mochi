@@ -74,6 +74,13 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 																		category.getCategoryCode(), 
 																		null
 																)).withRel("childFacets"));
+			
+			cr.add(linkTo(methodOn(BrandController.class).getBrandFacets(
+					category.getLocale(),
+					category.getCurrency(),  
+					category.getCategoryCode(), 
+					null
+																)).withRel("brandFacets"));
 
 			
 			cr.add(linkTo(methodOn(CategoryController.class).getMaxPrice(
