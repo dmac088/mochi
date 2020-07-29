@@ -62,7 +62,7 @@ function Products(props) {
     }
 
     const replaceFacet = (facet) => {
-        const na = [...stateObject.selectedFacets.filter(f => f.data.facetingName !== facet.data.facetName), facet];
+        const na = [...stateObject.selectedFacets.filter(f => f.data.facetingName !== facet.data.facetingName), facet];
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: na,

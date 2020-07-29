@@ -50,7 +50,7 @@ public class TagController {
     	
     	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
-    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
@@ -60,8 +60,8 @@ public class TagController {
     			tagService.findAll(	 locale, 
     								 currency, 
     								 categoryCode,
-    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice    							  
     			);
     	
@@ -76,7 +76,7 @@ public class TagController {
     	
     	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
     	 
-    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
@@ -86,8 +86,8 @@ public class TagController {
     			tagService.findAll(	 locale, 
     								 currency, 
     	 							 categoryCode,
-    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice    							  
     			).stream().map(c -> facetMapper.toEntityFacet(c)).collect(Collectors.toSet());;
     	

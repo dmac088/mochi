@@ -6,7 +6,7 @@ import { instance as axios } from "../../../../components/Layout/Helpers/api/axi
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 function PriceSidebar(props) {
-    const { addFacet, selectedFacets, loading } = props;
+    const { addFacet, selectedFacets, loading, type } = props;
     const categories = useSelector(state => state.categories);
     const { categoryCode } = props.match.params;
     const prevCategoryCode = usePrevious(categoryCode);
@@ -29,13 +29,16 @@ function PriceSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.maxPrice.href, selectedFacets || [])
+            //console.log(selectedFacets.map(f => f.data))
+            axios.post(currentCategory._links.maxPriceFacet.href, (type === 'browse')
+                                                                    ? selectedFacets.map(f => f.data)
+                                                                    : [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            maxPrice: response.data,
-                            currentPrice: (prevState.currentPrice) ? prevState.currentPrice : response.data,
+                            maxPrice: response.data.data.value,
+                            currentPrice: (prevState.currentPrice) ? prevState.currentPrice : response.data.data.value,
                         }));
                     }
                 });
@@ -48,7 +51,16 @@ function PriceSidebar(props) {
             ...prevState,
             currentPrice: newPrice,
         }));
-        addFacet(newPrice, "maxPrice", `price <= ${newPrice}`);
+        addFacet({
+                data: {
+                    type: 'EntityFacet',
+                    id: newPrice,
+                    desc: `price <= ${newPrice}`,
+                    value: newPrice, 
+                    facetingName: "price", 
+                    objectType: "Double"                    
+                }
+        });
     }
 
     return (
