@@ -1,7 +1,9 @@
-package io.nzbee.search.dto.facet;
+package io.nzbee.resources.dto.category;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.Category;
+import io.nzbee.search.dto.facet.EntityFacet;
+import io.nzbee.search.dto.facet.IFacetMapper;
 
 @Component
 public class CategoryFacetMapper implements IFacetMapper<Category> {
@@ -17,5 +19,5 @@ public class CategoryFacetMapper implements IFacetMapper<Category> {
 		ef.setCount(category.getCount());
 		return ef;
 	}
-	
+
 }

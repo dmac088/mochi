@@ -14,7 +14,7 @@ function CategorySidebar(props) {
     const prevCategoryCode = usePrevious(categoryCode);
 
     const [stateObject, setObjectState] = useState({
-        displayFacets: [],
+        categoryFacets: [],
     });
 
     function usePrevious(value) {
@@ -36,8 +36,8 @@ function CategorySidebar(props) {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            displayFacets: (response.data._embedded)
-                                ? mapCategoriesToDisplayFacets(response.data._embedded.categoryResources, selectedFacets)
+                            categoryFacets: (response.data._embedded)
+                                ? response.data._embedded.categoryFacetResources
                                 : [],
                             loading: false,
                         }));
@@ -47,35 +47,8 @@ function CategorySidebar(props) {
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
-    const mapCategoriesToDisplayFacets = (categories, selectedFacets) => {
-        console.log(categories);
-        return categories
-            .filter(c => c.data.count > 0)
-            .filter(({ data }) => !selectedFacets.some(x => x.id === data.categoryCode))
-            .map(c => {
-                return {
-                    display: c.data.categoryDesc + ' (' + c.data.count + ')',
-                    code: c.data.categoryCode,
-                    path: getCategoryPath(c.data.categoryCode, props.match)
-                }
-            });
 
-    }
-
-    const mapSearchFacetsToDisplayFacets = (searchFacets, selectedFacets) => {
-        console.log(searchFacets);
-        return searchFacets
-            .filter(({ data }) => !selectedFacets.some(x => x.id === data.id))
-            .map(f => {
-                return {
-                    display: f.displayValue + ' (' + f.count + ')',
-                    code: f.id,
-                    path: getCategoryPath(f.id, props.match)
-                }
-            });
-       
-    }
-
+    console.log(facets);
     return (
         <React.Fragment>
             {(loading || categories.loading)
@@ -83,8 +56,8 @@ function CategorySidebar(props) {
                 : <ListSidebar
                     filterType={"category"}
                     heading={"filter by category"}
-                    items={(type === 'browse') ? stateObject.displayFacets : mapSearchFacetsToDisplayFacets(facets, selectedFacets)}
-                    modFacet={addFacet} />}
+                    items={(type === 'browse') ? stateObject.categoryFacets.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
+                    addFacet={addFacet} />}
         </React.Fragment>
     )
 }

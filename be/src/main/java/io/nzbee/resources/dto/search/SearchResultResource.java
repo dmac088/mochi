@@ -1,32 +1,31 @@
-package io.nzbee.resources.dto;
+package io.nzbee.resources.dto.search;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.search.dto.facet.IFacet;
 import java.util.Set;
 
 
-public class SearchResultDto extends RepresentationModel<SearchResultDto> {
+public class SearchResultResource extends RepresentationModel<SearchResultResource> {
 	
     private PagedModel<EntityModel<ProductResource>> products;
     
-    private Set<IFacet> facets;
+    private Set<SearchFacetResource> facets;
     
-	public SearchResultDto(	PagedModel<EntityModel<ProductResource>> products,
-							Set<IFacet> facets) {
+	public SearchResultResource(	PagedModel<EntityModel<ProductResource>> products,
+									Set<SearchFacetResource> ssf) {
 
     	this.products = products;
     	
-		this.facets = facets;
+		this.facets = ssf;
     }
 
 	public PagedModel<EntityModel<ProductResource>> getProducts() {
 		return products;
 	}
 
-	public Set<IFacet> getFacets() {
+	public Set<SearchFacetResource> getFacets() {
 		return facets;
 	}
 	
