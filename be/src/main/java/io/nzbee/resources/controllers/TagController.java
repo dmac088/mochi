@@ -17,7 +17,7 @@ import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.resources.tag.TagResource;
 import io.nzbee.resources.tag.TagResourceAssembler;
-import io.nzbee.search.dto.facet.IFacet;
+import io.nzbee.search.facet.IFacet;
 
 
 @RestController

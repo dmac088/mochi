@@ -1,8 +1,9 @@
-package io.nzbee.resources.dto.search;
+package io.nzbee.resources.search;
 
 import java.util.Objects;
 import org.springframework.hateoas.RepresentationModel;
-import io.nzbee.search.dto.facet.SearchFacet;
+
+import io.nzbee.search.facet.SearchFacet;
 
 public class SearchFacetResource extends RepresentationModel<SearchFacetResource> {
 

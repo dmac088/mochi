@@ -4,7 +4,7 @@ import java.util.Set;
 
 import org.springframework.hateoas.PagedModel;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.search.dto.facet.IFacet;
+import io.nzbee.search.facet.IFacet;
 
 public class Search {
 	

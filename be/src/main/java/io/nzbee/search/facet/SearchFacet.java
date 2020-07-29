@@ -1,4 +1,4 @@
-package io.nzbee.search.dto.facet;
+package io.nzbee.search.facet;
 
 import java.util.Objects;
 import org.apache.lucene.search.Query;

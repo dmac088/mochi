@@ -1,12 +1,12 @@
-package io.nzbee.resources.dto.search;
+package io.nzbee.resources.search;
 
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.resources.controllers.SearchController;
-import io.nzbee.search.dto.facet.IFacet;
-import io.nzbee.search.dto.facet.SearchFacet;
+import io.nzbee.search.facet.IFacet;
+import io.nzbee.search.facet.SearchFacet;
 
 @Component
 public class SearchFacetResourceAssembler extends RepresentationModelAssemblerSupport<SearchFacet, SearchFacetResource> {

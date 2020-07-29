@@ -1,4 +1,4 @@
-package io.nzbee.search.dto.facet;
+package io.nzbee.search.facet;
 
 public interface IFacetMapper<T> {
 

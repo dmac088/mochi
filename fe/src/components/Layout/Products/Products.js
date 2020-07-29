@@ -157,15 +157,15 @@ function Products(props) {
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
-                            {/* <BrandSidebar
+                             <BrandSidebar
                                 {...props}
                                 type={type}
                                 name={"brand"}
-                                facets={stateObject.facets}
+                                facets={stateObject.facets.filter(f => f.data.facetingName === 'brand')}
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
-                            <PriceSidebar
+                            {/*<PriceSidebar
                                 {...props}
                                 type={type}
                                 facets={stateObject.facets}

@@ -24,7 +24,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.resources.dto.BrowseResultDto;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
-import io.nzbee.search.dto.facet.IFacet;
+import io.nzbee.search.facet.IFacet;
 
 @RestController
 @RequestMapping("/api")

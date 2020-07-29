@@ -31,7 +31,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.search.IFacetService;
-import io.nzbee.search.dto.facet.IFacet;
+import io.nzbee.search.facet.IFacet;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
-import { getCategoryPath } from '../../Helpers/Route/Route';
 import { ListSidebar } from './Layout/ListSidebar';
 import { findByCode } from '../../../../services/Category';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
@@ -14,7 +13,7 @@ function BrandSidebar(props) {
     const { categoryCode } = props.match.params;
 
     const [stateObject, setObjectState] = useState({
-        brands: [],
+        brandFacets: [],
     });
 
     const prevCategoryCode = usePrevious(categoryCode);
@@ -26,15 +25,6 @@ function BrandSidebar(props) {
         });
         return ref.current;
     }
-
-    stateObject.brands.filter(({ data }) => !(selectedFacets).some(x => x.id === data.brandCode))
-        .map(c => {
-            items.push({
-                display: c.data.brandDesc + ' (' + c.data.count + ')',
-                code: c.data.brandCode,
-                path: getCategoryPath(c.data.brandCode, props.match),
-            });
-        });
 
     useEffect(() => {
         let isSubscribed = true;
