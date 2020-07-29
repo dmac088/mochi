@@ -1,12 +1,9 @@
 package io.nzbee.search.dto.facet;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("EntityFacet")
 public class EntityFacet implements IFacet {
-
-	private ISearchDimension payload;
 
 	private String Id;
 	
@@ -14,21 +11,14 @@ public class EntityFacet implements IFacet {
 	
 	private String facetingName;
 	
-	private String payloadType;
+	private String objectType;
 	
 	private String value;
 	
+	private boolean isHierarchical;
+	
 	public EntityFacet() {
 		super();
-	}
-
-	public EntityFacet(ISearchDimension entity) {
-		this.payload = entity;
-		this.facetingName = entity.getClass().getSimpleName().toLowerCase().trim();
-		this.Id = entity.getCode();
-		this.value = entity.getCode();
-		this.desc = entity.getDesc();
-		this.payloadType = entity.getClass().getSimpleName();
 	}
 	
 	@Override
@@ -43,12 +33,7 @@ public class EntityFacet implements IFacet {
 
 	@Override
 	public boolean isHierarchical() {
-		return this.payload.isHierarchical();
-	}
-
-	@Override
-	public ISearchDimension getPayload() {
-		return this.payload;
+		return this.isHierarchical;
 	}
 
 	@Override
@@ -57,8 +42,8 @@ public class EntityFacet implements IFacet {
 	}
 	
 	@Override
-	public String getPayloadType() {
-		return this.payloadType;
+	public String getObjectType() {
+		return this.objectType;
 	}
 
 	@Override
@@ -68,7 +53,7 @@ public class EntityFacet implements IFacet {
 
 	@Override
 	public int getCount() {
-		return this.payload.getCount();
+		return this.getCount();
 	}
 
 	@Override
@@ -76,7 +61,25 @@ public class EntityFacet implements IFacet {
 		return this.facetingName;
 	}
 	
+	public void setId(String id) {
+		Id = id;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public void setHierarchical(boolean isHierarchical) {
+		this.isHierarchical = isHierarchical;
+	}
+	
 	public void setFacetingName(String name) {
 		this.facetingName = name;
 	}
+	
+	
 }

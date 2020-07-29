@@ -22,7 +22,7 @@ public class FacetContainer {
 	public Set<IFacet> getProductCategories() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getPayload().getClass().getSimpleName().equals(ProductCategory.class.getSimpleName()))
+				f.getObjectType().equals(ProductCategory.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toSet());
 	}
@@ -30,7 +30,7 @@ public class FacetContainer {
 	public Set<IFacet> getBrandCategories() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getPayload().getClass().getSimpleName().equals(BrandCategory.class.getSimpleName()))
+				f.getObjectType().equals(BrandCategory.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toSet());
 	}
@@ -38,7 +38,7 @@ public class FacetContainer {
 	public Set<IFacet> getBrands() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getPayload().getClass().getSimpleName().equals(Brand.class.getSimpleName()))
+				f.getObjectType().equals(Brand.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toSet());
 	}
@@ -46,7 +46,7 @@ public class FacetContainer {
 	public Set<IFacet> getTags() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getPayload().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
+				f.getObjectType().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toSet());
 	}
@@ -54,7 +54,7 @@ public class FacetContainer {
 	public Set<IFacet> getPrices() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getPayload().getClass().getSimpleName().equals(Product.class.getSimpleName() 
+				f.getObjectType().getClass().getSimpleName().equals(Product.class.getSimpleName() 
 														  + ".productMarkdown"
 														   ))
 				.map(f -> (IFacet) f)
