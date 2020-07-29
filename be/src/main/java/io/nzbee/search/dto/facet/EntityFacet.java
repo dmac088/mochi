@@ -36,10 +36,6 @@ public class EntityFacet implements IFacet {
 		return this.Id;
 	}
 
-	public void setId(String id) {
-		Id = id;
-	}
-
 	@Override
 	public String getDesc() {
 		return this.desc;

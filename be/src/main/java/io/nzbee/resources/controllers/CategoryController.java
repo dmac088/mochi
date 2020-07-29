@@ -92,9 +92,9 @@ public class CategoryController {
     	}
 		
 		final Set<Category> collection = categoryService.findAll(locale, currency, categoryCode,
-																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
-																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
 																 maxPrice);
 		
 		
@@ -110,9 +110,9 @@ public class CategoryController {
 		
 		
 		 Double result = categoryService.getMaxPrice(locale, currency, categoryCode, 
-													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
-													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()));
+													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
+													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()));
 		return ResponseEntity.ok(result);
 	}
 
