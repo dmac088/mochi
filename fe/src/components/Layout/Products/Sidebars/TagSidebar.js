@@ -29,7 +29,7 @@ function TagSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.tags.href, (type === 'browse')
+            axios.post(currentCategory._links.tagFacets.href, (type === 'browse')
                                                          ? selectedFacets.map(f => f.data)
                                                          : [])
                 .then((response) => {

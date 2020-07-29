@@ -68,7 +68,7 @@ public class TagController {
     	return ResponseEntity.ok(tagResourceAssembler.toCollectionModel(collection));
     }
 	
-	@PostMapping("/TagFacets/{locale}/{currency}/category/{categoryCode}")
+	@PostMapping("/TagFacet/{locale}/{currency}/category/{categoryCode}")
     public ResponseEntity<CollectionModel<TagFacetResource>> getTagFacets(@PathVariable String locale, 
     																 @PathVariable String currency, 
     																 @PathVariable String categoryCode,
