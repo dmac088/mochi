@@ -46,8 +46,6 @@ function TagSidebar(props) {
         }
     }, [categoryCode, categories.loading, loading]);
 
-    console.log(selectedFacets);
-
     return (
         <React.Fragment>
             {(loading || categories.loading)
