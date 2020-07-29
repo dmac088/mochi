@@ -10,11 +10,13 @@ public class EntityFacet implements IFacet {
 
 	private String Id;
 	
+	private String desc;
+	
 	private String facetingName;
 	
-	private String displayValue;
-	
 	private String payloadType;
+	
+	private String value;
 	
 	public EntityFacet() {
 		super();
@@ -24,7 +26,8 @@ public class EntityFacet implements IFacet {
 		this.payload = entity;
 		this.facetingName = entity.getClass().getSimpleName().toLowerCase().trim();
 		this.Id = entity.getCode();
-		this.displayValue = entity.getDesc();
+		this.value = entity.getCode();
+		this.desc = entity.getDesc();
 		this.payloadType = entity.getClass().getSimpleName();
 	}
 	
@@ -38,8 +41,8 @@ public class EntityFacet implements IFacet {
 	}
 
 	@Override
-	public String getDisplayValue() {
-		return this.displayValue;
+	public String getDesc() {
+		return this.desc;
 	}
 
 	@Override
@@ -64,12 +67,12 @@ public class EntityFacet implements IFacet {
 
 	@Override
 	public String getValue() {
-		return "Empty";
+		return this.value;
 	}
 
 	@Override
 	public int getCount() {
-		return 0;
+		return this.payload.getCount();
 	}
 
 	@Override

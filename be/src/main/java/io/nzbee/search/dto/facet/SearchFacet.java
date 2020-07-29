@@ -31,7 +31,7 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	}
 
 	@Override
-	public String getDisplayValue() {
+	public String getDesc() {
 		return ((ISearchDimension)this.getPayload()).getDesc();
 	}
 
