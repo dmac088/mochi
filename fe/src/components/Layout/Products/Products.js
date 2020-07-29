@@ -146,11 +146,11 @@ function Products(props) {
                 <div className="row">
                     <div className="col-lg-3 order-2 order-lg-1">
                         <div className="sidebar-area">
-                            {/* <SelectionSidebar
+                            <SelectionSidebar
                                 {...props}
                                 type={type}
                                 selectedFacets={stateObject.selectedFacets}
-                                removeFacet={removeFacet} /> */}
+                                removeFacet={removeFacet} />
                             <CategorySidebar
                                 {...props}
                                 type={type}
