@@ -139,7 +139,6 @@ function Products(props) {
         }));
     }
 
-    console.log(stateObject.selectedFacets);
     return (
         <div className="shop-page-container mb-50">
             <div className="container">
