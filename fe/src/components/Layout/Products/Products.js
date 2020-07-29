@@ -54,7 +54,6 @@ function Products(props) {
     }
 
     const addFacet = (facet) => {
-        console.log(facet);
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: [...stateObject.selectedFacets, facet],
@@ -72,10 +71,10 @@ function Products(props) {
         }));
     }
 
-    const removeFacet = (facetId) => {
+    const removeFacet = (facet) => {
         setObjectState((prevState) => ({
             ...prevState,
-            selectedFacets: stateObject.selectedFacets.filter(f => f.id !== facetId),
+            selectedFacets: stateObject.selectedFacets.filter(f => f.data.id !== facet.data.id),
             loading: true,
         }));
     }

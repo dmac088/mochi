@@ -3,7 +3,7 @@ import { instance as axios } from '../../../Helpers/api/axios';
 import { chunkArray } from '../../../../../services/Generic';
 import Slider from "react-slick";
 import { SlickArrowLeft, SlickArrowRight } from '../../HeroSlider/sliderHelper';
-import Column from '../Column'
+import Column from '../Column';
 const $ = window.$;
 
 const settings = {

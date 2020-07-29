@@ -57,7 +57,7 @@ function CategorySidebar(props) {
                     filterType={"category"}
                     heading={"filter by category"}
                     items={(type === 'browse') ? stateObject.categoryFacets.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
-                    addFacet={addFacet} />}
+                    modFacet={addFacet} />}
         </React.Fragment>
     )
 }
