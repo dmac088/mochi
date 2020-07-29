@@ -22,7 +22,7 @@ public class SearchFacetResourceAssembler extends RepresentationModelAssemblerSu
 	}
 
 	public Set<SearchFacetResource> toCollectionModel(Set<IFacet> returnFacets) {
-		return returnFacets.stream().map(rf -> new SearchFacetResource((SearchFacet) rf)).collect(Collectors.toSet());
+		return returnFacets.stream().map(rf -> toModel((SearchFacet) rf)).collect(Collectors.toSet());
 	}
     
 }
