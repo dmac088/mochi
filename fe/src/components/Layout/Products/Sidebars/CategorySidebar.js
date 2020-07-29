@@ -30,7 +30,7 @@ function CategorySidebar(props) {
         if (type === 'browse' && (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            console.log(selectedFacets.map(f => f.data))
+            //onsole.log(selectedFacets.map(f => f.data))
             axios.post(currentCategory._links.childFacets.href, (type === 'browse')
                                                                 ? selectedFacets.map(f => f.data)
                                                                 : [])

@@ -149,6 +149,10 @@ public class CategoryController {
 		LOGGER.debug("call CategoryController.getMaxPrice with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
 		
+		System.out.println();
+		System.out.println();
+		System.out.println();
+		System.out.println();
 		
 		 Double result = categoryService.getMaxPrice(locale, currency, categoryCode, 
 													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),

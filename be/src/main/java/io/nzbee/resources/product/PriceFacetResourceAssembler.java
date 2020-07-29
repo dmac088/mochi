@@ -12,8 +12,8 @@ public class PriceFacetResourceAssembler extends RepresentationModelAssemblerSup
 	}
 	
 	@Override
-	public PriceFacetResource toModel(EntityFacet category) {
-		return new PriceFacetResource(category);
+	public PriceFacetResource toModel(EntityFacet price) {
+		return new PriceFacetResource(price);
 	}
     
 }

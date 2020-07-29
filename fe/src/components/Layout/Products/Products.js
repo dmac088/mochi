@@ -54,6 +54,7 @@ function Products(props) {
     }
 
     const addFacet = (facet) => {
+        console.log(facet);
         setObjectState((prevState) => ({
             ...prevState,
             selectedFacets: [...stateObject.selectedFacets, facet],

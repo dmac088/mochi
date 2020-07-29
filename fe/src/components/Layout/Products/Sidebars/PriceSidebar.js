@@ -29,10 +29,7 @@ function PriceSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            //console.log(selectedFacets.map(f => f.data))
-            axios.post(currentCategory._links.maxPriceFacet.href, (type === 'browse')
-                                                                    ? selectedFacets.map(f => f.data)
-                                                                    : [])
+            axios.post(currentCategory._links.maxPriceFacet.href, [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
@@ -58,7 +55,8 @@ function PriceSidebar(props) {
                     desc: `price <= ${newPrice}`,
                     value: newPrice, 
                     facetingName: "price", 
-                    objectType: "Double"                    
+                    objectType: "Double", 
+                    count: 0,                   
                 }
         });
     }

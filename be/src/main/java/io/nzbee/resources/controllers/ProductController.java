@@ -113,7 +113,7 @@ public class ProductController {
 		
 		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size, sort, selectedFacets.size());
 		
-		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
