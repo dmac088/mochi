@@ -64,9 +64,9 @@ public class BrandController {
     			brandService.findAll(locale, 
     								 currency, 
     								 categoryCode,
-    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getId()).collect(Collectors.toSet()),
-    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getId()).collect(Collectors.toSet()),
-    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getId()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
+    								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice
     			);
 

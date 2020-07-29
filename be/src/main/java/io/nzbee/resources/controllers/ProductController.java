@@ -121,11 +121,11 @@ public class ProductController {
 
 			
 		final Page<ProductResource> pages = productService.findAll(locale, currency, categoryCode, 
-																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getId())
+																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getValue())
 																	.collect(Collectors.toSet()), 
-																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getId())
+																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getValue())
 																	.collect(Collectors.toSet()), 
-																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getId())
+																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getValue())
 																	.collect(Collectors.toSet()), 
 																	maxPrice,
 																	page, 

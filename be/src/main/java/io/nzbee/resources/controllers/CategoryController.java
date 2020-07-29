@@ -159,9 +159,9 @@ public class CategoryController {
 	
 	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}/maxPriceFacet")
 	public ResponseEntity<PriceFacetResource> getMaxPriceFacet(	@PathVariable String locale,
-													@PathVariable String currency, @PathVariable String categoryCode,
-													@RequestBody Set<IFacet> selectedFacets) {
-		LOGGER.debug("call CategoryController.getMaxPrice with parameters : {}, {}, {}", locale, currency,
+																@PathVariable String currency, @PathVariable String categoryCode,
+																@RequestBody Set<IFacet> selectedFacets) {
+		LOGGER.debug("call CategoryController.getMaxPriceFacet with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
 		
 		
