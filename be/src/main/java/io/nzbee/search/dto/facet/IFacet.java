@@ -18,7 +18,7 @@ public interface IFacet {
 
 	public String getId();
 	
-	public String getDisplayValue();
+	public String getDesc();
 	
 	public boolean isHierarchical();
 
