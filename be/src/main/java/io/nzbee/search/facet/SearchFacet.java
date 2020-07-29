@@ -51,7 +51,7 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 
 	@Override
 	public String getFacetingName() {
-		return delegate.getFacetingName();
+			return delegate.getFacetingName();
 	}
 
 	@Override
