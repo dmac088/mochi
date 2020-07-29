@@ -30,8 +30,8 @@ function TagSidebar(props) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
             axios.post(currentCategory._links.tagFacets.href, (type === 'browse')
-                                                         ? selectedFacets.map(f => f.data)
-                                                         : [])
+                                                              ? selectedFacets.map(f => f.data)
+                                                              : [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({

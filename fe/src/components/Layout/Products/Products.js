@@ -175,7 +175,8 @@ function Products(props) {
                                 type={type}
                                 facets={stateObject.facets}
                                 name={"tag"}
-                                selectedFacets={stateObject.facets.filter(f => f.data.facetingName === 'tag')}
+                                facets={stateObject.facets.filter(f => f.data.facetingName === 'tag')}
+                                selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading}
                             /> 
