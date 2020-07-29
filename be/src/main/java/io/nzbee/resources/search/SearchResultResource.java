@@ -1,4 +1,4 @@
-package io.nzbee.resources.dto.search;
+package io.nzbee.resources.search;
 
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;

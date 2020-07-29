@@ -36,7 +36,7 @@ import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
 import io.nzbee.search.ISearchService;
-import io.nzbee.search.dto.facet.IFacet;
+import io.nzbee.search.facet.IFacet;
 
 @Component
 public class PostgresProductAdapter implements IProductPortService {

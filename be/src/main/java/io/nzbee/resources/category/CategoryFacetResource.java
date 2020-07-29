@@ -1,7 +1,8 @@
-package io.nzbee.resources.dto.category;
+package io.nzbee.resources.category;
 
 import org.springframework.hateoas.RepresentationModel;
-import io.nzbee.search.dto.facet.EntityFacet;
+
+import io.nzbee.search.facet.EntityFacet;
 
 public class CategoryFacetResource extends RepresentationModel<CategoryFacetResource>  {
 	

@@ -18,13 +18,13 @@ import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.ProductCategory;
+import io.nzbee.resources.category.CategoryFacetResource;
+import io.nzbee.resources.category.CategoryFacetResourceAssembler;
 import io.nzbee.resources.category.CategoryResource;
 import io.nzbee.resources.category.CategoryResourceAssembler;
-import io.nzbee.resources.dto.category.CategoryFacetResource;
-import io.nzbee.resources.dto.category.CategoryFacetResourceAssembler;
-import io.nzbee.search.dto.facet.EntityFacet;
-import io.nzbee.search.dto.facet.IFacet;
-import io.nzbee.search.dto.facet.IFacetMapper;
+import io.nzbee.search.facet.EntityFacet;
+import io.nzbee.search.facet.IFacet;
+import io.nzbee.search.facet.IFacetMapper;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")

@@ -1,9 +1,9 @@
-package io.nzbee.resources.dto.category;
+package io.nzbee.resources.category;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.Category;
-import io.nzbee.search.dto.facet.EntityFacet;
-import io.nzbee.search.dto.facet.IFacetMapper;
+import io.nzbee.search.facet.EntityFacet;
+import io.nzbee.search.facet.IFacetMapper;
 
 @Component
 public class CategoryFacetMapper implements IFacetMapper<Category> {

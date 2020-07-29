@@ -18,7 +18,7 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.brand.BrandResourceAssembler;
-import io.nzbee.search.dto.facet.IFacet;
+import io.nzbee.search.facet.IFacet;
 
 @RestController
 @RequestMapping("/api")

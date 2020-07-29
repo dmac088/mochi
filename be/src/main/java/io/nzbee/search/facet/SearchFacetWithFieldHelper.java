@@ -1,4 +1,4 @@
-package io.nzbee.search.dto.facet;
+package io.nzbee.search.facet;
 
 import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
