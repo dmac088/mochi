@@ -113,8 +113,8 @@ public class CategoryController {
 	
 	@PostMapping("/CategoryFacet/{locale}/{currency}/code/{categoryCode}")
 	public ResponseEntity<CollectionModel<CategoryFacetResource>> getChildCategoryFacets(@PathVariable String locale,
-			@PathVariable String currency, @PathVariable String categoryCode,
-			@RequestBody Set<IFacet> selectedFacets) {
+																						 @PathVariable String currency, @PathVariable String categoryCode,
+																						 @RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getChildCategoryFacets with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
 		
