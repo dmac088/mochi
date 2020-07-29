@@ -53,12 +53,11 @@ function Products(props) {
         return ref.current;
     }
 
-    const addFacet = (facetId, facetName, display) => {
-        const na = [...stateObject.selectedFacets];
-        na.push(newEntityFacet(facetId, facetName, display));
+    const addFacet = (facet) => {
+        console.log(facet);
         setObjectState((prevState) => ({
             ...prevState,
-            selectedFacets: na,
+            selectedFacets: [...stateObject.selectedFacets, facet],
             loading: true,
         }));
     }
@@ -97,7 +96,7 @@ function Products(props) {
                 (type === 'browse') 
                 ? currentCategory._links.products.href
                 : discovery.links.searchProduct.href.replace('{category}', 'PRM01').replace('{q}', query.q),
-                stateObject.selectedFacets )
+                stateObject.selectedFacets.map(f => f.data) )
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
@@ -147,11 +146,11 @@ function Products(props) {
                 <div className="row">
                     <div className="col-lg-3 order-2 order-lg-1">
                         <div className="sidebar-area">
-                            <SelectionSidebar
+                            {/* <SelectionSidebar
                                 {...props}
                                 type={type}
                                 selectedFacets={stateObject.selectedFacets}
-                                removeFacet={removeFacet} />
+                                removeFacet={removeFacet} /> */}
                             <CategorySidebar
                                 {...props}
                                 type={type}
@@ -160,7 +159,7 @@ function Products(props) {
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading} />
-                            <BrandSidebar
+                            {/* <BrandSidebar
                                 {...props}
                                 type={type}
                                 name={"brand"}
@@ -181,7 +180,7 @@ function Products(props) {
                                 selectedFacets={stateObject.selectedFacets}
                                 addFacet={addFacet}
                                 loading={stateObject.loading}
-                            />
+                            /> */}
                         </div>
                     </div>
                     <div className="col-lg-9 order-1 order-lg-2 mb-sm-35 mb-xs-35">

@@ -1,4 +1,4 @@
-package io.nzbee.resources.category;
+package io.nzbee.resources.dto.category;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.resources.controllers.CategoryController;

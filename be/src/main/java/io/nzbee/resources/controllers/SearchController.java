@@ -17,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.resources.dto.SearchResultDto;
+import io.nzbee.resources.dto.search.SearchFacetResource;
+import io.nzbee.resources.dto.search.SearchFacetResourceAssembler;
+import io.nzbee.resources.dto.search.SearchResultResource;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.search.dto.facet.IFacet;
@@ -38,12 +40,15 @@ public class SearchController {
     private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
 	
 	@Autowired
+	private SearchFacetResourceAssembler searchFacetResourceAssembler;
+	
+	@Autowired
 	private IProductPortService ipps;
 	
 	
 	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}",
     					params = { "q", "page", "size", "sort" })
-    public ResponseEntity<SearchResultDto> search(	
+    public ResponseEntity<SearchResultResource> search(	
 						    						@PathVariable String 		 locale,
 						    						@PathVariable String 	  	 currency, 
 						    						@PathVariable String 	  	 category,
@@ -59,15 +64,17 @@ public class SearchController {
 		
     	//get the resulting pages of product
     	final Page<ProductResource> pages = ipps.search(	locale, 
-    												currency,
-    												category, 
-    												Integer.parseInt(page), 
-    												Integer.parseInt(size),
-    												term, 
-    												selectedFacets,
-    												returnFacets).map(p -> prodResourceAssembler.toModel(p));
+		    												currency,
+		    												category, 
+		    												Integer.parseInt(page), 
+		    												Integer.parseInt(size),
+		    												term, 
+		    												selectedFacets,
+		    												returnFacets).map(p -> prodResourceAssembler.toModel(p));
+    	
+    	Set<SearchFacetResource> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
 		
-    	return ResponseEntity.ok(new SearchResultDto(prodPagedAssembler.toModel(pages), returnFacets));
+    	return ResponseEntity.ok(new SearchResultResource(prodPagedAssembler.toModel(pages), ssf));
     }
 	
 	@GetMapping(value = "/Search/{locale}/{currency}/Suggest",
