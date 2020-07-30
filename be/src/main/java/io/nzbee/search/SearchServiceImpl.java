@@ -446,11 +446,11 @@ public class SearchServiceImpl implements ISearchService {
 
 	private Sort getSortField(String field, String currency, String locale) {
 		switch (field) {
-			case "nameAsc": 	return new Sort(new SortField("productDescSort" + locale, SortField.Type.STRING, false));
-			case "nameDesc": 	return new Sort(new SortField("productDescSort" + locale, SortField.Type.STRING, true));
-			case "priceAsc": 	return new Sort(new SortedNumericSortField("currentMarkdownPrice" + currency, SortField.Type.DOUBLE, false));
-			case "priceDesc": 	return new Sort(new SortedNumericSortField("currentMarkdownPrice" + currency, SortField.Type.DOUBLE, true));
-			default:			return new Sort(new SortField("productDescSort" + locale, SortField.Type.STRING, true));
+			case "nameAsc": 	return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, false));
+			case "nameDesc": 	return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, true));
+			case "priceAsc": 	return new Sort(new SortedNumericSortField(	"currentMarkdownPrice" 	+ currency, SortField.Type.DOUBLE, false));
+			case "priceDesc": 	return new Sort(new SortedNumericSortField(	"currentMarkdownPrice" 	+ currency, SortField.Type.DOUBLE, true));
+			default:			return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, true));
 		}
 	}
 
