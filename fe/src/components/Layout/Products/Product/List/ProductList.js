@@ -38,8 +38,6 @@ function ProductList(props) {
           <p className="product-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere esse tempora magnam dolorem tenetur eos eligendi non temporibus qui enim. Lorem ipsum dolor sit amet consectetur adipisicing elit. Ullam, magni.</p>
           <div className="list-product-icons">
             <a href="#" data-tooltip="Add to cart"> <span className="icon_cart_alt" /></a>
-            <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a>
-            <a href="#" data-tooltip="Compare"> <span className="arrow_left-right_alt" /> </a>
           </div>
         </div>
       </div>
