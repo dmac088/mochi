@@ -32,9 +32,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
 import com.google.common.collect.Lists;
-
 import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
@@ -162,9 +160,9 @@ public class SearchServiceImpl implements ISearchService {
 
 		Double	below = inc,
 				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-			   	toa = (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+			   	toa = 	(new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
 			   	fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				tob = (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				tob = 	(new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
 				above = tob;
 
 		FacetingRequest facetRequest = qb.facet().name(name)
@@ -176,7 +174,8 @@ public class SearchServiceImpl implements ISearchService {
 				.from(fromb)
 				.to(tob)
 				.above(above)
-				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER).createFacetingRequest();
+				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER)
+				.createFacetingRequest();
 
 		jpaQuery.getFacetManager().enableFaceting(facetRequest);
 		return jpaQuery.getFacetManager().getFacets(name);
