@@ -78,7 +78,7 @@ function Category(props) {
         if (isSubscribed) {
           setObjectState((prevState) => ({
             ...prevState,
-            products: (response.data._embedded) ? response.data._embedded.productResources
+            products: (response.data.products._embedded) ? response.data.products._embedded.productResources
               : [],
           }));
         }
@@ -103,6 +103,7 @@ function Category(props) {
     return () => (isSubscribed = false);
   }, [lang, curr]);
 
+  
   const renderColumns = (products, category) => {
     if (!products) { return null; }
     const chunks = chunkArray(products, 3);
