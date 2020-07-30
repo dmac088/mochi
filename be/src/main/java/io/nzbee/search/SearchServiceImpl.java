@@ -1,6 +1,8 @@
 package io.nzbee.search;
 
 import java.util.Date;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
@@ -11,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.lucene.search.Query;
+import org.apache.lucene.search.Sort;
 import org.apache.lucene.search.SortField;
 import org.apache.lucene.search.SortedNumericSortField;
 import org.hibernate.search.jpa.FullTextQuery;
@@ -29,6 +32,9 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
+
 import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
@@ -75,8 +81,6 @@ public class SearchServiceImpl implements ISearchService {
 			org.hibernate.search.jpa.FullTextQuery jpaQuery, Set<Facet> facets, Facet selectedFacet,
 			Set<SearchFacetHelper> setSearchFacetHelper) {
 
-		// we need a list of unique FacetingName and FieldName, use facets Set to create
-		// the helpers
 		Set<SearchFacetWithFieldHelper> lf = facets.stream().map(f -> {
 			SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper();
 			sp.setFacetingName(f.getFacetingName());
@@ -135,6 +139,47 @@ public class SearchServiceImpl implements ISearchService {
 			lsfh.add(sfh);
 		});
 		return lsfh;
+	}
+	
+	private List<Facet> getRangeFacets(QueryBuilder qb, org.hibernate.search.jpa.FullTextQuery jpaQuery,
+			String locale, String currency, String name, String field) {
+
+		org.apache.lucene.search.Sort sort = getSortField("priceDesc", currency, locale);
+		jpaQuery.setSort(sort);
+		
+		@SuppressWarnings("unchecked")
+		List<Product> results = jpaQuery.getResultList();
+
+		if (results.isEmpty()) {
+			return new ArrayList<Facet>();
+		}
+
+		Double maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		Double minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
+
+		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+
+		Double	below = inc,
+				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+			   	toa = (new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+			   	fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+				tob = (new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				above = tob;
+
+		FacetingRequest facetRequest = qb.facet().name(name)
+				.onField(field + currency + "Facet") 
+				.range()
+				.below(below)
+				.from(froma)
+				.to(toa)
+				.from(fromb)
+				.to(tob)
+				.above(above)
+				.orderedBy(FacetSortOrder.RANGE_DEFINITION_ORDER).createFacetingRequest();
+
+		jpaQuery.getFacetManager().enableFaceting(facetRequest);
+		return jpaQuery.getFacetManager().getFacets(name);
 	}
 
 	private Set<String> getDiscreteFacets(String locale, String currency, QueryBuilder qb,
@@ -229,11 +274,9 @@ public class SearchServiceImpl implements ISearchService {
 		Set<String> codes = new HashSet<String>();
 
 		facetServices.showFacetServices();
-
 		facetServices.getFacetServices().stream().forEach(f -> {
-			this.getDiscreteFacets(lcl, currency, queryBuilder, jpaQuery, f.getFacetCategory(), f.getFacetField(),
-					// facets will contain a fully initialized list of facets
-					facets, codes);
+			System.out.println(f.getFacetCategory());
+			this.getDiscreteFacets(lcl, currency, queryBuilder, jpaQuery, f.getFacetCategory(), f.getFacetField(),facets, codes);
 		});
 
 		// pull the selected from facetList using the tokens from JSON payload
@@ -253,8 +296,7 @@ public class SearchServiceImpl implements ISearchService {
 			this.processFacet(lcl, currency, queryBuilder, jpaQuery, facets, f, lsfh);
 		});
 
-		// if there are no selected facets the facets set will be initialized with all
-		// facets
+		// if there are no selected facets the facets set will be initialized with all facets
 		if (selectedFacets.isEmpty()) {
 			initializeFacetHelpers(lsfh, facets);
 		}
@@ -273,8 +315,8 @@ public class SearchServiceImpl implements ISearchService {
 			facets.stream().filter(x -> !selectedFacets.stream().filter(y -> (x.getValue().equals(y.getValue())))
 			.findFirst().isPresent()).collect(Collectors.toSet())
 			.stream().filter(f -> sfh.getFacetingName().equals(f.getFacetingName()))
-					.forEach(f -> {
-						Optional<ISearchDimension> dO = lc.stream().filter(c -> {
+			.forEach(f -> {
+				Optional<ISearchDimension> dO = lc.stream().filter(c -> {
 							return (c.getCode().equals(service.tokenToCode(f.getValue())));
 						}).findFirst();
 
@@ -402,23 +444,13 @@ public class SearchServiceImpl implements ISearchService {
 		return p;
 	}
 
-	private org.apache.lucene.search.Sort getSortField(String field, String currency, String locale) {
+	private Sort getSortField(String field, String currency, String locale) {
 		switch (field) {
-		case "nameAsc":
-			return new org.apache.lucene.search.Sort(
-					new SortField("productAscSort" + locale, SortField.Type.STRING, false));
-		case "nameDesc":
-			return new org.apache.lucene.search.Sort(
-					new SortField("productDescSort" + locale, SortField.Type.STRING, true));
-		case "priceAsc":
-			return new org.apache.lucene.search.Sort(
-					new SortedNumericSortField("currentMarkdownPrice" + currency, SortField.Type.DOUBLE, false));
-		case "priceDesc":
-			return new org.apache.lucene.search.Sort(
-					new SortedNumericSortField("currentMarkdownPrice" + currency, SortField.Type.DOUBLE, true));
-		default:
-			return new org.apache.lucene.search.Sort(
-					new SortField("productAscSort" + locale, SortField.Type.STRING, true));
+			case "nameAsc": 	return new Sort(new SortField("productDescSort" + locale, SortField.Type.STRING, false));
+			case "nameDesc": 	return new Sort(new SortField("productDescSort" + locale, SortField.Type.STRING, true));
+			case "priceAsc": 	return new Sort(new SortedNumericSortField("currentMarkdownPrice" + currency, SortField.Type.DOUBLE, false));
+			case "priceDesc": 	return new Sort(new SortedNumericSortField("currentMarkdownPrice" + currency, SortField.Type.DOUBLE, true));
+			default:			return new Sort(new SortField("productDescSort" + locale, SortField.Type.STRING, true));
 		}
 	}
 
