@@ -360,11 +360,10 @@ public class SearchServiceImpl implements ISearchService {
 		}
 		
 		// we need to aggregate the codes of each helper of type SimpleFacet
-		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(
-				lsfh
-				.stream()
-				.filter(f -> f.getType().equals("SimpleFacet"))
-				.collect(Collectors.toSet()), "SimpleFacet");
+		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(	lsfh
+																.stream()
+																.filter(f -> f.getType().equals("SimpleFacet"))
+																.collect(Collectors.toSet()), 	"SimpleFacet");
 
 		// select the object from DB for each of the aggregated facet helpers
 		aggLsfh.stream().forEach(sfh -> {
