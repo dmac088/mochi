@@ -68,6 +68,7 @@ public class SearchFacetRange  implements org.hibernate.search.query.facet.Facet
 	}
 
 	@Override
+	@JsonIgnore
 	public String getObjectType() {
 		return this.value.getClass().getSimpleName();
 	}

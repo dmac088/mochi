@@ -82,6 +82,7 @@ public class SearchFacetDiscrete  implements org.hibernate.search.query.facet.Fa
 	}
 
 	@Override
+	@JsonIgnore
 	public String getObjectType() {
 		return this.getPayload().getClass().getSimpleName();
 	}
