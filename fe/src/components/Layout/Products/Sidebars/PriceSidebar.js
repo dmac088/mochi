@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { findByCode } from '../../../../services/Category';
 import { RangeSidebar } from './Layout/RangeSidebar';
+import { ListSidebar } from './Layout/ListSidebar';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
@@ -67,12 +68,18 @@ function PriceSidebar(props) {
         <React.Fragment>
             {(loading || categories.loading)
                 ? <Spinner />
-                : <RangeSidebar
-                    filterType={"price"}
-                    heading={"filter by price"}
-                    maxPrice={stateObject.maxPrice}
-                    currentPrice={stateObject.currentPrice}
-                    changePrice={changePrice} />}
+                : (type === 'browse')
+                    ? <RangeSidebar
+                        filterType={"price"}
+                        heading={"filter by price"}
+                        maxPrice={stateObject.maxPrice}
+                        currentPrice={stateObject.currentPrice}
+                        modFacet={changePrice} />
+                    : <ListSidebar
+                        filterType={"price"}
+                        heading={"filter by price"}
+                        items={facets}
+                        modFacet={addFacet} />}
         </React.Fragment>
     )
 }
