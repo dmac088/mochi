@@ -11,6 +11,8 @@ public class SearchFacetHelper {
 
 	private String facetingName;
 	
+	private String type;
+	
 	private Set<String> codes = new HashSet<String>();
 
 	public String getFacetingName() {
@@ -32,6 +34,14 @@ public class SearchFacetHelper {
 	@SuppressWarnings("rawtypes")
 	public ISearchDimensionService getBean(ApplicationContext appContext) {
 		return (ISearchDimensionService) appContext.getBean(this.getFacetingName() + "EntityService");
+	}
+	
+	public String getType() {
+		return this.type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
 	}
 
 	@Override
