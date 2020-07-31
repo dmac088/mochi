@@ -479,7 +479,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 								facetPayload,
 								returnFacets);
 		
-		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getPayloadType().equals("Brand")
+		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getFacetingName().equals("brand")
 									   && f.getValue().equals("GLO01")).collect(Collectors.toSet());
 
 		returnFacets.clear();

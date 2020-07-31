@@ -2,24 +2,19 @@ package io.nzbee.search.facet;
 
 import java.util.Objects;
 import org.apache.lucene.search.Query;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
-import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("SearchFacet")
-public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFacet {
+public class SearchFacetRange  implements org.hibernate.search.query.facet.Facet, IFacet {
 	
 	private final org.hibernate.search.query.facet.Facet delegate;
 	
-	private ISearchDimension entity;
-	
 	private String value;
 	 
-	public SearchFacet(org.hibernate.search.query.facet.Facet f, ISearchDimension entity) {
+	public SearchFacetRange(org.hibernate.search.query.facet.Facet f) {
 	  this.delegate = f;
-	  this.entity = entity;
 	  if(!(f==null)) {
 		 this.value = f.getValue();
 	  }
@@ -27,26 +22,17 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 	
 	@Override
 	public String getId() {
-		return ((ISearchDimension)this.getPayload()).getCode();
+		return value.toString();
 	}
 
 	@Override
 	public String getDesc() {
-		return ((ISearchDimension)this.getPayload()).getDesc();
+		return value.toString();
 	}
 
 	@Override
 	public boolean isHierarchical() {
-		return ((ISearchDimension)this.getPayload()).isHierarchical();
-	}
-
-	@JsonIgnore
-	public ISearchDimension getPayload() {
-	   return this.entity;
-	}
-	
-	public void setPayload(ISearchDimension domainObject) {
-		this.entity = domainObject;
+		return false;
 	}
 
 	@Override
@@ -83,14 +69,14 @@ public class SearchFacet  implements org.hibernate.search.query.facet.Facet, IFa
 
 	@Override
 	public String getObjectType() {
-		return this.getPayload().getClass().getSimpleName();
+		return this.value.getClass().getSimpleName();
 	}
 	
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     SearchFacet sf = (SearchFacet) o;
+	     SearchFacetRange sf = (SearchFacetRange) o;
 	     return this.getValue().equals(sf.getValue());
 	}
 
