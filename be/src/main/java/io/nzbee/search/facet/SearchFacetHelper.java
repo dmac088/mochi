@@ -61,6 +61,7 @@ public class SearchFacetHelper {
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.getFacetingName(), that.getFacetingName());
 	      eb.append(this.getCodes(), that.getCodes());
+	      eb.append(this.type, that.type);
 	      return eb.isEquals();
 	}
 	

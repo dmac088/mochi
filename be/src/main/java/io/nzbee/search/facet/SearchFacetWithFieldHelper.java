@@ -8,6 +8,8 @@ import io.nzbee.domain.IService;
 
 public class SearchFacetWithFieldHelper {
 
+	private String type;
+	
 	private String facetingName;
 	
 	private String fieldName;
@@ -26,6 +28,14 @@ public class SearchFacetWithFieldHelper {
 
 	public void setFieldName(String fieldName) {
 		this.fieldName = fieldName;
+	}
+	
+	public String getType() {
+		return this.type;
+	}
+	
+	public void setType(String type) {
+		this.type = type;
 	}
 	
 	@SuppressWarnings("rawtypes")

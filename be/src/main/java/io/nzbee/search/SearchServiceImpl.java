@@ -42,7 +42,6 @@ import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.jewellery.Jewellery;
 import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.SearchFacetDiscrete;
 import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
@@ -77,25 +76,37 @@ public class SearchServiceImpl implements ISearchService {
 		return locale.substring(0, 2).toUpperCase() + locale.substring(3, 5).toUpperCase();
 	}
 
-	private Set<Facet> processFacet(String locale, String currency, QueryBuilder qb,
-			org.hibernate.search.jpa.FullTextQuery jpaQuery, Set<Facet> facets, Facet selectedFacet,
-			Set<SearchFacetHelper> setSearchFacetHelper) {
+	private Set<Facet> processFacet(String locale, 
+									String currency, QueryBuilder qb,
+									FullTextQuery jpaQuery, 
+									Set<Facet> facets, 
+									Facet selectedFacet,
+									Set<SearchFacetHelper> setSearchFacetHelper) {
 
 		Set<SearchFacetWithFieldHelper> lf = facets.stream().map(f -> {
 			SearchFacetWithFieldHelper sp = new SearchFacetWithFieldHelper();
 			sp.setFacetingName(f.getFacetingName());
 			sp.setFieldName(f.getFieldName());
+			sp.setType(f.getClass().getSimpleName());
 			return sp;
 		}).collect(Collectors.toSet());
 
 		facets.removeAll(facets.stream().filter(f -> !selectedFacet.getFacetingName().contains(f.getFacetingName()))
 				.collect(Collectors.toSet()));
 
-		lf.stream().map(f -> f.getFacetingName()).collect(Collectors.toSet()).stream().forEach(s -> {
+		lf.stream().forEach(f -> {
+			System.out.println("asdf" + f.getFacetingName());
+			System.out.println("asdf" + f.getType());
+		});
+		
+		//aggregate the codes of the discrete facets
+		lf.stream()
+		  .filter(f -> f.getType().equals("SimpleFacet"))
+		  .map(f -> f.getFacetingName()).collect(Collectors.toSet()).stream().forEach(s -> {
 
 			Set<String> ss = new HashSet<String>();
 			SearchFacetHelper sfh = new SearchFacetHelper();
-
+			
 			lf.stream().filter(f -> f.getFacetingName().equals(s)).forEach(f -> {
 				this.getDiscreteFacets(locale, 
 									   currency,
@@ -107,15 +118,24 @@ public class SearchServiceImpl implements ISearchService {
 									   ss);
 
 			});
-
 			sfh.setFacetingName(s);
 			sfh.setCodes(ss);
+			sfh.setType("SimpleFacet");
+			setSearchFacetHelper.add(sfh);
+		});
+		
+		//for range facets there is no need to aggregate
+		lf.stream().filter(f -> f.getType().equals("RangeFacetImpl")).forEach(f -> {
+			SearchFacetHelper sfh = new SearchFacetHelper();
+			sfh.setCodes(null);
+			sfh.setFacetingName(f.getFacetingName());
+			sfh.setType(f.getType());
 			setSearchFacetHelper.add(sfh);
 		});
 		return facets;
 	}
 
-	private Set<SearchFacetHelper> aggregateFacetHelpers(Set<SearchFacetHelper> lsfh) {
+	private Set<SearchFacetHelper> aggregateFacetHelpers(Set<SearchFacetHelper> lsfh, String type) {
 		Set<SearchFacetHelper> newLsfh = new HashSet<SearchFacetHelper>();
 		lsfh.stream().map(sfh -> sfh.getFacetingName()).collect(Collectors.toSet()).stream().forEach(f -> {
 			Set<String> sstr = new HashSet<String>();
@@ -127,6 +147,7 @@ public class SearchServiceImpl implements ISearchService {
 			SearchFacetHelper nsfh = new SearchFacetHelper();
 			nsfh.setFacetingName(f);
 			nsfh.setCodes(sstr);
+			nsfh.setType(type);
 			newLsfh.add(nsfh);
 		});
 		return newLsfh;
@@ -280,11 +301,11 @@ public class SearchServiceImpl implements ISearchService {
 
 		// this is a Lucene query using the Lucene api
 		Query searchQuery = queryBuilder.bool()
-				.must(queryBuilder.keyword().onFields("productDesc" + transLcl, "product.brand.brandDesc" + transLcl,
-						"product.categories.categoryDesc" + transLcl,
-						"product.categories.parent.categoryDesc" + transLcl,
-						"product.categories.parent.parent.categoryDesc" + transLcl, "product.tags.tagDesc" + transLcl)
-						.matching(searchTerm).createQuery())
+				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl, "product.brand.brandDesc" + transLcl,
+														"product.categories.categoryDesc" + transLcl,
+														"product.categories.parent.categoryDesc" + transLcl,
+														"product.categories.parent.parent.categoryDesc" + transLcl, "product.tags.tagDesc" + transLcl)
+														.matching(searchTerm).createQuery())
 				.createQuery();
 
 		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
@@ -305,14 +326,15 @@ public class SearchServiceImpl implements ISearchService {
 		facets.addAll(this.getRangeFacets(queryBuilder, jpaQuery, lcl, currency, "price", "currentMarkdownPrice"));
 		
 		facets.stream().forEach(f -> {
-			System.out.println("facet type = " + f.getClass().getSimpleName());
+			//System.out.println("facet type = " + f.getClass().getSimpleName());
 		});
 		
 		// pull the selected from facetList using the tokens from JSON payload
-		Set<Facet> selectedFacets = facetPayload.stream()
-												.flatMap(x -> facets.stream()
-												.filter(y -> x.getValue().equals(y.getValue())))
-												.collect(Collectors.toSet());
+		Set<Facet> selectedFacets = 
+									facetPayload.stream()
+									.flatMap(x -> {
+										return facets.stream().filter(y -> x.getValue().equals(y.getValue()));
+									}).collect(Collectors.toSet());
 
 		// combine the selected facets
 		Set<SearchFacetHelper> lsfh = new HashSet<SearchFacetHelper>();
@@ -330,14 +352,17 @@ public class SearchServiceImpl implements ISearchService {
 		if (selectedFacets.isEmpty()) {
 			initializeFacetHelpers(lsfh, facets);
 		}
-
-		// we need to aggregate the codes of each helper
-		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(lsfh
-				.stream().filter(f -> f.getClass().getSimpleName().equals("SimpleFacet")).collect(Collectors.toSet()));
+		
+		// we need to aggregate the codes of each helper of type SimpleFacet
+		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(
+				lsfh
+				.stream()
+				.filter(f -> f.getType().equals("SimpleFacet"))
+				.collect(Collectors.toSet()), "SimpleFacet");
 
 		// select the object from DB for each of the aggregated facet helpers
 		aggLsfh.stream().forEach(sfh -> {
-
+			
 			// create a new array of entity facets
 			ISearchDimensionService service = sfh.getBean(appContext);
 			
@@ -378,7 +403,7 @@ public class SearchServiceImpl implements ISearchService {
 		jpaQuery.setMaxResults(pageable.getPageSize());
 
 		// sort the results
-		org.apache.lucene.search.Sort sort = getSortField(sortBy, currency, transLcl);
+		Sort sort = getSortField(sortBy, currency, transLcl);
 		jpaQuery.setSort(sort);
 
 		setProductProjection(jpaQuery, lcl, currency);
