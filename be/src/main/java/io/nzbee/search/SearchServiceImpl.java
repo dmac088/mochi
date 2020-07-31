@@ -94,11 +94,6 @@ public class SearchServiceImpl implements ISearchService {
 		facets.removeAll(facets.stream().filter(f -> !selectedFacet.getFacetingName().contains(f.getFacetingName()))
 				.collect(Collectors.toSet()));
 
-		lf.stream().forEach(f -> {
-			System.out.println("asdf" + f.getFacetingName());
-			System.out.println("asdf" + f.getType());
-		});
-		
 		//aggregate the codes of the discrete facets
 		lf.stream()
 		  .filter(f -> f.getType().equals("SimpleFacet"))
@@ -168,33 +163,17 @@ public class SearchServiceImpl implements ISearchService {
 									   String locale, 
 									   String currency, 
 									   String name, 
-									   String field) {
+									   String onField,
+									   Double below,
+									   Double froma,
+									   Double toa,
+									   Double fromb,
+									   Double tob, 
+									   Double above) {
 
-		Sort sort = getSortField("priceDesc", currency, locale);
-		jpaQuery.setSort(sort);
-		
-		@SuppressWarnings("unchecked")
-		List<Product> results = jpaQuery.getResultList();
-
-		if (results.isEmpty()) {
-			return new ArrayList<Facet>();
-		}
-
-		Double maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
-		Double minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD();
-		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
-
-		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-
-		Double	below = inc,
-				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-			   	toa = 	(new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-			   	fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				tob = 	(new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
-				above = tob;
-
-		FacetingRequest facetRequest = qb.facet().name(name)
-				.onField(field + currency + "Facet") 
+		FacetingRequest facetRequest = 
+				qb.facet().name(name)
+				.onField(onField) 
 				.range()
 				.below(below)
 				.from(froma)
@@ -211,7 +190,8 @@ public class SearchServiceImpl implements ISearchService {
 	
 
 	private Set<String> getDiscreteFacets(String locale, 
-										  String currency, QueryBuilder qb,
+										  String currency, 
+										  QueryBuilder qb,
 										  FullTextQuery jpaQuery, 
 										  String facetingName, 
 										  String fieldReference,
@@ -301,10 +281,12 @@ public class SearchServiceImpl implements ISearchService {
 
 		// this is a Lucene query using the Lucene api
 		Query searchQuery = queryBuilder.bool()
-				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl, "product.brand.brandDesc" + transLcl,
+				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl, 
+														"product.brand.brandDesc" + transLcl,
 														"product.categories.categoryDesc" + transLcl,
 														"product.categories.parent.categoryDesc" + transLcl,
-														"product.categories.parent.parent.categoryDesc" + transLcl, "product.tags.tagDesc" + transLcl)
+														"product.categories.parent.parent.categoryDesc" + transLcl, 
+														"product.tags.tagDesc" + transLcl)
 														.matching(searchTerm).createQuery())
 				.createQuery();
 
@@ -323,12 +305,36 @@ public class SearchServiceImpl implements ISearchService {
 						this.getDiscreteFacets(lcl, currency, queryBuilder, jpaQuery, f.getFacetCategory(), f.getFacetField(),facets, codes);
 					});
 		
-		facets.addAll(this.getRangeFacets(queryBuilder, jpaQuery, lcl, currency, "price", "currentMarkdownPrice"));
 		
-		facets.stream().forEach(f -> {
-			//System.out.println("facet type = " + f.getClass().getSimpleName());
-		});
+		jpaQuery.setSort(getSortField("priceDesc", currency, lcl));
+		List<Product> results = new ArrayList<>();
+		results.addAll(jpaQuery.getResultList());
+
+		Double maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		Double minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
+		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+
+		Double	below = inc,
+				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+			   	toa = 	(new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+			   	fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+				tob = 	(new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				above = tob;
 		
+		facets.addAll(this.getRangeFacets(	queryBuilder, 
+											jpaQuery, 
+											lcl, 
+											currency,
+											"price", 
+											"currentMarkdownPrice" + currency + "Facet",
+											below, 
+											froma, 
+											toa, 
+											fromb, 
+											tob, 
+											above));
+	
 		// pull the selected from facetList using the tokens from JSON payload
 		Set<Facet> selectedFacets = 
 									facetPayload.stream()
@@ -390,9 +396,9 @@ public class SearchServiceImpl implements ISearchService {
 		
 		
 		returnFacets.stream()
-				.sorted((a, b) -> (a.getObjectType() + a.getValue()).compareTo(b.getObjectType() + b.getValue()))
+				.sorted((a, b) -> (a.getType() + a.getValue()).compareTo(b.getFacetingName() + b.getValue()))
 				.forEach(f -> {
-					LOGGER.debug(f.getObjectType() + " " + f.getDesc() + " -> " + f.getValue() + " -> " + f.getCount()
+					LOGGER.debug(f.getType() + " " + f.getDesc() + " -> " + f.getValue() + " -> " + f.getCount()
 							+ " - " + f.getFacetingName());
 				});
 
@@ -407,8 +413,8 @@ public class SearchServiceImpl implements ISearchService {
 		jpaQuery.setSort(sort);
 
 		setProductProjection(jpaQuery, lcl, currency);
-		List<Object[]> results = jpaQuery.getResultList();
-		List<Product> lp = results.stream().map(r -> this.mapResultToEntity(r, lcl, currency)).collect(Collectors.toList());
+		List<Object[]> finalResult = jpaQuery.getResultList();
+		List<Product> lp = finalResult.stream().map(r -> this.mapResultToEntity(r, lcl, currency)).collect(Collectors.toList());
 
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 
