@@ -6,10 +6,13 @@ import { instance as axios } from "../../../../components/Layout/Helpers/api/axi
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 function PriceSidebar(props) {
-    const { addFacet, selectedFacets, loading, type } = props;
+    const { addFacet, selectedFacets, loading, type, facets } = props;
     const categories = useSelector(state => state.categories);
     const { categoryCode } = props.match.params;
     const prevCategoryCode = usePrevious(categoryCode);
+
+    console.log(type);
+    console.log(facets);
 
     const [stateObject, setObjectState] = useState({
         maxPrice: null,
@@ -55,7 +58,6 @@ function PriceSidebar(props) {
                     desc: `price <= ${newPrice}`,
                     value: newPrice, 
                     facetingName: "price", 
-                    objectType: "Double", 
                     count: 0,                   
                 }
         });
