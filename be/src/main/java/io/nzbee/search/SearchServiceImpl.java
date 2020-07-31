@@ -42,8 +42,10 @@ import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.jewellery.Jewellery;
 import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.search.facet.SearchFacet;
+import io.nzbee.search.facet.IFacet;
+import io.nzbee.search.facet.SearchFacetDiscrete;
 import io.nzbee.search.facet.SearchFacetHelper;
+import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -273,11 +275,25 @@ public class SearchServiceImpl implements ISearchService {
 		Set<String> codes = new HashSet<String>();
 
 		facetServices.showFacetServices();
-		facetServices.getFacetServices().stream().forEach(f -> {
+		facetServices.getFacetServices().stream()
+					.filter(f -> !f.getFacetCategory().equals("price"))
+					.forEach(f -> {
+						System.out.println(f.getFacetCategory());
+						this.getDiscreteFacets(lcl, currency, queryBuilder, jpaQuery, f.getFacetCategory(), f.getFacetField(),facets, codes);
+					});
+		
+		facetServices.getFacetServices().stream()
+					.filter(f -> f.getFacetCategory().equals("price"))
+					.forEach(f -> {
+						facets.addAll(this.getRangeFacets(queryBuilder, jpaQuery, lcl, currency, "price", "currentMarkdownPrice"));
+					});
+		
+		facetServices.getFacetServices().stream()
+		.forEach(f -> {
 			System.out.println(f.getFacetCategory());
-			this.getDiscreteFacets(lcl, currency, queryBuilder, jpaQuery, f.getFacetCategory(), f.getFacetField(),facets, codes);
+			System.out.println(f.getFacetField());
 		});
-
+		
 		// pull the selected from facetList using the tokens from JSON payload
 		Set<Facet> selectedFacets = facetPayload.stream().flatMap(x -> {
 			return facets.stream().filter(y -> x.getValue().equals(y.getValue()));
@@ -301,7 +317,7 @@ public class SearchServiceImpl implements ISearchService {
 		}
 
 		// we need to aggregate the codes of each helper
-		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(lsfh);
+		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(lsfh.stream().filter(f -> !f.getFacetingName().equals("price")).collect(Collectors.toSet()));;;
 
 		// select the object from DB for each of the aggregated facet helpers
 		aggLsfh.stream().forEach(sfh -> {
@@ -320,11 +336,18 @@ public class SearchServiceImpl implements ISearchService {
 						}).findFirst();
 
 						if (dO.isPresent()) {
-							returnFacets.add(new SearchFacet(f, dO.get()));
+							returnFacets.add(new SearchFacetDiscrete(f, dO.get()));
 						}
 					});
 		});
-
+		
+		returnFacets.addAll(facets.stream().filter(x -> !selectedFacets.stream().filter(y -> (x.getValue().equals(y.getValue())))
+				.findFirst().isPresent()).collect(Collectors.toSet())
+				.stream()
+				.filter(f -> f.getFacetingName().equals("price"))
+				.map(f -> new SearchFacetRange(f)).collect(Collectors.toSet()));
+		
+		
 		returnFacets.stream()
 				.sorted((a, b) -> (a.getObjectType() + a.getValue()).compareTo(b.getObjectType() + b.getValue()))
 				.forEach(f -> {

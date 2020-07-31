@@ -6,22 +6,21 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 import io.nzbee.resources.controllers.SearchController;
 import io.nzbee.search.facet.IFacet;
-import io.nzbee.search.facet.SearchFacet;
 
 @Component
-public class SearchFacetResourceAssembler extends RepresentationModelAssemblerSupport<SearchFacet, SearchFacetResource> {
+public class SearchFacetResourceAssembler extends RepresentationModelAssemblerSupport<IFacet, SearchFacetResource> {
 
 	public SearchFacetResourceAssembler() {
 		super(SearchController.class, SearchFacetResource.class);
 	}
 	
 	@Override
-	public SearchFacetResource toModel(SearchFacet searchFacet) {
+	public SearchFacetResource toModel(IFacet searchFacet) {
 		return new SearchFacetResource(searchFacet);
 	}
 
 	public Set<SearchFacetResource> toCollectionModel(Set<IFacet> returnFacets) {
-		return returnFacets.stream().map(rf -> toModel((SearchFacet) rf)).collect(Collectors.toSet());
+		return returnFacets.stream().map(rf -> toModel((IFacet) rf)).collect(Collectors.toSet());
 	}
     
 }
