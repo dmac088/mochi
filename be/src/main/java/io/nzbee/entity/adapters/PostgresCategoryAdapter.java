@@ -15,13 +15,9 @@ import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.ICategoryAttributeService;
 import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.brand.ICategoryBrandMapper;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
-import io.nzbee.entity.category.type.ICategoryTypeRepository;
-import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
 
 @Component
@@ -38,17 +34,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Autowired
 	private ICategoryAttributeService categoryAttributeService;
 	
-	@Autowired 
-	private ICategoryTypeRepository categoryTypeRepository;
 	
 	@Autowired 
 	private ICategoryBrandService categoryBrandService;
-	
-	@Autowired 
-	private ICategoryProductMapper categoryProductMapper;
-	
-	@Autowired 
-	private ICategoryBrandMapper categoryBrandMapper;
 	
 	@Autowired
 	private ICategoryMapper categoryMapper;
