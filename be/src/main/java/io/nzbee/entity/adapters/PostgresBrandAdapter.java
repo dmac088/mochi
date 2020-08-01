@@ -93,21 +93,17 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		io.nzbee.entity.brand.attribute.BrandAttribute ba = (oba.isPresent()) 
 										? oba.get()
 										: (new io.nzbee.entity.brand.attribute.BrandAttribute());	
-									
-										
-		io.nzbee.entity.brand.Brand brand = new io.nzbee.entity.brand.Brand();
-		io.nzbee.entity.brand.attribute.BrandAttribute brandAttribute = new io.nzbee.entity.brand.attribute.BrandAttribute();
-	
+							
 		b.setBrandCode(domainObject.getBrandCode());
 		b.setLocale(domainObject.getLocale());
 		b.setCurrency(domainObject.getCurrency());
 		
 		ba.setBrandDesc(domainObject.getBrandDesc());
 		ba.setLclCd(domainObject.getLocale());
-		b.addAttribute(brandAttribute);
-		ba.setBrand(brand);
+		b.addAttribute(ba);
+		ba.setBrand(b);
 		
-		brandService.save(brand);		
+		brandService.save(b);		
 	}
 	
 	private Brand entityToDo(io.nzbee.entity.brand.Brand e) {
