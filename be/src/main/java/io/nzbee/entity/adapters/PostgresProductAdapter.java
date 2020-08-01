@@ -11,7 +11,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.Globals;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;

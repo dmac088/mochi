@@ -64,10 +64,9 @@ public class CategoryMasterService {
 	public void persistCategoryMaster(CategoryMasterSchema c) {
 		logger.debug("called persistCategoryMaster() ");
 		
-		Category cDo = 
-				categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
-													globalVars.getCurrencyHKD(), 
-													c.get_CATEGORY_CODE());
+		Category cDo = categoryDomainService.findByCode(   	globalVars.getLocaleENGB(), 
+															globalVars.getCurrencyHKD(), 
+															c.get_CATEGORY_CODE());
 		
 		categoryDomainService.save(cDo);
 

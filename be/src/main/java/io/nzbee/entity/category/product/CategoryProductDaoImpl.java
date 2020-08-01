@@ -159,7 +159,6 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	@Override
 	public void save(CategoryProduct t) {
 		em.persist(t);
-		em.flush();
 	}
 
 	@Override
