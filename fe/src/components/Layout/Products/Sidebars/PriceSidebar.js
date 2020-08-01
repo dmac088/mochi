@@ -71,7 +71,7 @@ function PriceSidebar(props) {
                         heading={"filter by price"}
                         maxPrice={stateObject.maxPrice}
                         currentPrice={stateObject.currentPrice}
-                        modFacet={changePrice} />
+                        changePrice={changePrice} />
                     : <ListSidebar
                         filterType={"price"}
                         heading={"filter by price"}
