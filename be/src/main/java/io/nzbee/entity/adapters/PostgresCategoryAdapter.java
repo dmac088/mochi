@@ -154,9 +154,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if(domainObject instanceof BrandCategory) {			
 			Optional<io.nzbee.entity.category.Category> oc = categoryService.findByCode(
-					domainObject.getLocale(),
-					domainObject.getCurrency(), 
-					domainObject.getCategoryCode());
+																						domainObject.getLocale(),
+																						domainObject.getCurrency(), 
+																						domainObject.getCategoryCode());
 
 			CategoryBrand cb = (oc.isPresent()) 
 			? (CategoryBrand) oc.get()
