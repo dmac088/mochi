@@ -143,7 +143,7 @@ public abstract class Category implements ISearchDimension {
 	@NaturalId
 	@Column(name="cat_cd", unique = true, updatable = false)
 	@Field(analyze = Analyze.NO, store=Store.YES)
-	private String categoryCode;
+	protected String categoryCode;
 
 	@Column(name="cat_lvl")
 	@Field(analyze = Analyze.NO, store=Store.YES)

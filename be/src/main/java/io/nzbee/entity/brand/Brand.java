@@ -220,5 +220,17 @@ public class Brand implements ISearchDimension {
 	public boolean isHierarchical() {
 		return false;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Brand)) return false;
+        return brandCode != null && brandCode.equals(((Brand) o).getBrandCode());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 32;
+    }
 
 }

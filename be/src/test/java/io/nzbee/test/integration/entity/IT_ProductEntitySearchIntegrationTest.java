@@ -98,6 +98,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Fruit",
 							  facetPayload,
 							  returnFacets);
@@ -119,6 +120,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "水果", 
 							  facetPayload,
 							  returnFacets);
@@ -143,6 +145,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10, 
+							  "nameAsc",
 							  "Vegetables",
 							  facetPayload,
 							  returnFacets);
@@ -165,6 +168,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Apple",	
 							  facetPayload,
 							  returnFacets);
@@ -187,6 +191,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10, 
+							  "nameAsc",
 							  "Cauliflower", 					
 							  facetPayload,
 							  returnFacets);
@@ -209,6 +214,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "All", 						
 							  facetPayload,
 							  returnFacets);
@@ -231,6 +237,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Nuts", 					
 							  facetPayload,
 							  returnFacets);
@@ -253,6 +260,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Organic", 					
 							  facetPayload,
 							  returnFacets);
@@ -275,6 +283,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "有機", 						
 							  facetPayload,
 							  returnFacets);
@@ -297,6 +306,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "不含麩質", 						
 							  facetPayload,
 							  returnFacets);
@@ -319,6 +329,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Gluten Free", 				
 							  facetPayload,
 							  returnFacets);
@@ -341,6 +352,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Glorys", 				
 							  facetPayload,
 							  returnFacets);
@@ -363,6 +375,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Enza", 					
 							  facetPayload,
 							  returnFacets);
@@ -385,6 +398,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Planters", 						
 							  facetPayload,
 							  returnFacets);
@@ -407,6 +421,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10, 
+							  "nameAsc",
 							  "Dole", 						
 							  facetPayload,
 							  returnFacets);
@@ -429,6 +444,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10,
+							  "nameAsc",							 							
 							  "Driscolls", 					
 							  facetPayload,
 							  returnFacets);
@@ -453,6 +469,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 							  "Ignored",
 							  0,
 							  10, 
+							  "nameAsc",
 							  "Cashews",						
 							  facetPayload,
 							  returnFacets);
@@ -475,6 +492,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 								"Ignored",
 								  0,
 								  10, 
+								  "nameAsc",
 								"Fruit", 
 								facetPayload,
 								returnFacets);
@@ -490,6 +508,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 								"Ignored",
 								  0,
 								  10, 
+								  "nameAsc",
 								"Fruit", 
 								fp,
 								returnFacets);
@@ -512,6 +531,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 								"Ignored",
 								  0,
 								  10,
+								  "nameAsc",
 								"Fruit", 		
 								facetPayload,
 								returnFacets);
@@ -539,6 +559,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 								"Ignored",
 								  0,
 								  10,
+								  "nameAsc",
 								"Fruit", 
 								fp,
 								returnFacets);

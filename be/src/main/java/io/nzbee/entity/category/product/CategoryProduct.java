@@ -81,18 +81,6 @@ public class CategoryProduct extends Category  {
 		this.getProducts().remove(product);
 		product.removeProductCategory(this);
 	}
-	
-	@Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof CategoryProduct)) return false;
-        return categoryId != null && categoryId.equals(((Category) o).getCategoryId());
-    }
- 
-    @Override
-    public int hashCode() {
-        return 32;
-    }
 
 	@Override
 	@JsonIgnore
@@ -126,4 +114,16 @@ public class CategoryProduct extends Category  {
 	public boolean isHierarchical() {
 		return true;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryProduct)) return false;
+        return categoryCode != null && categoryCode.equals(((Category) o).getCategoryCode());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 32;
+    }
 }

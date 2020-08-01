@@ -14,9 +14,9 @@ import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.product.CategoryProduct;
 
 @Entity
 @Table(name = "category_brand", schema = "mochi")
@@ -91,5 +91,17 @@ public class CategoryBrand extends Category {
 	public boolean isHierarchical() {
 		return false;
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof CategoryProduct)) return false;
+        return categoryCode != null && categoryCode.equals(((Category) o).getCategoryCode());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 32;
+    }
 	
 }

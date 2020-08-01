@@ -19,7 +19,7 @@ public class TagEntityBeanFactory {
 	@Bean
 	public final Tag getTagEntityBean() {
 		final Tag tag = new Tag();
-		tag.setCode("TST02");
+		tag.setTagCode("TST02");
 
 		final TagAttribute tagAttribute = new TagAttribute();
 		tagAttribute.setTag(tag);

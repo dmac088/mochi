@@ -233,7 +233,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		tagEntity.addTagAttribute(tagAttribute);
 		tagEntity.setTagAttribute(tagAttribute);
 		tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
-		tagEntity.setCode(t.get("tagCode").toString());
+		tagEntity.setTagCode(t.get("tagCode").toString());
 		
 		tagEntity.setLocale(locale);
 		tagEntity.setCurrency(currency);
