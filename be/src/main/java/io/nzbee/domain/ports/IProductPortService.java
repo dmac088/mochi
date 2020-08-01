@@ -13,7 +13,7 @@ public interface IProductPortService extends IProductDimensionService<Product> {
 
 	<T> Set<Product> findAllByType(String locale, String currency, Class<T> cls);
 
-	Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String searchTerm,
+	Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,
 			Set<IFacet> selectedFacets, Set<IFacet> returnFacets);
 
 	Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,

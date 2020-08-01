@@ -290,8 +290,7 @@ public class SearchServiceImpl implements ISearchService {
 														.matching(searchTerm).createQuery())
 				.createQuery();
 
-		final org.hibernate.search.jpa.FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery,
-				Product.class);
+		final FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, Product.class);
 
 		//initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
@@ -306,7 +305,7 @@ public class SearchServiceImpl implements ISearchService {
 					});
 		
 		
-		jpaQuery.setSort(getSortField("priceDesc", currency, lcl));
+		jpaQuery.setSort(getSortField("priceDesc", currency, transLcl));
 		List<Product> results = new ArrayList<>();
 		results.addAll(jpaQuery.getResultList());
 
@@ -408,6 +407,7 @@ public class SearchServiceImpl implements ISearchService {
 		jpaQuery.setMaxResults(pageable.getPageSize());
 
 		// sort the results
+		System.out.println("sortBy = " + sortBy);
 		Sort sort = getSortField(sortBy, currency, transLcl);
 		jpaQuery.setSort(sort);
 
@@ -513,6 +513,7 @@ public class SearchServiceImpl implements ISearchService {
 	}
 
 	private Sort getSortField(String field, String currency, String locale) {
+		LOGGER.debug("call getSortField with parameters {} {} {} ", field, currency, locale);
 		switch (field) {
 			case "nameAsc": 	return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, false));
 			case "nameDesc": 	return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, true));
