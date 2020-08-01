@@ -211,11 +211,11 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String searchTerm,
+	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,
 			Set<IFacet> selectedFacets, Set<IFacet> returnFacets) {
 
 		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
-					size, "", selectedFacets, returnFacets).map(p -> {
+					size, sort, selectedFacets, returnFacets).map(p -> {
 					Brand b = brandMapper.entityToDo(p.getBrand(), locale, currency);
 					Department d = departmentMapper.entityToDo(p.getDepartment(), locale, currency);
 					ProductCategory pc = (ProductCategory) categoryMapper.entityToDo(p.getPrimaryCategory());

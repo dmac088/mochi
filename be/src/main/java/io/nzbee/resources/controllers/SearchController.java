@@ -58,7 +58,7 @@ public class SearchController {
 											    	@RequestParam("sort") String sort, 
 						    						@RequestBody  Set<IFacet> 	 selectedFacets) {
 
-		LOGGER.debug("Searching for products with patameters: {}, {}, {}", locale, currency, term);
+		LOGGER.debug("Searching for products with patameters: {}, {}, {}, {}, {}, {}, {}", locale, currency, category, term, page, size, sort);
 		
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
@@ -68,6 +68,7 @@ public class SearchController {
 		    												category, 
 		    												Integer.parseInt(page), 
 		    												Integer.parseInt(size),
+		    												sort,
 		    												term, 
 		    												selectedFacets,
 		    												returnFacets).map(p -> prodResourceAssembler.toModel(p));
