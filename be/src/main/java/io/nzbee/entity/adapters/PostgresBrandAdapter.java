@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.attribute.IBrandAttributeService;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.exceptions.brand.BrandNotFoundException;
 
 @Component
@@ -14,6 +17,9 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Autowired 
 	private IBrandService brandService;
+	
+	@Autowired 
+	private IBrandAttributeService brandAttributeService;
 
 	@Override
 	public Set<Brand> findAll(String locale, String currency) {
@@ -68,17 +74,38 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	
 	@Override
 	public void save(Brand domainObject) {
+		
+		Optional<io.nzbee.entity.brand.Brand> ob = brandService.findByCode(
+																			domainObject.getLocale(),
+																			domainObject.getCurrency(), 
+																			domainObject.getBrandCode());
+		
+		io.nzbee.entity.brand.Brand b = (ob.isPresent()) 
+										? ob.get()
+										: new io.nzbee.entity.brand.Brand();
+										
+										
+		Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba = brandAttributeService.findByCode(
+																			domainObject.getLocale(), 
+																			domainObject.getCurrency(), 
+																			domainObject.getBrandCode());
+
+		io.nzbee.entity.brand.attribute.BrandAttribute ba = (oba.isPresent()) 
+										? oba.get()
+										: (new io.nzbee.entity.brand.attribute.BrandAttribute());	
+									
+										
 		io.nzbee.entity.brand.Brand brand = new io.nzbee.entity.brand.Brand();
 		io.nzbee.entity.brand.attribute.BrandAttribute brandAttribute = new io.nzbee.entity.brand.attribute.BrandAttribute();
 	
-		brand.setBrandCode(domainObject.getBrandCode());
-		brand.setLocale(domainObject.getLocale());
-		brand.setCurrency(domainObject.getCurrency());
+		b.setBrandCode(domainObject.getBrandCode());
+		b.setLocale(domainObject.getLocale());
+		b.setCurrency(domainObject.getCurrency());
 		
-		brandAttribute.setBrandDesc(domainObject.getBrandDesc());
-		brandAttribute.setLclCd(domainObject.getLocale());
-		brand.addAttribute(brandAttribute);
-		brandAttribute.setBrand(brand);
+		ba.setBrandDesc(domainObject.getBrandDesc());
+		ba.setLclCd(domainObject.getLocale());
+		b.addAttribute(brandAttribute);
+		ba.setBrand(brand);
 		
 		brandService.save(brand);		
 	}

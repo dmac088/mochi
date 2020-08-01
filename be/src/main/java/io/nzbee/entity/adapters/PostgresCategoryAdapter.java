@@ -34,7 +34,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Autowired
 	private ICategoryAttributeService categoryAttributeService;
 	
-	
 	@Autowired 
 	private ICategoryBrandService categoryBrandService;
 	
