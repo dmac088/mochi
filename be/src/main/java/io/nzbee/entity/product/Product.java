@@ -714,7 +714,7 @@ public abstract class Product {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Product)) return false;
-        return productId != null && productId.equals(((Product) o).getProductId());
+        return productUPC != null && productUPC.equals(((Product) o).getProductUPC());
     }
  
     @Override

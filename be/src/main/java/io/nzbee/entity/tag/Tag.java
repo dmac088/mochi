@@ -102,11 +102,11 @@ public class Tag implements ISearchDimension {
 		this.tagId = tagId;
 	}
 	
-	public String getCode() {
+	public String getTagCode() {
 		return tagCode;
 	}
 
-	public void setCode(String tagCode) {
+	public void setTagCode(String tagCode) {
 		this.tagCode = tagCode;
 	}
 	
@@ -188,8 +188,26 @@ public class Tag implements ISearchDimension {
 
 	@Override
 	public boolean isHierarchical() {
-		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	@Override
+	public String getCode() {
+		return this.tagCode;
+	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Tag)) return false;
+        return tagCode != null && tagCode.equals(((Tag) o).getTagCode());
+    }
+ 
+    @Override
+    public int hashCode() {
+        return 32;
+    }
+
+	
 
 }
