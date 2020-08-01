@@ -170,7 +170,7 @@ function Products(props) {
                                 type={type}
                                 facets={stateObject.facets.filter(f => f.data.facetingName === 'price')}
                                 selectedFacets={stateObject.selectedFacets}
-                                addFacet={replaceFacet} 
+                                addFacet={(type === 'browse') ? replaceFacet : addFacet} 
                                 loading={stateObject.loading}/>
                             <TagSidebar
                                 {...props}
