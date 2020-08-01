@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -12,12 +13,15 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.attribute.ICategoryAttributeService;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandMapper;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.category.product.ICategoryProductService;
+import io.nzbee.entity.category.type.ICategoryTypeRepository;
+import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
 
 @Component
@@ -30,6 +34,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Autowired 
 	private ICategoryProductService categoryProductService;
+	
+	@Autowired
+	private ICategoryAttributeService categoryAttributeService;
+	
+	@Autowired 
+	private ICategoryTypeRepository categoryTypeRepository;
 	
 	@Autowired 
 	private ICategoryBrandService categoryBrandService;
@@ -122,11 +132,68 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public void save(Category domainObject) {
 		
 		if (domainObject instanceof ProductCategory) {
-			categoryProductService.save(categoryProductMapper.doToEntity((ProductCategory) domainObject));
+			
+			Optional<io.nzbee.entity.category.Category> oc = categoryService.findByCode(
+																						domainObject.getLocale(),
+																						domainObject.getCurrency(), 
+																						domainObject.getCategoryCode());
+			
+			CategoryProduct cp = (oc.isPresent()) 
+					? (CategoryProduct) oc.get()
+					: new CategoryProduct();
+					
+			Optional<io.nzbee.entity.category.attribute.CategoryAttribute> oca = categoryAttributeService.findByCode(
+																						domainObject.getLocale(), 
+																						domainObject.getCurrency(), 
+																						domainObject.getCategoryCode());
+			
+			io.nzbee.entity.category.attribute.CategoryAttribute ca = (oca.isPresent()) 
+					? oca.get()
+					: (new io.nzbee.entity.category.attribute.CategoryAttribute());
+			
+			ca.setCategoryDesc(domainObject.getCategoryDesc());
+			ca.setLclCd(domainObject.getLocale());
+			ca.setCategory(cp);
+			
+			cp.setCategoryCode(domainObject.getCategoryCode());
+			cp.setCategoryLevel(domainObject.getCategoryLevel());
+			
+			cp.addAttribute(ca);
+			cp.setCategoryAttribute(ca);
+			
+			categoryProductService.save(cp);
 		}
 		
 		if(domainObject instanceof BrandCategory) {			
-			categoryBrandService.save(categoryBrandMapper.doToEntity((BrandCategory) domainObject));
+			Optional<io.nzbee.entity.category.Category> oc = categoryService.findByCode(
+					domainObject.getLocale(),
+					domainObject.getCurrency(), 
+					domainObject.getCategoryCode());
+
+			CategoryBrand cb = (oc.isPresent()) 
+			? (CategoryBrand) oc.get()
+			: new CategoryBrand();
+			
+			Optional<io.nzbee.entity.category.attribute.CategoryAttribute> oca = categoryAttributeService.findByCode(
+								domainObject.getLocale(), 
+								domainObject.getCurrency(), 
+								domainObject.getCategoryCode());
+			
+			io.nzbee.entity.category.attribute.CategoryAttribute ca = (oca.isPresent()) 
+			? oca.get()
+			: (new io.nzbee.entity.category.attribute.CategoryAttribute());
+			
+			ca.setCategoryDesc(domainObject.getCategoryDesc());
+			ca.setLclCd(domainObject.getLocale());
+			ca.setCategory(cb);
+			
+			cb.setCategoryCode(domainObject.getCategoryCode());
+			cb.setCategoryLevel(domainObject.getCategoryLevel());
+			
+			cb.addAttribute(ca);
+			cb.setCategoryAttribute(ca);
+			
+			categoryBrandService.save(cb);
 		}
 	
 	}

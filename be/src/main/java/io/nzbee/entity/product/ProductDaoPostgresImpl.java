@@ -705,7 +705,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	public void save(Product t) {
 		em.persist(t);
-		em.flush();
 	}
 
 	@Override
