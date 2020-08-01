@@ -498,7 +498,7 @@ public abstract class Product {
 		return this.getProductDescENGB();
 	}
 	
-	@Field(analyze=Analyze.NO)
+	@Field(analyze=Analyze.YES)
 	@SortableField
 	public String getProductDescSortZHHK() {
 		return this.getProductDescZHHK();
