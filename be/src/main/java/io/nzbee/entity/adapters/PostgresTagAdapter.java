@@ -52,7 +52,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	public void save(Tag tag) {
 		
 		io.nzbee.entity.tag.Tag t = new io.nzbee.entity.tag.Tag();
-		t.setCode(tag.getTagCode());
+		t.setTagCode(tag.getTagCode());
 		t.setLocale(tag.getLocale());
 		t.setCurrency(tag.getCurrency());
 		
