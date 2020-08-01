@@ -407,7 +407,6 @@ public class SearchServiceImpl implements ISearchService {
 		jpaQuery.setMaxResults(pageable.getPageSize());
 
 		// sort the results
-		System.out.println("sortBy = " + sortBy);
 		Sort sort = getSortField(sortBy, currency, transLcl);
 		jpaQuery.setSort(sort);
 
