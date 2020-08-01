@@ -49,7 +49,7 @@ public class FileController {
 	private FileStorageProperties fileStorageProperties;
     
     @PostMapping("/Product/Upload/")
-    public UploadFileResponse uploadFile(@RequestParam("file") MultipartFile uploadFile) {
+    public UploadFileResponse uploadFoodFile(@RequestParam("file") MultipartFile uploadFile) {
     	
     	logger.debug("called uploadFile with parameters {} ", uploadFile );
 
@@ -105,6 +105,24 @@ public class FileController {
                .body(resource);
     }
     
+    @PostMapping("/Category/Upload/")
+    public UploadFileResponse uploadCategoryFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadCategoryFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        categoryMasterService.writeCategoryMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
     
     @GetMapping("/Category/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadCategoryFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
@@ -147,6 +165,25 @@ public class FileController {
                .body(resource);
     }
     
+    
+    @PostMapping("/Brand/Upload/")
+    public UploadFileResponse uploadBrandFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadCategoryFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        brandMasterService.writeBrandMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
     @GetMapping("/Brand/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadBrandFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
     	System.out.println(fileStorageProperties.getDownloadDir());
@@ -186,6 +223,24 @@ public class FileController {
                .contentType(MediaType.parseMediaType(contentType))
                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                .body(resource);
+    }
+    
+    @PostMapping("/Tag/Upload/")
+    public UploadFileResponse uploadTagFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadCategoryFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        tagMasterService.writeTagMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
     }
     
     @GetMapping("/Tag/Download/{fileName:.+}")
