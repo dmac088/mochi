@@ -38,6 +38,7 @@ import org.apache.lucene.analysis.standard.StandardTokenizerFactory;
 import org.apache.lucene.analysis.ngram.EdgeNGramFilterFactory;
 import org.apache.lucene.analysis.core.KeywordTokenizerFactory;
 import org.apache.lucene.analysis.pattern.PatternReplaceFilterFactory;
+import org.apache.lucene.analysis.miscellaneous.ASCIIFoldingFilterFactory;
 import org.apache.lucene.analysis.miscellaneous.WordDelimiterFilterFactory;
 import org.apache.lucene.analysis.ngram.NGramFilterFactory;
 import org.hibernate.annotations.NaturalId;
@@ -49,6 +50,8 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.annotations.Index;
 import org.hibernate.search.annotations.IndexedEmbedded;
+import org.hibernate.search.annotations.Normalizer;
+import org.hibernate.search.annotations.NormalizerDef;
 import org.hibernate.search.annotations.Parameter;
 import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
@@ -270,6 +273,13 @@ filters = {
 			    	@ColumnResult(name = "product_count")
 			    })
 })
+@NormalizerDef(
+		name = "sortNormalizer",
+		filters = {
+			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class), // To handle diacritics such as "é"
+			@TokenFilterDef(factory = LowerCaseFilterFactory.class)
+		}
+)
 public abstract class Product { 
 	
 	@Id
@@ -369,6 +379,7 @@ public abstract class Product {
 		this.primaryCategoryIndex = primaryCategoryIndex; 
 		this.primaryCategory = primaryCategoryIndex;
 	}
+
 
 	
 	@Field(store=Store.YES)
@@ -481,7 +492,7 @@ public abstract class Product {
 		return "Not Applicable"; 
 	}
 	
-	@Field(analyze=Analyze.NO)
+	@Field(analyze=Analyze.YES, normalizer = @Normalizer(definition = "sortNormalizer"))
 	@SortableField
 	public String getProductDescSortENGB() {
 		return this.getProductDescENGB();
