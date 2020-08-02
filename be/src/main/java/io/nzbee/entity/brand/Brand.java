@@ -1,6 +1,7 @@
 package io.nzbee.entity.brand;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -230,7 +231,7 @@ public class Brand implements ISearchDimension {
  
     @Override
     public int hashCode() {
-        return 32;
+        return Objects.hash(brandCode);
     }
 
 }
