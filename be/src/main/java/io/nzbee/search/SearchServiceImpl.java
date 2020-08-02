@@ -305,12 +305,21 @@ public class SearchServiceImpl implements ISearchService {
 					});
 		
 		
+		//sort by price descending
 		jpaQuery.setSort(getSortField("priceDesc", currency, transLcl));
 		List<Product> results = new ArrayList<>();
 		results.addAll(jpaQuery.getResultList());
 
-		Double maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
-		Double minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		
+		
+		Double maxPrice = (currency.equals("HKD")) 
+						  ? results.stream().findFirst().get().getCurrentMarkdownPriceHKD()
+						  : results.stream().findFirst().get().getCurrentMarkdownPriceUSD();
+						  
+		Double minPrice = (currency.equals("HKD")) 
+				  		  ? Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD()
+				  		  : Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceUSD();
+				  		  
 		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
 		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
 
