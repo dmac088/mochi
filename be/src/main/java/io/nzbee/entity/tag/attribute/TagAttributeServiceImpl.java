@@ -6,9 +6,7 @@ import java.util.Set;
 import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.Constants;
-import io.nzbee.Globals;
 
 @Service
 public class TagAttributeServiceImpl implements ITagAttributeService {
