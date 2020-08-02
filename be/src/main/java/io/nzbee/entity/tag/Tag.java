@@ -1,7 +1,6 @@
 package io.nzbee.entity.tag;
 
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -206,7 +205,7 @@ public class Tag implements ISearchDimension {
  
     @Override
     public int hashCode() {
-        return Objects.hash(tagCode);
+        return 32;
     }
 
 	
