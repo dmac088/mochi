@@ -2,11 +2,9 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -24,9 +22,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
-import io.nzbee.Globals;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
@@ -56,9 +52,6 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private BrandEntityBeanFactory brandEntityBeanFactory;
@@ -172,7 +165,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 
 		// when
     	List<Brand> lb = brandService.findAll(	Constants.localeENGB, 
-				  								globalVars.getCurrencyHKD(), 
+				  								Constants.currencyHKD, 
 				  								"FRT01", 
 				  								categoryCodes, 
 				  								tagCodes, 

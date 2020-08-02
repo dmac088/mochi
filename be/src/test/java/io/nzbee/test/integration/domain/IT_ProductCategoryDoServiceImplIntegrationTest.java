@@ -56,21 +56,21 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     
     @Test
     public void whenValidCode_thenProductCategoryShouldBeFound() {
-        Category found = categoryService.findByCode(Constants.localeENGB, globalVars.getCurrencyHKD(), "TST01");
+        Category found = categoryService.findByCode(Constants.localeENGB, Constants.currencyHKD, "TST01");
       
         assertFound(found);
     }
     
 //    @Test
 //    public void whenInvalidCode_thenProductCategoryShouldNotBeFound() {
-//        Optional<Category> cat = Optional.ofNullable(categoryService.findByCode(Constants.localeENGB, globalVars.getCurrencyHKD(), "ZZZZZ"));
+//        Optional<Category> cat = Optional.ofNullable(categoryService.findByCode(Constants.localeENGB, Constants.currencyHKD, "ZZZZZ"));
 //      
 //        assertNotFound(cat);
 //    }
     
     @Test
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
-        Category found = categoryService.findByDesc(Constants.localeENGB, globalVars.getCurrencyHKD(), "test product category");
+        Category found = categoryService.findByDesc(Constants.localeENGB, Constants.currencyHKD, "test product category");
       
         assertFound(found);
      }
