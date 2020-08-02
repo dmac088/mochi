@@ -1,8 +1,8 @@
 package io.nzbee.entity.brand;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -66,17 +66,17 @@ public class Brand implements ISearchDimension {
 	
 	@ManyToMany(mappedBy = "brands")
 	@JsonIgnore
-	private List<CategoryBrand> categories;
+	private Set<CategoryBrand> categories = new HashSet<CategoryBrand>();
 
 	@OneToMany(	mappedBy="brand",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<Product> products;
+	private Set<Product> products = new HashSet<Product>();
 
 	@OneToMany(	mappedBy="brand",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<BrandAttribute> attributes = new ArrayList<BrandAttribute>();
+	private Set<BrandAttribute> attributes = new HashSet<BrandAttribute>();
 	
 	@Transient
 	private BrandAttribute brandAttribute;
@@ -137,11 +137,11 @@ public class Brand implements ISearchDimension {
 		this.brandCode = brandCode;
 	}
 
-	public List<Product> getProducts() {
+	public Set<Product> getProducts() {
 		return products;
 	}
 
-	public void setProducts(List<Product> products) {
+	public void setProducts(Set<Product> products) {
 		this.products = products;
 	}
 	
@@ -153,11 +153,11 @@ public class Brand implements ISearchDimension {
 		this.brandAttribute = brandAttribute;
 	}
 	
-	public List<BrandAttribute> getAttributes() {
+	public Set<BrandAttribute> getAttributes() {
 		return attributes;
 	}
 	
-	public List<CategoryBrand> getCategories() {
+	public Set<CategoryBrand> getCategories() {
 		return categories;
 	}
 	

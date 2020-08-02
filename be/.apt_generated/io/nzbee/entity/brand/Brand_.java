@@ -4,7 +4,7 @@ import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -13,10 +13,10 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class Brand_ {
 
 	public static volatile SingularAttribute<Brand, Long> brandId;
-	public static volatile ListAttribute<Brand, BrandAttribute> attributes;
-	public static volatile ListAttribute<Brand, CategoryBrand> categories;
+	public static volatile SetAttribute<Brand, BrandAttribute> attributes;
+	public static volatile SetAttribute<Brand, CategoryBrand> categories;
 	public static volatile SingularAttribute<Brand, String> brandCode;
-	public static volatile ListAttribute<Brand, Product> products;
+	public static volatile SetAttribute<Brand, Product> products;
 
 	public static final String BRAND_ID = "brandId";
 	public static final String ATTRIBUTES = "attributes";
