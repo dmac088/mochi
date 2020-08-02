@@ -80,10 +80,12 @@ public class PostgresBrandAdapter implements IBrandPortService {
 																			domainObject.getBrandCode());
 
 		io.nzbee.entity.brand.attribute.BrandAttribute ba = (oba.isPresent()) 
-										? oba.get()
-										: (new io.nzbee.entity.brand.attribute.BrandAttribute());
-										
-		io.nzbee.entity.brand.Brand b = ba.getBrand(); 								
+		? oba.get()
+		: new io.nzbee.entity.brand.attribute.BrandAttribute();
+										 	
+		io.nzbee.entity.brand.Brand b = (oba.isPresent()) 
+		? ba.getBrand()
+		: new io.nzbee.entity.brand.Brand();
 							
 		b.setBrandCode(domainObject.getBrandCode());
 		b.setLocale(domainObject.getLocale());

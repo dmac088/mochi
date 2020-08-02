@@ -152,9 +152,11 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			
 			io.nzbee.entity.category.attribute.CategoryAttribute ca = (oca.isPresent()) 
 			? oca.get()
-			: (new io.nzbee.entity.category.attribute.CategoryAttribute());
+			: new io.nzbee.entity.category.attribute.CategoryAttribute();
 			
-			io.nzbee.entity.category.brand.CategoryBrand cb = (CategoryBrand) ca.getCategory();
+			io.nzbee.entity.category.brand.CategoryBrand cb = (oca.isPresent())
+			? (CategoryBrand) ca.getCategory()
+			: new io.nzbee.entity.category.brand.CategoryBrand();
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());
