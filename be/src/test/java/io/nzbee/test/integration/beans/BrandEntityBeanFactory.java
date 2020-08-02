@@ -24,7 +24,7 @@ public class BrandEntityBeanFactory {
 		final BrandAttribute brandAttribute = new BrandAttribute();
 		brandAttribute.setBrand(brand);
 		brandAttribute.setBrandDesc("test brand");
-		brandAttribute.setLclCd(globalVars.getLocaleENGB());
+		brandAttribute.setLclCd(Constants.localeENGB);
 		brandAttribute.setBrand(brand);
 		brand.addAttribute(brandAttribute);
 		

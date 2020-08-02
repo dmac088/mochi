@@ -57,14 +57,14 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandCategoryShouldBeFound() {
-        Category found = categoryService.findByCode(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "TST02");
+        Category found = categoryService.findByCode(Constants.localeENGB, globalVars.getCurrencyHKD(), "TST02");
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenBrandCategoryShouldBeFound() {
-        Category found = categoryService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyHKD(), "test brand category");
+        Category found = categoryService.findByDesc(Constants.localeENGB, globalVars.getCurrencyHKD(), "test brand category");
       
         assertFound(found);
      }

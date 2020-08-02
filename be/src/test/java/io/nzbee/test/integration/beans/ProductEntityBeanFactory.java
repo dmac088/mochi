@@ -83,13 +83,13 @@ public class ProductEntityBeanFactory {
 		priceUSD.setProduct(product);
 		
 		//we need a brand
-		product.setBrand(brandService.findByCode(globalVars.getLocaleENGB(), 
+		product.setBrand(brandService.findByCode(Constants.localeENGB, 
 												 globalVars.getCurrencyHKD(), 
 												 "PLA01").get());
 				
 				
 		//we need a type
-		product.setDepartment(departmentService.findByCode(	globalVars.getLocaleENGB(), 
+		product.setDepartment(departmentService.findByCode(	Constants.localeENGB, 
 				 globalVars.getCurrencyHKD(),
 				 											"FOO01").get());
 				
@@ -97,7 +97,7 @@ public class ProductEntityBeanFactory {
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 				
 		//we need a category
-		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(globalVars.getLocaleENGB(), 
+		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
 				 														  globalVars.getCurrencyHKD(),
 																		  "FRT01").get();
 				

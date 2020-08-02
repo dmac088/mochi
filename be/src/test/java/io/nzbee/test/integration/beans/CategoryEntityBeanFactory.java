@@ -31,7 +31,7 @@ public class CategoryEntityBeanFactory {
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
 		categoryAttribute.setCategory(category);
 		categoryAttribute.setCategoryDesc("test product category");
-		categoryAttribute.setLclCd(globalVars.getLocaleENGB());
+		categoryAttribute.setLclCd(Constants.localeENGB);
 		category.addCategoryAttribute(categoryAttribute);
 		
 		return category;
@@ -47,7 +47,7 @@ public class CategoryEntityBeanFactory {
 		final CategoryAttribute categoryAttribute = new CategoryAttribute();
 		categoryAttribute.setCategory(category);
 		categoryAttribute.setCategoryDesc("test brand category");
-		categoryAttribute.setLclCd(globalVars.getLocaleENGB());
+		categoryAttribute.setLclCd(Constants.localeENGB);
 		category.addCategoryAttribute(categoryAttribute);
 		
 		return category;

@@ -24,7 +24,7 @@ public class TagEntityBeanFactory {
 		final TagAttribute tagAttribute = new TagAttribute();
 		tagAttribute.setTag(tag);
 		tagAttribute.setTagDesc("test tag");
-		tagAttribute.setLclCd(globalVars.getLocaleENGB());
+		tagAttribute.setLclCd(Constants.localeENGB);
 		tag.setTagAttribute(tagAttribute);
 		tag.addTagAttribute(tagAttribute);
 		
