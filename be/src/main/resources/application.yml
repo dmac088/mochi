@@ -49,16 +49,5 @@ server:
 app:
   globals:
     baseURL: https://localhost:8090
-    localeENGB: en-GB
-    localeZHHK: zh-HK
-    currencyHKD: HKD
-    currencyUSD: USD
-    retailPriceCode: RET01
-    markdownPriceCode: MKD01
-    unknownProductDesc: Not Applicable
-    unknownProductImage: unknown.jpg
-    activeSKUCode: ACT01
-    primaryRootCategoryCode: PRM01
     defaultPage: 0
     defaultPageSize: 10
-    productTypeCodeFood: FOO01

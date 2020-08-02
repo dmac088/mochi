@@ -6,17 +6,13 @@ import java.util.Set;
 import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 
 @Service
 public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 
 	@Autowired
 	private CategoryAttributeRepository CategoryAttributeRepository; 
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Override
 	public Optional<CategoryAttribute> findById(String locale, String currency, long id) {
@@ -69,12 +65,12 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 	
 	@Override
 	public Optional<CategoryAttribute> getCategoryAttributeEN(Long id) {
-		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryId(globalVars.getLocaleENGB(), id);
+		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeENGB, id);
 	}
 	
 	@Override
 	public Optional<CategoryAttribute> getCategoryAttributeHK(Long id) {
-		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryId(globalVars.getLocaleZHHK(), id);
+		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeZHHK, id);
 	}
 
 	@Override

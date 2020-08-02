@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -27,9 +27,6 @@ import io.nzbee.util.FileStorageServiceUpload;
 public class BrandMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(BrandMasterService.class);
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private IBrandPortService brandDomainService; 
@@ -64,8 +61,8 @@ public class BrandMasterService {
 		logger.debug("called persistBrandMaster() ");
 		
 		Brand bDo = 
-				brandDomainService.findByCode(   	globalVars.getLocaleENGB(), 
-													globalVars.getCurrencyHKD(), 
+				brandDomainService.findByCode(   	Constants.localeENGB, 
+													Constants.currencyHKD, 
 													c.get_BRAND_CODE());
 		
 		brandDomainService.save(bDo);
@@ -76,8 +73,8 @@ public class BrandMasterService {
 		logger.debug("called extractBrandMaster() ");
 		List<BrandMasterSchema> lpms = new ArrayList<BrandMasterSchema>();
 	    try {
-		    	List<Brand> brandList = brandDomainService.findAll(globalVars.getLocaleENGB(),
-		    													   globalVars.getCurrencyHKD())
+		    	List<Brand> brandList = brandDomainService.findAll(	Constants.localeENGB, 
+																	Constants.currencyHKD)
 		    							  .stream().collect(Collectors.toList());
 		    	
 		    	brandList.stream().forEach(b -> {
@@ -89,8 +86,8 @@ public class BrandMasterService {
 		    					.stream().collect(Collectors.toMap(b -> b.getBrandCode(), b -> new BrandMasterSchema()));
 		 
 		    	
-		    	brandList.addAll(brandDomainService.findAll(globalVars.getLocaleZHHK(),
-																  globalVars.getCurrencyUSD())
+		    	brandList.addAll(brandDomainService.findAll(Constants.localeZHHK,
+																  Constants.currencyUSD)
 		    											.stream()
 										    			.map(p -> (Brand) p)
 														.collect(Collectors.toList()));
@@ -105,11 +102,11 @@ public class BrandMasterService {
 			    	
 			    bms.set_BRAND_CODE(bnd.getBrandCode());
 			   
-			    if (b.getLocale().equals(globalVars.getLocaleENGB())) {
+			    if (b.getLocale().equals(Constants.localeENGB)) {
 			    	bms.set_BRAND_DESC_EN(bnd.getBrandDesc());
 			    }
 			    	
-			    if (b.getLocale().equals(globalVars.getLocaleZHHK())) {
+			    if (b.getLocale().equals(Constants.localeZHHK)) {
 			    	bms.set_BRAND_DESC_HK(bnd.getBrandDesc());
 			    }
 			    	

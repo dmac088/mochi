@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
@@ -28,9 +28,6 @@ import io.nzbee.util.FileStorageServiceUpload;
 public class CategoryMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CategoryMasterService.class);
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private ICategoryPortService categoryDomainService; 
@@ -64,8 +61,8 @@ public class CategoryMasterService {
 	public void persistCategoryMaster(CategoryMasterSchema c) {
 		logger.debug("called persistCategoryMaster() ");
 		
-		Category cDo = categoryDomainService.findByCode(   	globalVars.getLocaleENGB(), 
-															globalVars.getCurrencyHKD(), 
+		Category cDo = categoryDomainService.findByCode(   	Constants.localeENGB, 
+															Constants.currencyHKD, 
 															c.get_CATEGORY_CODE());
 		
 		categoryDomainService.save(cDo);
@@ -76,8 +73,8 @@ public class CategoryMasterService {
 		logger.debug("called extractCategoryMaster() ");
 		List<CategoryMasterSchema> lpms = new ArrayList<CategoryMasterSchema>();
 	    try {
-		    	List<Category> categoryList = categoryDomainService.findAll(globalVars.getLocaleENGB(),
-		    														  		globalVars.getCurrencyHKD())
+		    	List<Category> categoryList = categoryDomainService.findAll(Constants.localeENGB,
+		    														  		Constants.currencyHKD)
 		    							  						   .stream().collect(Collectors.toList());
 		    	
 		    	//create a map of categories (full list)
@@ -85,8 +82,8 @@ public class CategoryMasterService {
 		    												.stream().collect(Collectors.toMap(c -> c.getCategoryCode(), c -> new CategoryMasterSchema()));
 		 
 		    	
-		    	categoryList.addAll(categoryDomainService.findAll(globalVars.getLocaleZHHK(),
-																  globalVars.getCurrencyUSD())
+		    	categoryList.addAll(categoryDomainService.findAll(Constants.localeZHHK,
+																  Constants.currencyUSD)
 		    											.stream().collect(Collectors.toList()));
 		    	
 		    	lpms.addAll(categoryList.stream().map(c -> {
@@ -105,11 +102,11 @@ public class CategoryMasterService {
 			    	cms.set_CATEGORY_LEVEL(((ProductCategory) c).getCategoryLevel().toString());
 			    }
 			    	
-			    if (c.getLocale().equals(globalVars.getLocaleENGB())) {
+			    if (c.getLocale().equals(Constants.localeENGB)) {
 			    	cms.set_CATEGORY_DESC_EN(cat.getCategoryDesc());
 			    }
 			    	
-			    if (c.getLocale().equals(globalVars.getLocaleZHHK())) {
+			    if (c.getLocale().equals(Constants.localeZHHK)) {
 			    	cms.set_CATEGORY_DESC_HK(cat.getCategoryDesc());
 			    }
 			    	
