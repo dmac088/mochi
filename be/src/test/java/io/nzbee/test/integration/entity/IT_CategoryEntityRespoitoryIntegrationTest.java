@@ -20,9 +20,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
-import io.nzbee.Globals;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrand;
@@ -53,9 +51,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
 	
-	@Autowired
-	private Globals globalVars;
-
     @Autowired
     private ICategoryService categoryService;
     

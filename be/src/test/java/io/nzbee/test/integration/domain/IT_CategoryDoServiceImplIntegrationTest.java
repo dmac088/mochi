@@ -16,7 +16,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.category.Category;
 
 @RunWith(SpringRunner.class)
@@ -35,8 +35,6 @@ import io.nzbee.domain.category.Category;
 })
 public class IT_CategoryDoServiceImplIntegrationTest {
 
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private ICategoryPortService categoryService;
