@@ -457,7 +457,7 @@ public abstract class Product {
 	@Field(analyze=Analyze.NO, store=Store.YES)
 	@Transient
 	public Double getCurrentMarkdownPriceUSDFacet() {
-		return this.getCurrentMarkdownPriceHKD();
+		return this.getCurrentMarkdownPriceUSD();
 	}
 	
 	@Transient
