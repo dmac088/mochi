@@ -3,6 +3,7 @@ package io.nzbee.entity.category;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -320,12 +321,12 @@ public abstract class Category implements ISearchDimension {
 		this.categoryAttribute = categoryAttribute;
 	}
 
-	public void addAttribute(CategoryAttribute categoryAttribute) {
+	public void addCategoryAttribute(CategoryAttribute categoryAttribute) {
 		this.getAttributes().add(categoryAttribute);
 		categoryAttribute.setCategory(this);		
 	}
 	
-	public void removeAttribute(CategoryAttribute categoryAttribute) {
+	public void removeCategoryAttribute(CategoryAttribute categoryAttribute) {
 		this.getAttributes().remove(categoryAttribute);
 		categoryAttribute.setCategory(null);
 	}
@@ -345,6 +346,19 @@ public abstract class Category implements ISearchDimension {
 	@JsonIgnore
 	public String getTypeDiscriminator() {
 		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     Category pcDto = (Category) o;
+	     return this.getCategoryCode() == pcDto.getCategoryCode();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.getCategoryCode());
 	}
 
 }

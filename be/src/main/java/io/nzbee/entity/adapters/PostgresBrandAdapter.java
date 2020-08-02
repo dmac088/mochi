@@ -9,7 +9,6 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.brand.attribute.IBrandAttributeService;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.exceptions.brand.BrandNotFoundException;
 
 @Component
@@ -74,17 +73,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	
 	@Override
 	public void save(Brand domainObject) {
-		
-		Optional<io.nzbee.entity.brand.Brand> ob = brandService.findByCode(
-																			domainObject.getLocale(),
-																			domainObject.getCurrency(), 
-																			domainObject.getBrandCode());
-		
-		io.nzbee.entity.brand.Brand b = (ob.isPresent()) 
-										? ob.get()
-										: new io.nzbee.entity.brand.Brand();
-										
-										
+												
 		Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba = brandAttributeService.findByCode(
 																			domainObject.getLocale(), 
 																			domainObject.getCurrency(), 
@@ -92,7 +81,9 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 		io.nzbee.entity.brand.attribute.BrandAttribute ba = (oba.isPresent()) 
 										? oba.get()
-										: (new io.nzbee.entity.brand.attribute.BrandAttribute());	
+										: (new io.nzbee.entity.brand.attribute.BrandAttribute());
+										
+		io.nzbee.entity.brand.Brand b = ba.getBrand(); 								
 							
 		b.setBrandCode(domainObject.getBrandCode());
 		b.setLocale(domainObject.getLocale());

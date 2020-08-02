@@ -56,33 +56,26 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Override
 	public void save(Tag domainObject) {
 		
-		Optional<io.nzbee.entity.tag.Tag> ot = tagService.findByCode(
-																		domainObject.getLocale(),
-																		domainObject.getCurrency(), 
-																		domainObject.getTagCode());
-
-		io.nzbee.entity.tag.Tag t = (ot.isPresent()) 
-		? ot.get()
-		: new io.nzbee.entity.tag.Tag();
-		
-		
 		Optional<io.nzbee.entity.tag.attribute.TagAttribute> ota = tagAttributeService.findByCode(
 																		domainObject.getLocale(), 
 																		domainObject.getCurrency(), 
 																		domainObject.getTagCode());
 		
-		io.nzbee.entity.tag.attribute.TagAttribute ta = (ota.isPresent()) 
+		io.nzbee.entity.tag.attribute.TagAttribute ta =
+				(ota.isPresent()) 
 		? ota.get()
-		: (new io.nzbee.entity.tag.attribute.TagAttribute());	
+		: (new io.nzbee.entity.tag.attribute.TagAttribute());
+		
+		io.nzbee.entity.tag.Tag t = ta.getTag();
 		
 		ta.setTagDesc(domainObject.getTagDesc());
 		ta.setLclCd(domainObject.getLocale());
 		ta.setTag(t);
+		
 		t.setTagCode(domainObject.getTagCode());
 		t.setLocale(domainObject.getLocale());
 		t.setCurrency(domainObject.getCurrency());
 		t.addTagAttribute(ta);
-		t.getAttributes().add(ta);
 		
 		
 		tagService.save(t);

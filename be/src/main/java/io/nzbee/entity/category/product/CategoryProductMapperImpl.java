@@ -41,7 +41,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 		ca.setLclCd(pc.getLocale());
 		
 		ca.setCategory(cp);
-		cp.addAttribute(ca);
+		cp.addCategoryAttribute(ca);
 		
 		return cp;
 	}

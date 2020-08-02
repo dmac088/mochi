@@ -120,23 +120,16 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if (domainObject instanceof ProductCategory) {
 			
-			Optional<io.nzbee.entity.category.Category> oc = categoryService.findByCode(
-																						domainObject.getLocale(),
-																						domainObject.getCurrency(), 
-																						domainObject.getCategoryCode());
-			
-			CategoryProduct cp = (oc.isPresent()) 
-					? (CategoryProduct) oc.get()
-					: new CategoryProduct();
-					
 			Optional<io.nzbee.entity.category.attribute.CategoryAttribute> oca = categoryAttributeService.findByCode(
-																						domainObject.getLocale(), 
-																						domainObject.getCurrency(), 
-																						domainObject.getCategoryCode());
-			
+					domainObject.getLocale(), 
+					domainObject.getCurrency(), 
+					domainObject.getCategoryCode());
+
 			io.nzbee.entity.category.attribute.CategoryAttribute ca = (oca.isPresent()) 
-					? oca.get()
-					: (new io.nzbee.entity.category.attribute.CategoryAttribute());
+			? oca.get()
+			: (new io.nzbee.entity.category.attribute.CategoryAttribute());
+			
+			io.nzbee.entity.category.product.CategoryProduct cp = (CategoryProduct) ca.getCategory();
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());
@@ -145,21 +138,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cp.setCategoryCode(domainObject.getCategoryCode());
 			cp.setCategoryLevel(domainObject.getCategoryLevel());
 			
-			cp.addAttribute(ca);
-			cp.setCategoryAttribute(ca);
+			cp.addCategoryAttribute(ca);
 			
 			categoryProductService.save(cp);
 		}
 		
 		if(domainObject instanceof BrandCategory) {			
-			Optional<io.nzbee.entity.category.Category> oc = categoryService.findByCode(
-																						domainObject.getLocale(),
-																						domainObject.getCurrency(), 
-																						domainObject.getCategoryCode());
-
-			CategoryBrand cb = (oc.isPresent()) 
-			? (CategoryBrand) oc.get()
-			: new CategoryBrand();
 			
 			Optional<io.nzbee.entity.category.attribute.CategoryAttribute> oca = categoryAttributeService.findByCode(
 																						domainObject.getLocale(), 
@@ -170,6 +154,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			? oca.get()
 			: (new io.nzbee.entity.category.attribute.CategoryAttribute());
 			
+			io.nzbee.entity.category.brand.CategoryBrand cb = (CategoryBrand) ca.getCategory();
+			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());
 			ca.setCategory(cb);
@@ -177,7 +163,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cb.setCategoryCode(domainObject.getCategoryCode());
 			cb.setCategoryLevel(domainObject.getCategoryLevel());
 			
-			cb.addAttribute(ca);
+			cb.addCategoryAttribute(ca);
 			cb.setCategoryAttribute(ca);
 			
 			categoryBrandService.save(cb);

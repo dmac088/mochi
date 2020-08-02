@@ -36,6 +36,10 @@ public class CategoryAttribute {
 	@JoinColumn(name="cat_id")
 	private Category category;
 	
+	public Category getCategory() {
+		return category;
+	}
+	
 	public Long getCategoryAttributeId() {
 		return categoryAttributeId;
 	}
@@ -63,6 +67,7 @@ public class CategoryAttribute {
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(this.getCategory().getCategoryCode());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
@@ -76,8 +81,11 @@ public class CategoryAttribute {
 	            return false;
 	    }
 	    CategoryAttribute that = (CategoryAttribute) obj;
-	    EqualsBuilder eb = new EqualsBuilder();
-	    eb.append(this.getLclCd(), that.getLclCd());
-	    return eb.isEquals();
+	      EqualsBuilder eb = new EqualsBuilder();
+	      eb.append(this.getCategory().getCategoryCode(), that.getCategory().getCategoryCode());
+	      eb.append(this.getLclCd(), that.getLclCd());
+	      return eb.isEquals();
 	}
+
+	
 }
