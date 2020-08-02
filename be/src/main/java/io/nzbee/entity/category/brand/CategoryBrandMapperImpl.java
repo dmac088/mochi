@@ -36,7 +36,7 @@ public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 		ca.setLclCd(bc.getLocale());
 		
 		ca.setCategory(cb);
-		cb.addAttribute(ca);
+		cb.addCategoryAttribute(ca);
 		return cb;
 	}
 

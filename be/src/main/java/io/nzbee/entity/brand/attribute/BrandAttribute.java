@@ -36,16 +36,16 @@ public class BrandAttribute {
 	@JoinColumn(name="bnd_id")
 	private Brand brand;
 	
+	public Brand getBrand() {
+		return this.brand;
+	}
+	
 	public Long getId() {
 		return brandAttributeId;
 	}
 
 	public void setId(Long id) {
 		brandAttributeId = id;
-	}
-
-	public Brand getBrand() {
-		return this.brand;
 	}
 
 	public void setBrand(Brand brand) {
