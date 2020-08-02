@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.test.integration.beans.BrandDoBeanFactory;
@@ -27,9 +27,6 @@ public class IT_BrandDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
        
     }
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
     private IBrandPortService brandService;

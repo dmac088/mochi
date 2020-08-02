@@ -2,7 +2,6 @@ package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,7 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
@@ -30,9 +29,6 @@ public class IT_ProductDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
 		
     }
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
     private IProductPortService productService;

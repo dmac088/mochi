@@ -12,7 +12,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
@@ -28,9 +28,6 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
 		//the beans that we need to run this integration test
  
     }
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
     private ICategoryPortService categoryService;

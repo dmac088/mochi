@@ -128,18 +128,18 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		categoryCodes.add("POM01");
 
 		// when
-		List<Tag> lb = tagService.findAll(
-				Constants.localeENGB, 
-				Constants.currencyUSD, 
-				"FRT01",
-				categoryCodes, 
-				brandCodes,
-				new Double(1000));
+		List<Tag> lt = tagService.findAll(
+											Constants.localeENGB, 
+											Constants.currencyUSD, 
+											"FRT01",
+											categoryCodes, 
+											brandCodes,
+											new Double(1000));
 
 		// then
-		assertNotNull(lb);
-		assertThat(lb.size()).isEqualTo(1);
-		assertThat(lb.stream().findFirst().get().getCount()).isEqualTo(1);
+		assertNotNull(lt);
+		assertThat(lt.size()).isEqualTo(1);
+		assertThat(lt.stream().findFirst().get().getCount()).isEqualTo(1);
 	}
 	
 	

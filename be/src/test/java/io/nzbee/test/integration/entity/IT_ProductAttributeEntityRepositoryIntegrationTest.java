@@ -18,9 +18,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
-import io.nzbee.Globals;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
@@ -49,10 +47,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
-	
-	@Autowired
-	private Globals globalVars;
-	
+
 	@Autowired
 	private ProductEntityBeanFactory productEntityBeanFactory;
  
