@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,6 +8,7 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.attribute.ITagAttributeService;
 import io.nzbee.exceptions.tag.TagNotFoundException;
 
 @Component
@@ -14,6 +16,9 @@ public class PostgresTagAdapter  implements ITagPortService {
 
 	@Autowired 
 	private ITagService tagService;
+	
+	@Autowired
+	private ITagAttributeService tagAttributeService;
 
 	@Override
 	public Tag findByCode(String locale, String currency, String code) {
@@ -49,19 +54,36 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 	
 	@Override
-	public void save(Tag tag) {
+	public void save(Tag domainObject) {
 		
-		io.nzbee.entity.tag.Tag t = new io.nzbee.entity.tag.Tag();
-		t.setTagCode(tag.getTagCode());
-		t.setLocale(tag.getLocale());
-		t.setCurrency(tag.getCurrency());
+		Optional<io.nzbee.entity.tag.Tag> ot = tagService.findByCode(
+																		domainObject.getLocale(),
+																		domainObject.getCurrency(), 
+																		domainObject.getTagCode());
+
+		io.nzbee.entity.tag.Tag t = (ot.isPresent()) 
+		? ot.get()
+		: new io.nzbee.entity.tag.Tag();
 		
-		io.nzbee.entity.tag.attribute.TagAttribute ta = new io.nzbee.entity.tag.attribute.TagAttribute();
-		ta.setTagDesc(tag.getTagDesc());
-		ta.setLclCd(tag.getLocale());
+		
+		Optional<io.nzbee.entity.tag.attribute.TagAttribute> ota = tagAttributeService.findByCode(
+																		domainObject.getLocale(), 
+																		domainObject.getCurrency(), 
+																		domainObject.getTagCode());
+		
+		io.nzbee.entity.tag.attribute.TagAttribute ta = (ota.isPresent()) 
+		? ota.get()
+		: (new io.nzbee.entity.tag.attribute.TagAttribute());	
+		
+		t.setTagCode(domainObject.getTagCode());
+		t.setLocale(domainObject.getLocale());
+		t.setCurrency(domainObject.getCurrency());
+		
+		ta.setTagDesc(domainObject.getTagDesc());
+		ta.setLclCd(domainObject.getLocale());
 		t.addTagAttribute(ta);
+		t.getAttributes().add(ta);
 		ta.setTag(t);
-		t.setTagAttribute(ta);
 		
 		tagService.save(t);
 	}

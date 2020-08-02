@@ -72,7 +72,7 @@ public class TagAttribute {
 	@Override
     public int hashCode() {
 		HashCodeBuilder hcb = new HashCodeBuilder();
-        //hcb.append(this.getTag().getCode());
+        hcb.append(this.getTag().getCode());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
