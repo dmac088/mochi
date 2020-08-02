@@ -162,9 +162,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			: new CategoryBrand();
 			
 			Optional<io.nzbee.entity.category.attribute.CategoryAttribute> oca = categoryAttributeService.findByCode(
-								domainObject.getLocale(), 
-								domainObject.getCurrency(), 
-								domainObject.getCategoryCode());
+																						domainObject.getLocale(), 
+																						domainObject.getCurrency(), 
+																						domainObject.getCategoryCode());
 			
 			io.nzbee.entity.category.attribute.CategoryAttribute ca = (oca.isPresent()) 
 			? oca.get()
