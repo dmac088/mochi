@@ -17,7 +17,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -27,9 +27,6 @@ import io.nzbee.util.FileStorageServiceUpload;
 public class TagMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(TagMasterService.class);
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private ITagPortService tagDomainService; 
@@ -64,8 +61,8 @@ public class TagMasterService {
 		logger.debug("called persistTagMaster() ");
 		
 		Tag tDo = 
-				tagDomainService.findByCode(   globalVars.getLocaleENGB(), 
-													globalVars.getCurrencyHKD(), 
+				tagDomainService.findByCode(   Constants.localeENGB, 
+													Constants.currencyHKD, 
 													t.get_TAG_CODE());
 		
 		tagDomainService.save(tDo);
@@ -76,8 +73,8 @@ public class TagMasterService {
 		logger.debug("called extractTagMaster() ");
 		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
 	    try {
-		    	List<io.nzbee.domain.tag.Tag> tagList = tagDomainService.findAll(globalVars.getLocaleENGB(),
-		    														  		globalVars.getCurrencyHKD())
+		    	List<io.nzbee.domain.tag.Tag> tagList = tagDomainService.findAll(Constants.localeENGB,
+		    														  		Constants.currencyHKD)
 		    							  						   .stream().collect(Collectors.toList());
 		    	
 		    	//create a map of categories (full list)
@@ -85,8 +82,8 @@ public class TagMasterService {
 		    												.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
 		 
 		    	
-		    	tagList.addAll(tagDomainService.findAll(globalVars.getLocaleZHHK(),
-																  globalVars.getCurrencyUSD())
+		    	tagList.addAll(tagDomainService.findAll(Constants.localeZHHK,
+																  Constants.currencyUSD)
 		    											.stream().collect(Collectors.toList()));
 		    	
 		    	lpms.addAll(tagList.stream().map(t -> {
@@ -99,11 +96,11 @@ public class TagMasterService {
 			    	
 			    tms.set_TAG_CODE(tag.getTagCode());
 			    	
-			    if (t.getLocale().equals(globalVars.getLocaleENGB())) {
+			    if (t.getLocale().equals(Constants.localeENGB)) {
 			    	tms.set_TAG_DESC_EN(tag.getTagDesc());
 			    }
 			    	
-			    if (t.getLocale().equals(globalVars.getLocaleZHHK())) {
+			    if (t.getLocale().equals(Constants.localeZHHK)) {
 			    	tms.set_TAG_DESC_HK(tag.getTagDesc());
 			    }
 			    	

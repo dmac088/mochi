@@ -22,7 +22,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -40,9 +40,6 @@ import io.nzbee.domain.ports.IProductPortService;
 public class ProductMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductMasterService.class);
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private IProductPortService productDomainService;
@@ -87,19 +84,19 @@ public class ProductMasterService {
 	public void persistProductMaster(FoodMasterSchema p) {
 		logger.debug("called persistProductMaster() ");
 		Brand bDo =
-				brandDomainService.findByCode(globalVars.getLocaleENGB(), 
-											  globalVars.getCurrencyHKD(), 
+				brandDomainService.findByCode(Constants.localeENGB, 
+											  Constants.currencyHKD, 
 											  p.get_BRAND_CODE());
 
 		
 		Category cDo = 
-				categoryDomainService.findByCode(   globalVars.getLocaleENGB(), 
-													globalVars.getCurrencyHKD(), 
+				categoryDomainService.findByCode(   Constants.localeENGB, 
+													Constants.currencyHKD, 
 													p.get_PRIMARY_CATEGORY_CODE());
 		
 		Department dDo = 
-				departmentDomainService.findByCode(globalVars.getLocaleENGB(), 
-												   globalVars.getCurrencyHKD(), 
+				departmentDomainService.findByCode(Constants.localeENGB, 
+												   Constants.currencyHKD, 
 												   p.get_DEPARTMENT_CODE());
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -133,8 +130,8 @@ public class ProductMasterService {
 							   	p.get_PRODUCT_IMAGE_EN(),
 							   	p.get_COUNTRY_OF_ORIGIN(),
 							   	expiryDate,
-							   	globalVars.getLocaleENGB(),
-							   	globalVars.getCurrencyHKD(),
+							   	Constants.localeENGB,
+							   	Constants.currencyHKD,
 							   	bDo,
 							   	dDo,
 							   	(ProductCategory) cDo);
@@ -148,8 +145,8 @@ public class ProductMasterService {
 		List<FoodMasterSchema> lpms = new ArrayList<FoodMasterSchema>();
 	    try {
 	    
-	    	List<Food> productsList = productDomainService.findAllByType(globalVars.getLocaleENGB(),
-	    														  		 globalVars.getCurrencyHKD(),
+	    	List<Food> productsList = productDomainService.findAllByType(Constants.localeENGB,
+	    														  		 Constants.currencyHKD,
 	    														  		 Food.class)
 	    							  .stream()
 	    							  .map(p -> (Food) p)
@@ -159,8 +156,8 @@ public class ProductMasterService {
 	    	Map<String, FoodMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new FoodMasterSchema()));
 	 
 	    	
-	    	productsList.addAll(productDomainService.findAllByType(	globalVars.getLocaleZHHK(),
-																globalVars.getCurrencyUSD(),
+	    	productsList.addAll(productDomainService.findAllByType(	Constants.localeZHHK,
+																Constants.currencyUSD,
 																Food.class)
 	    											.stream()
 									    			.map(p -> (Food) p)
@@ -176,16 +173,16 @@ public class ProductMasterService {
 		    	pms.set_COUNTRY_OF_ORIGIN(p.getCountryOfOrigin());
 		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus());
 		    	
-		        if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+		        if (p.getLclCd().equals(Constants.localeENGB)) 
 		        		{ pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDesc()); }
-		        if (p.getLclCd().equals(globalVars.getLocaleZHHK())) 
+		        if (p.getLclCd().equals(Constants.localeZHHK)) 
         				{ pms.set_PRODUCT_DESCRIPTION_HK(p.getProductDesc()); }		
 		        
-		        if (p.getCurrency().equals(globalVars.getCurrencyHKD())) 
+		        if (p.getCurrency().equals(Constants.currencyHKD)) 
 						{ pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getProductRetail()); 
 						  pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getProductMarkdown());}	
 		        		
-		        if (p.getCurrency().equals(globalVars.getCurrencyUSD())) 
+		        if (p.getCurrency().equals(Constants.currencyUSD)) 
 						{ pms.set_PRODUCT_RETAIL_PRICE_USD(p.getProductRetail()); 
 						  pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getProductMarkdown());}
 		    	
@@ -195,10 +192,10 @@ public class ProductMasterService {
 		    	
 		    	pms.set_BRAND_CODE(brand.getBrandCode());
 		    	
-		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+		    	if (p.getLclCd().equals(Constants.localeENGB)) 
         				{ pms.set_BRAND_DESCRIPTION_EN(brand.getBrandDesc()); }
 		    	
-		    	if (p.getLclCd().equals(globalVars.getLocaleZHHK())) 
+		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
 						{ pms.set_BRAND_DESCRIPTION_HK(brand.getBrandDesc()); }
 		    	
 		    	ProductCategory c = categoryDomainService.findPrimaryByProductCode(p.getLclCd(),
@@ -207,11 +204,11 @@ public class ProductMasterService {
 		    	
 		    	pms.set_PRIMARY_CATEGORY_CODE(c.getCategoryCode());
 		    	
-		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+		    	if (p.getLclCd().equals(Constants.localeENGB)) 
 						{ pms.set_PRIMARY_CATEGORY_DESC_EN(c.getCategoryDesc()); 
 						  pms.set_PRODUCT_IMAGE_EN(p.getProductImage());}
 		    	
-		    	if (p.getLclCd().equals(globalVars.getLocaleZHHK())) 
+		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
 						{ pms.set_PRIMARY_CATEGORY_DESC_HK(c.getCategoryDesc()); 
 						  pms.set_PRODUCT_IMAGE_HK(p.getProductImage());}
 		    	
@@ -221,10 +218,10 @@ public class ProductMasterService {
 		    	
 		    	pms.set_DEPARTMENT_CODE(d.getDepartmentCode());
 		    	
-		    	if (p.getLclCd().equals(globalVars.getLocaleENGB())) 
+		    	if (p.getLclCd().equals(Constants.localeENGB)) 
 		    			{ pms.set_DEPARTMENT_DESC_EN(d.getDepartmentDesc()); } 
 		    	
-		    	if (p.getLclCd().equals(globalVars.getLocaleZHHK())) 
+		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
 						{ pms.set_DEPARTMENT_DESC_HK(d.getDepartmentDesc()); } 
 		    	
 		    	pms.set_PRODUCT_TYPE(p.getProductType());

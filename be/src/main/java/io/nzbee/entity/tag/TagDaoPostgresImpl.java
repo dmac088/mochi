@@ -23,6 +23,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.Constants;
 import io.nzbee.Globals;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
@@ -40,9 +42,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Override
 	public Optional<Tag> findById(String locale, String currency, long id) {
@@ -144,7 +143,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
 				
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), globalVars.getActiveSKUCode()));
+		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), Constants.activeSKUCode));
 		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
 		if(!codes.isEmpty()) {
 			conditions.add(root.in(Tag_.tagCode).in(codes));
@@ -252,7 +251,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 !(maxPrice == null)),"TagMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode)
-				 .setParameter("activeProductCode", globalVars.getActiveSKUCode());
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -265,7 +264,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		if(!(maxPrice == null)) {
 			query.setParameter("maxPrice", maxPrice);
 			query.setParameter("currency", currency);
-			query.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+			query.setParameter("markdownPriceCode", Constants.activeSKUCode);
 		}
 		
 		@SuppressWarnings("unchecked")

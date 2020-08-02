@@ -6,17 +6,13 @@ import java.util.Set;
 import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 
 @Service
 public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Autowired
 	private ProductAttributeRepository productAttributeRepository; 
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Override
 	public Optional<ProductAttribute> findById(String locale, String currency, long id) {
@@ -69,12 +65,12 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	
 	@Override
 	public Optional<ProductAttribute> getProductAttributeEN(Long id) {
-		return productAttributeRepository.findByLclCdAndProductProductId(globalVars.getLocaleENGB(), id);
+		return productAttributeRepository.findByLclCdAndProductProductId(Constants.localeENGB, id);
 	}
 	
 	@Override
 	public Optional<ProductAttribute> getProductAttributeHK(Long id) {
-		return productAttributeRepository.findByLclCdAndProductProductId(globalVars.getLocaleZHHK(), id);
+		return productAttributeRepository.findByLclCdAndProductProductId(Constants.localeZHHK, id);
 	}
 
 	@Override

@@ -6,17 +6,13 @@ import java.util.Set;
 import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 
 @Service
 public class BrandAttributeServiceImpl implements IBrandAttributeService {
 
 	@Autowired
 	private BrandAttributeRepository BrandAttributeRepository; 
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Override
 	public Optional<BrandAttribute> findById(String locale, String currency, long id) {
@@ -69,12 +65,12 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 	
 	@Override
 	public Optional<BrandAttribute> getBrandAttributeEN(Long id) {
-		return BrandAttributeRepository.findByLclCdAndBrandBrandId(globalVars.getLocaleENGB(), id);
+		return BrandAttributeRepository.findByLclCdAndBrandBrandId(Constants.localeENGB, id);
 	}
 	
 	@Override
 	public Optional<BrandAttribute> getBrandAttributeHK(Long id) {
-		return BrandAttributeRepository.findByLclCdAndBrandBrandId(globalVars.getLocaleZHHK(), id);
+		return BrandAttributeRepository.findByLclCdAndBrandBrandId(Constants.localeZHHK, id);
 	}
 
 	@Override

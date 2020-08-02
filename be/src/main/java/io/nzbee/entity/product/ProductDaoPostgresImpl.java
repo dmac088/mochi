@@ -24,7 +24,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -43,9 +43,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
-	
-	@Autowired
-	private Globals globalVars;
 
 	@Override
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
@@ -67,10 +64,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
-				.setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
-				.setParameter("activeProductCode", globalVars.getActiveSKUCode())
-				.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-				.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
+				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				.setParameter("activeProductCode", Constants.activeSKUCode)
+				.setParameter("retailPriceCode", Constants.retailPriceCode)
+				.setParameter("markdownPriceCode", Constants.markdownPriceCode)
 				.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
 		
@@ -99,10 +96,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productId", id)
-		.setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
-		.setParameter("activeProductCode", globalVars.getActiveSKUCode())
-		.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		try {
 			Object[] p = (Object[])query.getSingleResult();
@@ -135,10 +132,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
-		.setParameter("activeProductCode", globalVars.getActiveSKUCode())
-		.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!productCodes.isEmpty()) {
 			query.setParameter("productCodes", productCodes);
@@ -173,10 +170,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productDesc", desc)
-		.setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
-		.setParameter("activeProductCode", globalVars.getActiveSKUCode())
-		.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 
 		try {
@@ -195,7 +192,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
 		
 		List<String> categories = new ArrayList<String>();
-		categories.add(globalVars.getPrimaryRootCategoryCode());
+		categories.add(Constants.primaryRootCategoryCode);
 		
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
@@ -211,10 +208,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
-				 .setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
-				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
-				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("retailPriceCode", Constants.retailPriceCode)
+				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 				 
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -230,7 +227,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes, ','));
 		
 		List<String> categories = new ArrayList<String>();
-		categories.add(globalVars.getPrimaryRootCategoryCode());
+		categories.add(Constants.primaryRootCategoryCode);
 		
 		
 		Query query = em.createNativeQuery(this.constructSQL(true,
@@ -246,10 +243,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
-				 .setParameter("categoryCode", globalVars.getPrimaryRootCategoryCode())
-				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
-				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("retailPriceCode", Constants.retailPriceCode)
+				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!codes.isEmpty()) {
 			query.setParameter("productCodes", codes);
@@ -288,9 +285,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping.count")
 				 .setParameter("locale", 			locale)
 				 .setParameter("currency", 			currency)
-				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
-				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode());
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("retailPriceCode", Constants.retailPriceCode)
+				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
@@ -309,9 +306,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  ""), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
-				 .setParameter("activeProductCode", globalVars.getActiveSKUCode())
-				 .setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-				 .setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("retailPriceCode", Constants.retailPriceCode)
+				 .setParameter("markdownPriceCode", Constants.markdownPriceCode)
 				 
 				 //these should contain default values for these parameters
 				 //.setParameter("orderby", "1")
@@ -347,9 +344,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
   				 											 ""), "ProductMapping.count")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("activeProductCode", globalVars.getActiveSKUCode())
-		.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
 		.setParameter("categoryCode", categoryCode);
 		
 		if(!categoryCodes.isEmpty()) {
@@ -386,9 +383,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					   									sort), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("activeProductCode", globalVars.getActiveSKUCode())
-		.setParameter("retailPriceCode", globalVars.getRetailPriceCode())
-		.setParameter("markdownPriceCode", globalVars.getMarkdownPriceCode())
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
 		.setParameter("categoryCode", categoryCode);
 		
 		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));

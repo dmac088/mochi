@@ -11,7 +11,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
@@ -41,9 +41,6 @@ import io.nzbee.search.facet.IFacet;
 public class PostgresProductAdapter implements IProductPortService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private IProductService productService;
@@ -131,10 +128,10 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			Currency curr = currencyService.findByCode(food.getCurrency()).get();
 
-			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode(globalVars.getRetailPriceCode()).get();
-			io.nzbee.entity.product.price.ProductPriceType ptm = productPriceTypeService.findByCode(globalVars.getMarkdownPriceCode()).get();
+			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
+			io.nzbee.entity.product.price.ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
 
-			io.nzbee.entity.product.status.ProductStatus ps = productStatusService.findByProductStatusCode(globalVars.getActiveSKUCode())
+			io.nzbee.entity.product.status.ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode)
 					.get();
 
 			Optional<io.nzbee.entity.product.price.ProductPrice> oprcr = productPriceService

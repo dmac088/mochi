@@ -7,6 +7,7 @@ import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.Constants;
 import io.nzbee.Globals;
 
 @Service
@@ -14,9 +15,6 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 
 	@Autowired
 	private TagAttributeRepository TagAttributeRepository; 
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Override
 	public Optional<TagAttribute> findById(String locale, String currency, long id) {
@@ -69,12 +67,12 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	
 	@Override
 	public Optional<TagAttribute> getTagAttributeEN(Long id) {
-		return TagAttributeRepository.findByLclCdAndTagTagId(globalVars.getLocaleENGB(), id);
+		return TagAttributeRepository.findByLclCdAndTagTagId(Constants.localeENGB, id);
 	}
 	
 	@Override
 	public Optional<TagAttribute> getTagAttributeHK(Long id) {
-		return TagAttributeRepository.findByLclCdAndTagTagId(globalVars.getLocaleZHHK(), id);
+		return TagAttributeRepository.findByLclCdAndTagTagId(Constants.localeZHHK, id);
 	}
 
 	@Override

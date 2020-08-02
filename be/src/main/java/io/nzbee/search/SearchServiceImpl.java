@@ -33,7 +33,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -59,9 +59,6 @@ public class SearchServiceImpl implements ISearchService {
 	private static final String TITLE_EDGE_NGRAM_INDEX = "edgeNGramTitle";
 
 	private static final String TITLE_NGRAM_INDEX = "nGramTitle";
-
-	@Autowired
-	private Globals globalVars;
 
 	@Autowired
 	private ApplicationContext appContext;
@@ -465,9 +462,9 @@ public class SearchServiceImpl implements ISearchService {
 
 	private Product mapResultToEntity(Object[] r, String locale, String currency) {
 
-		Product p = (r[13].toString().equals(globalVars.getProductTypeCodeFood()) ? new Food() : new Jewellery());
+		Product p = (r[13].toString().equals(Constants.productTypeCodeFood) ? new Food() : new Jewellery());
 
-		if ((r[13].toString().equals(globalVars.getProductTypeCodeFood()))) {
+		if ((r[13].toString().equals(Constants.productTypeCodeFood))) {
 			((Food) p).setCountryOfOrigin(r[15].toString());
 			((Food) p).setExpiryDate(new Date());
 		}
