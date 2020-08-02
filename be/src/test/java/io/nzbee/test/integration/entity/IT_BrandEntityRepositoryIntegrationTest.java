@@ -86,8 +86,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findById(globalVars.getLocaleENGB(), 
-				  							globalVars.getCurrencyUSD(),  
+    	Brand found = brandService.findById(Constants.localeENGB, 
+				  							Constants.currencyUSD,  
 				  							brand.getId()).get();
      
         // then
@@ -112,8 +112,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findByDesc(globalVars.getLocaleENGB(), 
-				 							  globalVars.getCurrencyUSD(), 
+    	Brand found = brandService.findByDesc(Constants.localeENGB, 
+				 							  Constants.currencyUSD, 
 				 							  "test brand").get();
      
         //then
@@ -127,8 +127,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	Set<String> tagCodes 		= new HashSet<String>();
     	
         // when
-    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
-				  								globalVars.getCurrencyUSD(), 
+    	List<Brand> lb = brandService.findAll(	Constants.localeENGB, 
+				  								Constants.currencyUSD, 
 				  								"FRT01", 
 				  								categoryCodes, 
 				  								tagCodes, 
@@ -148,8 +148,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	categoryCodes.add("POM01");
     	
         // when
-    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
-				  								globalVars.getCurrencyUSD(), 
+    	List<Brand> lb = brandService.findAll(	Constants.localeENGB, 
+				  								Constants.currencyUSD, 
 				  								"FRT01", 
 				  								categoryCodes, 
 				  								tagCodes, 
@@ -169,7 +169,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("32.4");
 
 		// when
-    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
+    	List<Brand> lb = brandService.findAll(	Constants.localeENGB, 
 				  								globalVars.getCurrencyHKD(), 
 				  								"FRT01", 
 				  								categoryCodes, 
@@ -191,8 +191,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("4.15");
 
 		// when
-    	List<Brand> lb = brandService.findAll(	globalVars.getLocaleENGB(), 
-				  								globalVars.getCurrencyUSD(), 
+    	List<Brand> lb = brandService.findAll(	Constants.localeENGB, 
+				  								Constants.currencyUSD, 
 				  								"FRT01", 
 				  								categoryCodes, 
 				  								tagCodes, 

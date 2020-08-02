@@ -61,8 +61,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenFindAll_thenReturnAllCategories() {
     	
         // when
-    	List<Category> found = categoryService.findAll( globalVars.getLocaleENGB(), 
-												  		globalVars.getCurrencyUSD());
+    	List<Category> found = categoryService.findAll( Constants.localeENGB, 
+												  		Constants.currencyUSD);
      
         // then
     	assertAllCategoriesFound(found);
@@ -72,8 +72,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
     	
         // when
-    	List<Category> found = categoryService.findAll( globalVars.getLocaleENGB(), 
-		  											    globalVars.getCurrencyUSD(),
+    	List<Category> found = categoryService.findAll( Constants.localeENGB, 
+		  											    Constants.currencyUSD,
 												  		CategoryBrand.class);
      
         // then
@@ -84,8 +84,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenFindAllProductCategories_thenReturnAllProductCategories() {
     	
         // when
-    	List<Category> found = categoryService.findAll( globalVars.getLocaleENGB(), 
-		  												globalVars.getCurrencyUSD(),
+    	List<Category> found = categoryService.findAll( Constants.localeENGB, 
+		  												Constants.currencyUSD,
 												  		CategoryProduct.class);
      
         // then
@@ -96,7 +96,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInHKD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
 														   globalVars.getCurrencyHKD(), 
 														   "FRT01", 
 														   new HashSet<String>(), 
@@ -112,7 +112,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInHKD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
 														   globalVars.getCurrencyHKD(), 
 														   "VEG01", 
 														   new HashSet<String>(), 
@@ -128,7 +128,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInHKD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
 														   globalVars.getCurrencyHKD(), 
 														   "PRM01", 
 														   new HashSet<String>(), 
@@ -144,7 +144,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceHKD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
 														   globalVars.getCurrencyHKD(), 
 														   "POM01", 
 														   new HashSet<String>(), 
@@ -161,8 +161,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInUSD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyUSD(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
+														   Constants.currencyUSD, 
 														   "FRT01", 
 														   new HashSet<String>(), 
 														   new HashSet<String>(), 
@@ -177,8 +177,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInUSD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyUSD(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
+														   Constants.currencyUSD, 
 														   "VEG01", 
 														   new HashSet<String>(), 
 														   new HashSet<String>(), 
@@ -193,8 +193,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInUSD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-														   globalVars.getCurrencyUSD(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
+														   Constants.currencyUSD, 
 														   "PRM01", 
 														   new HashSet<String>(), 
 														   new HashSet<String>(), 
@@ -209,8 +209,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceUSD() {
     	
         // when
-    	Double found = categoryService.getMaxPrice(globalVars.getLocaleENGB(), 
-												   globalVars.getCurrencyUSD(), 
+    	Double found = categoryService.getMaxPrice(Constants.localeENGB, 
+												   Constants.currencyUSD, 
 												   "POM01", 
 												   new HashSet<String>(), 
 												   new HashSet<String>(), 

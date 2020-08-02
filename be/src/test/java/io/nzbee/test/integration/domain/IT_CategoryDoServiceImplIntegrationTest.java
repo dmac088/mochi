@@ -45,8 +45,8 @@ public class IT_CategoryDoServiceImplIntegrationTest {
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
-		Set<Category> found = categoryService.findAll(	globalVars.getLocaleENGB(), 
-				 										globalVars.getCurrencyUSD());
+		Set<Category> found = categoryService.findAll(	Constants.localeENGB, 
+				 										Constants.currencyUSD);
 
 		// then
 		assertFound(found);

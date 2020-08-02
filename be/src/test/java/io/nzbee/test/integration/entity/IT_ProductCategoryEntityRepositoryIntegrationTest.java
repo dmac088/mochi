@@ -87,8 +87,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findById(globalVars.getLocaleENGB(), 
-												  globalVars.getCurrencyUSD(),  
+    	Category found = categoryService.findById(Constants.localeENGB, 
+												  Constants.currencyUSD,  
 												  category.getCategoryId()).get();
      
         // then
@@ -99,8 +99,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByCode(globalVars.getLocaleENGB(), 
-				  									globalVars.getCurrencyUSD(), 
+    	Category found = categoryService.findByCode(Constants.localeENGB, 
+				  									Constants.currencyUSD, 
 				 									"TST02").get();
      
         // then
@@ -111,8 +111,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByDesc(globalVars.getLocaleENGB(), 
-				  									globalVars.getCurrencyUSD(), 
+    	Category found = categoryService.findByDesc(Constants.localeENGB, 
+				  									Constants.currencyUSD, 
 				 									"test product category").get();
      
         //then
@@ -127,8 +127,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
-    												globalVars.getCurrencyUSD(), 
+    	List<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    												Constants.currencyUSD, 
     												"FRT01",
     												categories,
     												brands, 
@@ -150,8 +150,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
-    												globalVars.getCurrencyUSD(), 
+    	List<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    												Constants.currencyUSD, 
     												"FRT01", 
     												categories,
     												brands, 
@@ -173,8 +173,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	tags.add("GFR01");
     	
     	//when
-    	List<Category> lc = categoryService.findAll(globalVars.getLocaleENGB(), 
-    												globalVars.getCurrencyUSD(), 
+    	List<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    												Constants.currencyUSD, 
     												"FRT01", 
     												categories,
     												brands, 

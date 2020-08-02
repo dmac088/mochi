@@ -86,8 +86,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnProduct() {
 		 // when
-    	Product found = productService.findById(  globalVars.getLocaleENGB(), 
-				  								  globalVars.getCurrencyUSD(),  
+    	Product found = productService.findById(  Constants.localeENGB, 
+				  								  Constants.currencyUSD,  
 												  product.getProductId()).get();
      
         // then
@@ -98,8 +98,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByCode(globalVars.getLocaleENGB(), 
-				  								  globalVars.getCurrencyUSD(),  
+    	Product found = productService.findByCode(Constants.localeENGB, 
+				  								  Constants.currencyUSD,  
 												  "123456789").get();
      
         // then
@@ -109,8 +109,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByDesc_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByDesc(globalVars.getLocaleENGB(), 
-				  								  globalVars.getCurrencyUSD(),  
+    	Product found = productService.findByDesc(Constants.localeENGB, 
+				  								  Constants.currencyUSD,  
 												  "test product").get();
      
         // then
@@ -121,8 +121,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     public void whenFindByProductCode_thenReturnProductCategories() {
     	
         // when
-    	List<CategoryProduct> found = productCategoryService.findAllByProductCode(globalVars.getLocaleENGB(), 
-				  																  globalVars.getCurrencyUSD(), 
+    	List<CategoryProduct> found = productCategoryService.findAllByProductCode(Constants.localeENGB, 
+				  																  Constants.currencyUSD, 
 				 																  "123456789");
      
         //then

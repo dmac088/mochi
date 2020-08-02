@@ -93,8 +93,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findById(globalVars.getLocaleENGB(), 
-												  globalVars.getCurrencyUSD(),  
+    	Category found = categoryService.findById(Constants.localeENGB, 
+												  Constants.currencyUSD,  
 												  category.getCategoryId()).get();
      
         // then
@@ -106,8 +106,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findByCode(globalVars.getLocaleENGB(), 
-				 									globalVars.getCurrencyUSD(), 
+    	Category found = categoryService.findByCode(Constants.localeENGB, 
+				 									Constants.currencyUSD, 
 				 									"TST02").get();
      
         // then
@@ -119,8 +119,8 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findByDesc(globalVars.getLocaleENGB(), 
-													globalVars.getCurrencyUSD(), 
+    	Category found = categoryService.findByDesc(Constants.localeENGB, 
+													Constants.currencyUSD, 
 				 									"test brand category").get();
      
         //then

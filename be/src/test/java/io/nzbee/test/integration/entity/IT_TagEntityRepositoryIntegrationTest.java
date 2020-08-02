@@ -47,9 +47,6 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private Globals globalVars;
-
-	@Autowired
 	private TagEntityBeanFactory tagEntityBeanFactory;
 
 	@Autowired
@@ -71,7 +68,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindById_thenReturnTag() {
 
 		// when
-		Tag found = tagService.findById(globalVars.getLocaleENGB(), globalVars.getCurrencyUSD(), tag.getTagId())
+		Tag found = tagService.findById(Constants.localeENGB, Constants.currencyUSD, tag.getTagId())
 				.get();
 
 		// then
@@ -94,7 +91,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnTag() {
 
 		// when
-		Tag found = tagService.findByDesc(globalVars.getLocaleENGB(), globalVars.getCurrencyUSD(), "test tag")
+		Tag found = tagService.findByDesc(Constants.localeENGB, Constants.currencyUSD, "test tag")
 				.get();
 
 		// then
@@ -108,8 +105,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> brandCodes = new HashSet<String>();
 
 		// when
-		List<Tag> lb = tagService.findAll(globalVars.getLocaleENGB(), 
-										  globalVars.getCurrencyUSD(), 
+		List<Tag> lb = tagService.findAll(Constants.localeENGB, 
+										  Constants.currencyUSD, 
 										  "FRT01",
 										  categoryCodes, 
 										  brandCodes,
@@ -132,8 +129,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		// when
 		List<Tag> lb = tagService.findAll(
-				globalVars.getLocaleENGB(), 
-				globalVars.getCurrencyUSD(), 
+				Constants.localeENGB, 
+				Constants.currencyUSD, 
 				"FRT01",
 				categoryCodes, 
 				brandCodes,
@@ -156,7 +153,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		// when
 		List<Tag> lb = tagService.findAll(
-				globalVars.getLocaleENGB(), 
+				Constants.localeENGB, 
 				globalVars.getCurrencyHKD(), 
 				"FRT01",
 				categoryCodes, 
@@ -178,8 +175,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		// when
 		List<Tag> lb = tagService.findAll(
-				globalVars.getLocaleENGB(), 
-				globalVars.getCurrencyUSD(), 
+				Constants.localeENGB, 
+				Constants.currencyUSD, 
 				"FRT01",
 				categoryCodes, 
 				brandCodes,
