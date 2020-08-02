@@ -80,7 +80,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	public void whenFindById_thenReturnProduct() {
 		 // when
     	Product found = productService.findById(  Constants.localeENGB, 
-												  globalVars.getCurrencyHKD(),  
+												  Constants.currencyHKD,  
 												  p.getProductId()).get();
      
         // then
@@ -92,7 +92,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
     	Product found = productService.findByCode(Constants.localeENGB, 
-				  								  globalVars.getCurrencyHKD(),  
+				  								  Constants.currencyHKD,  
 												  "123456789").get();
      
         // then

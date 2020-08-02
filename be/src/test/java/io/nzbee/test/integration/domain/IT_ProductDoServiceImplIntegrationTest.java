@@ -58,14 +58,14 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	
 	@Test
     public void whenValidCode_thenProductShouldBeFound() {
-        Product found = productService.findByCode(Constants.localeENGB, globalVars.getCurrencyHKD(), "3254354673");
+        Product found = productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "3254354673");
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenProductShouldBeFound() {
-    	Product found = productService.findByDesc(Constants.localeENGB, globalVars.getCurrencyHKD(), "Test Product Description");
+    	Product found = productService.findByDesc(Constants.localeENGB, Constants.currencyHKD, "Test Product Description");
       
         assertFound(found);
     }
