@@ -23,7 +23,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.entity.adapters.PostgresCategoryAdapter;
 import io.nzbee.entity.category.CategoryMapperImpl;
@@ -52,7 +52,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     CategoryBrandMapperImpl.class,
 							     CategoryResourceAssembler.class,
 							     PagedResourcesAssembler.class,
-							     Globals.class,
 							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
@@ -70,9 +69,6 @@ public class IT_CategoryControllerIntegrationTest {
 	
     @Autowired
     private MockMvc mockMvc;
-    
-    @Autowired
-	private Globals globalVars;
 
     @Autowired
     private WebApplicationContext webApplicationContext;
@@ -104,7 +100,7 @@ public class IT_CategoryControllerIntegrationTest {
     @Test
     @Transactional
     public void testFindOne() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/" + Constants.localeENGB + "/" + globalVars.getCurrencyHKD() + "/code/FRT01")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/code/FRT01")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
@@ -113,7 +109,7 @@ public class IT_CategoryControllerIntegrationTest {
         		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"))
         		.andExpect(jsonPath("$.data.categoryDesc").value("Fruit"))
         		.andExpect(jsonPath("$.data.locale").value(Constants.localeENGB))
-        		.andExpect(jsonPath("$.data.currency").value(globalVars.getCurrencyHKD()));
+        		.andExpect(jsonPath("$.data.currency").value(Constants.currencyHKD));
     }
     
 
