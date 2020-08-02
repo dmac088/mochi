@@ -19,6 +19,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import io.nzbee.Constants;
 import io.nzbee.Globals;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;

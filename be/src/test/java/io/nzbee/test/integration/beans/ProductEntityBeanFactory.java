@@ -4,7 +4,7 @@ import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -22,9 +22,6 @@ import io.nzbee.entity.product.status.IProductStatusRepository;
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "tst")
 public class ProductEntityBeanFactory {
-	
-	@Autowired
-	private Globals globalVars;
 	
 	@Autowired
 	private ICurrencyService currencyService;
@@ -84,13 +81,13 @@ public class ProductEntityBeanFactory {
 		
 		//we need a brand
 		product.setBrand(brandService.findByCode(Constants.localeENGB, 
-												 globalVars.getCurrencyHKD(), 
+												 Constants.currencyHKD, 
 												 "PLA01").get());
 				
 				
 		//we need a type
 		product.setDepartment(departmentService.findByCode(	Constants.localeENGB, 
-				 globalVars.getCurrencyHKD(),
+				 Constants.currencyHKD,
 				 											"FOO01").get());
 				
 		//we need a status
@@ -98,7 +95,7 @@ public class ProductEntityBeanFactory {
 				
 		//we need a category
 		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
-				 														  globalVars.getCurrencyHKD(),
+				 														  Constants.currencyHKD,
 																		  "FRT01").get();
 				
 				

@@ -23,7 +23,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Globals;
+import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.test.integration.beans.TagEntityBeanFactory;
@@ -154,7 +154,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// when
 		List<Tag> lb = tagService.findAll(
 				Constants.localeENGB, 
-				globalVars.getCurrencyHKD(), 
+				Constants.currencyHKD, 
 				"FRT01",
 				categoryCodes, 
 				brandCodes,
