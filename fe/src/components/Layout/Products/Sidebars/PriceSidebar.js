@@ -7,7 +7,7 @@ import { instance as axios } from "../../../../components/Layout/Helpers/api/axi
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 function PriceSidebar(props) {
-    const { addFacet, loading, type, facets } = props;
+    const { addFacet, loading, type, facets, selectedFacets } = props;
     const categories = useSelector(state => state.categories);
     const { categoryCode } = props.match.params;
     const prevCategoryCode = usePrevious(categoryCode);
@@ -30,7 +30,8 @@ function PriceSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.maxPriceFacet.href, [])
+            console.log(selectedFacets.map(f => f.data));
+            axios.post(currentCategory._links.maxPriceFacet.href, selectedFacets.map(f => f.data))
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
