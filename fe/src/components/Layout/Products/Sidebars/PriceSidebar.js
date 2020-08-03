@@ -36,7 +36,7 @@ function PriceSidebar(props) {
                         setObjectState((prevState) => ({
                             ...prevState,
                             maxPrice: response.data.data.value,
-                            currentPrice: /*(prevState.currentPrice) ? prevState.currentPrice :*/ response.data.data.value,
+                            currentPrice: (prevState.currentPrice) ? prevState.currentPrice : response.data.data.value,
                         }));
                     }
                 });

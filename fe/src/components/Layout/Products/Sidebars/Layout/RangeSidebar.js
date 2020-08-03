@@ -4,7 +4,6 @@ import 'rc-slider/assets/index.css';
 
 export const RangeSidebar = (props) => {
   const { currentPrice, maxPrice, changePrice } = props;
-  console.log(maxPrice);
     return (
       <div className="sidebar mb-35">
         <p>Value less than: {currentPrice}</p>
