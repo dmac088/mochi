@@ -330,7 +330,27 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		
-		// TODO Auto-generated method stub
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: locale = {}, "
+				+ "														   currency = {}, "
+				+ "														   category code = {}, "
+				+ "														   category codes = {},	"
+				+ "														   brand codes = {},	"
+				+ "														   tag codes = {},	"
+				+ "														   max price = {},	"
+				+ "														   page = {},	"
+				+ "														   size = {},	"
+				+ "														   sort = {},	",
+																							 locale, 
+																							 currency, 
+																							 categoryCode, 
+																							 categoryCodes,
+																							 brandCodes,
+																							 tagCodes,
+																							 maxPrice,
+																							 page,
+																							 size,
+																							 sort);
+
 		Query query = em.createNativeQuery(this.constructSQL(false,
 	 														 false,
 															 false,

@@ -103,11 +103,12 @@ public class CategoryController {
 		LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
 		
-		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getId()).findFirst();
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
     	}
+ 
 		
 		final Set<Category> collection = categoryService.findAll(locale, currency, categoryCode,
 																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
@@ -121,12 +122,13 @@ public class CategoryController {
 	
 	@PostMapping("/CategoryFacet/{locale}/{currency}/code/{categoryCode}")
 	public ResponseEntity<CollectionModel<CategoryFacetResource>> getChildCategoryFacets(@PathVariable String locale,
-																						 @PathVariable String currency, @PathVariable String categoryCode,
+																						 @PathVariable String currency, 
+																						 @PathVariable String categoryCode,
 																						 @RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getChildCategoryFacets with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
 		
-		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getValue()).findFirst();
+		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
@@ -148,11 +150,7 @@ public class CategoryController {
 												@RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getMaxPrice with parameters : {}, {}, {}", locale, currency,
 				categoryCode);
-		
-		System.out.println();
-		System.out.println();
-		System.out.println();
-		System.out.println();
+	
 		
 		 Double result = categoryService.getMaxPrice(locale, currency, categoryCode, 
 													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
