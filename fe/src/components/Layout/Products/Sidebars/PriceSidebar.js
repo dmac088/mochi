@@ -30,14 +30,13 @@ function PriceSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            console.log(selectedFacets.map(f => f.data));
             axios.post(currentCategory._links.maxPriceFacet.href, selectedFacets.map(f => f.data))
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
                             maxPrice: response.data.data.value,
-                            currentPrice: (prevState.currentPrice) ? prevState.currentPrice : response.data.data.value,
+                            currentPrice: /*(prevState.currentPrice) ? prevState.currentPrice :*/ response.data.data.value,
                         }));
                     }
                 });
