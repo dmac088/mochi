@@ -50,7 +50,7 @@ public class TagController {
     	
     	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
     	
-    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getValue()).findFirst();
+    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
@@ -76,7 +76,7 @@ public class TagController {
     	
     	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
     	 
-    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("maxPrice")).map(p -> p.getValue()).findFirst();
+    	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
     		maxPrice = new Double(oMaxPrice.get());
