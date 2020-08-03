@@ -51,7 +51,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, StringUtils.join(brandCodes), StringUtils.join(tagCodes));
+		LOGGER.debug("call CategoryDaoPostgresImpl.getMaxPrice parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}", locale, currency, categoryCode, StringUtils.join(categoryCodes), StringUtils.join(brandCodes), StringUtils.join(tagCodes));
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -779,9 +779,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  then '0' " +
 				"  else :parentCategoryCode" +
 				"  end" +
-				((!childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
-				((!childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
-				((!childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
+				((!maxPriceOnly && !childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
+				((!maxPriceOnly && !childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
+				((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
 			
 		return sql;
 	}

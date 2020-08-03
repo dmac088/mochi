@@ -161,16 +161,18 @@ public class CategoryController {
 	
 	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}/maxPriceFacet")
 	public ResponseEntity<PriceFacetResource> getMaxPriceFacet(	@PathVariable String locale,
-																@PathVariable String currency, @PathVariable String categoryCode,
+																@PathVariable String currency, 
+																@PathVariable String categoryCode,
 																@RequestBody Set<IFacet> selectedFacets) {
-		LOGGER.debug("call CategoryController.getMaxPriceFacet with parameters : {}, {}, {}", locale, currency,
-				categoryCode);
+		LOGGER.debug("call CategoryController.getMaxPriceFacet with parameters : {}, {}, {}", locale, currency,categoryCode);
 		
 		
-		 EntityFacet result = priceFacetMapper.toEntityFacet(categoryService.getMaxPrice(locale, currency, categoryCode, 
-													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
-													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
-													 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet())));
+		 EntityFacet result = priceFacetMapper.toEntityFacet(categoryService.getMaxPrice(locale, 
+																						 currency, 
+																						 categoryCode, 
+																						 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																						 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																						 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet())));
 		return ResponseEntity.ok(priceFacetResourceAssembler.toModel(result));
 	}
 
