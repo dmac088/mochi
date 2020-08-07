@@ -27,7 +27,8 @@ function PriceSidebar(props) {
 
     useEffect(() => {
         let isSubscribed = true;
-        if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
+        if (type === 'browse' && 
+            (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
             axios.post(currentCategory._links.maxPriceFacet.href, selectedFacets.map(f => f.data))
