@@ -22,8 +22,10 @@ export const localization = {
         "address": "Address",
         "accountdetails": "Account Details",
         "allcategories": "All Categories",
-        "product": "Product"
-
+        "product": "Product",
+        "accessories": "Accessories",
+        "fashion": "Fashion",
+        "homeandlifestyle": "Home & Lifestyle",
     },
     "zh-HK": {
         "home": "首頁",
@@ -40,6 +42,9 @@ export const localization = {
         "items": "項目",
         "searchyourproduct": "搜索你的產品",
         "allcategories": "所有類別",
-        "product": "產品"
+        "product": "產品",
+        "accessories": "飾物",
+        "fashion": "時裝",
+        "homeandlifestyle": "家居",
     }
 }
