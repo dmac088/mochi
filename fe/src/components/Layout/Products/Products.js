@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useRef } from "react";
 import queryString from 'query-string';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
+import * as bagService from "../../../services/Bag/index";
 import { findByCode } from '../../../services/Category';
-import { newEntityFacet, newSearchFacet } from '../../../services/Product';
 import ProductGrid from './Product/Grid/ProductGrid';
 import ProductList from './Product/List/ProductList';
 import CategorySidebar from './Sidebars/CategorySidebar';
@@ -19,6 +19,8 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Products(props) {
     const { toggleQuickView, match } = props;
+    const dispatch = useDispatch();
+
     const discovery = useSelector(state => state.discovery);
 
     const query = queryString.parse(props.location.search);
@@ -31,6 +33,14 @@ function Products(props) {
         facets: [],
         loading: false,
     });
+
+    const addToBag = (e) => {
+        e.preventDefault();
+        dispatch(bagService.addItem({
+                                "productCode": e.target.id, 
+                                "quantity": 1,
+                            }));
+    }
 
     const { categoryCode, type } = match.params;
     const categories = useSelector(state => state.categories);
@@ -117,11 +127,13 @@ function Products(props) {
             return (stateObject.gridLayout)
                 ? <ProductGrid
                     {...props}
+                    addToBag={addToBag}
                     key={index}
                     product={p}
                     toggleQuickView={toggleQuickView} />
                 : <ProductList
                     {...props}
+                    addToBag={addToBag}
                     key={index}
                     product={p}
                     toggleQuickView={toggleQuickView} />

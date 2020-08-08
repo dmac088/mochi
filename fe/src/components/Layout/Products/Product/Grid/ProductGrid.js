@@ -1,25 +1,13 @@
 import React from 'react';
 import { Link } from "react-router-dom";
 import { getCategoryProductPath } from '../../../Helpers/Route/Route';
-import { useDispatch } from 'react-redux';
-import * as bagService from "../../../../../services/Bag/index";
 
 const images = require.context('../../../../../assets/images/products', true);
 
 function ProductGrid(props) {
-  const { match, toggleQuickView } = props;
+  const { match, toggleQuickView, addToBag } = props;
   const { data } = props.product;
-
-  const dispatch = useDispatch();
   
-  const addToBag = (e) => {
-    e.preventDefault();
-    dispatch(bagService.addItem({
-                            "productCode": e.target.id, 
-                            "quantity": 1,
-                        }));
-  }
-
   return (
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
