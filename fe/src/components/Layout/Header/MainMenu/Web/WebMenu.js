@@ -1,7 +1,6 @@
 import React from "react";
-import BrandMenu from './BrandMenu';
 import BasicMenuItem from '../BasicMenuItem';
-import { getContactPath, getHomePath } from '../../../Helpers/Route/Route';
+import { getContactPath, getHomePath, getCategoryPath } from '../../../Helpers/Route/Route';
 
 function MainMenu(props) {
     const { match } = props;
@@ -18,19 +17,19 @@ function MainMenu(props) {
                 <li>
                     <BasicMenuItem
                         {...props}
-                        routePath={getHomePath(match)}
+                        routePath={getCategoryPath('ACC01', match)}
                         descKey={'accessories'} />
                 </li>
                 <li>
                     <BasicMenuItem
                         {...props}
-                        routePath={getHomePath(match)}
+                        routePath={getCategoryPath('FAS01', match)}
                         descKey={'fashion'} />
                 </li>
                 <li>
                     <BasicMenuItem
                         {...props}
-                        routePath={getHomePath(match)}
+                        routePath={getCategoryPath('HOM02', match)}
                         descKey={'homeandlifestyle'} />
                 </li>
                 <li>
