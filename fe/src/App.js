@@ -26,7 +26,7 @@ import Products from "./components/Layout/Products/Products";
 import Product from "./components/Layout/Products/Product/Product";
 
 
-function App() {
+function App() { 
 
   const renderContainer = (Component, props) => {
     return (
