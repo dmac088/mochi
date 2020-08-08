@@ -14,7 +14,6 @@ function Accordion(props) {
   const dispatch = useDispatch();
 
   const removeItem = (e) => {
-    console.log('removeItem = ' + e.target.id);
     e.preventDefault();
     dispatch(bagService.removeItem(e.target.id));
   }
