@@ -2,6 +2,7 @@ package io.nzbee.entity.adapters;
 
 import java.util.Date;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
@@ -15,6 +16,7 @@ import io.nzbee.exceptions.customer.CustomerException;
 import io.nzbee.exceptions.customer.CustomerNotFoundException;
 import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
 import io.nzbee.security.user.User;
+import io.nzbee.security.user.UserService;
 import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 
@@ -75,12 +77,12 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		ur.addUser(u);
 		u.setUsername(domainObject.getUserName());
 		u.setPassword(domainObject.getPassword());
-		u.setEnabled(true);
+		u.setEnabled(false);
+		u.setUsing2FA(false);
 		
 		io.nzbee.entity.role.customer.Customer c = new io.nzbee.entity.role.customer.Customer();
 		c.setCustomerNumber(domainObject.getCustomerID());
 		c.setRoleStart(new Date());
-		
 		
 		io.nzbee.entity.role.RoleType roleType = roleTypeRepository.findByRoleTypeDesc(io.nzbee.entity.role.customer.Customer.class.getSimpleName()).get();
 		c.setRoleType(roleType);
@@ -141,7 +143,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public void addCustomerLocation(Customer c, String clientIP) {
-		// TODO Auto-generated method stub
-		
+		UserDetails u = userService.loadUserByUsername(c.getUserName());
+		userService.addUserLocation((User) u, clientIP);
 	}
 }

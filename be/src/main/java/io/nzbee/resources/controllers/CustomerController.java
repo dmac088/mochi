@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +16,7 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
 
 @RestController
@@ -24,6 +26,9 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
+    
+    @Autowired
+    private ApplicationEventPublisher eventPublisher;
 
     public CustomerController() {
         super();
@@ -34,10 +39,9 @@ public class CustomerController {
         LOGGER.debug("Signing up a new customer with information: {}", customer);
         
         Customer c = customerService.registerNewCustomer(customer);
-        
         customerService.addCustomerLocation(c, getClientIP(request));
         
-        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(c, request.getLocale(), getAppUrl(request)));
         
         return new GenericResponse("success");
     }
@@ -66,5 +70,10 @@ public class CustomerController {
         }
         return xfHeader.split(",")[0];
     }
+    
+    private String getAppUrl(HttpServletRequest request) {
+        return "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+    }
+
     
 }
