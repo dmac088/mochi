@@ -57,6 +57,11 @@ public class User implements UserDetails, Serializable {
     @JoinColumn(name="pty_id")
     private Party userParty;
     
+    @Column(name = "is_using2fa")
+    private boolean isUsing2FA;
+    
+    @Column(name = "secret")
+    private String secret;
     
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "USER_ROLE", schema="security", 
@@ -128,6 +133,22 @@ public class User implements UserDetails, Serializable {
 		return this.enabled;
 	}
 	
+    public boolean isUsing2FA() {
+        return isUsing2FA;
+    }
+
+    public void setUsing2FA(boolean isUsing2FA) {
+        this.isUsing2FA = isUsing2FA;
+    }
+    
+    public String getSecret() {
+        return secret;
+    }
+
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+	
 	public void addUserRole(UserRole ur) {
 		this.getUserRoles().add(ur);
 	}
@@ -159,4 +180,5 @@ public class User implements UserDetails, Serializable {
     public int hashCode() {
         return 32;
     }
+
 }

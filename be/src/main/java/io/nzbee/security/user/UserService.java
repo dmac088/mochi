@@ -3,26 +3,22 @@ package io.nzbee.security.user;
 import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
 import java.net.URLEncoder;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.session.SessionRegistry;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.entity.role.IRoleRepository;
+import com.maxmind.geoip2.DatabaseReader;
 import io.nzbee.security.user.location.UserLocation;
 import io.nzbee.security.user.location.UserLocationRepository;
 import io.nzbee.security.user.locationtoken.NewLocationToken;
@@ -38,7 +34,6 @@ public class UserService implements UserDetailsService, IUserService {
     @Autowired
     private IUserRepository userRepository;
 
-
     @Autowired
     private VerificationTokenRepository tokenRepository;
 
@@ -46,13 +41,14 @@ public class UserService implements UserDetailsService, IUserService {
     private PasswordResetTokenRepository passwordTokenRepository;
 
     @Autowired
+    @Qualifier("userPasswordEncoder")
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
-    private IRoleRepository roleRepository;
-
-    @Autowired
-    private SessionRegistry sessionRegistry;
+//    @Autowired
+//    private IRoleRepository roleRepository;
+//
+//    @Autowired
+//    private SessionRegistry sessionRegistry;
 
     @Autowired
     @Qualifier("GeoIPCountry")
@@ -88,22 +84,22 @@ public class UserService implements UserDetailsService, IUserService {
     
     // API
 
-    @Override
-    public User registerNewUserAccount(final UserDto accountDto) {
-//        if (emailExists(accountDto.getEmail())) {
-//            throw new UserAlreadyExistException("There is an account with that email address: " + accountDto.getEmail());
-//        }
-//        final User user = new User();
-//
-//        user.setFirstName(accountDto.getFirstName());
-//        user.setLastName(accountDto.getLastName());
-//        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
-//        user.setEmail(accountDto.getEmail());
-//        user.setUsing2FA(accountDto.isUsing2FA());
-//        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
-//        return userRepository.save(user);
-    	return null;
-    }
+//    @Override
+//    public User registerNewUserAccount(final UserDto accountDto) {
+////        if (emailExists(accountDto.getEmail())) {
+////            throw new UserAlreadyExistException("There is an account with that email address: " + accountDto.getEmail());
+////        }
+////        final User user = new User();
+////
+////        user.setFirstName(accountDto.getFirstName());
+////        user.setLastName(accountDto.getLastName());
+////        user.setPassword(passwordEncoder.encode(accountDto.getPassword()));
+////        user.setEmail(accountDto.getEmail());
+////        user.setUsing2FA(accountDto.isUsing2FA());
+////        user.setRoles(Arrays.asList(roleRepository.findByName("ROLE_USER")));
+////        return userRepository.save(user);
+//    	return null;
+//    }
 
     @Override
     public User getUser(final String verificationToken) {
@@ -164,7 +160,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public User findUserByEmail(final String email) {
-        return userRepository.findByEmail(email);
+        return userRepository.loadUserByUsername(email);
     }
 
     @Override
@@ -217,7 +213,7 @@ public class UserService implements UserDetailsService, IUserService {
 
     @Override
     public String generateQRUrl(User user) throws UnsupportedEncodingException {
-        return QR_PREFIX + URLEncoder.encode(String.format("otpauth://totp/%s:%s?secret=%s&issuer=%s", APP_NAME, user.getEmail(), user.getSecret(), APP_NAME), "UTF-8");
+        return QR_PREFIX + URLEncoder.encode(String.format("otpauth://totp/%s:%s?secret=%s&issuer=%s", APP_NAME, user.getUsername(), user.getSecret(), APP_NAME), "UTF-8");
     }
 
     @Override
@@ -234,23 +230,26 @@ public class UserService implements UserDetailsService, IUserService {
     }
 
     private boolean emailExists(final String email) {
-        return userRepository.findByEmail(email) != null;
+        return userRepository.loadUserByUsername(email) != null;
     }
+    
+    
 
     @Override
     public List<String> getUsersFromSessionRegistry() {
-        return sessionRegistry.getAllPrincipals()
-            .stream()
-            .filter((u) -> !sessionRegistry.getAllSessions(u, false)
-                .isEmpty())
-            .map(o -> {
-                if (o instanceof User) {
-                    return ((User) o).getEmail();
-                } else {
-                    return o.toString()
-            ;
-                }
-            }).collect(Collectors.toList());
+    	return null;
+//        return sessionRegistry.getAllPrincipals()
+//            .stream()
+//            .filter((u) -> !sessionRegistry.getAllSessions(u, false)
+//                .isEmpty())
+//            .map(o -> {
+//                if (o instanceof User) {
+//                    return ((User) o).getEmail();
+//                } else {
+//                    return o.toString()
+//            ;
+//                }
+//            }).collect(Collectors.toList());
     }
 
     @Override
@@ -266,7 +265,7 @@ public class UserService implements UserDetailsService, IUserService {
                 .getCountry()
                 .getName();
             System.out.println(country + "====****");
-            final User user = userRepository.findByEmail(username);
+            final User user = userRepository.loadUserByUsername(username);
             final UserLocation loc = userLocationRepository.findByCountryAndUser(country, user);
             if ((loc == null) || !loc.isEnabled()) {
                 return createNewLocationToken(country, user);

@@ -17,6 +17,8 @@ public abstract class User_ {
 	public static volatile SingularAttribute<User, Boolean> accountExpired;
 	public static volatile SingularAttribute<User, Long> Id;
 	public static volatile SingularAttribute<User, Party> userParty;
+	public static volatile SingularAttribute<User, Boolean> isUsing2FA;
+	public static volatile SingularAttribute<User, String> secret;
 	public static volatile SingularAttribute<User, Boolean> credentialsExpired;
 	public static volatile SingularAttribute<User, Boolean> enabled;
 	public static volatile SingularAttribute<User, String> username;
@@ -27,6 +29,8 @@ public abstract class User_ {
 	public static final String ACCOUNT_EXPIRED = "accountExpired";
 	public static final String ID = "Id";
 	public static final String USER_PARTY = "userParty";
+	public static final String IS_USING2_FA = "isUsing2FA";
+	public static final String SECRET = "secret";
 	public static final String CREDENTIALS_EXPIRED = "credentialsExpired";
 	public static final String ENABLED = "enabled";
 	public static final String USERNAME = "username";
