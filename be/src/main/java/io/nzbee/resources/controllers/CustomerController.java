@@ -1,5 +1,7 @@
 package io.nzbee.resources.controllers;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,9 +30,15 @@ public class CustomerController {
     }
 
     @PostMapping("/Customer/Signup")
-    public GenericResponse registerNewCustomer(@RequestBody final CustomerDTO customer) {
-        LOGGER.debug("Creating a new customer with information: {}", customer);
-        customerService.registerNewCustomer(customer);
+    public GenericResponse registerNewCustomer(@RequestBody final CustomerDTO customer, final HttpServletRequest request) {
+        LOGGER.debug("Signing up a new customer with information: {}", customer);
+        
+        Customer c = customerService.registerNewCustomer(customer);
+        
+        customerService.addCustomerLocation(c, getClientIP(request));
+        
+        eventPublisher.publishEvent(new OnRegistrationCompleteEvent(registered, request.getLocale(), getAppUrl(request)));
+        
         return new GenericResponse("success");
     }
     
@@ -50,4 +58,13 @@ public class CustomerController {
     	customerService.delete(username);
     	return new GenericResponse("success");
 	}
+    
+    private String getClientIP(HttpServletRequest request) {
+        final String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader == null) {
+            return request.getRemoteAddr();
+        }
+        return xfHeader.split(",")[0];
+    }
+    
 }

@@ -15,8 +15,8 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public void registerNewCustomer(CustomerDTO customer) {		
-		customerService.registerNewCustomer(customer);
+	public Customer registerNewCustomer(CustomerDTO customer) {		
+		return customerService.registerNewCustomer(customer);
 	}
 
 	@Override
@@ -49,6 +49,12 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public void update(CustomerDTO customerDTO) {
 		customerService.update(customerDTO);
+	}
+
+	@Override
+	public void addCustomerLocation(Customer c, String clientIP) {
+		customerService.addCustomerLocation(c, clientIP);
+		
 	}
 
 }

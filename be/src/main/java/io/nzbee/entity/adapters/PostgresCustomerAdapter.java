@@ -33,6 +33,9 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Autowired
 	private IUserRoleService userRoleService;
 	
+	@Autowired
+    private UserService userService;
+	
 	@Override
 	public Customer findByUsername(String userName) {
 		Person p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
@@ -41,7 +44,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 
 	@Override
-	public void registerNewCustomer(CustomerDTO customer) {
+	public Customer registerNewCustomer(CustomerDTO customer) {
 		boolean exists = personService.userExists(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
 		if(exists) {
 			throw new CustomerAlreadyExistException("Customer with username " + customer.getUserName() + " already exists!");
@@ -59,6 +62,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		c.setPassword(customer.getPassword(), customer.getConfirmPassword());
 		this.save(c);
+		return c;
 	}
 	
 	@Override
@@ -133,5 +137,11 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
 		personService.delete(t);
+	}
+
+	@Override
+	public void addCustomerLocation(Customer c, String clientIP) {
+		// TODO Auto-generated method stub
+		
 	}
 }

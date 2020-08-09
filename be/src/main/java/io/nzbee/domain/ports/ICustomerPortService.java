@@ -7,11 +7,11 @@ public interface ICustomerPortService extends IPortService<Customer> {
 
 	public Customer findByUsername(String userName);
 	
-	void registerNewCustomer(CustomerDTO customer);
+	Customer registerNewCustomer(CustomerDTO customer);
 
 	void update(CustomerDTO dto);
 	
 	void delete(String userName);
 
-	
+	public void addCustomerLocation(Customer c, String clientIP);
 }
