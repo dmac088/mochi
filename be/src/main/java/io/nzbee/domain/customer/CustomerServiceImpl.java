@@ -54,7 +54,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	@Override
 	public void addCustomerLocation(Customer c, String clientIP) {
 		customerService.addCustomerLocation(c, clientIP);
-		
 	}
+	
 
 }

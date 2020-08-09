@@ -9,7 +9,7 @@ import com.maxmind.geoip2.exception.GeoIp2Exception;
 
 
 @Configuration
-public class BeanConfiguration {
+public class SecurityBeanConfiguration {
  
 	@Bean(name="GeoIPCountry")
     public DatabaseReader databaseReader() throws IOException, GeoIp2Exception {
