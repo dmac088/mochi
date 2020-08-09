@@ -1,4 +1,20 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    password: 7G6p2uvu#%$@
+    port: 465
+    properties:
+        mail:
+            smtps:
+                auth: true
+                starttls:
+                    enable: true
+                timeout: 8000
+            transport:
+                protocol: smtps
+    protocol: smtps
+    username: danielmackie82@gmail.com
+
   devtools:
     restart:
       enabled: false
@@ -51,3 +67,9 @@ app:
     baseURL: https://localhost:8090
     defaultPage: 0
     defaultPageSize: 10
+
+support:
+    email: admin@littlebagshop.com
+
+  
+    

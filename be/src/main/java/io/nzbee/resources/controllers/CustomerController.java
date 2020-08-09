@@ -1,7 +1,6 @@
 package io.nzbee.resources.controllers;
 
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,6 +44,20 @@ public class CustomerController {
         
         return new GenericResponse("success");
     }
+    
+    // User activation - verification
+   /* @GetMapping("/Customer/resendRegistrationToken")
+    public GenericResponse resendRegistrationToken(final HttpServletRequest request, @RequestParam("token") final String existingToken) {
+        final VerificationToken_ newToken = 
+        		
+        		
+        		userService.generateNewVerificationToken(existingToken);
+        
+        
+        final User user = userService.getUser(newToken.getToken());
+        mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user));
+        return new GenericResponse(messages.getMessage("message.resendToken", null, request.getLocale()));
+    }*/
     
     @GetMapping("/Customer/UserName/{username}")
 	public Customer getCustomer(@PathVariable String username) {
