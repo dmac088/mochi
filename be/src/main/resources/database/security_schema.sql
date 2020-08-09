@@ -346,7 +346,9 @@ CREATE TABLE user_ (
     credentials_expired boolean,
     enabled boolean,
     password character varying(255),
-    user_name character varying(255)
+    user_name character varying(255),
+    is_using2fa boolean,
+    secret character varying(255)
 );
 
 
