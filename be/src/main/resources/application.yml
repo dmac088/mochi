@@ -1,7 +1,7 @@
 spring:
   mail:
     host: smtp.gmail.com
-    password: 7G6p2uvu#%$@
+    password: ${SMTPPassword}
     port: 465
     properties:
         mail:
