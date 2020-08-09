@@ -16,36 +16,49 @@ SET row_security = off;
 
 SET search_path = security, pg_catalog;
 
+ALTER TABLE ONLY security.verification_token DROP CONSTRAINT verification_token_user;
 ALTER TABLE ONLY security.user_role DROP CONSTRAINT user_role_user_;
 ALTER TABLE ONLY security.user_role DROP CONSTRAINT user_role_role;
+ALTER TABLE ONLY security.user_location DROP CONSTRAINT user_location_user;
 ALTER TABLE ONLY security.role_permission DROP CONSTRAINT role_permission_role;
 ALTER TABLE ONLY security.role_permission DROP CONSTRAINT role_permission_permission;
+ALTER TABLE ONLY security.password_reset_token DROP CONSTRAINT password_reset_token_user;
+ALTER TABLE ONLY security.new_location_token DROP CONSTRAINT new_location_token_user_location;
 ALTER TABLE ONLY security.user_ DROP CONSTRAINT user_user_name;
 ALTER TABLE ONLY security.user_role DROP CONSTRAINT user_role_pkey;
+ALTER TABLE ONLY security.user_location DROP CONSTRAINT user_location_pkey;
 ALTER TABLE ONLY security.user_ DROP CONSTRAINT user___pkey;
 ALTER TABLE ONLY security.role DROP CONSTRAINT role_pkey;
 ALTER TABLE ONLY security.role_permission DROP CONSTRAINT role_permission_pkey;
+ALTER TABLE ONLY security.password_reset_token DROP CONSTRAINT password_reset_token_pkey;
 ALTER TABLE ONLY security.oauth_client_token DROP CONSTRAINT oauth_client_token_pkey;
 ALTER TABLE ONLY security.oauth_client_details DROP CONSTRAINT oauth_client_details_pkey;
 ALTER TABLE ONLY security.oauth_access_token DROP CONSTRAINT oauth_access_token_pkey;
+ALTER TABLE ONLY security.new_location_token DROP CONSTRAINT new_location_token_pkey;
+ALTER TABLE ONLY security.device_metadata DROP CONSTRAINT device_metadata_pkey;
 ALTER TABLE ONLY security.clientdetails DROP CONSTRAINT clientdetails_pkey;
 ALTER TABLE ONLY security.permission DROP CONSTRAINT authority_pkey;
 ALTER TABLE ONLY security.permission DROP CONSTRAINT authority_name;
 ALTER TABLE security.permission ALTER COLUMN id DROP DEFAULT;
+DROP TABLE security.verification_token;
 DROP TABLE security.user_role;
 DROP SEQUENCE security.user_role_id_seq;
+DROP TABLE security.user_location;
 DROP TABLE security.user_;
 DROP TABLE security.role_permission;
 DROP SEQUENCE security.role_permission_id_seq;
 DROP TABLE security.role;
 DROP SEQUENCE security.role_id_seq;
+DROP TABLE security.password_reset_token;
 DROP TABLE security.oauth_refresh_token;
 DROP TABLE security.oauth_code;
 DROP TABLE security.oauth_client_token;
 DROP TABLE security.oauth_client_details;
 DROP TABLE security.oauth_approvals;
 DROP TABLE security.oauth_access_token;
+DROP TABLE security.new_location_token;
 DROP SEQUENCE security.hibernate_sequence;
+DROP TABLE security.device_metadata;
 DROP TABLE security.clientdetails;
 DROP SEQUENCE security.authority_id_seq;
 DROP TABLE security.permission;
@@ -120,6 +133,21 @@ CREATE TABLE clientdetails (
 ALTER TABLE clientdetails OWNER TO security_owner;
 
 --
+-- Name: device_metadata; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE device_metadata (
+    id bigint NOT NULL,
+    device_details character varying(255),
+    last_logged_in timestamp without time zone,
+    location character varying(255),
+    user_id bigint
+);
+
+
+ALTER TABLE device_metadata OWNER TO security_owner;
+
+--
 -- Name: hibernate_sequence; Type: SEQUENCE; Schema: security; Owner: security_owner
 --
 
@@ -132,6 +160,19 @@ CREATE SEQUENCE hibernate_sequence
 
 
 ALTER TABLE hibernate_sequence OWNER TO security_owner;
+
+--
+-- Name: new_location_token; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE new_location_token (
+    id bigint NOT NULL,
+    token character varying(255),
+    user_location_id bigint NOT NULL
+);
+
+
+ALTER TABLE new_location_token OWNER TO security_owner;
 
 --
 -- Name: oauth_access_token; Type: TABLE; Schema: security; Owner: security_owner
@@ -228,6 +269,20 @@ CREATE TABLE oauth_refresh_token (
 ALTER TABLE oauth_refresh_token OWNER TO security_owner;
 
 --
+-- Name: password_reset_token; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE password_reset_token (
+    id bigint NOT NULL,
+    expiry_date timestamp without time zone,
+    token character varying(255),
+    pty_id bigint NOT NULL
+);
+
+
+ALTER TABLE password_reset_token OWNER TO security_owner;
+
+--
 -- Name: role_id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
 --
 
@@ -298,6 +353,20 @@ CREATE TABLE user_ (
 ALTER TABLE user_ OWNER TO security_owner;
 
 --
+-- Name: user_location; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE user_location (
+    id bigint NOT NULL,
+    country character varying(255),
+    enabled boolean NOT NULL,
+    pty_id bigint NOT NULL
+);
+
+
+ALTER TABLE user_location OWNER TO security_owner;
+
+--
 -- Name: user_role_id_seq; Type: SEQUENCE; Schema: security; Owner: security_owner
 --
 
@@ -323,6 +392,20 @@ CREATE TABLE user_role (
 
 
 ALTER TABLE user_role OWNER TO security_owner;
+
+--
+-- Name: verification_token; Type: TABLE; Schema: security; Owner: security_owner
+--
+
+CREATE TABLE verification_token (
+    id bigint NOT NULL,
+    expiry_date timestamp without time zone,
+    token character varying(255),
+    pty_id bigint NOT NULL
+);
+
+
+ALTER TABLE verification_token OWNER TO security_owner;
 
 --
 -- Name: permission id; Type: DEFAULT; Schema: security; Owner: security_owner
@@ -356,6 +439,22 @@ ALTER TABLE ONLY clientdetails
 
 
 --
+-- Name: device_metadata device_metadata_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY device_metadata
+    ADD CONSTRAINT device_metadata_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: new_location_token new_location_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY new_location_token
+    ADD CONSTRAINT new_location_token_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: oauth_access_token oauth_access_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
@@ -377,6 +476,14 @@ ALTER TABLE ONLY oauth_client_details
 
 ALTER TABLE ONLY oauth_client_token
     ADD CONSTRAINT oauth_client_token_pkey PRIMARY KEY (authentication_id);
+
+
+--
+-- Name: password_reset_token password_reset_token_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY password_reset_token
+    ADD CONSTRAINT password_reset_token_pkey PRIMARY KEY (id);
 
 
 --
@@ -404,6 +511,14 @@ ALTER TABLE ONLY user_
 
 
 --
+-- Name: user_location user_location_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY user_location
+    ADD CONSTRAINT user_location_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: user_role user_role_pkey; Type: CONSTRAINT; Schema: security; Owner: security_owner
 --
 
@@ -417,6 +532,22 @@ ALTER TABLE ONLY user_role
 
 ALTER TABLE ONLY user_
     ADD CONSTRAINT user_user_name UNIQUE (user_name);
+
+
+--
+-- Name: new_location_token new_location_token_user_location; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY new_location_token
+    ADD CONSTRAINT new_location_token_user_location FOREIGN KEY (user_location_id) REFERENCES user_location(id);
+
+
+--
+-- Name: password_reset_token password_reset_token_user; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY password_reset_token
+    ADD CONSTRAINT password_reset_token_user FOREIGN KEY (pty_id) REFERENCES user_(pty_id);
 
 
 --
@@ -436,6 +567,14 @@ ALTER TABLE ONLY role_permission
 
 
 --
+-- Name: user_location user_location_user; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY user_location
+    ADD CONSTRAINT user_location_user FOREIGN KEY (pty_id) REFERENCES user_(pty_id);
+
+
+--
 -- Name: user_role user_role_role; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
 --
 
@@ -452,6 +591,14 @@ ALTER TABLE ONLY user_role
 
 
 --
+-- Name: verification_token verification_token_user; Type: FK CONSTRAINT; Schema: security; Owner: security_owner
+--
+
+ALTER TABLE ONLY verification_token
+    ADD CONSTRAINT verification_token_user FOREIGN KEY (pty_id) REFERENCES user_(pty_id);
+
+
+--
 -- Name: security; Type: ACL; Schema: -; Owner: security_owner
 --
 
@@ -463,8 +610,8 @@ GRANT USAGE ON SCHEMA security TO security_app;
 -- Name: permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO mochi_app;
 
 
 --
@@ -480,6 +627,15 @@ GRANT ALL ON SEQUENCE authority_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO mochi_app;
+
+
+--
+-- Name: device_metadata; Type: ACL; Schema: security; Owner: security_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device_metadata TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device_metadata TO mochi_app;
 
 
 --
@@ -491,51 +647,67 @@ GRANT ALL ON SEQUENCE hibernate_sequence TO mochi_app;
 
 
 --
+-- Name: new_location_token; Type: ACL; Schema: security; Owner: security_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE new_location_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE new_location_token TO mochi_app;
+
+
+--
 -- Name: oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO mochi_app;
 
 
 --
 -- Name: oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO mochi_app;
 
 
 --
 -- Name: oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO mochi_app;
 
 
 --
 -- Name: oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO mochi_app;
 
 
 --
 -- Name: oauth_code; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO mochi_app;
 
 
 --
 -- Name: oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO mochi_app;
+
+
+--
+-- Name: password_reset_token; Type: ACL; Schema: security; Owner: security_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE password_reset_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE password_reset_token TO mochi_app;
 
 
 --
@@ -550,8 +722,8 @@ GRANT ALL ON SEQUENCE role_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 
 
 --
@@ -566,16 +738,24 @@ GRANT ALL ON SEQUENCE role_permission_id_seq TO mochi_app;
 -- Name: role_permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO mochi_app;
 
 
 --
 -- Name: user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
+
+
+--
+-- Name: user_location; Type: ACL; Schema: security; Owner: security_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_location TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_location TO mochi_app;
 
 
 --
@@ -590,8 +770,16 @@ GRANT ALL ON SEQUENCE user_role_id_seq TO mochi_app;
 -- Name: user_role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
+
+
+--
+-- Name: verification_token; Type: ACL; Schema: security; Owner: security_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE verification_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE verification_token TO mochi_app;
 
 
 --
