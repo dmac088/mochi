@@ -8,20 +8,23 @@ import javax.persistence.*;
 import io.nzbee.security.user.User;
 
 @Entity
+@Table(name = "verification_token", schema="security")
 public class VerificationToken {
 
     private static final int EXPIRATION = 60 * 24;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "pty_id")
     private Long id;
 
     private String token;
 
     @OneToOne(targetEntity = User.class, fetch = FetchType.EAGER)
-    @JoinColumn(nullable = false, name = "user_id", foreignKey = @ForeignKey(name = "FK_VERIFY_USER"))
+    @JoinColumn(nullable = false, name = "pty_id", foreignKey = @ForeignKey(name = "FK_VERIFY_USER"))
     private User user;
 
+    @Column(name = "expiry_date")
     private Date expiryDate;
 
     public VerificationToken() {
