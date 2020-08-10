@@ -710,7 +710,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       ct.cat_typ_desc 		AS cat_typ_desc, " +
 				"       a.cat_desc 				AS cat_desc, " +
 				"       a.lcl_cd 				AS lcl_cd, " +
-				//"		s.prnt_id   			AS cat_prnt_id, " +
+				"		parent.cat_id   		AS cat_prnt_id, " +
 				"		pc.cat_cd   			AS cat_prnt_cd, " +
 				"		pc.cat_lvl   			AS cat_prnt_lvl, " +
 				"		pc.cat_typ_id 			AS cat_prnt_typ_id, " +
