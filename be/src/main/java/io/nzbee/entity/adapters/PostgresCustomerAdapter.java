@@ -1,9 +1,20 @@
 package io.nzbee.entity.adapters;
 
+import java.util.Calendar;
+import java.util.Collection;
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import io.nzbee.Constants;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTO;
@@ -15,10 +26,13 @@ import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
 import io.nzbee.exceptions.customer.CustomerNotFoundException;
 import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
+import io.nzbee.security.authority.Authority;
+import io.nzbee.security.user.IUserService;
 import io.nzbee.security.user.User;
-import io.nzbee.security.user.UserService;
 import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
+import io.nzbee.security.user.verificationtoken.VerificationToken;
+import io.nzbee.security.user.verificationtoken.VerificationTokenRepository;
 
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
@@ -36,7 +50,10 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	private IUserRoleService userRoleService;
 	
 	@Autowired
-    private UserService userService;
+    private IUserService userService;
+	
+	@Autowired
+    private VerificationTokenRepository tokenRepository;
 	
 	@Override
 	public Customer findByUsername(String userName) {
@@ -143,7 +160,61 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	public void addCustomerLocation(Customer c, String clientIP) {
-		UserDetails u = userService.loadUserByUsername(c.getUserName());
+		UserDetails u = userService.findUserByEmail(c.getUserName());
 		userService.addUserLocation((User) u, clientIP);
 	}
+
+	@Override
+	public String validateVerificationToken(String token) {
+		final VerificationToken verificationToken = tokenRepository.findByToken(token);
+        if (verificationToken == null) {
+            return Constants.TOKEN_INVALID;
+        }
+
+        final User user = verificationToken.getUser();
+        final Calendar cal = Calendar.getInstance();
+        if ((verificationToken.getExpiryDate()
+            .getTime() - cal.getTime()
+            .getTime()) <= 0) {
+            tokenRepository.delete(verificationToken);
+            return Constants.TOKEN_EXPIRED;
+        }
+
+        user.setEnabled(true);
+        // tokenRepository.delete(verificationToken);
+        userService.saveRegisteredUser(user);
+        return Constants.TOKEN_VALID;
+	}
+
+	@Override
+	public Customer getCustomer(String verificationToken) {
+		final VerificationToken token = tokenRepository.findByToken(verificationToken);
+        if (token != null) {
+            User u = token.getUser();
+            Optional<Person> p = personService.findByUsernameAndRole(u.getUsername(), io.nzbee.entity.role.customer.Customer.class);
+            return personMapper.entityToDo(p.get());
+        }
+        return null;
+	}
+	
+	@Override
+	public void authWithoutPassword(Customer customer) {
+		
+		Optional<Person> p = personService.findByUsernameAndRole(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
+		User user = p.get().getPartyUser();
+
+        List<Authority> authorities = user.getUserRoles()
+                .stream()
+                .map(r -> r.getAuthorities())
+                .flatMap(Collection::stream)
+                .distinct()
+                .collect(Collectors.toList());
+
+//        List<GrantedAuthority> authorities = privileges.stream()
+//                .map(p -> new SimpleGrantedAuthority(p.getName()))
+//                .collect(Collectors.toList());
+
+        Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 }

@@ -1,15 +1,20 @@
 package io.nzbee.resources.controllers;
 
+import java.io.UnsupportedEncodingException;
+import java.util.Locale;
+
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
@@ -45,19 +50,16 @@ public class CustomerController {
         return new GenericResponse("success");
     }
     
-    // User activation - verification
-   /* @GetMapping("/Customer/resendRegistrationToken")
-    public GenericResponse resendRegistrationToken(final HttpServletRequest request, @RequestParam("token") final String existingToken) {
-        final VerificationToken_ newToken = 
-        		
-        		
-        		userService.generateNewVerificationToken(existingToken);
-        
-        
-        final User user = userService.getUser(newToken.getToken());
-        mailSender.send(constructResendVerificationTokenEmail(getAppUrl(request), request.getLocale(), newToken, user));
-        return new GenericResponse(messages.getMessage("message.resendToken", null, request.getLocale()));
-    }*/
+    @GetMapping("/registrationConfirmation")
+    public GenericResponse confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
+        final String result = customerService.validateVerificationToken(token);
+        if (result.equals("valid")) {
+            final Customer customer = customerService.getCustomer(token);
+            customerService.authWithoutPassword(customer);
+            return new GenericResponse("success");
+        }
+        return new GenericResponse("failure");
+    }
     
     @GetMapping("/Customer/UserName/{username}")
 	public Customer getCustomer(@PathVariable String username) {
