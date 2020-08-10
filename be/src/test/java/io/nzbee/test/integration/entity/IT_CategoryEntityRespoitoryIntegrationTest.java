@@ -14,6 +14,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -46,6 +48,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     static class CategoryEntityRepositoryIntegrationTest {
         
     }
+	
+	@MockBean
+    private JavaMailSender mailSender;
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
