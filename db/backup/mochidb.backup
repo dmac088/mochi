@@ -4842,34 +4842,34 @@ SELECT pg_catalog.setval('role_permission_id_seq', 77, true);
 --
 
 COPY user_ (pty_id, account_expired, account_locked, credentials_expired, enabled, password, user_name, is_using2fa, secret) FROM stdin;
-1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin	\N	\N
-232216	f	f	f	t	\N	asd321	\N	\N
-232220	f	f	f	t	$2a$08$HDsx4cloh1PXKlNp6C2yGObROfR3VysQAYdABq5naOXiGvFknU8/G	dandandan	\N	\N
-232230	f	f	f	t	$2a$08$7eM8kbxuV2Jse66alC42H.e0RR9cy4Hyp6Ospu5p3b/EmzeVgKhpK	willP009	\N	\N
-232232	f	f	f	t	$2a$08$3RoMwu7GVj6MXm6VabqzIOlP5rT5.v9bg9KNd7nSsTeKaklgZqbFu	willP010	\N	\N
-232234	f	f	f	t	$2a$08$cTnUGt.0wthXBGvsVMZHx.AJyQa0ebgvJW04X8JZ8/1/BXDfIjdWG	zoro	\N	\N
-232236	f	f	f	t	$2a$08$FabdFDGk9m8OjZPgKAErz.vrj.tBA0q8lnWT3W4Mi7dz9mHTuNSz.	j	\N	\N
-232238	f	f	f	t	$2a$08$81tduh5zwgiYtNggVPM6rOdDgv5YmCp.zI6gg13KpbXXv2qGqD0Am	x	\N	\N
-232240	f	f	f	t	$2a$08$5w4IxUjIw5BGrqRYSu/pDe5roRv3EubLbRH/sq39fIglXLLtfmNCW	z	\N	\N
-232242	f	f	f	t	$2a$08$09Z1moTTHngZmBYkgDKT6u.HG/IUv/wnZGRuGdQr3nIRfenYq1Tna	h	\N	\N
-232244	f	f	f	t	$2a$08$or5gp1qilssjjsmY.AlQJeqaYEG9eZmc4NhM3pV3SAFxqYi0CEZHG	i	\N	\N
-232246	f	f	f	t	$2a$08$eSAoAHFKAQrrfy3sgDGyc.DQiUvdN2wwq8uKLUAK.pJ.3fV7g3BK2	f	\N	\N
-232248	f	f	f	t	$2a$08$AeXLuGlP.9pcWACajgNQq.ft4nUNlVqxC6542ZZRSLrOlDksB.8Nq	av1	\N	\N
-232250	f	f	f	t	$2a$08$kbU80lL54gj.H333EHle9.uGYOgYu9jUf0TVqhxUR5QqquQQyQDjy	moobot	\N	\N
-232252	f	f	f	t	$2a$08$0rG7b0MAv3NhnhUnm9Wo/ue/OF3HeOxEpzjgAK8IIsVxQCpgFA6ji	Labrador	\N	\N
-232254	f	f	f	t	$2a$08$p1t6.ZTkGYnpgb/ZJ93n/eR3mPck7483VDthqLjMmq87C5eFPLlNi	bill	\N	\N
-232256	f	f	f	t	$2a$08$ZYgWAyU302Vu55IyqGY6KewH5dcTp5bfCQcD0VoFxRdJ6Jm6SOUKe	danielmackie82@gmail.com	\N	\N
-232258	f	f	f	t	$2a$08$FshVXmerj.mItbrKW1Dn8OvXo00F0SFC0XM6Is90HU29csTinQTt2	dan	\N	\N
-232260	f	f	f	t	$2a$08$LD84vr08Qr3eDbwuXshAXusm4eJ2qhN1kyMsOAD/LpdsreQjYBkkC	nod	\N	\N
-232262	f	f	f	t	$2a$08$c8qi4W9yonajx5mQ6GIsFe.BlpqfoIqa9YGwGvM7R99.RHu.SQ22a	dmac269	\N	\N
-232304	f	f	f	t	$2a$08$uMskpBcSMtkRQevNlIE5xORKArzGL8feooSuLyuL59.uRVXlhItMm	dmac088	\N	\N
-232310	f	f	f	t	$2a$08$WAj6Z.QOG6UqvCbEzlnFD./uyT2TafVm5MPH2LRUMUohM8Y33VboW	dmac999	\N	\N
-232312	f	f	f	t	$2a$08$1aM3WzOjSX9nJZUFhFutsOT4p8Xkos5iIidrXFnYeTAw6weAmykL.	dmac1111	\N	\N
-233016	f	f	f	t	$2a$08$rogMMd/vJ56a08lqOlzArujiQRN1.2avzCQLtDOQB8QcXYos6mxsy	adam@apple	\N	\N
-233018	f	f	f	t	$2a$08$RTEy6nmop87vx8IUyIsodO6YYUOrmwXB4V7wUhhcHf2SFMjwxd1Gy	barry@white	\N	\N
-233020	f	f	f	t	$2a$08$FLLvo2tVvtH29IaFbCOvHuCfq2UNWKcYQhiwfcFxYrKUSMwXgolcC	will@parkhouse	\N	\N
-233022	f	f	f	t	$2a$08$2HdSUuizuRx9Sw4q822W6OC.XBdNCC711euR/fghUWNeLdwhY2n/C	john@wayne	\N	\N
-233024	f	f	f	t	$2a$08$4DTKA9aghc3gJMan0zjn2e/URKSa667JXlVUrw6pS79OzBswm6pqK	bob@bob	\N	\N
+1	f	f	f	t	$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha	admin	f	\N
+232216	f	f	f	t	\N	asd321	f	\N
+232220	f	f	f	t	$2a$08$HDsx4cloh1PXKlNp6C2yGObROfR3VysQAYdABq5naOXiGvFknU8/G	dandandan	f	\N
+232230	f	f	f	t	$2a$08$7eM8kbxuV2Jse66alC42H.e0RR9cy4Hyp6Ospu5p3b/EmzeVgKhpK	willP009	f	\N
+232232	f	f	f	t	$2a$08$3RoMwu7GVj6MXm6VabqzIOlP5rT5.v9bg9KNd7nSsTeKaklgZqbFu	willP010	f	\N
+232234	f	f	f	t	$2a$08$cTnUGt.0wthXBGvsVMZHx.AJyQa0ebgvJW04X8JZ8/1/BXDfIjdWG	zoro	f	\N
+232236	f	f	f	t	$2a$08$FabdFDGk9m8OjZPgKAErz.vrj.tBA0q8lnWT3W4Mi7dz9mHTuNSz.	j	f	\N
+232238	f	f	f	t	$2a$08$81tduh5zwgiYtNggVPM6rOdDgv5YmCp.zI6gg13KpbXXv2qGqD0Am	x	f	\N
+232240	f	f	f	t	$2a$08$5w4IxUjIw5BGrqRYSu/pDe5roRv3EubLbRH/sq39fIglXLLtfmNCW	z	f	\N
+232242	f	f	f	t	$2a$08$09Z1moTTHngZmBYkgDKT6u.HG/IUv/wnZGRuGdQr3nIRfenYq1Tna	h	f	\N
+232244	f	f	f	t	$2a$08$or5gp1qilssjjsmY.AlQJeqaYEG9eZmc4NhM3pV3SAFxqYi0CEZHG	i	f	\N
+232246	f	f	f	t	$2a$08$eSAoAHFKAQrrfy3sgDGyc.DQiUvdN2wwq8uKLUAK.pJ.3fV7g3BK2	f	f	\N
+232248	f	f	f	t	$2a$08$AeXLuGlP.9pcWACajgNQq.ft4nUNlVqxC6542ZZRSLrOlDksB.8Nq	av1	f	\N
+232250	f	f	f	t	$2a$08$kbU80lL54gj.H333EHle9.uGYOgYu9jUf0TVqhxUR5QqquQQyQDjy	moobot	f	\N
+232252	f	f	f	t	$2a$08$0rG7b0MAv3NhnhUnm9Wo/ue/OF3HeOxEpzjgAK8IIsVxQCpgFA6ji	Labrador	f	\N
+232254	f	f	f	t	$2a$08$p1t6.ZTkGYnpgb/ZJ93n/eR3mPck7483VDthqLjMmq87C5eFPLlNi	bill	f	\N
+232256	f	f	f	t	$2a$08$ZYgWAyU302Vu55IyqGY6KewH5dcTp5bfCQcD0VoFxRdJ6Jm6SOUKe	danielmackie82@gmail.com	f	\N
+232258	f	f	f	t	$2a$08$FshVXmerj.mItbrKW1Dn8OvXo00F0SFC0XM6Is90HU29csTinQTt2	dan	f	\N
+232260	f	f	f	t	$2a$08$LD84vr08Qr3eDbwuXshAXusm4eJ2qhN1kyMsOAD/LpdsreQjYBkkC	nod	f	\N
+232262	f	f	f	t	$2a$08$c8qi4W9yonajx5mQ6GIsFe.BlpqfoIqa9YGwGvM7R99.RHu.SQ22a	dmac269	f	\N
+232304	f	f	f	t	$2a$08$uMskpBcSMtkRQevNlIE5xORKArzGL8feooSuLyuL59.uRVXlhItMm	dmac088	f	\N
+232310	f	f	f	t	$2a$08$WAj6Z.QOG6UqvCbEzlnFD./uyT2TafVm5MPH2LRUMUohM8Y33VboW	dmac999	f	\N
+232312	f	f	f	t	$2a$08$1aM3WzOjSX9nJZUFhFutsOT4p8Xkos5iIidrXFnYeTAw6weAmykL.	dmac1111	f	\N
+233016	f	f	f	t	$2a$08$rogMMd/vJ56a08lqOlzArujiQRN1.2avzCQLtDOQB8QcXYos6mxsy	adam@apple	f	\N
+233018	f	f	f	t	$2a$08$RTEy6nmop87vx8IUyIsodO6YYUOrmwXB4V7wUhhcHf2SFMjwxd1Gy	barry@white	f	\N
+233020	f	f	f	t	$2a$08$FLLvo2tVvtH29IaFbCOvHuCfq2UNWKcYQhiwfcFxYrKUSMwXgolcC	will@parkhouse	f	\N
+233022	f	f	f	t	$2a$08$2HdSUuizuRx9Sw4q822W6OC.XBdNCC711euR/fghUWNeLdwhY2n/C	john@wayne	f	\N
+233024	f	f	f	t	$2a$08$4DTKA9aghc3gJMan0zjn2e/URKSa667JXlVUrw6pS79OzBswm6pqK	bob@bob	f	\N
 \.
 
 
@@ -6078,8 +6078,8 @@ ALTER TABLE ONLY verification_token
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
+GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --

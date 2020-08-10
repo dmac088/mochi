@@ -46,34 +46,34 @@ SELECT pg_catalog.setval('hibernate_sequence', 1, false);
 -- Data for Name: user_; Type: TABLE DATA; Schema: security; Owner: security_owner
 --
 
-INSERT INTO user_ VALUES (1, false, false, false, true, '$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha', 'admin', NULL, NULL);
-INSERT INTO user_ VALUES (232216, false, false, false, true, NULL, 'asd321', NULL, NULL);
-INSERT INTO user_ VALUES (232220, false, false, false, true, '$2a$08$HDsx4cloh1PXKlNp6C2yGObROfR3VysQAYdABq5naOXiGvFknU8/G', 'dandandan', NULL, NULL);
-INSERT INTO user_ VALUES (232230, false, false, false, true, '$2a$08$7eM8kbxuV2Jse66alC42H.e0RR9cy4Hyp6Ospu5p3b/EmzeVgKhpK', 'willP009', NULL, NULL);
-INSERT INTO user_ VALUES (232232, false, false, false, true, '$2a$08$3RoMwu7GVj6MXm6VabqzIOlP5rT5.v9bg9KNd7nSsTeKaklgZqbFu', 'willP010', NULL, NULL);
-INSERT INTO user_ VALUES (232234, false, false, false, true, '$2a$08$cTnUGt.0wthXBGvsVMZHx.AJyQa0ebgvJW04X8JZ8/1/BXDfIjdWG', 'zoro', NULL, NULL);
-INSERT INTO user_ VALUES (232236, false, false, false, true, '$2a$08$FabdFDGk9m8OjZPgKAErz.vrj.tBA0q8lnWT3W4Mi7dz9mHTuNSz.', 'j', NULL, NULL);
-INSERT INTO user_ VALUES (232238, false, false, false, true, '$2a$08$81tduh5zwgiYtNggVPM6rOdDgv5YmCp.zI6gg13KpbXXv2qGqD0Am', 'x', NULL, NULL);
-INSERT INTO user_ VALUES (232240, false, false, false, true, '$2a$08$5w4IxUjIw5BGrqRYSu/pDe5roRv3EubLbRH/sq39fIglXLLtfmNCW', 'z', NULL, NULL);
-INSERT INTO user_ VALUES (232242, false, false, false, true, '$2a$08$09Z1moTTHngZmBYkgDKT6u.HG/IUv/wnZGRuGdQr3nIRfenYq1Tna', 'h', NULL, NULL);
-INSERT INTO user_ VALUES (232244, false, false, false, true, '$2a$08$or5gp1qilssjjsmY.AlQJeqaYEG9eZmc4NhM3pV3SAFxqYi0CEZHG', 'i', NULL, NULL);
-INSERT INTO user_ VALUES (232246, false, false, false, true, '$2a$08$eSAoAHFKAQrrfy3sgDGyc.DQiUvdN2wwq8uKLUAK.pJ.3fV7g3BK2', 'f', NULL, NULL);
-INSERT INTO user_ VALUES (232248, false, false, false, true, '$2a$08$AeXLuGlP.9pcWACajgNQq.ft4nUNlVqxC6542ZZRSLrOlDksB.8Nq', 'av1', NULL, NULL);
-INSERT INTO user_ VALUES (232250, false, false, false, true, '$2a$08$kbU80lL54gj.H333EHle9.uGYOgYu9jUf0TVqhxUR5QqquQQyQDjy', 'moobot', NULL, NULL);
-INSERT INTO user_ VALUES (232252, false, false, false, true, '$2a$08$0rG7b0MAv3NhnhUnm9Wo/ue/OF3HeOxEpzjgAK8IIsVxQCpgFA6ji', 'Labrador', NULL, NULL);
-INSERT INTO user_ VALUES (232254, false, false, false, true, '$2a$08$p1t6.ZTkGYnpgb/ZJ93n/eR3mPck7483VDthqLjMmq87C5eFPLlNi', 'bill', NULL, NULL);
-INSERT INTO user_ VALUES (232256, false, false, false, true, '$2a$08$ZYgWAyU302Vu55IyqGY6KewH5dcTp5bfCQcD0VoFxRdJ6Jm6SOUKe', 'danielmackie82@gmail.com', NULL, NULL);
-INSERT INTO user_ VALUES (232258, false, false, false, true, '$2a$08$FshVXmerj.mItbrKW1Dn8OvXo00F0SFC0XM6Is90HU29csTinQTt2', 'dan', NULL, NULL);
-INSERT INTO user_ VALUES (232260, false, false, false, true, '$2a$08$LD84vr08Qr3eDbwuXshAXusm4eJ2qhN1kyMsOAD/LpdsreQjYBkkC', 'nod', NULL, NULL);
-INSERT INTO user_ VALUES (232262, false, false, false, true, '$2a$08$c8qi4W9yonajx5mQ6GIsFe.BlpqfoIqa9YGwGvM7R99.RHu.SQ22a', 'dmac269', NULL, NULL);
-INSERT INTO user_ VALUES (232304, false, false, false, true, '$2a$08$uMskpBcSMtkRQevNlIE5xORKArzGL8feooSuLyuL59.uRVXlhItMm', 'dmac088', NULL, NULL);
-INSERT INTO user_ VALUES (232310, false, false, false, true, '$2a$08$WAj6Z.QOG6UqvCbEzlnFD./uyT2TafVm5MPH2LRUMUohM8Y33VboW', 'dmac999', NULL, NULL);
-INSERT INTO user_ VALUES (232312, false, false, false, true, '$2a$08$1aM3WzOjSX9nJZUFhFutsOT4p8Xkos5iIidrXFnYeTAw6weAmykL.', 'dmac1111', NULL, NULL);
-INSERT INTO user_ VALUES (233016, false, false, false, true, '$2a$08$rogMMd/vJ56a08lqOlzArujiQRN1.2avzCQLtDOQB8QcXYos6mxsy', 'adam@apple', NULL, NULL);
-INSERT INTO user_ VALUES (233018, false, false, false, true, '$2a$08$RTEy6nmop87vx8IUyIsodO6YYUOrmwXB4V7wUhhcHf2SFMjwxd1Gy', 'barry@white', NULL, NULL);
-INSERT INTO user_ VALUES (233020, false, false, false, true, '$2a$08$FLLvo2tVvtH29IaFbCOvHuCfq2UNWKcYQhiwfcFxYrKUSMwXgolcC', 'will@parkhouse', NULL, NULL);
-INSERT INTO user_ VALUES (233022, false, false, false, true, '$2a$08$2HdSUuizuRx9Sw4q822W6OC.XBdNCC711euR/fghUWNeLdwhY2n/C', 'john@wayne', NULL, NULL);
-INSERT INTO user_ VALUES (233024, false, false, false, true, '$2a$08$4DTKA9aghc3gJMan0zjn2e/URKSa667JXlVUrw6pS79OzBswm6pqK', 'bob@bob', NULL, NULL);
+INSERT INTO user_ VALUES (1, false, false, false, true, '$2a$08$qvrzQZ7jJ7oy2p/msL4M0.l83Cd0jNsX6AJUitbgRXGzge4j035ha', 'admin', false, NULL);
+INSERT INTO user_ VALUES (232216, false, false, false, true, NULL, 'asd321', false, NULL);
+INSERT INTO user_ VALUES (232220, false, false, false, true, '$2a$08$HDsx4cloh1PXKlNp6C2yGObROfR3VysQAYdABq5naOXiGvFknU8/G', 'dandandan', false, NULL);
+INSERT INTO user_ VALUES (232230, false, false, false, true, '$2a$08$7eM8kbxuV2Jse66alC42H.e0RR9cy4Hyp6Ospu5p3b/EmzeVgKhpK', 'willP009', false, NULL);
+INSERT INTO user_ VALUES (232232, false, false, false, true, '$2a$08$3RoMwu7GVj6MXm6VabqzIOlP5rT5.v9bg9KNd7nSsTeKaklgZqbFu', 'willP010', false, NULL);
+INSERT INTO user_ VALUES (232234, false, false, false, true, '$2a$08$cTnUGt.0wthXBGvsVMZHx.AJyQa0ebgvJW04X8JZ8/1/BXDfIjdWG', 'zoro', false, NULL);
+INSERT INTO user_ VALUES (232236, false, false, false, true, '$2a$08$FabdFDGk9m8OjZPgKAErz.vrj.tBA0q8lnWT3W4Mi7dz9mHTuNSz.', 'j', false, NULL);
+INSERT INTO user_ VALUES (232238, false, false, false, true, '$2a$08$81tduh5zwgiYtNggVPM6rOdDgv5YmCp.zI6gg13KpbXXv2qGqD0Am', 'x', false, NULL);
+INSERT INTO user_ VALUES (232240, false, false, false, true, '$2a$08$5w4IxUjIw5BGrqRYSu/pDe5roRv3EubLbRH/sq39fIglXLLtfmNCW', 'z', false, NULL);
+INSERT INTO user_ VALUES (232242, false, false, false, true, '$2a$08$09Z1moTTHngZmBYkgDKT6u.HG/IUv/wnZGRuGdQr3nIRfenYq1Tna', 'h', false, NULL);
+INSERT INTO user_ VALUES (232244, false, false, false, true, '$2a$08$or5gp1qilssjjsmY.AlQJeqaYEG9eZmc4NhM3pV3SAFxqYi0CEZHG', 'i', false, NULL);
+INSERT INTO user_ VALUES (232246, false, false, false, true, '$2a$08$eSAoAHFKAQrrfy3sgDGyc.DQiUvdN2wwq8uKLUAK.pJ.3fV7g3BK2', 'f', false, NULL);
+INSERT INTO user_ VALUES (232248, false, false, false, true, '$2a$08$AeXLuGlP.9pcWACajgNQq.ft4nUNlVqxC6542ZZRSLrOlDksB.8Nq', 'av1', false, NULL);
+INSERT INTO user_ VALUES (232250, false, false, false, true, '$2a$08$kbU80lL54gj.H333EHle9.uGYOgYu9jUf0TVqhxUR5QqquQQyQDjy', 'moobot', false, NULL);
+INSERT INTO user_ VALUES (232252, false, false, false, true, '$2a$08$0rG7b0MAv3NhnhUnm9Wo/ue/OF3HeOxEpzjgAK8IIsVxQCpgFA6ji', 'Labrador', false, NULL);
+INSERT INTO user_ VALUES (232254, false, false, false, true, '$2a$08$p1t6.ZTkGYnpgb/ZJ93n/eR3mPck7483VDthqLjMmq87C5eFPLlNi', 'bill', false, NULL);
+INSERT INTO user_ VALUES (232256, false, false, false, true, '$2a$08$ZYgWAyU302Vu55IyqGY6KewH5dcTp5bfCQcD0VoFxRdJ6Jm6SOUKe', 'danielmackie82@gmail.com', false, NULL);
+INSERT INTO user_ VALUES (232258, false, false, false, true, '$2a$08$FshVXmerj.mItbrKW1Dn8OvXo00F0SFC0XM6Is90HU29csTinQTt2', 'dan', false, NULL);
+INSERT INTO user_ VALUES (232260, false, false, false, true, '$2a$08$LD84vr08Qr3eDbwuXshAXusm4eJ2qhN1kyMsOAD/LpdsreQjYBkkC', 'nod', false, NULL);
+INSERT INTO user_ VALUES (232262, false, false, false, true, '$2a$08$c8qi4W9yonajx5mQ6GIsFe.BlpqfoIqa9YGwGvM7R99.RHu.SQ22a', 'dmac269', false, NULL);
+INSERT INTO user_ VALUES (232304, false, false, false, true, '$2a$08$uMskpBcSMtkRQevNlIE5xORKArzGL8feooSuLyuL59.uRVXlhItMm', 'dmac088', false, NULL);
+INSERT INTO user_ VALUES (232310, false, false, false, true, '$2a$08$WAj6Z.QOG6UqvCbEzlnFD./uyT2TafVm5MPH2LRUMUohM8Y33VboW', 'dmac999', false, NULL);
+INSERT INTO user_ VALUES (232312, false, false, false, true, '$2a$08$1aM3WzOjSX9nJZUFhFutsOT4p8Xkos5iIidrXFnYeTAw6weAmykL.', 'dmac1111', false, NULL);
+INSERT INTO user_ VALUES (233016, false, false, false, true, '$2a$08$rogMMd/vJ56a08lqOlzArujiQRN1.2avzCQLtDOQB8QcXYos6mxsy', 'adam@apple', false, NULL);
+INSERT INTO user_ VALUES (233018, false, false, false, true, '$2a$08$RTEy6nmop87vx8IUyIsodO6YYUOrmwXB4V7wUhhcHf2SFMjwxd1Gy', 'barry@white', false, NULL);
+INSERT INTO user_ VALUES (233020, false, false, false, true, '$2a$08$FLLvo2tVvtH29IaFbCOvHuCfq2UNWKcYQhiwfcFxYrKUSMwXgolcC', 'will@parkhouse', false, NULL);
+INSERT INTO user_ VALUES (233022, false, false, false, true, '$2a$08$2HdSUuizuRx9Sw4q822W6OC.XBdNCC711euR/fghUWNeLdwhY2n/C', 'john@wayne', false, NULL);
+INSERT INTO user_ VALUES (233024, false, false, false, true, '$2a$08$4DTKA9aghc3gJMan0zjn2e/URKSa667JXlVUrw6pS79OzBswm6pqK', 'bob@bob', false, NULL);
 
 
 --
