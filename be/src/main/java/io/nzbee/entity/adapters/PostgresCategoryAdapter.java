@@ -121,9 +121,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if (domainObject instanceof ProductCategory) {
 			
-			System.out.println("category code = " + domainObject.getCategoryCode());
-			System.out.println("locale = " + domainObject.getLocale());
-			
 			Optional<io.nzbee.entity.category.Category> oc = 
 					categoryService.findByCode(domainObject.getLocale(), 
 											   domainObject.getCurrency(), 
