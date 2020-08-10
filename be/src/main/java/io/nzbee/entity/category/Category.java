@@ -37,6 +37,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -66,9 +68,10 @@ import io.nzbee.search.ISearchDimension;
                     fields = {
                         @FieldResult(name = "categoryId", 					column = "cat_id"),
                         @FieldResult(name = "categoryCode", 				column = "cat_cd"),
-                        @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
+                        @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),
+                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_cd"),	
                         @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-                        @FieldResult(name = "parent", 						column = "cat_prnt_id"),
+                        @FieldResult(name = "parent", 						column = "cat_prnt_cd"),
                         @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
                         @FieldResult(name = "orderNumber", 					column = "cat_ord_num"),
                         @FieldResult(name = "hierarchy", 					column = "hir_id"),
@@ -149,6 +152,10 @@ public abstract class Category implements ISearchDimension {
 	@Column(name="cat_lvl")
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
+	
+	@Column(name="cat_prnt_cd")
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	private String categoryParentCode;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cat_typ_id",
@@ -159,7 +166,7 @@ public abstract class Category implements ISearchDimension {
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="cat_prnt_id", nullable=false)
+	@JoinColumn(name="cat_prnt_cd", nullable=false, insertable=false, updatable = false)
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
 	private Category parent;
 	
@@ -257,16 +264,16 @@ public abstract class Category implements ISearchDimension {
 	
 	@Transient
 	@JsonIgnore
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getCategoryDescENGB() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc();
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc();
 	}
 	
 	@Transient
 	@JsonIgnore
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getCategoryDescZHHK() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getCategoryDesc();
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getCategoryDesc();
 	}
 	
 	public Long getCategoryLevel() {
@@ -275,6 +282,14 @@ public abstract class Category implements ISearchDimension {
 
 	public void setCategoryLevel(Long categoryLevel) {
 		this.categoryLevel = categoryLevel;
+	}
+	
+	public String getCategoryParentCode() {
+		return categoryParentCode;
+	}
+
+	public void setCategoryParentCode(String categoryParentCode) {
+		this.categoryParentCode = categoryParentCode;
 	}
 	
 	public String getCategoryCode() {
