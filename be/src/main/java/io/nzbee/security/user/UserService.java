@@ -44,12 +44,6 @@ public class UserService implements UserDetailsService, IUserService {
     @Qualifier("userPasswordEncoder")
     private PasswordEncoder passwordEncoder;
 
-//    @Autowired
-//    private IRoleRepository roleRepository;
-//
-//    @Autowired
-//    private SessionRegistry sessionRegistry;
-
     @Autowired
     @Qualifier("GeoIPCountry")
     private DatabaseReader databaseReader;

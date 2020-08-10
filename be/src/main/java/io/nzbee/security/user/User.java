@@ -86,8 +86,6 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		// TODO Auto-generated method stub
-		//create a new array and return it
 		Set<GrantedAuthority> colNewAuth = new HashSet<GrantedAuthority>();
 		
 		 for(UserRole ur : this.getUserRoles()) {
@@ -98,7 +96,6 @@ public class User implements UserDetails, Serializable {
 
 	@Override
 	public String getPassword() {
-		// TODO Auto-generated method stub
 		return this.password;
 	}
 	
