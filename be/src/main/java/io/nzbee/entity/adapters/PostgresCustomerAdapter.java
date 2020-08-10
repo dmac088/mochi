@@ -6,6 +6,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -196,10 +199,10 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 	
 	@Override
-	public void authWithoutPassword(Customer customer) {
+	@Transactional
+	public void authWithoutPassword(String token) {
 		
-		Optional<Person> p = personService.findByUsernameAndRole(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
-		User user = p.get().getPartyUser();
+		User user = userService.getUser(token);
 
         List<Authority> authorities = user.getUserRoles()
                 .stream()

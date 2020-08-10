@@ -60,15 +60,10 @@ public class CustomerServiceImpl implements ICustomerService {
     public String validateVerificationToken(String token) {
 		return customerService.validateVerificationToken(token);
 	}
-	
-	@Override
-	public Customer getCustomer(String token) {
-		return customerService.getCustomer(token);
-	}
 
 	@Override
-	public void authWithoutPassword(Customer customer) {
-		customerService.authWithoutPassword(customer);
+	public void authWithoutPassword(String token) {
+		customerService.authWithoutPassword(token);
 	}
 
 }

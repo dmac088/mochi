@@ -52,8 +52,7 @@ public class CustomerController {
     public GenericResponse confirmRegistration(final HttpServletRequest request, final Model model, @RequestParam("token") final String token) throws UnsupportedEncodingException {
         final String result = customerService.validateVerificationToken(token);
         if (result.equals("valid")) {
-            final Customer customer = customerService.getCustomer(token);
-            customerService.authWithoutPassword(customer);
+            customerService.authWithoutPassword(token);
             return new GenericResponse("success");
         }
         return new GenericResponse("failure");
