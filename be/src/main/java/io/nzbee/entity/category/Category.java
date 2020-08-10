@@ -37,7 +37,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
@@ -71,14 +70,8 @@ import io.nzbee.search.ISearchDimension;
                         @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),
                         @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_cd"),	
                         @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-                        @FieldResult(name = "parent", 						column = "cat_prnt_cd"),
+                        @FieldResult(name = "parent", 						column = "cat_prnt_id"),
                         @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
-                        @FieldResult(name = "orderNumber", 					column = "cat_ord_num"),
-                        @FieldResult(name = "hierarchy", 					column = "hir_id"),
-                        @FieldResult(name = "productCount", 				column = "object_count"),
-                        @FieldResult(name = "brandCount", 					column = "object_count"),
-                        @FieldResult(name = "maxRetailPrice", 				column = "max_retail_price"),
-                        @FieldResult(name = "maxMarkdownPrice", 			column = "max_markdown_price"),
                         @FieldResult(name = "attributes", 					column = "cat_id")
                     }),
             @EntityResult(
@@ -105,15 +98,10 @@ import io.nzbee.search.ISearchDimension;
 	                    @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
 	                    @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
                         @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
-                        @FieldResult(name = "orderNumber", 					column = "cat_prnt_ord_num"),
                         @FieldResult(name = "categoryType", 				column = "cat_prnt_typ_id"),
                         @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
+                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_prnt_cd"),	
                         @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id"),
-                        @FieldResult(name = "hierarchy", 					column = "cat_prnt_hir_id"),
-                        @FieldResult(name = "productCount", 				column = "cat_prnt_object_count"),
-                        @FieldResult(name = "brandCount", 					column = "cat_prnt_object_count"),
-                        @FieldResult(name = "maxRetailPrice", 				column = "cat_prnt_max_retail_price"),
-                        @FieldResult(name = "maxMarkdownPrice", 			column = "cat_prnt_max_markdown_price"),
                         @FieldResult(name = "attributes", 					column = "cat_prnt_id")
 	                }),
 	        @EntityResult(
@@ -166,7 +154,7 @@ public abstract class Category implements ISearchDimension {
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="cat_prnt_cd", nullable=false, insertable=false, updatable = false)
+	@JoinColumn(name="cat_prnt_id", nullable=false)
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
 	private Category parent;
 	
