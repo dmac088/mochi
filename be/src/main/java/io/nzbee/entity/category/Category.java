@@ -154,7 +154,7 @@ public abstract class Category implements ISearchDimension {
 
 	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="cat_prnt_id", nullable=false)
+	@JoinColumn(name="cat_prnt_id", nullable=false, insertable = false, updatable = false)
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
 	private Category parent;
 	
