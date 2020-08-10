@@ -233,8 +233,6 @@ public class UserService implements UserDetailsService, IUserService {
         return userRepository.loadUserByUsername(email) != null;
     }
     
-    
-
     @Override
     public List<String> getUsersFromSessionRegistry() {
     	return null;
