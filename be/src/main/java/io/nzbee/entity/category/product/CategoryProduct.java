@@ -90,7 +90,6 @@ public class CategoryProduct extends Category  {
 
 	@Override
 	public void setType(String type) {
-		// TODO Auto-generated method stub
 		
 	}
 

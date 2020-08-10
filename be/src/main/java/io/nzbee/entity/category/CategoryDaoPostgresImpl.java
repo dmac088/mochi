@@ -664,7 +664,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd 	<> :categoryCode " : "") +
 				((hasBrands)   						? " AND b.bnd_cd in :brandCodes " : "") +
 				((hasCategories) 					? " AND cc.cat_cd in :categoryCodes " : "") +
-				((hasTags) 							? " 		AND t.tag_cd in 	:tagCodes " : "") +
+				((hasTags) 							? " AND t.tag_cd in 	:tagCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
@@ -699,9 +699,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.max_markdown_price " +
 				") " +
 				"SELECT " +
-				((maxPriceOnly) ? "MAX(s.max_markdown_price) as max_markdown_price " 
-				:
-				"		s.cat_id 				AS cat_id, " +
+				((maxPriceOnly) 
+				? "MAX(s.max_markdown_price) as max_markdown_price " 
+				: "		s.cat_id 				AS cat_id, " +
 				"       s.cat_cd 				AS cat_cd, " +
 				"       s.cat_lvl 				AS cat_lvl, " +	
 				"		a.cat_lcl_id 			AS cat_lcl_id, "	+	
@@ -710,12 +710,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       ct.cat_typ_desc 		AS cat_typ_desc, " +
 				"       a.cat_desc 				AS cat_desc, " +
 				"       a.lcl_cd 				AS lcl_cd, " +
-				"		parent.cat_id   		AS cat_prnt_id, " +
+				"		pc.cat_id   			AS cat_prnt_id, " +
 				"		pc.cat_cd   			AS cat_prnt_cd, " +
 				"		pc.cat_lvl   			AS cat_prnt_lvl, " +
 				"		pc.cat_typ_id 			AS cat_prnt_typ_id, " +
 				"		pct.cat_typ_cd			AS cat_prnt_typ_cd, " +
 				"		pct.cat_typ_desc		AS cat_prnt_typ_desc, " +
+				"		ppc.cat_id 				AS cat_prnt_prnt_id, " +
 				"		pc.cat_prnt_cd 			AS cat_prnt_prnt_cd, " + 
 				" 		pa.cat_lcl_id 			AS cat_prnt_lcl_id, " +
 				"       pa.cat_desc 			AS cat_prnt_desc, " +
@@ -723,11 +724,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		a.cat_lcl_id			AS cat_lcl_id, " +
 				"       a.cat_img_pth			AS cat_img_pth, " +
 				"       s.object_count			AS object_count, " +
-				"       s.max_retail_price		AS max_retail_price, " +
-				"       s.max_markdown_price	AS max_markdown_price, " +
-				"       ps.object_count			AS cat_prnt_object_count, " +
-				"       ps.max_retail_price		AS cat_prnt_max_retail_price, " +
-				"       ps.max_markdown_price 	AS cat_prnt_max_markdown_price, " +
 				"		coalesce(cs.child_cat_count,0)		AS child_cat_count ") +
 
 				"FROM summaries_ptb s " +
@@ -746,19 +742,19 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"LEFT JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
 				"AND a.lcl_cd = :locale " +
-				
-				"LEFT JOIN mochi.category parent " +
-				"ON s.prnt_cd = parent.cat_cd  " +
-				
+			
 				"INNER JOIN mochi.category_type ct " +
 				"ON ct.cat_typ_id = s.cat_type_id  " +
 				
 				((hasType) 
-						? "AND ct.cat_typ_id = :typeDiscriminator "  
-						: " ") +
+				? "AND ct.cat_typ_id = :typeDiscriminator "  
+				: " ") +
 				
 				"LEFT JOIN mochi.category pc " +
 				"ON pc.cat_cd = s.prnt_cd  " +
+				
+				"LEFT JOIN mochi.category ppc " +
+				"ON ppc.cat_cd = pc.cat_prnt_cd  " +
 				
 				"LEFT JOIN mochi.category_type pct " +
 				"ON pc.cat_typ_id = pct.cat_typ_id  " +
@@ -767,12 +763,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"ON pc.cat_id = pa.cat_id " +
 				"AND pa.lcl_cd = :locale " +
 				
-								
 				"WHERE 0=0 " +
 				"AND case " +
 				"	 when :parentCategoryCode = '-1' " +
 				"  then '0' " +
-				"  else parent.cat_cd" +
+				"  else pc.cat_cd" +
 				"	 end = " +
 				"	 case" +
 				"  when :parentCategoryCode = '-1' " +

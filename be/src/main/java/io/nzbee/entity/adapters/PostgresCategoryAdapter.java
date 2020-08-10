@@ -138,7 +138,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			
 			cp.setCategoryCode(domainObject.getCategoryCode());
 			cp.setCategoryLevel(((ProductCategory) domainObject).getCategoryLevel());
-			cp.setCategoryParentCode(((ProductCategory) domainObject).getParentCode());
+			//cp.setCategoryParentCode(((ProductCategory) domainObject).getParentCode());
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());
