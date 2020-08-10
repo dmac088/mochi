@@ -11,6 +11,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -55,6 +57,9 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 		//the beans that we need to run this integration test
 
 	}
+	
+	@MockBean
+    private JavaMailSender mailSender;
 	
 	//ensure the mochiEntityManagerFactory not the security EM
 	@Autowired

@@ -12,8 +12,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -55,6 +57,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
         public PagedResourcesAssembler<Product> pagedProductAssembler() {
         	return new PagedResourcesAssembler<Product>(null, null);
         }
+        
     }
 	
 	@Autowired
@@ -68,6 +71,9 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     private ICategoryService categoryService;
  
 	private io.nzbee.entity.category.Category category = null;
+	
+	@MockBean
+    private JavaMailSender mailSender;
     
     @Before
     public void setUp() { 
