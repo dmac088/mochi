@@ -3,6 +3,8 @@ package io.nzbee.entity.adapters;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -126,8 +128,10 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 											   domainObject.getCurrency(), 
 											   domainObject.getCategoryCode());
 			
+			System.out.println("type = " + oc.get().getClass().getSimpleName());
+			
 			CategoryProduct cp = (oc.isPresent()) 
-								 ? (CategoryProduct) oc.get()
+								 ? (CategoryProduct) Hibernate.unproxy(oc.get())
 								 : new CategoryProduct();
 			
 			System.out.println("found = " + oc.isPresent());					 
