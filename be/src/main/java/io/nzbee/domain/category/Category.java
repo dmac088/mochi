@@ -8,12 +8,8 @@ public abstract class Category implements ILocalizedDomainObject {
 	private String categoryCode;
 	
 	private String categoryDesc;
-	
-	private Long categoryLevel;
 
 	protected String categoryType;
-
-	private Long childCategoryCount;
 
 	private int objectCount;
 	
@@ -21,20 +17,30 @@ public abstract class Category implements ILocalizedDomainObject {
 	
 	private String currency;
 
-	public Category(String categoryCode, 
-					String categoryDesc,
-					Long categoryLevel,
-					String lclCd, 
-					String currency,
-					int objectCount 
+	public Category(		String categoryCode, 
+							String categoryDesc,
+							String lclCd, 
+							String currency,
+							int objectCount 
 					) {
 		super();
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
-		this.categoryLevel 	= categoryLevel;
 		this.objectCount	= objectCount;
 		this.locale 		= lclCd;
 		this.currency		= currency;
+	}
+	
+	public Category(		String 	categoryCode, 
+							String categoryDesc,
+							String lclCd,
+							String currency
+					) {
+		super();
+		this.categoryCode 	= categoryCode;
+		this.categoryDesc 	= categoryDesc;
+		this.locale 		= lclCd;
+		this.currency 		= currency;
 	}
 
 	public String getCategoryCode() {
@@ -43,14 +49,6 @@ public abstract class Category implements ILocalizedDomainObject {
 	
 	public String getCategoryDesc() {
 		return this.categoryDesc;
-	}
-
-	public Long getCategoryLevel() {
-		return this.categoryLevel;
-	}
-
-	public Long getChildCount() {
-		return childCategoryCount;
 	}
 	
 	public String getCategoryType() {
@@ -88,9 +86,7 @@ public abstract class Category implements ILocalizedDomainObject {
         builder.append("domain.Category [")
         .append("categoryCode=").append(categoryCode)
         .append(", categoryDesc=").append(categoryDesc)
-        .append(", categoryLevel=").append(categoryLevel)
         .append(", categoryType=").append(categoryType)
-        .append(", childCategoryCount=").append(childCategoryCount)
         .append("]");    	
         return builder.toString();
     }

@@ -11,6 +11,15 @@ import io.nzbee.domain.product.Product;
 @JsonTypeName("productcategory")
 public class ProductCategory extends Category {
 	
+	private Long categoryLevel;
+	
+	private Long childCategoryCount;
+	
+	@JsonIgnore
+	private List<Product> products;
+	
+	private String parentCode;
+	
 	public ProductCategory(	String categoryCode,
 							String categoryDesc,
 							boolean isHierarchical,
@@ -22,25 +31,37 @@ public class ProductCategory extends Category {
 							String currency) {
 		
 		super(categoryCode, 
-			  categoryDesc,
-			  level, 
+			  categoryDesc, 
 			  locale, 
 			  currency,
-			  objectCount
-			  );
+			  objectCount);
 		
-		this.childCount = childCount;
+		this.categoryLevel = level;
+		this.childCategoryCount = childCount;
 		this.parentCode = parentCode;
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.products = new ArrayList<Product>();
 	}
 	
-	@JsonIgnore
-	private List<Product> products;
+	public ProductCategory(	String categoryCode,
+							String categoryDesc,
+							Long level,
+							String parentCode,
+							String locale,
+							String currency) {
+
+		super(	categoryCode, 
+				categoryDesc,
+				locale,
+				currency);
+		
+		this.categoryLevel = level;
+		this.parentCode = parentCode;
+		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
+		this.products = new ArrayList<Product>();
+	}
 	
-	private String parentCode;
 	
-	private Long childCount;
 	
 	public void addProduct(Product product) {
 		this.getProducts().add(product);
@@ -59,7 +80,11 @@ public class ProductCategory extends Category {
 	}
 	
 	public Long getChildCount() {
-		return childCount;
+		return childCategoryCount;
+	}
+	
+	public Long getCategoryLevel() {
+		return this.categoryLevel;
 	}
 	
 }
