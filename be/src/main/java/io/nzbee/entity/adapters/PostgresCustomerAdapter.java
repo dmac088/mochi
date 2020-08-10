@@ -208,10 +208,6 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
                 .distinct()
                 .collect(Collectors.toList());
 
-//        List<GrantedAuthority> authorities = privileges.stream()
-//                .map(p -> new SimpleGrantedAuthority(p.getName()))
-//                .collect(Collectors.toList());
-
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
