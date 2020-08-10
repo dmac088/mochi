@@ -13,6 +13,7 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.attribute.ICategoryAttributeService;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
@@ -120,24 +121,28 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if (domainObject instanceof ProductCategory) {
 			
-			Optional<io.nzbee.entity.category.attribute.CategoryAttribute> oca = categoryAttributeService.findByCode(
-					domainObject.getLocale(), 
-					domainObject.getCurrency(), 
-					domainObject.getCategoryCode());
-
-			io.nzbee.entity.category.attribute.CategoryAttribute ca = (oca.isPresent()) 
-			? oca.get()
-			: (new io.nzbee.entity.category.attribute.CategoryAttribute());
+			System.out.println("category code = " + domainObject.getCategoryCode());
+			System.out.println("locale = " + domainObject.getLocale());
 			
-			io.nzbee.entity.category.product.CategoryProduct cp = (CategoryProduct) ca.getCategory();
+			Optional<io.nzbee.entity.category.Category> oc = 
+					categoryService.findByCode(domainObject.getLocale(), 
+											   domainObject.getCurrency(), 
+											   domainObject.getCategoryCode());
+
+			CategoryProduct cp = (oc.isPresent()) 
+								 ? (CategoryProduct) oc.get()
+								 : new CategoryProduct();
+			
+			CategoryAttribute ca = (oc.isPresent()) 
+								 ? cp.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst().get()
+								 : new CategoryAttribute();
+			
+			cp.setCategoryCode(domainObject.getCategoryCode());
+			cp.setCategoryLevel(((ProductCategory) domainObject).getCategoryLevel());
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());
 			ca.setCategory(cp);
-			
-			cp.setCategoryCode(domainObject.getCategoryCode());
-			cp.setCategoryLevel(domainObject.getCategoryLevel());
-			
 			cp.addCategoryAttribute(ca);
 			
 			categoryProductService.save(cp);
@@ -145,25 +150,24 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if(domainObject instanceof BrandCategory) {			
 			
-			Optional<io.nzbee.entity.category.attribute.CategoryAttribute> oca = categoryAttributeService.findByCode(
-																						domainObject.getLocale(), 
-																						domainObject.getCurrency(), 
-																						domainObject.getCategoryCode());
+			Optional<io.nzbee.entity.category.Category> oc = 
+					categoryService.findByCode(domainObject.getLocale(), 
+											   domainObject.getCurrency(), 
+											   domainObject.getCategoryCode());
 			
-			io.nzbee.entity.category.attribute.CategoryAttribute ca = (oca.isPresent()) 
-			? oca.get()
-			: new io.nzbee.entity.category.attribute.CategoryAttribute();
-			
-			io.nzbee.entity.category.brand.CategoryBrand cb = (oca.isPresent())
-			? (CategoryBrand) ca.getCategory()
-			: new io.nzbee.entity.category.brand.CategoryBrand();
+			CategoryBrand cb = (oc.isPresent()) 
+					 ? (CategoryBrand) oc.get()
+					 : new CategoryBrand();
+
+			CategoryAttribute ca = (oc.isPresent()) 
+					 ? cb.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst().get()
+					 : new CategoryAttribute();
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());
 			ca.setCategory(cb);
 			
 			cb.setCategoryCode(domainObject.getCategoryCode());
-			cb.setCategoryLevel(domainObject.getCategoryLevel());
 			
 			cb.addCategoryAttribute(ca);
 			cb.setCategoryAttribute(ca);

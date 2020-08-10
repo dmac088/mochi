@@ -18,10 +18,22 @@ public class BrandCategory extends Category {
 							String currency) {
 		super(categoryCode, 
 			  categoryDesc, 
-			  level, 
 			  locale, 
 			  currency,
 			  objectCount);
+		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
+		this.brands = new ArrayList<Brand>();
+	}
+	
+	public BrandCategory(	String categoryCode,
+							String categoryDesc,
+							String locale,
+							String currency) {
+		super(	categoryCode, 
+				categoryDesc, 
+				locale,
+				currency);
+		
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.brands = new ArrayList<Brand>();
 	}
