@@ -14,7 +14,6 @@ import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
-import io.nzbee.entity.category.attribute.ICategoryAttributeService;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -31,9 +30,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Autowired 
 	private ICategoryProductService categoryProductService;
-	
-	@Autowired
-	private ICategoryAttributeService categoryAttributeService;
 	
 	@Autowired 
 	private ICategoryBrandService categoryBrandService;
@@ -121,21 +117,28 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if (domainObject instanceof ProductCategory) {
 			
+			System.out.println("getLocale = " + domainObject.getLocale());
+			System.out.println("getCurrency = " + domainObject.getCurrency());
+			System.out.println("getCategoryCode = " + domainObject.getCategoryCode());
+			
 			Optional<io.nzbee.entity.category.Category> oc = 
 					categoryService.findByCode(domainObject.getLocale(), 
 											   domainObject.getCurrency(), 
 											   domainObject.getCategoryCode());
-
+			
 			CategoryProduct cp = (oc.isPresent()) 
 								 ? (CategoryProduct) oc.get()
 								 : new CategoryProduct();
 			
+			System.out.println("found = " + oc.isPresent());					 
+								 
 			CategoryAttribute ca = (oc.isPresent()) 
 								 ? cp.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst().get()
 								 : new CategoryAttribute();
 			
 			cp.setCategoryCode(domainObject.getCategoryCode());
 			cp.setCategoryLevel(((ProductCategory) domainObject).getCategoryLevel());
+			cp.setCategoryParentCode(((ProductCategory) domainObject).getParentCode());
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());

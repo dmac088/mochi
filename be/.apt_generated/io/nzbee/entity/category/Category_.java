@@ -11,6 +11,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Category.class)
 public abstract class Category_ {
 
+	public static volatile SingularAttribute<Category, String> categoryParentCode;
 	public static volatile SingularAttribute<Category, CategoryType> categoryType;
 	public static volatile SingularAttribute<Category, Category> parent;
 	public static volatile SingularAttribute<Category, Long> categoryLevel;
@@ -18,6 +19,7 @@ public abstract class Category_ {
 	public static volatile SingularAttribute<Category, String> categoryCode;
 	public static volatile SingularAttribute<Category, Long> categoryId;
 
+	public static final String CATEGORY_PARENT_CODE = "categoryParentCode";
 	public static final String CATEGORY_TYPE = "categoryType";
 	public static final String PARENT = "parent";
 	public static final String CATEGORY_LEVEL = "categoryLevel";
