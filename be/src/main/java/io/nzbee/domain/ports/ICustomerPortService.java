@@ -19,5 +19,5 @@ public interface ICustomerPortService extends IPortService<Customer> {
 
 	public Customer getCustomer(String token);
 
-	void authWithoutPassword(Customer customer);
+	void authWithoutPassword(String token);
 }

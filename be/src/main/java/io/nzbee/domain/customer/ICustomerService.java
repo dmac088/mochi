@@ -19,8 +19,6 @@ public interface ICustomerService extends IService<Customer> {
 
 	String validateVerificationToken(String token);
 
-	Customer getCustomer(String token);
-	
-	void authWithoutPassword(Customer customer);
+	void authWithoutPassword(String token);
 	
 }
