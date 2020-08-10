@@ -14,4 +14,10 @@ public interface ICustomerPortService extends IPortService<Customer> {
 	void delete(String userName);
 
 	public void addCustomerLocation(Customer c, String clientIP);
+
+	public String validateVerificationToken(String token);
+
+	public Customer getCustomer(String token);
+
+	void authWithoutPassword(Customer customer);
 }

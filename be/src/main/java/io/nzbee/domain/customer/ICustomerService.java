@@ -16,5 +16,11 @@ public interface ICustomerService extends IService<Customer> {
 	void update(CustomerDTO customerDTO);
 
 	void addCustomerLocation(Customer c, String clientIP);
+
+	String validateVerificationToken(String token);
+
+	Customer getCustomer(String token);
+	
+	void authWithoutPassword(Customer customer);
 	
 }

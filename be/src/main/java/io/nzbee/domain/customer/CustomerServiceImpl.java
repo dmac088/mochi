@@ -56,5 +56,19 @@ public class CustomerServiceImpl implements ICustomerService {
 		customerService.addCustomerLocation(c, clientIP);
 	}
 	
+	@Override
+    public String validateVerificationToken(String token) {
+		return customerService.validateVerificationToken(token);
+	}
+	
+	@Override
+	public Customer getCustomer(String token) {
+		return customerService.getCustomer(token);
+	}
+
+	@Override
+	public void authWithoutPassword(Customer customer) {
+		customerService.authWithoutPassword(customer);
+	}
 
 }
