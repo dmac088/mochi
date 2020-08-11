@@ -56,6 +56,11 @@ public class CategoryProductService implements ICategoryProductService {
 	public void save(CategoryProduct t) {
 		productCategoryDao.save(t);
 	}
+	
+	@Override
+	public void merge(CategoryProduct t) {
+		productCategoryDao.merge(t);
+	}
 
 	@Override
 	public void update(CategoryProduct t) {

@@ -9,5 +9,7 @@ public interface ICategoryProductService extends ILocalizedService<CategoryProdu
 	List<CategoryProduct> findAllByProductCode(String locale, String currency, String productCode);
 
 	Optional<CategoryProduct> findPrimaryByProductCode(String locale, String currency, String productCode);
+
+	void merge(CategoryProduct t);
 	
 }

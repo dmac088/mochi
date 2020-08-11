@@ -124,9 +124,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			System.out.println("getCategoryCode = " + domainObject.getCategoryCode());
 			
 			Optional<io.nzbee.entity.category.Category> oc = 
-					categoryService.findByCode(domainObject.getLocale(), 
-											   domainObject.getCurrency(), 
-											   domainObject.getCategoryCode());
+					categoryService.findByCode(domainObject.getCategoryCode());
 			
 			CategoryProduct cp = (oc.isPresent()) 
 								 ? (CategoryProduct) Hibernate.unproxy(oc.get())
@@ -138,7 +136,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			
 			cp.setCategoryCode(domainObject.getCategoryCode());
 			cp.setCategoryLevel(((ProductCategory) domainObject).getCategoryLevel());
-			//cp.setCategoryParentCode(((ProductCategory) domainObject).getParentCode());
+			cp.setCategoryParentCode(((ProductCategory) domainObject).getParentCode());
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());

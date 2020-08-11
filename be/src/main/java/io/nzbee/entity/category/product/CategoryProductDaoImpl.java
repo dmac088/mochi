@@ -201,4 +201,9 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		return cp;
 	}
 
+	@Override
+	public void merge(CategoryProduct t) {
+		em.merge(t);
+	}
+
 }

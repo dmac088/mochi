@@ -134,7 +134,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				.distinct(false)
 		);
 		
-		return Optional.ofNullable(query.getSingleResult());
+		try {
+			Category p = query.getSingleResult();
+			return Optional.ofNullable(p);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+		
 	}
 
 	

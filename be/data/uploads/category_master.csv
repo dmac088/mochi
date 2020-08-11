@@ -42,4 +42,4 @@ OTH01	Other	其他蔬菜	2	productcategory	VEG01
 FRT01	Fruit	水果	1	productcategory	PRM01
 ALM01	Almonds	杏仁	2	productcategory	NUT01
 ORV01	Orange	橙色蔬菜	3	productcategory	ROV01
-TEST1	Test EN	Test CN	1	productcategory	PRM01
+TEST3	Test EN2	Test CN2	2	productcategory	FRT01

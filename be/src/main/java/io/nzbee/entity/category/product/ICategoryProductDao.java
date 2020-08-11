@@ -11,4 +11,6 @@ public interface ICategoryProductDao extends ILocalizedDao<CategoryProduct> {
 
 	Optional<CategoryProduct> findPrimaryByProductCode(String locale, String currency, String productCode);
 
+	void merge(CategoryProduct t);
+
 }
