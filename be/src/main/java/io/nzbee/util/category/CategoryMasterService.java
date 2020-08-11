@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
@@ -22,6 +23,8 @@ import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -32,6 +35,9 @@ public class CategoryMasterService {
 	
 	@Autowired
 	private ICategoryPortService categoryDomainService;
+	
+	@Autowired
+	private ICategoryService categoryEntityService;
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -53,6 +59,19 @@ public class CategoryMasterService {
 	        readValues.readAll().stream().forEach(c -> {
 	        	this.persistCategoryMaster(c);
 	        });
+	        
+	        
+	        List<io.nzbee.entity.category.Category> lc = categoryEntityService.findAll();
+	        lc.stream().forEach(c -> {
+	        	if(!(c.getCategoryParentCode() == null)) {
+	        		Optional<io.nzbee.entity.category.Category> opc = categoryEntityService.findByCode(c.getCategoryParentCode());
+	        		if(opc.isPresent()) {
+	        			c.setCategoryParentId(opc.get().getCategoryId());
+	        			categoryEntityService.save(c);
+	        		}
+	        	}
+	        });
+	        
 	        
 		} catch (IOException e) {
 			logger.error(e.toString());

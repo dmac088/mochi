@@ -70,6 +70,7 @@ import io.nzbee.search.ISearchDimension;
                         @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),
                         @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_cd"),	
                         @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
+                        @FieldResult(name = "categoryParentId",				column = "cat_prnt_id"),
                         @FieldResult(name = "parent", 						column = "cat_prnt_id"),
                         @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
                         @FieldResult(name = "attributes", 					column = "cat_id")
@@ -100,6 +101,7 @@ import io.nzbee.search.ISearchDimension;
                         @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
                         @FieldResult(name = "categoryType", 				column = "cat_prnt_typ_id"),
                         @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
+                        @FieldResult(name = "categoryParentId",				column = "cat_prnt_prnt_id"),
                         @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_prnt_cd"),	
                         @FieldResult(name = "categoryAttribute", 			column = "cat_prnt_lcl_id"),
                         @FieldResult(name = "attributes", 					column = "cat_prnt_id")
@@ -144,6 +146,18 @@ public abstract class Category implements ISearchDimension {
 	@Column(name="cat_prnt_cd")
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String categoryParentCode;
+	
+	@Column(name="cat_prnt_id")
+	@Field(analyze = Analyze.NO, store=Store.YES)
+	private Long categoryParentId;
+
+	public Long getCategoryParentId() {
+		return categoryParentId;
+	}
+
+	public void setCategoryParentId(Long categoryParentId) {
+		this.categoryParentId = categoryParentId;
+	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cat_typ_id",
