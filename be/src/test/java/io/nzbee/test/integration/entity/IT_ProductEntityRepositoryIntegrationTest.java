@@ -3,6 +3,8 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.util.HashSet;
 import java.util.List;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -16,6 +18,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.data.domain.Page;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -129,6 +132,26 @@ public class IT_ProductEntityRepositoryIntegrationTest {
      
         //then
     	assertTrue(found.size() == 1);
+    }
+	
+	@Test
+    public void whenFindByProductCode_thenReturnProduct() {
+    	
+        // when
+    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    														 Constants.currencyUSD, 
+    														 "FRT01", 
+    														 new HashSet<String>(), 
+    														 new HashSet<String>(), 
+    														 new HashSet<String>(), 
+    														 new Double(10000), 
+    														 "1", 
+    														 "50", 
+    														 "priceAsc");
+    
+    	Long size = found.getTotalElements();
+        //then
+    	assertThat(size).isEqualTo(new Long(13));
     }
 	 
     private void assertFound(final Product found) {
