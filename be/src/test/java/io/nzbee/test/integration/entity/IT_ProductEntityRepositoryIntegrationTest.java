@@ -6,6 +6,8 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -135,7 +137,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     }
 	
 	@Test
-    public void whenFindByProductCode_thenReturnProduct() {
+    public void whenFindForFruitCategory_thenReturnAllFruitProducts() {
     	
         // when
     	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
@@ -152,6 +154,29 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	Long size = found.getTotalElements();
         //then
     	assertThat(size).isEqualTo(new Long(13));
+    }
+	
+	@Test
+    public void whenFindForPomesCategory_thenReturnAllPomesProducts() {
+    	
+		Set<String> categories = new HashSet<String>();
+		categories.add("POM01");
+		
+        // when
+    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    														 Constants.currencyUSD, 
+    														 "FRT01", 
+    														 categories, 
+    														 new HashSet<String>(), 
+    														 new HashSet<String>(), 
+    														 new Double(10000), 
+    														 "1", 
+    														 "50", 
+    														 "priceAsc");
+    
+    	Long size = found.getTotalElements();
+        //then
+    	assertThat(size).isEqualTo(new Long(3));
     }
 	 
     private void assertFound(final Product found) {
