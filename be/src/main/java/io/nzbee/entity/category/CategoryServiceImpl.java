@@ -101,4 +101,16 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
 
+	@Override
+	public List<Category> findAll() {
+		return categoryDAO.findAll();
+	}
+
+	@Override
+	public Optional<Category> findByCode(String categoryCode) {
+		return categoryDAO.findByCode(categoryCode);
+	}
+
+	
+
 }

@@ -92,6 +92,53 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
+	public List<Category> findAll() {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll ");
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	public Optional<Category> findByCode(String categoryCode) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		
+		Root<Category> root = cq.from(Category.class);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+
+		conditions.add(
+				cb.equal(root.get(Category_.CATEGORY_CODE), categoryCode)
+		);
+		
+		TypedQuery<Category> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		return Optional.ofNullable(query.getSingleResult());
+	}
+
+	
+	@Override
 	public <T> List<Category> findAllByType(String locale, String currency, Class<T> cls) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
 		
@@ -780,7 +827,5 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			
 		return sql;
 	}
-
-
 
 }
