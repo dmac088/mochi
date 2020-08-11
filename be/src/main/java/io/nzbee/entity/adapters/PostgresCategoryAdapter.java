@@ -130,7 +130,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 								 ? (CategoryProduct) Hibernate.unproxy(oc.get())
 								 : new CategoryProduct();
 								 
-			CategoryAttribute ca = null;
+			CategoryAttribute ca = new CategoryAttribute();
 			if (oc.isPresent()) {
 				Optional<CategoryAttribute> oca = cp.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
 				ca = (oca.isPresent()) 
@@ -142,8 +142,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			cp.setCategoryLevel(((ProductCategory) domainObject).getCategoryLevel());
 			cp.setCategoryParentCode(((ProductCategory) domainObject).getParentCode());
 			
-			ca.setCategoryDesc(domainObject.getCategoryDesc());
-			ca.setLclCd(domainObject.getLocale());
+			ca.setCategoryDesc(((ProductCategory) domainObject).getCategoryDesc());
+			ca.setLclCd(((ProductCategory) domainObject).getLocale());
 			ca.setCategory(cp);
 			cp.addCategoryAttribute(ca);
 			
