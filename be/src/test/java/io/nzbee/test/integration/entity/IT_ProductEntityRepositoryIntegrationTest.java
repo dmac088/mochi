@@ -147,13 +147,31 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 new HashSet<String>(), 
     														 new HashSet<String>(), 
     														 new Double(10000), 
-    														 "1", 
+    														 "0", 
     														 "50", 
     														 "priceAsc");
     
     	assertNotNull(found);
     	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
     }
+	
+	@Test
+    public void whenFindForFruitCategoryWithNullPrice_thenReturnAllFruitProducts() {
+    	
+        // when
+    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    														 Constants.currencyUSD, 
+    														 "FRT01", 
+    														 new HashSet<String>(), 
+    														 new HashSet<String>(), 
+    														 new HashSet<String>(), 
+    														 null, 
+    														 "0", 
+    														 "50", 
+    														 "priceAsc");
+    
+    	assertNotNull(found);
+	}
 	
 	@Test
     public void whenFindForPomesCategory_thenReturnAllPomesProducts() {
@@ -169,7 +187,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 new HashSet<String>(), 
     														 new HashSet<String>(), 
     														 new Double(10000), 
-    														 "1", 
+    														 "0", 
     														 "50", 
     														 "priceAsc");
     
@@ -192,7 +210,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 new HashSet<String>(), 
     														 tags, 
     														 new Double(10000), 
-    														 "1", 
+    														 "0", 
     														 "50", 
     														 "priceAsc");
     
@@ -215,7 +233,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 brands, 
     														 new HashSet<String>(),
     														 new Double(10000), 
-    														 "1", 
+    														 "0", 
     														 "50", 
     														 "priceAsc");
     
@@ -238,7 +256,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 brands, 
     														 new HashSet<String>(),
     														 new Double(10000), 
-    														 "1", 
+    														 "0", 
     														 "50", 
     														 "priceAsc");
     

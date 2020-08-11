@@ -565,7 +565,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"      ct.cat_typ_desc 		AS cat_typ_desc, " + 
 						"	   parent.cat_cd 		AS cat_prnt_cd, " + 
 						"	   parent.cat_lvl 		AS cat_prnt_lvl, " + 
-						"	   parent.cat_prnt_id	AS cat_prnt_prnt_id, " + 
+						"	   parent.cat_prnt_id	AS cat_prnt_prnt_id, " +
+						"	   parent.cat_prnt_cd	AS cat_prnt_prnt_cd, " + 
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
 						"	   prd.prd_crtd_dt,   " +
