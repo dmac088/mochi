@@ -20,11 +20,10 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.BrandCategory;
-import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.domain.category.Category;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -81,7 +80,7 @@ public class CategoryMasterService {
 	public void persistCategoryMaster(CategoryMasterSchema c) {
 		logger.debug("called persistCategoryMaster() ");
 		
-		Category cDo = c.get_CATEGORY_TYPE().equals("productcategory")
+		Category cEN =	c.get_CATEGORY_TYPE().equals("productcategory")
 						? new ProductCategory(
 								c.get_CATEGORY_CODE(),
 								c.get_CATEGORY_DESC_EN(),
@@ -93,10 +92,27 @@ public class CategoryMasterService {
 								c.get_CATEGORY_CODE(),
 								c.get_CATEGORY_DESC_EN(),
 								Constants.localeENGB,
-								Constants.currencyHKD);
+								Constants.currencyHKD
+								);
 		
-		categoryDomainService.save(cDo);
+		categoryDomainService.save(cEN);
+		
+		Category cCN =	c.get_CATEGORY_TYPE().equals("productcategory")
+				? new ProductCategory(
+						c.get_CATEGORY_CODE(),
+						c.get_CATEGORY_DESC_HK(),
+						new Long(c.get_CATEGORY_LEVEL()),
+						c.get_PARENT_CATEGORY_CODE(),
+						Constants.localeZHHK,
+						Constants.currencyHKD)
+				: new BrandCategory(
+						c.get_CATEGORY_CODE(),
+						c.get_CATEGORY_DESC_HK(),
+						Constants.localeZHHK,
+						Constants.currencyHKD
+						);
 
+		categoryDomainService.save(cCN);
 	}
 	
 	public void extractCategoryMaster(Resource resource) {
