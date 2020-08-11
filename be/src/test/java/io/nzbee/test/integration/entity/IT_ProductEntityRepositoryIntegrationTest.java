@@ -151,9 +151,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 "50", 
     														 "priceAsc");
     
-    	Long size = found.getTotalElements();
-        //then
-    	assertThat(size).isEqualTo(new Long(13));
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
     }
 	
 	@Test
@@ -174,10 +173,34 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 "50", 
     														 "priceAsc");
     
-    	Long size = found.getTotalElements();
-        //then
-    	assertThat(size).isEqualTo(new Long(3));
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(3));
     }
+	
+	
+	@Test
+    public void whenFindForFruitWithOrganicTag_thenReturnAllOrganicFruitProducts() {
+    	
+		Set<String> tags = new HashSet<String>();
+		tags.add("ORG01");
+		
+        // when
+    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    														 Constants.currencyUSD, 
+    														 "FRT01", 
+    														 new HashSet<String>(), 
+    														 new HashSet<String>(), 
+    														 tags, 
+    														 new Double(10000), 
+    														 "1", 
+    														 "50", 
+    														 "priceAsc");
+    
+        //then
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
+    }
+	
 	 
     private void assertFound(final Product found) {
     	assertThat(found.getUPC())
