@@ -1666,7 +1666,8 @@ CREATE TABLE category (
     cat_cd character(5) NOT NULL,
     cat_typ_id bigint,
     cat_lvl bigint,
-    cat_prnt_cd character(5)
+    cat_prnt_cd character(5),
+    cat_prnt_id bigint
 );
 
 
