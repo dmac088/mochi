@@ -128,13 +128,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 											   domainObject.getCurrency(), 
 											   domainObject.getCategoryCode());
 			
-			System.out.println("type = " + oc.get().getClass().getSimpleName());
-			
 			CategoryProduct cp = (oc.isPresent()) 
 								 ? (CategoryProduct) Hibernate.unproxy(oc.get())
 								 : new CategoryProduct();
-			
-			System.out.println("found = " + oc.isPresent());					 
 								 
 			CategoryAttribute ca = (oc.isPresent()) 
 								 ? cp.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst().get()
