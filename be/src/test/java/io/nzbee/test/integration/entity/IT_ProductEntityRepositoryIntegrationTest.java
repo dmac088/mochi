@@ -201,6 +201,52 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
     }
 	
+	@Test
+    public void whenFindForFruitWithBrandEnza_thenReturnAllEnzaFruitProducts() {
+    	
+		Set<String> brands = new HashSet<String>();
+		brands.add("ENZ01");
+		
+        // when
+    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    														 Constants.currencyUSD, 
+    														 "FRT01", 
+    														 new HashSet<String>(), 
+    														 brands, 
+    														 new HashSet<String>(),
+    														 new Double(10000), 
+    														 "1", 
+    														 "50", 
+    														 "priceAsc");
+    
+        //then
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
+    }
+	
+	@Test
+    public void whenFindForBrandEnza_thenReturnAllEnzaProducts() {
+    	
+		Set<String> brands = new HashSet<String>();
+		brands.add("ENZ01");
+		
+        // when
+    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    														 Constants.currencyUSD, 
+    														 "PRM01", 
+    														 new HashSet<String>(), 
+    														 brands, 
+    														 new HashSet<String>(),
+    														 new Double(10000), 
+    														 "1", 
+    														 "50", 
+    														 "priceAsc");
+    
+        //then
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
+    }
+	
 	 
     private void assertFound(final Product found) {
     	assertThat(found.getUPC())
