@@ -67,11 +67,11 @@ import io.nzbee.search.ISearchDimension;
                     fields = {
                         @FieldResult(name = "categoryId", 					column = "cat_id"),
                         @FieldResult(name = "categoryCode", 				column = "cat_cd"),
-                        @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),
-                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_cd"),	
+                        @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
                         @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-                        @FieldResult(name = "categoryParentId",				column = "cat_prnt_id"),
                         @FieldResult(name = "parent", 						column = "cat_prnt_id"),
+                        @FieldResult(name = "categoryParentId",				column = "cat_prnt_id"),
+                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_cd"),
                         @FieldResult(name = "categoryAttribute", 			column = "cat_lcl_id"),
                         @FieldResult(name = "attributes", 					column = "cat_id")
                     }),
