@@ -160,8 +160,7 @@ filters = {
 	    columns = {
 	    		@ColumnResult(name = "retail_price"),
 	    		@ColumnResult(name = "markdown_price"),
-	    		@ColumnResult(name = "prd_img_pth"),
-	    		@ColumnResult(name = "cat_prnt_cd"),
+	    		@ColumnResult(name = "prd_img_pth")
 	    },		
 	    entities = {
 	            @EntityResult(
@@ -238,7 +237,9 @@ filters = {
 		                    @FieldResult(name = "categoryCode", 				column = "cat_cd"),
 		                    @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
 		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-		                    @FieldResult(name = "parent", 						column = "cat_prnt_id")
+		                    @FieldResult(name = "parent", 						column = "cat_prnt_id"),
+		                    @FieldResult(name = "categoryParentId",				column = "cat_prnt_id"),
+	                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_cd"),
 		                }),
 	            @EntityResult(
 	                    entityClass = CategoryAttribute.class,
@@ -263,7 +264,9 @@ filters = {
 		                    @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
 		                    @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
 		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-		                    @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id")
+		                    @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
+		                    @FieldResult(name = "categoryParentId",				column = "cat_prnt_prnt_id"),
+	                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_prnt_cd"),
 		                }),
 	    }),
 		@SqlResultSetMapping(
