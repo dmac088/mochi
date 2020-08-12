@@ -226,11 +226,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 true,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 //.setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
-				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
-				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 
 				 
 		if(!categoryCodes.isEmpty()) {
 			 query.setParameter("categoryCodes", categoryCodes);
@@ -246,6 +244,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		if(!(maxPrice == null)) {
 			query.setParameter("maxPrice", maxPrice);
+			query.setParameter("currency", currency);
+			query.setParameter("retailPriceCode", Constants.retailPriceCode);
+			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		}
 		
 		query.setParameter("categoryCode", categoryCode);
