@@ -19,31 +19,31 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	}
 
 	@Override
-	public List<CategoryBrand> findAll(String locale, String currency) {
+	public List<CategoryBrand> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CategoryBrand> findAll(String locale, String currency, Set<String> codes) {
+	public List<CategoryBrand> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findById(String locale, String currency, long id) {
+	public Optional<CategoryBrand> findById(String locale, long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByCode(String locale, String currency, String code) {
+	public Optional<CategoryBrand> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByDesc(String locale, String currency, String desc) {
+	public Optional<CategoryBrand> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

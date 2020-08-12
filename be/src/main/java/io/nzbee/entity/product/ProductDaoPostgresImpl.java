@@ -743,4 +743,53 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return null;
 	}
 
+
+	@Override
+	public Optional<Product> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Product objectToEntity(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Product objectToEntity(Tuple t, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Product> findById(String locale, long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Optional<Product> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Product> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public List<Product> findAll(String locale, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

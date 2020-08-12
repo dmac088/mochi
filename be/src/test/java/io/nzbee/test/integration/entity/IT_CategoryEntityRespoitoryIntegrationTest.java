@@ -63,8 +63,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     public void whenFindAll_thenReturnAllCategories() {
     	
         // when
-    	List<Category> found = categoryService.findAll( Constants.localeENGB, 
-												  		Constants.currencyUSD);
+    	List<Category> found = categoryService.findAll( Constants.localeENGB);
      
         // then
     	assertAllCategoriesFound(found);
@@ -75,7 +74,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	
         // when
     	List<Category> found = categoryService.findAll( Constants.localeENGB, 
-		  											    Constants.currencyUSD,
 												  		CategoryBrand.class);
      
         // then
@@ -87,7 +85,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     	
         // when
     	List<Category> found = categoryService.findAll( Constants.localeENGB, 
-		  												Constants.currencyUSD,
 												  		CategoryProduct.class);
      
         // then

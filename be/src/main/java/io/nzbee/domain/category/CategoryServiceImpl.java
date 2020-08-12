@@ -12,8 +12,8 @@ public class CategoryServiceImpl implements ICategoryService {
     
     @Override
     @Transactional(readOnly=true)
-	public Set<Category> findAll(String locale, String currency) {
-    	return categoryService.findAll(locale, currency);
+	public Set<Category> findAll(String locale) {
+    	return categoryService.findAll(locale);
 	}
     
     @Override
@@ -28,48 +28,48 @@ public class CategoryServiceImpl implements ICategoryService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Category findByCode(String locale, String currency, String code) {
-		return categoryService.findByCode(locale, currency, code);
+	public Category findByCode(String locale, String code) {
+		return categoryService.findByCode(locale, code);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Category findByDesc(String locale, String currency, String desc) {
-		return categoryService.findByDesc(locale, currency, desc);
+	public Category findByDesc(String locale, String desc) {
+		return categoryService.findByDesc(locale, desc);
 	}
     
     @Override
     @Transactional(readOnly=true)
- 	public Set<Category> findByParent(String locale, String currency, String parentCategoryCode) {
-    	return categoryService.findByParent(parentCategoryCode, currency, locale);
+ 	public Set<Category> findByParent(String locale, String parentCategoryCode) {
+    	return categoryService.findByParent(parentCategoryCode, locale);
  	}
     
     @Override
     @Transactional(readOnly=true)
-  	public Set<Category> findAllForLevel(String locale, String currency, Long level) {
-     	return categoryService.findAllForLevel(locale, currency, level);
+  	public Set<Category> findAllForLevel(String locale, Long level) {
+     	return categoryService.findAllForLevel(locale, level);
   	}	
     
     @Override
     @Transactional(readOnly=true)
-  	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String code) {
-     	return categoryService.findAllByProductCode(locale, currency, code);
+  	public Set<ProductCategory> findAllByProductCode(String locale, String code) {
+     	return categoryService.findAllByProductCode(locale, code);
   	}	
     
     @Override
 	@Transactional(readOnly=true)
-	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
-		return categoryService.findAll(locale, currency, codes);
+	public Set<Category> findAll(String locale, Set<String> codes) {
+		return categoryService.findAll(locale, codes);
 	}
     
     @Override
-	public Set<ProductCategory> findAllProductCategories(String locale, String currency) {
-		return categoryService.findAllProductCategories(locale, currency);
+	public Set<ProductCategory> findAllProductCategories(String locale) {
+		return categoryService.findAllProductCategories(locale);
 	}
 
 	@Override
-	public Set<BrandCategory> findAllBrandCategories(String locale, String currency) {
-		return categoryService.findAllBrandCategories(locale, currency);
+	public Set<BrandCategory> findAllBrandCategories(String locale) {
+		return categoryService.findAllBrandCategories(locale);
 	}	
 
 	@Override

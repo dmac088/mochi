@@ -20,8 +20,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 				? e.getParent().get().getCategoryCode()
 				: null,
 				e.getChildCount(),
-				e.getLocale(), 
-				e.getCurrency()
+				e.getLocale()
 			 );
 	}
 
@@ -32,7 +31,6 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 		CategoryProduct cp = new CategoryProduct();
 		cp.setCategoryCode(pc.getCategoryCode());
 		cp.setLocale(pc.getLocale());
-		cp.setCurrency(pc.getCurrency());
 		cp.setCategoryLevel(pc.getCategoryLevel());
 		cp.setObjectCount(pc.getCount());
 		

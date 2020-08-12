@@ -90,7 +90,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	
         // when
     	Category found = categoryService.findById(Constants.localeENGB, 
-												  Constants.currencyUSD,  
 												  category.getCategoryId()).get();
      
         // then
@@ -102,7 +101,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	
         // when
     	Category found = categoryService.findByCode(Constants.localeENGB, 
-				  									Constants.currencyUSD, 
 				 									"TST02").get();
      
         // then
@@ -113,8 +111,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByDesc(Constants.localeENGB, 
-				  									Constants.currencyUSD, 
+    	Category found = categoryService.findByDesc(Constants.localeENGB,
 				 									"test product category").get();
      
         //then

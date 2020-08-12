@@ -74,11 +74,10 @@ public class BrandController {
     }
     
     @GetMapping("/Brand/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale, 
-    																@PathVariable String currency) {
-    	LOGGER.debug("Fetching brands for parameters : {}, {}", locale, currency);
+    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale) {
+    	LOGGER.debug("Fetching brands for parameters : {}, {}", locale);
     	final Set<Brand> collection = 
-    			 brandService.findAll(locale, currency);
+    			 brandService.findAll(locale);
     	
     	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
     }
@@ -109,12 +108,11 @@ public class BrandController {
 
         return ResponseEntity.ok(brandFacetResourceAssembler.toCollectionModel(collection));
     }
-    
 
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
-    public ResponseEntity<BrandResource> get(@PathVariable String locale, @PathVariable String currency, @PathVariable String brandCode) {
-    	LOGGER.debug("Fetching brand for parameters : {}, {}, {}", locale, currency, brandCode);
-    	Brand b = brandService.findByCode(locale, currency, brandCode);
+	public ResponseEntity<BrandResource> get(String locale, String brandCode) {
+    	LOGGER.debug("Fetching brand for parameters : {}, {}, {}", locale, brandCode);
+    	Brand b = brandService.findByCode(locale, brandCode);
     	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
-    }
+	}
 }

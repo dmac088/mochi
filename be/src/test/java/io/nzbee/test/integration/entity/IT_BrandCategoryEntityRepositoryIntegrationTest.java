@@ -97,7 +97,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	
         // when
     	Category found = categoryService.findById(Constants.localeENGB, 
-												  Constants.currencyUSD,  
 												  category.getCategoryId()).get();
      
         // then
@@ -110,7 +109,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	
         // when
     	Category found = categoryService.findByCode(Constants.localeENGB, 
-				 									Constants.currencyUSD, 
 				 									"TST02").get();
      
         // then
@@ -123,7 +121,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	
         // when
     	Category found = categoryService.findByDesc(Constants.localeENGB, 
-													Constants.currencyUSD, 
 				 									"test brand category").get();
      
         //then
@@ -137,7 +134,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	    .isEqualTo(new Long(2));
 	    assertThat(found.getCategoryType().getCategoryTypeCode())
 	    .isEqualTo("BND01");
-	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc())
+	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc())
 	    .isEqualTo("test brand category");
     }
     

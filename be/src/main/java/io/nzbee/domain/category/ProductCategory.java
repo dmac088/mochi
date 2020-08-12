@@ -27,13 +27,11 @@ public class ProductCategory extends Category {
 							int objectCount,
 							String parentCode,
 							Long childCount,
-							String locale, 
-							String currency) {
+							String locale) {
 		
 		super(categoryCode, 
 			  categoryDesc, 
-			  locale, 
-			  currency,
+			  locale,
 			  objectCount);
 		
 		this.categoryLevel = level;
@@ -47,13 +45,11 @@ public class ProductCategory extends Category {
 							String categoryDesc,
 							Long level,
 							String parentCode,
-							String locale,
-							String currency) {
+							String locale) {
 
 		super(	categoryCode, 
 				categoryDesc,
-				locale,
-				currency);
+				locale);
 		
 		this.categoryLevel = level;
 		this.parentCode = parentCode;

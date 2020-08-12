@@ -67,4 +67,34 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 		productPriceRepository.delete(t);
 	}
 
+	@Override
+	public List<ProductPrice> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductPrice> findAll(String locale, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductPrice> findById(String locale, long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductPrice> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductPrice> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

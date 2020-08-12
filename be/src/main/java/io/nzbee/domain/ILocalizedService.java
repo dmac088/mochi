@@ -4,13 +4,13 @@ import java.util.Set;
 
 public interface ILocalizedService<T> extends IService<T> {
 
-	T findByCode(String locale, String currency, String code);	
+	T findByCode(String locale, String code);	
 	
-	T findByDesc(String locale, String currency, String desc); 
+	T findByDesc(String locale, String desc); 
 
-	Set<T> findAll(String locale, String currency);
+	Set<T> findAll(String locale);
 
-	Set<T> findAll(String locale, String currency, Set<String> codes);
+	Set<T> findAll(String locale, Set<String> codes);
 
 	
 }

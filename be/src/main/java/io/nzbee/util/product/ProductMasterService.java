@@ -85,18 +85,15 @@ public class ProductMasterService {
 		logger.debug("called persistProductMaster() ");
 		Brand bDo =
 				brandDomainService.findByCode(Constants.localeENGB, 
-											  Constants.currencyHKD, 
 											  p.get_BRAND_CODE());
 
 		
 		Category cDo = 
-				categoryDomainService.findByCode(   Constants.localeENGB, 
-													Constants.currencyHKD, 
+				categoryDomainService.findByCode(   Constants.localeENGB,  
 													p.get_PRIMARY_CATEGORY_CODE());
 		
 		Department dDo = 
 				departmentDomainService.findByCode(Constants.localeENGB, 
-												   Constants.currencyHKD, 
 												   p.get_DEPARTMENT_CODE());
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
@@ -199,7 +196,6 @@ public class ProductMasterService {
 						{ pms.set_BRAND_DESCRIPTION_HK(brand.getBrandDesc()); }
 		    	
 		    	ProductCategory c = categoryDomainService.findPrimaryByProductCode(p.getLclCd(),
-																		 		   p.getCurrency(), 
 																		 		   p.getProductUPC()); 
 		    	
 		    	pms.set_PRIMARY_CATEGORY_CODE(c.getCategoryCode());

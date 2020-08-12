@@ -18,7 +18,6 @@ public class BrandResourceAssembler extends RepresentationModelAssemblerSupport<
 	public BrandResource toModel(Brand brand) {
 		BrandResource br = new BrandResource(brand);
 		br.add(linkTo(methodOn(BrandController.class).get(	brand.getLocale(),
-															brand.getCurrency(),
 															brand.getBrandCode())).withSelfRel());
 		return br;
 	}

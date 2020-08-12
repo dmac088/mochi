@@ -45,8 +45,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 	
 	@Override
-	public Set<Category> findAll(String locale, String currency, Set<String> codes) {
-		return categoryService.findAll(locale, currency, codes)
+	public Set<Category> findAll(String locale, Set<String> codes) {
+		return categoryService.findAll(locale, codes)
 				.stream().map(c -> (Category) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 
@@ -58,59 +58,59 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	public Category findByCode(String locale, String currency, String code) {
-		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, currency, code)
+	public Category findByCode(String locale, String code) {
+		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, code)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
 		return categoryMapper.entityToDo(cp);
 	}	
 	
 	@Override
-	public Category findByDesc(String locale, String currency, String desc) {
-		io.nzbee.entity.category.Category cp = categoryService.findByDesc(locale, currency, desc)
+	public Category findByDesc(String locale, String desc) {
+		io.nzbee.entity.category.Category cp = categoryService.findByDesc(locale, desc)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
 		return categoryMapper.entityToDo(cp);
 	}
 	
 	@Override
-	public Set<ProductCategory> findAllByProductCode(String locale, String currency, String productCode) {
-		return categoryProductService.findAllByProductCode(locale, currency, productCode)
+	public Set<ProductCategory> findAllByProductCode(String locale, String productCode) {
+		return categoryProductService.findAllByProductCode(locale, productCode)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
-	public ProductCategory findPrimaryByProductCode(String locale, String currency, String productCode) {
-		CategoryProduct cp = categoryProductService.findPrimaryByProductCode(locale, currency, productCode)
+	public ProductCategory findPrimaryByProductCode(String locale, String productCode) {
+		CategoryProduct cp = categoryProductService.findPrimaryByProductCode(locale, productCode)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
 		return (ProductCategory) categoryMapper.entityToDo(cp);		
 	}
 
 	@Override
-	public Set<Category> findAllForLevel(String locale, String currency, Long level) {
+	public Set<Category> findAllForLevel(String locale, Long level) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Category> findByParent(String parentCategoryCode, String currency, String locale) {
+	public Set<Category> findByParent(String parentCategoryCode, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Category> findAll(String locale, String currency) {
-		return categoryService.findAll(locale, currency)
+	public Set<Category> findAll(String locale) {
+		return categoryService.findAll(locale)
 				.stream().map(c -> categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
-	public Set<ProductCategory> findAllProductCategories(String locale, String currency) {
-		return categoryService.findAll(locale, currency, CategoryProduct.class)
+	public Set<ProductCategory> findAllProductCategories(String locale) {
+		return categoryService.findAll(locale, CategoryProduct.class)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
-	public Set<BrandCategory> findAllBrandCategories(String locale, String currency) {
-		return categoryService.findAll(locale, currency, CategoryBrand.class)
+	public Set<BrandCategory> findAllBrandCategories(String locale) {
+		return categoryService.findAll(locale, CategoryBrand.class)
 				.stream().map(c -> (BrandCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
@@ -120,7 +120,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		if (domainObject instanceof ProductCategory) {
 			
 			System.out.println("getLocale = " + domainObject.getLocale());
-			System.out.println("getCurrency = " + domainObject.getCurrency());
 			System.out.println("getCategoryCode = " + domainObject.getCategoryCode());
 			
 			Optional<io.nzbee.entity.category.Category> oc = 
@@ -154,7 +153,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 			
 			Optional<io.nzbee.entity.category.Category> oc = 
 					categoryService.findByCode(domainObject.getLocale(), 
-											   domainObject.getCurrency(), 
 											   domainObject.getCategoryCode());
 			
 			CategoryBrand cb = (oc.isPresent()) 

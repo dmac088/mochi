@@ -44,8 +44,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Brand> findById(String locale, String currency, long id) {
-		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}, {}", locale, currency, id);
+	public Optional<Brand> findById(String locale, long id) {
+		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}, {}", locale, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -71,7 +71,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Brand brand = this.objectToEntity(tuple, locale, currency);
+			Brand brand = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(brand);
 		} 
 		catch(NoResultException nre) {
@@ -80,8 +80,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public Optional<Brand> findByCode(String locale, String currency, String code) {
-		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, currency, code);
+	public Optional<Brand> findByCode(String locale, String code) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, code);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -107,7 +107,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Brand brand = this.objectToEntity(tuple, locale, currency);
+			Brand brand = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(brand);
 		} 
 		catch(NoResultException nre) {
@@ -117,8 +117,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 
 	
 	@Override
-	public Optional<Brand> findByDesc(String locale, String currency, String desc) {
-		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}, {}", locale, currency, desc);
+	public Optional<Brand> findByDesc(String locale, String desc) {
+		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}, {}", locale, desc);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -144,7 +144,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Brand brand = this.objectToEntity(tuple, locale, currency);
+			Brand brand = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(brand);
 		} 
 		catch(NoResultException nre) {
@@ -153,8 +153,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, Set<String> brandCodes) {
-		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, currency, StringUtil.join(brandCodes, ','));
+	public List<Brand> findAll(String locale, Set<String> brandCodes) {
+		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(brandCodes, ','));
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -182,12 +182,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
 	}
 	
 	@Override
-	public List<Brand> findAllByCategory(String locale, String currency, String categoryCode) {
-		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}, {}", locale, currency, categoryCode);
+	public List<Brand> findAllByCategory(String locale, String categoryCode) {
+		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}, {}", locale, categoryCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -214,13 +214,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
 	}
 	
 
 	@Override
-	public Optional<Brand> findByProductCode(String locale, String currency, String productCode) {
-		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+	public Optional<Brand> findByProductCode(String locale, String productCode) {
+		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}, {}", locale, productCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -247,7 +247,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Brand brand = this.objectToEntity(tuple, locale, currency);
+			Brand brand = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(brand);
 		} 
 		catch(NoResultException nre) {
@@ -256,8 +256,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency) {
-		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, currency);
+	public List<Brand> findAll(String locale) {
+		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -278,10 +278,9 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
 		
 	}
-	
 	
 	@Override
 	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
@@ -319,7 +318,21 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
+	public Brand objectToEntity(Object[] o, String locale, String currency) {
+		Brand brandEntity = this.objectToEntity(o, locale);
+		brandEntity.setCurrency(currency);
+		return brandEntity;
+	}
+
+	@Override
 	public Brand objectToEntity(Tuple t, String locale, String currency) {
+		Brand brandEntity = this.objectToEntity(t, locale);
+		brandEntity.setCurrency(currency);
+		return brandEntity;
+	}
+	
+	@Override
+	public Brand objectToEntity(Tuple t, String locale) {
 		Brand brandEntity = new Brand();
 		BrandAttribute brandAttribute = new BrandAttribute();
 		
@@ -332,7 +345,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
 		brandEntity.setBrandCode(t.get("brandCode").toString());
 		brandEntity.setLocale(locale);
-		brandEntity.setCurrency(currency);
 		
 		return brandEntity;
 	}
@@ -356,14 +368,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 
 	@Override
-	public Brand objectToEntity(Object[] o, String locale, String currency) {
+	public Brand objectToEntity(Object[] o, String locale) {
 		Brand brand = (Brand) o[0];
 		brand.setBrandAttribute(((BrandAttribute) o[1]));
 		
 		brand.setObjectCount(((BigInteger)o[2]).intValue());
 		
 		brand.setLocale(locale);
-		brand.setCurrency(currency);
 		
 		return brand;
 	}
@@ -482,5 +493,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 	return sql;
 	}
+
+	
+
 
 }

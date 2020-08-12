@@ -97,8 +97,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			Food food = (Food) domainObject;
 
 			// find the department
-			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(),
-					domainObject.getCurrency(), domainObject.getDepartment().getDepartmentCode()).get();
+			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(), domainObject.getDepartment().getDepartmentCode()).get();
 
 			// get all the categories
 			Set<io.nzbee.entity.category.product.CategoryProduct> lcp = categoryService
@@ -108,16 +107,16 @@ public class PostgresProductAdapter implements IProductPortService {
 					.stream().map(cd -> (CategoryProduct) cd).collect(Collectors.toSet());
 
 			io.nzbee.entity.category.product.CategoryProduct primaryCategory = (CategoryProduct) categoryService
-					.findByCode(domainObject.getLclCd(), domainObject.getCurrency(),
+					.findByCode(domainObject.getLclCd(),
 							food.getPrimaryCategory().getCategoryCode())
 					.get();
 
 			// find the brand
-			io.nzbee.entity.brand.Brand b = brandService.findByCode(domainObject.getLclCd(), domainObject.getCurrency(),
+			io.nzbee.entity.brand.Brand b = brandService.findByCode(domainObject.getLclCd(),
 					domainObject.getBrand().getBrandCode()).get();
 
 			Optional<io.nzbee.entity.product.attribute.ProductAttribute> opa = productAttributeService
-					.findByCode(domainObject.getLclCd(), domainObject.getCurrency(), domainObject.getProductUPC());
+					.findByCode(domainObject.getLclCd(), domainObject.getProductUPC());
 
 			io.nzbee.entity.product.attribute.ProductAttribute pa = (opa.isPresent()) ? opa.get()
 					: (new io.nzbee.entity.product.attribute.ProductAttribute());
@@ -185,8 +184,8 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public Product findByDesc(String locale, String currency, String desc) {
-		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, currency, desc).get();
+	public Product findByDesc(String locale, String desc) {
+		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, desc).get();
 		return mapHelper(pe);
 	}
 
@@ -213,7 +212,7 @@ public class PostgresProductAdapter implements IProductPortService {
 		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
 					size, sort, selectedFacets, returnFacets).map(p -> {
 					Brand b = brandMapper.entityToDo(p.getBrand(), locale, currency);
-					Department d = departmentMapper.entityToDo(p.getDepartment(), locale, currency);
+					Department d = departmentMapper.entityToDo(p.getDepartment(), locale);
 					ProductCategory pc = (ProductCategory) categoryMapper.entityToDo(p.getPrimaryCategory());
 					Product pDo = productMapper.entityToDo(p, b, d, pc);
 					return pDo;
@@ -255,7 +254,7 @@ public class PostgresProductAdapter implements IProductPortService {
 		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
 
 		Brand bdo = brandMapper.entityToDo(be, pe.getLocale(), pe.getCurrency());
-		Department ddo = departmentMapper.entityToDo(de, pe.getLocale(), pe.getCurrency());
+		Department ddo = departmentMapper.entityToDo(de, pe.getLocale());
 		ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c);
 		return productMapper.entityToDo(pe, bdo, ddo, cdo);
 	}
@@ -276,6 +275,31 @@ public class PostgresProductAdapter implements IProductPortService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Set<Product> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Product> findAll(String locale, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product findByDesc(String locale, String currency, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

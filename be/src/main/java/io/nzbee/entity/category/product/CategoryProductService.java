@@ -13,41 +13,41 @@ public class CategoryProductService implements ICategoryProductService {
 	private ICategoryProductDao productCategoryDao;
 	
 	@Override
-	public List<CategoryProduct> findAllByProductCode(String locale, String currency, String productCode) {
-		return productCategoryDao.findAllByProductCode(locale, currency, productCode);
+	public List<CategoryProduct> findAllByProductCode(String locale, String productCode) {
+		return productCategoryDao.findAllByProductCode(locale, productCode);
 	}
 	
 	@Override
-	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String currency, String productCode) {
-		return productCategoryDao.findPrimaryByProductCode(locale, currency, productCode);
+	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String productCode) {
+		return productCategoryDao.findPrimaryByProductCode(locale, productCode);
 	}
 
 	@Override
-	public List<CategoryProduct> findAll(String locale, String currency) {
+	public List<CategoryProduct> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CategoryProduct> findAll(String locale, String currency, Set<String> codes) {
+	public List<CategoryProduct> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findById(String locale, String currency, long id) {
+	public Optional<CategoryProduct> findById(String locale, long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findByCode(String locale, String currency, String code) {
+	public Optional<CategoryProduct> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findByDesc(String locale, String currency, String desc) {
+	public Optional<CategoryProduct> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

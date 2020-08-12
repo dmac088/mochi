@@ -11,13 +11,13 @@ public class DepartmentServiceImpl implements IDepartmentService {
 	private IDepartmentPortService departmentService;
 	
 	@Override
-	public Department findByCode(String locale, String currency, String code) {
-		return departmentService.findByCode(locale, currency, code);
+	public Department findByCode(String locale, String code) {
+		return departmentService.findByCode(locale, code);
 	}
 
 	@Override
-	public Department findByDesc(String locale, String currency, String desc) {
-		return departmentService.findByDesc(locale, currency, desc);
+	public Department findByDesc(String locale, String desc) {
+		return departmentService.findByDesc(locale, desc);
 	}
 
 	@Override
@@ -26,13 +26,13 @@ public class DepartmentServiceImpl implements IDepartmentService {
 	}
 	
 	@Override
-	public Set<Department> findAll(String locale, String currency) {
-		return departmentService.findAll(locale, currency);
+	public Set<Department> findAll(String locale) {
+		return departmentService.findAll(locale);
 	}
 
 	@Override
-	public Set<Department> findAll(String locale, String currency, Set<String> codes) {
-		return departmentService.findAll(locale, currency, codes);
+	public Set<Department> findAll(String locale, Set<String> codes) {
+		return departmentService.findAll(locale, codes);
 	}
 
 	@Override

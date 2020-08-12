@@ -91,6 +91,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return result;
 	}
 	
+	
 	@Override
 	public List<Category> findAll() {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll ");
@@ -146,8 +147,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	
 	@Override
-	public <T> List<Category> findAllByType(String locale, String currency, Class<T> cls) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
+	public <T> List<Category> findAllByType(String locale, Class<T> cls) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -162,11 +163,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false, 
 															 true), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode)
+				// .setParameter("retailPriceCode", Constants.retailPriceCode)
+				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode)
 				 .setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
 		
@@ -174,13 +174,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toList());
 	}
 	
 	
 	@Override
-	public List<Category> findAll(String locale, String currency) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}", locale, currency);
+	public List<Category> findAll(String locale) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}", locale);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -195,16 +195,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
+				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toList());
 	}
 	
 
@@ -227,11 +226,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 true,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
+				 //.setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
+				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 				 
 		if(!categoryCodes.isEmpty()) {
 			 query.setParameter("categoryCodes", categoryCodes);
@@ -259,9 +258,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 
 	@Override
-	public List<Category> findAll(String locale, String currency, Set<String> categoryCodes) {
+	public List<Category> findAll(String locale, Set<String> categoryCodes) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, currency, StringUtil.join(categoryCodes, ','));
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(categoryCodes, ','));
 		
 		Session session = em.unwrap(Session.class);
 
@@ -276,11 +275,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
+				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -289,12 +287,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toList());
 	}
 	
 	@Override
-	public Optional<Category> findById(String locale, String currency, long id) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, currency, id);
+	public Optional<Category> findById(String locale, long id) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, id);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -311,12 +309,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("categoryId", id)
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
+				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -325,7 +322,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		try {
 			Object[] c = (Object[])query.getSingleResult();
 			
-			Category category = this.objectToEntity(c, locale, currency);
+			Category category = this.objectToEntity(c, locale);
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -334,9 +331,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String currency, String desc) {
+	public Optional<Category> findByDesc(String locale, String desc) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, currency, desc);
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, desc);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -353,12 +350,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("categoryDesc", desc)
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
+				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -367,7 +363,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		try {
 			Object[] c = (Object[])query.getSingleResult();
 			
-			Category category = this.objectToEntity(c, locale, currency);
+			Category category = this.objectToEntity(c, locale);
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -377,9 +373,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 
 	@Override
-	public Optional<Category> findByCode(String locale, String currency, String code) {
+	public Optional<Category> findByCode(String locale, String code) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, currency, code);
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, code);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -398,12 +394,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
 				 //.setParameter("categoryCode", code)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
+				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!categoryCodes.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
@@ -412,7 +407,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		try {
 			Object[] c = (Object[])query.getSingleResult();
 			
-			Category category = this.objectToEntity(c, locale, currency);
+			Category category = this.objectToEntity(c, locale);
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -481,8 +476,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public List<Category> findAllByProductCode(String locale, String currency, String productCode) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+	public List<Category> findAllByProductCode(String locale, String productCode) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByProductCode parameters : {}, {}, {}", locale, productCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -509,23 +504,20 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Override
 	public Category objectToEntity(Tuple t, String locale, String currency) {
-		Category c =  t.get("categoryType").toString().equals("PRD01") 
-					? new CategoryProduct()
-					: new CategoryBrand();
-		
-		c.setCategoryCode(t.get("categoryCode").toString());
-		CategoryAttribute ca = new CategoryAttribute();
-		ca.setCategoryDesc(t.get("categoryDesc").toString());
-		c.setCategoryAttribute(ca);
-		
-		c.setLocale(locale);
+		Category c = objectToEntity(t, locale);
 		c.setCurrency(currency);
-		
 		return c;
 	}
 	
 	@Override
 	public Category objectToEntity(Object[] o, String locale, String currency) {
+		Category c = objectToEntity(o, locale);
+		c.setCurrency(currency);
+		return c;
+	}
+	
+	@Override
+	public Category objectToEntity(Object[] o, String locale) {
 		Category category = (Category) o[0];
 		category.setCategoryAttribute(((CategoryAttribute) o[1]));
 		category.setCategoryType((CategoryType) o[2]);
@@ -542,9 +534,24 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		category.setObjectCount(((BigDecimal)o[6]).intValue());
 		category.setChildCount(((BigInteger)o[7]).longValue());
 		category.setLocale(locale);
-		category.setCurrency(currency);
 		
 		return category;
+	}
+
+	@Override
+	public Category objectToEntity(Tuple t, String locale) {
+		Category c =  t.get("categoryType").toString().equals("PRD01") 
+				? new CategoryProduct()
+				: new CategoryBrand();
+	
+		c.setCategoryCode(t.get("categoryCode").toString());
+		CategoryAttribute ca = new CategoryAttribute();
+		ca.setCategoryDesc(t.get("categoryDesc").toString());
+		c.setCategoryAttribute(ca);
+		
+		c.setLocale(locale);
+		
+		return c;
 	}
 	
 	@Override
@@ -619,9 +626,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"    cc.cat_prnt_id 			AS cat_prnt_id, " +
 				"    cc.cat_typ_id 				AS cat_type_id, " +
 				"    cc.node, " +
-				"    COUNT(DISTINCT prd.upc_cd) 	AS object_count, " +
-				"    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
-				"    MAX(retail_price.prc_val) 		AS max_retail_price " +
+				"    COUNT(DISTINCT prd.upc_cd) 	AS object_count " +
+				((maxPriceOnly) ? ",    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
+								 "      MAX(retail_price.prc_val) 		AS max_retail_price " 
+							   : "") + 
 				"FROM descendants cc " +
 				"LEFT JOIN mochi.product_category pc " +
 				"ON cc.cat_id = pc.cat_id " +
@@ -670,7 +678,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		AND prc_val <= :maxPrice " 
 				: "") +
 				
-				"LEFT JOIN 	( " +
+				((maxPriceOnly)
+				? "LEFT JOIN 	( " +
 				"		 SELECT prd.prd_id,  " +
 				"			prc_typ_cd, " +
 				"			prc_val  " +
@@ -715,13 +724,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 AND prc_typ_cd = 		:markdownPriceCode " +
 				"		 AND prd_sts_cd = 		:activeProductCode " +
 				"		 )  markdown_price		  " +
-				"		 ON pc.prd_id = markdown_price.prd_id " +
+				"		 ON pc.prd_id = markdown_price.prd_id " 
+				: "") +
 				" WHERE 0=0 " +
 				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id	<> :categoryId " : "") +
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd 	<> :categoryCode " : "") +
-				((hasBrands)   						? " AND b.bnd_cd in :brandCodes " : "") +
-				((hasCategories) 					? " AND cc.cat_cd in :categoryCodes " : "") +
-				((hasTags) 							? " AND t.tag_cd in 	:tagCodes " : "") +
+				((hasBrands)   						? " AND b.bnd_cd 	in :brandCodes " : "") +
+				((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
+				((hasTags) 							? " AND t.tag_cd 	in 	:tagCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
@@ -741,8 +751,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.cat_type_id, " +
 				"	coalesce(s1.object_count, 0) + " +
 				"	sum(coalesce(s2.object_count,0)) as object_count, " +
-				"	greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price, " +
-				"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price, " +
+				((maxPriceOnly) 
+						? 	"	greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price, " +
+							"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price, " 
+						:   "") +
 				"   count(distinct s2.cat_id) as child_cat_count " +
 				"FROM summaries_pta s1 " +
 				"LEFT JOIN summaries_pta s2 " +
@@ -754,9 +766,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.cat_prnt_cd, " +
 				"	s1.cat_prnt_id, " +
 				"	s1.cat_type_id, " +
-				"	s1.object_count, " +
-				"	s1.max_retail_price, " +
-				"	s1.max_markdown_price " +
+				"	s1.object_count " +
+				((maxPriceOnly) 
+					? "	,s1.max_retail_price, " +
+					 "	s1.max_markdown_price " 
+					: "") +
 				") " +
 				"SELECT " +
 				((maxPriceOnly) 
@@ -840,6 +854,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			
 		return sql;
 	}
+
+
+
 	
 
 }

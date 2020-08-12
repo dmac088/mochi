@@ -129,7 +129,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	
         // when
     	List<CategoryProduct> found = productCategoryService.findAllByProductCode(Constants.localeENGB, 
-				  																  Constants.currencyUSD, 
 				 																  "123456789");
      
         //then

@@ -30,12 +30,10 @@ public class ProductDoBeanFactory {
 								   new Brand("ENZ01",
 											 "Enza",
 											 20,
-											 "en-GB",
-											 "HKD"),
+											 "en-GB"),
 								   new Department("FOO01",
 												  "Food",
-												  "en-GB",
-												  "HKD"),
+												  "en-GB"),
 								   new ProductCategory("FRT01", 
 										   			   "test category", 
 										   			   true, 
@@ -43,7 +41,6 @@ public class ProductDoBeanFactory {
 										   			   0, 
 										   			   "PNT01", 
 										   			   new Long(10),
-										   			   "en-GB", 
-										   			   "HKD"));
+										   			   "en-GB"));
 	}
 }

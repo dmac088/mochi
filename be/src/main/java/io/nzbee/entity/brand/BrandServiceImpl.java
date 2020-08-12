@@ -18,26 +18,26 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	@Override
 	@Transactional
-	public Optional<Brand> findById(String locale, String currency, long Id) {
-		return brandDao.findById(locale, currency, Id);
+	public Optional<Brand> findById(String locale, long Id) {
+		return brandDao.findById(locale, Id);
 	}
 
 	@Override
 	@Transactional
-	public Optional<Brand> findByCode(String locale, String currency, String brandCode) {
-		return brandDao.findByCode(locale, currency, brandCode);
+	public Optional<Brand> findByCode(String locale, String brandCode) {
+		return brandDao.findByCode(locale, brandCode);
 	}
 	
 	@Override
 	@Transactional
-	public Optional<Brand> findByDesc(String locale, String currency, String brandDesc) {
-		return brandDao.findByDesc(locale, currency, brandDesc);
+	public Optional<Brand> findByDesc(String locale, String brandDesc) {
+		return brandDao.findByDesc(locale, brandDesc);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, String currency) {
-		return brandDao.findAll(locale, currency);
+	public List<Brand> findAll(String locale) {
+		return brandDao.findAll(locale);
 	}
 
 	@Override
@@ -48,19 +48,24 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, String currency, Set<String> codes) {
-		return brandDao.findAll(locale, currency, codes);
+	public List<Brand> findAll(String locale, Set<String> codes) {
+		return brandDao.findAll(locale, codes);
+	}
+
+	@Override
+	public List<Brand> findAll(String lcl, String currency, Set<String> codes) {
+		return brandDao.findAll(lcl, codes);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, String currency, String categoryCode) {
-		return brandDao.findAllByCategory(locale, currency, categoryCode);
+	public List<Brand> findAll(String locale, String categoryCode) {
+		return brandDao.findAllByCategory(locale, categoryCode);
 	}
 	
 	@Override
-	public Optional<Brand> findByProductCode(String locale, String currency, String productCode) {
-		return brandDao.findByProductCode(locale, currency, productCode);
+	public Optional<Brand> findByProductCode(String locale, String productCode) {
+		return brandDao.findByProductCode(locale, productCode);
 	}
 
 	@Override

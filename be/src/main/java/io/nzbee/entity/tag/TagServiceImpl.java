@@ -26,28 +26,28 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
-	public List<Tag> findAll(String locale, String currency) {
-		return productTagDAO.findAll(locale, currency);
+	public List<Tag> findAll(String locale) {
+		return productTagDAO.findAll(locale);
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale, String currency, Set<String> codes) {
-		return productTagDAO.findAll(locale, currency, codes);
+	public List<Tag> findAll(String locale, Set<String> codes) {
+		return productTagDAO.findAll(locale, codes);
 	}
 
 	@Override
-	public Optional<Tag> findById(String locale, String currency, long id) {
-		return productTagDAO.findById(locale, currency, id);
+	public Optional<Tag> findById(String locale, long id) {
+		return productTagDAO.findById(locale, id);
 	}
 
 	@Override
-	public Optional<Tag> findByCode(String locale, String currency, String code) {
-		return productTagDAO.findByCode(locale, currency, code);
+	public Optional<Tag> findByCode(String locale, String code) {
+		return productTagDAO.findByCode(locale, code);
 	}
 	
 	@Override
-	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
-		return productTagDAO.findByDesc(locale, currency, desc);
+	public Optional<Tag> findByDesc(String locale, String desc) {
+		return productTagDAO.findByDesc(locale, desc);
 	}
 	
 	@Override
@@ -80,6 +80,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public void delete(Tag t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Tag> findAll(String lcl, String currency, Set<String> codes) {
+		return productTagDAO.findAll(lcl, codes);
 	}
 	
 }

@@ -14,35 +14,35 @@ public class DepartmentServiceImpl implements IDepartmentService{
     private IDepartmentDao departmentDao;
 	
 	@Override
-	public List<Department> findAll(String locale, String currency) {
+	public List<Department> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Department> findAll(String locale, String currency, Set<String> codes) {
+	public List<Department> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Department> findById(String locale, String currency, long id) {
-		return departmentDao.findById(locale, currency, id) ;
+	public Optional<Department> findById(String locale, long id) {
+		return departmentDao.findById(locale, id) ;
 	}
 
 	@Override
-	public Optional<Department> findByCode(String locale, String currency, String code) {
-		return departmentDao.findByCode(locale, currency, code);
+	public Optional<Department> findByCode(String locale, String code) {
+		return departmentDao.findByCode(locale, code);
 	}
 
 	@Override
-	public Optional<Department> findByDesc(String locale, String currency, String desc) {
-		return departmentDao.findByDesc(locale, currency, desc);
+	public Optional<Department> findByDesc(String locale, String desc) {
+		return departmentDao.findByDesc(locale, desc);
 	}
 	
 	@Override
-	public Optional<Department> findByProductCode(String locale, String currency, String productCode) {
-		return departmentDao.findByProductCode(locale, currency, productCode);
+	public Optional<Department> findByProductCode(String locale, String productCode) {
+		return departmentDao.findByProductCode(locale, productCode);
 	}
 
 

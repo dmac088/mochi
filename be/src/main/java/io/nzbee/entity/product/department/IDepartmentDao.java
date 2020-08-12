@@ -6,7 +6,7 @@ import io.nzbee.entity.ILocalizedDao;
 
 public interface IDepartmentDao extends ILocalizedDao<Department> {
 
-	Optional<Department> findByProductCode(String locale, String currency, String productCode);
+	Optional<Department> findByProductCode(String locale, String productCode);
 
 
 }

@@ -13,8 +13,7 @@ public class BrandMapper implements IBrandMapper {
 						 e.getBrandCode(),
 						 e.getBrandAttribute().getBrandDesc(),
 						 e.getCount(),
-						 locale, 
-						 currency);
+						 locale);
 	
 		return bo;
 	}

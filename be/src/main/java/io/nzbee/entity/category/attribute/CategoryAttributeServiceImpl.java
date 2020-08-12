@@ -15,29 +15,29 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 	private CategoryAttributeRepository CategoryAttributeRepository; 
 	
 	@Override
-	public Optional<CategoryAttribute> findById(String locale, String currency, long id) {
+	public Optional<CategoryAttribute> findById(String locale, long id) {
 		return CategoryAttributeRepository.findById(id);
 	}
 	
 	@Override
-	public List<CategoryAttribute> findAll(String locale, String currency) {
+	public List<CategoryAttribute> findAll(String locale) {
 		return null;//CategoryAttributeRepository.findAll();
 	}
 	
 
 	@Override
-	public Optional<CategoryAttribute> findByCode(String locale, String currency, String code) {
+	public Optional<CategoryAttribute> findByCode(String locale, String code) {
 		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryCode(locale, code);
 	}
 
 	@Override
-	public Optional<CategoryAttribute> findByDesc(String locale, String currency, String desc) {
+	public Optional<CategoryAttribute> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public List<CategoryAttribute> findAll(String locale, String currency, Set<String> codes) {
+	public List<CategoryAttribute> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,6 +81,18 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 
 	@Override
 	public CategoryAttribute objectToEntity(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CategoryAttribute objectToEntity(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CategoryAttribute objectToEntity(Tuple t, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}

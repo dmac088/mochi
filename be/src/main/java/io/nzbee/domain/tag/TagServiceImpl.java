@@ -9,23 +9,23 @@ public class TagServiceImpl implements ITagService {
 	private ITagService tagService;
 	
 	@Override
-	public Tag findByCode(String locale, String currency, String code) {
-		return tagService.findByCode(locale, currency, code);
+	public Tag findByCode(String locale, String code) {
+		return tagService.findByCode(locale, code);
 	}
 
 	@Override
-	public Tag findByDesc(String locale, String currency, String desc) {
-		return tagService.findByDesc(locale, currency, desc);
+	public Tag findByDesc(String locale, String desc) {
+		return tagService.findByDesc(locale, desc);
 	}
 
 	@Override
-	public Set<Tag> findAll(String locale, String currency) {
-		return tagService.findAll(locale, currency);
+	public Set<Tag> findAll(String locale) {
+		return tagService.findAll(locale);
 	}
 
 	@Override
-	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
-		return tagService.findAll(locale, currency, codes);
+	public Set<Tag> findAll(String locale, Set<String> codes) {
+		return tagService.findAll(locale, codes);
 	}
 
 	@Override

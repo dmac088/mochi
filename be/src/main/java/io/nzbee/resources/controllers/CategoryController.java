@@ -57,42 +57,38 @@ public class CategoryController {
 	}
 
 	@GetMapping("/Category/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale,
-			@PathVariable String currency) {
-		LOGGER.debug("Fetching all categories for parameters : {}, {}", locale, currency);
-		final Set<Category> collection = categoryService.findAll(locale, currency);
+	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale) {
+		LOGGER.debug("Fetching all categories for parameters : {}, {}", locale);
+		final Set<Category> collection = categoryService.findAll(locale);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 	@GetMapping("/ProductCategory/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale,
-			@PathVariable String currency) {
-		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale, currency);
-		final Set<ProductCategory> collection = categoryService.findAllProductCategories(locale, currency);
+	public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale) {
+		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale);
+		final Set<ProductCategory> collection = categoryService.findAllProductCategories(locale);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 	@GetMapping("/BrandCategory/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<CategoryResource>> getBrandCategories(@PathVariable String locale,
-			@PathVariable String currency) {
-		LOGGER.debug("Fetching brand categories for parameters : {}, {}", locale, currency);
-		final Set<BrandCategory> collection = categoryService.findAllBrandCategories(locale, currency);
+	public ResponseEntity<CollectionModel<CategoryResource>> getBrandCategories(@PathVariable String locale) {
+		LOGGER.debug("Fetching brand categories for parameters : {}, {}", locale);
+		final Set<BrandCategory> collection = categoryService.findAllBrandCategories(locale);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 	@GetMapping("/Category/{locale}/{currency}/product/{productCode}")
-	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale,
-			@PathVariable String currency, @PathVariable String productCode) {
-		LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, currency, productCode);
-		final Set<ProductCategory> collection = categoryService.findAllByProductCode(locale, currency, productCode);
+	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String productCode) {
+		LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, productCode);
+		final Set<ProductCategory> collection = categoryService.findAllByProductCode(locale, productCode);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 	@GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
-	public ResponseEntity<CategoryResource> getCategory(@PathVariable String locale, @PathVariable String currency,
+	public ResponseEntity<CategoryResource> getCategory(@PathVariable String locale,
 			@PathVariable String categoryCode) {
-		LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, currency, categoryCode);
-		Category c = categoryService.findByCode(locale, currency, categoryCode);
+		LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, categoryCode);
+		Category c = categoryService.findByCode(locale, categoryCode);
 		return ResponseEntity.ok(categoryResourceAssember.toModel(c));
 	}
 
@@ -175,5 +171,6 @@ public class CategoryController {
 																						 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet())));
 		return ResponseEntity.ok(priceFacetResourceAssembler.toModel(result));
 	}
+
 
 }

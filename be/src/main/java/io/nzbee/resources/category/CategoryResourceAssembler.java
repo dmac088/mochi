@@ -20,11 +20,11 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 	public CategoryResource toModel(Category category) {
 		CategoryResource cr = new CategoryResource(category);
 
-		cr.add(linkTo(methodOn(CategoryController.class).getCategory(category.getLocale(), category.getCurrency(),
+		cr.add(linkTo(methodOn(CategoryController.class).getCategory(category.getLocale(),
 				category.getCategoryCode())).withSelfRel());
 
 		if (category.getCategoryType().equals("brandcategory")) {
-			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), category.getCurrency(),
+			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), null,
 					category.getCategoryCode(), null)).withRel("brands"));
 		}
 
@@ -32,29 +32,29 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 			cr.add(linkTo(methodOn(ProductController.class).getProducts(null, null, category.getCategoryCode(), null,
 					null, null, null)).withRel("products"));
 
-			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), category.getCurrency(),
+			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), null,
 					category.getCategoryCode(), null)).withRel("brands"));
 
-			cr.add(linkTo(methodOn(TagController.class).getTags(category.getLocale(), category.getCurrency(),
+			cr.add(linkTo(methodOn(TagController.class).getTags(category.getLocale(), null,
 					category.getCategoryCode(), null)).withRel("tags"));
 
-			cr.add(linkTo(methodOn(CategoryController.class).getChildCategories(category.getLocale(),
-					category.getCurrency(), category.getCategoryCode(), null)).withRel("children"));
+			cr.add(linkTo(methodOn(CategoryController.class).getChildCategories(category.getLocale(), null
+					, category.getCategoryCode(), null)).withRel("children"));
 
-			cr.add(linkTo(methodOn(CategoryController.class).getChildCategoryFacets(category.getLocale(),
-					category.getCurrency(), category.getCategoryCode(), null)).withRel("childFacets"));
+			cr.add(linkTo(methodOn(CategoryController.class).getChildCategoryFacets(category.getLocale(), null
+					, category.getCategoryCode(), null)).withRel("childFacets"));
 
-			cr.add(linkTo(methodOn(BrandController.class).getBrandFacets(category.getLocale(), category.getCurrency(),
-					category.getCategoryCode(), null)).withRel("brandFacets"));
+			cr.add(linkTo(methodOn(BrandController.class).getBrandFacets(category.getLocale(), null
+					, category.getCategoryCode(), null)).withRel("brandFacets"));
 
-			cr.add(linkTo(methodOn(TagController.class).getTagFacets(category.getLocale(), category.getCurrency(),
-					category.getCategoryCode(), null)).withRel("tagFacets"));
+			cr.add(linkTo(methodOn(TagController.class).getTagFacets(category.getLocale(), null 
+					, category.getCategoryCode(), null)).withRel("tagFacets"));
 
-			cr.add(linkTo(methodOn(CategoryController.class).getMaxPrice(category.getLocale(), category.getCurrency(),
-					category.getCategoryCode(), null)).withRel("maxPrice"));
+			cr.add(linkTo(methodOn(CategoryController.class).getMaxPrice(category.getLocale(), null 
+					, category.getCategoryCode(), null)).withRel("maxPrice"));
 
-			cr.add(linkTo(methodOn(CategoryController.class).getMaxPriceFacet(category.getLocale(),
-					category.getCurrency(), category.getCategoryCode(), null)).withRel("maxPriceFacet"));
+			cr.add(linkTo(methodOn(CategoryController.class).getMaxPriceFacet(category.getLocale(), null
+					, category.getCategoryCode(), null)).withRel("maxPriceFacet"));
 
 		}
 

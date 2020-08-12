@@ -5,18 +5,20 @@ import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
 
+import io.nzbee.entity.brand.Brand;
+
 
 public interface ILocalizedDao<T> {
     
-    Optional<T> findById(String locale, String currency, long id);
+    Optional<T> findById(String locale, long id);
     
-    Optional<T> findByCode(String locale, String currency, String code);
+    Optional<T> findByCode(String locale, String code);
     
-    Optional<T> findByDesc(String locale, String currency, String desc);
+    Optional<T> findByDesc(String locale, String desc);
     
-    List<T> findAll(String locale, String currency);
+    List<T> findAll(String locale);
     
-    List<T> findAll(String locale, String currency, Set<String> codes);
+    List<T> findAll(String locale, Set<String> codes);
      
     T objectToEntity(Object[] o, String locale, String currency);
     
@@ -27,6 +29,10 @@ public interface ILocalizedDao<T> {
     void delete(T t);
 
 	T objectToEntity(Tuple t, String locale, String currency);
+
+	T objectToEntity(Object[] o, String locale);
+
+	T objectToEntity(Tuple t, String locale);
 
 	
     

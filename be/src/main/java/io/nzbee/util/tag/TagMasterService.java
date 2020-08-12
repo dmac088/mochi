@@ -62,7 +62,6 @@ public class TagMasterService {
 		
 		Tag tDo = 
 				tagDomainService.findByCode(   Constants.localeENGB, 
-													Constants.currencyHKD, 
 													t.get_TAG_CODE());
 		
 		tagDomainService.save(tDo);
@@ -73,8 +72,7 @@ public class TagMasterService {
 		logger.debug("called extractTagMaster() ");
 		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
 	    try {
-		    	List<io.nzbee.domain.tag.Tag> tagList = tagDomainService.findAll(Constants.localeENGB,
-		    														  		Constants.currencyHKD)
+		    	List<io.nzbee.domain.tag.Tag> tagList = tagDomainService.findAll(Constants.localeENGB)
 		    							  						   .stream().collect(Collectors.toList());
 		    	
 		    	//create a map of categories (full list)
@@ -82,8 +80,7 @@ public class TagMasterService {
 		    												.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
 		 
 		    	
-		    	tagList.addAll(tagDomainService.findAll(Constants.localeZHHK,
-																  Constants.currencyUSD)
+		    	tagList.addAll(tagDomainService.findAll(Constants.localeZHHK)
 		    											.stream().collect(Collectors.toList()));
 		    	
 		    	lpms.addAll(tagList.stream().map(t -> {
@@ -91,8 +88,7 @@ public class TagMasterService {
 		    	TagMasterSchema tms = map.get(t.getTagCode());
 		    		
 			    Tag tag = tagDomainService.findByCode(t.getLocale(),
-																t.getCurrency(), 
-																t.getTagCode()); 
+													  t.getTagCode()); 
 			    	
 			    tms.set_TAG_CODE(tag.getTagCode());
 			    	

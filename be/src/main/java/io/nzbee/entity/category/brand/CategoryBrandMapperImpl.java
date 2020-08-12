@@ -15,8 +15,7 @@ public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 				true,
 				e.getCategoryLevel(),
 				e.getObjectCount(),
-				e.getLocale(), 
-				e.getCurrency()
+				e.getLocale()
 				);
 	}
 
@@ -27,7 +26,6 @@ public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 		CategoryBrand cb = new CategoryBrand();
 		cb.setCategoryCode(bc.getCategoryCode());
 		cb.setLocale(bc.getLocale());
-		cb.setCurrency(bc.getCurrency());
 		cb.setObjectCount(bc.getCount());
 		
 		CategoryAttribute ca = new CategoryAttribute();

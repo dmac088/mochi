@@ -21,22 +21,22 @@ public class PostgresTagAdapter  implements ITagPortService {
 	private ITagAttributeService tagAttributeService;
 
 	@Override
-	public Tag findByCode(String locale, String currency, String code) {
-		io.nzbee.entity.tag.Tag t = tagService.findByCode(locale, currency, code)
+	public Tag findByCode(String locale, String code) {
+		io.nzbee.entity.tag.Tag t = tagService.findByCode(locale, code)
 				.orElseThrow(() -> new TagNotFoundException("Tag with code " + code + " not found!"));
 		return this.entityToDo(t);
 	}
 
 	@Override
-	public Tag findByDesc(String locale, String currency, String desc) {
-		io.nzbee.entity.tag.Tag t = tagService.findByDesc(locale, currency, desc)
+	public Tag findByDesc(String locale, String desc) {
+		io.nzbee.entity.tag.Tag t = tagService.findByDesc(locale, desc)
 				.orElseThrow(() -> new TagNotFoundException("Tag with desc " + desc + " not found!"));
 		return this.entityToDo(t);
 	}
 	
 	@Override
-	public Set<Tag> findAll(String locale, String currency) {
-		return tagService.findAll(locale, currency)
+	public Set<Tag> findAll(String locale) {
+		return tagService.findAll(locale)
 				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
 	}
 
@@ -48,8 +48,8 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 
 	@Override
-	public Set<Tag> findAll(String locale, String currency, Set<String> codes) {
-		return tagService.findAll(locale, currency, codes)
+	public Set<Tag> findAll(String locale, Set<String> codes) {
+		return tagService.findAll(locale, codes)
 				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
 	}
 	
@@ -58,7 +58,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 		
 		Optional<io.nzbee.entity.tag.attribute.TagAttribute> ota = tagAttributeService.findByCode(
 																		domainObject.getLocale(), 
-																		domainObject.getCurrency(), 
 																		domainObject.getTagCode());
 		
 		io.nzbee.entity.tag.attribute.TagAttribute ta = (ota.isPresent()) 
@@ -75,7 +74,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 		
 		t.setTagCode(domainObject.getTagCode());
 		t.setLocale(domainObject.getLocale());
-		t.setCurrency(domainObject.getCurrency());
 		t.addTagAttribute(ta);
 		
 		

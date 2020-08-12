@@ -87,7 +87,6 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	
         // when
     	Brand found = brandService.findById(Constants.localeENGB, 
-				  							Constants.currencyUSD,  
 				  							brand.getId()).get();
      
         // then
@@ -100,7 +99,6 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	
         // when
     	Brand found = brandService.findByCode("en-GB", 
-											  "USD",  
 											  "TST02").get();
      
         // then
@@ -113,7 +111,6 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	
         // when
     	Brand found = brandService.findByDesc(Constants.localeENGB, 
-				 							  Constants.currencyUSD, 
 				 							  "test brand").get();
      
         //then

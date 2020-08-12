@@ -7,20 +7,20 @@ import java.util.Set;
 public interface ILocalizedService<T> {
 
 	
-	public List<T> findAll(String locale, String currency);
+	List<T> findAll(String locale);
 	
-	public List<T> findAll(String locale, String currency, Set<String> codes);
+	List<T> findAll(String locale, Set<String> codes);
 	
-	public Optional<T> findById(String locale, String currency, long id);
+	Optional<T> findById(String locale, long id);
 	
-	public Optional<T> findByCode(String locale, String currency, String code);
+	Optional<T> findByCode(String locale, String code);
 	
-	public Optional<T> findByDesc(String locale, String currency, String desc);
+	Optional<T> findByDesc(String locale, String desc);
 	
-	public void save(T t);
+	void save(T t);
 	
-	public void update(T t);
+	void update(T t);
 	
-	public void delete(T t);
-	
+	void delete(T t);
+
 }

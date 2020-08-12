@@ -15,29 +15,29 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	private TagAttributeRepository TagAttributeRepository; 
 	
 	@Override
-	public Optional<TagAttribute> findById(String locale, String currency, long id) {
+	public Optional<TagAttribute> findById(String locale, long id) {
 		return TagAttributeRepository.findById(id);
 	}
 	
 	@Override
-	public List<TagAttribute> findAll(String locale, String currency) {
+	public List<TagAttribute> findAll(String locale) {
 		return null;//TagAttributeRepository.findAll();
 	}
 	
 
 	@Override
-	public Optional<TagAttribute> findByCode(String locale, String currency, String code) {
+	public Optional<TagAttribute> findByCode(String locale, String code) {
 		return TagAttributeRepository.findByLclCdAndTagTagCode(locale, code);
 	}
 
 	@Override
-	public Optional<TagAttribute> findByDesc(String locale, String currency, String desc) {
+	public Optional<TagAttribute> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public List<TagAttribute> findAll(String locale, String currency, Set<String> codes) {
+	public List<TagAttribute> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,6 +81,18 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 
 	@Override
 	public TagAttribute objectToEntity(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TagAttribute objectToEntity(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TagAttribute objectToEntity(Tuple t, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}

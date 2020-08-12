@@ -11,32 +11,26 @@ public class BrandServiceImpl implements IBrandService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Brand findByCode(String locale, String currency, String code) {
-		return brandService.findByCode(locale, currency, code);
+	public Brand findByCode(String locale, String code) {
+		return brandService.findByCode(locale, code);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public Brand findByDesc(String locale, String currency, String desc) {
-		return brandService.findByDesc(locale, currency, desc);
+	public Brand findByDesc(String locale, String desc) {
+		return brandService.findByDesc(locale, desc);
 	}
   
     @Override
 	@Transactional(readOnly=true)
-	public Set<Brand> findAll(String locale, String currency) {
-    	return brandService.findAll(locale, currency);
+	public Set<Brand> findAll(String locale) {
+    	return brandService.findAll(locale);
 	}	
     
     @Override
-    @Transactional(readOnly=true)
-	public Set<Brand> findAll(String locale, String currency, String category) {
-    	return brandService.findAll(locale, currency, category);
-	}
-    
-    @Override
 	@Transactional(readOnly=true)
-	public Set<Brand> findAll(String locale, String currency, Set<String> codes) {
-		return brandService.findAll(locale, currency, codes);
+	public Set<Brand> findAll(String locale, Set<String> codes) {
+		return brandService.findAll(locale, codes);
 	}
     
     @Override
@@ -46,8 +40,8 @@ public class BrandServiceImpl implements IBrandService {
 	}
     
 	@Override
-	public Brand findByProductCode(String locale, String currency, String productCode) {
-		return brandService.findByProductCode(locale, currency, productCode);
+	public Brand findByProductCode(String locale, String productCode) {
+		return brandService.findByProductCode(locale, productCode);
 	}
 
 	@Override
@@ -66,8 +60,5 @@ public class BrandServiceImpl implements IBrandService {
 		// TODO Auto-generated method stub
 		
 	}
-
 	
-
-
 }
