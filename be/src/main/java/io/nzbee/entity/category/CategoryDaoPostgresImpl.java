@@ -583,6 +583,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			t.cat_cd, " +
 				"			t.cat_lvl, " +
 				"			t.cat_prnt_cd,  " +
+				"			t.cat_prnt_id,  " +
 				"			t.cat_typ_id, " +
 				"			cast('/' || cast(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t " +
@@ -601,11 +602,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			t.cat_cd,  " +
 				"			t.cat_lvl, " +
 				"			t.cat_prnt_cd,  " +
+				"			t.cat_prnt_id,  " +
 				"			t.cat_typ_id, " +	
 				"			cast(d.node || CAST(t.cat_id as text) || '/' as text) node " +
 				"  FROM mochi.category AS t  " +
 				"  JOIN descendants AS d  " +
-				"  ON t.cat_prnt_cd = d.cat_cd " +
+				"  ON t.cat_prnt_id = d.cat_id " +
 				"), summaries_pta " +
 				"AS " +
 				"( " +
@@ -613,7 +615,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"    cc.cat_id 					AS cat_id, " +
 				"    cc.cat_cd 					AS cat_cd, " +
 				"    cc.cat_lvl 				AS cat_lvl, " +
-				"    cc.cat_prnt_cd 			AS prnt_cd, " +
+				"    cc.cat_prnt_cd 			AS cat_prnt_cd, " +
+				"    cc.cat_prnt_id 			AS cat_prnt_id, " +
 				"    cc.cat_typ_id 				AS cat_type_id, " +
 				"    cc.node, " +
 				"    COUNT(DISTINCT prd.upc_cd) 	AS object_count, " +
@@ -724,6 +727,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	 cc.cat_cd, " +
 				"	 cc.cat_lvl, " +
 				"	 cc.cat_prnt_cd, " +
+				"	 cc.cat_prnt_id, " +
 				"	 cc.cat_typ_id, " +
 				"	 cc.node) " +
 				" , summaries_ptb AS " +
@@ -732,7 +736,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.cat_id, " +
 				"	s1.cat_cd, " +
 				"	s1.cat_lvl, " +
-				"	s1.prnt_cd, " +
+				"	s1.cat_prnt_cd, " +
+				"	s1.cat_prnt_id, " +
 				"	s1.cat_type_id, " +
 				"	coalesce(s1.object_count, 0) + " +
 				"	sum(coalesce(s2.object_count,0)) as object_count, " +
@@ -746,7 +751,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"	s1.cat_id, " +
 				"	s1.cat_cd, " +
 				"	s1.cat_lvl, " +
-				"	s1.prnt_cd, " +
+				"	s1.cat_prnt_cd, " +
+				"	s1.cat_prnt_id, " +
 				"	s1.cat_type_id, " +
 				"	s1.object_count, " +
 				"	s1.max_retail_price, " +
@@ -783,13 +789,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"FROM summaries_ptb s " +
 
 				"LEFT JOIN summaries_ptb ps " +
-				"ON ps.cat_cd = s.prnt_cd " +
+				"ON ps.cat_id = s.cat_prnt_id " +
 
 				"LEFT JOIN (" + 
-				" SELECT 	prnt_cd as cat_cd, " +
+				" SELECT 	cat_prnt_cd as cat_cd, " +
 				" 			count(distinct cat_id) as child_cat_count " +
 				" FROM summaries_ptb cs " +
-				" GROUP BY prnt_cd" +
+				" GROUP BY cat_prnt_cd" +
 				") cs " +
 				"ON s.cat_cd = cs.cat_cd " +
 				
@@ -805,10 +811,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				: " ") +
 				
 				"LEFT JOIN mochi.category pc " +
-				"ON pc.cat_cd = s.prnt_cd  " +
+				"ON pc.cat_id = s.cat_prnt_id  " +
 				
 				"LEFT JOIN mochi.category ppc " +
-				"ON ppc.cat_cd = pc.cat_prnt_cd  " +
+				"ON ppc.cat_id = pc.cat_prnt_id  " +
 				
 				"LEFT JOIN mochi.category_type pct " +
 				"ON pc.cat_typ_id = pct.cat_typ_id  " +
