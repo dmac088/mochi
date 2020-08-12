@@ -6,13 +6,12 @@ import org.springframework.stereotype.Component;
 public class DepartmentMapper implements IDepartmentMapper {
 
 	@Override
-	public io.nzbee.domain.department.Department entityToDo(Department e, String locale, String currency) {
+	public io.nzbee.domain.department.Department entityToDo(Department e, String locale) {
 		io.nzbee.domain.department.Department dO = 
 				new io.nzbee.domain.department.Department(
 						e.getDepartmentCode(),
 						e.getAttribute().getDesc(),
-						locale, 
-						currency
+						locale
 				);
 	
 		return dO;

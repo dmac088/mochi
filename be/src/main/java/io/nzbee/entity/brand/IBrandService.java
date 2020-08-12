@@ -8,13 +8,14 @@ import io.nzbee.search.ISearchDimensionService;
 
 public interface IBrandService extends ILocalizedService<Brand>, ISearchDimensionService<Brand> {
 
-	List<Brand> findAll(String locale, String currency, Set<String> brandCodes);
+	List<Brand> findAll(String locale, Set<String> brandCodes);
 	
-	List<Brand> findAll(String locale, String currency, String categoryCode);
+	List<Brand> findAll(String locale, String categoryCode);
 	
-	Optional<Brand> findByProductCode(String locale, String currency, String productCode);
+	Optional<Brand> findByProductCode(String locale, String productCode);
 
 	List<Brand> findAll(String locale, String currency, String caetgoryCode, Set<String> categoryCodes,
 			Set<String> tagCodes, Double maxPrice);
+
 
 }

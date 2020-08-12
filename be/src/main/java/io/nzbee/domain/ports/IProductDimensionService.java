@@ -4,12 +4,12 @@ import java.util.Set;
 
 public interface IProductDimensionService<X> extends IPortService<X> {
 	
-	Set<X> findAll(String locale, String currency);
+	Set<X> findAll(String locale);
 	    
-	Set<X> findAll(String locale, String currency, Set<String> codes);
+	Set<X> findAll(String locale, Set<String> codes);
 
-	X findByCode(String locale, String currency, String code);
+	X findByCode(String locale, String code);
 
-	X findByDesc(String locale, String currency, String desc);
+	X findByDesc(String locale, String desc);
 	    
 }

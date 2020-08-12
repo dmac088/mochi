@@ -8,12 +8,12 @@ import io.nzbee.entity.ILocalizedDao;
 
 public interface IBrandDao extends ILocalizedDao<Brand> {
 	
-	List<Brand> findAll(String locale, String currency, Set<String> brandCodes);
-
-	List<Brand> findAllByCategory(String locale, String currency, String categoryCode);
+	List<Brand> findAll(String locale,  Set<String> brandCodes); 
 	
-	Optional<Brand> findByProductCode(String locale, String currency, String productCode);
+	Optional<Brand> findByProductCode(String locale, String productCode);
 
 	List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> tagCodes, Double maxPrice);
+
+	List<Brand> findAllByCategory(String locale, String categoryCode);
 }

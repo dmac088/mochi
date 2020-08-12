@@ -21,28 +21,28 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	private IBrandAttributeService brandAttributeService;
 
 	@Override
-	public Set<Brand> findAll(String locale, String currency) {
-		return brandService.findAll(locale, currency)
+	public Set<Brand> findAll(String locale) {
+		return brandService.findAll(locale)
 				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
 	}
 
 	@Override
-	public Brand findByCode(String locale, String currency, String code) {
-		io.nzbee.entity.brand.Brand b = brandService.findByCode(locale, currency, code)
+	public Brand findByCode(String locale, String code) {
+		io.nzbee.entity.brand.Brand b = brandService.findByCode(locale, code)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
 		return entityToDo(b);
 	}
 	
 	@Override
-	public Brand findByProductCode(String locale, String currency, String productCode) {
-		io.nzbee.entity.brand.Brand b = brandService.findByProductCode(locale, currency, productCode)
+	public Brand findByProductCode(String locale, String productCode) {
+		io.nzbee.entity.brand.Brand b = brandService.findByProductCode(locale, productCode)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product code " + productCode));
 		return entityToDo(b);
 	}
 
 	@Override
-	public Brand findByDesc(String locale, String currency, String desc) {
-		io.nzbee.entity.brand.Brand b = brandService.findByDesc(locale, currency, desc)
+	public Brand findByDesc(String locale, String desc) {
+		io.nzbee.entity.brand.Brand b = brandService.findByDesc(locale, desc)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product desc " + desc));
 		return entityToDo(b);
 	}
@@ -60,14 +60,14 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 
 	@Override
-	public Set<Brand> findAll(String locale, String currency, String category) {
-		return brandService.findAll(locale, currency, category)
+	public Set<Brand> findAll(String locale, String category) {
+		return brandService.findAll(locale, category)
 				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
 	}
 	
 	@Override
-	public Set<Brand> findAll(String locale, String currency, Set<String> codes) {
-		return brandService.findAll(locale, currency, codes)
+	public Set<Brand> findAll(String locale, Set<String> codes) {
+		return brandService.findAll(locale, codes)
 				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
 	}
 	
@@ -76,7 +76,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 												
 		Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba = brandAttributeService.findByCode(
 																			domainObject.getLocale(), 
-																			domainObject.getCurrency(), 
 																			domainObject.getBrandCode());
 
 		io.nzbee.entity.brand.attribute.BrandAttribute ba = (oba.isPresent()) 
@@ -89,7 +88,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 							
 		b.setBrandCode(domainObject.getBrandCode());
 		b.setLocale(domainObject.getLocale());
-		b.setCurrency(domainObject.getCurrency());
 		
 		ba.setBrandDesc(domainObject.getBrandDesc());
 		ba.setLclCd(domainObject.getLocale());
@@ -104,8 +102,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 					 e.getBrandCode(),
 					 e.getBrandAttribute().getBrandDesc(),
 					 e.getCount(),
-					 e.getLocale(), 
-					 e.getCurrency()
+					 e.getLocale()
 					);
 	}
 	

@@ -53,11 +53,6 @@ public class Tag implements ILocalizedDomainObject {
 	public String getLocale() {
 		return locale;
 	}
-
-	@Override
-	public String getCurrency() {
-		return currency;
-	}
 	
 	public List<Product> getProducts() {
 		return products;

@@ -18,8 +18,6 @@ public class Brand implements ILocalizedDomainObject {
 	
 	private String locale;
 	
-	private String currency;
-	
 	private int objectCount;
 	
 	@JsonIgnore
@@ -31,14 +29,12 @@ public class Brand implements ILocalizedDomainObject {
 	public Brand(String brandCode,
 				 String brandDesc,
 				 int objectCount,
-				 String locale, 
-				 String currency) {
+				 String locale) {
 				 this.brandCode = brandCode;
 				 this.brandDesc = brandDesc;
 			 	 this.products = new ArrayList<Product>();
 			 	 this.categories = new ArrayList<BrandCategory>();
 			 	 this.locale = locale;
-			 	 this.currency = currency;
 			 	 this.objectCount = objectCount;
 	}
 	
@@ -61,11 +57,6 @@ public class Brand implements ILocalizedDomainObject {
 	@Override
 	public String getLocale() {
 		return this.locale;
-	}
-
-	@Override
-	public String getCurrency() {
-		return this.currency;
 	}
 	
 	@Override

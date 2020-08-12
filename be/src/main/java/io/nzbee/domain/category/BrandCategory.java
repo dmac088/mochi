@@ -14,12 +14,10 @@ public class BrandCategory extends Category {
 							boolean isHierarchical,
 							Long level,
 							int objectCount,
-							String locale, 
-							String currency) {
+							String locale) {
 		super(categoryCode, 
 			  categoryDesc, 
 			  locale, 
-			  currency,
 			  objectCount);
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.brands = new ArrayList<Brand>();
@@ -27,12 +25,10 @@ public class BrandCategory extends Category {
 	
 	public BrandCategory(	String categoryCode,
 							String categoryDesc,
-							String locale,
-							String currency) {
+							String locale) {
 		super(	categoryCode, 
 				categoryDesc, 
-				locale,
-				currency);
+				locale);
 		
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.brands = new ArrayList<Brand>();

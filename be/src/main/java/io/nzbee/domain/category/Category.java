@@ -15,12 +15,10 @@ public abstract class Category implements ILocalizedDomainObject {
 	
 	private String locale;
 	
-	private String currency;
 
 	public Category(		String categoryCode, 
 							String categoryDesc,
 							String lclCd, 
-							String currency,
 							int objectCount 
 					) {
 		super();
@@ -28,19 +26,16 @@ public abstract class Category implements ILocalizedDomainObject {
 		this.categoryDesc 	= categoryDesc;
 		this.objectCount	= objectCount;
 		this.locale 		= lclCd;
-		this.currency		= currency;
 	}
 	
 	public Category(		String 	categoryCode, 
 							String categoryDesc,
-							String lclCd,
-							String currency
+							String lclCd
 					) {
 		super();
 		this.categoryCode 	= categoryCode;
 		this.categoryDesc 	= categoryDesc;
 		this.locale 		= lclCd;
-		this.currency 		= currency;
 	}
 
 	public String getCategoryCode() {
@@ -61,10 +56,6 @@ public abstract class Category implements ILocalizedDomainObject {
 	
 	public String getLocale() {
 		return locale;
-	}
-
-	public String getCurrency() {
-		return currency;
 	}
 
 	@Override

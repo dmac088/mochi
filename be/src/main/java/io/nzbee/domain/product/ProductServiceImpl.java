@@ -75,6 +75,30 @@ public class ProductServiceImpl implements IProductService {
 	public void update(Product object) {
 		productService.update(object);
 	}
+
+	@Override
+	public Product findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Product findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Product> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<Product> findAll(String locale, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 
 }

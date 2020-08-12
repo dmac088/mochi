@@ -43,8 +43,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Tag> findById(String locale, String currency, long id) {
-		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}, {}", locale, currency, id);
+	public Optional<Tag> findById(String locale, long id) {
+		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}, {}", locale, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -65,8 +65,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 	
 	@Override
-	public Optional<Tag> findByCode(String locale, String currency, String code) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, currency, code);
+	public Optional<Tag> findByCode(String locale, String code) {
+		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, code);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -90,7 +90,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		try {
 			
 			Tuple tuple = query.getSingleResult();
-			return Optional.ofNullable(this.objectToEntity(tuple, locale, currency));
+			return Optional.ofNullable(this.objectToEntity(tuple, locale));
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -99,8 +99,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	
 	@Override
-	public Optional<Tag> findByDesc(String locale, String currency, String desc) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}, {}", locale, currency, desc);
+	public Optional<Tag> findByDesc(String locale, String desc) {
+		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}, {}", locale, desc);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -130,8 +130,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 
 	@Override
-	public List<Tag> findAll(String locale, String currency, Set<String> codes) {
-		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtil.join(codes));
+	public List<Tag> findAll(String locale, Set<String> codes) {
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, StringUtil.join(codes));
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 				
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -158,7 +158,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 				
 		List<Tuple> tuples = query.getResultList();
 				
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -180,8 +180,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 
 	@Override
-	public List<Tag> findAll(String locale, String currency) {
-		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
+	public List<Tag> findAll(String locale) {
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
@@ -201,25 +201,39 @@ public class TagDaoPostgresImpl implements ITagDao {
 				
 		List<Tuple> tuples = query.getResultList();
 				
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
 	}
 
 	@Override
 	public Tag objectToEntity(Object[] o, String locale, String currency) {
-		Tag tag = (Tag) o[0];
+		Tag tagEntity = objectToEntity(o,locale);
+		tagEntity.setCurrency(currency);
+		return tagEntity;
+	}
+
+	@Override
+	public Tag objectToEntity(Tuple t, String locale, String currency) {
+		Tag tagEntity = objectToEntity(t,locale);
+		tagEntity.setCurrency(currency);
+		return tagEntity;
+	}
 	
+	@Override
+	public Tag objectToEntity(Object[] o, String locale) {
+		Tag tag = (Tag) o[0];
+		
 		tag.setTagAttribute(((TagAttribute) o[1]));
 		
 		tag.setObjectCount(((BigInteger)o[2]).intValue());
 		
 		tag.setLocale(locale);
-		tag.setCurrency(currency);
+		
 		
 		return tag;
 	}
 
 	@Override
-	public Tag objectToEntity(Tuple t, String locale, String currency) {
+	public Tag objectToEntity(Tuple t, String locale) {
 		Tag tagEntity = new Tag();
 		TagAttribute tagAttribute = new TagAttribute();
 				
@@ -234,7 +248,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		tagEntity.setTagCode(t.get("tagCode").toString());
 		
 		tagEntity.setLocale(locale);
-		tagEntity.setCurrency(currency);
+		
 		return tagEntity;
 	}
 	

@@ -25,8 +25,7 @@ public class CategoryDoBeanFactory {
 									0,									
 									"FRT01",
 									new Long(10),
-									"en-GB", 
-									"HKD");
+									"en-GB");
 		
 		return category;
 	}
@@ -38,8 +37,7 @@ public class CategoryDoBeanFactory {
 									false,
 									new Long(0),
 									0,
-									"en-GB", 
-									"HKD");
+									"en-GB");
 		
 	}
 	

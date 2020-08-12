@@ -23,6 +23,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.Constants;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
 
@@ -83,8 +84,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findById("en-GB",
-	    												  "USD",
+	    	Department found = departmentService.findById(Constants.localeENGB,
 	    												  department.getId()).get();
 	     
 	        // then
@@ -95,8 +95,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByCode_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findByCode("en-GB",
-															"USD",
+	    	Department found = departmentService.findByCode(Constants.localeENGB,
 															"TST01").get();
 	     
 	        // then
@@ -107,8 +106,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByDesc_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findByDesc("en-GB",
-															"USD",
+	    	Department found = departmentService.findByDesc(Constants.localeENGB,
 															"test department").get();
 	     
 	        // then

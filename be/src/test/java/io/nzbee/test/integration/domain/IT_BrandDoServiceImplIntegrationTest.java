@@ -52,14 +52,14 @@ public class IT_BrandDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandShouldBeFound() {
-        Brand found = brandService.findByCode(Constants.localeENGB, Constants.currencyHKD, "TST03");
+        Brand found = brandService.findByCode(Constants.localeENGB, "TST03");
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenBrandShouldBeFound() {
-    	Brand found = brandService.findByDesc(Constants.localeENGB, Constants.currencyHKD, "test brand");
+    	Brand found = brandService.findByDesc(Constants.localeENGB, "test brand");
       
         assertFound(found);
     }

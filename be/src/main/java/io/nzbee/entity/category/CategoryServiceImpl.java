@@ -17,18 +17,18 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	private ICategoryDao categoryDAO;
 	
 	@Override
-	public Optional<Category> findById(String locale, String currency, long id) {
-		return categoryDAO.findById(locale, currency, id);
+	public Optional<Category> findById(String locale, long id) {
+		return categoryDAO.findById(locale, id);
 	}
 
 	@Override
-	public Optional<Category> findByCode(String locale, String currency, String code) {
-		return categoryDAO.findByCode(locale, currency, code);
+	public Optional<Category> findByCode(String locale, String code) {
+		return categoryDAO.findByCode(locale, code);
 	}
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String currency, String categoryDesc) {
-		return categoryDAO.findByDesc(locale, currency, categoryDesc);
+	public Optional<Category> findByDesc(String locale, String categoryDesc) {
+		return categoryDAO.findByDesc(locale, categoryDesc);
 	}
 	
 	@Override
@@ -44,18 +44,18 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public List<Category> findAll(String locale, String currency) {
-		return categoryDAO.findAll(locale, currency);
+	public List<Category> findAll(String locale) {
+		return categoryDAO.findAll(locale);
 	}
 	
 	@Override
-	public List<Category> findAll(String locale, String currency, Set<String> categoryCodes) {
-		return categoryDAO.findAll(locale, currency, categoryCodes);
+	public List<Category> findAll(String locale, Set<String> categoryCodes) {
+		return categoryDAO.findAll(locale, categoryCodes);
 	}
 	
 	@Override
-	public <T> List<Category> findAll(String locale, String currency, Class<T> classType) {
-		return categoryDAO.findAllByType(locale, currency, classType);
+	public <T> List<Category> findAll(String locale, Class<T> classType) {
+		return categoryDAO.findAllByType(locale, classType);
 	}
 
 	@Override
@@ -64,7 +64,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	public List<Category> findAllForLevel(String locale, String currency, Long level) {
+	public List<Category> findAllForLevel(String locale, Long level) {
 		return categoryDAO.findByLevel(locale, level);
 	}
 	
@@ -107,10 +107,14 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	public Optional<Category> findByCode(String categoryCode) {
-		return categoryDAO.findByCode(categoryCode);
+	public List<Category> findAll(String lcl, String currency, Set<String> codes) {
+		return categoryDAO.findAll(lcl, codes);
 	}
 
-	
+	@Override
+	public Optional<Category> findByCode(String categoryCode) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

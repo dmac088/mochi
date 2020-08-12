@@ -86,13 +86,11 @@ public class CategoryMasterService {
 								c.get_CATEGORY_DESC_EN(),
 								new Long(c.get_CATEGORY_LEVEL()),
 								c.get_PARENT_CATEGORY_CODE(),
-								Constants.localeENGB,
-								Constants.currencyHKD)
+								Constants.localeENGB)
 						: new BrandCategory(
 								c.get_CATEGORY_CODE(),
 								c.get_CATEGORY_DESC_EN(),
-								Constants.localeENGB,
-								Constants.currencyHKD
+								Constants.localeENGB
 								);
 		
 		categoryDomainService.save(cEN);
@@ -103,14 +101,11 @@ public class CategoryMasterService {
 						c.get_CATEGORY_DESC_HK(),
 						new Long(c.get_CATEGORY_LEVEL()),
 						c.get_PARENT_CATEGORY_CODE(),
-						Constants.localeZHHK,
-						Constants.currencyHKD)
+						Constants.localeZHHK)
 				: new BrandCategory(
 						c.get_CATEGORY_CODE(),
 						c.get_CATEGORY_DESC_HK(),
-						Constants.localeZHHK,
-						Constants.currencyHKD
-						);
+						Constants.localeZHHK);
 
 		categoryDomainService.save(cCN);
 	}
@@ -119,8 +114,7 @@ public class CategoryMasterService {
 		logger.debug("called extractCategoryMaster() ");
 		List<CategoryMasterSchema> lpms = new ArrayList<CategoryMasterSchema>();
 	    try {
-		    	List<Category> categoryList = categoryDomainService.findAll(Constants.localeENGB,
-		    														  		Constants.currencyHKD)
+		    	List<Category> categoryList = categoryDomainService.findAll(Constants.localeENGB)
 		    							  						   .stream().collect(Collectors.toList());
 		    	
 		    	//create a map of categories (full list)
@@ -128,8 +122,7 @@ public class CategoryMasterService {
 		    												.stream().collect(Collectors.toMap(c -> c.getCategoryCode(), c -> new CategoryMasterSchema()));
 		 
 		    	
-		    	categoryList.addAll(categoryDomainService.findAll(Constants.localeZHHK,
-																  Constants.currencyUSD)
+		    	categoryList.addAll(categoryDomainService.findAll(Constants.localeZHHK)
 		    											.stream().collect(Collectors.toList()));
 		    	
 		    	lpms.addAll(categoryList.stream().map(c -> {
@@ -137,7 +130,6 @@ public class CategoryMasterService {
 		    	CategoryMasterSchema cms = map.get(c.getCategoryCode());
 		    		
 			    Category cat = categoryDomainService.findByCode(c.getLocale(),
-																c.getCurrency(), 
 																c.getCategoryCode()); 
 			    	
 			    cms.set_CATEGORY_CODE(cat.getCategoryCode());

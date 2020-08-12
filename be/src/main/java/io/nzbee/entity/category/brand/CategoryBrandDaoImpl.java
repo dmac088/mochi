@@ -78,31 +78,31 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 	
 	@Override
-	public Optional<CategoryBrand> findById(String locale, String currency, long id) {
+	public Optional<CategoryBrand> findById(String locale, long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByCode(String locale, String currency, String code) {
+	public Optional<CategoryBrand> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByDesc(String locale, String currency, String desc) {
+	public Optional<CategoryBrand> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CategoryBrand> findAll(String locale, String currency) {
+	public List<CategoryBrand> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CategoryBrand> findAll(String locale, String currency, Set<String> codes) {
+	public List<CategoryBrand> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -133,6 +133,19 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
 	@Override
 	public CategoryBrand objectToEntity(Tuple t, String locale, String currency) {
+		CategoryBrand cb = objectToEntity(t,locale);
+		cb.setCurrency(currency);
+		return cb; 
+	}
+
+	@Override
+	public CategoryBrand objectToEntity(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CategoryBrand objectToEntity(Tuple t, String locale) {
 		CategoryAttribute ca = new CategoryAttribute();
 		ca.setCategoryDesc(t.get("categoryDesc").toString());
 		ca.setLclCd(locale);
@@ -145,7 +158,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 		cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
 		cp.setCategoryCode(t.get("categoryCode").toString());
 		cp.setLocale(locale);
-		cp.setCurrency(currency);
+		
 		cp.setCategoryAttribute(ca);
 		cp.setCategoryType(ct);
 		

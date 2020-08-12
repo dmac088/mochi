@@ -81,13 +81,11 @@ public class ProductEntityBeanFactory {
 		
 		//we need a brand
 		product.setBrand(brandService.findByCode(Constants.localeENGB, 
-												 Constants.currencyHKD, 
 												 "PLA01").get());
 				
 				
 		//we need a type
 		product.setDepartment(departmentService.findByCode(	Constants.localeENGB, 
-				 Constants.currencyHKD,
 				 											"FOO01").get());
 				
 		//we need a status
@@ -95,7 +93,6 @@ public class ProductEntityBeanFactory {
 				
 		//we need a category
 		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
-				 														  Constants.currencyHKD,
 																		  "FRT01").get();
 				
 				

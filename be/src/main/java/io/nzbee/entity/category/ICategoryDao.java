@@ -11,13 +11,13 @@ public interface ICategoryDao extends ILocalizedDao<Category> {
 	
 	List<Category> findByLevel(String locale, Long level);
 
-	List<Category> findAll(String locale, String currency);
+	List<Category> findAll(String locale);
 	
-	List<Category> findAll(String locale, String currency, Set<String> categoryCodes);
+	List<Category> findAll(String locale, Set<String> categoryCodes);
 	
-	List<Category> findAllByProductCode(String locale, String currency, String productCode);
+	List<Category> findAllByProductCode(String locale, String productCode);
 
-	<T> List<Category> findAllByType(String locale, String currency, Class<T> cls);
+	<T> List<Category> findAllByType(String locale, Class<T> cls);
 
 	List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);

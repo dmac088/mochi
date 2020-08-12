@@ -73,7 +73,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindById_thenReturnTag() {
 
 		// when
-		Tag found = tagService.findById(Constants.localeENGB, Constants.currencyUSD, tag.getTagId())
+		Tag found = tagService.findById(Constants.localeENGB, tag.getTagId())
 				.get();
 
 		// then
@@ -85,7 +85,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnTag() {
 
 		// when
-		Tag found = tagService.findByCode("en-GB", "USD", "TST02").get();
+		Tag found = tagService.findByCode(Constants.localeENGB, "TST02").get();
 
 		// then
 		assertFound(found);
@@ -96,7 +96,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnTag() {
 
 		// when
-		Tag found = tagService.findByDesc(Constants.localeENGB, Constants.currencyUSD, "test tag")
+		Tag found = tagService.findByDesc(Constants.localeENGB, "test tag")
 				.get();
 
 		// then

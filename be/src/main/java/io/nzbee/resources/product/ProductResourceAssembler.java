@@ -24,7 +24,6 @@ public class ProductResourceAssembler extends RepresentationModelAssemblerSuppor
 									                		product.getProductUPC()
                 										)).withSelfRel(),
         	   linkTo(methodOn(CategoryController.class).getCategories(product.getLclCd(), 
-												                		product.getCurrency(), 
 												                		product.getProductUPC()
         												)).withRel("categories"));
         return pr;

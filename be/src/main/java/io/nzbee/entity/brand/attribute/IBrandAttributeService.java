@@ -11,4 +11,6 @@ public interface IBrandAttributeService extends ILocalizedDao<BrandAttribute> {
 	Optional<BrandAttribute> getBrandAttributeHK(Long id);
 
 	Optional<BrandAttribute> getBrandAttribute(Long id, String locale);
+
+
 }

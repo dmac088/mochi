@@ -21,28 +21,28 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	
 	@Override
 	public Department findByProductCode(String locale, String currency, String productCode) {
-		return (Department) departmentMapper.entityToDo(departmentService.findByProductCode(locale, currency, productCode).get(), locale, currency);		
+		return (Department) departmentMapper.entityToDo(departmentService.findByProductCode(locale, productCode).get(), locale);		
 	}
 
 	@Override
-	public Set<Department> findAll(String locale, String currency) {
+	public Set<Department> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Department> findAll(String locale, String currency, Set<String> codes) {
+	public Set<Department> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Department findByCode(String locale, String currency, String code) {
-		return (Department) departmentMapper.entityToDo(departmentService.findByCode(locale, currency, code).get(), locale, currency);	
+	public Department findByCode(String locale, String code) {
+		return (Department) departmentMapper.entityToDo(departmentService.findByCode(locale, code).get(), locale);	
 	}
 
 	@Override
-	public Department findByDesc(String locale, String currency, String desc) {
+	public Department findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

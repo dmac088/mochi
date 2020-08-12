@@ -31,21 +31,21 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	private EntityManager em;
 	
 	@Override
-	public List<Department> findAll(String locale, String currency) {
+	public List<Department> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Department> findAll(String locale, String currency, Set<String> codes) {
+	public List<Department> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Optional<Department> findById(String locale, String currency, long id) {
+	public Optional<Department> findById(String locale, long id) {
 		
-		LOGGER.debug("call DepartmentDaoImpl.findById parameters : {}, {}, {}", locale, currency, id);
+		LOGGER.debug("call DepartmentDaoImpl.findById parameters : {}, {}, {}", locale, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -71,7 +71,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Department department = this.objectToEntity(tuple, locale, currency);
+			Department department = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(department);
 		} 
 		catch(NoResultException nre) {
@@ -80,9 +80,9 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	}
 	
 	@Override
-	public Optional<Department> findByCode(String locale, String currency, String code) {
+	public Optional<Department> findByCode(String locale, String code) {
 		
-		LOGGER.debug("call DepartmentDaoImpl.findByCode parameters : {}, {}, {}", locale, currency, code);
+		LOGGER.debug("call DepartmentDaoImpl.findByCode parameters : {}, {}, {}", locale, code);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -108,7 +108,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Department department = this.objectToEntity(tuple, locale, currency);
+			Department department = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(department);
 		} 
 		catch(NoResultException nre) {
@@ -118,8 +118,8 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 
 	
 	@Override
-	public Optional<Department> findByDesc(String locale, String currency, String desc) {
-		LOGGER.debug("call DepartmentDaoImpl.findByDesc parameters : {}, {}, {}", locale, currency, desc);
+	public Optional<Department> findByDesc(String locale, String desc) {
+		LOGGER.debug("call DepartmentDaoImpl.findByDesc parameters : {}, {}, {}", locale, desc);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -145,7 +145,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Department department = this.objectToEntity(tuple, locale, currency);
+			Department department = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(department);
 		} 
 		catch(NoResultException nre) {
@@ -154,9 +154,9 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	}
 	
 	@Override
-	public Optional<Department> findByProductCode(String locale, String currency, String productCode) {
+	public Optional<Department> findByProductCode(String locale, String productCode) {
 		
-		LOGGER.debug("call DepartmentDaoImpl.findByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+		LOGGER.debug("call DepartmentDaoImpl.findByProductCode parameters : {}, {}, {}", locale, productCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -183,7 +183,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			Department department = this.objectToEntity(tuple, locale, currency);
+			Department department = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(department);
 		} 
 		catch(NoResultException nre) {
@@ -217,6 +217,19 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 
 	@Override
 	public Department objectToEntity(Tuple t, String locale, String currency) {
+		Department departmentEntity = objectToEntity(t, locale);
+		departmentEntity.setCurrency(currency);
+		return departmentEntity;
+	}
+
+	@Override
+	public Department objectToEntity(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Department objectToEntity(Tuple t, String locale) {
 		Department departmentEntity = new Department();
 		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
 		
@@ -230,7 +243,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		departmentEntity.setId(Long.parseLong(t.get("departmentId").toString()));
 		departmentEntity.setDepartmentCode(t.get("departmentCode").toString());
 		departmentEntity.setLocale(locale);
-		departmentEntity.setCurrency(currency);
+		
 		return departmentEntity;
 	}
 

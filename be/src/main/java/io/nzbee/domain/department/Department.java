@@ -14,19 +14,15 @@ public class Department implements ILocalizedDomainObject {
 
 	private String locale;
 	
-	private String currency;
-	
 	@JsonIgnore
 	private List<Product> products;
 	
 	public Department(	String departmentCode,
 						String departmentDesc,
-						String locale, 
-						String currency) {
+						String locale) {
 						this.departmentCode = departmentCode;
 						this.departmentDesc = departmentDesc;
 						this.locale = locale;
-						this.currency = currency;
 						this.products = new ArrayList<Product>();
 	}
 		
@@ -44,11 +40,6 @@ public class Department implements ILocalizedDomainObject {
 		return locale;
 	}
 
-	@Override
-	public String getCurrency() {
-		return currency;
-	}
-	
 	public List<Product> getProducts() {
 		return products;
 	}

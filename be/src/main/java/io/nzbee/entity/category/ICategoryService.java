@@ -11,9 +11,9 @@ public interface ICategoryService extends ILocalizedService<Category>, ISearchDi
 
 	List<Category> findByParent(String locale, String parentCategoryCode);
 
-	List<Category> findAllForLevel(String locale, String currency, Long level);
+	List<Category> findAllForLevel(String locale, Long level);
 	
-	<T> List<Category> findAll(String locale, String currency, Class<T> classType);
+	<T> List<Category> findAll(String locale, Class<T> classType);
 
 	List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brands, Set<String> tags, Double maxPrice);
@@ -24,5 +24,8 @@ public interface ICategoryService extends ILocalizedService<Category>, ISearchDi
 	List<Category> findAll();
 	
 	Optional<Category> findByCode(String categoryCode);
+
+	Optional<Category> findByCode(String locale, String categoryCode);
+
 
 }

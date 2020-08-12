@@ -62,7 +62,6 @@ public class BrandMasterService {
 		
 		Brand bDo = 
 				brandDomainService.findByCode(   	Constants.localeENGB, 
-													Constants.currencyHKD, 
 													c.get_BRAND_CODE());
 		
 		brandDomainService.save(bDo);
@@ -73,8 +72,7 @@ public class BrandMasterService {
 		logger.debug("called extractBrandMaster() ");
 		List<BrandMasterSchema> lpms = new ArrayList<BrandMasterSchema>();
 	    try {
-		    	List<Brand> brandList = brandDomainService.findAll(	Constants.localeENGB, 
-																	Constants.currencyHKD)
+		    	List<Brand> brandList = brandDomainService.findAll(Constants.localeENGB)
 		    							  .stream().collect(Collectors.toList());
 		    	
 		    	brandList.stream().forEach(b -> {
@@ -86,8 +84,7 @@ public class BrandMasterService {
 		    					.stream().collect(Collectors.toMap(b -> b.getBrandCode(), b -> new BrandMasterSchema()));
 		 
 		    	
-		    	brandList.addAll(brandDomainService.findAll(Constants.localeZHHK,
-																  Constants.currencyUSD)
+		    	brandList.addAll(brandDomainService.findAll(Constants.localeZHHK)
 		    											.stream()
 										    			.map(p -> (Brand) p)
 														.collect(Collectors.toList()));
@@ -97,7 +94,6 @@ public class BrandMasterService {
 		    	BrandMasterSchema bms = map.get(b.getBrandCode());
 		    		
 			    Brand bnd = brandDomainService.findByCode(b.getLocale(),
-														  b.getCurrency(), 
 														  b.getBrandCode()); 
 			    	
 			    bms.set_BRAND_CODE(bnd.getBrandCode());

@@ -37,8 +37,8 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	private EntityManager em;
 	
 	@Override
-	public List<CategoryProduct> findAllByProductCode(String locale, String currency, String productCode) {
-		LOGGER.debug("call CategoryProductDaoImpl.findAllByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+	public List<CategoryProduct> findAllByProductCode(String locale, String productCode) {
+		LOGGER.debug("call CategoryProductDaoImpl.findAllByProductCode parameters : {}, {}, {}", locale, productCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -75,12 +75,12 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		TypedQuery<Tuple> query = em.createQuery(cq);
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
 	}
 	
 	@Override
-	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String currency, String productCode) {
-		LOGGER.debug("call CategoryProductDaoImpl.findPrimaryByProductCode parameters : {}, {}, {}", locale, currency, productCode);
+	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String productCode) {
+		LOGGER.debug("call CategoryProductDaoImpl.findPrimaryByProductCode parameters : {}, {}, {}", locale, productCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -118,7 +118,7 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		try {
 			Tuple tuple = query.getSingleResult();
 			
-			CategoryProduct category = this.objectToEntity(tuple, locale, currency);
+			CategoryProduct category = this.objectToEntity(tuple, locale);
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -127,31 +127,31 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	}
 	
 	@Override
-	public Optional<CategoryProduct> findById(String locale, String currency, long id) {
+	public Optional<CategoryProduct> findById(String locale, long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findByCode(String locale, String currency, String code) {
+	public Optional<CategoryProduct> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findByDesc(String locale, String currency, String desc) {
+	public Optional<CategoryProduct> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CategoryProduct> findAll(String locale, String currency) {
+	public List<CategoryProduct> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CategoryProduct> findAll(String locale, String currency, Set<String> codes) {
+	public List<CategoryProduct> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -181,6 +181,24 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 
 	@Override
 	public CategoryProduct objectToEntity(Tuple t, String locale, String currency) {
+		CategoryProduct cp = objectToEntity(t, locale);
+		cp.setCurrency(currency);
+		return cp;
+	}
+
+	@Override
+	public void merge(CategoryProduct t) {
+		em.merge(t);
+	}
+
+	@Override
+	public CategoryProduct objectToEntity(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public CategoryProduct objectToEntity(Tuple t, String locale) {
 		CategoryAttribute ca = new CategoryAttribute();
 		ca.setCategoryDesc(t.get("categoryDesc").toString());
 		ca.setLclCd(locale);
@@ -194,16 +212,10 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		cp.setCategoryCode(t.get("categoryCode").toString());
 		cp.setCategoryLevel(Long.parseLong(t.get("categoryLevel").toString()));
 		cp.setLocale(locale);
-		cp.setCurrency(currency);
 		cp.setCategoryAttribute(ca);
 		cp.setCategoryType(ct);
 		
 		return cp;
-	}
-
-	@Override
-	public void merge(CategoryProduct t) {
-		em.merge(t);
 	}
 
 }

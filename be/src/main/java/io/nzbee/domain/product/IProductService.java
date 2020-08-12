@@ -14,5 +14,13 @@ public interface IProductService extends ILocalizedService<Product> {
 						  Double maxPrice,
 						  String page, String size, String sort);
 
+	Product findByCode(String locale, String currency, String code);
+
+	Product findByDesc(String locale, String currency, String desc);
+
+	Set<Product> findAll(String locale, String currency);
+
+	Set<Product> findAll(String locale, String currency, Set<String> codes);
+
 
 }
