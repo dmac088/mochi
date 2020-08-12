@@ -834,5 +834,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			
 		return sql;
 	}
+	
 
 }
