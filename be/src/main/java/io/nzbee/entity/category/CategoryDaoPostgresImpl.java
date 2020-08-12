@@ -245,7 +245,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		if(!(maxPrice == null)) {
 			query.setParameter("maxPrice", maxPrice);
 			query.setParameter("currency", currency);
-			query.setParameter("retailPriceCode", Constants.retailPriceCode);
+			//query.setParameter("retailPriceCode", Constants.retailPriceCode);
 			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		}
 		
