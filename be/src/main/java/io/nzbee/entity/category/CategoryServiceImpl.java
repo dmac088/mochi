@@ -113,8 +113,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 
 	@Override
 	public Optional<Category> findByCode(String categoryCode) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryDAO.findByCode(categoryCode);
 	}
 
 }

@@ -108,6 +108,23 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    public void whenFindByExistingCode_thenReturnProductCategory() {
+    	
+        // when
+    	Category found = categoryService.findByCode(Constants.localeENGB, 
+				 									"FET01").get();
+     
+    	assertThat(found.getCategoryCode())
+        .isEqualTo("FET01");
+	    assertThat(found.getCategoryLevel())
+	    .isEqualTo(new Long(1));
+	    assertThat(found.getCategoryType().getCategoryTypeCode())
+	    .isEqualTo("PRD01");
+	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc())
+	    .isEqualTo("Featured");
+    }
+    
+    @Test
     public void whenFindByDesc_thenReturnProductCategory() {
     	
         // when
