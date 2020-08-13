@@ -154,6 +154,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
     }
 	
+	
 	@Test
     public void whenFindForFruitCategoryWithNullPrice_thenReturnAllFruitProducts() {
     	
