@@ -293,56 +293,48 @@ public class TagDaoPostgresImpl implements ITagDao {
 			boolean hasBrands,
 			boolean hasPrice
 		) {
-	String sql = "WITH recursive descendants AS  " + 
-			"			(  " + 
-			"			          SELECT    t.cat_id,  " + 
-			"			                    t.cat_cd,  " + 
-			"			                    t.cat_lvl,  " + 
-			"			                    t.cat_prnt_id,  " + 
-			"			                    t.cat_typ_id,  " + 
-			"			                    cast('/'  " + 
-			"			                              || cast(t.cat_id AS text)  " + 
-			"			                              || '/' AS text) node  " + 
-			"			          FROM      mochi.category            AS t  " + 
-			"			          LEFT JOIN mochi.category_attr_lcl a  " + 
-			"			          ON        t.cat_id = a.cat_id  " + 
-			"			          AND       a.lcl_cd =  :locale " + 
-			"			          WHERE     0=0  " + 
-			"			           AND t.cat_cd = :categoryCode " + 
-			"			          UNION ALL  " + 
-			"			          SELECT t.cat_id,  " + 
-			"			                 t.cat_cd,  " + 
-			"			                 t.cat_lvl,  " + 
-			"			                 t.cat_prnt_id,  " + 
-			"			                 t.cat_typ_id,  " + 
-			"			                 cast(d.node  " + 
-			"			                        || cast(t.cat_id AS text)  " + 
-			"			                        || '/' AS text) node  " + 
-			"			          FROM   mochi.category         AS t  " + 
-			"			          JOIN   descendants            AS d  " + 
-			"			          ON     t.cat_prnt_id = d.cat_id ) " + 
-			"			, summary AS  " + 
-			"			(  " + 
-			"			          SELECT    cc.cat_id, " + 
-			"								cc.cat_cd, " + 
-			"								cc.node " + 
-			"			          FROM      descendants cc 	 " + 
-			"			          GROUP BY  cc.cat_id, " + 
-			"								cc.cat_cd, " + 
-			"								cc.node " + 
-			"			 ), categories AS (  " + 
-			"			 " + 
-			"			          SELECT    s1.node, " + 
-			"					  			s1.cat_id, " + 
-			"								s1.cat_cd " + 
-			"			          FROM      summary s1  " + 
-			"			          LEFT JOIN summary s2  " + 
-			"			          ON        s1.node <> s2.node  " + 
-			"			          AND       LEFT(s2.node, length(s1.node)) = s1.node  " + 
-			"			          GROUP BY  s1.node, " + 
-			"								s1.cat_id, " + 
-			"								s1.cat_cd " + 
-			"			) " + 
+		String sql = "WITH recursive descendants AS " + 
+				"( " + 
+				"          SELECT    t.cat_id, " + 
+				"                    t.cat_cd, " + 
+				"                    t.cat_lvl, " + 
+				"                    t.cat_prnt_id, " +
+				"                    t.cat_prnt_cd, " + 
+				"                    t.cat_typ_id, " + 
+				"                    cast('/' " + 
+				"                              || cast(t.cat_id AS text) " + 
+				"                              || '/' AS text) node " + 
+				"          FROM      mochi.category            AS t " + 
+				"          LEFT JOIN mochi.category_attr_lcl a " + 
+				"          ON        t.cat_id = a.cat_id " + 
+				"          AND       a.lcl_cd = :locale " + 
+				"          WHERE     0=0 " + 
+				"          AND t.cat_prnt_cd = :categoryCode " + 
+				"          UNION ALL " + 
+				"          SELECT t.cat_id, " + 
+				"                 t.cat_cd, " + 
+				"                 t.cat_lvl, " + 
+				"                 t.cat_prnt_id, " +
+				"                 t.cat_prnt_cd, " +
+				"                 t.cat_typ_id, " + 
+				"                 cast(d.node " + 
+				"                        || cast(t.cat_id AS text) " + 
+				"                        || '/' AS text) node " + 
+				"          FROM   mochi.category         AS t " + 
+				"          JOIN   descendants            AS d " + 
+				"          ON     t.cat_prnt_id = d.cat_id )" + 
+				", categories AS " + 
+				"( " + 
+				"          SELECT    s1.node," + 
+				"					 coalesce(s2.cat_id,s1.cat_id) as cat_id, " +
+				"		   			 coalesce(s2.cat_cd,s1.cat_cd) as cat_cd " +
+				"          FROM      descendants s1 " + 
+				"          LEFT JOIN descendants s2 " + 
+				"          ON        s1.node <> s2.node " + 
+				"          AND       LEFT(s2.node, length(s1.node)) = s1.node " + 
+				"		   WHERE 0=0 " + 
+				((hasCategories) ? 	"AND  s1.cat_cd IN (:categoryCodes) " : "") +	
+				")" + 
 			"			select t.tag_id,  " + 
 			"				   t.tag_cd, " + 
 			"				   lcl.tag_lcl_id, " + 
@@ -389,8 +381,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 							"		AND prc_val <= :maxPrice " 
 							: "") +
 			
-			"			where 0=0  " +			
-			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
+			"			where 0=0  " +
 			((hasBrands) ? 	" 		AND b.bnd_cd in 	:brandCodes " : "") +
 			"			group by t.tag_id,  " + 
 			"				   t.tag_cd, " + 
