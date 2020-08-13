@@ -490,65 +490,46 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								boolean offset,
 								String sort) {
 		
-		//now we can implement conditional joins
-		//based on the parameters passed
-		return "WITH RECURSIVE    " + 
-		"primary_descendants AS    " + 
-		"(    " + 
-		" SELECT 	t.cat_id,     " + 
-		"			t.cat_cd,    " + 
-		"			t.cat_lvl,    " + 
-		"			t.cat_prnt_id,   " + 
-		"			t.cat_typ_id   " + 
-		" FROM mochi.category AS t   " + 
-		" WHERE  " + 
-		" t.cat_cd = :categoryCode " + 
-
-		" UNION ALL    " + 
-		" SELECT 	t.cat_id,     " + 
-		"			t.cat_cd,     " + 
-		"			t.cat_lvl,    " + 
-		"			t.cat_prnt_id,   " + 
-		"			t.cat_typ_id   " + 
-		"  FROM mochi.category AS t    " + 
-		"  JOIN primary_descendants AS d   " + 
-		"  ON t.cat_prnt_id = d.cat_id    " + 
-		"),  secondary_descendants AS    " + 
-		"(    " + 
-		" SELECT 	t.cat_id,     " + 
-		"			t.cat_cd,    " + 
-		"			t.cat_lvl,    " + 
-		"			t.cat_prnt_id,   " + 
-		"			t.cat_typ_id   " + 
-		" FROM mochi.category AS t   " + 
-		((hasCategories) 
-						? " WHERE cat_cd in (:categoryCodes) " 
-						: "") +
-
-		" UNION ALL    " + 
-		" SELECT 	t.cat_id,     " + 
-		"			t.cat_cd,     " + 
-		"			t.cat_lvl,    " + 
-		"			t.cat_prnt_id,   " + 
-		"			t.cat_typ_id   " + 
-		"  FROM mochi.category AS t    " + 
-		"  JOIN secondary_descendants AS d   " + 
-		"  ON t.cat_prnt_id = d.cat_id    " + 
-		"), descendants AS (   " + 
-		"select cat_id, " + 
-		"	   cat_cd, " + 
-		"	   cat_lvl, " + 
-		"	   cat_prnt_id, " + 
-		"	   cat_typ_id " + 
-		"from primary_descendants " + 
-		"INTERSECT " + 
-		"select cat_id, " + 
-		"	   cat_cd, " + 
-		"	   cat_lvl, " + 
-		"	   cat_prnt_id, " + 
-		"	   cat_typ_id  " + 
-		"from secondary_descendants " + 
-		") " + 
+		String sql = "WITH recursive descendants AS " + 
+				"( " + 
+				"          SELECT    t.cat_id, " + 
+				"                    t.cat_cd, " + 
+				"                    t.cat_lvl, " + 
+				"                    t.cat_prnt_id, " +
+				"                    t.cat_prnt_cd, " + 
+				"                    t.cat_typ_id, " + 
+				"                    cast('/' " + 
+				"                              || cast(t.cat_id AS text) " + 
+				"                              || '/' AS text) node " + 
+				"          FROM      mochi.category            AS t " + 
+				"          WHERE     0=0 " + 
+				"          AND t.cat_prnt_cd = :categoryCode " + 
+				"          UNION ALL " + 
+				"          SELECT t.cat_id, " + 
+				"                 t.cat_cd, " + 
+				"                 t.cat_lvl, " + 
+				"                 t.cat_prnt_id, " +
+				"                 t.cat_prnt_cd, " +
+				"                 t.cat_typ_id, " + 
+				"                 cast(d.node " + 
+				"                        || cast(t.cat_id AS text) " + 
+				"                        || '/' AS text) node " + 
+				"          FROM   mochi.category         AS t " + 
+				"          JOIN   descendants            AS d " + 
+				"          ON     t.cat_prnt_id = d.cat_id )" + 
+				", categories AS " + 
+				"( " + 
+				"          SELECT    s1.node," + 
+				"					 coalesce(s2.cat_typ_id,s1.cat_typ_id) as cat_typ_id, " +		
+				"					 coalesce(s2.cat_id,s1.cat_id) as cat_id, " +
+				"		   			 coalesce(s2.cat_cd,s1.cat_cd) as cat_cd " +
+				"          FROM      descendants s1 " + 
+				"          LEFT JOIN descendants s2 " + 
+				"          ON        s1.node <> s2.node " + 
+				"          AND       LEFT(s2.node, length(s1.node)) = s1.node " + 
+				"		   WHERE 0=0 " + 
+				((hasCategories) ? 	"AND  s1.cat_cd IN (:categoryCodes) " : "") +	
+				")" + 
 		"select 	    " + 
 		((countOnly) 
 					? 	"	   count(distinct prd.prd_id) as product_count  "
@@ -594,7 +575,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"      :currency as ccy_cd, " +
 						"	   :locale as lcl_cd ") + 
 		
-		"	FROM descendants cc    " + 
+		"	FROM categories cc    " + 
 		
 		"	INNER JOIN mochi.product_category pc    " + 
 		"	ON cc.cat_id = pc.cat_id    " + 
@@ -702,6 +683,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		: 	" ORDER BY " + getOrderby(sort) + 
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
+		
+		return sql;
 	}
 
 	

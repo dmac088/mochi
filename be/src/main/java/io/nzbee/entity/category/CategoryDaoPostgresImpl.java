@@ -584,8 +584,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				boolean hasCategoryCd,
 				boolean hasType
 			) {
-		String sql = "WITH RECURSIVE  " +
-				"descendants AS " +
+		String sql = "WITH RECURSIVE descendants AS " +
 				"( " +
 				"  SELECT 	t.cat_id,  " +
 				"			t.cat_cd, " +
@@ -599,11 +598,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  LEFT JOIN mochi.category_attr_lcl a " +
 				"  ON t.cat_id = a.cat_id " +
 				"  AND a.lcl_cd = :locale " +
-				
 				"  WHERE 0=0 " +
-				((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " : "") + 
-				((hasCategoryId)  	? " AND t.cat_id 	= :categoryId" : "") +
-				((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode" : "") +
+				((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " 	: "") + 
+				((hasCategoryId)  	? " AND t.cat_id 	= :categoryId" 		: "") +
+				((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode" 	: "") +
 				((!hasCategoryCd 	&& !hasCategoryDesc 	&& !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +

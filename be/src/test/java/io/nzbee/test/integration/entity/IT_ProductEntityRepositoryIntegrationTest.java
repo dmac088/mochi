@@ -151,7 +151,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 "priceAsc");
     
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(12));
     }
 	
 	
