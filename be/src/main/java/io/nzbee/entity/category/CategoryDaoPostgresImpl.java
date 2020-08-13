@@ -72,9 +72,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("retailPriceCode", Constants.retailPriceCode)
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 				 
-		if(!categoryCodes.isEmpty()) {
-			 query.setParameter("categoryCodes", categoryCodes);
-		}
+//		if(!categoryCodes.isEmpty()) {
+//			 query.setParameter("categoryCodes", categoryCodes);
+//		}
 		
 		if(!brandCodes.isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
@@ -230,9 +230,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				 
 				 
-		if(!categoryCodes.isEmpty()) {
-			 query.setParameter("categoryCodes", categoryCodes);
-		}
+//		if(!categoryCodes.isEmpty()) {
+//			 query.setParameter("categoryCodes", categoryCodes);
+//		}
 		
 		if(!brandCodes.isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
@@ -729,7 +729,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id	<> :categoryId " : "") +
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd 	<> :categoryCode " : "") +
 				((hasBrands)   						? " AND b.bnd_cd 	in :brandCodes " : "") +
-				((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
+				//((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
 				((hasTags) 							? " AND t.tag_cd 	in 	:tagCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
