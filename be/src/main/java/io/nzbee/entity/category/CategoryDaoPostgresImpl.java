@@ -635,7 +635,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"LEFT JOIN mochi.product_category pc " +
 				"ON cc.cat_id = pc.cat_id " +
 				
-				"INNER JOIN 	( " +
+				"LEFT JOIN 	( " +
 				"		 SELECT prd.prd_id,  " +
 				"			prd.bnd_id, " +
 				"			upc_cd " +
