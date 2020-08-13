@@ -389,7 +389,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"          SELECT    t.cat_id, " + 
 			"                    t.cat_cd, " + 
 			"                    t.cat_lvl, " + 
-			"                    t.cat_prnt_id, " + 
+			"                    t.cat_prnt_id, " +
+			"                    t.cat_prnt_cd, " + 
 			"                    t.cat_typ_id, " + 
 			"                    cast('/' " + 
 			"                              || cast(t.cat_id AS text) " + 
@@ -399,12 +400,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"          ON        t.cat_id = a.cat_id " + 
 			"          AND       a.lcl_cd = :locale " + 
 			"          WHERE     0=0 " + 
-			"          AND t.cat_cd = :categoryCode " + 
+			"          AND t.cat_prnt_cd = :categoryCode " + 
 			"          UNION ALL " + 
 			"          SELECT t.cat_id, " + 
 			"                 t.cat_cd, " + 
 			"                 t.cat_lvl, " + 
-			"                 t.cat_prnt_id, " + 
+			"                 t.cat_prnt_id, " +
+			"                 t.cat_prnt_cd, " +
 			"                 t.cat_typ_id, " + 
 			"                 cast(d.node " + 
 			"                        || cast(t.cat_id AS text) " + 
@@ -412,27 +414,17 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"          FROM   mochi.category         AS t " + 
 			"          JOIN   descendants            AS d " + 
 			"          ON     t.cat_prnt_id = d.cat_id )" + 
-			", summary AS " + 
+			", categories AS " + 
 			"( " + 
-			"          SELECT    cc.cat_id," + 
-			"					cc.cat_cd," + 
-			"					cc.node" + 
-			"          FROM      descendants cc 	" + 
-			"          GROUP BY  cc.cat_id," + 
-			"					cc.cat_cd," + 
-			"					cc.node" + 
-			" ), categories AS ( " + 
-			"" + 
 			"          SELECT    s1.node," + 
-			"		  			s1.cat_id," + 
-			"					s1.cat_cd" + 
-			"          FROM      summary s1 " + 
-			"          LEFT JOIN summary s2 " + 
+			"					 coalesce(s2.cat_id,s1.cat_id) as cat_id, " +
+			"		   			 coalesce(s2.cat_cd,s1.cat_cd) as cat_cd " +
+			"          FROM      descendants s1 " + 
+			"          LEFT JOIN descendants s2 " + 
 			"          ON        s1.node <> s2.node " + 
 			"          AND       LEFT(s2.node, length(s1.node)) = s1.node " + 
-			"          GROUP BY  s1.node," + 
-			"					s1.cat_id," + 
-			"					s1.cat_cd" + 
+			"		   WHERE 0=0 " + 
+			((hasCategories) ? 	"AND  s1.cat_cd IN (:categoryCodes) " : "") +	
 			")" + 
 			"select b.bnd_id, " + 
 			"	   b.bnd_cd," + 
@@ -454,7 +446,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"	inner join mochi.brand b" + 
 			"		on p.bnd_id = b.bnd_id" + 
 			"						 " + 
-			"	left join mochi.brand_attr_lcl lcl" + 
+			"	inner join mochi.brand_attr_lcl lcl" + 
 			"		on b.bnd_id = lcl.bnd_id" + 
 			"		and lcl.lcl_cd = :locale " + 
 			"						 " + 
@@ -483,13 +475,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				: "") + 
 			"						 " + 
 			"where 0=0 " + 
-			((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
+			//((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
 			((hasTags) ? 	" 		AND t.tag_cd in 	:tagCodes " : "") +
 			"group by b.bnd_id, " + 
 			"	   b.bnd_cd," + 
 			"	   lcl.bnd_desc," + 
 			"	   lcl.bnd_lcl_id, " +
-			"		lcl.lcl_cd"	;
+			"	   lcl.lcl_cd"	;
 		
 	return sql;
 	}
