@@ -396,9 +396,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"                              || cast(t.cat_id AS text) " + 
 			"                              || '/' AS text) node " + 
 			"          FROM      mochi.category            AS t " + 
-			"          LEFT JOIN mochi.category_attr_lcl a " + 
-			"          ON        t.cat_id = a.cat_id " + 
-			"          AND       a.lcl_cd = :locale " + 
 			"          WHERE     0=0 " + 
 			"          AND t.cat_prnt_cd = :categoryCode " + 
 			"          UNION ALL " + 
@@ -435,10 +432,10 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"from categories c " + 
 			"	inner join mochi.product_category pc" + 
 			"		on c.cat_id = pc.cat_id" + 
-			"	" + 
+			"						" + 
 			"	inner join mochi.product p" + 
 			"		on pc.prd_id = p.prd_id" + 
-			"	" + 
+			"						" + 
 			"	inner join mochi.product_status ps" + 
 			"		on p.prd_sts_id = ps.prd_sts_id" + 
 			"		and ps.prd_sts_cd = :activeProductCode " + 

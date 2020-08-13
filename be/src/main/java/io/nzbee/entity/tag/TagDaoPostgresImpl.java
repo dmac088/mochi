@@ -305,9 +305,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"                              || cast(t.cat_id AS text) " + 
 				"                              || '/' AS text) node " + 
 				"          FROM      mochi.category            AS t " + 
-				"          LEFT JOIN mochi.category_attr_lcl a " + 
-				"          ON        t.cat_id = a.cat_id " + 
-				"          AND       a.lcl_cd = :locale " + 
 				"          WHERE     0=0 " + 
 				"          AND t.cat_prnt_cd = :categoryCode " + 
 				"          UNION ALL " + 
