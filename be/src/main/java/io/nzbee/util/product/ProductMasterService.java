@@ -183,8 +183,7 @@ public class ProductMasterService {
 						{ pms.set_PRODUCT_RETAIL_PRICE_USD(p.getProductRetail()); 
 						  pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getProductMarkdown());}
 		    	
-		    	Brand brand = brandDomainService.findByProductCode( p.getLclCd(),
-																	p.getCurrency(), 
+		    	Brand brand = brandDomainService.findByProductCode( p.getLclCd(), 
 																	p.getProductUPC());
 		    	
 		    	pms.set_BRAND_CODE(brand.getBrandCode());
