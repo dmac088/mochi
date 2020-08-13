@@ -475,7 +475,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				: "") + 
 			"						 " + 
 			"where 0=0 " + 
-			//((hasCategories) ? 	" 	AND c.cat_cd in 	:categoryCodes " : "") +
 			((hasTags) ? 	" 		AND t.tag_cd in 	:tagCodes " : "") +
 			"group by b.bnd_id, " + 
 			"	   b.bnd_cd," + 
