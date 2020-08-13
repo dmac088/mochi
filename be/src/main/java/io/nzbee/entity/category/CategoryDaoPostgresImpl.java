@@ -281,9 +281,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
 				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
-		if(!categoryCodes.isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
-		}
+//		if(!categoryCodes.isEmpty()) {
+//			query.setParameter("categoryCodes", categoryCodes);
+//		}
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -316,9 +316,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
 				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
-		if(!categoryCodes.isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
-		}
+//		if(!categoryCodes.isEmpty()) {
+//			query.setParameter("categoryCodes", categoryCodes);
+//		}
 
 		try {
 			Object[] c = (Object[])query.getSingleResult();
@@ -357,9 +357,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
 				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
-		if(!categoryCodes.isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
-		}
+//		if(!categoryCodes.isEmpty()) {
+//			query.setParameter("categoryCodes", categoryCodes);
+//		}
 
 		try {
 			Object[] c = (Object[])query.getSingleResult();
@@ -382,8 +382,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		final List<String> categoryCodes = new ArrayList<String>();
 		
-		categoryCodes.add(code);
-		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
 															 false,
 															 false,
@@ -392,18 +390,18 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
-															 false,
+															 true,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 //.setParameter("categoryCode", code)
+				 .setParameter("categoryCode", code)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
 				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
-		if(!categoryCodes.isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
-		}
+//		if(!categoryCodes.isEmpty()) {
+//			query.setParameter("categoryCodes", categoryCodes);
+//		}
 
 		try {
 			Object[] c = (Object[])query.getSingleResult();
