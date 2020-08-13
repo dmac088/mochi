@@ -503,7 +503,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"                              || '/' AS text) node " + 
 				"          FROM      mochi.category            AS t " + 
 				"          WHERE     0=0 " + 
-				"          AND t.cat_prnt_cd = :categoryCode " + 
+				"          AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
 				"                 t.cat_cd, " + 
@@ -518,17 +518,20 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"          JOIN   descendants            AS d " + 
 				"          ON     t.cat_prnt_id = d.cat_id )" + 
 				", categories AS " + 
-				"( " + 
-				"          SELECT    s1.node," + 
-				"					 coalesce(s2.cat_typ_id,s1.cat_typ_id) as cat_typ_id, " +		
+				"( " +
+				"          SELECT    " +
+				"					 coalesce(s2.cat_typ_id,s1.cat_typ_id) as cat_typ_id, " +
 				"					 coalesce(s2.cat_id,s1.cat_id) as cat_id, " +
 				"		   			 coalesce(s2.cat_cd,s1.cat_cd) as cat_cd " +
 				"          FROM      descendants s1 " + 
 				"          LEFT JOIN descendants s2 " + 
 				"          ON        s1.node <> s2.node " + 
-				"          AND       LEFT(s2.node, length(s1.node)) = s1.node " + 
+				"          AND       LEFT(s2.node, length(s1.node)) = s1.node " +				
 				"		   WHERE 0=0 " + 
-				((hasCategories) ? 	"AND  s1.cat_cd IN (:categoryCodes) " : "") +	
+						   ((hasCategories) ? "AND  s1.cat_cd IN (:categoryCodes) " : "") +
+				"          GROUP BY  coalesce(s2.cat_typ_id,s1.cat_typ_id), " +
+				"					 coalesce(s2.cat_id,s1.cat_id), " +
+				"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
 				")" + 
 		"select 	    " + 
 		((countOnly) 

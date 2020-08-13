@@ -216,7 +216,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
         //then
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(2));
     }
 	
 	@Test
