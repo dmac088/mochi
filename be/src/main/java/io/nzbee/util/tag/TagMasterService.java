@@ -18,6 +18,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
+import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -60,11 +61,17 @@ public class TagMasterService {
 	public void persistTagMaster(TagMasterSchema t) {
 		logger.debug("called persistTagMaster() ");
 		
-		Tag tDo = 
-				tagDomainService.findByCode(   Constants.localeENGB, 
-													t.get_TAG_CODE());
+		Tag tEN = new Tag(	 t.get_TAG_CODE(),
+							 t.get_TAG_DESC_EN(),
+							 Constants.localeENGB);
+				
+		tagDomainService.save(tEN);
 		
-		tagDomainService.save(tDo);
+		Tag tCN = new Tag(	t.get_TAG_CODE(),
+				 			t.get_TAG_DESC_HK(),
+				 		    Constants.localeZHHK);
+		
+		tagDomainService.save(tCN);
 
 	}
 	

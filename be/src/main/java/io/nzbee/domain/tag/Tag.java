@@ -18,8 +18,6 @@ public class Tag implements ILocalizedDomainObject {
 	
 	private String locale;
 	
-	private String currency;
-	
 	private int objectCount;
 
 	@JsonIgnore
@@ -34,8 +32,16 @@ public class Tag implements ILocalizedDomainObject {
 		this.tagDesc = tagDesc;
 		this.objectCount = objectCount;
 		this.locale = locale;
-		this.currency = currency;
 		this.products = new ArrayList<Product>();
+	}
+	
+	public Tag(	String tagCode,
+			String tagDesc,
+			String locale) {
+	this.tagCode = tagCode;
+	this.tagDesc = tagDesc;
+	this.locale = locale;
+	this.products = new ArrayList<Product>();
 	}
 	
 	public int getCount() {
