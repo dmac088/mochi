@@ -88,7 +88,7 @@ public class EntityFacet implements IFacet {
 	}
 	
 	public void setFacetingName(String name) {
-		this.facetingName = name;
+		this.facetingName = name.toLowerCase();
 	}
 	
 	
