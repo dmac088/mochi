@@ -63,12 +63,17 @@ public class BrandMasterService {
 	public void persistBrandMaster(BrandMasterSchema b) {
 		logger.debug("called persistBrandMaster() ");
 		
-		Brand bDo = new Brand(	 b.get_BRAND_CODE(),
+		Brand bEN = new Brand(	 b.get_BRAND_CODE(),
 								 b.get_BRAND_DESC_EN(),
 								 Constants.localeENGB);
-		
 				
-		brandDomainService.save(bDo);
+		brandDomainService.save(bEN);
+		
+		Brand bCN = new Brand(	 b.get_BRAND_CODE(),
+				 				 b.get_BRAND_DESC_HK(),
+				 				 Constants.localeZHHK);
+		
+		brandDomainService.save(bCN);
 	}
 	
 	public void extractBrandMaster(Resource resource) {
