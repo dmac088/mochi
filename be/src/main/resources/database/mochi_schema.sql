@@ -57,6 +57,8 @@ ALTER TABLE ONLY mochi.brand_category DROP CONSTRAINT brand_category_cat_id_cate
 ALTER TABLE ONLY mochi.brand_category DROP CONSTRAINT brand_category_bnd_id_brand_bnd_id_fkey;
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_bnd_id_fkey;
+ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pty_id_party_pty_id_fkey;
+ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_prd_id_product_prd_id_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
 DROP INDEX mochi.fki_product_attr_lcl_prd_id_fkey;
 DROP INDEX mochi.fki_category_cat_id_product_prm_cat_id;
@@ -134,6 +136,7 @@ ALTER TABLE ONLY mochi.brand_promotion DROP CONSTRAINT brand_promotion_pkey;
 ALTER TABLE ONLY mochi.brand DROP CONSTRAINT brand_pkey;
 ALTER TABLE ONLY mochi.brand_category DROP CONSTRAINT brand_category_pkey;
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_pkey;
+ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pkey;
 ALTER TABLE mochi.role_type ALTER COLUMN rle_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party_type ALTER COLUMN pty_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party ALTER COLUMN pty_id DROP DEFAULT;
@@ -219,6 +222,8 @@ DROP TABLE mochi.brand_attr_lcl;
 DROP SEQUENCE mochi.brand_attr_lcl_bnd_id_seq;
 DROP TABLE mochi.brand;
 DROP SEQUENCE mochi.brand_bnd_id_seq;
+DROP TABLE mochi.bag;
+DROP SEQUENCE mochi.bag_bag_id_seq;
 DROP TABLE mochi.address_type;
 DROP TABLE mochi.address;
 DROP FUNCTION mochi.ft_product_categories(text, text);
@@ -1550,6 +1555,34 @@ CREATE TABLE address_type (
 ALTER TABLE address_type OWNER TO mochidb_owner;
 
 --
+-- Name: bag_bag_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE bag_bag_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE bag_bag_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: bag; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE bag (
+    bag_id bigint DEFAULT nextval('bag_bag_id_seq'::regclass) NOT NULL,
+    prd_id bigint NOT NULL,
+    pty_id bigint NOT NULL,
+    qty smallint NOT NULL
+);
+
+
+ALTER TABLE bag OWNER TO mochidb_owner;
+
+--
 -- Name: brand_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2674,6 +2707,14 @@ ALTER TABLE ONLY role_type ALTER COLUMN rle_typ_id SET DEFAULT nextval('role_typ
 
 
 --
+-- Name: bag bag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag
+    ADD CONSTRAINT bag_pkey PRIMARY KEY (bag_id);
+
+
+--
 -- Name: brand_attr_lcl brand_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3287,6 +3328,22 @@ CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON role USING 
 
 
 --
+-- Name: bag bag_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag
+    ADD CONSTRAINT bag_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+
+
+--
+-- Name: bag bag_pty_id_party_pty_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag
+    ADD CONSTRAINT bag_pty_id_party_pty_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id);
+
+
+--
 -- Name: brand_attr_lcl brand_attr_lcl_bnd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3619,8 +3676,8 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT USAGE ON SCHEMA mochi TO security_app;
+GRANT USAGE ON SCHEMA mochi TO mochi_app;
 
 
 --
@@ -3635,6 +3692,20 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE address TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE address_type TO mochi_app;
+
+
+--
+-- Name: bag_bag_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT ALL ON SEQUENCE bag_bag_id_seq TO mochi_app;
+
+
+--
+-- Name: bag; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE bag TO mochi_app;
 
 
 --
@@ -3753,8 +3824,8 @@ GRANT ALL ON SEQUENCE customer_cst_id_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 GRANT SELECT ON TABLE customer TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 
 
 --
@@ -3880,16 +3951,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 GRANT SELECT ON TABLE organisation TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 GRANT SELECT ON TABLE party TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 
 
 --
@@ -3910,8 +3981,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 GRANT SELECT ON TABLE party_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 
 
 --
@@ -3925,8 +3996,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 GRANT SELECT ON TABLE person TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 
 
 --
@@ -4129,16 +4200,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 GRANT SELECT ON TABLE role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 GRANT SELECT ON TABLE role_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 
 
 --
