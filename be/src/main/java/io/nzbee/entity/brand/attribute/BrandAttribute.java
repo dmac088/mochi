@@ -71,7 +71,7 @@ public class BrandAttribute {
 	@Override
     public int hashCode() {
         HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.getBrand().getBrandCode());
+        hcb.append(this.getBrandDesc());
         hcb.append(this.getLclCd());
         return hcb.toHashCode();
     }
@@ -86,7 +86,7 @@ public class BrandAttribute {
 	    }
 	    BrandAttribute that = (BrandAttribute) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.getBrand().getBrandCode(), that.getBrand().getBrandCode());
+	      eb.append(this.getBrandDesc(), that.getBrandDesc());
 	      eb.append(this.getLclCd(), that.getLclCd());
 	      return eb.isEquals();
 	}

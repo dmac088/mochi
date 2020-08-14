@@ -19,6 +19,9 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.BrandCategory;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.util.FileStorageServiceUpload;
 
@@ -57,15 +60,15 @@ public class BrandMasterService {
 		}
 	}
 	
-	public void persistBrandMaster(BrandMasterSchema c) {
+	public void persistBrandMaster(BrandMasterSchema b) {
 		logger.debug("called persistBrandMaster() ");
 		
-		Brand bDo = 
-				brandDomainService.findByCode(   	Constants.localeENGB, 
-													c.get_BRAND_CODE());
+		Brand bDo = new Brand(	 b.get_BRAND_CODE(),
+								 b.get_BRAND_DESC_EN(),
+								 Constants.localeENGB);
 		
+				
 		brandDomainService.save(bDo);
-
 	}
 	
 	public void extractBrandMaster(Resource resource) {
