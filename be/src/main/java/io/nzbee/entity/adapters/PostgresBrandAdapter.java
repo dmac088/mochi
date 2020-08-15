@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.brand.attribute.IBrandAttributeService;
 import io.nzbee.exceptions.brand.BrandNotFoundException;
 
 @Component
@@ -17,9 +16,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Autowired 
 	private IBrandService brandService;
 	
-	@Autowired 
-	private IBrandAttributeService brandAttributeService;
-
 	@Override
 	public Set<Brand> findAll(String locale) {
 		return brandService.findAll(locale)
