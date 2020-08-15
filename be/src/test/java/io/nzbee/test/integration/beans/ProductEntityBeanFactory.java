@@ -14,7 +14,6 @@ import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentService;
-import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
