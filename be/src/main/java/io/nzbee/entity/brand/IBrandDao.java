@@ -1,9 +1,7 @@
 package io.nzbee.entity.brand;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import io.nzbee.entity.ILocalizedDao;
 
 public interface IBrandDao extends ILocalizedDao<Brand> {
