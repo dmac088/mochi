@@ -2,11 +2,9 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Test;
@@ -63,6 +61,23 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 		// then
 		assertAllCategoriesFound(found);
+	}
+	
+	@Test
+	public void whenFindAllWithListOfProductCodes_thenReturnRequestedCategories() {
+
+		Set<String> ls = new HashSet<String>();
+		ls.add("POM01");
+		ls.add("CIT01");
+		
+		// when
+		Set<Category> found = categoryService.findAll(Constants.localeENGB,
+													  Constants.currencyHKD, 
+													  ls);
+
+		// then
+		assertNotNull(found);
+		assertThat(found.size()).isEqualTo(2);	
 	}
 	
 	@Test
