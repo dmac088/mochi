@@ -199,7 +199,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	public <T> Set<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
 		Class<?> clazz = cls.equals(Food.class) ? io.nzbee.entity.product.food.Food.class
-				: io.nzbee.entity.product.jewellery.Jewellery.class;
+				: io.nzbee.entity.product.accessories.Accessories.class;
 
 		List<io.nzbee.entity.product.Product> lp = productService.findAllByType(locale, currency, clazz);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());

@@ -69,8 +69,8 @@ public class ProductMasterService {
 	    				.withQuoteChar('"');
 	    	
 	        CsvMapper mapper = new CsvMapper();
-	        MappingIterator<FoodMasterSchema> readValues =
-	        	mapper.readerFor(FoodMasterSchema.class).with(bootstrapSchema).readValues(file);
+	        MappingIterator<AccessoriesMasterSchema> readValues =
+	        	mapper.readerFor(AccessoriesMasterSchema.class).with(bootstrapSchema).readValues(file);
 	        
 	        readValues.readAll().stream().forEach(p -> {
 	        	this.persistProductMaster(p);
@@ -81,7 +81,7 @@ public class ProductMasterService {
 		}
 	}
 	
-	public void persistProductMaster(FoodMasterSchema p) {
+	public void persistProductMaster(AccessoriesMasterSchema p) {
 		logger.debug("called persistProductMaster() ");
 		Brand bDo =
 				brandDomainService.findByCode(Constants.localeENGB, 
@@ -139,7 +139,7 @@ public class ProductMasterService {
 	
 	public void extractProductMaster(Resource resource) {
 		logger.debug("called extractProductMaster() ");
-		List<FoodMasterSchema> lpms = new ArrayList<FoodMasterSchema>();
+		List<AccessoriesMasterSchema> lpms = new ArrayList<AccessoriesMasterSchema>();
 	    try {
 	    
 	    	List<Food> productsList = productDomainService.findAllByType(Constants.localeENGB,
@@ -150,7 +150,7 @@ public class ProductMasterService {
 	    							  .collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)
-	    	Map<String, FoodMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new FoodMasterSchema()));
+	    	Map<String, AccessoriesMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new AccessoriesMasterSchema()));
 	 
 	    	
 	    	productsList.addAll(productDomainService.findAllByType(	Constants.localeZHHK,
@@ -162,7 +162,7 @@ public class ProductMasterService {
 	    	
 	    	lpms.addAll(productsList.stream().map(p -> {
 	    		
-		    	FoodMasterSchema pms = map.get(p.getProductUPC());
+		    	AccessoriesMasterSchema pms = map.get(p.getProductUPC());
 		    	
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
@@ -225,7 +225,7 @@ public class ProductMasterService {
 	    	}).collect(Collectors.toSet()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
-	        CsvSchema schema = mapper.schemaFor(FoodMasterSchema.class)
+	        CsvSchema schema = mapper.schemaFor(AccessoriesMasterSchema.class)
 	        		.withHeader()
 	        		.withColumnSeparator('\t')
 	        		.withQuoteChar('"');
