@@ -107,12 +107,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			// find the department
 			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(), 
-																						   domainObject.getDepartment().getDepartmentCode()).get();
-
-			domainObject.getCategories().stream().map(cc -> cc.getCategoryCode()).forEach(c -> {
-				System.out.println("categoryCode = " + c);
-			});
-			
+																						   domainObject.getDepartment().getDepartmentCode()).get();			
 			// get all the categories
 			Set<io.nzbee.entity.category.product.CategoryProduct> lcp = 
 					categoryService.findAll( domainObject.getLclCd(), 
@@ -129,6 +124,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
 			Set<Tag> tags = tagService.findAll(domainObject.getLclCd(), tagCodes);	
 			
+		
 			// find the brand
 			io.nzbee.entity.brand.Brand b = brandService.findByCode(domainObject.getLclCd(),
 					domainObject.getBrand().getBrandCode()).get();
@@ -182,7 +178,10 @@ public class PostgresProductAdapter implements IProductPortService {
 			});
 			product.setPrimaryCategory(primaryCategory);
 			product.setBrand(b);
-			product.setTags(tags);
+			tags.stream().forEach(t -> {
+				t.addProduct(product);
+				tagService.save(t);
+			});
 			product.addProductPrice(prcr);
 			product.addProductPrice(prcm);
 			product.setProductStatus(ps);

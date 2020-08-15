@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -308,10 +309,14 @@ public abstract class Product {
 						includeEmbeddedObjectId=true)
 	private Set<CategoryProduct> categories = new HashSet<CategoryProduct>();
 	
-	@ManyToMany(mappedBy = "products", 
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@ManyToMany(fetch = FetchType.LAZY,
+				mappedBy = "products", 
+				cascade = {
+					CascadeType.PERSIST, 
+					CascadeType.MERGE
+				})
 	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
-	private Set<Tag> tags;
+	private Set<Tag> tags = new HashSet<Tag>();
 
 	@OneToMany(	mappedBy="product",  
 				cascade = CascadeType.ALL,
@@ -617,6 +622,16 @@ public abstract class Product {
 		this.markdownPrice = markdownPrice;
 	}
 	
+	public void addTag(Tag tag) {
+		this.getTags().add(tag);
+		tag.getProducts().add(this);
+	}
+	
+	public void removeTag(Tag tag) {
+		this.getTags().remove(tag);
+		tag.getProducts().remove(this);
+	}
+	
 	public void addProductCategory(CategoryProduct categoryProduct) {
 		this.getCategories().add(categoryProduct);
 		categoryProduct.getProducts().add(this);
@@ -682,7 +697,7 @@ public abstract class Product {
  
     @Override
     public int hashCode() {
-        return 31;
+    	return Objects.hash(this.getProductUPC());
     }
     
     public String getTypeDiscriminator() {

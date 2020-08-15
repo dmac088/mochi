@@ -1,6 +1,7 @@
 package io.nzbee.entity.tag;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -69,7 +70,7 @@ public class Tag implements ISearchDimension {
     		   joinColumns 			= @JoinColumn(name = "tag_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @OrderBy
-    private Set<Product> products;
+    private Set<Product> products = new HashSet<Product>();
 
 	@OneToMany(	mappedBy="tag", 
 				cascade = CascadeType.ALL,
@@ -171,6 +172,16 @@ public class Tag implements ISearchDimension {
 		tagAttribute.setTag(this);
 	}
 	
+	public void addProduct(Product product) {
+		this.getProducts().add(product);
+		product.addTag(this);
+	}
+	
+	public void removeProduct(Product product) {
+		this.getProducts().remove(product);
+		product.removeTag(this);
+	}
+	
 	public void removeTagAttribute(TagAttribute tagAttribute) {
 		this.getAttributes().remove(tagAttribute);
 		tagAttribute.setTag(null);
@@ -205,7 +216,7 @@ public class Tag implements ISearchDimension {
  
     @Override
     public int hashCode() {
-        return 32;
+    	return Objects.hash(this.getTagCode());
     }
 
 	
