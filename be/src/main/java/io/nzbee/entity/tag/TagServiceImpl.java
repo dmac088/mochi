@@ -46,6 +46,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
+	public Optional<Tag> findByCode(String code) {
+		return productTagDAO.findByCode(code);
+	}
+	
+	@Override
 	public Optional<Tag> findByDesc(String locale, String desc) {
 		return productTagDAO.findByDesc(locale, desc);
 	}
