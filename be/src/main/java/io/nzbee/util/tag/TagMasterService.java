@@ -61,7 +61,7 @@ public class TagMasterService {
 		logger.debug("called persistTagMaster() ");
 		
 		Tag tEN = new Tag(	 t.get_TAG_CODE(),
-							 t.get_TAG_DESC_EN(),
+							 t.get_TAG_DESC_EN().toUpperCase(),
 							 Constants.localeENGB);
 				
 		tagDomainService.save(tEN);

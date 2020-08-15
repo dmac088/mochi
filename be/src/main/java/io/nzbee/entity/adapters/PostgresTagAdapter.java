@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.attribute.ITagAttributeService;
 import io.nzbee.exceptions.tag.TagNotFoundException;
 
 @Component
@@ -17,9 +16,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Autowired 
 	private ITagService tagService;
 	
-	@Autowired
-	private ITagAttributeService tagAttributeService;
-
 	@Override
 	public Tag findByCode(String locale, String code) {
 		io.nzbee.entity.tag.Tag t = tagService.findByCode(locale, code)
@@ -56,17 +52,24 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Override
 	public void save(Tag domainObject) {
 		
-		Optional<io.nzbee.entity.tag.attribute.TagAttribute> ota = tagAttributeService.findByCode(
-																		domainObject.getLocale(), 
-																		domainObject.getTagCode());
+		Optional<io.nzbee.entity.tag.Tag> ot = 
+				tagService.findByCode(domainObject.getTagCode());
 		
-		io.nzbee.entity.tag.attribute.TagAttribute ta = (ota.isPresent()) 
-		? ota.get()
-		: (new io.nzbee.entity.tag.attribute.TagAttribute());
 		
-		io.nzbee.entity.tag.Tag t = (ota.isPresent()) 
-		? ta.getTag()
-		: new io.nzbee.entity.tag.Tag();
+		io.nzbee.entity.tag.Tag t = 
+				(ot.isPresent())
+				? ot.get() 
+				: new io.nzbee.entity.tag.Tag();
+				
+		io.nzbee.entity.tag.attribute.TagAttribute ta = new io.nzbee.entity.tag.attribute.TagAttribute();
+		
+		if(ot.isPresent()) {
+			Optional<io.nzbee.entity.tag.attribute.TagAttribute> ota =
+			ot.get().getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
+			ta = (ota.isPresent()) 
+			? ota.get()
+			: new io.nzbee.entity.tag.attribute.TagAttribute();
+		}		
 		
 		ta.setTagDesc(domainObject.getTagDesc());
 		ta.setLclCd(domainObject.getLocale());

@@ -23,7 +23,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.Product_;
@@ -95,6 +94,39 @@ public class TagDaoPostgresImpl implements ITagDao {
 		catch(NoResultException nre) {
 			return Optional.empty();
 		}
+	}
+	
+	
+	@Override
+	public Optional<Tag> findByCode(String code) {
+		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}", code);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+		
+		Root<Tag> root = cq.from(Tag.class);
+
+		List<Predicate> conditions = new ArrayList<Predicate>();
+
+		conditions.add(
+				cb.equal(root.get(Tag_.TAG_CODE), code)
+		);
+		
+		TypedQuery<Tag> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		try {
+			Tag tag = query.getSingleResult();
+			return Optional.ofNullable(tag);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+		
 	}
 
 	

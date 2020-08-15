@@ -1,0 +1,45 @@
+_CATEGORY_LEVEL	_PARENT_CATEGORY_CODE	_PRIMARY_CATEGORY_CODE	_PRIMARY_CATEGORY_DESC_EN	_PRIMARY_CATEGORY_DESC_HK
+0		ACC01	Accessories	
+1	ACC01	AHAR1	Hair Accessories	髮飾
+1	ACC01	AOTH1	Other Accessories 	其他飾物
+1	ACC01	AJEW1	Jewelry	首飾
+2	AHAR1	AHHAB	Hair Bands	頭箍
+2	AHAR1	AHHAC	Hair Clips	髮夾
+2	AHAR1	AHHAT	Hair Ties 	頭髮橡筋
+2	AJEW1	AJBRA	Bracelets	手鏈 
+2	AJEW1	AJEAR	Earrings	耳環
+2	AJEW1	AJNEC	Necklaces	項鍊
+2	AJEW1	AJRIN	Rings	戒指
+2	AJEW1	AJBRO	Brooch	胸針
+2	AOTH1	AOKEY	Keyrings	鎖匙扣
+2	AOTH1	AOLAN	Lanyards	頸繩
+2	AOTH1	AOPAD	Packing decorations	包裝裝飾物
+0		FAS01	Fashion 	時裝
+1	FAS01	FFOT1	Footwear	鞋類
+1	FAS01	FBEL1	Belts	皮帶
+1	FAS01	FWAT1	Watches	手錶
+1	FAS01	FCLO1	Clothes 	衣服
+1	FAS01	FBAG1	Bags and wallets	手袋銀包
+1	FAS01	FHEA1	Head Accessories 	頭飾
+1	FAS01	FCOO1	Cool Stationary 	時尚文具
+1	FAS01	FPHO1	Phone Accessories	手機配件
+2	FFOT1	FFSHO	Shoes	鞋
+2	FFOT1	FFSLI	Slippers	拖鞋
+2	FFOT1	FFSOC	Socks	襪
+2	FBEL1	FBFAB	Fashion Belts 	時尚皮帶
+2	FHEA1	FHSUN	Sunglasses	太陽眼鏡
+2	FHEA1	FHHAT	Hats	帽
+2	FWAT1	FWWAT	Fashion Watches	時尚手錶
+2	FCLO1	FCTOP	Tops	上衫
+2	FCLO1	FCBOT	Bottoms 	外褲
+2	FCLO1	FCJAC	Jackets	外褸
+2	FCLO1	FCSCA	Scarfs	頸巾
+2	FBAG1	FBBAC	Backpacks	背囊
+2	FBAG1	FBHAN	Handbags	包包
+2	FBAG1	FBWAL	Wallet 	銀包
+2	FCOO1	FCPOC	Pockets 	文件袋
+2	FPHO1	FPAPP	Apple	蘋果手機配件 
+0		HOM01	Home	家居
+1	HOM01	HFLO1	Floor	地板
+2	HFLO1	HFCAR	Carpets	地毯
+2	HFLO1	HFCUP	Cupboards	收納
