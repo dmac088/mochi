@@ -300,21 +300,13 @@ public abstract class Product {
 	private Date productCreateDt;
 
 	@ManyToMany(fetch = FetchType.LAZY,
-				mappedBy = "products",
-		    	cascade = {
-		            CascadeType.PERSIST,
-		            CascadeType.MERGE
-		        })
+				mappedBy = "products")
 	@IndexedEmbedded(	prefix="product.categories.", 
 						includeEmbeddedObjectId=true)
 	private Set<CategoryProduct> categories = new HashSet<CategoryProduct>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
-				mappedBy = "products", 
-				cascade = {
-					CascadeType.PERSIST, 
-					CascadeType.MERGE
-				})
+				mappedBy = "products") 
 	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
 	private Set<Tag> tags = new HashSet<Tag>();
 
