@@ -2258,7 +2258,8 @@ CREATE TABLE product_attr_lcl (
     prd_id bigint NOT NULL,
     prd_desc character varying(100),
     prd_img_pth character varying(100),
-    lcl_cd character varying(5) NOT NULL
+    lcl_cd character varying(5) NOT NULL,
+    prd_lng_desc character varying(500)
 );
 
 
