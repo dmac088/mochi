@@ -4,6 +4,8 @@ import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
 
+import io.nzbee.entity.brand.Brand;
+
 
 public interface ILocalizedDao<T> {
     
@@ -32,5 +34,4 @@ public interface ILocalizedDao<T> {
 	T objectToEntity(Tuple t, String locale);
 
 	
-    
 }

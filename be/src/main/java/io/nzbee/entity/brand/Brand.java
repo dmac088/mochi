@@ -17,6 +17,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
@@ -230,7 +232,9 @@ public class Brand implements ISearchDimension {
  
     @Override
     public int hashCode() {
-        return 32;
+    	HashCodeBuilder hcb = new HashCodeBuilder();
+        hcb.append(this.brandCode);
+        return hcb.toHashCode();
     }
 
 }
