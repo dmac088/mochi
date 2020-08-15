@@ -1,8 +1,8 @@
 package io.nzbee.entity.party;
 
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -52,7 +52,7 @@ public abstract class Party {
 				orphanRemoval = true
 			  )
 	@JsonManagedReference
-	private List<Role> partyRoles = new ArrayList<Role>();
+	private Set<Role> partyRoles = new HashSet<Role>();
 	
 	@OneToOne(	mappedBy="userParty", 
 				fetch = FetchType.LAZY, 
@@ -93,11 +93,11 @@ public abstract class Party {
 		this.partyType = partyType;
 	}
 	
-	public List<Role> getPartyRoles() {
+	public Set<Role> getPartyRoles() {
 		return this.partyRoles;
 	}
 
-	public void setPartyRoles(List<Role> partyRole) {
+	public void setPartyRoles(Set<Role> partyRole) {
 		this.partyRoles = partyRole;
 	}
 	
