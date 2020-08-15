@@ -17,18 +17,6 @@ SET row_security = off;
 SET search_path = mochi, pg_catalog;
 
 --
--- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
 -- Data for Name: category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -81,124 +69,9 @@ INSERT INTO category VALUES (37, 'ORV01', 1, 3, 'ROV01', 6);
 -- Data for Name: department; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO department VALUES (2, 'JEW01', 'Jewellery');
 INSERT INTO department VALUES (3, 'FOO01', 'Food');
 INSERT INTO department VALUES (1, 'SHP01', 'Shipping');
-
-
---
--- Data for Name: party_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO party_type VALUES (1, 'Person');
-INSERT INTO party_type VALUES (2, 'Organisation');
-
-
---
--- Data for Name: party; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO party VALUES (1, 1);
-INSERT INTO party VALUES (232216, 1);
-INSERT INTO party VALUES (232220, 1);
-INSERT INTO party VALUES (232230, 1);
-INSERT INTO party VALUES (232232, 1);
-INSERT INTO party VALUES (232234, 1);
-INSERT INTO party VALUES (232236, 1);
-INSERT INTO party VALUES (232238, 1);
-INSERT INTO party VALUES (232240, 1);
-INSERT INTO party VALUES (232242, 1);
-INSERT INTO party VALUES (232244, 1);
-INSERT INTO party VALUES (232246, 1);
-INSERT INTO party VALUES (232248, 1);
-INSERT INTO party VALUES (232250, 1);
-INSERT INTO party VALUES (232252, 1);
-INSERT INTO party VALUES (232254, 1);
-INSERT INTO party VALUES (232256, 1);
-INSERT INTO party VALUES (232258, 1);
-INSERT INTO party VALUES (232260, 1);
-INSERT INTO party VALUES (232262, 1);
-INSERT INTO party VALUES (232304, 1);
-INSERT INTO party VALUES (232310, 1);
-INSERT INTO party VALUES (232312, 1);
-INSERT INTO party VALUES (233016, 1);
-INSERT INTO party VALUES (233018, 1);
-INSERT INTO party VALUES (233020, 1);
-INSERT INTO party VALUES (233022, 1);
-INSERT INTO party VALUES (233024, 1);
-
-
---
--- Data for Name: product_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO product_status VALUES (1, 'ACT01', 'active');
-INSERT INTO product_status VALUES (2, 'INA01', 'inactive');
-
-
---
--- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO product VALUES (11, '3577789', '2019-01-04', 32, 3, 1, 9);
-INSERT INTO product VALUES (5, '12383658', '2019-01-04', 34, 3, 1, 5);
-INSERT INTO product VALUES (7, '14445678', '2019-01-04', 37, 3, 1, 8);
-INSERT INTO product VALUES (9, '12366678', '2019-01-04', 32, 3, 1, 7);
-INSERT INTO product VALUES (13, '76477789', '2019-01-04', 33, 3, 1, 8);
-INSERT INTO product VALUES (21, '18170258', '2019-02-05', 38, 3, 1, 10);
-INSERT INTO product VALUES (23, '17236024', '2019-02-05', 35, 3, 1, 12);
-INSERT INTO product VALUES (25, '15483827', '2019-02-05', 35, 3, 1, 13);
-INSERT INTO product VALUES (26, '13627671', '2019-02-05', 35, 3, 1, 20);
-INSERT INTO product VALUES (28, '16153782', '2019-02-05', 34, 3, 1, 26);
-INSERT INTO product VALUES (30, '16067775', '2019-02-05', 33, 3, 1, 26);
-INSERT INTO product VALUES (2, '23464789', '2019-01-04', 40, 3, 1, 14);
-INSERT INTO product VALUES (8, '25556789', '2019-01-04', 41, 3, 1, 14);
-INSERT INTO product VALUES (17, '18911676', '2019-02-05', 37, 3, 1, 10);
-INSERT INTO product VALUES (3, '19633678', '2019-01-04', 37, 3, 1, 5);
-INSERT INTO product VALUES (4, '23456645', '2019-01-04', 41, 3, 1, 8);
-INSERT INTO product VALUES (6, '23739283', '2019-01-04', 38, 3, 1, 6);
-INSERT INTO product VALUES (12, '64377789', '2019-01-04', 34, 3, 1, 9);
-INSERT INTO product VALUES (16, '18188784', '2019-02-05', 41, 3, 1, 9);
-INSERT INTO product VALUES (10, '23477789', '2019-01-04', 35, 3, 1, 9);
-INSERT INTO product VALUES (14, '13159658', '2019-02-05', 32, 3, 1, 8);
-INSERT INTO product VALUES (15, '15410595', '2019-02-05', 38, 3, 1, 9);
-INSERT INTO product VALUES (19, '10760430', '2019-02-05', 33, 3, 1, 14);
-INSERT INTO product VALUES (20, '10688155', '2019-02-05', 37, 3, 1, 13);
-INSERT INTO product VALUES (22, '17235347', '2019-02-05', 39, 3, 1, 10);
-INSERT INTO product VALUES (24, '19037164', '2019-02-05', 41, 3, 1, 12);
-INSERT INTO product VALUES (27, '15946292', '2019-02-05', 39, 3, 1, 17);
-INSERT INTO product VALUES (29, '17152401', '2019-02-05', 33, 3, 1, 19);
-INSERT INTO product VALUES (1, '12345678', '2019-01-04', 38, 3, 1, 15);
-INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1, 15);
-
-
---
--- Data for Name: bag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Name: bag_bag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
---
-
-SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
-
-
---
--- Data for Name: brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO brand VALUES (32, 'DLE01');
-INSERT INTO brand VALUES (33, 'ENZ01');
-INSERT INTO brand VALUES (34, 'DIV01');
-INSERT INTO brand VALUES (35, 'DRI01');
-INSERT INTO brand VALUES (36, 'WON01');
-INSERT INTO brand VALUES (37, 'PLA01');
-INSERT INTO brand VALUES (38, 'GLO01');
-INSERT INTO brand VALUES (39, 'ADO01');
-INSERT INTO brand VALUES (40, 'GOL01');
-INSERT INTO brand VALUES (41, 'SHI01');
+INSERT INTO department VALUES (2, 'ACC01', 'Accessories');
 
 
 --
@@ -415,6 +288,145 @@ INSERT INTO locale VALUES ('zh-MO');
 INSERT INTO locale VALUES ('zh-SG');
 INSERT INTO locale VALUES ('zh-TW');
 INSERT INTO locale VALUES ('zu-ZA');
+
+
+--
+-- Data for Name: product_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO product_status VALUES (1, 'ACT01', 'active');
+INSERT INTO product_status VALUES (2, 'INA01', 'inactive');
+
+
+--
+-- Data for Name: product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO product VALUES (11, '3577789', '2019-01-04', 32, 3, 1, 9);
+INSERT INTO product VALUES (5, '12383658', '2019-01-04', 34, 3, 1, 5);
+INSERT INTO product VALUES (7, '14445678', '2019-01-04', 37, 3, 1, 8);
+INSERT INTO product VALUES (9, '12366678', '2019-01-04', 32, 3, 1, 7);
+INSERT INTO product VALUES (13, '76477789', '2019-01-04', 33, 3, 1, 8);
+INSERT INTO product VALUES (21, '18170258', '2019-02-05', 38, 3, 1, 10);
+INSERT INTO product VALUES (23, '17236024', '2019-02-05', 35, 3, 1, 12);
+INSERT INTO product VALUES (25, '15483827', '2019-02-05', 35, 3, 1, 13);
+INSERT INTO product VALUES (26, '13627671', '2019-02-05', 35, 3, 1, 20);
+INSERT INTO product VALUES (28, '16153782', '2019-02-05', 34, 3, 1, 26);
+INSERT INTO product VALUES (30, '16067775', '2019-02-05', 33, 3, 1, 26);
+INSERT INTO product VALUES (2, '23464789', '2019-01-04', 40, 3, 1, 14);
+INSERT INTO product VALUES (8, '25556789', '2019-01-04', 41, 3, 1, 14);
+INSERT INTO product VALUES (17, '18911676', '2019-02-05', 37, 3, 1, 10);
+INSERT INTO product VALUES (3, '19633678', '2019-01-04', 37, 3, 1, 5);
+INSERT INTO product VALUES (4, '23456645', '2019-01-04', 41, 3, 1, 8);
+INSERT INTO product VALUES (6, '23739283', '2019-01-04', 38, 3, 1, 6);
+INSERT INTO product VALUES (12, '64377789', '2019-01-04', 34, 3, 1, 9);
+INSERT INTO product VALUES (16, '18188784', '2019-02-05', 41, 3, 1, 9);
+INSERT INTO product VALUES (10, '23477789', '2019-01-04', 35, 3, 1, 9);
+INSERT INTO product VALUES (14, '13159658', '2019-02-05', 32, 3, 1, 8);
+INSERT INTO product VALUES (15, '15410595', '2019-02-05', 38, 3, 1, 9);
+INSERT INTO product VALUES (19, '10760430', '2019-02-05', 33, 3, 1, 14);
+INSERT INTO product VALUES (20, '10688155', '2019-02-05', 37, 3, 1, 13);
+INSERT INTO product VALUES (22, '17235347', '2019-02-05', 39, 3, 1, 10);
+INSERT INTO product VALUES (24, '19037164', '2019-02-05', 41, 3, 1, 12);
+INSERT INTO product VALUES (27, '15946292', '2019-02-05', 39, 3, 1, 17);
+INSERT INTO product VALUES (29, '17152401', '2019-02-05', 33, 3, 1, 19);
+INSERT INTO product VALUES (1, '12345678', '2019-01-04', 38, 3, 1, 15);
+INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1, 15);
+
+
+--
+-- Data for Name: product_accessories; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: accessories_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: party_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO party_type VALUES (1, 'Person');
+INSERT INTO party_type VALUES (2, 'Organisation');
+
+
+--
+-- Data for Name: party; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO party VALUES (1, 1);
+INSERT INTO party VALUES (232216, 1);
+INSERT INTO party VALUES (232220, 1);
+INSERT INTO party VALUES (232230, 1);
+INSERT INTO party VALUES (232232, 1);
+INSERT INTO party VALUES (232234, 1);
+INSERT INTO party VALUES (232236, 1);
+INSERT INTO party VALUES (232238, 1);
+INSERT INTO party VALUES (232240, 1);
+INSERT INTO party VALUES (232242, 1);
+INSERT INTO party VALUES (232244, 1);
+INSERT INTO party VALUES (232246, 1);
+INSERT INTO party VALUES (232248, 1);
+INSERT INTO party VALUES (232250, 1);
+INSERT INTO party VALUES (232252, 1);
+INSERT INTO party VALUES (232254, 1);
+INSERT INTO party VALUES (232256, 1);
+INSERT INTO party VALUES (232258, 1);
+INSERT INTO party VALUES (232260, 1);
+INSERT INTO party VALUES (232262, 1);
+INSERT INTO party VALUES (232304, 1);
+INSERT INTO party VALUES (232310, 1);
+INSERT INTO party VALUES (232312, 1);
+INSERT INTO party VALUES (233016, 1);
+INSERT INTO party VALUES (233018, 1);
+INSERT INTO party VALUES (233020, 1);
+INSERT INTO party VALUES (233022, 1);
+INSERT INTO party VALUES (233024, 1);
+
+
+--
+-- Data for Name: bag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Name: bag_bag_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
+
+
+--
+-- Data for Name: brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO brand VALUES (32, 'DLE01');
+INSERT INTO brand VALUES (33, 'ENZ01');
+INSERT INTO brand VALUES (34, 'DIV01');
+INSERT INTO brand VALUES (35, 'DRI01');
+INSERT INTO brand VALUES (36, 'WON01');
+INSERT INTO brand VALUES (37, 'PLA01');
+INSERT INTO brand VALUES (38, 'GLO01');
+INSERT INTO brand VALUES (39, 'ADO01');
+INSERT INTO brand VALUES (40, 'GOL01');
+INSERT INTO brand VALUES (41, 'SHI01');
 
 
 --
@@ -885,7 +897,7 @@ INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 233047, true);
+SELECT pg_catalog.setval('hibernate_sequence', 233049, true);
 
 
 --
@@ -903,18 +915,6 @@ SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
 
 --
 -- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Data for Name: product_jewellery; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Data for Name: jewellery_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 

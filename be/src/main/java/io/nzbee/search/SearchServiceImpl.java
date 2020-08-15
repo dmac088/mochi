@@ -40,13 +40,13 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.food.Food;
-import io.nzbee.entity.product.jewellery.Jewellery;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.search.facet.SearchFacetDiscrete;
 import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.accessories.Accessories;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -462,7 +462,7 @@ public class SearchServiceImpl implements ISearchService {
 
 	private Product mapResultToEntity(Object[] r, String locale, String currency) {
 
-		Product p = (r[13].toString().equals(Constants.productTypeCodeFood) ? new Food() : new Jewellery());
+		Product p = (r[13].toString().equals(Constants.productTypeCodeFood) ? new Food() : new Accessories());
 
 		if ((r[13].toString().equals(Constants.productTypeCodeFood))) {
 			((Food) p).setCountryOfOrigin(r[15].toString());

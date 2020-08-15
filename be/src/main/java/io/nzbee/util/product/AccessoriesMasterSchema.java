@@ -1,7 +1,7 @@
 package io.nzbee.util.product;
 
 
-public class FoodMasterSchema {
+public class AccessoriesMasterSchema {
 
 	private String PRODUCT_UPC_CODE;
 	
@@ -12,6 +12,10 @@ public class FoodMasterSchema {
 	private String PRODUCT_DESCRIPTION_EN;
 	
 	private String PRODUCT_DESCRIPTION_HK;
+	
+	private String PRODUCT_LONG_DESCRIPTION_EN;
+	
+	private String PRODUCT_LONG_DESCRIPTION_HK;
 	
 	private String BRAND_CODE;
 	
@@ -37,40 +41,44 @@ public class FoodMasterSchema {
 	
 	private String PRIMARY_CATEGORY_DESC_HK;
 	
-	private String DEPARTMENT_CODE;
+	private String PRODUCT_TEMPLATE_CODE;
 	
-	private String DEPARTMENT_DESC_EN;
+	private String PRODUCT_TEMPLATE_DESC_EN;
 	
-	private String DEPARTMENT_DESC_HK;
+	private String PRODUCT_TEMPLATE_DESC_HK;
 	
-	private String EXPIRY_DATE;
+	private String TAG_CODE_A;
 	
-	private String COUNTRY_OF_ORIGIN;
+	private String TAG_CODE_B;
 	
-	private String PRODUCT_TYPE;
+	private String TAG_CODE_C;
+	
+	private String TAG_CODE_D;
+	
+	private String TAG_CODE_E;
 
-	public String get_EXPIRY_DATE() {
-		return EXPIRY_DATE;
+	public String getPRODUCT_TEMPLATE_CODE() {
+		return PRODUCT_TEMPLATE_CODE;
 	}
 
-	public void set_EXPIRY_DATE(String eXPIRY_DATE) {
-		EXPIRY_DATE = eXPIRY_DATE;
+	public void setPRODUCT_TEMPLATE_CODE(String pRODUCT_TEMPLATE_CODE) {
+		PRODUCT_TEMPLATE_CODE = pRODUCT_TEMPLATE_CODE;
 	}
 
-	public String get_COUNTRY_OF_ORIGIN() {
-		return COUNTRY_OF_ORIGIN;
+	public String getPRODUCT_TEMPLATE_DESC_EN() {
+		return PRODUCT_TEMPLATE_DESC_EN;
 	}
 
-	public void set_COUNTRY_OF_ORIGIN(String COUNTRY_OF_ORIGIN) {
-		this.COUNTRY_OF_ORIGIN = COUNTRY_OF_ORIGIN;
+	public void setPRODUCT_TEMPLATE_DESC_EN(String pRODUCT_TEMPLATE_DESC_EN) {
+		PRODUCT_TEMPLATE_DESC_EN = pRODUCT_TEMPLATE_DESC_EN;
 	}
 
-	public String get_DEPARTMENT_CODE() {
-		return DEPARTMENT_CODE;
+	public String getPRODUCT_TEMPLATE_DESC_HK() {
+		return PRODUCT_TEMPLATE_DESC_HK;
 	}
 
-	public void set_DEPARTMENT_CODE(String DEPARTMENT_CODE) {
-		this.DEPARTMENT_CODE = DEPARTMENT_CODE;
+	public void setPRODUCT_TEMPLATE_DESC_HK(String pRODUCT_TEMPLATE_DESC_HK) {
+		PRODUCT_TEMPLATE_DESC_HK = pRODUCT_TEMPLATE_DESC_HK;
 	}
 
 	public String get_PRODUCT_UPC_CODE() {
@@ -119,6 +127,22 @@ public class FoodMasterSchema {
 
 	public void set_BRAND_DESCRIPTION_HK(String BRAND_DESCRIPTION_HK) {
 		this.BRAND_DESCRIPTION_HK = BRAND_DESCRIPTION_HK;
+	}
+
+	public String getPRODUCT_LONG_DESCRIPTION_EN() {
+		return PRODUCT_LONG_DESCRIPTION_EN;
+	}
+
+	public void setPRODUCT_LONG_DESCRIPTION_EN(String pRODUCT_LONG_DESCRIPTION_EN) {
+		PRODUCT_LONG_DESCRIPTION_EN = pRODUCT_LONG_DESCRIPTION_EN;
+	}
+
+	public String getPRODUCT_LONG_DESCRIPTION_HK() {
+		return PRODUCT_LONG_DESCRIPTION_HK;
+	}
+
+	public void setPRODUCT_LONG_DESCRIPTION_HK(String pRODUCT_LONG_DESCRIPTION_HK) {
+		PRODUCT_LONG_DESCRIPTION_HK = pRODUCT_LONG_DESCRIPTION_HK;
 	}
 
 	public double get_PRODUCT_RETAIL_PRICE_USD() {
@@ -201,22 +225,6 @@ public class FoodMasterSchema {
 		PRIMARY_CATEGORY_DESC_HK = pRIMARY_CATEGORY_DESC_HK;
 	}
 	
-	public String get_DEPARTMENT_DESC_EN() {
-		return DEPARTMENT_DESC_EN;
-	}
-
-	public void set_DEPARTMENT_DESC_EN(String dEPARTMENT_DESC_EN) {
-		DEPARTMENT_DESC_EN = dEPARTMENT_DESC_EN;
-	}
-	
-	public String get_DEPARTMENT_DESC_HK() {
-		return DEPARTMENT_DESC_HK;
-	}
-
-	public void set_DEPARTMENT_DESC_HK(String dEPARTMENT_DESC_HK) {
-		DEPARTMENT_DESC_HK = dEPARTMENT_DESC_HK;
-	}
-
 	public String get_PRODUCT_STATUS_CODE() {
 		return PRODUCT_STATUS_CODE;
 	}
@@ -224,13 +232,45 @@ public class FoodMasterSchema {
 	public void set_PRODUCT_STATUS_CODE(String pRODUCT_STATUS_CODE) {
 		PRODUCT_STATUS_CODE = pRODUCT_STATUS_CODE;
 	}
-	
-	public String get_PRODUCT_TYPE() {
-		return PRODUCT_TYPE;
+
+	public String getTAG_CODE_A() {
+		return TAG_CODE_A;
 	}
 
-	public void set_PRODUCT_TYPE(String pRODUCT_TYPE) {
-		PRODUCT_TYPE = pRODUCT_TYPE;
+	public void setTAG_CODE_A(String tAG_CODE_A) {
+		TAG_CODE_A = tAG_CODE_A;
+	}
+
+	public String getTAG_CODE_B() {
+		return TAG_CODE_B;
+	}
+
+	public void setTAG_CODE_B(String tAG_CODE_B) {
+		TAG_CODE_B = tAG_CODE_B;
+	}
+
+	public String getTAG_CODE_C() {
+		return TAG_CODE_C;
+	}
+
+	public void setTAG_CODE_C(String tAG_CODE_C) {
+		TAG_CODE_C = tAG_CODE_C;
+	}
+
+	public String getTAG_CODE_D() {
+		return TAG_CODE_D;
+	}
+
+	public void setTAG_CODE_D(String tAG_CODE_D) {
+		TAG_CODE_D = tAG_CODE_D;
+	}
+
+	public String getTAG_CODE_E() {
+		return TAG_CODE_E;
+	}
+
+	public void setTAG_CODE_E(String tAG_CODE_E) {
+		TAG_CODE_E = tAG_CODE_E;
 	}
 
 	@Override
