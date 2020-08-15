@@ -9,6 +9,7 @@ import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.accessories.Accessories;
 import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
@@ -43,11 +44,9 @@ public class ProductEntityBeanFactory {
 	
 	public final Product getProductEntityBean() {
 	
-		Food product = new Food();
+		Accessories product = new Accessories();
 		product.setProductCreateDt(new Date());
 		product.setUPC("123456789");
-		product.setExpiryDate(new Date());
-		product.setCountryOfOrigin("NZL");
 		
 		ProductAttribute paEng = new ProductAttribute();
 		paEng.setProductDesc("test product");
@@ -86,7 +85,7 @@ public class ProductEntityBeanFactory {
 				
 		//we need a type
 		product.setDepartment(departmentService.findByCode(	Constants.localeENGB, 
-				 											"FOO01").get());
+				 											"ACC01").get());
 				
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
