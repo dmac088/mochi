@@ -16,7 +16,7 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.Food;
+import io.nzbee.domain.product.Accessories;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.brand.IBrandService;
@@ -91,18 +91,21 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	public void save(Product domainObject) {
-		if (domainObject instanceof Food) {
+		if (domainObject instanceof Accessories) {
 
-			Optional<io.nzbee.entity.product.Product> op = productService.findByCode(domainObject.getLclCd(),
-					domainObject.getCurrency(), domainObject.getProductUPC());
+			Optional<io.nzbee.entity.product.Product> op = productService.findByCode(	domainObject.getLclCd(),
+																						domainObject.getCurrency(), 
+																						domainObject.getProductUPC());
 
-			io.nzbee.entity.product.food.Food product = (op.isPresent()) ? (io.nzbee.entity.product.food.Food) op.get()
-					: new io.nzbee.entity.product.food.Food();
+			io.nzbee.entity.product.accessories.Accessories product = (op.isPresent()) 
+					? (io.nzbee.entity.product.accessories.Accessories) op.get()
+					: new io.nzbee.entity.product.accessories.Accessories();
 
-			Food food = (Food) domainObject;
+			Accessories accessory = (Accessories) domainObject;
 
 			// find the department
-			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(), domainObject.getDepartment().getDepartmentCode()).get();
+			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(), 
+																						   domainObject.getDepartment().getDepartmentCode()).get();
 
 			// get all the categories
 			Set<io.nzbee.entity.category.product.CategoryProduct> lcp = categoryService
@@ -113,7 +116,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			io.nzbee.entity.category.product.CategoryProduct primaryCategory = (CategoryProduct) categoryService
 					.findByCode(domainObject.getLclCd(),
-							food.getPrimaryCategory().getCategoryCode()).get();
+							accessory.getPrimaryCategory().getCategoryCode()).get();
 
 			
 			//get all the tags
@@ -134,7 +137,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			pa.setProductImage(domainObject.getProductImage());
 			pa.setLclCd(domainObject.getLclCd());
 
-			Currency curr = currencyService.findByCode(food.getCurrency()).get();
+			Currency curr = currencyService.findByCode(accessory.getCurrency()).get();
 
 			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
 			io.nzbee.entity.product.price.ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
@@ -150,7 +153,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			prcr.setType(ptr);
 			prcr.setCurrency(curr);
-			prcr.setPriceValue(food.getProductRetail());
+			prcr.setPriceValue(accessory.getProductRetail());
 
 			Optional<io.nzbee.entity.product.price.ProductPrice> oprcm = productPriceService
 					.findOne(domainObject.getProductUPC(), ptm.getCode(), domainObject.getCurrency());
@@ -161,23 +164,19 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			prcm.setType(ptm);
 			prcm.setCurrency(curr);
-			prcm.setPriceValue(food.getProductMarkdown());
+			prcm.setPriceValue(accessory.getProductMarkdown());
 
-			product.setProductUPC(food.getProductUPC());
-			product.setProductCreateDt(food.getProductCreateDt());
-			product.setCountryOfOrigin(food.getCountryOfOrigin());
-			product.setExpiryDate(food.getExpiryDate());
-			product.setLocale(food.getLclCd());
-			product.setCurrency(food.getCurrency());
+			product.setProductUPC(accessory.getProductUPC());
+			product.setProductCreateDt(accessory.getProductCreateDt());
+			product.setLocale(accessory.getLclCd());
+			product.setCurrency(accessory.getCurrency());
 			product.setDepartment(d);
 			lcp.stream().forEach(c -> {
 				product.addCategory(c);
 			});
 			product.setPrimaryCategory(primaryCategory);
 			product.setBrand(b);
-			
 			product.setTags(tags);
-			
 			product.addProductPrice(prcr);
 			product.addProductPrice(prcm);
 			product.setProductStatus(ps);
@@ -211,7 +210,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	public <T> Set<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
-		Class<?> clazz = cls.equals(Food.class) ? io.nzbee.entity.product.food.Food.class
+		Class<?> clazz = cls.equals(Accessories.class) ? io.nzbee.entity.product.accessories.Accessories.class
 				: io.nzbee.entity.product.accessories.Accessories.class;
 
 		List<io.nzbee.entity.product.Product> lp = productService.findAllByType(locale, currency, clazz);
