@@ -63,10 +63,6 @@ public class ProductController {
 															size, 
 															sort);
     	
-    	sp.forEach(p -> {
-    		System.out.println(p.getProductUPC());
-    	});
-    	
     	final Page<ProductResource> pages = sp.map(p -> prodResourceAssembler.toModel(p));
     			
     	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
