@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -108,11 +110,12 @@ public class PostgresProductAdapter implements IProductPortService {
 																						   domainObject.getDepartment().getDepartmentCode()).get();
 
 			// get all the categories
-			Set<io.nzbee.entity.category.product.CategoryProduct> lcp = categoryService
-					.findAll(domainObject.getLclCd(), domainObject.getCurrency(),
-							domainObject.getCategories().stream().map(cc -> cc.getCategoryCode())
+			Set<io.nzbee.entity.category.product.CategoryProduct> lcp = 
+					categoryService.findAll( domainObject.getLclCd(), 
+											 domainObject.getCurrency(),
+											 domainObject.getCategories().stream().map(cc -> cc.getCategoryCode())
 									.collect(Collectors.toSet()))
-					.stream().map(cd -> (CategoryProduct) cd).collect(Collectors.toSet());
+					.stream().map(cd -> (CategoryProduct) Hibernate.unproxy(cd)).collect(Collectors.toSet());
 
 			io.nzbee.entity.category.product.CategoryProduct primaryCategory = (CategoryProduct) categoryService
 					.findByCode(domainObject.getLclCd(),
