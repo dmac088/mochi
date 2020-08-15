@@ -59,7 +59,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
-		List<Category> found = categoryService.findAll(Constants.localeENGB);
+		Set<Category> found = categoryService.findAll(Constants.localeENGB);
 
 		// then
 		assertAllCategoriesFound(found);
@@ -207,7 +207,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertThat(found).isEqualTo(new Double("10.98"));
 	}
 
-	private void assertAllCategoriesFound(final List<Category> found) {
+	private void assertAllCategoriesFound(final Set<Category> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(43);
