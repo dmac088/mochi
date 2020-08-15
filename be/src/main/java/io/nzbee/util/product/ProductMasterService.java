@@ -23,6 +23,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
+import io.nzbee.domain.product.Accessories;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -94,7 +95,7 @@ public class ProductMasterService {
 		
 		Department dDo = 
 				departmentDomainService.findByCode(Constants.localeENGB, 
-												   p.get_DEPARTMENT_CODE());
+												   p.get_PRODUCT_TEMPLATE_CODE());
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		Date createdDate = null;
@@ -105,11 +106,6 @@ public class ProductMasterService {
 				(p.get_PRODUCT_CREATED_DATE().length() == 0)
 				? format.parse("1900-01-01")
 				: format.parse(p.get_PRODUCT_CREATED_DATE());
-				
-			expiryDate = 
-				(p.get_EXPIRY_DATE().length() == 0)
-				? format.parse("9999-12-31")
-				: format.parse(p.get_PRODUCT_CREATED_DATE());
 
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
@@ -117,7 +113,7 @@ public class ProductMasterService {
 		}
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
-		Product pDo = new Food(
+		Product pDo = new Accessories(
 								p.get_PRODUCT_UPC_CODE(),
 								createdDate,
 								p.get_PRODUCT_STATUS_CODE(),
@@ -125,8 +121,6 @@ public class ProductMasterService {
 							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
 							   	p.get_PRODUCT_IMAGE_EN(),
-							   	p.get_COUNTRY_OF_ORIGIN(),
-							   	expiryDate,
 							   	Constants.localeENGB,
 							   	Constants.currencyHKD,
 							   	bDo,
@@ -167,7 +161,6 @@ public class ProductMasterService {
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
 		    	
-		    	pms.set_COUNTRY_OF_ORIGIN(p.getCountryOfOrigin());
 		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus());
 		    	
 		        if (p.getLclCd().equals(Constants.localeENGB)) 
@@ -211,15 +204,13 @@ public class ProductMasterService {
 															 			 p.getCurrency(), 
 															 			 p.getProductUPC()); 
 		    	
-		    	pms.set_DEPARTMENT_CODE(d.getDepartmentCode());
+		    	pms.set_PRODUCT_TEMPLATE_CODE(d.getDepartmentCode());
 		    	
 		    	if (p.getLclCd().equals(Constants.localeENGB)) 
-		    			{ pms.set_DEPARTMENT_DESC_EN(d.getDepartmentDesc()); } 
+		    			{ pms.set_PRODUCT_TEMPLATE_DESC_EN(d.getDepartmentDesc()); } 
 		    	
 		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
-						{ pms.set_DEPARTMENT_DESC_HK(d.getDepartmentDesc()); } 
-		    	
-		    	pms.set_PRODUCT_TYPE(p.getProductType());
+						{ pms.set_PRODUCT_TEMPLATE_DESC_HK(d.getDepartmentDesc()); } 
 		    	
 	    	return pms;
 	    	}).collect(Collectors.toSet()));
