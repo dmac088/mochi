@@ -96,13 +96,13 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public List<CategoryBrand> findAll(String locale) {
+	public Set<CategoryBrand> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<CategoryBrand> findAll(String locale, Set<String> codes) {
+	public Set<CategoryBrand> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -179,7 +179,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	
 	@Override
-	public List<Category> findAll(String locale) {
+	public Set<Category> findAll(String locale) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}", locale);
 		
 		Session session = em.unwrap(Session.class);
@@ -203,7 +203,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toSet());
 	}
 	
 
@@ -259,7 +259,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 
 	@Override
-	public List<Category> findAll(String locale, Set<String> categoryCodes) {
+	public Set<Category> findAll(String locale, Set<String> categoryCodes) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(categoryCodes, ','));
 		
@@ -288,7 +288,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toList());
+		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toSet());
 	}
 	
 	@Override

@@ -5,4 +5,5 @@ public interface IFacetService {
 	String getFacetField();
 	
 	String getFacetCategory();
+
 }

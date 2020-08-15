@@ -44,12 +44,12 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public List<Category> findAll(String locale) {
+	public Set<Category> findAll(String locale) {
 		return categoryDAO.findAll(locale);
 	}
 	
 	@Override
-	public List<Category> findAll(String locale, Set<String> categoryCodes) {
+	public Set<Category> findAll(String locale, Set<String> categoryCodes) {
 		return categoryDAO.findAll(locale, categoryCodes);
 	}
 	
@@ -107,7 +107,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	public List<Category> findAll(String lcl, String currency, Set<String> codes) {
+	public Set<Category> findAll(String lcl, String currency, Set<String> codes) {
 		return categoryDAO.findAll(lcl, codes);
 	}
 

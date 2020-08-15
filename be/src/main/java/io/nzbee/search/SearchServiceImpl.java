@@ -376,7 +376,7 @@ public class SearchServiceImpl implements ISearchService {
 			// create a new array of entity facets
 			ISearchDimensionService service = sfh.getBean(appContext);
 			
-			List<ISearchDimension> lc = service.findAll(lcl, currency, sfh.getCodes());
+			Set<ISearchDimension> lc = service.findAll(lcl, currency, sfh.getCodes());
 
 			facets.stream().filter(x -> !selectedFacets.stream().filter(y -> (x.getValue().equals(y.getValue())))
 			.findFirst().isPresent()).collect(Collectors.toSet())

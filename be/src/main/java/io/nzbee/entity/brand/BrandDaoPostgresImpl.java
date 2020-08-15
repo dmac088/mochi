@@ -153,7 +153,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, Set<String> brandCodes) {
+	public Set<Brand> findAll(String locale, Set<String> brandCodes) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(brandCodes, ','));
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -182,11 +182,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
 	}
 	
 	@Override
-	public List<Brand> findAllByCategory(String locale, String categoryCode) {
+	public Set<Brand> findAllByCategory(String locale, String categoryCode) {
 		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}, {}", locale, categoryCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -214,7 +214,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
 	}
 	
 
@@ -256,7 +256,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale) {
+	public Set<Brand> findAll(String locale) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -278,12 +278,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<Tuple> tuples = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
 		
 	}
 	
 	@Override
-	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
@@ -313,7 +313,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(b -> this.objectToEntity(b, locale, currency)).collect(Collectors.toList());
+		return results.stream().map(b -> this.objectToEntity(b, locale, currency)).collect(Collectors.toSet());
 		
 	}
 	

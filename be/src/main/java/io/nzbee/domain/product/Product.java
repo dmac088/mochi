@@ -131,6 +131,14 @@ public abstract class Product {
 	public String getProductType() {
 		return productType;
 	}
+	
+	public void addTag(Tag t) {
+		tags.add(t);
+	}
+	
+	public List<Tag> getTags() {
+		return tags;
+	}
 
 	@Override
 	public boolean equals(Object o) {

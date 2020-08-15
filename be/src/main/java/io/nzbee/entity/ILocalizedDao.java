@@ -1,11 +1,8 @@
 package io.nzbee.entity;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
-
-import io.nzbee.entity.brand.Brand;
 
 
 public interface ILocalizedDao<T> {
@@ -16,9 +13,9 @@ public interface ILocalizedDao<T> {
     
     Optional<T> findByDesc(String locale, String desc);
     
-    List<T> findAll(String locale);
+    Set<T> findAll(String locale);
     
-    List<T> findAll(String locale, Set<String> codes);
+    Set<T> findAll(String locale, Set<String> codes);
      
     T objectToEntity(Object[] o, String locale, String currency);
     

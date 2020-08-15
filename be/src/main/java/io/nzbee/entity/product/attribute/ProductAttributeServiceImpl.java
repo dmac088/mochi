@@ -110,13 +110,13 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	}
 
 	@Override
-	public List<ProductAttribute> findAll(String locale) {
+	public Set<ProductAttribute> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ProductAttribute> findAll(String locale, Set<String> codes) {
+	public Set<ProductAttribute> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

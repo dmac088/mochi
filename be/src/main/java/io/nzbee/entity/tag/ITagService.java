@@ -9,5 +9,6 @@ public interface ITagService  extends ILocalizedService<Tag>, ISearchDimensionSe
 
 	List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Double maxPrice);
+
 	
 }

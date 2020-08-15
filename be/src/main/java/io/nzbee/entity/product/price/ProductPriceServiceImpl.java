@@ -68,13 +68,13 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public List<ProductPrice> findAll(String locale) {
+	public Set<ProductPrice> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ProductPrice> findAll(String locale, Set<String> codes) {
+	public Set<ProductPrice> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

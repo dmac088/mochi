@@ -26,12 +26,12 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
-	public List<Tag> findAll(String locale) {
+	public Set<Tag> findAll(String locale) {
 		return productTagDAO.findAll(locale);
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale, Set<String> codes) {
+	public Set<Tag> findAll(String locale, Set<String> codes) {
 		return productTagDAO.findAll(locale, codes);
 	}
 
@@ -83,7 +83,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
-	public List<Tag> findAll(String lcl, String currency, Set<String> codes) {
+	public Set<Tag> findAll(String lcl, String currency, Set<String> codes) {
 		return productTagDAO.findAll(lcl, codes);
 	}
 	
