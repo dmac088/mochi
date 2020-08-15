@@ -57,27 +57,27 @@ public class AccessoriesMasterSchema {
 	
 	private String TAG_CODE_E;
 
-	public String getPRODUCT_TEMPLATE_CODE() {
+	public String get_PRODUCT_TEMPLATE_CODE() {
 		return PRODUCT_TEMPLATE_CODE;
 	}
 
-	public void setPRODUCT_TEMPLATE_CODE(String pRODUCT_TEMPLATE_CODE) {
+	public void set_PRODUCT_TEMPLATE_CODE(String pRODUCT_TEMPLATE_CODE) {
 		PRODUCT_TEMPLATE_CODE = pRODUCT_TEMPLATE_CODE;
 	}
 
-	public String getPRODUCT_TEMPLATE_DESC_EN() {
+	public String get_PRODUCT_TEMPLATE_DESC_EN() {
 		return PRODUCT_TEMPLATE_DESC_EN;
 	}
 
-	public void setPRODUCT_TEMPLATE_DESC_EN(String pRODUCT_TEMPLATE_DESC_EN) {
+	public void set_PRODUCT_TEMPLATE_DESC_EN(String pRODUCT_TEMPLATE_DESC_EN) {
 		PRODUCT_TEMPLATE_DESC_EN = pRODUCT_TEMPLATE_DESC_EN;
 	}
 
-	public String getPRODUCT_TEMPLATE_DESC_HK() {
+	public String get_PRODUCT_TEMPLATE_DESC_HK() {
 		return PRODUCT_TEMPLATE_DESC_HK;
 	}
 
-	public void setPRODUCT_TEMPLATE_DESC_HK(String pRODUCT_TEMPLATE_DESC_HK) {
+	public void set_PRODUCT_TEMPLATE_DESC_HK(String pRODUCT_TEMPLATE_DESC_HK) {
 		PRODUCT_TEMPLATE_DESC_HK = pRODUCT_TEMPLATE_DESC_HK;
 	}
 
@@ -129,11 +129,11 @@ public class AccessoriesMasterSchema {
 		this.BRAND_DESCRIPTION_HK = BRAND_DESCRIPTION_HK;
 	}
 
-	public String getPRODUCT_LONG_DESCRIPTION_EN() {
+	public String get_PRODUCT_LONG_DESCRIPTION_EN() {
 		return PRODUCT_LONG_DESCRIPTION_EN;
 	}
 
-	public void setPRODUCT_LONG_DESCRIPTION_EN(String pRODUCT_LONG_DESCRIPTION_EN) {
+	public void set_PRODUCT_LONG_DESCRIPTION_EN(String pRODUCT_LONG_DESCRIPTION_EN) {
 		PRODUCT_LONG_DESCRIPTION_EN = pRODUCT_LONG_DESCRIPTION_EN;
 	}
 
@@ -233,43 +233,43 @@ public class AccessoriesMasterSchema {
 		PRODUCT_STATUS_CODE = pRODUCT_STATUS_CODE;
 	}
 
-	public String getTAG_CODE_A() {
+	public String get_TAG_CODE_A() {
 		return TAG_CODE_A;
 	}
 
-	public void setTAG_CODE_A(String tAG_CODE_A) {
+	public void set_TAG_CODE_A(String tAG_CODE_A) {
 		TAG_CODE_A = tAG_CODE_A;
 	}
 
-	public String getTAG_CODE_B() {
+	public String get_TAG_CODE_B() {
 		return TAG_CODE_B;
 	}
 
-	public void setTAG_CODE_B(String tAG_CODE_B) {
+	public void set_TAG_CODE_B(String tAG_CODE_B) {
 		TAG_CODE_B = tAG_CODE_B;
 	}
 
-	public String getTAG_CODE_C() {
+	public String get_TAG_CODE_C() {
 		return TAG_CODE_C;
 	}
 
-	public void setTAG_CODE_C(String tAG_CODE_C) {
+	public void set_TAG_CODE_C(String tAG_CODE_C) {
 		TAG_CODE_C = tAG_CODE_C;
 	}
 
-	public String getTAG_CODE_D() {
+	public String get_TAG_CODE_D() {
 		return TAG_CODE_D;
 	}
 
-	public void setTAG_CODE_D(String tAG_CODE_D) {
+	public void set_TAG_CODE_D(String tAG_CODE_D) {
 		TAG_CODE_D = tAG_CODE_D;
 	}
 
-	public String getTAG_CODE_E() {
+	public String get_TAG_CODE_E() {
 		return TAG_CODE_E;
 	}
 
-	public void setTAG_CODE_E(String tAG_CODE_E) {
+	public void set_TAG_CODE_E(String tAG_CODE_E) {
 		TAG_CODE_E = tAG_CODE_E;
 	}
 
