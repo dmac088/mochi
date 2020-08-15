@@ -131,31 +131,26 @@ public class ProductMasterService {
 							   	(ProductCategory) cDo);
 
 		//add the tags to the domain object
-		Tag tAeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_A());
-		Tag tBeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_B());
-		Tag tCeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_C());
-		Tag tDeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_D());
-		Tag tEeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_E());
-		Tag tAcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_A());
-		Tag tBcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_B());
-		Tag tCcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_C());
-		Tag tDcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_D());
-		Tag tEcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_E());
-		
-		pDo.addTag(tAeN);
-		pDo.addTag(tBeN);
-		pDo.addTag(tCeN);
-		pDo.addTag(tDeN);
-		pDo.addTag(tEeN);
-		
-		pDo.addTag(tAcN);
-		pDo.addTag(tBcN);
-		pDo.addTag(tCcN);
-		pDo.addTag(tDcN);
-		pDo.addTag(tEcN);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_A(), pDo);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_B(), pDo);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_C(), pDo);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_D(), pDo);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_E(), pDo);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_A(), pDo);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_B(), pDo);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_C(), pDo);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_D(), pDo);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_E(), pDo);
 		
 		productDomainService.save(pDo);
 
+	}
+	
+	private void addTagToProduct(String locale, String tagCode, Product p) {
+		if(tagCode.length() == 5) {
+			Tag t = tagDomainService.findByCode(locale, tagCode);
+			p.addTag(t);
+		}
 	}
 	
 	public void extractProductMaster(Resource resource) {
