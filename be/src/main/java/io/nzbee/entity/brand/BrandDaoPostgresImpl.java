@@ -27,6 +27,8 @@ import io.nzbee.Constants;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.brand.attribute.BrandAttribute_;
+import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.CategoryBrand_;
 import io.nzbee.entity.product.Product;
@@ -72,6 +74,37 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			Tuple tuple = query.getSingleResult();
 			
 			Brand brand = this.objectToEntity(tuple, locale);
+			return Optional.ofNullable(brand);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+	}
+	
+	@Override
+	public Optional<Brand> findByCode(String code) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}", code);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		
+		Root<Brand> root = cq.from(Brand.class);
+
+		List<Predicate> conditions = new ArrayList<Predicate>();
+
+		conditions.add(
+				cb.equal(root.get(Brand_.BRAND_CODE), code)
+		);
+		
+		TypedQuery<Brand> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		try {
+			Brand brand = query.getSingleResult();
 			return Optional.ofNullable(brand);
 		} 
 		catch(NoResultException nre) {

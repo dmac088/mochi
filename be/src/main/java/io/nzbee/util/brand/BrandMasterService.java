@@ -19,9 +19,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.BrandCategory;
-import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.util.FileStorageServiceUpload;
 

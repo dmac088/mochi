@@ -21,6 +21,12 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public Optional<Brand> findById(String locale, long Id) {
 		return brandDao.findById(locale, Id);
 	}
+	
+	@Override
+	@Transactional
+	public Optional<Brand> findByCode(String brandCode) {
+		return brandDao.findByCode(brandCode);
+	}
 
 	@Override
 	@Transactional

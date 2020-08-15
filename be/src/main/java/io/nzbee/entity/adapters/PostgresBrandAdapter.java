@@ -73,18 +73,24 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	
 	@Override
 	public void save(Brand domainObject) {
-												
-		Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba = brandAttributeService.findByCode(
-																			domainObject.getLocale(), 
-																			domainObject.getBrandCode());
-
-		io.nzbee.entity.brand.attribute.BrandAttribute ba = (oba.isPresent()) 
-		? oba.get()
-		: new io.nzbee.entity.brand.attribute.BrandAttribute();
-										 	
-		io.nzbee.entity.brand.Brand b = (oba.isPresent()) 
-		? ba.getBrand()
+		
+		Optional<io.nzbee.entity.brand.Brand> ob = 
+				brandService.findByCode(domainObject.getBrandCode());
+						
+		io.nzbee.entity.brand.Brand b = 
+		(ob.isPresent())
+		? ob.get() 
 		: new io.nzbee.entity.brand.Brand();
+		
+		io.nzbee.entity.brand.attribute.BrandAttribute ba = new io.nzbee.entity.brand.attribute.BrandAttribute();
+		if(ob.isPresent()) {
+			Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba =
+					ob.get().getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
+			
+			ba = (oba.isPresent()) 
+			? oba.get()
+			: new io.nzbee.entity.brand.attribute.BrandAttribute();
+		}
 							
 		b.setBrandCode(domainObject.getBrandCode());
 		b.setLocale(domainObject.getLocale());
