@@ -36,30 +36,30 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale) {
+	public Set<Brand> findAll(String locale) {
 		return brandDao.findAll(locale);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, String currency, String categoryCode,  Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	public Set<Brand> findAll(String locale, String currency, String categoryCode,  Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		return brandDao.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, Set<String> codes) {
+	public Set<Brand> findAll(String locale, Set<String> codes) {
 		return brandDao.findAll(locale, codes);
 	}
 
 	@Override
-	public List<Brand> findAll(String lcl, String currency, Set<String> codes) {
+	public Set<Brand> findAll(String lcl, String currency, Set<String> codes) {
 		return brandDao.findAll(lcl, codes);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public List<Brand> findAll(String locale, String categoryCode) {
+	public Set<Brand> findAll(String locale, String categoryCode) {
 		return brandDao.findAllByCategory(locale, categoryCode);
 	}
 	

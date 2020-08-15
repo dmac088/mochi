@@ -130,7 +130,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 
 	@Override
-	public List<Tag> findAll(String locale, Set<String> codes) {
+	public Set<Tag> findAll(String locale, Set<String> codes) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, StringUtil.join(codes));
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 				
@@ -158,7 +158,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 				
 		List<Tuple> tuples = query.getResultList();
 				
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -180,7 +180,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 
 	@Override
-	public List<Tag> findAll(String locale) {
+	public Set<Tag> findAll(String locale) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale);
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -201,7 +201,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 				
 		List<Tuple> tuples = query.getResultList();
 				
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toList());
+		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
 	}
 
 	@Override

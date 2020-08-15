@@ -26,6 +26,7 @@ import io.nzbee.Constants;
 import io.nzbee.domain.product.Accessories;
 import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.tag.Tag;
 import io.nzbee.util.FileStorageServiceUpload;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.Category;
@@ -35,6 +36,7 @@ import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.domain.ports.ITagPortService;
 
 @Service
 @Transactional
@@ -50,6 +52,9 @@ public class ProductMasterService {
 	
 	@Autowired
 	private ICategoryPortService categoryDomainService; 
+	
+	@Autowired
+	private ITagPortService tagDomainService;
 	
 	@Autowired
 	private IDepartmentPortService departmentDomainService; 
@@ -87,7 +92,6 @@ public class ProductMasterService {
 		Brand bDo =
 				brandDomainService.findByCode(Constants.localeENGB, 
 											  p.get_BRAND_CODE());
-
 		
 		Category cDo = 
 				categoryDomainService.findByCode(   Constants.localeENGB,  
@@ -99,12 +103,11 @@ public class ProductMasterService {
 		
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 		Date createdDate = null;
-		Date expiryDate = null;
 		try {
 		
 			createdDate = 
 				(p.get_PRODUCT_CREATED_DATE().length() == 0)
-				? format.parse("1900-01-01")
+				? new Date()
 				: format.parse(p.get_PRODUCT_CREATED_DATE());
 
 		} catch (ParseException e) {
@@ -126,6 +129,30 @@ public class ProductMasterService {
 							   	bDo,
 							   	dDo,
 							   	(ProductCategory) cDo);
+
+		//add the tags to the domain object
+		Tag tAeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_A());
+		Tag tBeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_B());
+		Tag tCeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_C());
+		Tag tDeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_D());
+		Tag tEeN = tagDomainService.findByCode(Constants.localeENGB, p.get_TAG_CODE_E());
+		Tag tAcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_A());
+		Tag tBcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_B());
+		Tag tCcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_C());
+		Tag tDcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_D());
+		Tag tEcN = tagDomainService.findByCode(Constants.localeZHHK, p.get_TAG_CODE_E());
+		
+		pDo.addTag(tAeN);
+		pDo.addTag(tBeN);
+		pDo.addTag(tCeN);
+		pDo.addTag(tDeN);
+		pDo.addTag(tEeN);
+		
+		pDo.addTag(tAcN);
+		pDo.addTag(tBcN);
+		pDo.addTag(tCcN);
+		pDo.addTag(tDcN);
+		pDo.addTag(tEcN);
 		
 		productDomainService.save(pDo);
 

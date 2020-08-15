@@ -4,12 +4,14 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import io.nzbee.entity.tag.Tag;
+
 public interface ILocalizedService<T> {
 
 	
-	List<T> findAll(String locale);
+	Set<T> findAll(String locale);
 	
-	List<T> findAll(String locale, Set<String> codes);
+	Set<T> findAll(String locale, Set<String> codes);
 	
 	Optional<T> findById(String locale, long id);
 	

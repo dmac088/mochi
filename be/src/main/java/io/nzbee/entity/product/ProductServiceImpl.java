@@ -95,13 +95,13 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<Product> findAll(String locale) {
+	public Set<Product> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Product> findAll(String locale, Set<String> codes) {
+	public Set<Product> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

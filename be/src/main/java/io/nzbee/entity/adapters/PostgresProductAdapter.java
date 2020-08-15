@@ -33,6 +33,8 @@ import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.Tag;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
 import io.nzbee.search.ISearchService;
 import io.nzbee.search.facet.IFacet;
@@ -62,6 +64,9 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Autowired
 	private IBrandService brandService;
+	
+	@Autowired
+	private ITagService tagService;
 
 	@Autowired
 	private ICurrencyService currencyService;
@@ -108,9 +113,13 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			io.nzbee.entity.category.product.CategoryProduct primaryCategory = (CategoryProduct) categoryService
 					.findByCode(domainObject.getLclCd(),
-							food.getPrimaryCategory().getCategoryCode())
-					.get();
+							food.getPrimaryCategory().getCategoryCode()).get();
 
+			
+			//get all the tags
+			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
+			Set<Tag> tags = tagService.findAll(domainObject.getLclCd(), tagCodes);	
+			
 			// find the brand
 			io.nzbee.entity.brand.Brand b = brandService.findByCode(domainObject.getLclCd(),
 					domainObject.getBrand().getBrandCode()).get();
@@ -146,7 +155,8 @@ public class PostgresProductAdapter implements IProductPortService {
 			Optional<io.nzbee.entity.product.price.ProductPrice> oprcm = productPriceService
 					.findOne(domainObject.getProductUPC(), ptm.getCode(), domainObject.getCurrency());
 
-			io.nzbee.entity.product.price.ProductPrice prcm = (oprcm.isPresent()) ? oprcm.get()
+			io.nzbee.entity.product.price.ProductPrice prcm = (oprcm.isPresent()) 
+					? oprcm.get()
 					: new io.nzbee.entity.product.price.ProductPrice();
 
 			prcm.setType(ptm);
@@ -165,6 +175,9 @@ public class PostgresProductAdapter implements IProductPortService {
 			});
 			product.setPrimaryCategory(primaryCategory);
 			product.setBrand(b);
+			
+			product.setTags(tags);
+			
 			product.addProductPrice(prcr);
 			product.addProductPrice(prcm);
 			product.setProductStatus(ps);
