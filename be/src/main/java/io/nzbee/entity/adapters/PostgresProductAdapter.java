@@ -109,10 +109,13 @@ public class PostgresProductAdapter implements IProductPortService {
 			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(), 
 																						   domainObject.getDepartment().getDepartmentCode()).get();
 
+			domainObject.getCategories().stream().map(cc -> cc.getCategoryCode()).forEach(c -> {
+				System.out.println("categoryCode = " + c);
+			});
+			
 			// get all the categories
 			Set<io.nzbee.entity.category.product.CategoryProduct> lcp = 
 					categoryService.findAll( domainObject.getLclCd(), 
-											 domainObject.getCurrency(),
 											 domainObject.getCategories().stream().map(cc -> cc.getCategoryCode())
 									.collect(Collectors.toSet()))
 					.stream().map(cd -> (CategoryProduct) Hibernate.unproxy(cd)).collect(Collectors.toSet());
