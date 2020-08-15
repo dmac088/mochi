@@ -43,27 +43,31 @@ public class ProductController {
     
     
 	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<BrowseResultDto> getProducts(@PathVariable String locale, 
-															    	   @PathVariable String currency, 
-															    	   @PathVariable String categoryCode,
-															    	   @RequestParam(value = "page", defaultValue = "0") String page,
-															    	   @RequestParam(value = "size", defaultValue = "10") String size,
-															    	   @RequestParam(value = "sort", defaultValue = "10") String sort
-															    	   ) {
+    public ResponseEntity<BrowseResultDto> getProducts(	@PathVariable String locale, 
+														@PathVariable String currency, 
+														@PathVariable String categoryCode,
+														@RequestParam(value = "page", defaultValue = "0") String page,
+														@RequestParam(value = "size", defaultValue = "10") String size,
+														@RequestParam(value = "sort", defaultValue = "10") String sort) {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final Page<ProductResource> pages = productService.findAll(	locale, 
-    																currency, 
-    																categoryCode, 
-																	new HashSet<String>(), 
-																	new HashSet<String>(),
-																	new HashSet<String>(),
-																	null,
-																	page, 
-																	size, 
-																	sort
-														  		  ).map(p -> prodResourceAssembler.toModel(p));
+    	final Page<Product> sp = productService.findAll(	locale, 
+															currency, 
+															categoryCode, 
+															new HashSet<String>(), 
+															new HashSet<String>(),
+															new HashSet<String>(),
+															null,
+															page, 
+															size, 
+															sort);
+    	
+    	sp.forEach(p -> {
+    		System.out.println(p.getProductUPC());
+    	});
+    	
+    	final Page<ProductResource> pages = sp.map(p -> prodResourceAssembler.toModel(p));
     			
     	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
     }
@@ -119,19 +123,22 @@ public class ProductController {
     		maxPrice = new Double(oMaxPrice.get());
     	}
 
-			
-		final Page<ProductResource> pages = productService.findAll(locale, currency, categoryCode, 
-																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getValue())
-																	.collect(Collectors.toSet()), 
-																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getValue())
-																	.collect(Collectors.toSet()), 
-																	selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getValue())
-																	.collect(Collectors.toSet()), 
-																	maxPrice,
-																	page, 
-																	size, 
-																	sort
-														  		  ).map(p -> prodResourceAssembler.toModel(p));
+		final Page<Product> sp = productService.findAll(locale, 
+													currency, 
+													categoryCode, 
+													selectedFacets.stream().filter(c -> c.getFacetingName().equals("category")).map(c -> c.getValue())
+													.collect(Collectors.toSet()), 
+													selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand")).map(c -> c.getValue())
+													.collect(Collectors.toSet()), 
+													selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag")).map(c -> c.getValue())
+													.collect(Collectors.toSet()), 
+													maxPrice,
+													page, 
+													size, 
+													sort
+										  		  );	
+		
+		final Page<ProductResource> pages = sp.map(p -> prodResourceAssembler.toModel(p));
 		
 		return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
 	}

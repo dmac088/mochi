@@ -64,7 +64,7 @@ public class ProductMasterService {
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
-	public void writeFoodMaster(String fileName) {
+	public void writeAccessoriesMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
 			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
