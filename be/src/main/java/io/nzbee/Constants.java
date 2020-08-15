@@ -11,8 +11,7 @@ public class Constants {
 	public static final String unknownProductDesc = "Not Applicable";
 	public static final String activeSKUCode = "ACT01";
 	public static final String primaryRootCategoryCode = "PRM01";
-	public static final String productTypeCodeFood = "FOO01";
-	
+	public static final String productTypeCodeAccessories = "ACC01";
 	public static final String TOKEN_INVALID = "invalidToken";
 	public static final String TOKEN_EXPIRED = "expired";
 	public static final String TOKEN_VALID = "valid";

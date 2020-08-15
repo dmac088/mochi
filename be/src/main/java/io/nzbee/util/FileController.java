@@ -49,13 +49,13 @@ public class FileController {
 	private FileStorageProperties fileStorageProperties;
     
     @PostMapping("/Product/Upload/")
-    public UploadFileResponse uploadFoodFile(@RequestParam("file") MultipartFile uploadFile) {
+    public UploadFileResponse uploadAccessoriesFile(@RequestParam("file") MultipartFile uploadFile) {
     	
     	logger.debug("called uploadFile with parameters {} ", uploadFile );
 
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        productMasterService.writeFoodMaster(fileName);
+        productMasterService.writeAccessoriesMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
@@ -67,8 +67,8 @@ public class FileController {
     }
 
     @GetMapping("/Product/Download/{fileName:.+}")
-    public ResponseEntity<Resource> downloadFoodFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
-    	logger.debug("called downloadFoodFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
+    public ResponseEntity<Resource> downloadAccessoriesFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
+    	logger.debug("called downloadAccessoriesFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
     	
     	//generate the file for downloading
     	File file = new File(fileStorageProperties.getDownloadDir() + fileName);

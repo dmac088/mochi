@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
-import io.nzbee.entity.product.food.Food;
+import io.nzbee.entity.product.accessories.Accessories;
 
 @Component(value="productMapper")
 public class ProductMapper implements IProductMapper {
@@ -19,8 +19,8 @@ public class ProductMapper implements IProductMapper {
 		
 		
 		
-		if(e instanceof Food) {
-			io.nzbee.domain.product.Product pO = new io.nzbee.domain.product.Food(
+		if(e instanceof Accessories) {
+			io.nzbee.domain.product.Product pO = new io.nzbee.domain.product.Accessories(
 					e.getProductUPC(),
 				   	e.getProductCreateDt(),
 				   	e.getProductStatus().getCode(),
@@ -28,8 +28,6 @@ public class ProductMapper implements IProductMapper {
 				   	e.getRetailPrice(),
 				   	e.getMarkdownPrice(),
 				   	e.getProductAttribute().getProductImage(),
-				   	((Food) e).getCountryOfOrigin(),
-				   	((Food) e).getExpiryDate(),
 				   	e.getLocale(),
 				   	e.getCurrency(),
 				   	brand,

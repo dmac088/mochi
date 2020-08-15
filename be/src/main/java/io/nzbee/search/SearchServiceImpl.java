@@ -39,7 +39,6 @@ import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
-import io.nzbee.entity.product.food.Food;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.search.facet.SearchFacetDiscrete;
 import io.nzbee.search.facet.SearchFacetHelper;
@@ -462,12 +461,7 @@ public class SearchServiceImpl implements ISearchService {
 
 	private Product mapResultToEntity(Object[] r, String locale, String currency) {
 
-		Product p = (r[13].toString().equals(Constants.productTypeCodeFood) ? new Food() : new Accessories());
-
-		if ((r[13].toString().equals(Constants.productTypeCodeFood))) {
-			((Food) p).setCountryOfOrigin(r[15].toString());
-			((Food) p).setExpiryDate(new Date());
-		}
+		Product p = new Accessories();
 
 		ProductAttribute pa = new ProductAttribute();
 		pa.setProductDesc(r[2].toString());
