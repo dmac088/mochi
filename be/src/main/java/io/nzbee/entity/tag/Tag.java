@@ -2,6 +2,7 @@ package io.nzbee.entity.tag;
 
 import java.util.HashSet;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -27,6 +28,8 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.search.ISearchDimension;
@@ -156,15 +159,21 @@ public class Tag implements ISearchDimension {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getTagDescENGB() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("en-GB")).findFirst().get().getTagDesc();
+		Optional<TagAttribute> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst();
+		return (ota.isPresent()) 
+				? ota.get().getTagDesc()
+				: "Empty"; 
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getTagDescZHHK() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals("zh-HK")).findFirst().get().getTagDesc();
+		Optional<TagAttribute> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst();
+		return (ota.isPresent()) 
+				? ota.get().getTagDesc()
+				: "Empty"; 
 	}
 	
 	public void addTagAttribute(TagAttribute tagAttribute) {
