@@ -31,9 +31,7 @@ public class AccessoriesMasterSchema {
 	
 	private double PRODUCT_MARKDOWN_PRICE_HKD;
 	
-	private String PRODUCT_IMAGE_EN;
-	
-	private String PRODUCT_IMAGE_HK;
+	private String PRODUCT_IMAGE;
 	
 	private String PRIMARY_CATEGORY_CODE;
 	
@@ -185,21 +183,14 @@ public class AccessoriesMasterSchema {
 		this.PRIMARY_CATEGORY_CODE = PRIMARY_CATEGORY_CODE;
 	}
 
-	public String get_PRODUCT_IMAGE_EN() {
-		return PRODUCT_IMAGE_EN;
+	public String get_PRODUCT_IMAGE() {
+		return PRODUCT_IMAGE;
 	}
 
-	public void set_PRODUCT_IMAGE_EN(String PRODUCT_IMAGE_EN) {
-		this.PRODUCT_IMAGE_EN = PRODUCT_IMAGE_EN;
+	public void set_PRODUCT_IMAGE(String PRODUCT_IMAGE) {
+		this.PRODUCT_IMAGE = PRODUCT_IMAGE;
 	}
 
-	public String get_PRODUCT_IMAGE_HK() {
-		return PRODUCT_IMAGE_HK;
-	}
-
-	public void set_PRODUCT_IMAGE_HK(String PRODUCT_IMAGE_HK) {
-		this.PRODUCT_IMAGE_HK = PRODUCT_IMAGE_HK;
-	}
 	
 	public String get_BRAND_CODE() {
 		return BRAND_CODE;
@@ -287,8 +278,7 @@ public class AccessoriesMasterSchema {
         	   .append(", PRODUCT_MARKDOWN_PRICE_USD=").append(PRODUCT_MARKDOWN_PRICE_USD)
         	   .append(", PRODUCT_RETAIL_PRICE_HKD=").append(PRODUCT_RETAIL_PRICE_HKD)
         	   .append(", PRODUCT_MARKDOWN_PRICE_HKD=").append(PRODUCT_MARKDOWN_PRICE_HKD)
-        	   .append(", PRODUCT_IMAGE_EN=").append(PRODUCT_IMAGE_EN)
-        	   .append(", PRODUCT_IMAGE_HK=").append(PRODUCT_IMAGE_HK)
+        	   .append(", PRODUCT_IMAGE_EN=").append(PRODUCT_IMAGE)
         	   .append(", PRIMARY_CATEGORY_CODE=").append(PRIMARY_CATEGORY_CODE)
                .append("]");
         return builder.toString();
