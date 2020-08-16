@@ -71,9 +71,7 @@ public class Tag implements ISearchDimension {
 	@ManyToMany(mappedBy = "tags")
     private Set<Product> products = new HashSet<Product>();
 
-	@OneToMany(	mappedBy="tag", 
-				cascade = CascadeType.ALL,
-				orphanRemoval = true)
+	@OneToMany(mappedBy="tag")
 	private Set<TagAttribute> attributes = new HashSet<TagAttribute>();
 	
 	@Transient
