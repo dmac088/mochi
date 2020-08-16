@@ -117,7 +117,15 @@ public class PostgresProductAdapter implements IProductPortService {
 			
 			//get all the tags
 			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
+			tagCodes.forEach(t -> {
+				System.out.println(t);
+			});
 			Set<Tag> tags = tagService.findAll(domainObject.getLclCd(), tagCodes);	
+			
+			tags.forEach(t -> {
+				System.out.println(t.getCode());
+				System.out.println(t.getDesc());
+			});
 		
 			// find the brand
 			io.nzbee.entity.brand.Brand b = brandService.findByCode(domainObject.getLclCd(),
