@@ -123,7 +123,7 @@ public class ProductMasterService {
 							   	p.get_PRODUCT_DESCRIPTION_EN(),
 							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
 							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
-							   	p.get_PRODUCT_IMAGE(),
+							   	p.get_PRODUCT_IMAGE_EN(),
 							   	Constants.localeENGB,
 							   	Constants.currencyHKD,
 							   	bDo,
@@ -213,13 +213,14 @@ public class ProductMasterService {
 																		 		   p.getProductUPC()); 
 		    	
 		    	pms.set_PRIMARY_CATEGORY_CODE(c.getCategoryCode());
-		    	pms.set_PRODUCT_IMAGE(p.getProductImage());
 		    	
 		    	if (p.getLclCd().equals(Constants.localeENGB)) 
-						{ pms.set_PRIMARY_CATEGORY_DESC_EN(c.getCategoryDesc());}
+						{ pms.set_PRIMARY_CATEGORY_DESC_EN(c.getCategoryDesc()); 
+						  pms.set_PRODUCT_IMAGE_EN(p.getProductImage());}
 		    	
 		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
-						{ pms.set_PRIMARY_CATEGORY_DESC_HK(c.getCategoryDesc());}
+						{ pms.set_PRIMARY_CATEGORY_DESC_HK(c.getCategoryDesc()); 
+						  pms.set_PRODUCT_IMAGE_HK(p.getProductImage());}
 		    	
 		    	Department d = departmentDomainService.findByProductCode(p.getLclCd(),
 															 			 p.getCurrency(), 
