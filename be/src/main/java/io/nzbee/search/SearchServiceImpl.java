@@ -450,13 +450,26 @@ public class SearchServiceImpl implements ISearchService {
 
 	private void setProductProjection(FullTextQuery jpaQuery, String locale, String currency) {
 		String transLcl = cleanLocale(locale);
-		jpaQuery.setProjection("Id", "productId", "productDesc" + transLcl, "productImage" + transLcl, "lclCd",
-				"productUPC", "productCreateDt", "product.brand.brandCode", "product.brand.brandDesc" + transLcl,
-				"brandDescForIndex", "currentRetailPrice" + currency, "currentMarkdownPrice" + currency,
-				"displayCategories" + transLcl, "product.department.departmentCode",
-				"product.department.departmentDesc" + transLcl, "countryOfOrigin",
-				"product.primarycategory.categoryCode", "product.primarycategory.categoryDesc" + transLcl,
-				"product.status.productStatusCode", "product.status.productStatusDesc");
+		jpaQuery.setProjection("Id", 
+								"productId", 
+								"productDesc" + transLcl, 
+								"productImage" + transLcl, 
+								"lclCd",
+								"productUPC", 
+								"productCreateDt", 
+								"product.brand.brandCode", 
+								"product.brand.brandDesc" + transLcl,
+								"brandDescForIndex", 
+								"currentRetailPrice" + currency, 
+								"currentMarkdownPrice" + currency,
+								"displayCategories" + transLcl, 
+								"product.department.departmentCode",
+								"product.department.departmentDesc" + transLcl, 
+								//"countryOfOrigin",
+								"product.primarycategory.categoryCode", 
+								"product.primarycategory.categoryDesc" + transLcl,
+								"product.status.productStatusCode", 
+								"product.status.productStatusDesc");
 	}
 
 	private Product mapResultToEntity(Object[] r, String locale, String currency) {
@@ -469,8 +482,8 @@ public class SearchServiceImpl implements ISearchService {
 		pa.setLclCd(locale);
 
 		ProductStatus ps = new ProductStatus();
-		ps.setCode(r[18].toString());
-		ps.setDesc(r[19].toString());
+		ps.setCode(r[17].toString());
+		ps.setDesc(r[18].toString());
 		p.setProductStatus(ps);
 
 		p.setUPC(r[5].toString());
@@ -483,8 +496,8 @@ public class SearchServiceImpl implements ISearchService {
 
 		CategoryProduct cp = new CategoryProduct();
 		CategoryAttribute ca = new CategoryAttribute();
-		cp.setCategoryCode(r[15].toString());
-		ca.setCategoryDesc(r[16].toString());
+		cp.setCategoryCode(r[14].toString());
+		ca.setCategoryDesc(r[15].toString());
 		ca.setLclCd(locale);
 		cp.setCategoryAttribute(ca);
 		p.setPrimaryCategory(cp);
