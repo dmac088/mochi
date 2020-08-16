@@ -24,10 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.product.status.ProductStatus_;
 import io.nzbee.entity.tag.Tag_;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.entity.tag.attribute.TagAttribute_;
@@ -163,19 +159,17 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	@Override
 	public Set<Tag> findAll(String locale, Set<String> codes) {
-		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, StringUtil.join(codes));
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 				
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 				
 		Root<Tag> root = cq.from(Tag.class);
-		Join<Tag, Product> tag = root.join(Tag_.products);
-		Join<Product, ProductStatus> status = tag.join(Product_.productStatus);
 		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
 				
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), Constants.activeSKUCode));
 		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
+		
 		if(!codes.isEmpty()) {
 			conditions.add(root.in(Tag_.tagCode).in(codes));
 		}

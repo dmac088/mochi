@@ -1,6 +1,7 @@
 package io.nzbee.entity.category.product;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -37,7 +38,7 @@ public class CategoryProduct extends Category  {
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
     @JsonIgnore
-    private Set<Product> products = new HashSet<>();
+    private Set<Product> products = new HashSet<Product>();
 	
 	@Transient
 	private int productCount;
@@ -123,6 +124,6 @@ public class CategoryProduct extends Category  {
  
     @Override
     public int hashCode() {
-        return 32;
+    	return Objects.hash(this.getCategoryCode());
     }
 }

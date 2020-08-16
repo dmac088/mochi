@@ -53,7 +53,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	public void save(Tag domainObject) {
 		
 		Optional<io.nzbee.entity.tag.Tag> ot = 
-				tagService.findByCode(domainObject.getTagCode());
+				tagService.findByCode(domainObject.getTagCode().toUpperCase());
 		
 		
 		io.nzbee.entity.tag.Tag t = 
@@ -75,7 +75,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 		ta.setLclCd(domainObject.getLocale());
 		ta.setTag(t);
 		
-		t.setTagCode(domainObject.getTagCode());
+		t.setTagCode(domainObject.getTagCode().toUpperCase());
 		t.setLocale(domainObject.getLocale());
 		t.addTagAttribute(ta);
 		
