@@ -192,13 +192,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
 		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), Constants.activeSKUCode));
 		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
+		
 		if(!brandCodes.isEmpty()) {
 			conditions.add(root.in(Brand_.brandCode).in(brandCodes));
 		}

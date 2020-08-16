@@ -307,13 +307,14 @@ public abstract class Product {
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 				mappedBy = "products") 
-	@IndexedEmbedded(prefix="product.tags.", includeEmbeddedObjectId=true)
+	@IndexedEmbedded(	prefix="product.tags.", 
+						includeEmbeddedObjectId=true)
 	private Set<Tag> tags = new HashSet<Tag>();
 
 	@OneToMany(	mappedBy="product",  
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private List<ProductAttribute> attributes = new ArrayList<ProductAttribute>();
+	private Set<ProductAttribute> attributes = new HashSet<ProductAttribute>();
 	
 	@Transient
 	private ProductAttribute productAttribute;
@@ -527,14 +528,14 @@ public abstract class Product {
 	}
 	
 	public Set<Tag> getTags() {
-		return tags;
+		return this.tags;
 	}
 	
 	public void setTags(Set<Tag> tags) {
 		this.tags = tags;
 	}
 	
-	private List<ProductAttribute> getAttributes() {
+	private Set<ProductAttribute> getAttributes() {
 		return attributes;
 	}
 	
@@ -631,7 +632,7 @@ public abstract class Product {
 	
 	public void removeProductCategory(CategoryProduct categoryProduct) {
 		this.getCategories().remove(categoryProduct);
-		categoryProduct.removeProduct(this);
+		categoryProduct.getProducts().remove(this);
 	}
 	
 	public void addProductAttribute(ProductAttribute productAttribute) {

@@ -130,11 +130,11 @@ public class ProductMasterService {
 							   	(ProductCategory) cDo);
 
 		//add the tags to the domain object
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_A(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_B(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_C(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_D(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_E(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_A().toUpperCase(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_B().toUpperCase(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_C().toUpperCase(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_D().toUpperCase(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_E().toUpperCase(), pEn);
 	
 		productDomainService.save(pEn);
 		
@@ -153,11 +153,11 @@ public class ProductMasterService {
 			   	dDo,
 			   	(ProductCategory) cDo);
 		
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_A(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_B(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_C(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_D(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_E(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_A().toUpperCase(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_B().toUpperCase(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_C().toUpperCase(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_D().toUpperCase(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_E().toUpperCase(), pCn);
 		
 		productDomainService.save(pCn);
 

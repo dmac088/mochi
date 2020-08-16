@@ -18,7 +18,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.OrderBy;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -28,7 +28,6 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
@@ -36,6 +35,7 @@ import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "tag", schema = "mochi")
+@PrimaryKeyJoinColumn(name = "tag_id")
 @SqlResultSetMapping(
 	    name = "TagMapping",
 	    columns = {
@@ -68,11 +68,14 @@ public class Tag implements ISearchDimension {
 	@Column(name="tag_cd", unique = true, updatable = false)
 	private String tagCode;
 
-	@ManyToMany(fetch = FetchType.LAZY)
+	@ManyToMany(fetch = FetchType.LAZY,
+			cascade = {
+		            CascadeType.PERSIST,
+		            CascadeType.MERGE
+		        })
     @JoinTable(name = "product_tag", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "tag_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
-    @OrderBy
     private Set<Product> products = new HashSet<Product>();
 
 	@OneToMany(	mappedBy="tag", 
@@ -227,7 +230,4 @@ public class Tag implements ISearchDimension {
     public int hashCode() {
     	return Objects.hash(this.getTagCode());
     }
-
-	
-
 }
