@@ -3,11 +3,8 @@ package io.nzbee.entity.category.product;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
@@ -15,7 +12,6 @@ import javax.persistence.Transient;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
@@ -29,14 +25,8 @@ import io.nzbee.entity.product.Product;
 @JsonTypeName("categoryproduct")
 public class CategoryProduct extends Category  {
 	
-	@ManyToMany(fetch = FetchType.LAZY, 
-				cascade = {
-			            CascadeType.PERSIST,
-			            CascadeType.MERGE
-			        })
-    @JoinTable(name = "product_category", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "cat_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
+	
+	@ManyToMany(mappedBy = "categories")
     @JsonIgnore
     private Set<Product> products = new HashSet<Product>();
 	

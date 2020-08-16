@@ -22,6 +22,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -299,14 +300,26 @@ public abstract class Product {
 	@Field(store=Store.YES)
 	private Date productCreateDt;
 
-	@ManyToMany(fetch = FetchType.LAZY,
-				mappedBy = "products")
+	@ManyToMany(fetch = FetchType.LAZY, 
+				cascade = {
+			            CascadeType.PERSIST,
+			            CascadeType.MERGE
+			    })
+	@JoinTable(name = "product_category", schema="mochi", 
+		   joinColumns 			= @JoinColumn(name = "prd_id"), 
+		   inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
 	@IndexedEmbedded(	prefix="product.categories.", 
 						includeEmbeddedObjectId=true)
 	private Set<CategoryProduct> categories = new HashSet<CategoryProduct>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
-				mappedBy = "products") 
+				cascade = {
+		            CascadeType.PERSIST,
+		            CascadeType.MERGE
+		        }) 
+	@JoinTable(name = "product_tag", schema="mochi", 
+	   joinColumns 			= @JoinColumn(name = "prd_id"), 
+	   inverseJoinColumns 	= @JoinColumn(name = "tag_id"))
 	@IndexedEmbedded(	prefix="product.tags.", 
 						includeEmbeddedObjectId=true)
 	private Set<Tag> tags = new HashSet<Tag>();

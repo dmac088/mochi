@@ -24,8 +24,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.Brand_;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.tag.Tag_;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.entity.tag.attribute.TagAttribute_;
@@ -197,7 +195,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	public void save(Tag t) {
 		em.persist(t);
-		em.flush();
 	}
 
 	@Override

@@ -68,14 +68,7 @@ public class Tag implements ISearchDimension {
 	@Column(name="tag_cd", unique = true, updatable = false)
 	private String tagCode;
 
-	@ManyToMany(fetch = FetchType.LAZY,
-			cascade = {
-		            CascadeType.PERSIST,
-		            CascadeType.MERGE
-		        })
-    @JoinTable(name = "product_tag", schema="mochi", 
-    		   joinColumns 			= @JoinColumn(name = "tag_id"), 
-    		   inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
+	@ManyToMany(mappedBy = "tags")
     private Set<Product> products = new HashSet<Product>();
 
 	@OneToMany(	mappedBy="tag", 

@@ -33,7 +33,6 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.food.Food;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -267,27 +266,33 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	
 	 
     private void assertFound(final Product found) {
+    	
     	assertThat(found.getUPC())
         .isEqualTo("123456789");
-    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("FRT01")).findFirst().isPresent())
-    	.isTrue();
+    	
     	assertThat(found.getDepartment().getDepartmentCode())
     	.isEqualTo("ACC01");
+    	
     	assertThat(found.getProductStatus().getCode())
     	.isEqualTo("ACT01");
+    	
     	assertThat(found.getBrand().getBrandCode())
     	.isEqualTo("PLA01");
+    	
     	assertNotNull(found.getPrimaryCategory());
-    	if(found instanceof Food) {
-    		assertThat(((Food) found).getCountryOfOrigin())
-    		.isEqualTo("NZL");
-    	}
+    	assertThat(found.getPrimaryCategory().getCategoryCode().equals("FRT01")).isTrue();
+    	
+    	assertNotNull(found.getCategories());
+    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("FRT01")).findFirst().isPresent()).isTrue();
+    	
     	assertThat(found.getCurrentRetailPriceUSD())
     	.isEqualTo(new Double(7.8));
+    	
     	assertThat(found.getCurrentRetailPriceHKD())
     	.isEqualTo(new Double(78));
-    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
-    	.isTrue();
+    	
+//    	assertNotNull(found.getTags());
+//    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }
     
     @After
