@@ -24,7 +24,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.domain.product.Accessories;
-import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -158,11 +157,11 @@ public class ProductMasterService {
 		List<AccessoriesMasterSchema> lpms = new ArrayList<AccessoriesMasterSchema>();
 	    try {
 	    
-	    	List<Food> productsList = productDomainService.findAllByType(Constants.localeENGB,
+	    	List<Accessories> productsList = productDomainService.findAllByType(Constants.localeENGB,
 	    														  		 Constants.currencyHKD,
-	    														  		 Food.class)
+	    														  		Accessories.class)
 	    							  .stream()
-	    							  .map(p -> (Food) p)
+	    							  .map(p -> (Accessories) p)
 	    							  .collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)
@@ -171,9 +170,9 @@ public class ProductMasterService {
 	    	
 	    	productsList.addAll(productDomainService.findAllByType(	Constants.localeZHHK,
 																Constants.currencyUSD,
-																Food.class)
+																Accessories.class)
 	    											.stream()
-									    			.map(p -> (Food) p)
+									    			.map(p -> (Accessories) p)
 													.collect(Collectors.toList()));
 	    	
 	    	lpms.addAll(productsList.stream().map(p -> {

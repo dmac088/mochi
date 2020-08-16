@@ -4,10 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.hibernate.Hibernate;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -43,8 +40,6 @@ import io.nzbee.search.facet.IFacet;
 
 @Component
 public class PostgresProductAdapter implements IProductPortService {
-
-	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	private IProductService productService;

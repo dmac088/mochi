@@ -2957,6 +2957,66 @@ SET search_path = mochi, pg_catalog;
 --
 
 COPY accessories_attr_lcl (prd_lcl_id, prd_id, primary_metal_type, primary_stone_type, lcl_cd) FROM stdin;
+6	5	\N	\N	en-GB
+8	7	\N	\N	en-GB
+10	9	\N	\N	en-GB
+14	13	\N	\N	en-GB
+22	21	\N	\N	en-GB
+24	23	\N	\N	en-GB
+26	25	\N	\N	en-GB
+27	26	\N	\N	en-GB
+29	28	\N	\N	en-GB
+31	30	\N	\N	en-GB
+3	2	\N	\N	en-GB
+9	8	\N	\N	en-GB
+18	17	\N	\N	en-GB
+4	3	\N	\N	en-GB
+5	4	\N	\N	en-GB
+7	6	\N	\N	en-GB
+13	12	\N	\N	en-GB
+17	16	\N	\N	en-GB
+11	10	\N	\N	en-GB
+12	11	\N	\N	en-GB
+15	14	\N	\N	en-GB
+16	15	\N	\N	en-GB
+20	19	\N	\N	en-GB
+21	20	\N	\N	en-GB
+23	22	\N	\N	en-GB
+25	24	\N	\N	en-GB
+28	27	\N	\N	en-GB
+30	29	\N	\N	en-GB
+2	1	\N	\N	en-GB
+19	18	\N	\N	en-GB
+45	5	\N	\N	zh-HK
+47	7	\N	\N	zh-HK
+49	9	\N	\N	zh-HK
+53	13	\N	\N	zh-HK
+61	21	\N	\N	zh-HK
+63	23	\N	\N	zh-HK
+65	25	\N	\N	zh-HK
+66	26	\N	\N	zh-HK
+68	28	\N	\N	zh-HK
+70	30	\N	\N	zh-HK
+42	2	\N	\N	zh-HK
+48	8	\N	\N	zh-HK
+57	17	\N	\N	zh-HK
+43	3	\N	\N	zh-HK
+44	4	\N	\N	zh-HK
+46	6	\N	\N	zh-HK
+52	12	\N	\N	zh-HK
+56	16	\N	\N	zh-HK
+50	10	\N	\N	zh-HK
+51	11	\N	\N	zh-HK
+54	14	\N	\N	zh-HK
+55	15	\N	\N	zh-HK
+59	19	\N	\N	zh-HK
+60	20	\N	\N	zh-HK
+62	22	\N	\N	zh-HK
+64	24	\N	\N	zh-HK
+67	27	\N	\N	zh-HK
+69	29	\N	\N	zh-HK
+41	1	\N	\N	zh-HK
+58	18	\N	\N	zh-HK
 \.
 
 
@@ -3422,66 +3482,6 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 --
 
 COPY food_attr_lcl (prd_lcl_id, prd_id, ingredients, lcl_cd) FROM stdin;
-6	5	Not Applicable	en-GB
-8	7	Not Applicable	en-GB
-10	9	Not Applicable	en-GB
-14	13	Not Applicable	en-GB
-22	21	Not Applicable	en-GB
-24	23	Not Applicable	en-GB
-26	25	Not Applicable	en-GB
-27	26	Not Applicable	en-GB
-29	28	Not Applicable	en-GB
-31	30	Not Applicable	en-GB
-3	2	Not Applicable	en-GB
-9	8	Not Applicable	en-GB
-18	17	Not Applicable	en-GB
-4	3	Not Applicable	en-GB
-5	4	Not Applicable	en-GB
-7	6	Not Applicable	en-GB
-13	12	Not Applicable	en-GB
-17	16	Not Applicable	en-GB
-11	10	Not Applicable	en-GB
-12	11	Not Applicable	en-GB
-15	14	Not Applicable	en-GB
-16	15	Not Applicable	en-GB
-20	19	Not Applicable	en-GB
-21	20	Not Applicable	en-GB
-23	22	Not Applicable	en-GB
-25	24	Not Applicable	en-GB
-28	27	Not Applicable	en-GB
-30	29	Not Applicable	en-GB
-2	1	Not Applicable	en-GB
-19	18	Not Applicable	en-GB
-45	5	不適用	zh-HK
-47	7	不適用	zh-HK
-49	9	不適用	zh-HK
-53	13	不適用	zh-HK
-61	21	不適用	zh-HK
-63	23	不適用	zh-HK
-65	25	不適用	zh-HK
-66	26	不適用	zh-HK
-68	28	不適用	zh-HK
-70	30	不適用	zh-HK
-42	2	不適用	zh-HK
-48	8	不適用	zh-HK
-57	17	不適用	zh-HK
-43	3	不適用	zh-HK
-44	4	不適用	zh-HK
-46	6	不適用	zh-HK
-52	12	不適用	zh-HK
-56	16	不適用	zh-HK
-50	10	不適用	zh-HK
-51	11	不適用	zh-HK
-54	14	不適用	zh-HK
-55	15	不適用	zh-HK
-59	19	不適用	zh-HK
-60	20	不適用	zh-HK
-62	22	不適用	zh-HK
-64	24	不適用	zh-HK
-67	27	不適用	zh-HK
-69	29	不適用	zh-HK
-41	1	不適用	zh-HK
-58	18	不適用	zh-HK
 \.
 
 
@@ -4077,6 +4077,36 @@ COPY product (prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id, prm_cat_
 --
 
 COPY product_accessories (prd_id) FROM stdin;
+5
+7
+9
+13
+21
+23
+25
+26
+28
+30
+2
+8
+17
+3
+4
+6
+12
+16
+10
+11
+14
+15
+19
+20
+22
+24
+27
+29
+1
+18
 \.
 
 
@@ -4227,36 +4257,6 @@ SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 122, true);
 --
 
 COPY product_food (prd_id, exp_dt, ctry_of_orig) FROM stdin;
-5	2020-04-23	CHN
-7	2020-04-23	CHN
-9	2020-04-23	CHN
-13	2020-04-23	CHN
-21	2020-04-23	CHN
-23	2020-04-23	CHN
-25	2020-04-23	CHN
-26	2020-04-23	CHN
-28	2020-04-23	CHN
-30	2020-04-23	CHN
-2	2020-04-23	CHN
-8	2020-04-23	CHN
-17	2020-04-23	CHN
-3	2020-04-23	CHN
-4	2020-04-23	CHN
-6	2020-04-23	CHN
-12	2020-04-23	CHN
-16	2020-04-23	CHN
-10	2020-04-23	CHN
-11	2020-04-23	CHN
-14	2020-04-23	CHN
-15	2020-04-23	CHN
-19	2020-04-23	CHN
-20	2020-04-23	CHN
-22	2020-04-23	CHN
-24	2020-04-23	CHN
-27	2020-04-23	CHN
-29	2020-04-23	CHN
-1	2020-04-23	CHN
-18	2020-04-23	CHN
 \.
 
 
