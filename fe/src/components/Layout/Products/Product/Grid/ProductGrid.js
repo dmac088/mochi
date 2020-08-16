@@ -8,6 +8,7 @@ function ProductGrid(props) {
   const { match, toggleQuickView, addToBag } = props;
   const { data } = props.product;
   
+  console.log(data.productImage);
   return (
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
