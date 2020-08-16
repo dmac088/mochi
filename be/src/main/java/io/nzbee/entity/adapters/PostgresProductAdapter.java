@@ -177,6 +177,7 @@ public class PostgresProductAdapter implements IProductPortService {
 				product.addCategory(c);
 			});
 			product.setPrimaryCategory(primaryCategory);
+			product.addCategory(primaryCategory);
 			product.setBrand(b);
 			product.setTags(tags);
 			product.addProductPrice(prcr);
