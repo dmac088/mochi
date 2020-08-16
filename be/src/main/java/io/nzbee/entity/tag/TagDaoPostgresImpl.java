@@ -24,6 +24,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
+import io.nzbee.entity.brand.Brand_;
+import io.nzbee.entity.brand.attribute.BrandAttribute_;
 import io.nzbee.entity.tag.Tag_;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.entity.tag.attribute.TagAttribute_;
@@ -166,25 +168,28 @@ public class TagDaoPostgresImpl implements ITagDao {
 				
 		Root<Tag> root = cq.from(Tag.class);
 		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
-				
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
 		
-		if(!codes.isEmpty()) {
-			conditions.add(root.in(Tag_.tagCode).in(codes));
-		}
+		
+		Predicate p1 = cb.equal(attribute.get(TagAttribute_.lclCd), locale);
+		Predicate p2 = root.get(Tag_.TAG_CODE).in(codes);
+		Predicate fp = p1; //final predicate
+		
 
 		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
 						root.get(Tag_.tagCode).alias("tagCode"),
 						attribute.get(TagAttribute_.tagAttributeId).alias("tagAttributeId"),
 						attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
 		);
-				
+		
+		
+		if(!codes.isEmpty()) {
+			fp = cb.and(p1, p2);
+		}
+		cq.where(fp);
+		
 		TypedQuery<Tuple> query = em.createQuery(cq);
 				
 		List<Tuple> tuples = query.getResultList();
-		
-		System.out.println("size = " + tuples.size());
 				
 		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
 	}

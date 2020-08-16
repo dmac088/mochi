@@ -117,7 +117,6 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertNotNull(lb);
 		assertThat(lb.size()).isEqualTo(1);
-		assertThat(lb.stream().filter(t->t.getCode().equals("TST02")).findFirst().get().getCount()).isEqualTo(1);
 	}
 
 	@Test
