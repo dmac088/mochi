@@ -56,7 +56,7 @@ function CategoryMenuContainer(props) {
             <nav className="category-menu" >
                 <CategoryMenu
                     {...props}
-                    category={findByCode(categories, 'PRM01')}
+                    category={findByCode(categories, 'ACC01')}
                     categories={categories}
                     in={stateObject.menuVisible}
                     isMobile={stateObject.isMobile} />

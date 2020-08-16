@@ -316,9 +316,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
 				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
-//		if(!categoryCodes.isEmpty()) {
-//			query.setParameter("categoryCodes", categoryCodes);
-//		}
 
 		try {
 			Object[] c = (Object[])query.getSingleResult();
@@ -356,10 +353,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
 				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
-		
-//		if(!categoryCodes.isEmpty()) {
-//			query.setParameter("categoryCodes", categoryCodes);
-//		}
 
 		try {
 			Object[] c = (Object[])query.getSingleResult();
@@ -398,10 +391,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
 				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
-		
-//		if(!categoryCodes.isEmpty()) {
-//			query.setParameter("categoryCodes", categoryCodes);
-//		}
 
 		try {
 			Object[] c = (Object[])query.getSingleResult();
