@@ -102,6 +102,23 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertFound(found);
 	}
+	
+	@Test
+	public void whenFindAllForTestTag_thenReturnTheTestTag() {
+
+		Set<String> tagCodes = new HashSet<String>();
+		
+		tagCodes.add("TST02");
+
+		// when
+		Set<Tag> lb = tagService.findAll(Constants.localeENGB, 
+										 tagCodes);
+
+		// then
+		assertNotNull(lb);
+		assertThat(lb.size()).isEqualTo(1);
+		assertThat(lb.stream().filter(t->t.getCode().equals("TST02")).findFirst().get().getCount()).isEqualTo(1);
+	}
 
 	@Test
 	public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
