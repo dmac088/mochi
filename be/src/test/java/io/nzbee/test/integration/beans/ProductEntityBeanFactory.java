@@ -19,6 +19,7 @@ import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.Tag;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "tst")
@@ -98,12 +99,14 @@ public class ProductEntityBeanFactory {
 																		  "FRT01").get();
 				
 				
-		//add the product to the category
+		//add the category to the product
 		product.addProductCategory(cp);
 		product.setPrimaryCategory(cp);
 		
 		//we should add a tag
-		product.addTag(tagService.findByCode(Constants.localeENGB, "ORG01").get());
+		Tag t = tagService.findByCode(	Constants.localeENGB, 
+										"ORG01").get();
+		product.addTag(t);
 		
 		return product;
 	}

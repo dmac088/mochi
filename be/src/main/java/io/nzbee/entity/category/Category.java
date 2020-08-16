@@ -125,10 +125,6 @@ import io.nzbee.search.ISearchDimension;
 	    })
 public abstract class Category implements ISearchDimension {
 
-	public void setAttributes(Set<CategoryAttribute> attributes) {
-		this.attributes = attributes;
-	}
-
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="cat_id")
@@ -328,6 +324,10 @@ public abstract class Category implements ISearchDimension {
 	
 	public Set<CategoryAttribute> getAttributes() {
 		return attributes;
+	}
+
+	public void setAttributes(Set<CategoryAttribute> attributes) {
+		this.attributes = attributes;
 	}
 	
 	public CategoryAttribute getCategoryAttribute() {
