@@ -338,12 +338,102 @@ INSERT INTO product VALUES (18, '17366878', '2019-02-05', 39, 3, 1, 15);
 -- Data for Name: product_accessories; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO product_accessories VALUES (5);
+INSERT INTO product_accessories VALUES (7);
+INSERT INTO product_accessories VALUES (9);
+INSERT INTO product_accessories VALUES (13);
+INSERT INTO product_accessories VALUES (21);
+INSERT INTO product_accessories VALUES (23);
+INSERT INTO product_accessories VALUES (25);
+INSERT INTO product_accessories VALUES (26);
+INSERT INTO product_accessories VALUES (28);
+INSERT INTO product_accessories VALUES (30);
+INSERT INTO product_accessories VALUES (2);
+INSERT INTO product_accessories VALUES (8);
+INSERT INTO product_accessories VALUES (17);
+INSERT INTO product_accessories VALUES (3);
+INSERT INTO product_accessories VALUES (4);
+INSERT INTO product_accessories VALUES (6);
+INSERT INTO product_accessories VALUES (12);
+INSERT INTO product_accessories VALUES (16);
+INSERT INTO product_accessories VALUES (10);
+INSERT INTO product_accessories VALUES (11);
+INSERT INTO product_accessories VALUES (14);
+INSERT INTO product_accessories VALUES (15);
+INSERT INTO product_accessories VALUES (19);
+INSERT INTO product_accessories VALUES (20);
+INSERT INTO product_accessories VALUES (22);
+INSERT INTO product_accessories VALUES (24);
+INSERT INTO product_accessories VALUES (27);
+INSERT INTO product_accessories VALUES (29);
+INSERT INTO product_accessories VALUES (1);
+INSERT INTO product_accessories VALUES (18);
 
 
 --
 -- Data for Name: accessories_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO accessories_attr_lcl VALUES (6, 5, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (8, 7, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (10, 9, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (14, 13, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (22, 21, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (24, 23, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (26, 25, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (27, 26, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (29, 28, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (31, 30, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (3, 2, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (9, 8, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (18, 17, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (4, 3, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (5, 4, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (7, 6, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (13, 12, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (17, 16, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (11, 10, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (12, 11, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (15, 14, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (16, 15, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (20, 19, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (21, 20, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (23, 22, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (25, 24, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (28, 27, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (30, 29, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (2, 1, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (19, 18, NULL, NULL, 'en-GB');
+INSERT INTO accessories_attr_lcl VALUES (45, 5, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (47, 7, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (49, 9, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (53, 13, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (61, 21, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (63, 23, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (65, 25, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (66, 26, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (68, 28, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (70, 30, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (42, 2, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (48, 8, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (57, 17, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (43, 3, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (44, 4, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (46, 6, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (52, 12, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (56, 16, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (50, 10, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (51, 11, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (54, 14, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (55, 15, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (59, 19, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (60, 20, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (62, 22, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (64, 24, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (67, 27, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (69, 29, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (41, 1, NULL, NULL, 'zh-HK');
+INSERT INTO accessories_attr_lcl VALUES (58, 18, NULL, NULL, 'zh-HK');
 
 
 --
@@ -795,102 +885,12 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Data for Name: product_food; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO product_food VALUES (5, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (7, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (9, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (13, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (21, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (23, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (25, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (26, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (28, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (30, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (2, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (8, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (17, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (3, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (4, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (6, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (12, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (16, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (10, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (11, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (14, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (15, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (19, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (20, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (22, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (24, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (27, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (29, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (1, '2020-04-23', 'CHN');
-INSERT INTO product_food VALUES (18, '2020-04-23', 'CHN');
 
 
 --
 -- Data for Name: food_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO food_attr_lcl VALUES (6, 5, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (8, 7, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (10, 9, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (14, 13, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (22, 21, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (24, 23, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (26, 25, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (27, 26, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (29, 28, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (31, 30, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (3, 2, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (9, 8, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (18, 17, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (4, 3, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (5, 4, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (7, 6, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (13, 12, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (17, 16, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (11, 10, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (12, 11, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (15, 14, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (16, 15, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (20, 19, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (21, 20, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (23, 22, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (25, 24, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (28, 27, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (30, 29, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (2, 1, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (19, 18, 'Not Applicable', 'en-GB');
-INSERT INTO food_attr_lcl VALUES (45, 5, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (47, 7, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (49, 9, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (53, 13, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (61, 21, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (63, 23, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (65, 25, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (66, 26, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (68, 28, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (70, 30, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (42, 2, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (48, 8, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (57, 17, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (43, 3, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (44, 4, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (46, 6, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (52, 12, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (56, 16, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (50, 10, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (51, 11, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (54, 14, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (55, 15, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (59, 19, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (60, 20, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (62, 22, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (64, 24, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (67, 27, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (69, 29, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (41, 1, '不適用', 'zh-HK');
-INSERT INTO food_attr_lcl VALUES (58, 18, '不適用', 'zh-HK');
 
 
 --
