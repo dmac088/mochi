@@ -230,9 +230,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				 
 				 
-//		if(!categoryCodes.isEmpty()) {
-//			 query.setParameter("categoryCodes", categoryCodes);
-//		}
+		if(!categoryCodes.isEmpty()) {
+			 query.setParameter("categoryCodes", categoryCodes);
+		}
 		
 		if(!brandCodes.isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
