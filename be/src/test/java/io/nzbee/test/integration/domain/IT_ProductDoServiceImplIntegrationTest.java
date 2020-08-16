@@ -14,7 +14,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.Food;
 import io.nzbee.domain.product.Product;
 import io.nzbee.test.integration.beans.ProductDoBeanFactory;
 
@@ -76,9 +75,6 @@ public class IT_ProductDoServiceImplIntegrationTest {
     	
     	assertThat(found.getProductMarkdown())
     	.isEqualTo(new Double(71));
-    	
-    	assertThat(((Food) found).getCountryOfOrigin())
-    	.isEqualTo("NZL");
 
 	    assertNotNull(found.getPrimaryCategory());
 	    

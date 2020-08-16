@@ -115,33 +115,51 @@ public class ProductMasterService {
 		}
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
-		Product pDo = new Accessories(
+		Product pEn = new Accessories(
 								p.get_PRODUCT_UPC_CODE(),
 								createdDate,
 								p.get_PRODUCT_STATUS_CODE(),
 							   	p.get_PRODUCT_DESCRIPTION_EN(),
-							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
-							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
+							   	p.get_PRODUCT_RETAIL_PRICE_USD(),
+							   	p.get_PRODUCT_MARKDOWN_PRICE_USD(),
 							   	p.get_PRODUCT_IMAGE_EN(),
 							   	Constants.localeENGB,
-							   	Constants.currencyHKD,
+							   	Constants.currencyUSD,
 							   	bDo,
 							   	dDo,
 							   	(ProductCategory) cDo);
 
 		//add the tags to the domain object
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_A(), pDo);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_B(), pDo);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_C(), pDo);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_D(), pDo);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_E(), pDo);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_A(), pDo);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_B(), pDo);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_C(), pDo);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_D(), pDo);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_E(), pDo);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_A(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_B(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_C(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_D(), pEn);
+		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_E(), pEn);
+	
+		productDomainService.save(pEn);
 		
-		productDomainService.save(pDo);
+		
+		Product pCn = new Accessories(
+				p.get_PRODUCT_UPC_CODE(),
+				createdDate,
+				p.get_PRODUCT_STATUS_CODE(),
+			   	p.get_PRODUCT_DESCRIPTION_HK(),
+			   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
+			   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
+			   	p.get_PRODUCT_IMAGE_HK(),
+			   	Constants.localeZHHK,
+			   	Constants.currencyHKD,
+			   	bDo,
+			   	dDo,
+			   	(ProductCategory) cDo);
+		
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_A(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_B(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_C(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_D(), pCn);
+		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_E(), pCn);
+		
+		productDomainService.save(pCn);
 
 	}
 	
