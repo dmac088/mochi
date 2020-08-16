@@ -18,6 +18,7 @@ import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.entity.tag.ITagService;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "tst")
@@ -40,6 +41,9 @@ public class ProductEntityBeanFactory {
 	    
 	@Autowired
 	private ICategoryService categoryService;
+	
+	@Autowired
+	private ITagService tagService;
 	
 	public final Product getProductEntityBean() {
 	
@@ -97,6 +101,9 @@ public class ProductEntityBeanFactory {
 		//add the product to the category
 		product.addProductCategory(cp);
 		product.setPrimaryCategory(cp);
+		
+		//we should add a tag
+		product.addTag(tagService.findByCode(Constants.localeENGB, "ORG01").get());
 		
 		return product;
 	}
