@@ -4,18 +4,14 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
 import javax.persistence.EntityResult;
-import javax.persistence.FetchType;
 import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -28,6 +24,7 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.tag.attribute.TagAttribute;
@@ -69,6 +66,7 @@ public class Tag implements ISearchDimension {
 	private String tagCode;
 
 	@ManyToMany(mappedBy = "tags")
+	@JsonIgnore
     private Set<Product> products = new HashSet<Product>();
 
 	@OneToMany(mappedBy="tag")
@@ -170,11 +168,6 @@ public class Tag implements ISearchDimension {
 				: "Empty"; 
 	}
 	
-	public void addTagAttribute(TagAttribute tagAttribute) {
-		this.getAttributes().add(tagAttribute);
-		tagAttribute.setTag(this);
-	}
-	
 	public void addProduct(Product product) {
 		this.getProducts().add(product);
 		product.addTag(this);
@@ -183,6 +176,11 @@ public class Tag implements ISearchDimension {
 	public void removeProduct(Product product) {
 		this.getProducts().remove(product);
 		product.removeTag(this);
+	}
+	
+	public void addTagAttribute(TagAttribute tagAttribute) {
+		this.getAttributes().add(tagAttribute);
+		tagAttribute.setTag(this);
 	}
 	
 	public void removeTagAttribute(TagAttribute tagAttribute) {
