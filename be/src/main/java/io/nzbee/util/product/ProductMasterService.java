@@ -140,18 +140,18 @@ public class ProductMasterService {
 		
 		
 		Product pCn = new Accessories(
-				p.get_PRODUCT_UPC_CODE(),
-				createdDate,
-				p.get_PRODUCT_STATUS_CODE(),
-			   	p.get_PRODUCT_DESCRIPTION_HK(),
-			   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
-			   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
-			   	p.get_PRODUCT_IMAGE_HK(),
-			   	Constants.localeZHHK,
-			   	Constants.currencyHKD,
-			   	bDo,
-			   	dDo,
-			   	(ProductCategory) cDo);
+								p.get_PRODUCT_UPC_CODE(),
+								createdDate,
+								p.get_PRODUCT_STATUS_CODE(),
+							   	p.get_PRODUCT_DESCRIPTION_HK(),
+							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
+							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
+							   	p.get_PRODUCT_IMAGE_HK(),
+							   	Constants.localeZHHK,
+							   	Constants.currencyHKD,
+							   	bDo,
+							   	dDo,
+							   	(ProductCategory) cDo);
 		
 		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_A().toUpperCase(), pCn);
 		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_B().toUpperCase(), pCn);

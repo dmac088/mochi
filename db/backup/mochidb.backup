@@ -5572,6 +5572,14 @@ ALTER TABLE ONLY product_tag
 
 
 --
+-- Name: product uc_product_upc_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product
+    ADD CONSTRAINT uc_product_upc_cd UNIQUE (upc_cd);
+
+
+--
 -- Name: tag uc_tag_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 

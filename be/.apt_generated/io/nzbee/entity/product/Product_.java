@@ -9,7 +9,6 @@ import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.Tag;
 import java.util.Date;
 import javax.annotation.Generated;
-import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -25,7 +24,7 @@ public abstract class Product_ {
 	public static volatile SetAttribute<Product, ProductAttribute> attributes;
 	public static volatile SetAttribute<Product, CategoryProduct> categories;
 	public static volatile SingularAttribute<Product, Department> department;
-	public static volatile ListAttribute<Product, ProductPrice> prices;
+	public static volatile SetAttribute<Product, ProductPrice> prices;
 	public static volatile SingularAttribute<Product, CategoryProduct> primaryCategoryIndex;
 	public static volatile SingularAttribute<Product, Brand> brand;
 	public static volatile SetAttribute<Product, Tag> tags;

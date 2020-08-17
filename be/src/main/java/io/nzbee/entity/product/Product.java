@@ -367,7 +367,7 @@ public abstract class Product {
 	@OneToMany(	mappedBy="product",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	List<ProductPrice> prices = new ArrayList<ProductPrice>();
+	Set<ProductPrice> prices = new HashSet<ProductPrice>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_cat_id")
@@ -588,11 +588,11 @@ public abstract class Product {
 		this.productCreateDt = productCreateDt;
 	}
 	
-	public List<ProductPrice> getPrices() {
+	public Set<ProductPrice> getPrices() {
 		return this.prices;
 	}
 
-	public void setPrices(List<ProductPrice> productPrices) {
+	public void setPrices(Set<ProductPrice> productPrices) {
 		this.prices = productPrices;
 	}
 
