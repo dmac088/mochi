@@ -107,8 +107,6 @@ public class ProductEntityBeanFactory {
 		Tag t = tagService.findByCode(	Constants.localeENGB, 
 										"ORG01").get();
 		
-		System.out.println(t.getDesc());
-		
 		product.addTag(t);
 		
 		return product;
