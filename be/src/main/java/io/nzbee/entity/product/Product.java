@@ -302,7 +302,7 @@ public abstract class Product {
 
 	@ManyToMany(fetch = FetchType.LAZY, 
 				cascade = {
-			            CascadeType.PERSIST,
+						CascadeType.PERSIST,
 			            CascadeType.MERGE
 			    })
 	@JoinTable(name = "product_category", schema="mochi", 
@@ -314,8 +314,8 @@ public abstract class Product {
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 				cascade = {
-		            CascadeType.PERSIST,
-		            CascadeType.MERGE
+						//CascadeType.PERSIST,
+						CascadeType.MERGE
 		        }) 
 	@JoinTable(name = "product_tag", schema="mochi", 
 	   joinColumns 			= @JoinColumn(name = "prd_id"), 
