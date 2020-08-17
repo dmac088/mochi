@@ -33,6 +33,7 @@ function ShopHeader(props) {
                     <div className="sort-by-dropdown d-flex align-items-center mb-xs-10">
                         <p className="mr-10">Sort By: </p>
                         <select onChange={changeSort} name="sort-by" id="sort-by" className="nice-select">
+                            <option value="bestMatch">Best match</option>
                             <option value="nameAsc">Name [A-Z]</option>
                             <option value="nameDesc">Name [Z-A]</option>
                             <option value="priceAsc">Price: Low to High</option>

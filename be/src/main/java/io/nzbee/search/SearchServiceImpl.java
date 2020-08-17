@@ -268,21 +268,24 @@ public class SearchServiceImpl implements ISearchService {
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
 														 .buildQueryBuilder()
 														 .forEntity(Product.class).overridesForField("productDesc", lcl)
-														 .overridesForField("product.brand.brandDesc", lcl)
-														 .overridesForField("product.categories.categoryDesc", lcl)
-														 .overridesForField("product.categories.parent.categoryDesc", lcl)
-														 .overridesForField("product.categories.parent.parent.categoryDesc", lcl)
-														 .overridesForField("product.tags.tagDesc", lcl).get();
+//														 .overridesForField("product.brand.brandDesc", lcl)
+//														 .overridesForField("product.categories.categoryDesc", lcl)
+//														 .overridesForField("product.categories.parent.categoryDesc", lcl)
+//														 .overridesForField("product.categories.parent.parent.categoryDesc", lcl)
+//														 .overridesForField("product.tags.tagDesc", lcl)
+																 .get();
+		
 
 		// this is a Lucene query using the Lucene api
 		Query searchQuery = queryBuilder.bool()
-				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl, 
-														"product.brand.brandDesc" + transLcl,
-														"product.categories.categoryDesc" + transLcl,
-														"product.categories.parent.categoryDesc" + transLcl,
-														"product.categories.parent.parent.categoryDesc" + transLcl, 
-														"product.tags.tagDesc" + transLcl)
-														.matching(searchTerm).createQuery())
+				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl//, 
+														//"product.brand.brandDesc" + transLcl,
+														//"product.categories.categoryDesc" + transLcl,
+														//"product.categories.parent.categoryDesc" + transLcl,
+														//"product.categories.parent.parent.categoryDesc" + transLcl, 
+														//"product.tags.tagDesc" + transLcl)
+														).matching(searchTerm).createQuery())
+				
 				.createQuery();
 
 		final FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, Product.class);
@@ -526,11 +529,12 @@ public class SearchServiceImpl implements ISearchService {
 	private Sort getSortField(String field, String currency, String locale) {
 		LOGGER.debug("call getSortField with parameters {} {} {} ", field, currency, locale);
 		switch (field) {
-			case "nameAsc": 	return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, false));
-			case "nameDesc": 	return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, true));
-			case "priceAsc": 	return new Sort(new SortedNumericSortField(	"currentMarkdownPrice" 	+ currency, SortField.Type.DOUBLE, false));
-			case "priceDesc": 	return new Sort(new SortedNumericSortField(	"currentMarkdownPrice" 	+ currency, SortField.Type.DOUBLE, true));
-			default:			return new Sort(new SortField(				"productDescSort" 		+ locale, 	SortField.Type.STRING, true));
+			case "nameAsc": 	return new Sort(new SortField(				"productDescSort" 			+ locale, 		SortField.Type.STRING, false));
+			case "nameDesc": 	return new Sort(new SortField(				"productDescSort" 			+ locale, 		SortField.Type.STRING, true));
+			case "priceAsc": 	return new Sort(new SortedNumericSortField(	"currentMarkdownPrice" 		+ currency, 	SortField.Type.DOUBLE, false));
+			case "priceDesc": 	return new Sort(new SortedNumericSortField(	"currentMarkdownPrice" 		+ currency,		SortField.Type.DOUBLE, true));
+			case "bestMatch": 	return new Sort(SortField.FIELD_SCORE, new SortField("productDescSort"	+ locale, 		SortField.Type.STRING, true));
+			default:			return new Sort(SortField.FIELD_SCORE, new SortField("productDescSort"	+ locale, 		SortField.Type.STRING, true));
 		}
 	}
 
