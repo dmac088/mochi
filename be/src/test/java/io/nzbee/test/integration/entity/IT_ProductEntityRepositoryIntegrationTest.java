@@ -291,8 +291,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	assertThat(found.getCurrentRetailPriceHKD())
     	.isEqualTo(new Double(78));
     	
-//    	assertNotNull(found.getTags());
-//    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
+    	assertNotNull(found.getTags());
+    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }
     
     @After
