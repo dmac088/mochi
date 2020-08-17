@@ -4,6 +4,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
@@ -69,7 +71,8 @@ public class Tag implements ISearchDimension {
 	@JsonIgnore
     private Set<Product> products = new HashSet<Product>();
 
-	@OneToMany(mappedBy="tag")
+	@OneToMany(mappedBy="tag",
+			   cascade = CascadeType.ALL)
 	private Set<TagAttribute> attributes = new HashSet<TagAttribute>();
 	
 	@Transient
