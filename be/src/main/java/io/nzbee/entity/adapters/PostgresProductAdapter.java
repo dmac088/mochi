@@ -31,7 +31,10 @@ import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
+import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
@@ -98,8 +101,6 @@ public class PostgresProductAdapter implements IProductPortService {
 					? (io.nzbee.entity.product.accessories.Accessories) op.get()
 					: new io.nzbee.entity.product.accessories.Accessories();
 
-			Accessories accessory = (Accessories) domainObject;
-
 			// find the department
 			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(), 
 																						   domainObject.getDepartment().getDepartmentCode()).get();			
@@ -112,7 +113,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			io.nzbee.entity.category.product.CategoryProduct primaryCategory = (CategoryProduct) categoryService
 					.findByCode(domainObject.getLclCd(),
-							accessory.getPrimaryCategory().getCategoryCode()).get();
+							domainObject.getPrimaryCategory().getCategoryCode()).get();
 
 			
 			//get all the tags
@@ -134,39 +135,46 @@ public class PostgresProductAdapter implements IProductPortService {
 			pa.setProductImage(domainObject.getProductImage());
 			pa.setLclCd(domainObject.getLclCd());
 
-			Currency curr = currencyService.findByCode(accessory.getCurrency()).get();
+			Currency curr = currencyService.findByCode(domainObject.getCurrency()).get();
 
-			io.nzbee.entity.product.price.ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
-			io.nzbee.entity.product.price.ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
+			ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
+			ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
 
-			io.nzbee.entity.product.status.ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode)
+			ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode)
 					.get();
 
-			Optional<io.nzbee.entity.product.price.ProductPrice> oprcr = productPriceService
-					.findOne(domainObject.getProductUPC(), ptr.getCode(), domainObject.getCurrency());
+			Optional<ProductPrice> oprcr = 
+					productPriceService.findOne(domainObject.getProductUPC(), 
+												Constants.retailPriceCode, 
+												domainObject.getCurrency());
 
-			io.nzbee.entity.product.price.ProductPrice prcr = (oprcr.isPresent()) ? oprcr.get()
-					: new io.nzbee.entity.product.price.ProductPrice();
+			//retail price
+			ProductPrice prcr = (oprcr.isPresent()) 
+								? oprcr.get()
+								: new ProductPrice();
 
 			prcr.setType(ptr);
 			prcr.setCurrency(curr);
-			prcr.setPriceValue(accessory.getProductRetail());
+			prcr.setPriceValue(domainObject.getProductRetail());
 
-			Optional<io.nzbee.entity.product.price.ProductPrice> oprcm = productPriceService
-					.findOne(domainObject.getProductUPC(), ptm.getCode(), domainObject.getCurrency());
+			Optional<ProductPrice> oprcm = 
+					productPriceService.findOne(domainObject.getProductUPC(), 
+												Constants.markdownPriceCode, 
+												domainObject.getCurrency());
 
-			io.nzbee.entity.product.price.ProductPrice prcm = (oprcm.isPresent()) 
-					? oprcm.get()
-					: new io.nzbee.entity.product.price.ProductPrice();
+			//markdown price
+			ProductPrice prcm = (oprcm.isPresent()) 
+								? oprcm.get()
+								: new ProductPrice();
 
 			prcm.setType(ptm);
 			prcm.setCurrency(curr);
-			prcm.setPriceValue(accessory.getProductMarkdown());
+			prcm.setPriceValue(domainObject.getProductMarkdown());
 
-			product.setProductUPC(accessory.getProductUPC());
-			product.setProductCreateDt(accessory.getProductCreateDt());
-			product.setLocale(accessory.getLclCd());
-			product.setCurrency(accessory.getCurrency());
+			product.setProductUPC(domainObject.getProductUPC());
+			product.setProductCreateDt(domainObject.getProductCreateDt());
+			product.setLocale(domainObject.getLclCd());
+			product.setCurrency(domainObject.getCurrency());
 			product.setDepartment(d);
 			lcp.forEach(c -> {
 				product.addCategory(c);

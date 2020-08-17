@@ -65,6 +65,7 @@ DROP INDEX mochi.fki_category_cat_id_product_prm_cat_id;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
 ALTER TABLE ONLY mochi.tag DROP CONSTRAINT uc_tag_cd;
+ALTER TABLE ONLY mochi.product DROP CONSTRAINT uc_product_upc_cd;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT uc_product_tag;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT uc_product_category;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT uc_prm_cd;
@@ -3299,6 +3300,14 @@ ALTER TABLE ONLY product_category
 
 ALTER TABLE ONLY product_tag
     ADD CONSTRAINT uc_product_tag UNIQUE (prd_id, tag_id);
+
+
+--
+-- Name: product uc_product_upc_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product
+    ADD CONSTRAINT uc_product_upc_cd UNIQUE (upc_cd);
 
 
 --

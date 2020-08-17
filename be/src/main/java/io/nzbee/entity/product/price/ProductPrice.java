@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.price;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -36,6 +38,10 @@ public class ProductPrice {
 	@JoinColumn(name="prd_id", nullable=false, updatable = false, insertable = true)
 	private Product product;
 
+    public Long getId() {
+		return id;
+	}
+	
 	public ProductPriceType getType() {
 		return this.type;
 	}
@@ -68,4 +74,16 @@ public class ProductPrice {
 		this.product = product;
 	}
 	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Product)) return false;
+        return id != null && id.equals(((ProductPrice) o).getId());
+    }
+
+
+	@Override
+    public int hashCode() {
+    	return 31;
+    }
 }
