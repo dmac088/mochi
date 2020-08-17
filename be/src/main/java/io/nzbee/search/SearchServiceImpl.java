@@ -267,21 +267,10 @@ public class SearchServiceImpl implements ISearchService {
 		
 		Double minPrice = new Double(0), maxPrice = new Double(0);
 		
-		maxPrice = (currency.equals(Constants.currencyHKD)) 
-				  ? results.stream().findFirst().get().getCurrentMarkdownPriceHKD()
-				  : 0;
-				  
-		maxPrice = (currency.equals(Constants.currencyUSD)) 
-				  ? results.stream().findFirst().get().getCurrentMarkdownPriceUSD()
-				  : 0;
-						  
-		minPrice = (currency.equals(Constants.currencyHKD))
-				  ? Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD()
-				  : 0;
-				  		  
-		minPrice = (currency.equals(Constants.currencyUSD))
-				  ? Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceUSD()
-				  : 0;
+		if (currency.equals(Constants.currencyHKD)) maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		if (currency.equals(Constants.currencyUSD)) maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceUSD();
+		if (currency.equals(Constants.currencyHKD)) minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD();
+		if (currency.equals(Constants.currencyUSD)) minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceUSD();
 				  		  
 		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
 		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
@@ -347,7 +336,7 @@ public class SearchServiceImpl implements ISearchService {
 		Set<String> codes = new HashSet<String>();
 
 		facetServices.showFacetServices();
-		//by default price facets will not be included in getFAcetServices
+		
 		facetServices.getFacetServices().stream()
 					.forEach(f -> {
 						//this will add to facets collection
@@ -357,7 +346,7 @@ public class SearchServiceImpl implements ISearchService {
 		
 		//get the price facets, which are range facets
 		jpaQuery.setSort(getSortField("priceDesc", currency, transLcl));
-		List<Product> results = new ArrayList<>();
+		List<Product> results = new ArrayList<Product>();
 		results.addAll(jpaQuery.getResultList());
 
 		if(results.size() > size) {
