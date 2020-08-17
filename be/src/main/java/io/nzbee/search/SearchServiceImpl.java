@@ -46,6 +46,7 @@ import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.accessories.Accessories;
 import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.Constants;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 
@@ -72,7 +73,8 @@ public class SearchServiceImpl implements ISearchService {
 	}
 
 	private Set<Facet> processFacet(String locale, 
-									String currency, QueryBuilder qb,
+									String currency, 
+									QueryBuilder qb,
 									FullTextQuery jpaQuery, 
 									Set<Facet> facets, 
 									Facet selectedFacet,
@@ -254,6 +256,56 @@ public class SearchServiceImpl implements ISearchService {
 			fieldRefs.add(newFieldReference);
 		}
 	}
+	
+	private void getPriceFacets(String locale, 
+								String currency, 
+								List<Product> results,
+								Set<Facet> facets,
+								QueryBuilder queryBuilder, 
+								FullTextQuery jpaQuery
+								) {
+		
+		Double minPrice = new Double(0), maxPrice = new Double(0);
+		
+		maxPrice = (currency.equals(Constants.currencyHKD)) 
+				  ? results.stream().findFirst().get().getCurrentMarkdownPriceHKD()
+				  : 0;
+				  
+		maxPrice = (currency.equals(Constants.currencyUSD)) 
+				  ? results.stream().findFirst().get().getCurrentMarkdownPriceUSD()
+				  : 0;
+						  
+		minPrice = (currency.equals(Constants.currencyHKD))
+				  ? Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD()
+				  : 0;
+				  		  
+		minPrice = (currency.equals(Constants.currencyUSD))
+				  ? Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceUSD()
+				  : 0;
+				  		  
+		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
+		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		
+		Double	below = inc,
+				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+			   	toa = 	(new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+			   	fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
+				tob = 	(new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				above = tob;
+		
+		facets.addAll(this.getRangeFacets(	queryBuilder, 
+											jpaQuery, 
+											locale, 
+											currency,
+											"price", 
+											"currentMarkdownPrice" + currency + "Facet",
+											below, 
+											froma, 
+											toa, 
+											fromb, 
+											tob, 
+											above));
+	}
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
@@ -303,43 +355,19 @@ public class SearchServiceImpl implements ISearchService {
 					});
 		
 		
-		//sort by price descending
+		//get the price facets, which are range facets
 		jpaQuery.setSort(getSortField("priceDesc", currency, transLcl));
 		List<Product> results = new ArrayList<>();
 		results.addAll(jpaQuery.getResultList());
 
-		
-		
-		Double maxPrice = (currency.equals("HKD")) 
-						  ? results.stream().findFirst().get().getCurrentMarkdownPriceHKD()
-						  : results.stream().findFirst().get().getCurrentMarkdownPriceUSD();
-						  
-		Double minPrice = (currency.equals("HKD")) 
-				  		  ? Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceHKD()
-				  		  : Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceUSD();
-				  		  
-		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
-		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
-
-		Double	below = inc,
-				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-			   	toa = 	(new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-			   	fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				tob = 	(new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
-				above = tob;
-		
-		facets.addAll(this.getRangeFacets(	queryBuilder, 
-											jpaQuery, 
-											lcl, 
-											currency,
-											"price", 
-											"currentMarkdownPrice" + currency + "Facet",
-											below, 
-											froma, 
-											toa, 
-											fromb, 
-											tob, 
-											above));
+		if(results.size() > size) {
+			this.getPriceFacets(lcl, 
+								currency, 
+								results, 
+								facets, 
+								queryBuilder, 
+								jpaQuery);
+		}
 	
 		// pull the selected from facetList using the tokens from JSON payload
 		Set<Facet> selectedFacets = 
