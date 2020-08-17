@@ -309,22 +309,22 @@ public class SearchServiceImpl implements ISearchService {
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
 														 .buildQueryBuilder()
 														 .forEntity(Product.class).overridesForField("productDesc", lcl)
-//														 .overridesForField("product.brand.brandDesc", lcl)
-//														 .overridesForField("product.categories.categoryDesc", lcl)
-//														 .overridesForField("product.categories.parent.categoryDesc", lcl)
-//														 .overridesForField("product.categories.parent.parent.categoryDesc", lcl)
-//														 .overridesForField("product.tags.tagDesc", lcl)
+														 .overridesForField("product.brand.brandDesc", lcl)
+														 .overridesForField("product.categories.categoryDesc", lcl)
+														 .overridesForField("product.categories.parent.categoryDesc", lcl)
+														 .overridesForField("product.categories.parent.parent.categoryDesc", lcl)
+														 .overridesForField("product.tags.tagDesc", lcl)
 																 .get();
 		
 
 		// this is a Lucene query using the Lucene api
 		Query searchQuery = queryBuilder.bool()
-				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl//, 
-														//"product.brand.brandDesc" + transLcl,
-														//"product.categories.categoryDesc" + transLcl,
-														//"product.categories.parent.categoryDesc" + transLcl,
-														//"product.categories.parent.parent.categoryDesc" + transLcl, 
-														//"product.tags.tagDesc" + transLcl)
+				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl, 
+														"product.brand.brandDesc" + transLcl,
+														"product.categories.categoryDesc" + transLcl,
+														"product.categories.parent.categoryDesc" + transLcl,
+														"product.categories.parent.parent.categoryDesc" + transLcl, 
+														"product.tags.tagDesc" + transLcl
 														).matching(searchTerm).createQuery())
 				
 				.createQuery();
