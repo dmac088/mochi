@@ -1,0 +1,46 @@
+_CATEGORY_TYPE	_CATEGORY_LEVEL	_PARENT_CATEGORY_CODE	_CATEGORY_CODE	_CATEGORY_DESC_EN	_CATEGORY_DESC_HK
+productcategory	0		PRM01	All	所有
+productcategory	1	PRM01	ACC01	Accessories	配件
+productcategory	2	ACC01	AHAR1	Hair Accessories	髮飾
+productcategory	2	ACC01	AOTH1	Other Accessories 	其他飾物
+productcategory	2	ACC01	AJEW1	Jewelry	首飾
+productcategory	3	AHAR1	AHHAB	Hair Bands	頭箍
+productcategory	3	AHAR1	AHHAC	Hair Clips	髮夾
+productcategory	3	AHAR1	AHHAT	Hair Ties 	頭髮橡筋
+productcategory	3	AJEW1	AJBRA	Bracelets	手鏈 
+productcategory	3	AJEW1	AJEAR	Earrings	耳環
+productcategory	3	AJEW1	AJNEC	Necklaces	項鍊
+productcategory	3	AJEW1	AJRIN	Rings	戒指
+productcategory	3	AJEW1	AJBRO	Brooch	胸針
+productcategory	3	AOTH1	AOKEY	Keyrings	鎖匙扣
+productcategory	3	AOTH1	AOLAN	Lanyards	頸繩
+productcategory	3	AOTH1	AOPAD	Packing decorations	包裝裝飾物
+productcategory	1	PRM01	FAS01	Fashion 	時裝
+productcategory	2	FAS01	FFOT1	Footwear	鞋類
+productcategory	2	FAS01	FBEL1	Belts	皮帶
+productcategory	2	FAS01	FWAT1	Watches	手錶
+productcategory	2	FAS01	FCLO1	Clothes 	衣服
+productcategory	2	FAS01	FBAG1	Bags and wallets	手袋銀包
+productcategory	2	FAS01	FHEA1	Head Accessories 	頭飾
+productcategory	2	FAS01	FCOO1	Cool Stationary 	時尚文具
+productcategory	2	FAS01	FPHO1	Phone Accessories	手機配件
+productcategory	3	FFOT1	FFSHO	Shoes	鞋
+productcategory	3	FFOT1	FFSLI	Slippers	拖鞋
+productcategory	3	FFOT1	FFSOC	Socks	襪
+productcategory	3	FBEL1	FBFAB	Fashion Belts 	時尚皮帶
+productcategory	3	FHEA1	FHSUN	Sunglasses	太陽眼鏡
+productcategory	3	FHEA1	FHHAT	Hats	帽
+productcategory	3	FWAT1	FWWAT	Fashion Watches	時尚手錶
+productcategory	3	FCLO1	FCTOP	Tops	上衫
+productcategory	3	FCLO1	FCBOT	Bottoms 	外褲
+productcategory	3	FCLO1	FCJAC	Jackets	外褸
+productcategory	3	FCLO1	FCSCA	Scarfs	頸巾
+productcategory	3	FBAG1	FBBAC	Backpacks	背囊
+productcategory	3	FBAG1	FBHAN	Handbags	包包
+productcategory	3	FBAG1	FBWAL	Wallet 	銀包
+productcategory	3	FCOO1	FCPOC	Pockets 	文件袋
+productcategory	3	FPHO1	FPAPP	Apple	蘋果手機配件 
+productcategory	1	PRM01	HOM01	Home	家居
+productcategory	2	HOM01	HFLO1	Floor	地板
+productcategory	3	HFLO1	HFCAR	Carpets	地毯
+productcategory	3	HFLO1	HFCUP	Cupboards	收納
