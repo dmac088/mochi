@@ -41,22 +41,19 @@ function CategoryMenuItem(props) {
     }
 
     const children = [];
-
-
+    console.log(category.data.categoryLevel);
     return (
         <li
             className={((stateObject.hasChildren)
                 ? "menu-item-has-children"
                 : "") +
                 ((itemCounter > 8)
-                    ? " hidden"
-                    : "")}
+                ? " hidden"
+                : "")}
             style={
-                (isRoot && itemCounter > 8
-                    // && !showMore
-                )
-                    ? { "display": "none" }
-                    : { "--my-left-indent": getIndent(category.data.categoryLevel, 10) }
+                (isRoot && itemCounter > 8)
+                ? { "display": "none" }
+                : { "--my-left-indent": getIndent(category.data.categoryLevel, 10) }
             }>
 
             <Link 

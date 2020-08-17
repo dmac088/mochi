@@ -56,6 +56,13 @@ function Search(props) {
             onKeyDown={handleKeyDown}
             options={options}
             placeholder="Search for products..."
+            inputProps={{ style: {  "position": "relative",
+                                    //"flex-basis": "50%",
+                                    "background-color": "#ffffff",
+                                    "height": "50px",
+                                    "border": "1px solid #e4e4e4",
+                                    "padding-right": "55px",
+                                    "border-radius": "50px" } }}   
             renderMenuItemChildren={option => {
                 return (
                     <div onClick={(e)=>handleClick(e)}>

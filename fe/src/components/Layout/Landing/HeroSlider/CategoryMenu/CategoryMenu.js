@@ -24,7 +24,7 @@ function CategoryMenu(props) {
         return renderList.map(category => {
 
             if (isRoot) { itemCounter += 1 };
-
+            
             return (
                 <TransitionGroup
                     {...props}
