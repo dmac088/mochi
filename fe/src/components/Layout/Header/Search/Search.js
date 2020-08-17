@@ -3,12 +3,12 @@ import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
+import './Search.css';
 import { getSearchPath } from "../../Helpers/Route/Route";
-
 
 function Search(props) {
 
-    const { history, match } = props;
+    const { history, match } = props; 
     const { lang } = match.params;
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
@@ -28,7 +28,7 @@ function Search(props) {
         setIsLoading(true);
 
         const SEARCH_URI = links.searchSuggestion.href.replace('{q}', query);
-        
+
 
         axios.get(`${SEARCH_URI}`)
             .then((resp) => {
@@ -47,42 +47,46 @@ function Search(props) {
     return (
         // <div className={"header-advance-search"}>
         <React.Fragment>
-        <AsyncTypeahead
-            id="async-example"
-            isLoading={isLoading}
-            labelKey="suggestion"
-            minLength={((lang === 'en-GB') ? 3 : 1)}
-            onSearch={handleSearch}
-            onKeyDown={handleKeyDown}
-            options={options}
-            placeholder="Search for products..."
-            inputProps={{ style: {  "position": "relative",
-                                    //"flex-basis": "50%",
-                                    "background-color": "#ffffff",
-                                    "height": "50px",
-                                    "border": "1px solid #e4e4e4",
-                                    "padding-right": "55px",
-                                    "border-radius": "50px" } }}   
-            renderMenuItemChildren={option => {
-                return (
-                    <div onClick={(e)=>handleClick(e)}>
-                        {option.suggestion}
-                    </div>
-                    // <div key={option.suggestion}>
-                    //     {/* <img
-                    //         alt={option.login}
-                    //         src={option.avatar_url}
-                    //         style={{
-                    //             height: '24px',
-                    //             marginRight: '10px',
-                    //             width: '24px',
-                    //         }}
-                    //     /> */}
-                    //     <span>{option.suggestion}</span>
-                    // </div>
-                )
-            }}
-        />
+                <AsyncTypeahead
+                    id="async-example"
+                    isLoading={isLoading}
+                    labelKey="suggestion"
+                    minLength={((lang === 'en-GB') ? 3 : 1)}
+                    onSearch={handleSearch}
+                    onKeyDown={handleKeyDown}
+                    options={options}
+                    placeholder="Search for products..."
+                    inputProps={{
+                        style: {
+                            "position": "relative",
+                            "background-color": "#ffffff",
+                            "height": "50px",
+                            "border": "1px solid #e4e4e4",
+                            "padding-right": "55px",
+                            "border-radius": "50px"
+                        }
+                    }}
+                    renderMenuItemChildren={option => {
+                        return (
+                            <div onClick={(e) => handleClick(e)}>
+                                {option.suggestion}
+                            </div>
+                            // <div key={option.suggestion}>
+                            //     {/* <img
+                            //         alt={option.login}
+                            //         src={option.avatar_url}
+                            //         style={{
+                            //             height: '24px',
+                            //             marginRight: '10px',
+                            //             width: '24px',
+                            //         }}
+                            //     /> */}
+                            //     <span>{option.suggestion}</span>
+                            // </div>
+                        )
+                    }}
+                />
+               {/* <button type="submit" class="btn btn-primary">Submit</button>*/}
         </React.Fragment>
         // </div>
     );
