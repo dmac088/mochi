@@ -45,7 +45,7 @@ function Search(props) {
     };
 
     return (
-        <div className={"typeaheadwrapper"}>
+        <div className="typeaheadwrapper">
             <AsyncTypeahead
                 id="async-example"
                 isLoading={isLoading}
@@ -85,7 +85,7 @@ function Search(props) {
                     )
                 }}
             />
-            <button>
+            <button class="search">
                 <span class="icon_search"></span>
             </button>
         </div>
