@@ -95,6 +95,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 true,
 															 false,
 															 false,
@@ -102,7 +103,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
-				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				//.setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				.setParameter("activeProductCode", Constants.activeSKUCode)
 				.setParameter("retailPriceCode", Constants.retailPriceCode)
 				.setParameter("markdownPriceCode", Constants.markdownPriceCode)
@@ -130,11 +131,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+															 false,
 															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productId", id)
-		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+		//.setParameter("categoryCode", Constants.primaryRootCategoryCode)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
@@ -160,6 +162,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Query query = em.createNativeQuery(this.constructSQL(!productCodes.isEmpty(),
 															 false,
 															 false,
+															 false,
 															 false, 
 															 false,
 															 false,
@@ -170,7 +173,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+		//.setParameter("categoryCode", Constants.primaryRootCategoryCode)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
@@ -197,6 +200,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 true,
 															 false,
+															 false,
 															 false, 
 															 false,
 															 false,
@@ -208,7 +212,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productDesc", desc)
-		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+		//.setParameter("categoryCode", Constants.primaryRootCategoryCode)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
@@ -229,11 +233,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public List<Product> findAll(String locale, String currency) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
 		
-		List<String> categories = new ArrayList<String>();
-		categories.add(Constants.primaryRootCategoryCode);
+//		List<String> categories = new ArrayList<String>();
+//		categories.add(Constants.primaryRootCategoryCode);
 		
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
+															 false,
 															 false,
 															 false,
 															 false, 
@@ -246,7 +251,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+			//	 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("retailPriceCode", Constants.retailPriceCode)
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
@@ -264,11 +269,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes, ','));
 		
-		List<String> categories = new ArrayList<String>();
-		categories.add(Constants.primaryRootCategoryCode);
+//		List<String> categories = new ArrayList<String>();
+//		categories.add(Constants.primaryRootCategoryCode);
 		
 		
 		Query query = em.createNativeQuery(this.constructSQL(true,
+															 false,
 															 false,
 															 false,
 															 false, 
@@ -281,7 +287,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				// .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("retailPriceCode", Constants.retailPriceCode)
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
@@ -313,6 +319,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 false,
 															 false,
+															 false,
 															 false, 
 															 false, 
 															 false,
@@ -331,6 +338,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		long total = ((BigInteger) result).longValue();
 		
 		query = em.createNativeQuery(this.constructSQL(
+													  false,
 													  false,
 													  false,
 													  false,
@@ -392,6 +400,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		Query query = em.createNativeQuery(this.constructSQL(false,
 	 														 false,
 															 false,
+															 !(categoryCode == null),
 															 categoryCodes.size()>=1, 
 															 brandCodes.size()>=1,
   				 											 tagCodes.size()>=1,
@@ -423,14 +432,17 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			query.setParameter("maxPrice", maxPrice);
 		}
 		
+		if(!(categoryCode == null)) {
+			query.setParameter("categoryCode", categoryCode);
+		}
+		
 		Object result = query.getSingleResult();
 		long total = ((BigInteger) result).longValue();
-		
-		
 		
 		query = em.createNativeQuery(this.constructSQL(	false,
 														false,
 														false,
+														!(categoryCode == null),
 														!categoryCodes.isEmpty(), 
 														!brandCodes.isEmpty(),
 					   									!tagCodes.isEmpty(),
@@ -441,9 +453,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					   									sort), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("activeProductCode", Constants.activeSKUCode)
-		.setParameter("retailPriceCode", Constants.retailPriceCode)
-		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+		.setParameter("activeProductCode", 	Constants.activeSKUCode)
+		.setParameter("retailPriceCode", 	Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", 	Constants.markdownPriceCode)
 		.setParameter("categoryCode", categoryCode);
 		
 		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
@@ -519,6 +531,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	private String constructSQL(boolean hasProductCodes,
 								boolean hasProductDesc,
 								boolean hasProductId,
+								boolean hasCategory,
 								boolean hasCategories,
 								boolean hasBrands,
 								boolean hasTags,
@@ -540,8 +553,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"                              || cast(t.cat_id AS text) " + 
 				"                              || '/' AS text) node " + 
 				"          FROM      mochi.category            AS t " + 
-				"          WHERE     0=0 " + 
-				"          AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " + 
+				"          WHERE     0=0 " +
+				((hasCategory) 
+				? " AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " 
+				: " AND t.cat_lvl = 0 ") + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
 				"                 t.cat_cd, " + 
