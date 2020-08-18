@@ -8,7 +8,7 @@ import { getSearchPath } from "../../Helpers/Route/Route";
 
 function Search(props) {
 
-    const { history, match } = props; 
+    const { history, match } = props;
     const { lang } = match.params;
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
@@ -45,50 +45,50 @@ function Search(props) {
     };
 
     return (
-        // <div className={"header-advance-search"}>
-        <React.Fragment>
-                <AsyncTypeahead
-                    id="async-example"
-                    isLoading={isLoading}
-                    labelKey="suggestion"
-                    minLength={((lang === 'en-GB') ? 3 : 1)}
-                    onSearch={handleSearch}
-                    onKeyDown={handleKeyDown}
-                    options={options}
-                    placeholder="Search for products..."
-                    inputProps={{
-                        style: {
-                            "position": "relative",
-                            "background-color": "#ffffff",
-                            "height": "50px",
-                            "border": "1px solid #e4e4e4",
-                            "padding-right": "55px",
-                            "border-radius": "50px"
-                        }
-                    }}
-                    renderMenuItemChildren={option => {
-                        return (
-                            <div onClick={(e) => handleClick(e)}>
-                                {option.suggestion}
-                            </div>
-                            // <div key={option.suggestion}>
-                            //     {/* <img
-                            //         alt={option.login}
-                            //         src={option.avatar_url}
-                            //         style={{
-                            //             height: '24px',
-                            //             marginRight: '10px',
-                            //             width: '24px',
-                            //         }}
-                            //     /> */}
-                            //     <span>{option.suggestion}</span>
-                            // </div>
-                        )
-                    }}
-                />
-               {/* <button type="submit" class="btn btn-primary">Submit</button>*/}
-        </React.Fragment>
-        // </div>
+        <div className={"typeaheadwrapper"}>
+            <AsyncTypeahead
+                id="async-example"
+                isLoading={isLoading}
+                labelKey="suggestion"
+                minLength={((lang === 'en-GB') ? 3 : 1)}
+                onSearch={handleSearch}
+                onKeyDown={handleKeyDown}
+                options={options}
+                placeholder="Search for products..."
+                inputProps={{
+                    style: {
+                        "position": "relative",
+                        "background-color": "#ffffff",
+                        "height": "50px",
+                        "border": "1px solid #e4e4e4",
+                        "padding-right": "55px",
+                        "border-radius": "50px"
+                    }
+                }}
+                renderMenuItemChildren={option => {
+                    return (
+                        <div onClick={(e) => handleClick(e)}>
+                            {option.suggestion}
+                        </div>
+                        // <div key={option.suggestion}>
+                        //     {/* <img
+                        //         alt={option.login}
+                        //         src={option.avatar_url}
+                        //         style={{
+                        //             height: '24px',
+                        //             marginRight: '10px',
+                        //             width: '24px',
+                        //         }}
+                        //     /> */}
+                        //     <span>{option.suggestion}</span>
+                        // </div>
+                    )
+                }}
+            />
+            <button>
+                <span class="icon_search"></span>
+            </button>
+        </div>
     );
 
 
