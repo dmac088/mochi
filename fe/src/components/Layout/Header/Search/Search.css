@@ -1,3 +1,20 @@
-.rbt {
+
+
+button {
+    position: absolute;
+    right: 5px;
+    top: 5px;
+    background: none;
+    border: none;
+    background-color: #80bb01;
+    color: #ffffff;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.typeaheadwrapper {
    flex-basis: 50%;
+   position: relative;
+   height: 50px;
 }
