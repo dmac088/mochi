@@ -46,6 +46,7 @@ function CategoryMenuContainer(props) {
 
     const categories = useSelector(state => state.categories.list);
 
+    console.log(stateObject.menuVisible);
     return (
 
         <div className="hero-side-category">

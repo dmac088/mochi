@@ -51,11 +51,11 @@ function CategoryMenu(props) {
     return (
 
         <Transition
-            in={props.in || true}
+            in={props.in}
             timeout={2000}
-            onEntering={() => { slide(container, 'slideDown', null); }}
+            onEntering={() => { slide(container, 'slideDown', null);}}
             onEntered={() => { console.log(' entered') }}
-            onExiting={() => { slide(container, 'slideUp', null); }}
+            onExiting={() => { slide(container, 'slideUp', null);}}
             onExited={() => { console.log(' exited') }}>
             <ul ref={setContainer}>
 
