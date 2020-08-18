@@ -31,7 +31,7 @@ public interface IProductDao extends ILocalizedDao<Product> {
 
 	List<Product> findAll(String locale, String currency, Set<String> codes);
 
-	
+	Optional<Product> findByCode(String productUPC);
 
 	
 }
