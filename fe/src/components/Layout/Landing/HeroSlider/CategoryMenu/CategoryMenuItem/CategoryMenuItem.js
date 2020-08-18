@@ -29,10 +29,6 @@ function CategoryMenuItem(props) {
             : 25 + (((level - 1) * 10) - offset)) + "px";
     }
 
-    //const children = [];
-    
-    console.log("categoryLevel = " + category.data.categoryLevel );
-
     return (
         <li
             className={((stateObject.hasChildren)
