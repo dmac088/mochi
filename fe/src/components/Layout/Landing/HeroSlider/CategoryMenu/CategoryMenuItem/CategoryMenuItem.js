@@ -3,6 +3,7 @@ import MobileCategoryMenuItemSubList from './MobileCategoryMenuItemSublist';
 import WebCategoryMenuItemSubList from './WebCategoryMenuItemSublist';
 import { Link } from "react-router-dom";
 import { getCategoryPath } from "../../../../Helpers/Route/Route";
+import { getChildCategories } from "../../../../Helpers/Category";
 
 function CategoryMenuItem(props) {
     
@@ -28,19 +29,7 @@ function CategoryMenuItem(props) {
             : 25 + (((level - 1) * 10) - offset)) + "px";
     }
 
-    const getChildren = (parent, categories, children) => {
-        const c = categories.filter(o => o.data.parentCode === parent.data.categoryCode);
-        if (c.length === 0) {
-            return children;
-        }
-        c.map((child) => {
-            children.push(child);
-            getChildren(child, categories, children);
-        });
-        return c;
-    }
-
-    const children = [];
+    //const children = [];
     
     console.log("categoryLevel = " + category.data.categoryLevel );
 
@@ -77,7 +66,7 @@ function CategoryMenuItem(props) {
             ?   <MobileCategoryMenuItemSubList
                     renderList={renderList}
                     fullList={fullList}
-                    children={getChildren(category, fullList, children)}
+                    children={getChildCategories(category, fullList, [])}
                     categoryLevel={category.data.categoryLevel}
                     itemCounter={itemCounter}
                     renderCategoryList={renderCategoryList}
@@ -86,7 +75,7 @@ function CategoryMenuItem(props) {
             :   <WebCategoryMenuItemSubList
                     renderList={renderList}
                     fullList={fullList}
-                    children={getChildren(category, fullList, children)}
+                    children={getChildCategories(category, fullList, [])}
                     categoryLevel={category.data.categoryLevel}
                     itemCounter={itemCounter}
                     renderCategoryList={renderCategoryList}
