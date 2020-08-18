@@ -12,15 +12,14 @@ export const findByCode = (categories, code) => {
     return categories.filter(o => o.data.categoryCode === code)[0];
 }
 
-export const getChildren = (parent, categories, children) => {
-    if (!categories) { return; }
-    if (!parent) { return; }
+export const getChildCategories = (parent = {}, categories = [], children = []) => {
     const c = categories.filter(o => o.data.parentCode === parent.data.categoryCode);
-    if (!c) { return children; }
+    if (c.length === 0) {
+        return children;
+    }
     c.map((child) => {
         children.push(child);
-        getChildren(child, categories, children);
+        getChildCategories(child, categories, children);
     });
-
-    return c;
+    return c; 
 }

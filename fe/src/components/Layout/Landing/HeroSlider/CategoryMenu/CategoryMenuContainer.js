@@ -58,7 +58,7 @@ function CategoryMenuContainer(props) {
                     {...props}
                     category={findByCode(categories, 'PRM05')}
                     displayLevel={1}
-                    categories={categories}
+                    categories={categories || []}
                     in={stateObject.menuVisible}
                     isMobile={stateObject.isMobile} />
             </nav>

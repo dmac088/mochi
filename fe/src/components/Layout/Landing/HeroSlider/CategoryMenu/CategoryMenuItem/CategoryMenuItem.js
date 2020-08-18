@@ -3,7 +3,7 @@ import MobileCategoryMenuItemSubList from './MobileCategoryMenuItemSublist';
 import WebCategoryMenuItemSubList from './WebCategoryMenuItemSublist';
 import { Link } from "react-router-dom";
 import { getCategoryPath } from "../../../../Helpers/Route/Route";
-import { getChildCategories } from "../../../../Helpers/Category";
+import { getChildCategories } from "../../../../../../services/Category/index";
 
 function CategoryMenuItem(props) {
     
