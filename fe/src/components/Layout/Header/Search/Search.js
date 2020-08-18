@@ -58,11 +58,11 @@ function Search(props) {
                 inputProps={{
                     style: {
                         "position": "relative",
-                        "background-color": "#ffffff",
+                        "backgroundColor": "#ffffff",
                         "height": "50px",
                         "border": "1px solid #e4e4e4",
-                        "padding-right": "55px",
-                        "border-radius": "50px"
+                        "paddingRight": "55px",
+                        "borderRadius": "50px"
                     }
                 }}
                 renderMenuItemChildren={option => {
@@ -85,8 +85,8 @@ function Search(props) {
                     )
                 }}
             />
-            <button class="search">
-                <span class="icon_search"></span>
+            <button className="search">
+                <span className="icon_search"></span>
             </button>
         </div>
     );

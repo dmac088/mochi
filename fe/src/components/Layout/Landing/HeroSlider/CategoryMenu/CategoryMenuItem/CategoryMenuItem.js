@@ -42,6 +42,8 @@ function CategoryMenuItem(props) {
 
     const children = [];
     
+    console.log("categoryLevel = " + category.data.categoryLevel );
+
     return (
         <li
             className={((stateObject.hasChildren)
