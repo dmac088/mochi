@@ -2,6 +2,7 @@ import React from 'react';
 import { TransitionGroup, Transition } from 'react-transition-group'
 import { slide } from "../../../Helpers/Animation/Slide";
 import CategoryMenuItem from './CategoryMenuItem/CategoryMenuItem';
+import { getChildCategories } from "../../../Helpers/Category";
 
 function CategoryMenu(props) {
     const { isMobile, categories, displayLevel } = props;
@@ -44,9 +45,7 @@ function CategoryMenu(props) {
         container = c;
     }
 
-    console.log(categories);
     return (
-
         <Transition
             in={props.in}
             timeout={2000}
@@ -58,7 +57,7 @@ function CategoryMenu(props) {
                 {renderCategoryList(//tells us if we are in mobile mode
                                     isMobile,
                                     //display categories and sort order defined here, list of codes
-                                    categories.filter(c => c.data.categoryLevel === displayLevel),
+                                    getChildCategories(categories.find(c => c.data.categoryCode === 'PRM05'), categories, []),
                                     //the actual list of objects to be displayed
                                     categories,
                                     //is it the root list (level = 0)
