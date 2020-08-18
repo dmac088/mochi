@@ -94,9 +94,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	public void save(Product domainObject) {
 		if (domainObject instanceof Accessories) {
 
-			Optional<io.nzbee.entity.product.Product> op = productService.findByCode(	domainObject.getLclCd(),
-																						domainObject.getCurrency(), 
-																						domainObject.getProductUPC());
+			Optional<io.nzbee.entity.product.Product> op = productService.findByCode(domainObject.getProductUPC());
 
 			io.nzbee.entity.product.accessories.Accessories product = (op.isPresent()) 
 					? (io.nzbee.entity.product.accessories.Accessories) op.get()

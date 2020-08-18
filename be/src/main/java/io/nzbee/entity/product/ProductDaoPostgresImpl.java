@@ -13,6 +13,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
+import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -44,9 +49,42 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
+
+
+	@Override
+	public Optional<Product> findByCode(String productUPC) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findByCode parameters : {}", productUPC);
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<Product> cq = cb.createQuery(Product.class);
+		
+		Root<Product> root = cq.from(Product.class);
+
+		List<Predicate> conditions = new ArrayList<Predicate>();
+
+		conditions.add(
+				cb.equal(root.get(Product_.productUPC), productUPC)
+		);
+		
+		TypedQuery<Product> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+		
+		try {
+			Product product = query.getSingleResult();
+			return Optional.ofNullable(product);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+	}
+	
 	@Override
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
+		LOGGER.debug("call ProductDaoPostgresImpl.findAllByType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -774,5 +812,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

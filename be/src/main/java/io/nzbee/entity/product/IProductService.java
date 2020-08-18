@@ -23,5 +23,7 @@ public interface IProductService extends ILocalizedService<Product> {
 	List<Product> findAll(String locale, String currency);
 
 	List<Product> findAll(String locale, String currency, Set<String> productCodes);
+
+	Optional<Product> findByCode(String productUPC);
  
 }

@@ -118,6 +118,11 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
+	@Override
+	public Optional<Product> findByCode(String productUPC) {
+		return productDAO.findByCode(productUPC);
+	}
+
 
 	
 }
