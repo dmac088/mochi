@@ -37,7 +37,6 @@ import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.Tag;
-import io.nzbee.exceptions.category.CategoryNotFoundException;
 import io.nzbee.exceptions.product.ProductNotFoundException;
 import io.nzbee.search.ISearchService;
 import io.nzbee.search.facet.IFacet;
@@ -131,6 +130,7 @@ public class PostgresProductAdapter implements IProductPortService {
 					: (new io.nzbee.entity.product.attribute.ProductAttribute());
 
 			pa.setProductDesc(domainObject.getProductDesc());
+			pa.setProductLongDesc(domainObject.getProductLongDesc());
 			pa.setProductImage(domainObject.getProductImage());
 			pa.setLclCd(domainObject.getLclCd());
 
