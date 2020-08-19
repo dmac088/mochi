@@ -21,6 +21,8 @@ public abstract class Product {
 
 	private String productDesc;
 	
+	private String productLongDesc;
+	
 	private Double productRetail;
 	
 	private Double productMarkdown;
@@ -50,6 +52,7 @@ public abstract class Product {
 				   	Date productCreateDt,
 				   	String productStatus,
 				   	String productDesc,
+				   	String productLongDesc,
 				   	Double productRetail,
 				   	Double productMarkdown,
 				   	String productImage,
@@ -74,6 +77,7 @@ public abstract class Product {
 					this.primaryCategory = category;
 					this.categories.add(category);
 					this.productStatus = productStatus;
+					this.productLongDesc = productLongDesc;
 	}
 	
 	public String getProductStatus() {

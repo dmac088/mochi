@@ -14,12 +14,14 @@ public abstract class ProductAttribute_ {
 	public static volatile SingularAttribute<ProductAttribute, String> ProductImage;
 	public static volatile SingularAttribute<ProductAttribute, String> lclCd;
 	public static volatile SingularAttribute<ProductAttribute, Long> Id;
+	public static volatile SingularAttribute<ProductAttribute, String> productLongDesc;
 
 	public static final String PRODUCT_DESC = "productDesc";
 	public static final String PRODUCT = "product";
 	public static final String PRODUCT_IMAGE = "ProductImage";
 	public static final String LCL_CD = "lclCd";
 	public static final String ID = "Id";
+	public static final String PRODUCT_LONG_DESC = "productLongDesc";
 
 }
 

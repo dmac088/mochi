@@ -1,9 +1,7 @@
 package io.nzbee.entity.product;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
@@ -195,6 +193,7 @@ filters = {
 		                    @FieldResult(name = "Id", 				column = "prd_lcl_id"),
 		                    @FieldResult(name = "productId", 		column = "prd_id"),
 		                    @FieldResult(name = "productDesc", 		column = "prd_desc"),
+		                    @FieldResult(name = "productLongDesc", 	column = "prd_lng_desc"),
 		                    @FieldResult(name = "ProductImage", 	column = "prd_img_pth"),
 		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
 		                    @FieldResult(name = "product", 			column = "prd_id")
