@@ -44,7 +44,6 @@ function CategoryMenu(props) {
     const setContainer = (c) => {
         container = c;
     }
-
     return (
         <Transition
             in={props.in}
