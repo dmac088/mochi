@@ -215,7 +215,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(), 
+		Query query = session.createNativeQuery(constructSQL(false, 
 															 !brandCodes.isEmpty(),
 															 !tagCodes.isEmpty(),
 															 !(maxPrice == null),
@@ -228,11 +228,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
-				 
-				 
-		if(!categoryCodes.isEmpty()) {
-			 query.setParameter("categoryCodes", categoryCodes);
-		}
 		
 		if(!brandCodes.isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
