@@ -117,7 +117,9 @@ function QuickViewProduct(props) {
                     <span className="main-price">${product.productRetail}</span>
                     <span className="discounted-price"> ${product.productMarkdown}</span>
                   </h2>
-                  <p className="product-description mb-20">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco,Proin lectus ipsum, gravida et mattis vulputate, tristique ut lectus</p>
+                  <p className="product-description mb-20">
+                    {product.productLongDesc}
+                  </p>
                   <div className="cart-buttons mb-20">
                     <div className="pro-qty mr-10">
                       <input onChange={() => console.log('updateQuantity')} type="text" value={1} />
