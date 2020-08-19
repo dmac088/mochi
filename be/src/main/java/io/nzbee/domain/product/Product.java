@@ -36,7 +36,7 @@ public abstract class Product {
 	private String currency;
 	
 	protected String productType;
-	
+
 	@JsonIgnore
 	private List<ProductCategory> categories;
 
@@ -106,6 +106,10 @@ public abstract class Product {
 
 	public String getProductDesc() {
 		return productDesc;
+	}
+	
+	public String getProductLongDesc() {
+		return productLongDesc;
 	}
 
 	public double getProductRetail() {
