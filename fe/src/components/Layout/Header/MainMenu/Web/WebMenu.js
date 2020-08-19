@@ -29,7 +29,7 @@ function MainMenu(props) {
                 <li>
                     <BasicMenuItem
                         {...props}
-                        routePath={getCategoryPath('HOM02', match)}
+                        routePath={getCategoryPath('HOM01', match)}
                         descKey={'homeandlifestyle'} />
                 </li>
                 <li>
