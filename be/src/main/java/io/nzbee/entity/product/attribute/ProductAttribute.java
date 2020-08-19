@@ -23,7 +23,10 @@ public class ProductAttribute {
 	private Long Id;
 
 	@Column(name="prd_desc")
-	private String productDesc; 
+	private String productDesc;
+	
+	@Column(name="prd_lng_desc")
+	private String productLongDesc; 
 
 	@Column(name="prd_img_pth")
 	private String ProductImage;
@@ -61,6 +64,15 @@ public class ProductAttribute {
 	
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
+	}
+	
+
+	public String getProductLongDesc() {
+		return productLongDesc;
+	}
+
+	public void setProductLongDesc(String productLongDesc) {
+		this.productLongDesc = productLongDesc;
 	}
 
 	public String getLclCd() {
