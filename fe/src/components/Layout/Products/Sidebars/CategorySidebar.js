@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { getCategoryPath } from '../../../../components/Layout/Helpers/Route/Route';
 import { ListSidebar } from './Layout/ListSidebar';
 import { findByCode } from '../../../../services/Category';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
@@ -30,7 +29,6 @@ function CategorySidebar(props) {
         if (type === 'browse' && (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            //onsole.log(selectedFacets.map(f => f.data))
             axios.post(currentCategory._links.childFacets.href, (type === 'browse')
                                                                 ? selectedFacets.map(f => f.data)
                                                                 : [])
@@ -56,7 +54,10 @@ function CategorySidebar(props) {
                 : <ListSidebar
                     filterType={"category"}
                     heading={"filter by category"}
-                    items={(type === 'browse') ? stateObject.categoryFacets.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
+                    items={ (type === 'browse') 
+                            ? stateObject.categoryFacets
+                            .filter(c => c.data.count > 0)
+                            .filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
                     modFacet={addFacet} />}
         </React.Fragment>
     )
