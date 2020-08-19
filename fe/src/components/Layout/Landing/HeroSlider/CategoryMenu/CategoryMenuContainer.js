@@ -45,7 +45,8 @@ function CategoryMenuContainer(props) {
     }, []);
 
     const categories = useSelector(state => state.categories.list);
-
+    const rootCategory = findByCode(categories, 'PRM05');
+    if(!rootCategory) { return null; }
     return (
 
         <div className="hero-side-category">
@@ -56,8 +57,7 @@ function CategoryMenuContainer(props) {
             <nav className="category-menu" >
                 <CategoryMenu
                     {...props}
-                    category={findByCode(categories, 'PRM05')}
-                    displayLevel={1}
+                    category={rootCategory}
                     categories={categories || []}
                     in={stateObject.menuVisible}
                     isMobile={stateObject.isMobile} />
