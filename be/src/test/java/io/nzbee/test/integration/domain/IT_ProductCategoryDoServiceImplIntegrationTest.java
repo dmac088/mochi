@@ -9,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.category.ProductCategory;
@@ -27,6 +29,9 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     static class CategoryServiceImplIntegrationTestConfiguration {
 		
     }
+	
+	@MockBean
+    private JavaMailSender mailSender;
 	
 	@Autowired
     private ICategoryPortService categoryService;
