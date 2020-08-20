@@ -111,9 +111,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 													  new HashSet<String>(), 
 													  null);	
 
-		// then
+		// then only children
 		assertNotNull(found);
-		assertThat(found.size()).isEqualTo(12);	
+		assertThat(found.size()).isEqualTo(7);	
 	}
 	
 	@Test
@@ -130,7 +130,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		
 		// then
 		assertNotNull(found);
-		assertThat(found.size()).isEqualTo(14);		
+		assertThat(found.size()).isEqualTo(35);		
 	}
 	
 	@Test
