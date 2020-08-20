@@ -3,7 +3,6 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -143,7 +142,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    	Set<Category> lc = categoryService.findAll(Constants.localeENGB, 
     												Constants.currencyUSD, 
     												"FRT01",
     												categories,
@@ -166,7 +165,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    	Set<Category> lc = categoryService.findAll(Constants.localeENGB, 
     												Constants.currencyUSD, 
     												"FRT01", 
     												categories,
@@ -189,7 +188,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	tags.add("GFR01");
     	
     	//when
-    	List<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    	Set<Category> lc = categoryService.findAll(Constants.localeENGB, 
     												Constants.currencyUSD, 
     												"FRT01", 
     												categories,

@@ -3,7 +3,6 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -81,7 +80,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
-	public void whenFindAllWithListOfProductCodes_thenReturnRequestedCategories() {
+	public void whenFindAllWithListOfCategoryCodes_thenReturnRequestedCategories() {
 
 		Set<String> ls = new HashSet<String>();
 		ls.add("POM01");
@@ -97,16 +96,37 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	public void whenFindAllForListOfSelectedCategoryCodes_thenIgnoreSelectedCategories() {
+
+		Set<String> ls = new HashSet<String>();
+		ls.add("POM01");
+		ls.add("CIT01");
+		
+		// when
+		Set<Category> found = categoryService.findAll(Constants.localeENGB, 
+													  Constants.currencyHKD, 
+													  "FRT01", 
+													  ls, 
+													  new HashSet<String>(), 
+													  new HashSet<String>(), 
+													  null);	
+
+		// then
+		assertNotNull(found);
+		assertThat(found.size()).isEqualTo(12);	
+	}
+	
+	@Test
 	public void whenFindAllCategories_thenReturnAllCategories() {
 		
 		//when
-		List<Category> found = categoryService.findAll(		Constants.localeENGB, 
+		Set<Category> found = categoryService.findAll(		Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
 															new HashSet<String>(),
 															new HashSet<String>(), 
-															new Double(10000));
+															null);
 		
 		// then
 		assertNotNull(found);
@@ -117,7 +137,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategoriesWithNullPrice_thenReturnAllCategories() {
 		
 		//when
-		List<Category> found = categoryService.findAll(		Constants.localeENGB, 
+		Set<Category> found = categoryService.findAll(		Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
@@ -134,7 +154,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
 
 		// when
-		List<Category> found = categoryService.findAll(Constants.localeENGB, CategoryBrand.class);
+		Set<Category> found = categoryService.findAll(Constants.localeENGB, CategoryBrand.class);
 
 		// then
 		assertAllBrandCategoriesFound(found);
@@ -144,7 +164,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
 
 		// when
-		List<Category> found = categoryService.findAll(Constants.localeENGB, CategoryProduct.class);
+		Set<Category> found = categoryService.findAll(Constants.localeENGB, CategoryProduct.class);
 
 		// then
 		assertAllProductCategoriesFound(found);
@@ -244,13 +264,13 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertThat(found).size().isEqualTo(43);
 	}
 
-	private void assertAllBrandCategoriesFound(final List<Category> found) {
+	private void assertAllBrandCategoriesFound(final Set<Category> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(1);
 	}
 
-	private void assertAllProductCategoriesFound(final List<Category> found) {
+	private void assertAllProductCategoriesFound(final Set<Category> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(42);

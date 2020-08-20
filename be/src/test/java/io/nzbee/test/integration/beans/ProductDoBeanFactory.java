@@ -20,6 +20,7 @@ public class ProductDoBeanFactory {
 								   new Date(),
 								   "ACT01",
 								   "Test Product Description",
+								   "Test Product Long Description",
 								   new Double(78),
 								   new Double(71),
 								   "test_image.jpg",
