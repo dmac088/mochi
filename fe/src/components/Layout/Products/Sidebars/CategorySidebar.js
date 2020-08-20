@@ -47,6 +47,8 @@ function CategorySidebar(props) {
         return () => (isSubscribed = false);
     }, [categoryCode, categories.loading, loading]);
 
+
+    console.log(facets);
     return (
         <React.Fragment>
             {(loading || categories.loading)
@@ -57,7 +59,8 @@ function CategorySidebar(props) {
                     items={ (type === 'browse') 
                             ? stateObject.categoryFacets
                             .filter(c => c.data.count > 0)
-                            .filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
+                            .filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) 
+                            : facets}
                     modFacet={addFacet} />}
         </React.Fragment>
     )
