@@ -171,10 +171,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		}
 	
 	}
-	
-	private Category mapHelper(io.nzbee.entity.category.Category c) {
-		return categoryMapper.entityToDo(c);
-	}
 
 	@Override
 	public void update(Category domainObject) {

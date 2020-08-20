@@ -1,10 +1,7 @@
 package io.nzbee.entity;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
-import io.nzbee.entity.tag.Tag;
 
 public interface ILocalizedService<T> {
 
