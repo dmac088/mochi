@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
@@ -60,7 +61,7 @@ public class CategoryMasterService {
 	        });
 	        
 	        
-	        List<io.nzbee.entity.category.Category> lc = categoryEntityService.findAll();
+	        Set<io.nzbee.entity.category.Category> lc = categoryEntityService.findAll();
 	        lc.stream().forEach(c -> {
 	        	if(!(c.getCategoryParentCode() == null)) {
 	        		Optional<io.nzbee.entity.category.Category> opc = categoryEntityService.findByCode(c.getCategoryParentCode());
