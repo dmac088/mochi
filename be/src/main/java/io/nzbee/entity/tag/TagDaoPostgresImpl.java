@@ -70,10 +70,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 		Root<Tag> root = cq.from(Tag.class);
 		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
 				
-		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
-				root.get(Tag_.tagCode).alias("tagCode"),
-				attribute.get(TagAttribute_.tagAttributeId).alias("tagAttributeId"),
-				attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
+		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
+						root.get(Tag_.TAG_CODE).alias("tagCode"),
+						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
+						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
 		);
 		
 		cq.where(cb.and (cb.equal(attribute.get(TagAttribute_.lclCd), locale),
@@ -128,28 +128,31 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@Override
 	public Optional<Tag> findByDesc(String locale, String desc) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}, {}", locale, desc);
+		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}", locale, desc);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		
 		Root<Tag> root = cq.from(Tag.class);
 		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
-		
-
-		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
-		conditions.add(cb.equal(attribute.get(TagAttribute_.tagDesc), desc));
-		
-		TypedQuery<Tag> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
+				
+		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
+						root.get(Tag_.TAG_CODE).alias("tagCode"),
+						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
+						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
 		);
 		
+		cq.where(cb.and (cb.equal(attribute.get(TagAttribute_.LCL_CD), locale),
+				cb.equal(attribute.get(TagAttribute_.TAG_DESC), desc)));
+		
+		
+		TypedQuery<Tuple> query = em.createQuery(cq);
+		
 		try {
-			Tag tag = query.getSingleResult();
-			return Optional.ofNullable(tag);
+			
+			Tuple tuple = query.getSingleResult();
+			return Optional.ofNullable(this.objectToEntity(tuple, locale));
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -173,10 +176,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 		Predicate fp = p1; //final predicate
 		
 
-		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
-						root.get(Tag_.tagCode).alias("tagCode"),
-						attribute.get(TagAttribute_.tagAttributeId).alias("tagAttributeId"),
-						attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
+		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
+						root.get(Tag_.TAG_CODE).alias("tagCode"),
+						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
+						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
 		);
 		
 		
@@ -219,10 +222,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 		Root<Tag> root = cq.from(Tag.class);
 		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
 	
-		cq.multiselect(	root.get(Tag_.tagId).alias("tagId"),
-						root.get(Tag_.tagCode).alias("tagCode"),
-						attribute.get(TagAttribute_.tagAttributeId).alias("tagAttributeId"),
-						attribute.get(TagAttribute_.tagDesc).alias("tagDesc")
+		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
+						root.get(Tag_.TAG_CODE).alias("tagCode"),
+						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
+						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
 		);
 		
 		cq.where(cb.equal(attribute.get(TagAttribute_.lclCd), locale));

@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 import io.nzbee.domain.product.Product;
 import io.nzbee.search.facet.IFacet;
 
-public interface IProductPortService extends IProductDimensionService<Product> {
+public interface IProductPortService extends IPortService<Product> {
 
 	Set<Product> findAll(String locale, String currency);
 
