@@ -13,9 +13,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import; 
 import org.springframework.http.MediaType;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
@@ -50,8 +51,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     CategoryMapperImpl.class,
 							     CategoryProductMapperImpl.class,
 							     CategoryBrandMapperImpl.class,
-							     CategoryResourceAssembler.class,
-							     PagedResourcesAssembler.class,
+							     CategoryResourceAssembler.class,  
 							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
@@ -66,6 +66,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Import(WebSecurityConfig.class)
 @ActiveProfiles(profiles = "tst")
 public class IT_CategoryControllerIntegrationTest {
+	
+	@MockBean
+    private JavaMailSender mailSender;
 	
     @Autowired
     private MockMvc mockMvc;

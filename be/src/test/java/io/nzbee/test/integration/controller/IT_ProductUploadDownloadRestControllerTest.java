@@ -36,7 +36,7 @@ import io.nzbee.util.FileController;
 @WebMvcTest(FileController.class)
 @Import(WebSecurityConfig.class)
 @ActiveProfiles(profiles = "tst")
-public class IT_FoodUploadDownloadRestControllerTest {
+public class IT_ProductUploadDownloadRestControllerTest {
 
 	private InputStream is;
 	
