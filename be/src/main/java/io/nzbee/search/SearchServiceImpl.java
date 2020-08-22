@@ -1,9 +1,6 @@
 package io.nzbee.search;
 
 import java.util.Date;
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
