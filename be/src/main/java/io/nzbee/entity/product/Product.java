@@ -56,6 +56,8 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
@@ -72,7 +74,7 @@ import io.nzbee.entity.tag.Tag;
 @Table(name = "product", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="dept_id")
-@AnalyzerDef(name = "en-GB",
+@AnalyzerDef(name = Constants.localeENGB,
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
   @TokenFilterDef(factory = LowerCaseFilterFactory.class),
@@ -81,7 +83,7 @@ filters = {
 	      @Parameter(name = "language", value = "English")
   })
 })
-@AnalyzerDef(name = "zh-HK",
+@AnalyzerDef(name = Constants.localeZHHK,
 tokenizer = @TokenizerDef(factory = StandardTokenizerFactory.class),
 filters = {
   @TokenFilterDef(factory = CJKWidthFilterFactory.class),
@@ -470,28 +472,50 @@ public abstract class Product {
 	
 	@Transient
 	@Fields({
-			  @Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB")),
+			  @Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeENGB)),
 			  @Field(name = "edgeNGramTitleENGB", index = Index.YES, store = Store.NO,
 			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerENGB")),
 			  @Field(name = "nGramTitleENGB", index = Index.YES, store = Store.NO,
 			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzerENGB"))
 	})
 	public String getProductDescENGB() {
-		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
 		return (pa.isPresent()) ? pa.get().getProductDesc() : "Not Applicable"; 
 	}
 	
 	@Transient
 	@Fields({
-		@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK")),
+		@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeZHHK)),
 		@Field(name = "edgeNGramTitleZHHK", index = Index.YES, store = Store.NO,
 			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerZHHK")),
 		@Field(name = "nGramTitleZHHK", index = Index.YES, store = Store.NO,
 			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteNGramAnalyzerZHHK"))
 	})
 	public String getProductDescZHHK() {
-		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		return (pa.isPresent()) ? pa.get().getProductDesc() : "Not Applicable"; 
+	}
+	
+	@Transient
+	@Fields({
+		@Field(	analyze = Analyze.YES, 
+				store=Store.YES, 
+				analyzer = @Analyzer(definition = Constants.localeENGB))
+	})
+	public String getProductLongDescENGB() {
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
+		return (pa.isPresent()) ? pa.get().getProductLongDesc() : "Not Applicable"; 
+	}
+	
+	@Transient
+	@Fields({
+		@Field(	analyze = Analyze.YES, 
+				store=Store.YES, 
+				analyzer = @Analyzer(definition = Constants.localeZHHK))
+	})
+	public String getProductLongDescZHHK() {
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
+		return (pa.isPresent()) ? pa.get().getProductLongDesc() : "Not Applicable"; 
 	}
 	
 	@Field(analyze=Analyze.YES, normalizer = @Normalizer(definition = "sortNormalizer"))
@@ -508,13 +532,13 @@ public abstract class Product {
 	
 	@Field(analyze=Analyze.NO, store=Store.YES)
 	public String getProductImageENGB() {
-		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
 		return (pa.isPresent()) ? pa.get().getProductImage() : "unknown.jpg";
 	}
 	
 	@Field(analyze=Analyze.NO, store=Store.YES)
 	public String getProductImageZHHK() {
-		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		return (pa.isPresent()) ? pa.get().getProductImage() : "unknown.jpg";
 	}
 	
