@@ -44,8 +44,11 @@ function Product(props) {
     }
 
     const discovery = useSelector(state => state.discovery);
+
+
     const retrieveProduct = (id) => {
-        const url = discovery.links.getproduct.data.href.replace('{code}', id);
+        console.log(discovery);
+        const url = discovery.links.getProduct.href.replace('{code}', id);
         axios.get(url)
              .then((response) => {
                  setObjectState((prevState) => ({
