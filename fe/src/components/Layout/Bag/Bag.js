@@ -7,7 +7,6 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 function Bag() {
 
     const bag = useSelector(state => state.bag);
-    const images = require.context('../../../assets/images/products', true);
     const dispatch = useDispatch();
 
     const removeItem = (e) => {
@@ -22,7 +21,7 @@ function Bag() {
               <tr key={index}>
                 <td className="pro-thumbnail">
                   <a id={product.data.productUPC} href="#" onClick={(e) => console.log(e)}>
-                    <img src={images(`./${product.data.productImage}`)} className="img-fluid" alt="Product" />
+                    <img src={product._links.defaultImage.href} className="img-fluid" alt="Product" />
                   </a>
                 </td> 
                 <td className="pro-title">

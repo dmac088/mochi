@@ -5,7 +5,7 @@ import { settings } from './Helper';
 function QuickViewProduct(props) {
 
   const { toggleQuickView, product } = props;
-  
+
   const closeModal = (e) => {
     toggleQuickView(e);
   }
@@ -13,7 +13,7 @@ function QuickViewProduct(props) {
   const changeImage = () => {
     console.log('changeImage');
   }
-
+  
   return (
     <div className={"modal fade quick-view-modal-container show"}
       id={"modal-" + product.data.productUPC}
