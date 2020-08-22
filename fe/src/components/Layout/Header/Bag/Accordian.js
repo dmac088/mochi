@@ -7,10 +7,9 @@ import * as bagService from '../../../../services/Bag/index';
 const $ = window.$;
 
 function Accordion(props) {
-  const { match, bag } = props;
+  const { match, bag, product} = props;
   const { lang } = match.params;
 
-  const images = require.context('../../../../assets/images/products', true);
   const dispatch = useDispatch();
 
   const removeItem = (e) => {
@@ -24,7 +23,7 @@ function Accordion(props) {
         <div key={index} className="cart-float-single-item d-flex">
           <span className="remove-item"><a onClick={removeItem} href="#"><i id={item.data.productUPC} className="fa fa-times"></i></a></span>
           <div className="cart-float-single-item-image">
-            <a href="single-product.html"><img src={images(`./${item.data.productImage}`)} className="img-fluid" alt="" /></a>
+            <a href="single-product.html"><img src={item._links.defaultImage.href} className="img-fluid" alt="" /></a>
           </div>
           <div className="cart-float-single-item-desc">
             <p className="product-title"> <a href="single-product.html">{item.data.productDesc} </a></p>
