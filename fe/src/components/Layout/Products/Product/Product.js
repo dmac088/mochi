@@ -7,7 +7,7 @@ import * as bagService from "../../../../services/Bag/index";
 function Product(props) {
     const { match } = props;
     const { productCode, lang, curr } = match.params;
-    const images = require.context('../../../../assets/images/products', true);
+    
     const dispatch = useDispatch();
 
     const [stateObject, setObjectState] = useState({
@@ -45,13 +45,13 @@ function Product(props) {
 
     const discovery = useSelector(state => state.discovery);
     const retrieveProduct = (id) => {
-        const url = discovery.links.getProduct.href.replace('{code}', id);
+        const url = discovery.links.getproduct.data.href.replace('{code}', id);
         axios.get(url)
              .then((response) => {
                  setObjectState((prevState) => ({
                      ...prevState,
                      product: (response.data) 
-                              ? response.data.data
+                              ? response.data
                               : {},
                      loading: false,
                  }));
@@ -96,7 +96,7 @@ function Product(props) {
                                                 id="single-slide-tab-1"
                                                 href="#single-slide1">
                                                 <img
-                                                    src={images(`./${product.productImage}`)}
+                                                    src={product._links.defaultImage.href}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -108,7 +108,7 @@ function Product(props) {
                                                 id="single-slide-tab-2"
                                                 href="#single-slide2">
                                                 <img
-                                                    src={images(`./${product.productImage}`)}
+                                                    src={product._links.defaultImage.href}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -121,7 +121,7 @@ function Product(props) {
                                                 href="#single-slide3"
                                             >
                                                 <img 
-                                                    src={images(`./${product.productImage}`)}
+                                                    src={product._links.defaultImage.href}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -134,7 +134,7 @@ function Product(props) {
                                                 href="#single-slide4"
                                             >
                                                 <img
-                                                    src={images(`./${product.productImage}`)}
+                                                    src={product._links.defaultImage.href}
                                                     className="img-fluid"
                                                     alt=""
                                                 />
@@ -151,7 +151,7 @@ function Product(props) {
                                     >
                                         <div className="single-product-img easyzoom img-full">
                                             <img
-                                                src={images(`./${product.productImage}`)}
+                                                src={product._links.defaultImage.href}
                                                 className="img-fluid"
                                                 alt=""
                                             />
@@ -171,7 +171,7 @@ function Product(props) {
                                     >
                                         <div className="single-product-img easyzoom img-full">
                                             <img
-                                                src={images(`./${product.productImage}`)}
+                                                src={product._links.defaultImage.href}
                                                 className="img-fluid"
                                                 alt=""
                                             />
@@ -189,11 +189,11 @@ function Product(props) {
                                         aria-labelledby="single-slide-tab-3">
                                         <div className="single-product-img easyzoom img-full">
                                             <img
-                                                src={images(`./${product.productImage}`)}
+                                                src={product._links.defaultImage.href}
                                                 className="img-fluid"
                                                 alt="" />
                                             <a
-                                                href={images(`./${product.productImage}`)}
+                                                href={product._links.defaultImage.href}
                                                 className="big-image-popup">
                                                 <i className="fa fa-search-plus" />
                                             </a>
@@ -207,12 +207,12 @@ function Product(props) {
                                     >
                                         <div className="single-product-img easyzoom img-full">
                                             <img
-                                                src={images(`./${product.productImage}`)}
+                                                src={product._links.defaultImage.href}
                                                 className="img-fluid"
                                                 alt=""
                                             />
                                             <a
-                                                href={images(`./${product.productImage}`)}
+                                                href={product._links.defaultImage.href}
                                                 className="big-image-popup"
                                             >
                                                 <i className="fa fa-search-plus" />
@@ -225,16 +225,16 @@ function Product(props) {
                         <div className="col-lg-6 col-md-12 col-xs-12">
                             <div className="product-feature-details">
                                 <h2 className="product-title mb-15">
-                                    {product.productDesc}
+                                    {product.data.productDesc}
                                 </h2>
 
                                 <h2 className="product-price mb-15">
-                                    <span className="main-price">{product.productRetail}</span>
-                                    <span className="discounted-price"> {product.productMarkdown}</span>
+                                    <span className="main-price">{product.data.productRetail}</span>
+                                    <span className="discounted-price"> {product.data.productMarkdown}</span>
                                 </h2>
 
                                 <p className="product-description mb-20">
-                                    {product.productLongDesc}
+                                    {product.data.productLongDesc}
 	                            </p>
 
                                 <div className="cart-buttons mb-20">
