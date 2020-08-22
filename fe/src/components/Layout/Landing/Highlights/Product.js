@@ -6,10 +6,8 @@ import { useDispatch } from 'react-redux';
 
 
 function Product(props) {
-  const { match, category, toggleQuickView } = props;
-  const { data } = props.product;
-
-  const images = require.context('../../../../assets/images/products', true);
+  const { match, category, toggleQuickView, product } = props;
+  
   const dispatch = useDispatch();
 
   const addToBag = (e) => {
@@ -23,31 +21,31 @@ function Product(props) {
   return (
     <div className="gf-product tab-slider-sub-product">
       <div className="image">
-        <Link to={`${getCategoryProductPath(match, data.productUPC, category.data.categoryCode)}`}>
+        <Link to={`${getCategoryProductPath(match, product.data.productUPC, category.data.categoryCode)}`}>
           {/* <span className="onsale">Sale!</span> */}
-          <img src={images(`./${data.productImage}`)} className="img-fluid" />
+          <img src={product._links.defaultImage.href} alt="Image not found" className="img-fluid" />
         </Link>
         <div className="product-hover-icons">
-          <a id={data.productUPC} href="#" className="active" onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={data.productUPC} className="icon_cart_alt" /></a>
+          <a id={product.data.productUPC} href="#" className="active" onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={product.data.productUPC} className="icon_cart_alt" /></a>
           {/* <a id="#test" href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a> */}
-          <a id="#test" href="#" onClick={(e) => toggleQuickView(e, data)} data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-"} >
+          <a id="#test" href="#" onClick={(e) => toggleQuickView(e, product.data)} data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-"} >
             <span className="icon_search" />
           </a>
         </div>
       </div>
       <div className="product-content">
         <div className="product-categories">
-          <a id="#test" href="#">{data.primaryCategory.categoryDesc}</a>,<span> </span>
-          <a id="#test" href="#">{data.brand.brandDesc}</a>
+          <a id="#test" href="#">{product.data.primaryCategory.categoryDesc}</a>,<span> </span>
+          <a id="#test" href="#">{product.data.brand.brandDesc}</a>
         </div>
         <h3 className="product-title">
           <a id="#test" href="#">
-            {data.productDesc}
+            {product.data.productDesc}
           </a>
         </h3>
         <div className="price-box">
-          <span className="main-price">{data.productRetail}</span>
-          <span className="discounted-price">{data.productMarkdown}</span>
+          <span className="main-price">{product.data.productRetail}</span>
+          <span className="discounted-price">{product.data.productMarkdown}</span>
         </div>
       </div>
     </div>

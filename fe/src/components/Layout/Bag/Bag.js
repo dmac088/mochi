@@ -17,6 +17,7 @@ function Bag() {
 
     const renderCartProducts = (items) => {
         return items.map((product, index) => {
+            console.log(product);
             return(
               <tr key={index}>
                 <td className="pro-thumbnail">
