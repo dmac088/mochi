@@ -503,7 +503,7 @@ public class SearchServiceImpl implements ISearchService {
 
 		ProductAttribute pa = new ProductAttribute();
 		pa.setProductDesc(r[2].toString());
-		pa.setProductLongDesc(r[19].toString());
+		pa.setProductLongDesc((!(r[19] == null)) ? r[19].toString() : "");
 		pa.setProductImage(r[3].toString());
 		pa.setLclCd(locale);
 
