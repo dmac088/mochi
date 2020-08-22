@@ -5,8 +5,7 @@ import { settings } from './Helper';
 function QuickViewProduct(props) {
 
   const { toggleQuickView, product } = props;
-  const images = require.context('../../../../assets/images/products', true);
-
+  
   const closeModal = (e) => {
     toggleQuickView(e);
   }
@@ -17,7 +16,7 @@ function QuickViewProduct(props) {
 
   return (
     <div className={"modal fade quick-view-modal-container show"}
-      id={"modal-" + product.productUPC}
+      id={"modal-" + product.data.productUPC}
       tabIndex="-1"
       role="dialog"
       style={{
@@ -39,7 +38,7 @@ function QuickViewProduct(props) {
                   <div className="tab-content product-large-image-list" id="myTabContent">
                     <div className="tab-pane fade show active" id="single-slide1" role="tabpanel" aria-labelledby="single-slide-tab-1">
                       <div className="single-product-img img-full">
-                        <img src={images(`./${product.productImage}`)}
+                        <img src={product._links.defaultImage.href}
                           className="img-fluid"
                           alt=""
                         />
@@ -47,7 +46,7 @@ function QuickViewProduct(props) {
                     </div>
                     <div className="tab-pane fade" id="single-slide2" role="tabpanel" aria-labelledby="single-slide-tab-2">
                       <div className="single-product-img img-full">
-                        <img src={images(`./${product.productImage}`)}
+                        <img src={product._links.defaultImage.href}
                           className="img-fluid"
                           alt=""
                         />
@@ -55,7 +54,7 @@ function QuickViewProduct(props) {
                     </div>
                     <div className="tab-pane fade" id="single-slide3" role="tabpanel" aria-labelledby="single-slide-tab-3">
                       <div className="single-product-img img-full">
-                        <img src={images(`./${product.productImage}`)}
+                        <img src={product._links.defaultImage.href}
                           className="img-fluid"
                           alt=""
                         />
@@ -63,7 +62,7 @@ function QuickViewProduct(props) {
                     </div>
                     <div className="tab-pane fade" id="single-slide4" role="tabpanel" aria-labelledby="single-slide-tab-4">
                       <div className="single-product-img img-full">
-                        <img src={images(`./${product.productImage}`)}
+                        <img src={product._links.defaultImage.href}
                           className="img-fluid"
                           alt=""
                         />
@@ -74,34 +73,34 @@ function QuickViewProduct(props) {
                     <Slider role="tablist" className="nav small-image-slider" {...settings}>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-1" href="#single-slide1">
-                          <img src={images(`./${product.productImage}`)}
+                          <img src={product._links.defaultImage.href}
                             className="img-fluid"
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
-                          <img src={images(`./${product.productImage}`)}
+                          <img src={product._links.defaultImage.href}
                             className="img-fluid"
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-3" href="#single-slide3">
-                          <img src={images(`./${product.productImage}`)}
+                          <img src={product._links.defaultImage.href}
                             className="img-fluid"
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-4" href="#single-slide4">
-                          <img src={images(`./${product.productImage}`)}
+                          <img src={product._links.defaultImage.href}
                             alt="" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
-                          <img src={images(`./${product.productImage}`)}
+                          <img src={product._links.defaultImage.href}
                             className="img-fluid"
                             alt="" />
                         </a>
@@ -112,13 +111,13 @@ function QuickViewProduct(props) {
               </div>
               <div className="col-lg-7 col-md-6 col-xs-12">
                 <div className="product-feature-details">
-                  <h2 className="product-title mb-15">{product.productDesc}</h2>
+                  <h2 className="product-title mb-15">{product.data.productDesc}</h2>
                   <h2 className="product-price mb-15">
-                    <span className="main-price">${product.productRetail}</span>
-                    <span className="discounted-price"> ${product.productMarkdown}</span>
+                    <span className="main-price">${product.data.productRetail}</span>
+                    <span className="discounted-price"> ${product.data.productMarkdown}</span>
                   </h2>
                   <p className="product-description mb-20">
-                    {product.productLongDesc}
+                    {product.data.productLongDesc}
                   </p>
                   <div className="cart-buttons mb-20">
                     <div className="pro-qty mr-10">
