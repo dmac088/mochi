@@ -1,6 +1,9 @@
 package io.nzbee.search;
 
 import java.util.Date;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -308,7 +311,9 @@ public class SearchServiceImpl implements ISearchService {
 
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
 														 .buildQueryBuilder()
-														 .forEntity(Product.class).overridesForField("productDesc", lcl)
+														 .forEntity(Product.class)
+														 .overridesForField("productDesc", lcl)
+														 .overridesForField("productLongDesc", lcl)
 														 .overridesForField("product.brand.brandDesc", lcl)
 														 .overridesForField("product.categories.categoryDesc", lcl)
 														 .overridesForField("product.categories.parent.categoryDesc", lcl)
@@ -319,7 +324,8 @@ public class SearchServiceImpl implements ISearchService {
 
 		// this is a Lucene query using the Lucene api
 		Query searchQuery = queryBuilder.bool()
-				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl, 
+				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl,
+														"productLongDesc" + transLcl, 
 														"product.brand.brandDesc" + transLcl,
 														"product.categories.categoryDesc" + transLcl,
 														"product.categories.parent.categoryDesc" + transLcl,
@@ -469,7 +475,7 @@ public class SearchServiceImpl implements ISearchService {
 
 	private void setProductProjection(FullTextQuery jpaQuery, String locale, String currency) {
 		String transLcl = cleanLocale(locale);
-		jpaQuery.setProjection("Id", 
+		jpaQuery.setProjection(	"Id", 
 								"productId", 
 								"productDesc" + transLcl, 
 								"productImage" + transLcl, 
@@ -484,19 +490,20 @@ public class SearchServiceImpl implements ISearchService {
 								"displayCategories" + transLcl, 
 								"product.department.departmentCode",
 								"product.department.departmentDesc" + transLcl, 
-								//"countryOfOrigin",
 								"product.primarycategory.categoryCode", 
 								"product.primarycategory.categoryDesc" + transLcl,
 								"product.status.productStatusCode", 
-								"product.status.productStatusDesc");
+								"product.status.productStatusDesc",
+								"productLongDesc" + transLcl);
 	}
 
 	private Product mapResultToEntity(Object[] r, String locale, String currency) {
-
+		
 		Product p = new Accessories();
 
 		ProductAttribute pa = new ProductAttribute();
 		pa.setProductDesc(r[2].toString());
+		pa.setProductLongDesc(r[19].toString());
 		pa.setProductImage(r[3].toString());
 		pa.setLclCd(locale);
 

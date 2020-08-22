@@ -103,7 +103,7 @@ function Products(props) {
             axios.post(
                 (type === 'browse') 
                 ? currentCategory._links.products.href
-                : discovery.links.searchProduct.href.replace('{category}', 'PRM01').replace('{q}', query.q),
+                : discovery.links.searchProduct.href.replace('{category}', 'PRM05').replace('{q}', query.q),
                 stateObject.selectedFacets.map(f => f.data) )
                 .then((response) => {
                     if (isSubscribed) {
