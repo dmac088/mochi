@@ -40,7 +40,7 @@ function QuickViewProduct(props) {
                       <div className="single-product-img img-full">
                         <img src={product._links.defaultImage.href}
                           className="img-fluid"
-                          alt=""
+                          alt="Image not found"
                         />
                       </div>
                     </div>
@@ -48,7 +48,7 @@ function QuickViewProduct(props) {
                       <div className="single-product-img img-full">
                         <img src={product._links.defaultImage.href}
                           className="img-fluid"
-                          alt=""
+                          alt="Image not found"
                         />
                       </div>
                     </div>
@@ -56,7 +56,7 @@ function QuickViewProduct(props) {
                       <div className="single-product-img img-full">
                         <img src={product._links.defaultImage.href}
                           className="img-fluid"
-                          alt=""
+                          alt="Image not found"
                         />
                       </div>
                     </div>
@@ -64,7 +64,7 @@ function QuickViewProduct(props) {
                       <div className="single-product-img img-full">
                         <img src={product._links.defaultImage.href}
                           className="img-fluid"
-                          alt=""
+                          alt="Image not found"
                         />
                       </div>
                     </div>
@@ -75,34 +75,34 @@ function QuickViewProduct(props) {
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-1" href="#single-slide1">
                           <img src={product._links.defaultImage.href}
                             className="img-fluid"
-                            alt="" />
+                            alt="Image not found" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
                           <img src={product._links.defaultImage.href}
                             className="img-fluid"
-                            alt="" />
+                            alt="Image not found" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-3" href="#single-slide3">
                           <img src={product._links.defaultImage.href}
                             className="img-fluid"
-                            alt="" />
+                            alt="Image not found" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-4" href="#single-slide4">
                           <img src={product._links.defaultImage.href}
-                            alt="" />
+                            alt="Image not found" />
                         </a>
                       </div>
                       <div className="single-small-image img-full">
                         <a onClick={changeImage} data-toggle="tab" id="single-slide-tab-2" href="#single-slide2">
                           <img src={product._links.defaultImage.href}
                             className="img-fluid"
-                            alt="" />
+                            alt="Image not found" />
                         </a>
                       </div>
                     </Slider>
