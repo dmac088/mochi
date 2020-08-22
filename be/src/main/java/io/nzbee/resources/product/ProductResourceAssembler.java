@@ -7,16 +7,12 @@ import org.springframework.hateoas.Link;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import io.nzbee.Globals;
 import io.nzbee.domain.product.Product;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
 
 @Component
 public class ProductResourceAssembler extends RepresentationModelAssemblerSupport<Product, ProductResource> {
-//
-//	@Autowired
-//	private Globals globalVars;
 	
 	public ProductResourceAssembler() {
 		super(ProductController.class, ProductResource.class);
