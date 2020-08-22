@@ -1,6 +1,9 @@
 package io.nzbee.resources.product;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import java.io.IOException;
+
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.product.Product;
@@ -26,7 +29,16 @@ public class ProductResourceAssembler extends RepresentationModelAssemblerSuppor
         	   linkTo(methodOn(CategoryController.class).getCategories(product.getLclCd(), 
 												                		product.getProductUPC()
         												)).withRel("categories"));
-        return pr;
+        
+        
+ 	   try {
+ 		   pr.add(linkTo(methodOn(ProductController.class).getImageWithMediaType(null
+															)).withRel("images"));
+ 	   } catch (IOException e) {
+ 		   // TODO Auto-generated catch block
+ 		   e.printStackTrace();
+ 	   }
+       return pr;
     }
     
 }
