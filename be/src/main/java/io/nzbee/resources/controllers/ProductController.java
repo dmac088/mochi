@@ -148,11 +148,18 @@ public class ProductController {
 			  value = "/Product/Image/{imageFileName}",
 			  produces = MediaType.IMAGE_JPEG_VALUE
 			)
-			public @ResponseBody byte[] getImageWithMediaType(@PathVariable String imageFileName) throws IOException {
+			public @ResponseBody ResponseEntity<byte[]> getImageWithMediaType(@PathVariable String imageFileName) {
 				LOGGER.debug("call ProductController.getImageWithMediaType with parameter {}", imageFileName);
-			    InputStream in = getClass()
-			      .getResourceAsStream("/public/images/" + imageFileName);
-			    return IOUtils.toByteArray(in);
+			    InputStream in = getClass().getResourceAsStream("/public/images/" + imageFileName);
+			    try {
+			    	if(!(in == null)) {
+			    		return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), HttpStatus.OK);
+			    	} 
+			    	return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			    return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 			}
-    
 }
