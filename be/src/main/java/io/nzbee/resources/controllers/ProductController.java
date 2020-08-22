@@ -1,8 +1,12 @@
 package io.nzbee.resources.controllers;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +15,7 @@ import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -18,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
@@ -138,5 +144,16 @@ public class ProductController {
 		
 		return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
 	}
+	
+	@GetMapping(
+			  value = "/Product/Image/{imageFileName}",
+			  produces = MediaType.IMAGE_JPEG_VALUE
+			)
+			public @ResponseBody byte[] getImageWithMediaType(@PathVariable String imageFileName) throws IOException {
+				LOGGER.debug("call ProductController.getImageWithMediaType with parameter {}", imageFileName);
+			    InputStream in = getClass()
+			      .getResourceAsStream("/public/images/" + imageFileName);
+			    return IOUtils.toByteArray(in);
+			}
     
 }
