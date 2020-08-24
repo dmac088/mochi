@@ -80,8 +80,6 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 	    	
    	    //persist a new transient test category
    	    entityManager.persist(customer);
-   	    entityManager.flush();
-   	    entityManager.close();
    
     }
 	

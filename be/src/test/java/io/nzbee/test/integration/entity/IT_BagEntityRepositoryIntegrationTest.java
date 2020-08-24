@@ -1,6 +1,7 @@
 package io.nzbee.test.integration.entity;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -13,16 +14,19 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
-import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
+import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.IBagService;
+import io.nzbee.entity.party.person.IPersonService;
+import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.role.customer.Customer;
+import io.nzbee.test.integration.beans.BagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -46,12 +50,15 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private CategoryEntityBeanFactory categoryEntityBeanFactory;
+	private BagEntityBeanFactory bagEntityBeanFactory;
  
     @Autowired
-    private IBagService categoryService;
+    private IBagService bagService;
+    
+	@Autowired
+    private IPersonService personService;
  
-	private io.nzbee.entity.category.Category category = null;
+	private Bag bag = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -61,62 +68,33 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	this.persistNewCategory();
     }
     
-	public io.nzbee.entity.category.Category persistNewCategory() {
+	public Bag persistNewCategory() {
+		
+		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
     	
-		category = categoryEntityBeanFactory.getBrandCategoryEntityBean();
+		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    	
 	    //persist a new transient test category
-	    entityManager.persist(category);
-	    entityManager.flush();
+	    entityManager.persist(bag);
 	    
-	    return category;
+	    return bag;
 	}
    
     
     @Test
-    public void whenFindById_thenReturnBrandCategory() {
+	@WithUserDetails(value = "admin")
+    public void whenFindById_thenReturnBag() {
     	
         // when
-    	Category found = categoryService.findById(Constants.localeENGB, 
-												  category.getCategoryId()).get();
+    	Bag found = bagService.findById(bag.getBagId()).get();
      
         // then
     	assertFound(found);
     }
+ 
     
-    // write test cases here
-    @Test
-    public void whenFindByCode_thenReturnBrandCategory() {
-    	
-        // when
-    	Category found = categoryService.findByCode(Constants.localeENGB, 
-				 									"TST02").get();
-     
-        // then
-    	assertFound(found);
-    }
-    
- // write test cases here
-    @Test
-    public void whenFindByDesc_thenReturnBrandCategory() {
-    	
-        // when
-    	Category found = categoryService.findByDesc(Constants.localeENGB, 
-				 									"test brand category").get();
-     
-        //then
-    	assertFound(found);
-    }
-    
-    private void assertFound(final Category found) {
-    	assertThat(found.getCategoryCode())
-        .isEqualTo("TST02");
-	    assertThat(found.getCategoryLevel())
-	    .isEqualTo(new Long(2));
-	    assertThat(found.getCategoryType().getCategoryTypeCode())
-	    .isEqualTo("BND01");
-	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc())
-	    .isEqualTo("test brand category");
+    private void assertFound(final Bag found) {
+    	assertNotNull(bag);
     }
     
     @After
