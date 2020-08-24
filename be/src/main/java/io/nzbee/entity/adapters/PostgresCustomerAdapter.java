@@ -16,17 +16,23 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
+import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.Product;
 import io.nzbee.entity.role.IRoleTypeRepository;
 import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
 import io.nzbee.exceptions.customer.CustomerNotFoundException;
 import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
+import io.nzbee.exceptions.product.ProductException;
 import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.IUserService;
 import io.nzbee.security.user.User;
@@ -52,6 +58,12 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	
 	@Autowired
     private IUserService userService;
+	
+	@Autowired
+    private IBagService bagService;
+	
+	@Autowired
+    private IProductService productService;
 	
 	@Autowired
     private VerificationTokenRepository tokenRepository;
@@ -110,8 +122,8 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		p.setFamilyName(domainObject.getFamilyName());
 		p.setEnabled(domainObject.isEnabled());
 		
-		p.setPartyUser(u);
-		u.setUserParty(p);
+		p.setUser(u);
+		u.setParty(p);
 		p.addRole(c);
 		c.setRoleParty(p);
 		
@@ -142,10 +154,10 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	public void update(CustomerDTO dto) {
 		Customer customerDo = new Customer(	dto.getGivenName(),
-				dto.getFamilyName(),
-				dto.getUserName(),
-				dto.getCustomerId(),
-				dto.isEnabled());
+											dto.getFamilyName(),
+											dto.getUserName(),
+											dto.getCustomerId(),
+											dto.isEnabled());
 
 		customerDo.setPassword(dto.getPassword(), dto.getConfirmPassword());
 		
@@ -214,4 +226,36 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
         Authentication authentication = new UsernamePasswordAuthenticationToken(user, null, authorities);
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
+
+	@Override
+	public void addItemToBag(Customer c, BagItem bagItem) {
+		
+		//get the party of the bag, which will be a person
+		Person t = personService.findByUsernameAndRole(c.getUserName(), io.nzbee.entity.role.customer.Customer.class)
+					.orElseThrow(() -> new CustomerException("Customer with username " + c.getUserName() + " not found!"));
+		
+		
+		//get the product of the item the customer wishes to add
+		String upc = bagItem.getProduct().getProductUPC();
+		Product p = productService.findByCode(upc)
+					.orElseThrow(() -> new ProductException("Customer with UPC " + upc + " not found!"));
+		
+		
+		//get the bag of the person
+		Optional<Bag> ob = bagService.findByUsername(c.getUserName());
+		
+		Bag b = (ob.isPresent()) 
+				? ob.get()
+				: new Bag();
+		
+		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem(p);
+		bi.setQuantity(bagItem.getQty());
+		b.addItem(bi);
+		
+		//set the bag / party relationship
+		t.setBag(b);
+		b.setParty(t);
+				
+		bagService.save(b);
+	}
 }

@@ -8,9 +8,7 @@ import io.nzbee.domain.product.Product;
 public class Bag {
 	
 	private Set<BagItem> bagItems;
-	
 	private BagStatus bagStatus;
-	
 	private Customer customer;
 
 	public Bag(Customer customer) {

@@ -13,10 +13,10 @@ public class PersonMapper implements IPersonMapper {
 		= new Customer(
 			e.getGivenName(),
 			e.getFamilyName(),
-			e.getPartyUser().getUsername(),
+			e.getUser().getUsername(),
 			((io.nzbee.entity.role.customer.Customer) 
 				e.getPartyRoles().stream().filter(r -> r.getRoleType().getRoleTypeDesc().equals(Customer.class.getSimpleName())).findFirst().get()).getCustomerNumber(),
-			e.getPartyUser().isEnabled()
+			e.getUser().isEnabled()
 		);		
 		return co;	
 	}

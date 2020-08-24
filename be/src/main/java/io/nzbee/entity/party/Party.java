@@ -83,11 +83,11 @@ public abstract class Party {
 		this.partyId = partyId;
 	}
 	
-	public User getPartyUser() {
+	public User getUser() {
 		return partyUser;
 	}
 
-	public void setPartyUser(User partyUser) {
+	public void setUser(User partyUser) {
 		this.partyUser = partyUser;
 	}
 
@@ -123,7 +123,7 @@ public abstract class Party {
 	
 	public void addUser(User user) {
 		this.partyUser = user;
-		user.setUserParty(this);
+		user.setParty(this);
 	}
 
 	public Bag getBag() {

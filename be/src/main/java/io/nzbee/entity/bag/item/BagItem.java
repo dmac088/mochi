@@ -32,7 +32,7 @@ public class BagItem {
 	private Product product;
 	
 	@Column(name="qty")
-	private double quantity;
+	private int quantity;
 	
 	public Long getBagItemId() {
 		return bagItemId;
@@ -42,11 +42,11 @@ public class BagItem {
 		this.product = p;
 	}
 	
-	public double getQuantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(double quantity) {
+	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
 

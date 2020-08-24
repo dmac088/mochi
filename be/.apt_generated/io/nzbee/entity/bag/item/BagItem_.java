@@ -11,7 +11,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class BagItem_ {
 
 	public static volatile SingularAttribute<BagItem, Product> product;
-	public static volatile SingularAttribute<BagItem, Double> quantity;
+	public static volatile SingularAttribute<BagItem, Integer> quantity;
 	public static volatile SingularAttribute<BagItem, Bag> bag;
 	public static volatile SingularAttribute<BagItem, Long> bagItemId;
 
