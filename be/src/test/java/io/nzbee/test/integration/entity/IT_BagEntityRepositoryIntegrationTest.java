@@ -2,6 +2,8 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -101,6 +103,16 @@ public class IT_BagEntityRepositoryIntegrationTest {
      
         // then
     	assertFound(found);
+    }
+    
+    @Test
+	@WithUserDetails(value = "admin")
+    public void thenFindByUsername_thenReturnBag() {
+    	
+    	Optional<Bag> found = bagService.findByUsername("dmac088");
+    	
+    	assertTrue(found.isPresent());
+    	assertFound(found.get());
     }
  
     

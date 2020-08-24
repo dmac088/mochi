@@ -5,7 +5,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IBagRepository extends CrudRepository<Bag, Long> {
 
-	Optional<Bag> findByPartyUserUsername(String userName);
+	Optional<Bag> findByPartyPartyUserUsername(String userName);
 	
 }
 
