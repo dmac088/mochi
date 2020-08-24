@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
@@ -28,6 +31,9 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
+    
+    @Autowired
+    private IBagService bagService;
     
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -59,8 +65,13 @@ public class CustomerController {
     }
     
     @GetMapping("/Customer/UserName/{username}")
-	public Customer getCustomer(@PathVariable String username) {
+	public Customer getCustomer(@PathVariable String username) {   	
     	return customerService.findByUsername(username);
+	}
+    
+    @GetMapping("/Customer/UserName/{username}/Bag")
+	public Bag getCustomerBag(@PathVariable String username) {
+    	return bagService.findByUsername(username);
 	}
     
     @PostMapping("/Customer/Update")
