@@ -2,19 +2,17 @@ package io.nzbee.domain.bag;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import io.nzbee.domain.ports.ICustomerPortService;
+import io.nzbee.domain.ports.IBagPortService;
 
 public class BagServiceImpl implements IBagService {
 
 	@Autowired
-	private ICustomerPortService customerService;
+	private IBagPortService bagService;
 	
 	
 	@Override
 	public Bag findByUsername(String userName) {
-		return customerService;
+		return bagService.findByUsername(userName);
 	}
-
-	
 	
 }
