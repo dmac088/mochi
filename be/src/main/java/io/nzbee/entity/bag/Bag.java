@@ -40,6 +40,14 @@ public class Bag {
 	@JoinColumn(name="bag_sts_id")
 	private BagStatus bagStatus;
 
+	public BagStatus getBagStatus() {
+		return bagStatus;
+	}
+
+	public void setBagStatus(BagStatus bagStatus) {
+		this.bagStatus = bagStatus;
+	}
+
 	public Long getBagId() {
 		return bagId;
 	}

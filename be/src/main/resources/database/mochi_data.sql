@@ -691,13 +691,16 @@ SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
 -- Data for Name: bag_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO bag_status VALUES (1, 'NEW01', 'New');
+INSERT INTO bag_status VALUES (2, 'PRO01', 'Processed');
+INSERT INTO bag_status VALUES (3, 'PND01', 'Pending');
 
 
 --
 -- Name: bag_status_bag_sts_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('bag_status_bag_sts_id_seq', 1, false);
+SELECT pg_catalog.setval('bag_status_bag_sts_id_seq', 3, true);
 
 
 --

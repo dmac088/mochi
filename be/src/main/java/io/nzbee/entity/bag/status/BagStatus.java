@@ -17,38 +17,38 @@ public class BagStatus {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bag_sts_id")
-	private Long productStatusId;
+	private Long bagStatusId;
 
 	@Column(name="bag_sts_cd")
 	@Field(store=Store.YES)
-	private String productStatusCode;
+	private String bagStatusCode;
 	
 	@Column(name="bag_sts_desc")
 	@Field(store=Store.YES)
-	private String productStatusDesc;
+	private String bagStatusDesc;
 
-	public Long getProductStatusId() {
-		return productStatusId;
+	public Long getbagStatusId() {
+		return bagStatusId;
 	}
 
-	public void setId(Long productStatusId) {
-		this.productStatusId = productStatusId;
+	public void setId(Long bagStatusId) {
+		this.bagStatusId = bagStatusId;
 	}
 
 	public String getCode() {
-		return productStatusCode;
+		return bagStatusCode;
 	}
 
-	public void setCode(String productStatusCode) {
-		this.productStatusCode = productStatusCode;
+	public void setCode(String bagStatusCode) {
+		this.bagStatusCode = bagStatusCode;
 	}
 
 	public String getDesc() {
-		return productStatusDesc;
+		return bagStatusDesc;
 	}
 
-	public void setDesc(String productStatusDesc) {
-		this.productStatusDesc = productStatusDesc;
+	public void setDesc(String bagStatusDesc) {
+		this.bagStatusDesc = bagStatusDesc;
 	}
 
 }
