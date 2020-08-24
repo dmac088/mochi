@@ -4,11 +4,15 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BagItemServiceImpl implements IBagItemService {
 
+	@Autowired
+	private IBagItemRepository bagItemRepository;
+	
 	@Override
 	public List<BagItem> findAll() {
 		// TODO Auto-generated method stub
@@ -23,8 +27,7 @@ public class BagItemServiceImpl implements IBagItemService {
 
 	@Override
 	public Optional<BagItem> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return bagItemRepository.findById(id);
 	}
 
 	@Override
