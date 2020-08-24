@@ -28,4 +28,8 @@ public class Bag {
 		bagItems.add(BagItem);
 	}
 	
+	public void removeItem(BagItem bi) {
+		bagItems.remove(bi);
+	}
+	
 }

@@ -56,7 +56,7 @@ ALTER TABLE ONLY mochi.brand_category DROP CONSTRAINT brand_category_bnd_id_bran
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_bnd_id_fkey;
 ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pty_id_party_pty_id_fkey;
-ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_prd_id_product_prd_id_fkey;
+ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_bag_id_bag_bag_id_fkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_lcl_cd_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
@@ -139,6 +139,7 @@ ALTER TABLE ONLY mochi.brand DROP CONSTRAINT brand_pkey;
 ALTER TABLE ONLY mochi.brand_category DROP CONSTRAINT brand_category_pkey;
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pkey;
+ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_pkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_pkey;
 ALTER TABLE mochi.role_type ALTER COLUMN rle_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party_type ALTER COLUMN pty_typ_id DROP DEFAULT;
@@ -224,6 +225,7 @@ DROP TABLE mochi.brand_attr_lcl;
 DROP SEQUENCE mochi.brand_attr_lcl_bnd_id_seq;
 DROP TABLE mochi.brand;
 DROP SEQUENCE mochi.brand_bnd_id_seq;
+DROP TABLE mochi.bag_item;
 DROP TABLE mochi.bag;
 DROP SEQUENCE mochi.bag_bag_id_seq;
 DROP TABLE mochi.address_type;
@@ -1592,13 +1594,26 @@ ALTER TABLE bag_bag_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE bag (
     bag_id bigint DEFAULT nextval('bag_bag_id_seq'::regclass) NOT NULL,
-    prd_id bigint NOT NULL,
     pty_id bigint NOT NULL,
     qty smallint NOT NULL
 );
 
 
 ALTER TABLE bag OWNER TO mochidb_owner;
+
+--
+-- Name: bag_item; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE bag_item (
+    bag_item_id bigint NOT NULL,
+    bag_id bigint NOT NULL,
+    prd_id bigint NOT NULL,
+    qty smallint NOT NULL
+);
+
+
+ALTER TABLE bag_item OWNER TO mochidb_owner;
 
 --
 -- Name: brand_bnd_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -2719,6 +2734,14 @@ ALTER TABLE ONLY accessories_attr_lcl
 
 
 --
+-- Name: bag_item bag_item_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag_item
+    ADD CONSTRAINT bag_item_pkey PRIMARY KEY (bag_item_id);
+
+
+--
 -- Name: bag bag_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3372,11 +3395,11 @@ ALTER TABLE ONLY accessories_attr_lcl
 
 
 --
--- Name: bag bag_prd_id_product_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: bag_item bag_item_bag_id_bag_bag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY bag
-    ADD CONSTRAINT bag_prd_id_product_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+ALTER TABLE ONLY bag_item
+    ADD CONSTRAINT bag_item_bag_id_bag_bag_id_fkey FOREIGN KEY (bag_id) REFERENCES bag(bag_id);
 
 
 --
@@ -3741,6 +3764,13 @@ GRANT ALL ON SEQUENCE bag_bag_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE bag TO mochi_app;
+
+
+--
+-- Name: bag_item; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE bag_item TO mochi_app;
 
 
 --
