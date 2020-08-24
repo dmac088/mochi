@@ -21,6 +21,7 @@ public class PostgredBagAdapter implements IBagPortService {
 		(ob.isPresent())
 		? ob.get()
 		: new io.nzbee.entity.bag.Bag();
+		return null;
 		
 	}
 
