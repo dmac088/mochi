@@ -78,13 +78,14 @@ public class IT_BagEntityRepositoryIntegrationTest {
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
     	Optional<BagStatus> bs = bagStatusService.findByCode("NEW01");
 		
-		
-		bag = bagEntityBeanFactory.getBagEntityBean(p.get(), bs.get());
-	    	
+		bag = bagEntityBeanFactory.getBagEntityBean(p.get()/*, bs.get()*/);
+	    bag.setBagStatus(bs.get());
+	    
 	    //persist a new transient test category
 	    entityManager.persist(bag);
 	    
 	    return bag;
+	    
 	}
    
     
