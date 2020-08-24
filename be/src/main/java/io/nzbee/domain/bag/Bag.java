@@ -7,12 +7,13 @@ import io.nzbee.domain.product.Product;
 
 public class Bag {
 	
-	private Set<BagItem> bagItems = new HashSet<BagItem>();
+	private Set<BagItem> bagItems;
 	
 	private Customer customer;
 
 	public Bag(Customer customer) {
 		this.customer = customer;
+		bagItems = new HashSet<BagItem>();
 	}
 
 	public Customer getCustomer() {
