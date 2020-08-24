@@ -22,6 +22,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.bag.status.BagStatus;
@@ -106,10 +108,10 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	assertNotNull(bag);
     	
     	assertThat(found.getBagStatus().getCode())
-	    .isEqualTo("NEW01");
+	    .isEqualTo(Constants.bagStatusCodeNew);
     	
     	assertThat(found.getBagStatus().getDesc())
-	    .isEqualTo("New");
+	    .isEqualTo(Constants.bagStatusDescNew);
     }
     
     @After
