@@ -33,5 +33,21 @@ public class Bag {
 	public void setParty(Party party) {
 		this.party = party;
 	}
+
+	public Set<BagItem> getBagItems() {
+		return bagItems;
+	}
+
+	public void setBagItems(Set<BagItem> bagItems) {
+		this.bagItems = bagItems;
+	}
+	
+	public void addItem(BagItem bi) {
+		this.getBagItems().add(bi);
+	}
+	
+	public void removeItem(BagItem bi) {
+		this.getBagItems().remove(bi);
+	}
 	
 }
