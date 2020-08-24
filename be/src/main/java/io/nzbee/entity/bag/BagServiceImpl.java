@@ -32,7 +32,7 @@ public class BagServiceImpl implements IBagService {
 	
 	@Override
 	public Optional<Bag> findByUsername(String userName) {
-		return bagRepository.findByPartyUserUsername(userName);
+		return bagRepository.findByPartyPartyUserUsername(userName);
 	}
 
 	@Override
