@@ -9,11 +9,14 @@ public class Bag {
 	
 	private Set<BagItem> bagItems;
 	
+	private BagStatus bagStatus;
+	
 	private Customer customer;
 
 	public Bag(Customer customer) {
 		this.customer = customer;
 		bagItems = new HashSet<BagItem>();
+		bagStatus = BagStatus.NEW;
 	}
 
 	public Customer getCustomer() {
@@ -33,4 +36,8 @@ public class Bag {
 		bagItems.remove(bi);
 	}
 	
+	public BagStatus getBagStatus() {
+		return bagStatus;
+	}
+
 }
