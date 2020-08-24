@@ -92,7 +92,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	    Product product = productService.findByCode("23464789").get();
 	        
 	    bagItem = new BagItem(product);
-	    bagItem.setQuantity(new Double(2));
+	    bagItem.setQuantity(2);
 	    bag.addItem(bagItem);
 	    
 	    entityManager.persist(bag);
