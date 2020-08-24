@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import io.nzbee.entity.bag.item.BagItem;
 import io.nzbee.entity.party.Party;
 
 @Table(name = "bag", schema = "mochi")
