@@ -27,14 +27,14 @@ public class Brand implements ILocalizedDomainObject {
 	private List<BrandCategory> categories;
 	
 	public Brand(String brandCode,
-			 String brandDesc,
-			 String locale) {
-			 this.brandCode = brandCode;
-			 this.brandDesc = brandDesc;
-		 	 this.products = new ArrayList<Product>();
-		 	 this.categories = new ArrayList<BrandCategory>();
-		 	 this.locale = locale;
-}
+				 String brandDesc,
+				 String locale) {
+				 this.brandCode = brandCode;
+				 this.brandDesc = brandDesc;
+			 	 this.products = new ArrayList<Product>();
+			 	 this.categories = new ArrayList<BrandCategory>();
+			 	 this.locale = locale;
+	}
 
 	public Brand(String brandCode,
 				 String brandDesc,
