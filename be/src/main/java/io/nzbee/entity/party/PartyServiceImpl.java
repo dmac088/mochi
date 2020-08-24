@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PartyServiceImpl implements IPartyService {
 
 	@Autowired
-	private PartyRepository partyRepository; 
+	private IPartyRepository partyRepository; 
 	
 	@Autowired
 	@Qualifier(value = "partyDao")
