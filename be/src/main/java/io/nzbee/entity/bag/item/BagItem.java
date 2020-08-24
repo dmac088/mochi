@@ -1,9 +1,10 @@
-package io.nzbee.entity.bag;
+package io.nzbee.entity.bag.item;
 
 import javax.persistence.Column;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.product.Product;
 
 @Table(name = "bag_item", schema = "mochi")
