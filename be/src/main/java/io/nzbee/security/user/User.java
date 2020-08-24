@@ -99,11 +99,11 @@ public class User implements UserDetails, Serializable {
 		return this.password;
 	}
 	
-	public Party getUserParty() {
+	public Party getParty() {
 		return userParty;
 	}
 
-	public void setUserParty(Party userParty) {
+	public void setParty(Party userParty) {
 		this.userParty = userParty;
 	}
 

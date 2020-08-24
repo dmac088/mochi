@@ -6,8 +6,7 @@ public class BagItem {
 
 	private Bag bag;
 	private Product product;
-	private double qty;
-	
+	private int qty;
 	
 	public BagItem(Bag bag, Product p, int qty) {
 		this.bag = bag;
@@ -23,7 +22,7 @@ public class BagItem {
 		return product;
 	}
 
-	public double getQty() {
+	public int getQty() {
 		return qty;
 	}
 
