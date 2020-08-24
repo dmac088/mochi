@@ -688,6 +688,19 @@ SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
 
 
 --
+-- Data for Name: bag_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Name: bag_status_bag_sts_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('bag_status_bag_sts_id_seq', 1, false);
+
+
+--
 -- Data for Name: brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1245,7 +1258,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 233736, true);
+SELECT pg_catalog.setval('hibernate_sequence', 233737, true);
 
 
 --
