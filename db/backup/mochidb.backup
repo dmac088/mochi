@@ -1488,8 +1488,7 @@ ALTER TABLE bag_bag_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE bag (
     bag_id bigint DEFAULT nextval('bag_bag_id_seq'::regclass) NOT NULL,
-    pty_id bigint NOT NULL,
-    qty smallint NOT NULL
+    pty_id bigint NOT NULL
 );
 
 
@@ -3053,7 +3052,7 @@ COPY address_type  FROM stdin;
 -- Data for Name: bag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY bag (bag_id, pty_id, qty) FROM stdin;
+COPY bag (bag_id, pty_id) FROM stdin;
 \.
 
 
