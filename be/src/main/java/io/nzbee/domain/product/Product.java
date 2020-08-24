@@ -48,17 +48,17 @@ public abstract class Product {
 	@JsonIgnore
 	private List<Tag> tags;
 	
-	public Product(	String productUPC,
-				   	Date productCreateDt,
-				   	String productStatus,
-				   	String productDesc,
-				   	String productLongDesc,
-				   	Double productRetail,
-				   	Double productMarkdown,
-				   	String productImage,
-				   	String lclCd,
-				   	String currency,
-				   	Brand brand,
+	public Product(	String 	productUPC,
+				   	Date 	productCreateDt,
+				   	String 	productStatus,
+				   	String 	productDesc,
+				   	String 	productLongDesc,
+				   	Double 	productRetail,
+				   	Double 	productMarkdown,
+				   	String 	productImage,
+				   	String 	lclCd,
+				   	String 	currency,
+				   	Brand 	brand,
 				   	Department department,
 				   	ProductCategory category) {
 		
