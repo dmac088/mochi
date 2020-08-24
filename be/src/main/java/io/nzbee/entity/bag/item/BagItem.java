@@ -1,5 +1,7 @@
 package io.nzbee.entity.bag.item;
 
+import java.util.Objects;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,6 +34,10 @@ public class BagItem {
 	@Column(name="qty")
 	private double quantity;
 	
+	public Long getBagItemId() {
+		return bagItemId;
+	}
+	
 	public BagItem(Product p) {
 		this.product = p;
 	}
@@ -43,5 +49,24 @@ public class BagItem {
 	public void setQuantity(double quantity) {
 		this.quantity = quantity;
 	}
+
+	public Bag getBag() {
+		return bag;
+	}
+
+	public void setBag(Bag bag) {
+		this.bag = bag;
+	}
 	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof BagItem)) return false;
+        return bagItemId != null && bagItemId.equals(((BagItem) o).getBagItemId());
+    }
+ 
+    @Override
+    public int hashCode() {
+    	return Objects.hash(this.getBagItemId());
+    }
 }

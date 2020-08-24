@@ -22,14 +22,16 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
+import io.nzbee.entity.bag.item.BagItem;
 import io.nzbee.entity.bag.Bag;
-import io.nzbee.entity.bag.IBagService;
+import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.entity.bag.status.BagStatus;
 import io.nzbee.entity.bag.status.IBagStatusService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.Product;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.test.integration.beans.BagEntityBeanFactory;
 
@@ -47,7 +49,7 @@ import io.nzbee.test.integration.beans.BagEntityBeanFactory;
 			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
-public class IT_BagEntityRepositoryIntegrationTest {
+public class IT_BagItemEntityRepositoryIntegrationTest {
  
 	
 	@Autowired
@@ -58,7 +60,10 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	private BagEntityBeanFactory bagEntityBeanFactory;
  
     @Autowired
-    private IBagService bagService;
+    private IBagItemService bagItemService;
+    
+    @Autowired
+    private IProductService productService;
     
     @Autowired
     private IBagStatusService bagStatusService;
@@ -66,7 +71,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	@Autowired
     private IPersonService personService;
  
-	private Bag bag = null;
+	private BagItem bagItem = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -76,42 +81,42 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	this.persistNewBag();
     }
     
-	public Bag persistNewBag() {
+	public BagItem persistNewBag() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
     	Optional<BagStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
-		
-		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
+    	
+		Bag bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    bag.setBagStatus(bs.get());
 	    
-	    //persist a new transient test category
+	    Product product = productService.findByCode("23464789").get();
+	        
+	    bagItem = new BagItem(product);
+	    bag.addItem(bagItem);
+	    
 	    entityManager.persist(bag);
 	    
-	    return bag;
-	    
+	    return bagItem;
 	}
    
     
     @Test
 	@WithUserDetails(value = "admin")
-    public void whenFindById_thenReturnBag() {
+    public void whenFindById_thenReturnBagItem() {
     	
         // when
-    	Bag found = bagService.findById(bag.getBagId()).get();
+    	BagItem found = bagItemService.findById(bagItem.getBagItemId()).get();
      
         // then
     	assertFound(found);
     }
  
     
-    private void assertFound(final Bag found) {
-    	assertNotNull(bag);
+    private void assertFound(final BagItem found) {
+    	assertNotNull(found);
     	
-    	assertThat(found.getBagStatus().getCode())
-	    .isEqualTo(Constants.bagStatusCodeNew);
-    	
-    	assertThat(found.getBagStatus().getDesc())
-	    .isEqualTo(Constants.bagStatusDescNew);
+    	assertThat(found.getQuantity())
+	    .isEqualTo(2);
     }
     
     @After

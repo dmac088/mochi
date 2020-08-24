@@ -1,7 +1,8 @@
 package io.nzbee.entity.bag;
 
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -34,7 +35,7 @@ public class Bag {
 	@OneToMany(	mappedBy="bag",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private Set<BagItem> bagItems;
+	private Set<BagItem> bagItems = new HashSet<BagItem>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="bag_sts_id")
@@ -70,10 +71,24 @@ public class Bag {
 	
 	public void addItem(BagItem bi) {
 		this.getBagItems().add(bi);
+		bi.setBag(this);
 	}
 	
 	public void removeItem(BagItem bi) {
 		this.getBagItems().remove(bi);
+		bi.setBag(null);
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bag)) return false;
+        return bagId != null && bagId.equals(((Bag) o).getBagId());
+    }
+ 
+    @Override
+    public int hashCode() {
+    	return Objects.hash(this.getBagId());
+    }
 	
 }
