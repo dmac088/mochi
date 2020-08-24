@@ -23,6 +23,8 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.bag.IBagService;
+import io.nzbee.entity.bag.status.BagStatus;
+import io.nzbee.entity.bag.status.IBagStatusService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
@@ -74,8 +76,10 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	public Bag persistNewCategory() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
-    	
-		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
+    	Optional<BagStatus> bs = bagStatusService.findByCode("NEW01");
+		
+		
+		bag = bagEntityBeanFactory.getBagEntityBean(p.get(), bs.get());
 	    	
 	    //persist a new transient test category
 	    entityManager.persist(bag);
