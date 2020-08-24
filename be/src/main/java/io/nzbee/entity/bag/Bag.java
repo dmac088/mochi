@@ -25,11 +25,7 @@ public class Bag {
 	@OneToMany(mappedBy = "bag")
 	private Set<BagItem> bagItems;
 	
-	@Column(name="qty")
-	private double quantity;
 
-	
-	
 	public Party getParty() {
 		return party;
 	}
@@ -37,16 +33,5 @@ public class Bag {
 	public void setParty(Party party) {
 		this.party = party;
 	}
-
-	public double getQuantity() {
-		return quantity;
-	}
-
-	public void setQuantity(double quantity) {
-		this.quantity = quantity;
-	}
-	
-	
-	
 	
 }

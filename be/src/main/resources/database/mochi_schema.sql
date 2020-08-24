@@ -1594,8 +1594,7 @@ ALTER TABLE bag_bag_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE bag (
     bag_id bigint DEFAULT nextval('bag_bag_id_seq'::regclass) NOT NULL,
-    pty_id bigint NOT NULL,
-    qty smallint NOT NULL
+    pty_id bigint NOT NULL
 );
 
 
