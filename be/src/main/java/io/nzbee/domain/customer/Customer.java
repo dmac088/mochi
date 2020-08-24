@@ -4,12 +4,15 @@ import java.util.Objects;
 //import javax.validation.constraints.NotNull;
 //import javax.validation.constraints.Size;
 
+import io.nzbee.domain.bag.Bag;
+
 
 //we don't bother about dealing with party, even though our data model and persistence layer cater
 //for both persons and organizations in the "Role" of customers, we're only interested in running a 
 //B2C business, therefore all customers will be Persons (at least through the web front end for now)
 public class Customer {
     
+	private Bag bag;
 
 	//@NotNull
     private String customerId;
@@ -46,9 +49,10 @@ public class Customer {
     	this.familyName = familyName;
     	this.partyType = "Person";
     	this.enabled = isEnabled;
+    	this.bag = new Bag(this);
     }
-    
-    public String getCustomerID() {
+
+	public String getCustomerID() {
 		return customerId;
 	}
 
@@ -80,6 +84,10 @@ public class Customer {
 	
 	public String getPassword() {
 		return password;
+	}
+	
+    public Bag getBag() {
+		return bag;
 	}
  	
 	@Override

@@ -1,5 +1,17 @@
 package io.nzbee.domain.bag;
 
-public class Bag {
+import io.nzbee.domain.customer.Customer;
 
+public class Bag {
+	
+	private Customer customer;
+
+	public Bag(Customer customer) {
+		this.customer = customer;
+	}
+
+	public Customer getCustomer() {
+		return customer;
+	}
+	
 }
