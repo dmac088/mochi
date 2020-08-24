@@ -92,6 +92,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	    Product product = productService.findByCode("23464789").get();
 	        
 	    bagItem = new BagItem(product);
+	    bagItem.setQuantity(new Double(2));
 	    bag.addItem(bagItem);
 	    
 	    entityManager.persist(bag);
@@ -104,8 +105,10 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	@WithUserDetails(value = "admin")
     public void whenFindById_thenReturnBagItem() {
     	
+    	Long itemId = bagItem.getBagItemId();
+    	
         // when
-    	BagItem found = bagItemService.findById(bagItem.getBagItemId()).get();
+    	BagItem found = bagItemService.findById(itemId).get();
      
         // then
     	assertFound(found);
