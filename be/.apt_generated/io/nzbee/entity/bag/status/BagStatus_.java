@@ -8,13 +8,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(BagStatus.class)
 public abstract class BagStatus_ {
 
-	public static volatile SingularAttribute<BagStatus, Long> productStatusId;
-	public static volatile SingularAttribute<BagStatus, String> productStatusDesc;
-	public static volatile SingularAttribute<BagStatus, String> productStatusCode;
+	public static volatile SingularAttribute<BagStatus, String> bagStatusDesc;
+	public static volatile SingularAttribute<BagStatus, Long> bagStatusId;
+	public static volatile SingularAttribute<BagStatus, String> bagStatusCode;
 
-	public static final String PRODUCT_STATUS_ID = "productStatusId";
-	public static final String PRODUCT_STATUS_DESC = "productStatusDesc";
-	public static final String PRODUCT_STATUS_CODE = "productStatusCode";
+	public static final String BAG_STATUS_DESC = "bagStatusDesc";
+	public static final String BAG_STATUS_ID = "bagStatusId";
+	public static final String BAG_STATUS_CODE = "bagStatusCode";
 
 }
 

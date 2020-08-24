@@ -3104,6 +3104,9 @@ COPY bag_item (bag_item_id, bag_id, prd_id, qty) FROM stdin;
 --
 
 COPY bag_status (bag_sts_id, bag_sts_cd, bag_sts_desc) FROM stdin;
+1	NEW01	New
+2	PRO01	Processed
+3	PND01	Pending
 \.
 
 
@@ -3111,7 +3114,7 @@ COPY bag_status (bag_sts_id, bag_sts_cd, bag_sts_desc) FROM stdin;
 -- Name: bag_status_bag_sts_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('bag_status_bag_sts_id_seq', 1, false);
+SELECT pg_catalog.setval('bag_status_bag_sts_id_seq', 3, true);
 
 
 --

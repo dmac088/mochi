@@ -55,6 +55,9 @@ public class IT_BagEntityRepositoryIntegrationTest {
     @Autowired
     private IBagService bagService;
     
+    @Autowired
+    private IBagStatusService bagStatusService;
+    
 	@Autowired
     private IPersonService personService;
  

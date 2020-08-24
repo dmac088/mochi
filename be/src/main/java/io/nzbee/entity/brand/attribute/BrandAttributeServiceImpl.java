@@ -11,7 +11,7 @@ import io.nzbee.Constants;
 public class BrandAttributeServiceImpl implements IBrandAttributeService {
 
 	@Autowired
-	private BrandAttributeRepository BrandAttributeRepository; 
+	private IBrandAttributeRepository BrandAttributeRepository; 
 	
 	@Override
 	public Optional<BrandAttribute> findById(String locale, long id) {
