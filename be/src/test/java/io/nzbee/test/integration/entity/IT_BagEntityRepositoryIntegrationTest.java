@@ -79,7 +79,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	public Bag persistNewCategory() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
-    	Optional<BagStatus> bs = bagStatusService.findByCode("NEW01");
+    	Optional<BagStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
 		
 		bag = bagEntityBeanFactory.getBagEntityBean(p.get()/*, bs.get()*/);
 	    bag.setBagStatus(bs.get());
