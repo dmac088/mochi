@@ -107,6 +107,9 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	
     	assertThat(found.getBagStatus().getCode())
 	    .isEqualTo("NEW01");
+    	
+    	assertThat(found.getBagStatus().getDesc())
+	    .isEqualTo("New");
     }
     
     @After
