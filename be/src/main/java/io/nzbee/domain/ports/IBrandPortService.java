@@ -3,7 +3,7 @@ package io.nzbee.domain.ports;
 import java.util.Set;
 import io.nzbee.domain.brand.Brand;
 
-public interface IBrandPortService  extends IProductDimensionService<Brand> {
+public interface IBrandPortService extends IProductDimensionService<Brand> {
 
 	Set<Brand> findAll(String locale, String category);
 

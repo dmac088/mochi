@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.entity.bag.IBagService;
@@ -24,6 +23,24 @@ public class PostgredBagAdapter implements IBagPortService {
 		? ob.get()
 		: new io.nzbee.entity.bag.Bag();
 		return null;
+		
+	}
+
+	@Override
+	public void save(Bag domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(Bag domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(Bag domainObject) {
+		// TODO Auto-generated method stub
 		
 	}
 
