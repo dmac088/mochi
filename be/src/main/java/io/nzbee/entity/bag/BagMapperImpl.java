@@ -6,8 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.domain.bag.Bag;
-import io.nzbee.domain.bag.BagStatus;
+import io.nzbee.domain.bag.Bag; 
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.entity.bag.item.BagItem;
 import io.nzbee.entity.bag.item.IBagItemMapper;
@@ -81,8 +80,13 @@ public class BagMapperImpl implements IBagMapper {
 							 .map(bi -> bagItemMapper.entityToDo(bi))
 							 .collect(Collectors.toSet());
 		
+		
 		//create a new bag domain object
-		Bag b = new Bag(c, sbi, BagStatus.NEW);
+		Bag b = new Bag(c);
+		sbi.forEach(bi -> {
+			b.addItem(bi);
+		});
+		
 		
 		return b;
 	}
