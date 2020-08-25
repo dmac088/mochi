@@ -78,7 +78,7 @@ public class CustomerController {
 	}
     
     @GetMapping("/Customer/Bag")
-	public Bag getCustomerBag(@PathVariable String username, Principal principal) {
+	public Bag getCustomerBag(Principal principal) {
     	return bagService.findByUsername(principal.getName());
 	}
     

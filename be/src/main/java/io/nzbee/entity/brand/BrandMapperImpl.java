@@ -3,7 +3,7 @@ package io.nzbee.entity.brand;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BrandMapper implements IBrandMapper {
+public class BrandMapperImpl implements IBrandMapper {
 
 	@Override
 	public io.nzbee.domain.brand.Brand entityToDo(Brand e, String locale, String currency) {
