@@ -242,7 +242,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		
 		//get the bag of the person
-		Optional<Bag> ob = bagService.findByUsername(c.getUserName());
+		Optional<Bag> ob = bagService.findByCode(c.getUserName());
 		
 		Bag b = (ob.isPresent()) 
 				? ob.get()

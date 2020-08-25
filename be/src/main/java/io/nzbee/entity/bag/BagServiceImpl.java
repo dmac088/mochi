@@ -29,16 +29,10 @@ public class BagServiceImpl implements IBagService {
 	public Optional<Bag> findById(long id) {
 		return bagRepository.findById(id);
 	}
-	
-	@Override
-	public Optional<Bag> findByUsername(String userName) {
-		return bagRepository.findByPartyPartyUserUsername(userName);
-	}
 
 	@Override
-	public Optional<Bag> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+	public Optional<Bag> findByCode(String userName) {
+		return bagRepository.findByPartyPartyUserUsername(userName);
 	}
 
 	@Override

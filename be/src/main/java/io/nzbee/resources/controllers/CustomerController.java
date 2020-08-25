@@ -17,10 +17,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
+import io.nzbee.dto.bag.item.BagItemDTO;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
@@ -43,7 +45,6 @@ public class CustomerController {
         super();
     }
 
-    
     @GetMapping(value = "/username")
     public String currentUserName(Principal principal) {
     	LOGGER.debug("call CustomerController.currentUserName");
@@ -79,7 +80,12 @@ public class CustomerController {
     
     @GetMapping("/Customer/Bag")
 	public Bag getCustomerBag(Principal principal) {
-    	return bagService.findByUsername(principal.getName());
+    	return bagService.findByCode(principal.getName());
+	}
+    
+    @PostMapping("/Customer/Bag")
+	public Bag getAddItemToBag(Principal principal, BagItemDTO bagItem) {
+    	return bagService.addItemToBag(principal.getName(), bagItem);
 	}
     
     @PostMapping("/Customer/Update")
