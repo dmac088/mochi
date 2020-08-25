@@ -15,6 +15,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.entity.bag.item.BagItem;
 import io.nzbee.entity.bag.status.BagStatus;
 import io.nzbee.entity.party.Party;
@@ -30,6 +33,7 @@ public class Bag {
 	
 	@OneToOne
 	@JoinColumn(name="pty_id")
+	@JsonIgnore
 	private Party party;
 
 	@OneToMany(	mappedBy="bag",
