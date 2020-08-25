@@ -9,6 +9,8 @@ public class BagItemDTO {
 	private int qty;
 	
 	private String locale;
+	
+	private String currency;
 
 	public BagItemDTO() {
 		
@@ -46,4 +48,11 @@ public class BagItemDTO {
 		this.locale = locale;
 	}
 	
+	public String getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(String currency) {
+		this.currency = currency;
+	}
 }
