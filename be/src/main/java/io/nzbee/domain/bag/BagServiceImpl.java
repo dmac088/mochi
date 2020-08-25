@@ -16,8 +16,8 @@ public class BagServiceImpl implements IBagService {
 	
 	
 	@Override 
-	public Bag addItemToBag(BagItem bagItem) {
-		return bagService.addItemToBag(bagItem);
+	public Bag addItemToBag(String userName, BagItem bagItem) {
+		return bagService.addItemToBag(userName, bagItem);
 	}
 
 

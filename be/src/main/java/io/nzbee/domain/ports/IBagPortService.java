@@ -7,6 +7,8 @@ public interface IBagPortService  extends IPortService<Bag> {
 
 	Bag findByCode(String userName);
 
-	Bag addItemToBag(BagItem bagItem);
+	Bag addItemToBag(String userName, BagItem bagItem);
+
+	void save(String userName, Bag domainObject);
 	
 }
