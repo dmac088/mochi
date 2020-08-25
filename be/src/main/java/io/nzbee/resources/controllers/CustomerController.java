@@ -1,6 +1,8 @@
 package io.nzbee.resources.controllers;
 
 import java.io.UnsupportedEncodingException;
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
@@ -42,6 +43,13 @@ public class CustomerController {
         super();
     }
 
+    
+    @GetMapping(value = "/username")
+    public String currentUserName(Principal principal) {
+    	LOGGER.debug("call CustomerController.currentUserName");
+        return principal.getName();
+    }
+    
     @PostMapping("/Customer/Signup")
     public GenericResponse registerNewCustomer(@RequestBody final CustomerDTO customer, final HttpServletRequest request) {
         LOGGER.debug("Signing up a new customer with information: {}", customer);
@@ -69,9 +77,9 @@ public class CustomerController {
     	return customerService.findByUsername(username);
 	}
     
-    @GetMapping("/Customer/UserName/{username}/Bag")
-	public Bag getCustomerBag(@PathVariable String username) {
-    	return bagService.findByUsername(username);
+    @GetMapping("/Customer/Bag")
+	public Bag getCustomerBag(@PathVariable String username, Principal principal) {
+    	return bagService.findByUsername(principal.getName());
 	}
     
     @PostMapping("/Customer/Update")
