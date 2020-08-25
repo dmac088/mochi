@@ -1,9 +1,7 @@
 package io.nzbee.domain.bag;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
 import io.nzbee.domain.ports.IBagPortService;
-import io.nzbee.dto.bag.item.BagItemDTO;
 
 public class BagServiceImpl implements IBagService {
 
@@ -18,7 +16,7 @@ public class BagServiceImpl implements IBagService {
 	
 	
 	@Override 
-	public Bag addItemToBag(String userName, BagItemDTO bagItem) {
+	public Bag addItemToBag(String userName, BagItem bagItem) {
 		return bagService.addItemToBag(userName, bagItem);
 	}
 
