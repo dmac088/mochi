@@ -11,8 +11,6 @@ import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
-import io.nzbee.entity.product.IProductMapper;
-import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.role.customer.Customer;
 
 @Service
@@ -22,16 +20,11 @@ public class PostgresBagAdapter implements IBagPortService {
 	private IPersonService personService;
 	
 	@Autowired
-	private IProductService productService;
-	
-	@Autowired
 	private IBagService bagService;
 	
 	@Autowired
 	private IBagMapper bagMapper;
 	
-	@Autowired
-	private IProductMapper productMapper;
 	
 	@Override
 	public Bag findByCode(String userName) {
@@ -51,7 +44,7 @@ public class PostgresBagAdapter implements IBagPortService {
 	}
 	
 	@Override
-	public Bag addItemToBag(String userName, BagItem bagItem) {
+	public Bag addItemToBag(BagItem bagItem) {
 		Bag b = bagItem.getBag();
 		Product p = bagItem.getProduct();
 		BagItem bi = new BagItem(b, p, bagItem.getQuantity());
