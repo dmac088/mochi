@@ -52,8 +52,8 @@ public class PostgresBagAdapter implements IBagPortService {
 	
 	@Override
 	public Bag addItemToBag(String userName, BagItem bagItem) {
-		Bag b = this.findByCode(userName);
-		Product p = productMapper.entityToDo(productService.findByCode(bagItem.getProduct().getProductUPC()).get());
+		Bag b = bagItem.getBag();
+		Product p = bagItem.getProduct();
 		BagItem bi = new BagItem(b, p, bagItem.getQuantity());
 		b.getBagItems().add(bi);
 		this.save(b);

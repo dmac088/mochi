@@ -26,7 +26,7 @@ public class BagItemDTOMapperImpl implements IBagItemDTOMapper {
 			bagService.findByCode(dto.getBagUserName()),
 			
 			//get the product object
-			productService.findByCode(dto.getLocale(), dto.getItemUPC()),
+			productService.findByCode(dto.getLocale(), dto.getCurrency(), dto.getItemUPC()),
 			
 			dto.getQty()
 		);
