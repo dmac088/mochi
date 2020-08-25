@@ -21,12 +21,6 @@ public class Bag {
 		bagItems 		= new HashSet<BagItem>();
 		bagStatus 		= BagStatus.NEW;
 	}
-	
-	public Bag(Customer customer, Set<BagItem> bagItems, BagStatus bagStatus) {
-		this.customer 	= customer;
-		this.bagItems 	= bagItems;
-		this.bagStatus 	= bagStatus;
-	}
 
 	public Customer getCustomer() {
 		return customer;
