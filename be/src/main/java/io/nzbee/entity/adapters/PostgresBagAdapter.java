@@ -14,7 +14,6 @@ import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.ProductMapper;
 import io.nzbee.entity.role.customer.Customer;
 
 @Service
