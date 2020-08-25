@@ -2,7 +2,6 @@ package io.nzbee.resources.controllers;
 
 import java.io.UnsupportedEncodingException;
 import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,6 @@ import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
-import io.nzbee.dto.bag.item.BagItemDTO;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 

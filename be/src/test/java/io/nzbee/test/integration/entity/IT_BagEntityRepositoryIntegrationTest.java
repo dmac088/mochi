@@ -108,7 +108,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     public void thenFindByUsername_thenReturnBag() {
     	
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<Bag> found = bagService.findByUsername("dmac088");
+    	Optional<Bag> found = bagService.findByCode("dmac088");
     	
     	assertTrue(found.isPresent());
     	assertFound(found.get());
