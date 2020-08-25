@@ -16,11 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
-import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
+import io.nzbee.dto.bag.item.BagItemDTO;
+import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
@@ -38,6 +39,9 @@ public class CustomerController {
     
     @Autowired
     private ApplicationEventPublisher eventPublisher;
+    
+    @Autowired
+    private IBagItemDTOMapper bagItemDTOMapper;
 
     public CustomerController() {
         super();
@@ -82,8 +86,8 @@ public class CustomerController {
 	}
     
     @PostMapping("/Customer/Bag")
-	public Bag getAddItemToBag(Principal principal, BagItem bagItem) {
-    	return bagService.addItemToBag(principal.getName(), bagItem);
+	public Bag getAddItemToBag(Principal principal, @RequestBody BagItemDTO bagItem) {
+    	return bagService.addItemToBag(principal.getName(), bagItemDTOMapper.dtoToDo(bagItem));
 	}
     
     @PostMapping("/Customer/Update")

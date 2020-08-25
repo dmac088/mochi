@@ -1,18 +1,22 @@
 package io.nzbee.domain.category;
 
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.nzbee.domain.ILocalizedDomainObject;
- 
+
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property="type")
+@JsonSubTypes( {@JsonSubTypes.Type(value = ProductCategory.class, 	name = "productcategory"),
+				@JsonSubTypes.Type(value = BrandCategory.class, 	name = "brandcategory")})
 public abstract class Category implements ILocalizedDomainObject {
 
 	private String categoryCode;
-	
 	private String categoryDesc;
-
 	protected String categoryType;
-
 	private int objectCount;
-	
 	private String locale;
 	
 

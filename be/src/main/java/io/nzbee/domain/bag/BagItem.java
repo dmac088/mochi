@@ -1,17 +1,21 @@
 package io.nzbee.domain.bag;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import io.nzbee.domain.product.Product;
 
 public class BagItem {
 
 	private Bag bag;
 	private Product product;
-	private int qty;
+	private int quantity;
 	
-	public BagItem(Bag bag, Product p, int qty) {
+	@JsonCreator(mode = JsonCreator.Mode.PROPERTIES)
+	public BagItem(Bag bag, 
+			  	   Product p, 
+			  	   int quantity) {
 		this.bag = bag;
 		this.product = p;
-		this.qty = qty;
+		this.quantity = quantity;
 	}
 
 	public Bag getBag() {
@@ -22,8 +26,8 @@ public class BagItem {
 		return product;
 	}
 
-	public int getQty() {
-		return qty;
+	public int getQuantity() {
+		return quantity;
 	}
 
 }
