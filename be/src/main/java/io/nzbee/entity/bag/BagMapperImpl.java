@@ -73,20 +73,23 @@ public class BagMapperImpl implements IBagMapper {
 
 	@Override
 	public Bag entityToDo(Person p, io.nzbee.entity.bag.Bag e) {
+		
+		//we need a customer to instantiate a new bag
 		Customer c = personMapper.entityToDo(p);
+		
+		//create a new bag domain object
+		Bag b = new Bag(c);
 		
 		//map the entity bagItems to the domain bagItems
 		Set<io.nzbee.domain.bag.BagItem> sbi = e.getBagItems().stream()
 							 .map(bi -> bagItemMapper.entityToDo(bi))
 							 .collect(Collectors.toSet());
 		
-		
-		//create a new bag domain object
-		Bag b = new Bag(c);
+		//use the add item method on the domain object to 
+		//ensure business rules are fired against each added bagItem
 		sbi.forEach(bi -> {
 			b.addItem(bi);
 		});
-		
 		
 		return b;
 	}
