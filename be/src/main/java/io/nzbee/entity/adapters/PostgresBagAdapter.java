@@ -44,7 +44,7 @@ public class PostgresBagAdapter implements IBagPortService {
 	}
 	
 	@Override
-	public Bag addItemToBag(BagItem bagItem) {
+	public Bag addItemToBag(String userName, BagItem bagItem) {
 		Bag b = bagItem.getBag();
 		Product p = bagItem.getProduct();
 		BagItem bi = new BagItem(b, p, bagItem.getQuantity());
@@ -55,8 +55,10 @@ public class PostgresBagAdapter implements IBagPortService {
 
 
 	@Override
-	public void save(Bag domainObject) {
-		bagService.save(bagMapper.doToEntity(domainObject));
+	public void save(String userName, Bag domainObject) {
+		io.nzbee.entity.bag.Bag b = bagMapper.doToEntity(userName, domainObject);
+		System.out.println(b == null);
+		bagService.save(b);
 	}
 
 	@Override
@@ -67,6 +69,12 @@ public class PostgresBagAdapter implements IBagPortService {
 
 	@Override
 	public void delete(Bag domainObject) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void save(Bag domainObject) {
 		// TODO Auto-generated method stub
 		
 	}

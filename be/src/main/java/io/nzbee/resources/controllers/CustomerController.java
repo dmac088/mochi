@@ -87,7 +87,7 @@ public class CustomerController {
     
     @PostMapping("/Customer/Bag")
 	public Bag getAddItemToBag(@RequestBody BagItemDTO bagItem) {
-    	return bagService.addItemToBag(bagItemDTOMapper.dtoToDo(bagItem));
+    	return bagService.addItemToBag(bagItem.getBagUserName(), bagItemDTOMapper.dtoToDo(bagItem));
 	}
     
     @PostMapping("/Customer/Update")
