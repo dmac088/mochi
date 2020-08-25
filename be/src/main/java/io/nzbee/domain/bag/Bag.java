@@ -17,9 +17,15 @@ public class Bag {
 	private Customer customer;
 
 	public Bag(Customer customer) {
-		this.customer = customer;
-		bagItems = new HashSet<BagItem>();
-		bagStatus = BagStatus.NEW;
+		this.customer 	= customer;
+		bagItems 		= new HashSet<BagItem>();
+		bagStatus 		= BagStatus.NEW;
+	}
+	
+	public Bag(Customer customer, Set<BagItem> bagItems, BagStatus bagStatus) {
+		this.customer 	= customer;
+		this.bagItems 	= bagItems;
+		this.bagStatus 	= bagStatus;
 	}
 
 	public Customer getCustomer() {
@@ -33,6 +39,10 @@ public class Bag {
 	public void addItem(Product p, int qty) {
 		BagItem BagItem = new BagItem(this, p, qty);
 		bagItems.add(BagItem);
+	}
+	
+	public void addItem(BagItem bi) {
+		bagItems.add(bi);
 	}
 	
 	public void removeItem(BagItem bi) {
