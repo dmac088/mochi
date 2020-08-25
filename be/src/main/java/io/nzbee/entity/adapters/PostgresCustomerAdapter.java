@@ -249,7 +249,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 				: new Bag();
 		
 		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem(p);
-		bi.setQuantity(bagItem.getQty());
+		bi.setQuantity(bagItem.getQuantity());
 		b.addItem(bi);
 		
 		//set the bag / party relationship

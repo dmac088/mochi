@@ -5,12 +5,18 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.tag.Tag;
 
-
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property="type")
+@JsonSubTypes( {@JsonSubTypes.Type(value = Accessories.class, 	name = "accessories")})
 public abstract class Product {
 
 	private String productUPC;
@@ -48,18 +54,18 @@ public abstract class Product {
 	@JsonIgnore
 	private List<Tag> tags;
 	
-	public Product(	String 	productUPC,
-				   	Date 	productCreateDt,
-				   	String 	productStatus,
-				   	String 	productDesc,
-				   	String 	productLongDesc,
-				   	Double 	productRetail,
-				   	Double 	productMarkdown,
-				   	String 	productImage,
-				   	String 	lclCd,
-				   	String 	currency,
-				   	Brand 	brand,
-				   	Department department,
+	public Product(	String 		productUPC,
+				   	Date 		productCreateDt,
+				   	String 		productStatus,
+				   	String 		productDesc,
+				   	String 		productLongDesc,
+				   	Double 		productRetail,
+				   	Double 		productMarkdown,
+				   	String 		productImage,
+				   	String 		lclCd,
+				   	String 		currency,
+				   	Brand 		brand,
+				   	Department 	department,
 				   	ProductCategory category) {
 		
 					this.productUPC = productUPC;
