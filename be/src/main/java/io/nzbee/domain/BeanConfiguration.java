@@ -2,6 +2,9 @@ package io.nzbee.domain;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import io.nzbee.domain.bag.BagServiceImpl;
+import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.CategoryServiceImpl;
@@ -47,5 +50,10 @@ public class BeanConfiguration {
     @Bean
     public IDepartmentService departmentService() {
         return new DepartmentServiceImpl();
+    }
+    
+    @Bean
+    public IBagService bagService() {
+        return new BagServiceImpl();
     }
 }

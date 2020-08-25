@@ -3,11 +3,13 @@ package io.nzbee.entity.adapters;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.entity.bag.IBagService;
 
+@Service
 public class PostgredBagAdapter implements IBagPortService {
 
 	@Autowired
