@@ -57,7 +57,6 @@ public class PostgresBagAdapter implements IBagPortService {
 	@Override
 	public void save(String userName, Bag domainObject) {
 		io.nzbee.entity.bag.Bag b = bagMapper.doToEntity(userName, domainObject);
-		System.out.println(b == null);
 		bagService.save(b);
 	}
 
