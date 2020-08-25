@@ -3,6 +3,7 @@ package io.nzbee.domain.bag;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import io.nzbee.domain.ports.IBagPortService;
+import io.nzbee.dto.bag.item.BagItemDTO;
 
 public class BagServiceImpl implements IBagService {
 
@@ -11,8 +12,34 @@ public class BagServiceImpl implements IBagService {
 	
 	
 	@Override
-	public Bag findByUsername(String userName) {
-		return bagService.findByUsername(userName);
+	public Bag findByCode(String userName) {
+		return bagService.findByCode(userName);
 	}
 	
+	
+	@Override 
+	public Bag addItemToBag(String userName, BagItemDTO bagItem) {
+		return bagService.addItemToBag(userName, bagItem);
+	}
+
+
+	@Override
+	public void save(Bag object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void delete(Bag object) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void update(Bag object) {
+		// TODO Auto-generated method stub
+		
+	}
 }

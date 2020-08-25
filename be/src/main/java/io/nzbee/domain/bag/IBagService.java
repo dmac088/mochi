@@ -1,9 +1,12 @@
 package io.nzbee.domain.bag;
 
-public interface IBagService {
-	
-	Bag findByUsername(String userName);
-	
-	
+import io.nzbee.domain.IService;
+import io.nzbee.dto.bag.item.BagItemDTO;
+
+public interface IBagService extends IService<Bag> {
+
+	Bag findByCode(String userName);
+
+	Bag addItemToBag(String userName, BagItemDTO bagItem);
 	
 }

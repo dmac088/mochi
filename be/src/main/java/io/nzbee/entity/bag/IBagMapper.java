@@ -7,4 +7,6 @@ public interface IBagMapper extends IMapper<io.nzbee.domain.bag.Bag, Bag> {
 
 	io.nzbee.domain.bag.Bag entityToDo(Person p, Bag e);
 
+	Bag doToEntity(String userName, io.nzbee.domain.bag.Bag d);
+
 }
