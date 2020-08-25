@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.ports.IBagPortService;
-import io.nzbee.domain.product.Product;
 import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
@@ -46,10 +45,7 @@ public class PostgresBagAdapter implements IBagPortService {
 	@Override
 	public Bag addItemToBag(String userName, BagItem bagItem) {
 		Bag b = bagItem.getBag();
-		Product p = bagItem.getProduct();
-		BagItem bi = new BagItem(b, p, bagItem.getQuantity());
-		b.getBagItems().add(bi);
-		this.save(b);
+		this.save(userName,b);
 		return b;
 	}
 

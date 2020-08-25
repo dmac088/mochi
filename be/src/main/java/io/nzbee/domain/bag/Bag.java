@@ -32,15 +32,15 @@ public class Bag {
 	
 	public void addItem(Product p, int qty) {
 		BagItem BagItem = new BagItem(this, p, qty);
-		bagItems.add(BagItem);
+		this.getBagItems().add(BagItem);
 	}
 	
 	public void addItem(BagItem bi) {
-		bagItems.add(bi);
+		this.getBagItems().add(bi);
 	}
 	
 	public void removeItem(BagItem bi) {
-		bagItems.remove(bi);
+		this.getBagItems().remove(bi);
 	}
 	
 	public BagStatus getBagStatus() {
