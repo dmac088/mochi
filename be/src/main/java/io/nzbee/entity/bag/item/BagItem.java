@@ -31,6 +31,10 @@ public class BagItem {
 	@JoinColumn(name="prd_id")
 	private Product product;
 	
+	public Product getProduct() {
+		return product;
+	}
+
 	@Column(name="qty")
 	private int quantity;
 	
