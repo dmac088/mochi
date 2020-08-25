@@ -7,7 +7,6 @@ import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.bag.item.BagItemDTO;
 import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
@@ -52,10 +51,10 @@ public class PostgresBagAdapter implements IBagPortService {
 	}
 	
 	@Override
-	public Bag addItemToBag(String userName, BagItemDTO bagItem) {
+	public Bag addItemToBag(String userName, BagItem bagItem) {
 		Bag b = this.findByCode(userName);
-		Product p = productMapper.entityToDo(productService.findByCode(bagItem.getProductUPC()).get());
-		BagItem bi = new BagItem(b, p, bagItem.getQuantity());
+		Product p = productMapper.entityToDo(productService.findByCode(bagItem.getProduct().getProductUPC()).get());
+		BagItem bi = new BagItem(b, p, bagItem.getQty());
 		b.getBagItems().add(bi);
 		this.save(b);
 		return b;
