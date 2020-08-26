@@ -50,14 +50,19 @@ public class BagMapperImpl implements IBagMapper {
 									 ? obe.get()
 									 : nbe;
 		
+		System.out.println(d.getBagItems().size());
+									 
 		//map the domain bagItems to entity bagItems
 		Set<BagItem> sbi = d.getBagItems().stream()
 					   		.map(bi -> bagItemMapper.doToEntity(bi))
 					   		.collect(Collectors.toSet());
 		
+		System.out.println("bagId = " + b.getBagId());
+		
 		//add the bag items to the bag
 		sbi.stream()
 			.forEach(bi -> {
+				System.out.println(bi.getQuantity());
 				b.addItem(bi);
 			});
 		
