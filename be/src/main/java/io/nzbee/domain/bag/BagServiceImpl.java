@@ -13,12 +13,6 @@ public class BagServiceImpl implements IBagService {
 	public Bag findByCode(String userName) {
 		return bagService.findByCode(userName);
 	}
-	
-	
-	@Override 
-	public Bag addItemToBag(BagItem bagItem) {
-		return bagService.addItemToBag(bagItem);
-	}
 
 
 	@Override

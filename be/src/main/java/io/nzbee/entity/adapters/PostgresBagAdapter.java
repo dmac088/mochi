@@ -4,7 +4,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.bag.Bag;
-import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.IBagService;
@@ -40,15 +39,6 @@ public class PostgresBagAdapter implements IBagPortService {
 	
 		//map the bag to a domain object
 		return bagMapper.entityToDo(p, b);
-	}
-	
-	@Override
-	public Bag addItemToBag(BagItem bagItem) {
-		//in order to construct a bagItem the bagItem must already be linked to a bag
-		//so we simply need to persist the bag
-		Bag b = bagItem.getBag();
-		this.save(b);
-		return b;
 	}
 
 	@Override
