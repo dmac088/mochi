@@ -34,46 +34,6 @@ public class BagMapperImpl implements IBagMapper {
 	private IBagService bagService;
 
 	@Override
-	public io.nzbee.entity.bag.Bag doToEntity(String userName, Bag d) {
-		
-		//get the bag, status, and customer from the database
-		Optional<io.nzbee.entity.bag.Bag> obe = bagService.findByCode(userName);
-		Optional<io.nzbee.entity.bag.status.BagStatus> obs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
-		Optional<io.nzbee.entity.party.person.Person> op = personService.findByUsernameAndRole(userName, Customer.class);
-		
-		
-		io.nzbee.entity.bag.Bag nbe = new io.nzbee.entity.bag.Bag();
-		nbe.setBagStatus(obs.get());
-		
-		//use the existing bag if it exists otherwise use newly created
-		io.nzbee.entity.bag.Bag b = (obe.isPresent())
-									 ? obe.get()
-									 : nbe;
-		
-		System.out.println(d.getBagItems().size());
-									 
-		//map the domain bagItems to entity bagItems
-		Set<BagItem> sbi = d.getBagItems().stream()
-					   		.map(bi -> bagItemMapper.doToEntity(bi))
-					   		.collect(Collectors.toSet());
-		
-		System.out.println("bagId = " + b.getBagId());
-		
-		//add the bag items to the bag
-		sbi.stream()
-			.forEach(bi -> {
-				System.out.println(bi.getQuantity());
-				b.addItem(bi);
-			});
-		
-		//set the customer of the bag
-		b.setParty(op.get());
-		
-		//persist the bag
-		return b;
-	}
-
-	@Override
 	public Bag entityToDo(io.nzbee.entity.bag.Bag e) {
 		// TODO Auto-generated method stub
 		return null;
@@ -104,9 +64,35 @@ public class BagMapperImpl implements IBagMapper {
 
 	@Override
 	public io.nzbee.entity.bag.Bag doToEntity(Bag d) {
-		// TODO Auto-generated method stub
-		return null;
+		//get the bag, status, and customer from the database
+		Optional<io.nzbee.entity.bag.Bag> obe = bagService.findByCode(d.getCustomer().getUserName());
+		Optional<io.nzbee.entity.bag.status.BagStatus> obs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
+		Optional<io.nzbee.entity.party.person.Person> op = personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
+					
+		io.nzbee.entity.bag.Bag nbe = new io.nzbee.entity.bag.Bag();
+		nbe.setBagStatus(obs.get());
+				
+		//use the existing bag if it exists otherwise use newly created
+		io.nzbee.entity.bag.Bag b = (obe.isPresent())
+									 ? obe.get()
+									 : nbe;
+				
+		//map the domain bagItems to entity bagItems
+		Set<BagItem> sbi = d.getBagItems().stream()
+					   		.map(bi -> bagItemMapper.doToEntity(bi))
+					   		.collect(Collectors.toSet());
+				
+		//add the bag items to the bag
+		sbi.stream()
+			.forEach(bi -> {
+				b.addItem(bi);
+			});
+				
+		//set the customer of the bag
+		b.setParty(op.get());
+				
+		//persist the bag
+		return b;
 	}
-
 
 }
