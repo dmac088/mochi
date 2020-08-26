@@ -16,15 +16,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
-import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
+import io.nzbee.domain.product.IProductService;
+import io.nzbee.domain.product.Product;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.bag.item.BagItemDTO;
-import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 import io.nzbee.dto.customer.CustomerDTO;
-import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
 
@@ -40,13 +39,11 @@ public class CustomerController {
     private IBagService bagService;
     
     @Autowired
-    private IBagItemService bagItemService;
+	private IProductService productService;
     
     @Autowired
     private ApplicationEventPublisher eventPublisher;
     
-    @Autowired
-    private IBagItemDTOMapper bagItemDTOMapper;
 
     public CustomerController() {
         super();
@@ -91,10 +88,17 @@ public class CustomerController {
 	}
     
     @PostMapping("/Customer/Bag")
-	public Bag getAddItemToBag(@RequestBody BagItemDTO bagItem) {
-    	BagItem bi = bagItemDTOMapper.dtoToDo(bagItem);
-    	bagItemService.save(bi);
-    	return bi.getBag();
+	public Bag getAddItemToBag(@RequestBody BagItemDTO dto) {
+    	Bag b = bagService.findByCode(dto.getBagUserName());
+    	
+    	Product p = productService.findByCode(	dto.getLocale(), 
+												dto.getCurrency(), 
+												dto.getItemUPC());
+    	
+		b.addItem(p, dto.getQty());
+		
+    	bagService.save(b);
+    	return b;
 	}
     
     @PostMapping("/Customer/Update")

@@ -2,14 +2,15 @@ package io.nzbee.domain.bag;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
 
 public class Bag {
 	
+	@JsonManagedReference
 	private Set<BagItem> bagItems;
 	private BagStatus bagStatus;
 	
@@ -31,11 +32,7 @@ public class Bag {
 	}
 	
 	public void addItem(Product p, int qty) {
-		BagItem BagItem = new BagItem(this, p, qty);
-		this.getBagItems().add(BagItem);
-	}
-	
-	public void addItem(BagItem bi) {
+		BagItem bi = new BagItem(this, p, qty);
 		this.getBagItems().add(bi);
 	}
 	

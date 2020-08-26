@@ -56,7 +56,7 @@ public class BagMapperImpl implements IBagMapper {
 		//use the add item method on the domain object to 
 		//ensure business rules are fired against each added bagItem
 		sbi.forEach(bi -> {
-			b.addItem(bi);
+			b.addItem(bi.getProduct(), bi.getQuantity());
 		});
 		
 		return b;
