@@ -24,7 +24,7 @@ public class BagItem {
 	private Long bagItemId;
 	
 	@ManyToOne
-	@JoinColumn(name="bag_id", nullable=false, updatable = false, insertable = true)
+	@JoinColumn(name="bag_id")
 	private Bag bag;
 	
 	@ManyToOne
