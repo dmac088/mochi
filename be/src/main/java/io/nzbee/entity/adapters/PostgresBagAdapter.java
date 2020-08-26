@@ -43,18 +43,12 @@ public class PostgresBagAdapter implements IBagPortService {
 	}
 	
 	@Override
-	public Bag addItemToBag(String userName, BagItem bagItem) {
-		Bag b = this.findByCode(userName);
-		b.addItem(bagItem);
-		this.save(userName,b);
+	public Bag addItemToBag(BagItem bagItem) {
+		//in order to construct a bagItem the bagItem must already be linked to a bag
+		//so we simply need to persist the bag
+		Bag b = bagItem.getBag();
+		this.save(b);
 		return b;
-	}
-
-
-	@Override
-	public void save(String userName, Bag domainObject) {
-		io.nzbee.entity.bag.Bag b = bagMapper.doToEntity(userName, domainObject);
-		bagService.save(b);
 	}
 
 	@Override
@@ -71,8 +65,8 @@ public class PostgresBagAdapter implements IBagPortService {
 
 	@Override
 	public void save(Bag domainObject) {
-		// TODO Auto-generated method stub
-		
+		io.nzbee.entity.bag.Bag b = bagMapper.doToEntity(domainObject);
+		bagService.save(b);
 	}
 
 
