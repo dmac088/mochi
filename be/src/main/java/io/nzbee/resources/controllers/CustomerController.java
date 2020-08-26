@@ -24,6 +24,7 @@ import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.bag.item.BagItemDTO;
 import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
 
@@ -37,6 +38,9 @@ public class CustomerController {
     
     @Autowired
     private IBagService bagService;
+    
+    @Autowired
+    private IBagItemService bagItemService;
     
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -89,7 +93,7 @@ public class CustomerController {
     @PostMapping("/Customer/Bag")
 	public Bag getAddItemToBag(@RequestBody BagItemDTO bagItem) {
     	BagItem bi = bagItemDTOMapper.dtoToDo(bagItem);
-    	bagService.save(bi.getBag());
+    	bagItemService.save(bi);
     	return bi.getBag();
 	}
     

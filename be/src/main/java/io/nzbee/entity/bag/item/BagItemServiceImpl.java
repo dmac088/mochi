@@ -38,7 +38,7 @@ public class BagItemServiceImpl implements IBagItemService {
 
 	@Override
 	public void save(BagItem t) {
-		// TODO Auto-generated method stub
+		bagItemRepository.save(t);
 		
 	}
 
