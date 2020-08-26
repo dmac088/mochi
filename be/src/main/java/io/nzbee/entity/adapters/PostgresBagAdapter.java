@@ -44,7 +44,8 @@ public class PostgresBagAdapter implements IBagPortService {
 	
 	@Override
 	public Bag addItemToBag(String userName, BagItem bagItem) {
-		Bag b = bagItem.getBag();
+		Bag b = this.findByCode(userName);
+		b.addItem(bagItem);
 		this.save(userName,b);
 		return b;
 	}

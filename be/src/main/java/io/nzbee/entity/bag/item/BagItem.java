@@ -31,6 +31,11 @@ public class BagItem {
 	@JoinColumn(name="prd_id")
 	private Product product;
 	
+	
+	public BagItem() {
+	
+	}
+	
 	public Product getProduct() {
 		return product;
 	}
