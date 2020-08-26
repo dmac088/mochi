@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
@@ -87,7 +88,9 @@ public class CustomerController {
     
     @PostMapping("/Customer/Bag")
 	public Bag getAddItemToBag(@RequestBody BagItemDTO bagItem) {
-    	return bagService.addItemToBag(bagItemDTOMapper.dtoToDo(bagItem));
+    	BagItem bi = bagItemDTOMapper.dtoToDo(bagItem);
+    	bagService.save(bi.getBag());
+    	return bi.getBag();
 	}
     
     @PostMapping("/Customer/Update")
