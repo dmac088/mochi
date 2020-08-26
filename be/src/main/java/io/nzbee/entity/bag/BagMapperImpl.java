@@ -56,7 +56,10 @@ public class BagMapperImpl implements IBagMapper {
 					   		.collect(Collectors.toSet());
 		
 		//add the bag items to the bag
-		b.setBagItems(sbi);
+		sbi.stream()
+			.forEach(bi -> {
+				b.addItem(bi);
+			});
 		
 		//set the customer of the bag
 		b.setParty(op.get());
