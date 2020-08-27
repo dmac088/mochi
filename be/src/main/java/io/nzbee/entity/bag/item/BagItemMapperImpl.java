@@ -33,7 +33,6 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	public io.nzbee.entity.bag.item.BagItem doToEntity(BagItem d) {
 		Optional<io.nzbee.entity.product.Product> op = productService.findByCode(d.getProduct().getProductUPC());
 		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem();
-		//bi.setBag(bagMapper.doToEntity(d.getBag()));
 		bi.setQuantity(d.getQuantity());
 		bi.setProduct(op.get());
 		return bi;
