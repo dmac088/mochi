@@ -29,9 +29,6 @@ public class ProductMapperImpl implements IProductMapper {
 													Department department, 
 													ProductCategory category) {
 		
-		
-		
-		
 		if(e instanceof Accessories) {
 			io.nzbee.domain.product.Product pO = new io.nzbee.domain.product.Accessories(
 					e.getProductUPC(),
