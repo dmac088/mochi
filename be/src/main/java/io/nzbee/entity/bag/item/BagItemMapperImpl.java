@@ -23,10 +23,10 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	private IProductService productService;
 	
 	@Override
-	public BagItem entityToDo(io.nzbee.entity.bag.item.BagItem e) {
+	public BagItem entityToDo(String locale, String currency, io.nzbee.entity.bag.item.BagItem e) {
 		Bag b = bagMapper.entityToDo(e.getBag());
-		Product p = productMapper.entityToDo(e.getProduct());
-		System.out.println(e.getProduct().getProductUPC());
+		Product p = productMapper.entityToDo(productService.findByCode(locale, currency, e.getProduct().getProductUPC()).get());
+//		System.out.println(e.getProduct().getProductUPC());
 		System.out.println(p.getProductUPC());
 		return new BagItem(b, p, e.getQuantity());
 	}
@@ -37,6 +37,12 @@ public class BagItemMapperImpl implements IBagItemMapper {
 		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem(op.get());
 		bi.setQuantity(d.getQuantity());	
 		return bi;
+	}
+
+	@Override
+	public BagItem entityToDo(io.nzbee.entity.bag.item.BagItem e) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

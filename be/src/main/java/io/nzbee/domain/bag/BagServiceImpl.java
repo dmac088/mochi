@@ -10,8 +10,8 @@ public class BagServiceImpl implements IBagService {
 	
 	
 	@Override
-	public Bag findByCode(String userName) {
-		return bagService.findByCode(userName);
+	public Bag findByCode(String locale, String currency, String userName) {
+		return bagService.findByCode(locale, currency, userName);
 	}
 
 
@@ -32,5 +32,12 @@ public class BagServiceImpl implements IBagService {
 	public void update(Bag object) {
 		// TODO Auto-generated method stub
 		
+	}
+
+
+	@Override
+	public Bag findByCode(String userName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
