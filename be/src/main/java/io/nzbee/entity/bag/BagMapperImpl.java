@@ -40,7 +40,7 @@ public class BagMapperImpl implements IBagMapper {
 	}
 
 	@Override
-	public Bag entityToDo(Person p, io.nzbee.entity.bag.Bag e) {
+	public Bag entityToDo(String locale, String currency, Person p, io.nzbee.entity.bag.Bag e) {
 		
 		//we need a customer to instantiate a new bag
 		Customer c = personMapper.entityToDo(p);
@@ -50,7 +50,7 @@ public class BagMapperImpl implements IBagMapper {
 		
 		//map the entity bagItems to the domain bagItems
 		Set<io.nzbee.domain.bag.BagItem> sbi = e.getBagItems().stream()
-							 .map(bi -> bagItemMapper.entityToDo(bi))
+							 .map(bi -> bagItemMapper.entityToDo(locale, currency, bi))
 							 .collect(Collectors.toSet());
 		
 		//use the add item method on the domain object to 
@@ -95,6 +95,12 @@ public class BagMapperImpl implements IBagMapper {
 				
 		//persist the bag
 		return b;
+	}
+
+	@Override
+	public Bag entityToDo(Person p, io.nzbee.entity.bag.Bag e) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

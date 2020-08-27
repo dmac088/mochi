@@ -25,7 +25,7 @@ public class PostgresBagAdapter implements IBagPortService {
 	
 	
 	@Override
-	public Bag findByCode(String userName) {
+	public Bag findByCode(String locale, String currency, String userName) {
 		Optional<io.nzbee.entity.bag.Bag> ob = bagService.findByCode(userName);
 		
 		Person p = (ob.isPresent())
@@ -38,7 +38,7 @@ public class PostgresBagAdapter implements IBagPortService {
 									: new io.nzbee.entity.bag.Bag();
 	
 		//map the bag to a domain object
-		return bagMapper.entityToDo(p, b);
+		return bagMapper.entityToDo(locale, currency, p, b);
 	}
 
 	@Override
@@ -57,6 +57,12 @@ public class PostgresBagAdapter implements IBagPortService {
 	public void save(Bag domainObject) {
 		io.nzbee.entity.bag.Bag b = bagMapper.doToEntity(domainObject);
 		bagService.save(b);
+	}
+
+	@Override
+	public Bag findByCode(String userName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

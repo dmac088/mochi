@@ -10,6 +10,8 @@ public class BagItem {
 	private Bag bag;
 	private Product product;
 	private int quantity;
+	private String locale;
+	private String currency;
 	
 	public BagItem(Bag bag, 
 			  	   Product p, 
@@ -31,4 +33,12 @@ public class BagItem {
 		return quantity;
 	}
 
+	public String getLocale() {
+		return locale;
+	}
+
+	public String getCurrency() {
+		return currency;
+	}
+	
 }

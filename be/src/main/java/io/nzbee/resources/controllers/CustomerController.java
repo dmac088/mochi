@@ -91,14 +91,15 @@ public class CustomerController {
 	public Bag getAddItemToBag(@RequestBody BagItemDTO dto) {
     	
     	//here we get the bag and bagItems but the products are null
-    	Bag b = bagService.findByCode(dto.getBagUserName());
-    	
-    	System.out.println(b.getBagItems().size());
+    	Bag b = bagService.findByCode(	dto.getLocale(), 
+    									dto.getCurrency(), 
+    									dto.getBagUserName());
     	
     	Product p = productService.findByCode(	dto.getLocale(), 
 												dto.getCurrency(), 
 												dto.getItemUPC());
     	
+    	System.out.println(b == null);
 		b.addItem(p, dto.getQty());
 		
     	bagService.save(b);

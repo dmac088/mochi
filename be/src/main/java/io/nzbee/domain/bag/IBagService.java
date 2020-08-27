@@ -6,4 +6,6 @@ public interface IBagService extends IService<Bag> {
 
 	Bag findByCode(String userName);
 
+	Bag findByCode(String locale, String currency, String userName);
+
 }
