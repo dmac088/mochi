@@ -18,13 +18,13 @@ public class DepartmentMapper implements IDepartmentMapper {
 	}
 
 	@Override
-	public Department entityToDo(Department e) {
+	public io.nzbee.domain.department.Department entityToDo(Department e) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Department doToEntity(Department d) {
+	public Department doToEntity(io.nzbee.domain.department.Department d) {
 		// TODO Auto-generated method stub
 		return null;
 	}

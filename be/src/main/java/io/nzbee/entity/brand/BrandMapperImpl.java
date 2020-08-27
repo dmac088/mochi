@@ -19,13 +19,13 @@ public class BrandMapperImpl implements IBrandMapper {
 	}
 
 	@Override
-	public Brand entityToDo(Brand e) {
+	public io.nzbee.domain.brand.Brand entityToDo(Brand e) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Brand doToEntity(Brand d) {
+	public Brand doToEntity(io.nzbee.domain.brand.Brand d) {
 		// TODO Auto-generated method stub
 		return null;
 	}

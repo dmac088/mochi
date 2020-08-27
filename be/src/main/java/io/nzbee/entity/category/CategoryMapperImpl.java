@@ -30,8 +30,8 @@ public class CategoryMapperImpl implements ICategoryMapper {
 
 	@Override
 	public Category doToEntity(io.nzbee.domain.category.Category d) {
-		
 		return null;
 	}
+
 	
 }
