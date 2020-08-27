@@ -82,6 +82,7 @@ ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT uc_bnd_lcl;
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT uc_bnd_desc_lcl_cd;
 ALTER TABLE ONLY mochi.brand DROP CONSTRAINT uc_bnd_cd;
 ALTER TABLE ONLY mochi.bag_status DROP CONSTRAINT uc_bag_sts_cd;
+ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT uc_bag_item;
 ALTER TABLE ONLY mochi.tag DROP CONSTRAINT tag_pkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.role_type DROP CONSTRAINT role_type_rle_typ_desc_key;
@@ -3242,6 +3243,14 @@ ALTER TABLE ONLY tag_attr_lcl
 
 ALTER TABLE ONLY tag
     ADD CONSTRAINT tag_pkey PRIMARY KEY (tag_id);
+
+
+--
+-- Name: bag_item uc_bag_item; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag_item
+    ADD CONSTRAINT uc_bag_item UNIQUE (bag_id, prd_id);
 
 
 --

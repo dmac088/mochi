@@ -6501,6 +6501,14 @@ ALTER TABLE ONLY tag
 
 
 --
+-- Name: bag_item uc_bag_item; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag_item
+    ADD CONSTRAINT uc_bag_item UNIQUE (bag_id, prd_id);
+
+
+--
 -- Name: bag_status uc_bag_sts_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
