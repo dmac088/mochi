@@ -26,8 +26,6 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	public BagItem entityToDo(String locale, String currency, io.nzbee.entity.bag.item.BagItem e) {
 		Bag b = bagMapper.entityToDo(e.getBag());
 		Product p = productMapper.entityToDo(productService.findByCode(locale, currency, e.getProduct().getProductUPC()).get());
-//		System.out.println(e.getProduct().getProductUPC());
-		System.out.println(p.getProductUPC());
 		return new BagItem(b, p, e.getQuantity());
 	}
 
