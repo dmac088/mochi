@@ -99,7 +99,6 @@ public class CustomerController {
 												dto.getCurrency(), 
 												dto.getItemUPC());
     	
-    	System.out.println(b == null);
 		b.addItem(p, dto.getQty());
 		
     	bagService.save(b);
