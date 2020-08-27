@@ -17,8 +17,7 @@ public class BagServiceImpl implements IBagService {
 
 	@Override
 	public void save(Bag object) {
-		// TODO Auto-generated method stub
-		
+		bagService.save(object);		
 	}
 
 

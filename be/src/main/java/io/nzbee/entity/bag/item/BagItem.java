@@ -22,7 +22,7 @@ public class BagItem {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bag_item_id")
 	private Long bagItemId;
-	
+
 	@ManyToOne
 	@JoinColumn(name="bag_id")
 	private Bag bag;
@@ -34,10 +34,6 @@ public class BagItem {
 	
 	public BagItem() {
 	
-	}
-	
-	public Product getProduct() {
-		return product;
 	}
 
 	@Column(name="qty")
@@ -65,6 +61,14 @@ public class BagItem {
 
 	public void setBag(Bag bag) {
 		this.bag = bag;
+	}
+	
+	public Product getProduct() {
+		return product;
+	}
+
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 	
 	@Override
