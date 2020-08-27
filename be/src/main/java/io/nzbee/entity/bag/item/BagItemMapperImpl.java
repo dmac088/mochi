@@ -26,15 +26,16 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	public BagItem entityToDo(io.nzbee.entity.bag.item.BagItem e) {
 		Bag b = bagMapper.entityToDo(e.getBag());
 		Product p = productMapper.entityToDo(e.getProduct());
+		System.out.println(e.getProduct().getProductUPC());
+		System.out.println(p.getProductUPC());
 		return new BagItem(b, p, e.getQuantity());
 	}
 
 	@Override
 	public io.nzbee.entity.bag.item.BagItem doToEntity(BagItem d) {
 		Optional<io.nzbee.entity.product.Product> op = productService.findByCode(d.getProduct().getProductUPC());
-		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem();
-		bi.setQuantity(d.getQuantity());
-		bi.setProduct(op.get());
+		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem(op.get());
+		bi.setQuantity(d.getQuantity());	
 		return bi;
 	}
 
