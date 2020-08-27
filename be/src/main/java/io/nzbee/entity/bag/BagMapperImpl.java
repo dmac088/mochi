@@ -76,8 +76,6 @@ public class BagMapperImpl implements IBagMapper {
 		io.nzbee.entity.bag.Bag b = (obe.isPresent())
 									 ? obe.get()
 									 : nbe;
-									 
-		System.out.println("size = " + d.getBagItems().size());
 				
 		//map the domain bagItems to entity bagItems
 		Set<BagItem> sbi = d.getBagItems().stream()
