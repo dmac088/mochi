@@ -32,6 +32,7 @@ public class BagMapperImpl implements IBagMapper {
 	
 	@Autowired
 	private IBagService bagService;
+	
 
 	@Override
 	public Bag entityToDo(io.nzbee.entity.bag.Bag e) {
@@ -65,26 +66,39 @@ public class BagMapperImpl implements IBagMapper {
 	@Override
 	public io.nzbee.entity.bag.Bag doToEntity(Bag d) {
 		//get the bag, status, and customer from the database
-		Optional<io.nzbee.entity.bag.Bag> obe = bagService.findByCode(d.getCustomer().getUserName());
-		Optional<io.nzbee.entity.bag.status.BagStatus> obs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
-		Optional<io.nzbee.entity.party.person.Person> op = personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
+		Optional<io.nzbee.entity.bag.Bag> obe 					= bagService.findByCode(d.getCustomer().getUserName());
+		Optional<io.nzbee.entity.bag.status.BagStatus> obs 		= bagStatusService.findByCode(Constants.bagStatusCodeNew);
+		Optional<io.nzbee.entity.party.person.Person> op	 	= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
 					
 		io.nzbee.entity.bag.Bag nbe = new io.nzbee.entity.bag.Bag();
 		nbe.setBagStatus(obs.get());
 				
 		//use the existing bag if it exists otherwise use newly created
 		io.nzbee.entity.bag.Bag b = (obe.isPresent())
-									 ? obe.get()
-									 : nbe;
+									? obe.get()
+									: nbe;
 				
+									
+									
 		//map the domain bagItems to entity bagItems
 		Set<BagItem> sbi = d.getBagItems().stream()
-					   		.map(bi -> bagItemMapper.doToEntity(bi))
+					   		.map(bi -> {
+					   			
+					   			Optional<BagItem> obi = b.getBagItems().stream().filter(i -> i.getProduct().getProductUPC().equals(bi.getProduct().getProductUPC())).findFirst();
+					   			
+					   			if (obi.isPresent()) {
+					   				BagItem bie = obi.get();
+					   				bie.setQuantity(bi.getQuantity());
+					   				return bie;
+					   			}
+					   			
+					   			return bagItemMapper.doToEntity(bi);
+					   		})
 					   		.collect(Collectors.toSet());
 				
 		//add the bag items to the bag
 		sbi.stream()
-			.forEach(bi -> {
+		   .forEach(bi -> {
 				b.addItem(bi);
 			});
 				
