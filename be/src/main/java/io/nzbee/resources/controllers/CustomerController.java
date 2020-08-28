@@ -15,14 +15,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.domain.bag.Bag;
-import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
-import io.nzbee.domain.product.IProductService;
-import io.nzbee.domain.product.Product;
 import io.nzbee.domain.services.GenericResponse;
-import io.nzbee.dto.bag.item.BagItemDTO;
 import io.nzbee.dto.customer.CustomerDTO;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
@@ -34,12 +29,7 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
-    
-    @Autowired
-    private IBagService bagService;
-    
-    @Autowired
-	private IProductService productService;
+ 
     
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -82,28 +72,6 @@ public class CustomerController {
     	return customerService.findByUsername(username);
 	}
     
-    @GetMapping("/Customer/Bag")
-	public Bag getCustomerBag(Principal principal) {
-    	return bagService.findByCode(principal.getName());
-	}
-    
-    @PostMapping("/Customer/Bag")
-	public Bag getAddItemToBag(@RequestBody BagItemDTO dto) {
-    	
-    	//here we get the bag and bagItems but the products are null
-    	Bag b = bagService.findByCode(	dto.getLocale(), 
-    									dto.getCurrency(), 
-    									dto.getBagUserName());
-    	
-    	Product p = productService.findByCode(	dto.getLocale(), 
-												dto.getCurrency(), 
-												dto.getItemUPC());
-    	
-		b.addItem(p, dto.getQty());
-		
-    	bagService.save(b);
-    	return b;
-	}
     
     @PostMapping("/Customer/Update")
     public GenericResponse updateCustomer(@RequestBody final CustomerDTO customer) {
