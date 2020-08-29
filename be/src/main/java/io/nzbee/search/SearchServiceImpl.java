@@ -519,8 +519,8 @@ public class SearchServiceImpl implements ISearchService {
 
 		CategoryProduct cp = new CategoryProduct();
 		CategoryAttribute ca = new CategoryAttribute();
-		cp.setCategoryCode(r[14].toString());
-		ca.setCategoryDesc(r[15].toString());
+		cp.setCategoryCode(r[15].toString());
+		ca.setCategoryDesc(r[14].toString());
 		ca.setLclCd(locale);
 		cp.setCategoryAttribute(ca);
 		p.setPrimaryCategory(cp);
