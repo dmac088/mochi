@@ -7,7 +7,6 @@ public class BagItemDTOMapperImpl implements IBagItemDTOMapper {
 	@Override
 	public BagItemDTO doToDto(BagItem d) {
 		BagItemDTO bi = new BagItemDTO();
-		bi.setBagUserName(d.getBag().getCustomer().getUserName());
 		bi.setLocale(d.getLocale());
 		bi.setCurrency(d.getCurrency());
 		bi.setItemUPC(d.getProduct().getProductUPC());
