@@ -14,6 +14,8 @@ import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.dto.bag.BagDTO;
+import io.nzbee.dto.bag.IBagDTOMapper;
 import io.nzbee.dto.bag.item.BagItemDTO;
 
 
@@ -28,19 +30,22 @@ public class BagController {
     @Autowired
 	private IProductService productService;
     
+    @Autowired
+    private IBagDTOMapper bagDTOMapper;
+    
 
     public BagController() {
         super();
     }
 
     @GetMapping("/Bag/{locale}/{currency}")
-	public Bag getCustomerBag(	@PathVariable String locale, 
+	public BagDTO getCustomerBag(	@PathVariable String locale, 
 								@PathVariable String currency, 
 								Principal principal) {
     	LOGGER.debug("call CustomerController.getCustomerBag");
-    	return bagService.findByCode(locale,
+    	return bagDTOMapper.doToDto(bagService.findByCode(locale,
     								 currency,
-    								 principal.getName());
+    								 principal.getName()));
 	}
     
     @PostMapping("/Bag")
