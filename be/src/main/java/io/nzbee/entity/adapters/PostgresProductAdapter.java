@@ -6,6 +6,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -196,6 +197,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
+	@Cacheable("products")
 	public Product findByCode(String locale, String currency, String code) {
 		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code)
 				.orElseThrow(() -> new ProductNotFoundException("Product for code " + code + " not found!"));
@@ -203,6 +205,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
+	@Cacheable("products")
 	public Product findByDesc(String locale, String currency, String desc) {
 		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, currency, desc)
 				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));;
@@ -210,12 +213,14 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
+	@Cacheable("products")
 	public Set<Product> findAll(String locale, String currency) {
 		List<io.nzbee.entity.product.Product> lp = productService.findAll(locale, currency);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 
 	@Override
+	@Cacheable("products")
 	public <T> Set<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
 		Class<?> clazz = cls.equals(Accessories.class) ? io.nzbee.entity.product.accessories.Accessories.class
@@ -226,6 +231,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
+	@Cacheable("products")
 	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,
 			Set<IFacet> selectedFacets, Set<IFacet> returnFacets) {
 
@@ -240,12 +246,14 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
+	@Cacheable("products")
 	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
 		List<io.nzbee.entity.product.Product> lp =  productService.findAll(locale, currency, codes);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 	
 	@Override
+	@Cacheable("products")
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		

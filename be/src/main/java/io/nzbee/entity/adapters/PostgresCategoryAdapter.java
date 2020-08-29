@@ -7,6 +7,7 @@ import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
@@ -39,17 +40,20 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	private ICategoryMapper categoryMapper;
 
 	@Override
+	@Cacheable("maxprices")
 	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes) {
 		return categoryService.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
 	}
 	
 	@Override
+	@Cacheable("categories")
 	public Set<Category> findAll(String locale, Set<String> codes) {
 		return categoryService.findAll(locale, codes)
 				.stream().map(c -> (Category) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 
 	@Override
+	@Cacheable("categories")
 	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = ", locale, currency, categoryCode, brandCodes, tagCodes, maxPrice);
 		return categoryService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice)
@@ -57,6 +61,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
+	@Cacheable("categories")
 	public Category findByCode(String locale, String code) {
 		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, code)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
@@ -64,6 +69,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}	
 	
 	@Override
+	@Cacheable("categories")
 	public Category findByDesc(String locale, String desc) {
 		io.nzbee.entity.category.Category cp = categoryService.findByDesc(locale, desc)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
@@ -71,12 +77,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 	
 	@Override
+	@Cacheable("categories")
 	public Set<ProductCategory> findAllByProductCode(String locale, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, productCode)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
+	@Cacheable("categories")
 	public ProductCategory findPrimaryByProductCode(String locale, String productCode) {
 		CategoryProduct cp = categoryProductService.findPrimaryByProductCode(locale, productCode)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
@@ -96,18 +104,21 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
+	@Cacheable("categories")
 	public Set<Category> findAll(String locale) {
 		return categoryService.findAll(locale)
 				.stream().map(c -> categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
+	@Cacheable("categories")
 	public Set<ProductCategory> findAllProductCategories(String locale) {
 		return categoryService.findAll(locale, CategoryProduct.class)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
+	@Cacheable("categories")
 	public Set<BrandCategory> findAllBrandCategories(String locale) {
 		return categoryService.findAll(locale, CategoryBrand.class)
 				.stream().map(c -> (BrandCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
