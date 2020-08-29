@@ -39,7 +39,7 @@ public class Role {
 	@Transient
 	private Long roleTypeId = (long) 1;
 	
-	@Column(name="rle_start_dttm")
+	@Column(name="rle_start_dt")
 	private Date RoleStart; 
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
