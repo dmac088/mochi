@@ -48,9 +48,7 @@ public class BagMapperImpl implements IBagMapper {
 		Customer c = personMapper.entityToDo(p);
 		
 		//create a new bag domain object
-		Bag b = new Bag(c,
-						e.getBagCreatedDateTime(),
-						e.getBagUpdatedDateTime());
+		Bag b = new Bag(c);
 		
 		//map the entity bagItems to the domain bagItems
 		Set<io.nzbee.domain.bag.BagItem> sbi = e.getBagItems().stream()
