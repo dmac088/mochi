@@ -1,6 +1,6 @@
 package io.nzbee.test.integration.beans;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -49,7 +49,7 @@ public class ProductEntityBeanFactory {
 	public final Product getProductEntityBean() {
 	
 		Accessories product = new Accessories();
-		product.setProductCreateDt(new Date());
+		product.setProductCreateDt(LocalDateTime.now());
 		product.setUPC("123456789");
 		
 		ProductAttribute paEng = new ProductAttribute();

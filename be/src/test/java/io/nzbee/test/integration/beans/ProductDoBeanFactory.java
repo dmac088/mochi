@@ -1,7 +1,6 @@
 package io.nzbee.test.integration.beans;
 
-import java.util.Date;
-
+import java.time.LocalDateTime;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.brand.Brand;
@@ -17,7 +16,7 @@ public class ProductDoBeanFactory {
 	public final Product getProductDoBean() {
 		
 		return new Accessories(	"3254354673",
-								   new Date(),
+								   LocalDateTime.now(),
 								   "ACT01",
 								   "Test Product Description",
 								   "Test Product Long Description",

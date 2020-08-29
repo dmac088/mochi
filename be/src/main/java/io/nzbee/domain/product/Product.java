@@ -1,7 +1,7 @@
 package io.nzbee.domain.product;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -23,7 +23,7 @@ public abstract class Product {
 	
 	private String productStatus;
 	
-	private Date productCreateDt;
+	private LocalDateTime productCreateDt;
 
 	private String productDesc;
 	
@@ -54,18 +54,18 @@ public abstract class Product {
 	@JsonIgnore
 	private List<Tag> tags;
 	
-	public Product(	String 		productUPC,
-				   	Date 		productCreateDt,
-				   	String 		productStatus,
-				   	String 		productDesc,
-				   	String 		productLongDesc,
-				   	Double 		productRetail,
-				   	Double 		productMarkdown,
-				   	String 		productImage,
-				   	String 		lclCd,
-				   	String 		currency,
-				   	Brand 		brand,
-				   	Department 	department,
+	public Product(	String 			productUPC,
+					LocalDateTime 	productCreateDt,
+				   	String 			productStatus,
+				   	String 			productDesc,
+				   	String 			productLongDesc,
+				   	Double 			productRetail,
+				   	Double 			productMarkdown,
+				   	String 			productImage,
+				   	String 			lclCd,
+				   	String 			currency,
+				   	Brand 			brand,
+				   	Department 		department,
 				   	ProductCategory category) {
 		
 					this.productUPC = productUPC;
@@ -106,7 +106,7 @@ public abstract class Product {
 		return productUPC;
 	}
 
-	public Date getProductCreateDt() {
+	public LocalDateTime getProductCreateDt() {
 		return productCreateDt;
 	}
 

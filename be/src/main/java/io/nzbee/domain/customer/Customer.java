@@ -3,7 +3,6 @@ package io.nzbee.domain.customer;
 import java.util.Objects;
 import io.nzbee.domain.bag.Bag;
 
-
 //we don't bother about dealing with party, even though our data model and persistence layer cater
 //for both persons and organizations in the "Role" of customers, we're only interested in running a 
 //B2C business, therefore all customers will be Persons (at least through the web front end for now)

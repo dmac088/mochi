@@ -1,7 +1,7 @@
 package io.nzbee.search;
 
-import java.util.Date;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -510,7 +510,7 @@ public class SearchServiceImpl implements ISearchService {
 		p.setProductStatus(ps);
 
 		p.setUPC(r[5].toString());
-		p.setProductCreateDt((Date) r[6]);
+		p.setProductCreateDt((LocalDateTime) r[6]);
 		p.setRetailPrice(Double.parseDouble(r[10].toString()));
 		p.setMarkdownPrice(Double.parseDouble(r[11].toString()));
 		p.setLocale(locale);
