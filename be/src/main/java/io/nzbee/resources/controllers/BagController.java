@@ -49,12 +49,12 @@ public class BagController {
 	}
     
     @PostMapping("/Bag")
-	public BagDTO addItemToBag(@RequestBody BagItemDTO dto) {
+	public BagDTO addItemToBag(@RequestBody BagItemDTO dto, Principal principal) {
     	LOGGER.debug("call CustomerController.addItemToBag");
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	dto.getLocale(), 
     									dto.getCurrency(), 
-    									dto.getBagUserName());
+    									principal.getName());
     	
     	Product p = productService.findByCode(	dto.getLocale(), 
 												dto.getCurrency(), 

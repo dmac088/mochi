@@ -2,8 +2,6 @@ package io.nzbee.dto.bag.item;
 
 public class BagItemDTO {
 
-	private String bagUserName;
-	
 	private String itemUPC;
 	
 	private int qty;
@@ -14,14 +12,6 @@ public class BagItemDTO {
 
 	public BagItemDTO() {
 		
-	}
-
-	public String getBagUserName() {
-		return bagUserName;
-	}
-
-	public void setBagUserName(String bagUserName) {
-		this.bagUserName = bagUserName;
 	}
 
 	public String getItemUPC() {
