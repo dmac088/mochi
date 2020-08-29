@@ -1,6 +1,6 @@
 package io.nzbee.entity.product;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -299,7 +299,7 @@ public abstract class Product {
 	
 	@Column(name="prd_crtd_dt")
 	@Field(store=Store.YES)
-	private Date productCreateDt;
+	private LocalDateTime productCreateDt;
 
 	@ManyToMany(fetch = FetchType.LAZY, 
 				cascade = {
@@ -315,7 +315,6 @@ public abstract class Product {
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 				cascade = {
-						//CascadeType.PERSIST,
 						CascadeType.MERGE
 		        }) 
 	@JoinTable(name = "product_tag", schema="mochi", 
@@ -603,11 +602,11 @@ public abstract class Product {
 		this.department = department;
 	}
 
-	public Date getProductCreateDt() {
+	public LocalDateTime getProductCreateDt() {
 		return productCreateDt;
 	}
 
-	public void setProductCreateDt(Date productCreateDt) {
+	public void setProductCreateDt(LocalDateTime productCreateDt) {
 		this.productCreateDt = productCreateDt;
 	}
 	

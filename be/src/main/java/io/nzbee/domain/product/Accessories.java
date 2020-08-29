@@ -1,6 +1,6 @@
 package io.nzbee.domain.product;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
@@ -11,7 +11,7 @@ import io.nzbee.domain.department.Department;
 public class Accessories extends Product {
 
 	public Accessories(	 String productUPC,
-					   	 Date   productCreateDt,
+						 LocalDateTime   productCreateDt,
 					   	 String productStatus,
 					   	 String productDesc,
 					   	 String productLongDesc,

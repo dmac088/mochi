@@ -123,6 +123,9 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	
     	assertThat(found.getBagStatus().getDesc())
 	    .isEqualTo(Constants.bagStatusDescNew);
+    	
+    	assertNotNull(found.getBagCreatedDateTime());
+    	assertNotNull(found.getBagUpdatedDateTime());
     }
     
     @After

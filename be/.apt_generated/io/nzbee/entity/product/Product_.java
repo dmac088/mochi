@@ -7,7 +7,7 @@ import io.nzbee.entity.product.department.Department;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.Tag;
-import java.util.Date;
+import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
@@ -20,7 +20,7 @@ public abstract class Product_ {
 	public static volatile SingularAttribute<Product, Long> productId;
 	public static volatile SingularAttribute<Product, String> productUPC;
 	public static volatile SingularAttribute<Product, ProductStatus> productStatus;
-	public static volatile SingularAttribute<Product, Date> productCreateDt;
+	public static volatile SingularAttribute<Product, LocalDateTime> productCreateDt;
 	public static volatile SetAttribute<Product, ProductAttribute> attributes;
 	public static volatile SetAttribute<Product, CategoryProduct> categories;
 	public static volatile SingularAttribute<Product, Department> department;

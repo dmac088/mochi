@@ -1,5 +1,6 @@
 package io.nzbee.entity.bag;
 
+import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -44,6 +45,13 @@ public class Bag {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="bag_sts_id")
 	private BagStatus bagStatus;
+	
+	
+	@Column(name="bag_crd_dt")
+	private LocalDateTime bagCreatedDateTime;
+
+	@Column(name="bag_upd_dt")
+	private LocalDateTime bagUpdatedDateTime;
 
 	public BagStatus getBagStatus() {
 		return bagStatus;
@@ -81,6 +89,22 @@ public class Bag {
 	public void removeItem(BagItem bi) {
 		this.getBagItems().remove(bi);
 		bi.setBag(null);
+	}
+	
+	public LocalDateTime getBagCreatedDateTime() {
+		return bagCreatedDateTime;
+	}
+
+	public void setBagCreatedDateTime(LocalDateTime bagCreatedDateTime) {
+		this.bagCreatedDateTime = bagCreatedDateTime;
+	}
+
+	public LocalDateTime getBagUpdatedDateTime() {
+		return bagUpdatedDateTime;
+	}
+
+	public void setBagUpdatedDateTime(LocalDateTime bagUpdatedDateTime) {
+		this.bagUpdatedDateTime = bagUpdatedDateTime;
 	}
 	
 	@Override

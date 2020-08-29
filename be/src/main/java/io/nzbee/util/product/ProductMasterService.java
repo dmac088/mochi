@@ -6,6 +6,8 @@ import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +16,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -100,19 +103,11 @@ public class ProductMasterService {
 				departmentDomainService.findByCode(Constants.localeENGB, 
 												   p.get_PRODUCT_TEMPLATE_CODE());
 		
-		DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
-		Date createdDate = null;
-		try {
-		
-			createdDate = 
-				(p.get_PRODUCT_CREATED_DATE().length() == 0)
-				? new Date()
-				: format.parse(p.get_PRODUCT_CREATED_DATE());
-
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		DateTimeFormatter format = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+		LocalDateTime createdDate = null;
+		createdDate = (p.get_PRODUCT_CREATED_DATE().length() == 0)
+					  ? LocalDateTime.now()
+					  : LocalDateTime.parse(p.get_PRODUCT_CREATED_DATE(), format);
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
 		Product pEn = new Accessories(

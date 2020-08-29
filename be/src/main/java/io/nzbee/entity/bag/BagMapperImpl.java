@@ -1,5 +1,6 @@
 package io.nzbee.entity.bag;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -47,7 +48,9 @@ public class BagMapperImpl implements IBagMapper {
 		Customer c = personMapper.entityToDo(p);
 		
 		//create a new bag domain object
-		Bag b = new Bag(c);
+		Bag b = new Bag(c,
+						e.getBagCreatedDateTime(),
+						e.getBagUpdatedDateTime());
 		
 		//map the entity bagItems to the domain bagItems
 		Set<io.nzbee.domain.bag.BagItem> sbi = e.getBagItems().stream()
@@ -66,19 +69,19 @@ public class BagMapperImpl implements IBagMapper {
 	@Override
 	public io.nzbee.entity.bag.Bag doToEntity(Bag d) {
 		//get the bag, status, and customer from the database
-		Optional<io.nzbee.entity.bag.Bag> obe 					= bagService.findByCode(d.getCustomer().getUserName());
-		Optional<io.nzbee.entity.bag.status.BagStatus> obs 		= bagStatusService.findByCode(Constants.bagStatusCodeNew);
-		Optional<io.nzbee.entity.party.person.Person> op	 	= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
+		Optional<io.nzbee.entity.bag.Bag> obe 						= bagService.findByCode(d.getCustomer().getUserName());
+		Optional<io.nzbee.entity.bag.status.BagStatus> onbs 		= bagStatusService.findByCode(Constants.bagStatusCodeNew);
+		Optional<io.nzbee.entity.party.person.Person> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
 					
 		io.nzbee.entity.bag.Bag nbe = new io.nzbee.entity.bag.Bag();
-		nbe.setBagStatus(obs.get());
+		nbe.setBagStatus(onbs.get());
+		nbe.setBagCreatedDateTime(LocalDateTime.now());
+		nbe.setBagUpdatedDateTime(LocalDateTime.now());
 				
 		//use the existing bag if it exists otherwise use newly created
 		io.nzbee.entity.bag.Bag b = (obe.isPresent())
 									? obe.get()
-									: nbe;
-				
-									
+									: nbe;							
 									
 		//map the domain bagItems to entity bagItems
 		Set<BagItem> sbi = d.getBagItems().stream()

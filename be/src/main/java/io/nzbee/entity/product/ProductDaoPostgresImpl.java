@@ -627,8 +627,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   ps.prd_sts_desc,  " + 
 						"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
-						"	   food.exp_dt, " +
-						"	   food.ctry_of_orig, " + 
 						"      :currency as ccy_cd, " +
 						"	   :locale as lcl_cd ") + 
 		
@@ -696,10 +694,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
 		"		) mprc  " +
 		"		ON prd.prd_id = mprc.prd_id  " +
-		
-		"	LEFT JOIN mochi.product_food food " + 
-		"	ON prd.prd_id = food.prd_id    " + 
-		
+	
 		"	LEFT JOIN mochi.product_accessories acc " + 
 		"	ON prd.prd_id = acc.prd_id    " +
 			 
