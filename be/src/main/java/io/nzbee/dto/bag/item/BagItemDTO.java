@@ -6,7 +6,7 @@ public class BagItemDTO {
 	
 	private String itemDesc;
 	
-	private int qty;
+	private int itemQty;
 	
 	private String locale;
 	
@@ -32,12 +32,12 @@ public class BagItemDTO {
 		this.itemDesc = itemDesc;
 	}
 
-	public int getQty() {
-		return qty;
+	public int getItemQty() {
+		return itemQty;
 	}
 
-	public void setQty(int qty) {
-		this.qty = qty;
+	public void setItemQty(int qty) {
+		this.itemQty = qty;
 	}
 	
 	public String getLocale() {
