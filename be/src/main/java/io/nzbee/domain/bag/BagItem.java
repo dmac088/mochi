@@ -38,11 +38,11 @@ public class BagItem {
 	}
 
 	public String getLocale() {
-		return locale;
+		return this.product.getLclCd();
 	}
 
 	public String getCurrency() {
-		return currency;
+		return this.product.getCurrency();
 	}
 	
 }
