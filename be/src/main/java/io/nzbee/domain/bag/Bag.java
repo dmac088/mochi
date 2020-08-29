@@ -1,6 +1,5 @@
 package io.nzbee.domain.bag;
 
-import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -14,8 +13,6 @@ public class Bag {
 	@JsonManagedReference
 	private Set<BagItem> bagItems;
 	private BagStatus bagStatus;
-	private LocalDateTime createTime;
-	private LocalDateTime updateTime;
 
 	@JsonIgnore
 	private Customer customer;
@@ -26,16 +23,6 @@ public class Bag {
 		this.bagStatus 		= BagStatus.NEW;
 	}
 	
-	public Bag(	Customer customer,
-				LocalDateTime createTime,
-				LocalDateTime updateTime) {
-		this.customer 		= customer;
-		this.bagItems 		= new HashSet<BagItem>();
-		this.bagStatus 		= BagStatus.NEW;
-		this.createTime 	= createTime;
-		this.updateTime 	= updateTime;
-	}
-
 	public Customer getCustomer() {
 		return customer;
 	}
@@ -67,11 +54,4 @@ public class Bag {
 		return bagStatus;
 	}
 	
-	public LocalDateTime getCreateTime() {
-		return createTime;
-	}
-
-	public LocalDateTime getUpdateTime() {
-		return updateTime;
-	}
 }
