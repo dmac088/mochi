@@ -49,7 +49,7 @@ public class BagController {
 	}
     
     @PostMapping("/Bag")
-	public Bag addItemToBag(@RequestBody BagItemDTO dto) {
+	public BagDTO addItemToBag(@RequestBody BagItemDTO dto) {
     	LOGGER.debug("call CustomerController.addItemToBag");
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	dto.getLocale(), 
@@ -63,7 +63,7 @@ public class BagController {
 		b.addItem(p, dto.getQty());
 		
     	bagService.save(b);
-    	return b;
+    	return bagDTOMapper.doToDto(b);
 	}
  
     
