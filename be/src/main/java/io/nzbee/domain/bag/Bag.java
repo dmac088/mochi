@@ -54,4 +54,11 @@ public class Bag {
 		return bagStatus;
 	}
 	
+	public int getTotalItems() {
+		return this.getBagItems().size();
+	}
+	
+	public int getTotalQuantity() {
+		return this.getBagItems().stream().mapToInt(BagItem::getQuantity).sum();
+	}
 }
