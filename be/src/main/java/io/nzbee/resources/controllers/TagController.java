@@ -48,7 +48,7 @@ public class TagController {
     																@PathVariable String categoryCode,
     																@RequestBody Set<IFacet> selectedFacets) {
     	
-    	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	LOGGER.debug("call TagController.getTags with parameters: {}, {}, {}", locale, currency, categoryCode);
     	
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
@@ -74,7 +74,7 @@ public class TagController {
     																 @PathVariable String categoryCode,
     																 @RequestBody Set<IFacet> selectedFacets) {
     	
-    	LOGGER.debug("Fetching tags for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	LOGGER.debug("call TagController.getTagFacets with parameters: {}, {}, {}", locale, currency, categoryCode);
     	 
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;

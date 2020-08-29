@@ -52,7 +52,7 @@ public class BrandController {
     																@PathVariable String categoryCode,
     																@RequestBody  Set<IFacet> selectedFacets) {
     	 
-    	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	LOGGER.debug("call BrandController.getBrands with parameters {}, {}, {}", locale, currency, categoryCode);
     	
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
@@ -75,7 +75,7 @@ public class BrandController {
     
     @GetMapping("/Brand/{locale}/{currency}")
     public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale) {
-    	LOGGER.debug("Fetching brands for parameters : {}, {}", locale);
+    	LOGGER.debug("call BrandController.getBrands with parameters: {}, {}", locale);
     	final Set<Brand> collection = 
     			 brandService.findAll(locale);
     	
@@ -88,7 +88,7 @@ public class BrandController {
 	    																 @PathVariable String categoryCode,
 	    																 @RequestBody  Set<IFacet> selectedFacets) {
     	 
-    	LOGGER.debug("Fetching brands for parameters : {}, {}, {}", locale, currency, categoryCode);
+    	LOGGER.debug("call BrandController.getBrandFacets with parameters: {}, {}, {}", locale, currency, categoryCode);
     	
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
@@ -111,7 +111,7 @@ public class BrandController {
 
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
 	public ResponseEntity<BrandResource> get(String locale, String brandCode) {
-    	LOGGER.debug("Fetching brand for parameters : {}, {}, {}", locale, brandCode);
+    	LOGGER.debug("call BrandController.get with parameters: {}, {}, {}", locale, brandCode);
     	Brand b = brandService.findByCode(locale, brandCode);
     	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
 	}
