@@ -43,7 +43,7 @@ public class ProductCategory extends Category {
 	
 	public ProductCategory(	String categoryCode,
 							String categoryDesc,
-							Long level,
+							Long   level,
 							String parentCode,
 							String locale) {
 

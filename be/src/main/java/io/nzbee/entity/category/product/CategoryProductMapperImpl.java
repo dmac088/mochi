@@ -10,6 +10,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 	
 	@Override
 	public ProductCategory entityToDo(CategoryProduct e) {
+		
 		return new ProductCategory(
 				e.getCategoryCode(),
 				e.getCategoryAttribute().getCategoryDesc(),
