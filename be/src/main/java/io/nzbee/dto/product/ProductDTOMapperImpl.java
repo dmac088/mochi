@@ -24,6 +24,9 @@ public class ProductDTOMapperImpl implements IProductDTOMapper {
 		pdto.setProductLongDesc(d.getProductLongDesc());
 		pdto.setProductMarkdown(d.getProductMarkdown());
 		pdto.setProductRetail(d.getProductRetail());
+		pdto.setLocale(d.getLclCd());
+		pdto.setCurrency(d.getCurrency());
+		pdto.setProductType(d.getProductType());
 		
 		return pdto;
 	}
