@@ -16,7 +16,7 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.dto.bag.BagDTO;
 import io.nzbee.dto.bag.IBagDTOMapper;
-import io.nzbee.dto.bag.item.BagItemDTO;
+import io.nzbee.dto.bag.item.BagItemDTOOut;
 
 
 @RestController
@@ -49,7 +49,7 @@ public class BagController {
 	}
     
     @PostMapping("/Bag")
-	public BagDTO addItemToBag(@RequestBody BagItemDTO dto, Principal principal) {
+	public BagDTO addItemToBag(@RequestBody BagItemDTOOut dto, Principal principal) {
     	LOGGER.debug("call CustomerController.addItemToBag");
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	dto.getLocale(), 

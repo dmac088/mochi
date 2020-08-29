@@ -1,11 +1,11 @@
 package io.nzbee.dto;
 
+//in, out, domain
+public interface IMapper<D, E, F> {
 
-public interface IMapper<D, E> {
+	E doToDto(F d);
 
-	D doToDto(E d);
-
-	E dtoToDo(D dto);
+	F dtoToDo(D dto);
 
 
 }
