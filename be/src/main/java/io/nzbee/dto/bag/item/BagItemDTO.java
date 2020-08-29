@@ -4,6 +4,8 @@ public class BagItemDTO {
 
 	private String itemUPC;
 	
+	private String itemDesc;
+	
 	private int qty;
 	
 	private String locale;
@@ -20,6 +22,14 @@ public class BagItemDTO {
 
 	public void setItemUPC(String itemUPC) {
 		this.itemUPC = itemUPC;
+	}
+	
+	public String getItemDesc() {
+		return itemDesc;
+	}
+
+	public void setItemDesc(String itemDesc) {
+		this.itemDesc = itemDesc;
 	}
 
 	public int getQty() {
