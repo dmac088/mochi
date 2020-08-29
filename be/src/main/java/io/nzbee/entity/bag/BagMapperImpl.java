@@ -79,7 +79,9 @@ public class BagMapperImpl implements IBagMapper {
 		//use the existing bag if it exists otherwise use newly created
 		io.nzbee.entity.bag.Bag b = (obe.isPresent())
 									? obe.get()
-									: nbe;							
+									: nbe;		
+									
+		b.setBagUpdatedDateTime(LocalDateTime.now());							
 									
 		//map the domain bagItems to entity bagItems
 		Set<BagItem> sbi = d.getBagItems().stream()
