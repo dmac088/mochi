@@ -60,7 +60,7 @@ public class BagController {
 												dto.getCurrency(), 
 												dto.getItemUPC());
     	
-		b.addItem(p, dto.getQty());
+		b.addItem(p, dto.getItemQty());
 		
     	bagService.save(b);
     	return bagDTOMapper.doToDto(b);
