@@ -35,8 +35,8 @@ function Product(props) {
       </div>
       <div className="product-content">
         <div className="product-categories">
-          <a id="#test" href="#">{product.data.primaryCategory.categoryDesc}</a>,<span> </span>
-          <a id="#test" href="#">{product.data.brand.brandDesc}</a>
+          <a id="#test" href="#">{product.data.primaryCategoryDesc}</a>,<span> </span>
+          <a id="#test" href="#">{product.data.brandDesc}</a>
         </div>
         <h3 className="product-title">
           <a id="#test" href="#">

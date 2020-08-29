@@ -9,6 +9,7 @@ import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.CollectionModel;
@@ -156,18 +157,20 @@ public class ProductController {
 			  value = "/Product/Image/{imageFileName}",
 			  produces = MediaType.IMAGE_JPEG_VALUE
 			)
-			public @ResponseBody ResponseEntity<byte[]> getImageWithMediaType(@PathVariable String imageFileName) {
-				LOGGER.debug("call ProductController.getImageWithMediaType with parameter {}", imageFileName);
-			    InputStream in = getClass().getResourceAsStream("/public/images/" + imageFileName);
-			    try {
-			    	if(!(in == null)) {
-			    		return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), HttpStatus.OK);
-			    	} 
-			    	return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			    return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
-			}
+	@Cacheable("pictures")
+	public @ResponseBody ResponseEntity<byte[]> getImageWithMediaType(@PathVariable String imageFileName) {
+		LOGGER.debug("call ProductController.getImageWithMediaType with parameter {}", imageFileName);
+		InputStream in = getClass().getResourceAsStream("/public/images/" + imageFileName);
+		try {
+			if(!(in == null)) {
+					return new ResponseEntity<byte[]>(IOUtils.toByteArray(in), HttpStatus.OK);
+			} 
+			return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+				
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
+	}
 }

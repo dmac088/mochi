@@ -33,8 +33,8 @@ function ProductGrid(props) {
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a href="shop-left-sidebar.html">{product.data.primaryCategory.categoryDesc}</a>,<span> </span>
-            <a href="shop-left-sidebar.html">{product.data.brand.brandDesc}</a>
+            <a href="shop-left-sidebar.html">{product.data.primaryCategoryDesc}</a>,<span> </span>
+            <a href="shop-left-sidebar.html">{product.data.brandDesc}</a>
           </div>
           <h3 className="product-title"><a href="#">{product.data.productDesc}</a></h3>
           <div className="price-box">
