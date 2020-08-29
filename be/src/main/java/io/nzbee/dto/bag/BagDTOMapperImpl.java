@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.bag.Bag;
-import io.nzbee.dto.bag.item.BagItemDTO;
+import io.nzbee.dto.bag.item.BagItemDTOOut;
 import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 
 @Component
@@ -24,7 +24,7 @@ public class BagDTOMapperImpl implements IBagDTOMapper {
 		dto.setCustomerUserName(d.getCustomer().getUserName());
 		dto.setTotalItems(d.getTotalItems());
 		dto.setTotalQuantity(d.getTotalQuantity());
-		Set<BagItemDTO> sbi = d.getBagItems().stream().map(i -> bagItemMapper.doToDto(i)).collect(Collectors.toSet());
+		Set<BagItemDTOOut> sbi = d.getBagItems().stream().map(i -> bagItemMapper.doToDto(i)).collect(Collectors.toSet());
 		dto.setBagItems(sbi);
 		return dto;
 	}

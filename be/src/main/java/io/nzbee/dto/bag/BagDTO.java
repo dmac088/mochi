@@ -2,13 +2,13 @@ package io.nzbee.dto.bag;
 
 import java.util.Set;
 
-import io.nzbee.dto.bag.item.BagItemDTO;
+import io.nzbee.dto.bag.item.BagItemDTOOut;
 
 public class BagDTO {
 
 	private String customerUserName;
 
-	private Set<BagItemDTO> bagItems;
+	private Set<BagItemDTOOut> bagItems;
 
 	private String bagStatusCode;
 	
@@ -27,11 +27,11 @@ public class BagDTO {
 		this.customerUserName = customerUserName;
 	}
 	
-	public Set<BagItemDTO> getBagItems() {
+	public Set<BagItemDTOOut> getBagItems() {
 		return bagItems;
 	}
 
-	public void setBagItems(Set<BagItemDTO> bagItems) {
+	public void setBagItems(Set<BagItemDTOOut> bagItems) {
 		this.bagItems = bagItems;
 	}
 

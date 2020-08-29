@@ -1,6 +1,6 @@
 package io.nzbee.dto.bag.item;
 
-public class BagItemDTO {
+public class BagItemDTOOut {
 
 	private String itemUPC;
 	
@@ -12,7 +12,7 @@ public class BagItemDTO {
 	
 	private String currency;
 
-	public BagItemDTO() {
+	public BagItemDTOOut() {
 		
 	}
 
