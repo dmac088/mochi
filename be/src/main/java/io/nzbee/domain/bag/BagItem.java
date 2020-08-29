@@ -10,6 +10,8 @@ public class BagItem {
 	private Bag bag;
 	private Product product;
 	private int quantity;
+	private String locale;
+	private String currency;
 	
 	public BagItem(Bag bag, 
 			  	   Product p, 
@@ -17,6 +19,8 @@ public class BagItem {
 		this.bag = bag;
 		this.product = p;
 		this.quantity = quantity;
+		this.locale = p.getLclCd();
+		this.currency = p.getCurrency();
 	}
 
 	public Bag getBag() {
@@ -36,11 +40,11 @@ public class BagItem {
 	}
 
 	public String getLocale() {
-		return this.product.getLclCd();
+		return this.locale;
 	}
 
 	public String getCurrency() {
-		return this.product.getCurrency();
+		return this.currency;
 	}
 	
 }
