@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
@@ -91,6 +93,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	private ICategoryMapper categoryMapper;
 
 	@Override
+	@Transactional
 	public void save(Product domainObject) {
 		if (domainObject instanceof Accessories) {
 
@@ -198,6 +201,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Cacheable("products")
+	@Transactional(readOnly = true)
 	public Product findByCode(String locale, String currency, String code) {
 		io.nzbee.entity.product.Product pe = productService.findByCode(locale, currency, code)
 				.orElseThrow(() -> new ProductNotFoundException("Product for code " + code + " not found!"));
@@ -206,6 +210,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Cacheable("products")
+	@Transactional(readOnly = true)
 	public Product findByDesc(String locale, String currency, String desc) {
 		io.nzbee.entity.product.Product pe = productService.findByDesc(locale, currency, desc)
 				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));;
@@ -214,6 +219,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Cacheable("products")
+	@Transactional(readOnly = true)
 	public Set<Product> findAll(String locale, String currency) {
 		List<io.nzbee.entity.product.Product> lp = productService.findAll(locale, currency);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
@@ -221,6 +227,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Cacheable("products")
+	@Transactional(readOnly = true)
 	public <T> Set<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
 		Class<?> clazz = cls.equals(Accessories.class) ? io.nzbee.entity.product.accessories.Accessories.class
@@ -247,6 +254,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Cacheable("products")
+	@Transactional(readOnly = true)
 	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
 		List<io.nzbee.entity.product.Product> lp =  productService.findAll(locale, currency, codes);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());

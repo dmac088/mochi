@@ -6,15 +6,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
-
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.Constants;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
@@ -69,6 +68,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
     private VerificationTokenRepository tokenRepository;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Customer findByUsername(String userName) {
 		Person p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
@@ -76,6 +76,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 
 	@Override
+	@Transactional
 	public Customer registerNewCustomer(CustomerDTO customer) {
 		boolean exists = personService.userExists(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
 		if(exists) {
@@ -98,6 +99,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 	
 	@Override
+	@Transactional
 	public void save(Customer domainObject) {
 		//in our domain world a customer is a person
 		
@@ -132,6 +134,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	
 	
 	@Override
+	@Transactional
 	public void update(Customer domainObject) {
 		//in our domain world a customer is a person
 		Person p = personService.findByUsernameAndRole(domainObject.getUserName(), io.nzbee.entity.role.customer.Customer.class).get();
@@ -144,6 +147,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 
 	@Override
+	@Transactional
 	public void delete(Customer object) {
 		Person t = personService.findByUsernameAndRole(object.getUserName(), io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerException("Customer with username " + object.getUserName() + " not found!"));
@@ -152,6 +156,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 
 	@Override
+	@Transactional
 	public void update(CustomerDTO dto) {
 		Customer customerDo = new Customer(	dto.getGivenName(),
 											dto.getFamilyName(),
@@ -165,6 +170,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 
 	@Override
+	@Transactional
 	public void delete(String userName) {
 		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
@@ -178,6 +184,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 
 	@Override
+	@Transactional
 	public String validateVerificationToken(String token) {
 		final VerificationToken verificationToken = tokenRepository.findByToken(token);
         if (verificationToken == null) {
@@ -200,6 +207,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Customer getCustomer(String verificationToken) {
 		final VerificationToken token = tokenRepository.findByToken(verificationToken);
         if (token != null) {
@@ -228,6 +236,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
     }
 
 	@Override
+	@Transactional
 	public void addItemToBag(Customer c, BagItem bagItem) {
 		
 		//get the party of the bag, which will be a person

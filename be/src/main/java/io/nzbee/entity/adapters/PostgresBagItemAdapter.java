@@ -2,6 +2,7 @@ package io.nzbee.entity.adapters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.ports.IBagItemPortService;
@@ -18,6 +19,7 @@ public class PostgresBagItemAdapter implements IBagItemPortService {
 	private IBagItemMapper bagItemMapper;
 	
 	@Override
+	@Transactional
 	public void save(BagItem domainObject) {
 		bagItemService.save(bagItemMapper.doToEntity(domainObject));
 	}
