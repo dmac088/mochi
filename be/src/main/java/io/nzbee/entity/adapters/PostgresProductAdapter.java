@@ -262,6 +262,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Override
 	@Cacheable("products")
+	@Transactional(readOnly = true)
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		
