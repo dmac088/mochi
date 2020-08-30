@@ -86,8 +86,7 @@ public class BagMapperImpl implements IBagMapper {
 		//map the domain bagItems to entity bagItems
 		Set<BagItem> sbi = d.getBagItems().stream()
 					   		.map(bi -> {
-					   			
-					   			Optional<BagItem> obi = b.getBagItems().stream().filter(i -> i.getProduct().getProductUPC().equals(bi.getProduct().getProductUPC())).findFirst();
+					   			Optional<BagItem> obi = b.getBagItems().stream().filter(i -> i.getProduct().getProductUPC().equals(bi.getProduct().getProductUPC())).findAny();
 					   			
 					   			if (obi.isPresent()) {
 					   				BagItem bie = obi.get();

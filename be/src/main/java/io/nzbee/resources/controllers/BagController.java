@@ -20,7 +20,7 @@ import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.dto.bag.IBagDTOMapper;
-import io.nzbee.dto.bag.item.BagItemDTOOut;
+import io.nzbee.dto.bag.item.BagItemDTOIn;
 import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 import io.nzbee.resources.bag.BagResource;
 import io.nzbee.resources.bag.BagResourceAssembler;
@@ -82,7 +82,7 @@ public class BagController {
 	}
     
     @PostMapping("/Bag")
-	public ResponseEntity<BagResource>  addItemToBag(@RequestBody BagItemDTOOut dto, Principal principal) {
+	public ResponseEntity<BagResource>  addItemToBag(@RequestBody BagItemDTOIn dto, Principal principal) {
     	LOGGER.debug("call BagController.addItemToBag");
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	dto.getLocale(), 
