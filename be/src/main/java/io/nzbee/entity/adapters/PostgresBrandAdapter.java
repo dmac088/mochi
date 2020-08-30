@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
@@ -19,6 +21,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	
 	@Override
 	@Cacheable("brands")
+	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale) {
 		return brandService.findAll(locale)
 				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
@@ -26,6 +29,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	@Cacheable("brands")
+	@Transactional(readOnly = true)
 	public Brand findByCode(String locale, String code) {
 		io.nzbee.entity.brand.Brand b = brandService.findByCode(locale, code)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
@@ -34,6 +38,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	
 	@Override
 	@Cacheable("brands")
+	@Transactional(readOnly = true)
 	public Brand findByProductCode(String locale, String productCode) {
 		io.nzbee.entity.brand.Brand b = brandService.findByProductCode(locale, productCode)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product code " + productCode));
@@ -42,6 +47,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	@Cacheable("brands")
+	@Transactional(readOnly = true)
 	public Brand findByDesc(String locale, String desc) {
 		io.nzbee.entity.brand.Brand b = brandService.findByDesc(locale, desc)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product desc " + desc));
@@ -50,6 +56,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	@Cacheable("brands")
+	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		
 		return brandService.findAll(locale, 
@@ -63,6 +70,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	@Cacheable("brands")
+	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, String category) {
 		return brandService.findAll(locale, category)
 				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
@@ -70,12 +78,14 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	
 	@Override
 	@Cacheable("brands")
+	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, Set<String> codes) {
 		return brandService.findAll(locale, codes)
 				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
 	}
 	
 	@Override
+	@Transactional
 	public void save(Brand domainObject) {
 		
 		Optional<io.nzbee.entity.brand.Brand> ob = 

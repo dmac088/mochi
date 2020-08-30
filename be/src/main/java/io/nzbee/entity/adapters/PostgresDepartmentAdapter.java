@@ -4,6 +4,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.entity.product.department.IDepartmentMapper;
@@ -20,6 +22,7 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	private IDepartmentMapper departmentMapper;
 	
 	@Override
+	@Transactional(readOnly = true)
 	public Department findByProductCode(String locale, String currency, String productCode) {
 		return (Department) departmentMapper.entityToDo(departmentService.findByProductCode(locale, productCode).get(), locale);		
 	}
@@ -37,6 +40,7 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Department findByCode(String locale, String code) {
 		return (Department) departmentMapper.entityToDo(departmentService.findByCode(locale, code).get(), locale);	
 	}
