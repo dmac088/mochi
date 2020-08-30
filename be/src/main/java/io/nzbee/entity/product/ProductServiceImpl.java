@@ -5,6 +5,9 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.ICategoryService;
@@ -12,6 +15,8 @@ import io.nzbee.entity.category.ICategoryService;
 
 @Service(value = "productEntityService")
 public class ProductServiceImpl implements IProductService {
+	
+	private static final String CACHE_NAME = "productCache";      
 	
 	@Autowired
 	private IProductDao productDAO;
@@ -21,16 +26,19 @@ public class ProductServiceImpl implements IProductService {
 	private ICategoryService categoryService;
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #id}")
 	public Optional<Product> findById(String locale, String currency, long id) {
 		return productDAO.findById(locale, currency, id);
 	}
 
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #code}")
 	public Optional<Product> findByCode(String locale, String currency, String code) {
 		return productDAO.findByCode(locale, currency, code);
 	}
 
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #desc}")
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		return productDAO.findByDesc(locale, currency, desc);
 	}
@@ -41,17 +49,20 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<Product> findAll(String locale, String currency, Set<String> productCodes) {
 		return productDAO.findAll(locale, currency, productCodes);
 	}
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		return productDAO.findAllByType(locale, currency, cls);
 	}
 
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		return productDAO.findAll(
@@ -71,11 +82,24 @@ public class ProductServiceImpl implements IProductService {
 
 
 	@Override
-	public void save(Product t) {
-		productDAO.save(t);
+	@Caching(evict = {
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.productUPC}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productId}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productUPC}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productDesc}"),
+			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true)
+			})
+	public void save(Product product) {
+		productDAO.save(product);
 		
 	}
 
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key="#productUPC")
+	public Optional<Product> findByCode(String productUPC) {
+		return productDAO.findByCode(productUPC);
+	}
+	
 	@Override
 	public void update(Product t) {
 		// TODO Auto-generated method stub
@@ -118,11 +142,4 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
-	@Override
-	public Optional<Product> findByCode(String productUPC) {
-		return productDAO.findByCode(productUPC);
-	}
-
-
-	
 }
