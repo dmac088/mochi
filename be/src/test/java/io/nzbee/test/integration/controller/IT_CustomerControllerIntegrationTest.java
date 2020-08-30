@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -42,6 +44,8 @@ import io.nzbee.test.LoggingRequestInterceptor;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "tst")
 public class IT_CustomerControllerIntegrationTest {
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -117,7 +121,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    	JSONObject jObj = new JSONObject(response.getBody());
 			return jObj.getString("access_token");
 	    } catch (HttpServerErrorException e ) {
-	    	System.out.println(e.getResponseBodyAsString());
+	    	LOGGER.debug(e.getResponseBodyAsString());
 	    } catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -170,7 +174,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
 	    } catch (HttpServerErrorException e ) {
-	    	System.out.println(e.getResponseBodyAsString());
+	    	LOGGER.debug(e.getResponseBodyAsString());
 	    }
 	    
 	    headers = this.getRestHeaders(true);
@@ -210,7 +214,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
-	    	System.out.println(e.getResponseBodyAsString());
+	    	LOGGER.debug(e.getResponseBodyAsString());
 	    }
 	    
 	    //update the customer
@@ -221,7 +225,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
-	    	System.out.println(e.getResponseBodyAsString());
+	    	LOGGER.debug(e.getResponseBodyAsString());
 	    }
 	    
 	    headers = this.getRestHeaders(true);
@@ -259,7 +263,7 @@ public class IT_CustomerControllerIntegrationTest {
 	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
 	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
-	    	System.out.println(e.getResponseBodyAsString());
+	    	LOGGER.debug(e.getResponseBodyAsString());
 	    }
 	    
 	    //delete
