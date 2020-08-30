@@ -38,7 +38,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #desc}")
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
 		return productDAO.findByDesc(locale, currency, desc);
 	}
@@ -86,7 +85,6 @@ public class ProductServiceImpl implements IProductService {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.productUPC}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productId}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productUPC}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productDesc}"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true)
 			})
 	public void save(Product product) {
