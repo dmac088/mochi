@@ -13,7 +13,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import; 
 import org.springframework.http.MediaType;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -64,6 +63,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     PriceFacetResourceAssembler.class,
 							     SecurityBeanConfiguration.class,
 							     Globals.class,
+							     JavaMailSender.class,
 							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
@@ -78,9 +78,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 @Import(WebSecurityConfig.class)
 @ActiveProfiles(profiles = "tst")
 public class IT_CategoryControllerIntegrationTest {
-	
-	@MockBean
-    private JavaMailSender mailSender;
 	
     @Autowired
     private MockMvc mockMvc;
@@ -120,7 +117,7 @@ public class IT_CategoryControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
-        		.andExpect(content().contentType("application/hal+json;charset=UTF-8"))
+        		.andExpect(content().contentType("application/hal+json"))
         		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"))
         		.andExpect(jsonPath("$.data.categoryDesc").value("Fruit"))
         		.andExpect(jsonPath("$.data.locale").value(Constants.localeENGB))
