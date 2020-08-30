@@ -25,6 +25,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Constants;
+import io.nzbee.Globals;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.entity.adapters.PostgresCategoryAdapter;
 import io.nzbee.entity.category.CategoryMapperImpl;
@@ -34,8 +35,13 @@ import io.nzbee.entity.category.brand.CategoryBrandServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductDaoImpl;
 import io.nzbee.entity.category.product.CategoryProductMapperImpl;
 import io.nzbee.entity.category.product.CategoryProductService;
+import io.nzbee.resources.category.CategoryFacetMapper;
+import io.nzbee.resources.category.CategoryFacetResourceAssembler;
 import io.nzbee.resources.category.CategoryResourceAssembler;
 import io.nzbee.resources.controllers.CategoryController;
+import io.nzbee.resources.product.PriceFacetMapper;
+import io.nzbee.resources.product.PriceFacetResourceAssembler;
+import io.nzbee.security.SecurityBeanConfiguration;
 import io.nzbee.security.WebSecurityConfig;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -52,6 +58,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     CategoryProductMapperImpl.class,
 							     CategoryBrandMapperImpl.class,
 							     CategoryResourceAssembler.class,  
+							     CategoryFacetMapper.class,
+							     CategoryFacetResourceAssembler.class,
+							     PriceFacetMapper.class,
+							     PriceFacetResourceAssembler.class,
+							     SecurityBeanConfiguration.class,
+							     Globals.class,
 							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
@@ -94,8 +106,8 @@ public class IT_CategoryControllerIntegrationTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
-        		.andExpect(content().contentType("application/hal+json;charset=UTF-8"))
-        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(43)));
+        		.andExpect(content().contentType("application/hal+json"))
+        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(88)));
         
     }
     
