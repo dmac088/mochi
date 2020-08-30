@@ -1,14 +1,8 @@
 package io.nzbee.dto.bag;
 
-import java.util.Set;
-
-import io.nzbee.dto.bag.item.BagItemDTOOut;
-
 public class BagDTO {
 
 	private String customerUserName;
-
-	private Set<BagItemDTOOut> bagItems;
 
 	private String bagStatusCode;
 	
@@ -25,14 +19,6 @@ public class BagDTO {
 
 	public void setCustomerUserName(String customerUserName) {
 		this.customerUserName = customerUserName;
-	}
-	
-	public Set<BagItemDTOOut> getBagItems() {
-		return bagItems;
-	}
-
-	public void setBagItems(Set<BagItemDTOOut> bagItems) {
-		this.bagItems = bagItems;
 	}
 
 	public String getBagStatusCode() {
