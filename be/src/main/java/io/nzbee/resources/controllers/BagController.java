@@ -3,7 +3,6 @@ package io.nzbee.resources.controllers;
 import java.security.Principal;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,12 +22,10 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.dto.bag.IBagDTOMapper;
 import io.nzbee.dto.bag.item.BagItemDTOOut;
 import io.nzbee.dto.bag.item.IBagItemDTOMapper;
-import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.resources.bag.BagResource;
 import io.nzbee.resources.bag.BagResourceAssembler;
 import io.nzbee.resources.bag.item.BagItemResource;
 import io.nzbee.resources.bag.item.BagItemResourceAssembler;
-import io.nzbee.resources.brand.BrandResource;
 
 
 @RestController
@@ -38,9 +35,6 @@ public class BagController {
 
     @Autowired
     private IBagService bagService;
-    
-    @Autowired
-    private IBagItemService bagItemService;
     
     @Autowired
 	private IProductService productService;
@@ -72,7 +66,7 @@ public class BagController {
 																	    								 principal.getName()))));
 	}
     
-    @GetMapping("/Bag/Items/{locale}/{currency}")
+    @GetMapping("/Bag/{locale}/{currency}/Items")
 	public ResponseEntity<CollectionModel<BagItemResource>> getBagContents(@PathVariable String locale, 
 													  					   @PathVariable String currency, 
 													  					   Principal principal) {
