@@ -78,6 +78,7 @@ public class CategoryMasterService {
 		}
 	}
 	
+	@Transactional
 	public void persistCategoryMaster(CategoryMasterSchema c) {
 		logger.debug("called persistCategoryMaster() ");
 		
