@@ -64,9 +64,9 @@ public class CategoryProductService implements ICategoryProductService {
 	@Override
 	@Caching(evict = {
 			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.currecy, #category.categoryId}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.currecy, #category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.currecy, #category.categoryDesc}"),
+			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
+			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}"),
+			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryDesc}"),
 			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
 			  @CacheEvict(cacheNames = CACHE_NAME, allEntries = true),
 			})
@@ -77,9 +77,9 @@ public class CategoryProductService implements ICategoryProductService {
 	@Override
 	@Caching(evict = {
 			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.currecy, #category.categoryId}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.currecy, #category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.currecy, #category.categoryDesc}"),
+			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
+			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}"),
+			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryDesc}"),
 			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
 			  @CacheEvict(cacheNames = CACHE_NAME, allEntries = true),
 			})
