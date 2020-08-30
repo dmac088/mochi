@@ -7,8 +7,8 @@ import io.nzbee.domain.product.Product;
 public class ProductDTOMapperImpl implements IProductDTOMapper {
 
 	@Override
-	public ProductDTO doToDto(Product d) {
-		ProductDTO pdto = new ProductDTO();
+	public ProductDTOFull doToDto(Product d) {
+		ProductDTOFull pdto = new ProductDTOFull();
 		
 		//brand
 		pdto.setBrandCode(d.getBrand().getBrandCode());
@@ -32,7 +32,7 @@ public class ProductDTOMapperImpl implements IProductDTOMapper {
 	}
 
 	@Override
-	public Product dtoToDo(ProductDTO dto) {
+	public Product dtoToDo(ProductDTOFull dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

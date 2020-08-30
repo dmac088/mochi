@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.dto.product.IProductDTOMapper;
-import io.nzbee.dto.product.ProductDTO;
+import io.nzbee.dto.product.ProductDTOFull;
 import io.nzbee.resources.dto.BrowseResultDto;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
@@ -63,7 +63,7 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final Page<ProductDTO> sp = productService.findAll(	locale, 
+    	final Page<ProductDTOFull> sp = productService.findAll(	locale, 
 															currency, 
 															categoryCode, 
 															new HashSet<String>(), 
@@ -104,7 +104,7 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
-    	final Set<ProductDTO> collection = productService.findAll(locale, currency, productCodes)
+    	final Set<ProductDTOFull> collection = productService.findAll(locale, currency, productCodes)
     													 .stream()
     													 .map(p -> productDTOMapper.doToDto(p))
     													 .collect(Collectors.toSet());
