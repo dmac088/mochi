@@ -5,7 +5,7 @@ package io.nzbee.dto.product;
 //application UI, stitching the UI directly over the domain model results in verbosity in the 
 //domain model in terms of Jackson annotations (i.e. Ignore that we typically want to avoid)
 
-public class ProductDTO {
+public class ProductDTOFull {
 
 	private String productUPC;
 
