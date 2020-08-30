@@ -34,7 +34,7 @@ public class Bag {
 	public void addItem(Product p, int qty) {
 		Optional<BagItem> obi = this.getBagItems().stream()
 		.filter(bi -> bi.getProduct().getProductUPC().equals(p.getProductUPC()))
-		.findFirst();
+		.findAny();
 		
 		BagItem bi = new BagItem(this, p, qty);
 		
