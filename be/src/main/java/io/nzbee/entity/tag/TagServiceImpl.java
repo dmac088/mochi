@@ -56,7 +56,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
 	public Optional<Tag> findByDesc(String locale, String desc) {
 		return productTagDAO.findByDesc(locale, desc);
 	}
@@ -93,7 +92,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.brandCode}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagId}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagCode}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagDesc}"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 			allEntries = true)
 			})
 	public void save(Tag tag) {

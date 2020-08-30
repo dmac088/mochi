@@ -31,7 +31,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
 	public Optional<Category> findByDesc(String locale, String desc) {
 		return categoryDAO.findByDesc(locale, desc);
 	}
