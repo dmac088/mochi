@@ -4,10 +4,8 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.brand.IBrandService;
@@ -20,7 +18,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	private IBrandService brandService;
 	
 	@Override
-	@Cacheable("brands")
 	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale) {
 		return brandService.findAll(locale)
@@ -28,7 +25,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 
 	@Override
-	@Cacheable("brands")
 	@Transactional(readOnly = true)
 	public Brand findByCode(String locale, String code) {
 		io.nzbee.entity.brand.Brand b = brandService.findByCode(locale, code)
@@ -37,7 +33,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 	
 	@Override
-	@Cacheable("brands")
 	@Transactional(readOnly = true)
 	public Brand findByProductCode(String locale, String productCode) {
 		io.nzbee.entity.brand.Brand b = brandService.findByProductCode(locale, productCode)
@@ -46,7 +41,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 
 	@Override
-	@Cacheable("brands")
 	@Transactional(readOnly = true)
 	public Brand findByDesc(String locale, String desc) {
 		io.nzbee.entity.brand.Brand b = brandService.findByDesc(locale, desc)
@@ -55,7 +49,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 
 	@Override
-	@Cacheable("brands")
 	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		
@@ -69,7 +62,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 
 	@Override
-	@Cacheable("brands")
 	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, String category) {
 		return brandService.findAll(locale, category)
@@ -77,7 +69,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	}
 	
 	@Override
-	@Cacheable("brands")
 	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, Set<String> codes) {
 		return brandService.findAll(locale, codes)

@@ -7,10 +7,8 @@ import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
@@ -42,14 +40,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	private ICategoryMapper categoryMapper;
 
 	@Override
-	@Cacheable("maxprices")
 	@Transactional(readOnly = true)
 	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes) {
 		return categoryService.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
 	}
 	
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Set<Category> findAll(String locale, Set<String> codes) {
 		return categoryService.findAll(locale, codes)
@@ -57,7 +53,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = ", locale, currency, categoryCode, brandCodes, tagCodes, maxPrice);
@@ -66,7 +61,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Category findByCode(String locale, String code) {
 		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, code)
@@ -75,7 +69,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}	
 	
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Category findByDesc(String locale, String desc) {
 		io.nzbee.entity.category.Category cp = categoryService.findByDesc(locale, desc)
@@ -84,7 +77,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 	
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Set<ProductCategory> findAllByProductCode(String locale, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, productCode)
@@ -92,7 +84,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 	
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public ProductCategory findPrimaryByProductCode(String locale, String productCode) {
 		CategoryProduct cp = categoryProductService.findPrimaryByProductCode(locale, productCode)
@@ -113,7 +104,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Set<Category> findAll(String locale) {
 		return categoryService.findAll(locale)
@@ -121,7 +111,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 	
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Set<ProductCategory> findAllProductCategories(String locale) {
 		return categoryService.findAll(locale, CategoryProduct.class)
@@ -129,7 +118,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 	
 	@Override
-	@Cacheable("categories")
 	@Transactional(readOnly = true)
 	public Set<BrandCategory> findAllBrandCategories(String locale) {
 		return categoryService.findAll(locale, CategoryBrand.class)
