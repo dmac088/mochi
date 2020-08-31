@@ -19,6 +19,7 @@ public class ProductDTOLightMapperImpl implements IProductDTOLightMapper {
 		//product 
 		pdto.setProductUPC(d.getProductUPC());
 		pdto.setProductDesc(d.getProductDesc());
+		pdto.setProductLongDesc(d.getProductLongDesc());
 		pdto.setProductMarkdown(d.getProductMarkdown());
 		pdto.setProductRetail(d.getProductRetail());
 		pdto.setLocale(d.getLclCd());
