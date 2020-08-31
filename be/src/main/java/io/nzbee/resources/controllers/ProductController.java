@@ -32,6 +32,8 @@ import io.nzbee.dto.product.IProductDTOLightMapper;
 import io.nzbee.dto.product.ProductDTOFull;
 import io.nzbee.dto.product.ProductDTOLight;
 import io.nzbee.resources.dto.BrowseResultDto;
+import io.nzbee.resources.product.ProductFullResource;
+import io.nzbee.resources.product.ProductFullResourceAssembler;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.resources.product.ProductLightResourceAssembler;
 import io.nzbee.search.facet.IFacet;
@@ -52,7 +54,10 @@ public class ProductController {
     private IProductDTOLightMapper productDTOLightMapper;
     
     @Autowired
-    private ProductLightResourceAssembler prodResourceAssembler;
+    private ProductLightResourceAssembler prodLightResourceAssembler;
+    
+    @Autowired
+    private ProductFullResourceAssembler prodFullResourceAssembler;
     
     @Autowired
     private PagedResourcesAssembler<ProductLightResource> prodPagedAssembler;
@@ -79,7 +84,7 @@ public class ProductController {
 															size, 
 															sort).map(d -> productDTOLightMapper.doToDto(d));
     	
-    	final Page<ProductLightResource> pages = sp.map(p -> prodResourceAssembler.toModel(p));
+    	final Page<ProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
     			
     	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
     }
@@ -95,10 +100,10 @@ public class ProductController {
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
-    public ResponseEntity<ProductLightResource> get(	@PathVariable String locale, 
+    public ResponseEntity<ProductFullResource> get(	@PathVariable String locale, 
     											@PathVariable String currency, 
     											@PathVariable String code) {
-    	ProductLightResource pr = prodResourceAssembler.toModel(productDTOLightMapper.doToDto(productService.findByCode(locale, currency, code)));
+    	ProductFullResource pr = prodFullResourceAssembler.toModel(productDTOFullMapper.doToDto(productService.findByCode(locale, currency, code)));
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
@@ -114,7 +119,7 @@ public class ProductController {
     													 .map(p -> productDTOLightMapper.doToDto(p))
     													 .collect(Collectors.toSet());
     	
-        return ResponseEntity.ok(prodResourceAssembler.toCollectionModel(collection));
+        return ResponseEntity.ok(prodLightResourceAssembler.toCollectionModel(collection));
     }
     
   
@@ -153,7 +158,7 @@ public class ProductController {
 													sort
 										  		  );	
 		
-		final Page<ProductLightResource> pages = sp.map(p -> prodResourceAssembler.toModel(productDTOLightMapper.doToDto(p)));
+		final Page<ProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(productDTOLightMapper.doToDto(p)));
 		
 		return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
 	}
