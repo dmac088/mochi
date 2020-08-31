@@ -29,7 +29,6 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.dto.product.IProductDTOFullMapper;
 import io.nzbee.dto.product.IProductDTOLightMapper;
-import io.nzbee.dto.product.ProductDTOFull;
 import io.nzbee.dto.product.ProductDTOLight;
 import io.nzbee.resources.dto.BrowseResultDto;
 import io.nzbee.resources.product.ProductFullResource;
