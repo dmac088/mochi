@@ -75,7 +75,7 @@ public class CustomerController {
     }
     
     @GetMapping("/Customer")
-	public ResponseEntity<CustomerResource> getCustomer(@PathVariable Principal customer) {   	
+	public ResponseEntity<CustomerResource> getCustomer(Principal customer) {   	
     	Customer c = customerService.findByUsername(customer.getName());
     	return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.doToDto(c)));
 	}
