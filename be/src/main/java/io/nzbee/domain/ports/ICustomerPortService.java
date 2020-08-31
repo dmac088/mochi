@@ -2,15 +2,15 @@ package io.nzbee.domain.ports;
 
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
-import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.dto.customer.CustomerDTOIn;
 
 public interface ICustomerPortService extends IPortService<Customer> {
 
 	public Customer findByUsername(String userName);
 	
-	Customer registerNewCustomer(CustomerDTO customer);
+	Customer registerNewCustomer(CustomerDTOIn customer);
 
-	void update(CustomerDTO dto);
+	void update(CustomerDTOIn dto);
 	
 	void delete(String userName);
 

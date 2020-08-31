@@ -2,7 +2,7 @@ package io.nzbee.domain.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.ports.ICustomerPortService;
-import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.dto.customer.CustomerDTOIn;
 
 public class CustomerServiceImpl implements ICustomerService {
 
@@ -15,7 +15,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public Customer registerNewCustomer(CustomerDTO customer) {		
+	public Customer registerNewCustomer(CustomerDTOIn customer) {		
 		return customerService.registerNewCustomer(customer);
 	}
 
@@ -47,7 +47,7 @@ public class CustomerServiceImpl implements ICustomerService {
 	}
 
 	@Override
-	public void update(CustomerDTO customerDTO) {
+	public void update(CustomerDTOIn customerDTO) {
 		customerService.update(customerDTO);
 	}
 

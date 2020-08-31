@@ -1,6 +1,6 @@
 package io.nzbee.dto.customer;
 
-public class CustomerDTO {
+public class CustomerDTOIn {
 
     private String customerId;
 	
@@ -18,8 +18,7 @@ public class CustomerDTO {
     
     private boolean enabled;
 	
-	public CustomerDTO() {
-		super();
+	public CustomerDTOIn() {
 	}
     
 	public String getCustomerId() {

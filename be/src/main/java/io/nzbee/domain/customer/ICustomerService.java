@@ -1,7 +1,7 @@
 package io.nzbee.domain.customer;
 
 import io.nzbee.domain.IService;
-import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.dto.customer.CustomerDTOIn;
 
 public interface ICustomerService extends IService<Customer> {
 
@@ -9,11 +9,11 @@ public interface ICustomerService extends IService<Customer> {
 
 	Customer findByUsername(String userName);
 
-	Customer registerNewCustomer(final CustomerDTO customer);
+	Customer registerNewCustomer(final CustomerDTOIn customer);
 
 	void delete(String userName);
 	
-	void update(CustomerDTO customerDTO);
+	void update(CustomerDTOIn customerDTO);
 
 	void addCustomerLocation(Customer c, String clientIP);
 

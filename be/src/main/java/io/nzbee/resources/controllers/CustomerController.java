@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
-import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
 
@@ -46,7 +46,7 @@ public class CustomerController {
     }
     
     @PostMapping("/Customer/Signup")
-    public GenericResponse registerNewCustomer(@RequestBody final CustomerDTO customer, final HttpServletRequest request) {
+    public GenericResponse registerNewCustomer(@RequestBody final CustomerDTOIn customer, final HttpServletRequest request) {
         LOGGER.debug("Signing up a new customer with information: {}", customer);
         
         Customer c = customerService.registerNewCustomer(customer);
@@ -73,7 +73,7 @@ public class CustomerController {
 	}
        
     @PostMapping("/Customer/Update")
-    public GenericResponse updateCustomer(@RequestBody final CustomerDTO customer) {
+    public GenericResponse updateCustomer(@RequestBody final CustomerDTOIn customer) {
     	customerService.update(customer);
     	return new GenericResponse("success");
 	}
