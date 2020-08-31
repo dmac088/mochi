@@ -67,12 +67,11 @@ public class CustomerController {
         return new GenericResponse("failure");
     }
     
-    @GetMapping("/Customer/UserName/{username}")
-	public Customer getCustomer(@PathVariable String username) {   	
-    	return customerService.findByUsername(username);
+    @GetMapping("/Customer")
+	public Customer getCustomer(@PathVariable Principal customer) {   	
+    	return customerService.findByUsername(customer.getName());
 	}
-    
-    
+       
     @PostMapping("/Customer/Update")
     public GenericResponse updateCustomer(@RequestBody final CustomerDTO customer) {
     	customerService.update(customer);
