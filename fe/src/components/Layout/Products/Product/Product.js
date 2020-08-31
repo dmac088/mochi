@@ -47,7 +47,6 @@ function Product(props) {
 
 
     const retrieveProduct = (id) => {
-        console.log(discovery);
         const url = discovery.links.getProduct.href.replace('{code}', id);
         axios.get(url)
              .then((response) => {
