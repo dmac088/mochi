@@ -5,6 +5,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.dto.customer.CustomerDTOOut;
+import io.nzbee.resources.controllers.BagController;
 import io.nzbee.resources.controllers.CustomerController;
 
 @Component
@@ -18,6 +19,7 @@ public class CustomerResourceAssembler extends RepresentationModelAssemblerSuppo
 	public CustomerResource toModel(CustomerDTOOut c) {
 		CustomerResource cr = new CustomerResource(c);
 		cr.add(linkTo(methodOn(CustomerController.class).getCustomer(null)).withSelfRel());
+		cr.add(linkTo(methodOn(BagController.class).getCustomerBag(null, null, null)).withRel("bag"));
 		return cr;
 	}
 
