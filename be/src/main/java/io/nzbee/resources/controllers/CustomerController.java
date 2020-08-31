@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTOIn;
+import io.nzbee.dto.customer.ICustomerDTOMapper;
+import io.nzbee.resources.customer.CustomerResource;
+import io.nzbee.resources.customer.CustomerResourceAssembler;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
 
@@ -30,10 +34,13 @@ public class CustomerController {
     @Autowired
     private ICustomerService customerService;
  
-    
     @Autowired
     private ApplicationEventPublisher eventPublisher;
     
+    @Autowired
+    private CustomerResourceAssembler customerResourceAssembler;
+    
+    @Autowired ICustomerDTOMapper customerDTOMapper;
 
     public CustomerController() {
         super();
@@ -68,8 +75,9 @@ public class CustomerController {
     }
     
     @GetMapping("/Customer")
-	public Customer getCustomer(@PathVariable Principal customer) {   	
-    	return customerService.findByUsername(customer.getName());
+	public ResponseEntity<CustomerResource> getCustomer(@PathVariable Principal customer) {   	
+    	Customer c = customerService.findByUsername(customer.getName());
+    	return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.doToDto(c)));
 	}
        
     @PostMapping("/Customer/Update")
