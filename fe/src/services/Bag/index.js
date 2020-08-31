@@ -1,6 +1,9 @@
 import { instance as axios } from "../../components/Layout/Helpers/api/axios";
 import LocalStorageService from "../../components/Layout/Helpers/Storage/Bag/LocalStorageService";
 import {
+    getBagStarted,
+    getBagSuccess,
+    getBagFailure,
     getBagItemsStarted,
     getBagItemsSuccess,
     getBagItemsFailure,
@@ -52,7 +55,38 @@ export const addItem = (item) => {
 
 
 export const getBag = () => {
+    return (dispatch, getState) => {
+        const state = getState();
+        
+        dispatch(getBagStarted());  
 
+        axios.get(state.discovery.links.getBag.href)
+        .then((payload) => {
+            return payload.data;
+        }).then((bag) => {
+            dispatch(getBagSuccess(bag));
+            return bag;
+        }).then((bag) => {
+            dispatch(getBagItems(bag));
+        }).catch((error) => {
+            dispatch(getBagFailure(error.response));
+        });
+    }
+}
+
+
+export const getBagItems = (bag) => {
+    return (dispatch) => {
+
+        dispatch(getBagItemsStarted());  
+
+        axios.get(bag._links.bagContents.href)
+        .then((payload) => {
+            dispatch(getBagItemsSuccess(payload.data.data || []));
+        }).catch((error) => {
+            dispatch(getBagItemsFailure(error.response));
+        });
+    }
 }
 
 

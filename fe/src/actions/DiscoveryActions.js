@@ -4,7 +4,7 @@ import  { GET_DISCOVERY_STARTED,
           GET_DISCOVERY_FAILURE
         } from "./ActionTypes";
 import { getAllCategories } from './CategoryActions'
-import { getItems } from '../services/Bag/index'; 
+import { getBag, getBagItems } from '../services/Bag/index'; 
 
   export const discover = () => { 
       return (dispatch) => {
@@ -22,13 +22,12 @@ import { getItems } from '../services/Bag/index';
 
   export const initialize = () => {
     return (dispatch) => {
-        
       return dispatch(discover())
       .then(() => {
         dispatch(getAllCategories());
       })
       .then(() => {
-        dispatch(getItems());
+        dispatch(getBag());
       });
     }
   }

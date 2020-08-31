@@ -1,5 +1,7 @@
 import {
-    ADD_BAG_ITEM,
+    GET_BAG_STARTED,
+    GET_BAG_SUCCESS,
+    GET_BAG_FAILURE,
     GET_BAG_ITEMS_STARTED,
     GET_BAG_ITEMS_SUCCESS,
     GET_BAG_ITEMS_FAILURE,
@@ -9,13 +11,37 @@ import * as bagService from '../services/Bag/index';
 
 const initialState = {
     items: [],
+    bagStatusCode: null,
     totalItems: 0,
-    totalAmount: 0,
+    totalQuantity: 0,
+    links: null,
     loading: false,
 };
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case GET_BAG_STARTED:
+            return {
+                ...state,
+                loading: true,
+            }
+
+        case GET_BAG_SUCCESS:
+            return {
+                ...state,
+                bagStatusCode: action.payload.bag.bagStatusCode,
+                totalItems: action.payload.bag.totalItems,
+                totalQuantity: action.payload.bag.totalQuantity,
+                links: action.payload.links,
+                loading: false,
+            }
+
+        case GET_BAG_FAILURE:
+            return {
+                ...state,
+                error: action.payload.error,
+                loading: false,
+            }
 
         case GET_BAG_ITEMS_STARTED:
             return {
@@ -26,9 +52,7 @@ export default function (state = initialState, action) {
         case GET_BAG_ITEMS_SUCCESS:
             return {
                 ...state,
-                items: action.payload.items,
-                totalItems: bagService.sumTotalItems(action.payload.items),
-                totalAmount: bagService.sumTotalAmount(action.payload.items),
+                items: action.payload.items || [],
                 loading: false,
             }
 
@@ -40,12 +64,9 @@ export default function (state = initialState, action) {
             }
 
         case REMOVE_BAG_ITEM_SUCCESS:
-            const newItems = state.items.filter(i => i.data.productUPC !== action.payload.productCode);
             return {
                 ...state,
-                items: newItems,
-                totalItems: bagService.sumTotalItems(newItems),
-                totalAmount: bagService.sumTotalAmount(newItems),
+                items: action.payload.items || [],
             }
 
         default:

@@ -1,5 +1,8 @@
 
 import {
+  GET_BAG_STARTED,
+  GET_BAG_SUCCESS,
+  GET_BAG_FAILURE,
   GET_BAG_ITEMS_STARTED,
   GET_BAG_ITEMS_SUCCESS,
   GET_BAG_ITEMS_FAILURE,
@@ -10,6 +13,26 @@ import {
   REMOVE_BAG_ITEM_SUCCESS,
   REMOVE_BAG_ITEM_FAILURE,
 } from "./ActionTypes";
+
+export const getBagStarted = () => ({
+  type: GET_BAG_STARTED
+});
+
+export const getBagSuccess = bag => ({
+  type: GET_BAG_SUCCESS,
+  payload: {
+    bag: bag.data,
+    links: bag._links,
+    loading: false,
+  }
+});
+
+export const getBagFailure = error => ({
+  type: GET_BAG_FAILURE,
+  payload: {
+    error,
+  }
+});
 
 export const getBagItemsStarted = () => ({
   type: GET_BAG_ITEMS_STARTED
