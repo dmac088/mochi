@@ -22,6 +22,7 @@ public class ProductDTOFullMapperImpl implements IProductDTOFullMapper {
 		pdto.setProductUPC(d.getProductUPC());
 		pdto.setProductDesc(d.getProductDesc());
 		pdto.setProductLongDesc(d.getProductLongDesc());
+		pdto.setProductLongDesc(d.getProductLongDesc());
 		pdto.setProductMarkdown(d.getProductMarkdown());
 		pdto.setProductRetail(d.getProductRetail());
 		pdto.setLocale(d.getLclCd());

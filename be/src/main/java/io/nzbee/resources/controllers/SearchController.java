@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.dto.product.IProductDTOFullMapper;
+import io.nzbee.dto.product.IProductDTOLightMapper;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.resources.product.ProductLightResourceAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
@@ -32,13 +33,16 @@ public class SearchController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private IProductDTOFullMapper productDTOMapper;
+	private IProductDTOFullMapper productDTOFullMapper;
+	
+	@Autowired
+	private IProductDTOLightMapper productDTOLightMapper;
 	
 	@Autowired
     private IProductPortService productService;
 	
 	@Autowired
-    private ProductLightResourceAssembler prodResourceAssembler;
+    private ProductLightResourceAssembler prodLightResourceAssembler;
 	
 	@Autowired
     private PagedResourcesAssembler<ProductLightResource> prodPagedAssembler;
@@ -67,7 +71,7 @@ public class SearchController {
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
     	//get the resulting pages of product
-    	final Page<ProductLightResource> pages = ipps.search(	locale, 
+    	final Page<ProductLightResource> pages = ipps.search(locale, 
 		    												currency,
 		    												category, 
 		    												Integer.parseInt(page), 
@@ -75,7 +79,7 @@ public class SearchController {
 		    												sort,
 		    												term, 
 		    												selectedFacets,
-		    												returnFacets).map(p -> prodResourceAssembler.toModel(productDTOMapper.doToDto(p)));
+		    												returnFacets).map(p -> prodLightResourceAssembler.toModel(productDTOLightMapper.doToDto(p)));
     	
     	Set<SearchFacetResource> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
     	

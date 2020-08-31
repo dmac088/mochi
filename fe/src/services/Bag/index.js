@@ -51,6 +51,11 @@ export const addItem = (item) => {
 }
 
 
+export const getBag = () => {
+
+}
+
+
 export const getItems = () => {
     return (dispatch, getState) => {
 
@@ -60,7 +65,7 @@ export const getItems = () => {
 
         axios.post(state.discovery.links.getProducts.href, bagItems.map(i => i.productCode))
             .then((payload) => {
-                return payload.data._embedded.productResources;
+                return payload.data._embedded.productLightResources;
             }).then((products) => {
                 const items = products.map(p => {
                     return {
