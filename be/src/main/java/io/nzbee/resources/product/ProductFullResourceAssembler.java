@@ -8,15 +8,15 @@ import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
 
 @Component
-public class ProductResourceAssembler extends RepresentationModelAssemblerSupport<ProductDTOFull, ProductResource> {
+public class ProductFullResourceAssembler extends RepresentationModelAssemblerSupport<ProductDTOFull, ProductFullResource> {
 	
-	public ProductResourceAssembler() {
-		super(ProductController.class, ProductResource.class);
+	public ProductFullResourceAssembler() {
+		super(ProductController.class, ProductFullResource.class);
 	}
 
 	@Override
-	public ProductResource toModel(ProductDTOFull product) {
-		ProductResource pr = new ProductResource(product);
+	public ProductFullResource toModel(ProductDTOFull product) {
+		ProductFullResource pr = new ProductFullResource(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(product.getLocale(), product.getCurrency(),
 				product.getProductUPC())).withSelfRel(),

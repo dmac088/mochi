@@ -27,11 +27,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.product.IProductDTOMapper;
+import io.nzbee.dto.product.IProductDTOFullMapper;
+import io.nzbee.dto.product.IProductDTOLightMapper;
 import io.nzbee.dto.product.ProductDTOFull;
+import io.nzbee.dto.product.ProductDTOLight;
 import io.nzbee.resources.dto.BrowseResultDto;
-import io.nzbee.resources.product.ProductResource;
-import io.nzbee.resources.product.ProductResourceAssembler;
+import io.nzbee.resources.product.ProductLightResource;
+import io.nzbee.resources.product.ProductLightResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 
 @RestController
@@ -44,13 +46,16 @@ public class ProductController {
     private IProductService productService;
     
     @Autowired
-    private IProductDTOMapper productDTOMapper;
+    private IProductDTOFullMapper productDTOFullMapper;
     
     @Autowired
-    private ProductResourceAssembler prodResourceAssembler;
+    private IProductDTOLightMapper productDTOLightMapper;
     
     @Autowired
-    private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
+    private ProductLightResourceAssembler prodResourceAssembler;
+    
+    @Autowired
+    private PagedResourcesAssembler<ProductLightResource> prodPagedAssembler;
     
     
 	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}")
@@ -63,7 +68,7 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final Page<ProductDTOFull> sp = productService.findAll(	locale, 
+    	final Page<ProductDTOLight> sp = productService.findAll(	locale, 
 															currency, 
 															categoryCode, 
 															new HashSet<String>(), 
@@ -72,16 +77,16 @@ public class ProductController {
 															null,
 															page, 
 															size, 
-															sort).map(d -> productDTOMapper.doToDto(d));
+															sort).map(d -> productDTOLightMapper.doToDto(d));
     	
-    	final Page<ProductResource> pages = sp.map(p -> prodResourceAssembler.toModel(p));
+    	final Page<ProductLightResource> pages = sp.map(p -> prodResourceAssembler.toModel(p));
     			
     	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
     }
     
 	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
     			params = { "page", "size" })
-    public ResponseEntity<PagedModel<ProductResource>> getProductsByBrand(	@PathVariable String locale, 
+    public ResponseEntity<PagedModel<ProductLightResource>> getProductsByBrand(	@PathVariable String locale, 
 															    	   		@PathVariable String currency, 
 															    	   		@PathVariable String brandCode,
 															    	   		@RequestParam("page") int page,
@@ -90,23 +95,23 @@ public class ProductController {
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
-    public ResponseEntity<ProductResource> get(	@PathVariable String locale, 
+    public ResponseEntity<ProductLightResource> get(	@PathVariable String locale, 
     											@PathVariable String currency, 
     											@PathVariable String code) {
-    	ProductResource pr = prodResourceAssembler.toModel(productDTOMapper.doToDto(productService.findByCode(locale, currency, code)));
+    	ProductLightResource pr = prodResourceAssembler.toModel(productDTOLightMapper.doToDto(productService.findByCode(locale, currency, code)));
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
     @PostMapping("/Product/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<ProductResource>> getProducts(	@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<ProductLightResource>> getProducts(	@PathVariable String locale, 
     																		@PathVariable String currency, 
     																		@RequestBody final Set<String> productCodes) {
     	
     	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
-    	final Set<ProductDTOFull> collection = productService.findAll(locale, currency, productCodes)
+    	final Set<ProductDTOLight> collection = productService.findAll(locale, currency, productCodes)
     													 .stream()
-    													 .map(p -> productDTOMapper.doToDto(p))
+    													 .map(p -> productDTOLightMapper.doToDto(p))
     													 .collect(Collectors.toSet());
     	
         return ResponseEntity.ok(prodResourceAssembler.toCollectionModel(collection));
@@ -148,7 +153,7 @@ public class ProductController {
 													sort
 										  		  );	
 		
-		final Page<ProductResource> pages = sp.map(p -> prodResourceAssembler.toModel(productDTOMapper.doToDto(p)));
+		final Page<ProductLightResource> pages = sp.map(p -> prodResourceAssembler.toModel(productDTOLightMapper.doToDto(p)));
 		
 		return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
 	}

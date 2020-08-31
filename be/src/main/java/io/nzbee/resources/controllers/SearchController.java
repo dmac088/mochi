@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.dto.product.IProductDTOMapper;
-import io.nzbee.resources.product.ProductResource;
-import io.nzbee.resources.product.ProductResourceAssembler;
+import io.nzbee.dto.product.IProductDTOFullMapper;
+import io.nzbee.resources.product.ProductLightResource;
+import io.nzbee.resources.product.ProductLightResourceAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
 import io.nzbee.resources.search.SearchFacetResourceAssembler;
 import io.nzbee.resources.search.SearchResultResource;
@@ -32,16 +32,16 @@ public class SearchController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private IProductDTOMapper productDTOMapper;
+	private IProductDTOFullMapper productDTOMapper;
 	
 	@Autowired
     private IProductPortService productService;
 	
 	@Autowired
-    private ProductResourceAssembler prodResourceAssembler;
+    private ProductLightResourceAssembler prodResourceAssembler;
 	
 	@Autowired
-    private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
+    private PagedResourcesAssembler<ProductLightResource> prodPagedAssembler;
 	
 	@Autowired
 	private SearchFacetResourceAssembler searchFacetResourceAssembler;
@@ -67,7 +67,7 @@ public class SearchController {
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
     	//get the resulting pages of product
-    	final Page<ProductResource> pages = ipps.search(	locale, 
+    	final Page<ProductLightResource> pages = ipps.search(	locale, 
 		    												currency,
 		    												category, 
 		    												Integer.parseInt(page), 
