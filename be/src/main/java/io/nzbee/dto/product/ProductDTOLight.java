@@ -11,6 +11,8 @@ public class ProductDTOLight {
 
 	private String productDesc;
 	
+	private String productLongDesc;
+
 	private Double productRetail;
 	
 	private Double productMarkdown;
@@ -39,6 +41,14 @@ public class ProductDTOLight {
 
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
+	}
+	
+	public String getProductLongDesc() {
+		return productLongDesc;
+	}
+
+	public void setProductLongDesc(String productLongDesc) {
+		this.productLongDesc = productLongDesc;
 	}
 
 	public Double getProductRetail() {
