@@ -81,7 +81,7 @@ public class BagController {
     	
 	}
     
-    @PostMapping("/Bag")
+    @PostMapping("/Bag/AddItem")
 	public ResponseEntity<BagResource>  addItemToBag(@RequestBody BagItemDTOIn dto, Principal principal) {
     	LOGGER.debug("call BagController.addItemToBag");
     	//here we get the bag and bagItems but the products are null
