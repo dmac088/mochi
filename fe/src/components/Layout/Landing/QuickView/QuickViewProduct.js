@@ -13,8 +13,6 @@ function QuickViewProduct(props) {
   const changeImage = () => {
     console.log('changeImage');
   }
-
-  console.log(product);
   
   return (
     <div className={"modal fade quick-view-modal-container show"}

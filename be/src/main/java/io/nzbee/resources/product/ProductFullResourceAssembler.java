@@ -18,10 +18,10 @@ public class ProductFullResourceAssembler extends RepresentationModelAssemblerSu
 	public ProductFullResource toModel(ProductDTOFull product) {
 		ProductFullResource pr = new ProductFullResource(product);
 
-		pr.add(linkTo(methodOn(ProductController.class).get(product.getLocale(), product.getCurrency(),
+		pr.add(linkTo(methodOn(ProductController.class).get(null, null,
 				product.getProductUPC())).withSelfRel(),
 
-				linkTo(methodOn(CategoryController.class).getCategories(product.getLocale(), product.getProductUPC()))
+				linkTo(methodOn(CategoryController.class).getCategories(null, product.getProductUPC()))
 						.withRel("categories"),
 						
 				linkTo(methodOn(ProductController.class).getImageWithMediaType(product.getProductUPC() + "_1.jpg"))
