@@ -3,11 +3,12 @@ import { Link } from "react-router-dom";
 import { getCheckoutPath, getBagPath } from '../../Helpers/Route/Route'
 import { localization } from '../../Localization/Localization';
 import { useDispatch } from 'react-redux';
+import { Spinner } from '../../Helpers/Animation/Spinner';
 import * as bagService from '../../../../services/Bag/index';
 const $ = window.$;
 
 function Accordion(props) {
-  const { match, bag, product} = props;
+  const { match, bag } = props;
   const { lang } = match.params;
 
   const dispatch = useDispatch();
@@ -34,8 +35,12 @@ function Accordion(props) {
     });
   }
 
+  console.log(bag);
   return (
-    <React.Fragment>
+    
+    (bag.loading)
+    ? <Spinner />
+    : <React.Fragment>
       <div className="cart-items">
         {renderItems(bag.items)}
       </div>
