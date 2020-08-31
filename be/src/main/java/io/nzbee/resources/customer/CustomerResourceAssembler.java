@@ -1,5 +1,7 @@
 package io.nzbee.resources.customer;
 
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.dto.customer.CustomerDTOOut;
@@ -12,10 +14,10 @@ public class CustomerResourceAssembler extends RepresentationModelAssemblerSuppo
 		super(CustomerController.class, CustomerResource.class);
 	}
 
-
 	@Override
 	public CustomerResource toModel(CustomerDTOOut c) {
 		CustomerResource cr = new CustomerResource(c);
+		cr.add(linkTo(methodOn(CustomerController.class).getCustomer(null)).withSelfRel());
 		return cr;
 	}
 
