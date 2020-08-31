@@ -35,7 +35,7 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
-import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.test.LoggingRequestInterceptor;
 
 
@@ -147,8 +147,8 @@ public class IT_CustomerControllerIntegrationTest {
     }
   
     
-    private CustomerDTO customerDefinition() {
-    	CustomerDTO c =  new CustomerDTO();
+    private CustomerDTOIn customerDefinition() {
+    	CustomerDTOIn c =  new CustomerDTOIn();
     	c.setGivenName(CUSTOMER_GIVEN_NAME_EN);
     	c.setFamilyName(CUSTOMER_FAMILY_NAME_EN);
     	c.setUserName(CUSTOMER_USERNAME);
@@ -167,20 +167,20 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpHeaders headers = this.getRestHeaders(false);
 	
 	    //convert to a Customer DTO object 
-	    CustomerDTO customer = this.customerDefinition();
+	    CustomerDTOIn customer = this.customerDefinition();
 	    
-	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    HttpEntity<CustomerDTOIn> customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
 	    try {
-	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	ResponseEntity<CustomerDTOIn> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    	assertEquals(uriDTO.getStatusCodeValue(), HttpStatus.OK.value());
 	    } catch (HttpServerErrorException e ) {
 	    	LOGGER.debug(e.getResponseBodyAsString());
 	    }
 	    
 	    headers = this.getRestHeaders(true);
-	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
-	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTO.class);
-	    CustomerDTO c = uriDo.getBody();
+	    HttpEntity<CustomerDTOIn> request = new HttpEntity<CustomerDTOIn>(headers);
+	    ResponseEntity<CustomerDTOIn> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTOIn.class);
+	    CustomerDTOIn c = uriDo.getBody();
 	    
 	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.OK.value());
 	    assertEquals(CUSTOMER_GIVEN_NAME_EN, c.getGivenName());
@@ -189,9 +189,9 @@ public class IT_CustomerControllerIntegrationTest {
 	    
 	    //delete
 	    headers = this.getRestHeaders(true);
-	    request = new HttpEntity<CustomerDTO>(headers);
-	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
-	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    request = new HttpEntity<CustomerDTOIn>(headers);
+	    customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
+	    ResponseEntity<CustomerDTOIn> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    assertEquals(HttpStatus.OK.value(), uri.getStatusCodeValue()); 
 	    
     }
@@ -206,12 +206,12 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpHeaders headers = this.getRestHeaders(false);
 	
 	    //convert to a Customer DTO object 
-	    CustomerDTO customer = this.customerDefinition();
+	    CustomerDTOIn customer = this.customerDefinition();
 	    
 	    //create the customers
-	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    HttpEntity<CustomerDTOIn> customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
 	    try {
-	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	ResponseEntity<CustomerDTOIn> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
 	    	LOGGER.debug(e.getResponseBodyAsString());
@@ -220,18 +220,18 @@ public class IT_CustomerControllerIntegrationTest {
 	    //update the customer
 	    customer.setGivenName(CUSTOMER_UPDATE_GIVEN_NAME_EN);
 	    headers = this.getRestHeaders(true);
-	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
 	    try {
-	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	ResponseEntity<CustomerDTOIn> uriDTO = restTemplate.exchange(CUSTOMER_UPDATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
 	    	LOGGER.debug(e.getResponseBodyAsString());
 	    }
 	    
 	    headers = this.getRestHeaders(true);
-	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
-	    ResponseEntity<CustomerDTO> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTO.class);
-	    CustomerDTO c = uriDo.getBody();
+	    HttpEntity<CustomerDTOIn> request = new HttpEntity<CustomerDTOIn>(headers);
+	    ResponseEntity<CustomerDTOIn> uriDo = restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTOIn.class);
+	    CustomerDTOIn c = uriDo.getBody();
 	    
 	    assertEquals(uriDo.getStatusCodeValue(), HttpStatus.OK.value());
 	    assertEquals(CUSTOMER_UPDATE_GIVEN_NAME_EN, c.getGivenName());
@@ -240,9 +240,9 @@ public class IT_CustomerControllerIntegrationTest {
 	    
 	    //delete
 	    headers = this.getRestHeaders(true);
-	    request = new HttpEntity<CustomerDTO>(headers);
-	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
-	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    request = new HttpEntity<CustomerDTOIn>(headers);
+	    customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
+	    ResponseEntity<CustomerDTOIn> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    assertEquals(HttpStatus.OK.value(), uri.getStatusCodeValue()); 
     }
     
@@ -256,11 +256,11 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpHeaders headers = this.getRestHeaders(true);
 	
 	    //convert to a Customer DTO object 
-	    CustomerDTO customer = this.customerDefinition();
+	    CustomerDTOIn customer = this.customerDefinition();
 	    
-	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    HttpEntity<CustomerDTOIn> customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
 	    try {
-	    	ResponseEntity<CustomerDTO> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	ResponseEntity<CustomerDTOIn> uriDTO = restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    	assertEquals(HttpStatus.OK.value(), uriDTO.getStatusCodeValue());
 	    } catch (HttpServerErrorException e ) {
 	    	LOGGER.debug(e.getResponseBodyAsString());
@@ -268,8 +268,8 @@ public class IT_CustomerControllerIntegrationTest {
 	    
 	    //delete
 	    headers = this.getRestHeaders(true);
-	    customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
-	    ResponseEntity<CustomerDTO> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
+	    ResponseEntity<CustomerDTOIn> uri = restTemplate.exchange(CUSTOMER_DELETE_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    assertEquals(HttpStatus.OK.value(), uri.getStatusCodeValue()); 
     }
     
@@ -283,9 +283,9 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpHeaders headers = this.getRestHeaders(true);
 	    
 	    headers = this.getRestHeaders(true);
-	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
+	    HttpEntity<CustomerDTOIn> request = new HttpEntity<CustomerDTOIn>(headers);
 	    try {
-	    	restTemplate.exchange(CUSTOMER_READ_ENDPOINT + "asdf", HttpMethod.GET, request, CustomerDTO.class);
+	    	restTemplate.exchange(CUSTOMER_READ_ENDPOINT + "asdf", HttpMethod.GET, request, CustomerDTOIn.class);
 	    } catch (final HttpClientErrorException e) {
 	    	assertEquals(HttpStatus.NOT_FOUND.value(), e.getStatusCode().value());
 	    }
@@ -300,14 +300,14 @@ public class IT_CustomerControllerIntegrationTest {
 	    HttpHeaders headers = this.getRestHeaders(false);
 	
 	    //convert to a Customer DTO object 
-	    CustomerDTO customer = this.customerDefinition();
+	    CustomerDTOIn customer = this.customerDefinition();
 	    //set to a username of a customer we know already exists
 	    customer.setUserName("dmac088");
 	    
 	    //create the customers
-	    HttpEntity<CustomerDTO> customerDTO = new HttpEntity<CustomerDTO>(customer, headers);
+	    HttpEntity<CustomerDTOIn> customerDTO = new HttpEntity<CustomerDTOIn>(customer, headers);
 	    try {
-	    	restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTO.class);
+	    	restTemplate.exchange(CUSTOMER_CREATE_ENDPOINT, HttpMethod.POST, customerDTO, CustomerDTOIn.class);
 	    } catch (final HttpClientErrorException e ) {
 	    	assertEquals(HttpStatus.CONFLICT.value(), e.getStatusCode().value());
 	    }
@@ -320,9 +320,9 @@ public class IT_CustomerControllerIntegrationTest {
 	    interceptors.add(new LoggingRequestInterceptor());
 	    restTemplate.setInterceptors(interceptors);
 	    HttpHeaders headers = this.getRestHeaders(false);
-	    HttpEntity<CustomerDTO> request = new HttpEntity<CustomerDTO>(headers);
+	    HttpEntity<CustomerDTOIn> request = new HttpEntity<CustomerDTOIn>(headers);
 	    try {
-	    	restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTO.class);
+	    	restTemplate.exchange(CUSTOMER_READ_ENDPOINT + CUSTOMER_USERNAME, HttpMethod.GET, request, CustomerDTOIn.class);
 	    } catch (final HttpClientErrorException e ) {
 	    	assertEquals(HttpStatus.UNAUTHORIZED.value(), e.getStatusCode().value());
 	    }

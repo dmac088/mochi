@@ -18,7 +18,7 @@ import io.nzbee.Constants;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
-import io.nzbee.dto.customer.CustomerDTO;
+import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonMapper;
@@ -77,7 +77,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	@Transactional
-	public Customer registerNewCustomer(CustomerDTO customer) {
+	public Customer registerNewCustomer(CustomerDTOIn customer) {
 		boolean exists = personService.userExists(customer.getUserName(), io.nzbee.entity.role.customer.Customer.class);
 		if(exists) {
 			throw new CustomerAlreadyExistException("Customer with username " + customer.getUserName() + " already exists!");
@@ -157,7 +157,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Override
 	@Transactional
-	public void update(CustomerDTO dto) {
+	public void update(CustomerDTOIn dto) {
 		Customer customerDo = new Customer(	dto.getGivenName(),
 											dto.getFamilyName(),
 											dto.getUserName(),
