@@ -1,28 +1,12 @@
-import { instance as axios } from "../components/Layout/Helpers/api/axios";
 import {  GET_CATEGORIES_STARTED,
           GET_CATEGORIES_SUCCESS,
           GET_CATEGORIES_FAILURE } from "./ActionTypes";
 
-export const getAllCategories = () => {
-  return (dispatch, getState) => {
-    dispatch(getCategoriesStarted());
-    const state = getState();
-    return axios.get(state.discovery.links.getAllProductCategories.href)
-    .then((payload) => {
-      return payload.data._embedded.categoryResources;
-    }).then((categories) => {
-      dispatch(getCategoriesSuccess(categories));
-    }).catch((error) => {
-      dispatch(getCategoriesFailure(error.response));
-    });
-  }
-}
-
-const getCategoriesStarted = () => ({
+export const getCategoriesStarted = () => ({
   type: GET_CATEGORIES_STARTED
 });
 
-const getCategoriesSuccess = categories => ({
+export const getCategoriesSuccess = categories => ({
   type: GET_CATEGORIES_SUCCESS,
   payload: {
     list: categories,
@@ -30,7 +14,7 @@ const getCategoriesSuccess = categories => ({
   }
 });
 
-const getCategoriesFailure = error => ({
+export const getCategoriesFailure = error => ({
   type: GET_CATEGORIES_FAILURE,
   payload: {
     error,

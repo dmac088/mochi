@@ -8,7 +8,6 @@ import LocalStorageService from '../../components/Layout/Helpers/Storage/Token/L
 import * as apiConfig from '../api';
 
 export const authenticate = (username, password) => {
-
     return (dispatch, getState) => {
       const state = getState();
       const localStorageService = LocalStorageService.getService();
@@ -25,7 +24,7 @@ export const authenticate = (username, password) => {
   
       dispatch(getSessionStarted());
   
-      instance.post(
+      return instance.post(
         href,
         form,
         apiConfig.config,

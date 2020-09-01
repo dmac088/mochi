@@ -11,7 +11,6 @@ import Account from "./components/Layout/Account/Account";
 import Landing from "./components/Layout/Landing/Landing";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
-import Dashboard from "./components/CategoryTool/Dashboard";
 import Contact from "./components/Layout/Contact/Contact";
 import AddCapability from "./components/CategoryTool/AddCapability";
 import UpdateCapability from "./components/CategoryTool/UpdateCapability";
@@ -50,9 +49,9 @@ function App() {
             exact path="/:lang/:curr/contact"
             render={(props) => renderContainer(Contact, props)} />
 
-          <Route
+          {/* <Route
             exact path="/:lang/:curr/dashboard"
-            render={(props) => renderContainer(Dashboard, props)} />
+            render={(props) => renderContainer(Dashboard, props)} /> */}
 
           <Route
             exact path="/:lang/:curr/addCapability"

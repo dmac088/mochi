@@ -1,3 +1,7 @@
+import { instance as axios } from "../../components/Layout/Helpers/api/axios";
+import { getCategoriesStarted, 
+         getCategoriesSuccess,
+         getCategoriesFailure } from "../../actions/CategoryActions";
 
 
 export const findByDesc = (categories, desc) => {
@@ -11,6 +15,21 @@ export const findByCode = (categories, code) => {
     if(!code) { return; }
     return categories.filter(o => o.data.categoryCode === code)[0];
 }
+
+export const getAllCategories = () => {
+    return (dispatch, getState) => {
+      dispatch(getCategoriesStarted());
+      const state = getState();
+      return axios.get(state.discovery.links.getAllProductCategories.href)
+      .then((payload) => {
+        return payload.data._embedded.categoryResources;
+      }).then((categories) => {
+        dispatch(getCategoriesSuccess(categories));
+      }).catch((error) => {
+        dispatch(getCategoriesFailure(error.response));
+      });
+    }
+  }
 
 export const getChildCategories = (parent = {}, categories = [], children = []) => {
     const c = categories.filter(o => o.data.parentCode === parent.data.categoryCode);
