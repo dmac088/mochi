@@ -18,7 +18,7 @@ function Accordion(props) {
     dispatch(bagService.removeItem(e.target.id));
   }
   
-  const renderItems = (items) => {
+  const renderItems = (items = []) => {
     return items.map((item, index) => {    
       console.log(item);
       return (

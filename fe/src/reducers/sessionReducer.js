@@ -7,6 +7,7 @@ import { GET_SESSION_STARTED,
     loading: false,
     error: null,
     authenticated: false,
+    isDone: false,
   };
   
   export default function(state = initialState, action) {
@@ -23,6 +24,7 @@ import { GET_SESSION_STARTED,
         ...state,
         ...action.payload,
         loading: false,
+        isDone: true,
       }
 
     case GET_SESSION_FAILURE:
@@ -36,6 +38,7 @@ import { GET_SESSION_STARTED,
       return {
         ...initialState.tokens,
         loading: false,
+        isDone: false,
         error: null,
         authenticated: false,
       }

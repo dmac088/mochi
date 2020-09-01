@@ -5,6 +5,7 @@ import { GET_CATEGORIES_STARTED,
   const initialState = {
     list: [] ,
     loading: false,
+    isDone: false,
     error: null,
   };
 
@@ -20,6 +21,8 @@ import { GET_CATEGORIES_STARTED,
         return {
           ...state,
           ...action.payload,
+          loading: false,
+          isDone: true,
         };
 
       case GET_CATEGORIES_FAILURE:
