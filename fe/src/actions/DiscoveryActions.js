@@ -21,13 +21,16 @@ import { getBag, getBagItems } from '../services/Bag/index';
   }
 
   export const initialize = () => {
-    return (dispatch) => {
+    return (dispatch, getState) => {
       return dispatch(discover())
       .then(() => {
-        dispatch(getAllCategories());
-      })
-      .then(() => {
-        dispatch(getBag());
+        dispatch(getAllCategories())
+        .then(() => {
+          dispatch(getBag())
+          .then(() => {
+            dispatch(getBagItems(getState().bag));
+          })
+        });
       });
     }
   }

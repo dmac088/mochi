@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
 import { useDispatch } from 'react-redux';
@@ -13,6 +13,10 @@ function Bag() {
         e.preventDefault();
         dispatch(bagService.removeItem(e.target.id));
     }
+
+    // useEffect(() => {
+    //     dispatch(bagService.getBagAndItems());
+    // }, []);
 
     const renderCartProducts = (items) => {
         return items.map((product, index) => {

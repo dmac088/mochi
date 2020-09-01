@@ -23,7 +23,7 @@ export const add = (item) => {
     return (dispatch) => {
         return dispatch(addItem(item))
             .then(() => {
-                dispatch(getItems());
+              //  dispatch(getItems());
             })
             .catch((error) => {
                 console.log(error);
@@ -31,6 +31,13 @@ export const add = (item) => {
     }
 }
 
+export const addItem = (item) => {
+    return (dispatch) => {
+
+    }
+}
+
+/*
 export const addItem = (item) => {
     return (dispatch) => {
         const allItems = localStorageService.getItems("bagItems") || [];
@@ -52,7 +59,7 @@ export const addItem = (item) => {
         dispatch(getItems());
     }
 }
-
+*/
 
 export const getBag = () => {
     return (dispatch, getState) => {
@@ -60,60 +67,43 @@ export const getBag = () => {
         
         dispatch(getBagStarted());  
 
-        axios.get(state.discovery.links.getBag.href)
+        return axios.get(state.discovery.links.getBag.href)
         .then((payload) => {
-            return payload.data;
+             return payload.data;
         }).then((bag) => {
-            dispatch(getBagSuccess(bag));
-            return bag;
-        }).then((bag) => {
-            dispatch(getBagItems(bag));
+             dispatch(getBagSuccess(bag));
         }).catch((error) => {
-            dispatch(getBagFailure(error.response));
+             dispatch(getBagFailure(error.response));
         });
     }
 }
 
 
-export const getBagItems = (bag) => {
-    return (dispatch) => {
+//we need to inject the dependencies into the function
+export const getBagItems = () => {
+    return (dispatch, getState) => {
 
         dispatch(getBagItemsStarted());  
 
-        axios.get(bag._links.bagContents.href)
+        return axios.get(getState().bag.links.bagContents.href)
         .then((payload) => {
-            dispatch(getBagItemsSuccess(payload.data.data || []));
+            return payload.data._embedded.bagItemResources;
+        }).then((items) => {
+            dispatch(getBagItemsSuccess(items || []));
         }).catch((error) => {
             dispatch(getBagItemsFailure(error.response));
         });
     }
 }
 
-
-export const getItems = () => {
-    return (dispatch, getState) => {
-
-        const state = getState();
-        const bagItems = localStorageService.getItems();
-        dispatch(getBagItemsStarted());
-
-        axios.post(state.discovery.links.getProducts.href, bagItems.map(i => i.productCode))
-            .then((payload) => {
-                return payload.data._embedded.productLightResources;
-            }).then((products) => {
-                const items = products.map(p => {
-                    return {
-                        ...p,
-                        'quantity': bagItems.filter(i => i.productCode === p.data.productUPC)[0].quantity,
-                    }
-                });
-                dispatch(getBagItemsSuccess(items));
-            }).catch((error) => {
-                dispatch(getBagItemsFailure(error.response));
-            });
+export const getBagAndItems = () => {
+    return (dispatch) => {
+        dispatch(getBag())
+        .then((response) => {
+            console.log(response);
+        });
     }
 }
-
 
 export const removeItem = (productCode) => {
     return dispatch => {
@@ -125,17 +115,4 @@ export const removeItem = (productCode) => {
     }
 }
 
-export const sumTotalItems = (items) => {
-    let total = 0;
-    total = items.length;
-    return total;
-}
-
-export const sumTotalAmount = (items) => {
-    let total = 0;
-    for (var i = 0; i < items.length; i++) {
-        total += items[i].data.productMarkdown * parseInt(items[i].quantity);
-    }
-    return total;
-}
 
