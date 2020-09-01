@@ -1,18 +1,23 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Accordion from "./Accordian";
 import { Transition } from 'react-transition-group';
 import { Link } from "react-router-dom";
 import { slide } from '../../Helpers/Animation/Slide';
 import { getBagPath } from '../../Helpers/Route/Route';
 import { localization } from '../../Localization/Localization';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { Spinner } from '../../Helpers/Animation/Spinner';
+import * as bagService from '../../../../services/Bag/index';
 
 function BagMenu(props) {
 
   const { match } = props;
   const { lang } = match.params;
 
+  const dispatch = useDispatch();
+
   const bag = useSelector(state => state.bag);
+  const discovery = useSelector(state => state.discovery);
 
   const [stateInContainer, setInContainer] = useState(false);
 
@@ -36,6 +41,13 @@ function BagMenu(props) {
       setVisible(visibleRef.current);
     }, 500);
   }
+
+
+  useEffect(() => {
+    if(!discovery.loading && discovery.isDone ) {
+        dispatch(bagService.getBag());
+    }
+  }, [discovery.loading, discovery.isDone]);
   
   let container = null;
 
@@ -43,7 +55,12 @@ function BagMenu(props) {
       container = c;
   }
 
+  console.log(bag);
   return (
+    <React.Fragment>
+    {(bag.loading) 
+      ? <Spinner />
+      :
     <div 
         onMouseEnter={setIn}
         onMouseLeave={setNotIn}
@@ -70,7 +87,8 @@ function BagMenu(props) {
               bag={bag}/>
           </div>
       </Transition>
-    </div>
+    </div>}
+    </React.Fragment>
   );
 }
 
