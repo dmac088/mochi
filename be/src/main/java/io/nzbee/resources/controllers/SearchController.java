@@ -57,9 +57,9 @@ public class SearchController {
 	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}",
     					params = { "q", "page", "size", "sort" })
     public ResponseEntity<SearchResultResource> search(	
-						    						@PathVariable String 		 locale,
-						    						@PathVariable String 	  	 currency, 
-						    						@PathVariable String 	  	 category,
+						    						@PathVariable 		  String locale,
+						    						@PathVariable 		  String currency, 
+						    						@PathVariable 		  String category,
 						    						@RequestParam("q") 	  String term, 
 						    						@RequestParam("page") String page,
 											    	@RequestParam("size") String size, 
@@ -87,11 +87,13 @@ public class SearchController {
     }
 	
 	@GetMapping(value = "/Search/{locale}/{currency}/Suggest",
-			params = { "q" })
-	public ResponseEntity<String[]> getSuggestions(	@PathVariable String locale, 
-									@PathVariable String currency, 
-									@RequestParam("q") String term) {
+				params = { "q" })
+	public ResponseEntity<String[]> getSuggestions(	@PathVariable 		String locale, 
+													@PathVariable 		String currency, 
+													@RequestParam("q") 	String term) {
+		
 		LOGGER.debug("Searching for suggestions with patameters: {}, {}", locale, term);
+		
 		return new ResponseEntity< >(productService.getSuggestion(term, locale, currency), HttpStatus.OK);
 	}
 	
