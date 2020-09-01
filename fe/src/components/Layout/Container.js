@@ -5,7 +5,7 @@ import Footer from "./Footer/Footer";
 import BreadCrumb from "./BreadCrumb/BreadCrumb";
 import Scroller from "../Layout/Scroller/Scroller";
 import { isHomePath } from './Helpers/Route/Route';
-import { initialize } from "../../actions/DiscoveryActions";
+import * as discoveryService from "../../services/Discovery/index";
 import { reauthenticate } from "../../services/Session";
 import QuickViewProduct from "./Landing/QuickView/QuickViewProduct";
 
@@ -39,15 +39,17 @@ function Container(props) {
     }
 
     useEffect(() => {
-        dispatch(reauthenticate());
-        dispatch(initialize());
+        dispatch(reauthenticate())
+        .then(() => {
+            dispatch(discoveryService.initialize());
+        });
     }, []);
 
     //we really only want to reinitialize on a change of locale or currency
     //not on every reload, but worry about this later
     useEffect(() => {
         if (prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
-            dispatch(initialize());
+            dispatch(discoveryService.initialize());
         }
     }, [lang, curr]);
 
