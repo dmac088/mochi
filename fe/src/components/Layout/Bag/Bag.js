@@ -23,29 +23,29 @@ function Bag() {
             return(
               <tr key={index}>
                 <td className="pro-thumbnail">
-                  <a id={product.data.productUPC} href="#" onClick={(e) => console.log(e)}>
+                  <a id={product.data.itemUPC} href="#" onClick={(e) => console.log(e)}>
                     <img src={product._links.defaultImage.href} className="img-fluid" alt="Product" />
                   </a>
                 </td> 
                 <td className="pro-title">
-                  <a id={product.data.productUPC} href="#" onClick={(e) => console.log(e)}>
-                    {product.data.productDesc}
+                  <a id={product.data.itemUPC} href="#" onClick={(e) => console.log(e)}>
+                    {product.data.itemDesc}
                   </a>
                 </td>
                 <td className="pro-price">
-                  <span>${product.data.productMarkdown}</span>
+                  <span>${product.data.markdownPrice}</span>
                 </td>
                 <td className="pro-quantity">
                   <div className="pro-qty">
-                    <input type="text" defaultValue={product.quantity} />
+                    <input type="text" defaultValue={product.data.itemQty} />
                   </div>
                 </td>
                 <td className="pro-subtotal">
-                  <span>${product.quantity * product.data.productMarkdown}</span>
+                  <span>${product.data.itemQty * product.data.markdownPrice}</span>
                 </td>
                 <td className="pro-remove">
-                  <a id={product.data.productUPC} onClick={removeItem} href="#">
-                    <i id={product.data.productUPC} onClick={removeItem} className="fa fa-trash-o"></i>
+                  <a id={product.data.itemUPC} onClick={removeItem} href="#">
+                    <i id={product.data.itemUPC} onClick={removeItem} className="fa fa-trash-o"></i>
                   </a>
                 </td>
               </tr>

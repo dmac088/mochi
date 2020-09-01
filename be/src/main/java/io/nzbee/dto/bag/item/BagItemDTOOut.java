@@ -11,6 +11,8 @@ public class BagItemDTOOut {
 	private String locale;
 	
 	private String currency;
+	
+	private double markdownPrice;
 
 	public BagItemDTOOut() {
 		
@@ -54,5 +56,13 @@ public class BagItemDTOOut {
 
 	public void setCurrency(String currency) {
 		this.currency = currency;
+	}
+	
+	public double getMarkdownPrice() {
+		return markdownPrice;
+	}
+
+	public void setMarkdownPrice(double markdownPrice) {
+		this.markdownPrice = markdownPrice;
 	}
 }
