@@ -7,6 +7,7 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 function Bag() {
 
     const bag = useSelector(state => state.bag);
+    const bagContents = useSelector(state => state.bagContents);
     const dispatch = useDispatch();
 
     const removeItem = (e) => {
@@ -14,11 +15,13 @@ function Bag() {
         dispatch(bagService.removeItem(e.target.id));
     }
 
-    // useEffect(() => {
-    //     dispatch(bagService.getBagAndItems());
-    // }, []);
+    useEffect(() => {
+        if(!bag.loading && bag.isDone ) {
+            dispatch(bagService.getBagContents());
+        }
+    }, [bag.loading, bag.isDone]);
 
-    const renderCartProducts = (items) => {
+    const renderCartProducts = (items = []) => {
         return items.map((product, index) => {
             return(
               <tr key={index}>
@@ -49,13 +52,13 @@ function Bag() {
                   </a>
                 </td>
               </tr>
-            )
+            ) 
           });
       }
 
     return (
         <React.Fragment>
-            {(bag.loading) 
+            {(bagContents.loading) 
             ? <Spinner />
             :
             <div className="page-section section mb-50">
@@ -76,7 +79,7 @@ function Bag() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {renderCartProducts(bag.items)}
+                                            {renderCartProducts(bagContents.items)}
                                         </tbody>
                                     </table>
                                 </div>

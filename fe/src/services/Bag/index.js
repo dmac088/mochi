@@ -4,12 +4,15 @@ import {
     getBagStarted,
     getBagSuccess,
     getBagFailure,
-    getBagItemsStarted,
-    getBagItemsSuccess,
-    getBagItemsFailure,
+} from '../../actions/BagActions';
+
+import {
+    getBagContentsStarted,
+    getBagContentsSuccess,
+    getBagContentsFailure,
     removeBagItemStarted,
     removeBagItemSuccess,
-} from '../../actions/BagActions';
+} from '../../actions/BagContentsActions';
 
 const localStorageService = LocalStorageService.getService();
 
@@ -61,6 +64,16 @@ export const addItem = (item) => {
 }
 */
 
+export const getBagAndItems = () => {
+    return (dispatch, getState) => {
+        dispatch(getBag())
+                    .then(() => {
+                        dispatch(getBagContents(getState().bag));
+                    });
+    }
+}
+    
+
 export const getBag = () => {
     return (dispatch, getState) => {
         const state = getState();
@@ -78,29 +91,19 @@ export const getBag = () => {
     }
 }
 
-
 //we need to inject the dependencies into the function
-export const getBagItems = () => {
+export const getBagContents = () => {
     return (dispatch, getState) => {
 
-        dispatch(getBagItemsStarted());  
+        dispatch(getBagContentsStarted());  
 
         return axios.get(getState().bag.links.bagContents.href)
         .then((payload) => {
             return payload.data._embedded.bagItemResources;
         }).then((items) => {
-            dispatch(getBagItemsSuccess(items || []));
+            dispatch(getBagContentsSuccess(items || []));
         }).catch((error) => {
-            dispatch(getBagItemsFailure(error.response));
-        });
-    }
-}
-
-export const getBagAndItems = () => {
-    return (dispatch) => {
-        dispatch(getBag())
-        .then((response) => {
-            console.log(response);
+            dispatch(getBagContentsFailure(error.response));
         });
     }
 }

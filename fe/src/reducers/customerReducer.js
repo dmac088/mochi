@@ -9,6 +9,7 @@ import {
 
 const initialState = {
     loading: false,
+    isDone: false,
     error: null,
 };
 
@@ -27,6 +28,7 @@ export default function (state = initialState, action) {
         ...state,
         ...action.payload,
         loading: false,
+        isDone: true,
     }
 
     case REGISTER_CUSTOMER_FAILURE:
