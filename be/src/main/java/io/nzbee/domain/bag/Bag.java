@@ -3,18 +3,13 @@ package io.nzbee.domain.bag;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
 
 public class Bag {
 	
-	@JsonManagedReference
 	private Set<BagItem> bagItems;
 	private BagStatus bagStatus;
-
-	@JsonIgnore
 	private Customer customer;
 
 	public Bag(	Customer customer) {
