@@ -12,7 +12,6 @@ public class BagDTOMapperImpl implements IBagDTOMapper {
 		BagDTO dto = new BagDTO();
 		dto.setBagStatusCode(d.getBagStatus().toString());
 		dto.setBagStatusDesc(d.getBagStatus().toString());
-		dto.setCustomerUserName(d.getCustomer().getUserName());
 		dto.setTotalItems(d.getTotalItems());
 		dto.setTotalQuantity(d.getTotalQuantity());
 		return dto;
