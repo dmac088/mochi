@@ -16,12 +16,6 @@ import {
 
 const localStorageService = LocalStorageService.getService();
 
-const checkProduct = (items, productCode) => {
-    return items.some(function (item) {
-        return item.productCode === productCode;
-    });
-}
-
 export const add = (item) => {
     return (dispatch) => {
         return dispatch(addItem(item))
@@ -35,34 +29,14 @@ export const add = (item) => {
 }
 
 export const addItem = (item) => {
-    return (dispatch) => {
-        console.log(item);
+    return (dispatch, getState) => {
+        return axios.post(getState().bag.links.addItem.href,
+                          item)
+                    .then((payload) => {
+                        dispatch(getBagAndItems());
+                    });
     }
 }
-
-/*
-export const addItem = (item) => {
-    return (dispatch) => {
-        const allItems = localStorageService.getItems("bagItems") || [];
-
-        if (checkProduct(allItems, item.productCode)) {
-            const foundItem = allItems.find(x => x.productCode === item.productCode);
-            const updatedItem = {
-                ...foundItem,
-                quantity: Number(foundItem.quantity) + Number(item.quantity),
-            }
-            const newAllItems = allItems.filter(i => i.productCode !== item.productCode);
-            newAllItems.push(updatedItem)
-            localStorageService.setItems(JSON.stringify(newAllItems));
-            dispatch(getItems());
-            return;
-        }
-        allItems.push(item);
-        localStorageService.setItems(JSON.stringify(allItems));
-        dispatch(getItems());
-    }
-}
-*/
 
 export const getBagAndItems = () => {
     return (dispatch, getState) => {

@@ -37,8 +37,8 @@ function Products(props) {
     const addToBag = (e) => {
         e.preventDefault();
         dispatch(bagService.addItem({
-                                "productCode": e.target.id, 
-                                "quantity": 1,
+                                "itemUPC": e.target.id, 
+                                "itemQty": 1,
                             }));
     }
 

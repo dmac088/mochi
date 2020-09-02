@@ -60,14 +60,11 @@ function Product(props) {
         });
     }
 
-    const addToBag = (e, product) => {
-        console.log('addToBag');
+    const addToBag = (e, productCode, quantity) => {
         e.preventDefault();
         dispatch(bagService.addItem({
-                                "itemUPC":  product.productCode, 
-                                "itemQty":  product.quantity,
-                                "locale":   product.locale,
-	                            "currency": product.currency
+                                "itemUPC": productCode, 
+                                "itemQty": quantity
                             }));
     }
 
