@@ -2,8 +2,6 @@ package io.nzbee.dto.bag;
 
 public class BagDTO {
 
-	private String customerUserName;
-
 	private String bagStatusCode;
 	
 	private String bagStatusDesc;
@@ -11,15 +9,6 @@ public class BagDTO {
 	private int totalItems;
 	
 	private int totalQuantity;
-	
-	
-	public String getCustomerUserName() {
-		return customerUserName;
-	}
-
-	public void setCustomerUserName(String customerUserName) {
-		this.customerUserName = customerUserName;
-	}
 
 	public String getBagStatusCode() {
 		return bagStatusCode;
