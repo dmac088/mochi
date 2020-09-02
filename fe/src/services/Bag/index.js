@@ -36,7 +36,7 @@ export const add = (item) => {
 
 export const addItem = (item) => {
     return (dispatch) => {
-
+        console.log(item);
     }
 }
 

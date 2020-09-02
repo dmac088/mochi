@@ -58,8 +58,8 @@ public class BagController {
 
     @GetMapping("/Bag/{locale}/{currency}")
 	public ResponseEntity<BagResource> getCustomerBag(	@PathVariable String locale, 
-								@PathVariable String currency, 
-								Principal principal) {
+														@PathVariable String currency, 
+														Principal principal) {
     	LOGGER.debug("call BagController.getCustomerBag");
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(bagService.findByCode(locale,
 																	    								 currency,
@@ -81,16 +81,20 @@ public class BagController {
     	
 	}
     
-    @PostMapping("/Bag/Items/Add")
-	public ResponseEntity<BagResource>  addItemToBag(@RequestBody BagItemDTOIn dto, Principal principal) {
+    @PostMapping("/Bag/{locale}/{currency}/Items/Add")
+	public ResponseEntity<BagResource>  addItemToBag(	@PathVariable String locale, 
+														@PathVariable String currency,
+														@RequestBody BagItemDTOIn dto, 
+														Principal principal) {
+    	
     	LOGGER.debug("call BagController.addItemToBag");
     	//here we get the bag and bagItems but the products are null
-    	Bag b = bagService.findByCode(	dto.getLocale(), 
-    									dto.getCurrency(), 
+    	Bag b = bagService.findByCode(	locale, 
+    									currency, 
     									principal.getName());
     	
-    	Product p = productService.findByCode(	dto.getLocale(), 
-												dto.getCurrency(), 
+    	Product p = productService.findByCode(	locale, 
+												currency, 
 												dto.getItemUPC());
     	
 		b.addItem(p, dto.getItemQty());
