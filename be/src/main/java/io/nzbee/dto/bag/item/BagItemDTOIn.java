@@ -5,10 +5,6 @@ public class BagItemDTOIn {
 	private String itemUPC;
 	
 	private int itemQty;
-	
-	private String locale;
-	
-	private String currency;
 
 	public BagItemDTOIn() {
 		
@@ -30,19 +26,4 @@ public class BagItemDTOIn {
 		this.itemQty = qty;
 	}
 	
-	public String getLocale() {
-		return locale;
-	}
-
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-	
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
 }
