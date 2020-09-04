@@ -50,7 +50,7 @@ public class BagItemServiceImpl implements IBagItemService {
 
 	@Override
 	public void delete(BagItem t) {
-		// TODO Auto-generated method stub
+		bagItemRepository.delete(t);
 		
 	}
 

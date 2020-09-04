@@ -50,7 +50,7 @@ export const authenticate = (username, password) => {
   
       if (!refreshToken) {
         console.log("No refresh token found in localstorage");
-        return;
+        return new Promise(function(resolve, reject) { return resolve(); });
       }
   
       return axios.post(
