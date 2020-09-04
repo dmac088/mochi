@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
+import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
@@ -35,6 +36,9 @@ public class BagController {
 
     @Autowired
     private IBagService bagService;
+    
+    @Autowired
+    private IBagItemService bagItemService;
     
     @Autowired
 	private IProductService productService;
@@ -116,10 +120,11 @@ public class BagController {
     									principal.getName());
     	
     	
+    	BagItem item = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(dto.getItemUPC())).findAny().get();
     	
-    	b.removeItem(b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(dto.getItemUPC())).findAny().get());
+    	b.removeItem(item);
     	
-    	bagService.save(b);
+    	bagItemService.delete(item);
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));
 	}
  

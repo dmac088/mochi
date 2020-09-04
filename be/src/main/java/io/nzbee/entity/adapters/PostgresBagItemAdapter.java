@@ -32,8 +32,7 @@ public class PostgresBagItemAdapter implements IBagItemPortService {
 
 	@Override
 	public void delete(BagItem domainObject) {
-		// TODO Auto-generated method stub
-		
+		bagItemService.delete(bagItemMapper.doToEntity(domainObject));
 	}
 
 }

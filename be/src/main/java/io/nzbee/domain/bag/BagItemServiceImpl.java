@@ -17,8 +17,7 @@ public class BagItemServiceImpl implements IBagItemService{
 
 	@Override
 	public void delete(BagItem object) {
-		// TODO Auto-generated method stub
-		
+		bagItemService.delete(object);
 	}
 
 	@Override
