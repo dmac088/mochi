@@ -1,6 +1,7 @@
 package io.nzbee.resources.controllers;
 
 import java.security.Principal;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.slf4j.Logger;
@@ -108,7 +109,7 @@ public class BagController {
 	}
     
     @GetMapping("/Bag/{locale}/{currency}/Items/Remove/{itemCode}")
-	public ResponseEntity<BagResource>  removeItemFromBag(	@PathVariable String locale, 
+	public void removeItemFromBag(	@PathVariable String locale, 
 															@PathVariable String currency,
 															@PathVariable String itemCode, 
 															Principal principal) {
@@ -119,10 +120,12 @@ public class BagController {
     									currency, 
     									principal.getName());
     	
-    	BagItem item = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(itemCode)).findAny().get();
+    	Optional<BagItem> obi = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(itemCode)).findAny();
     	
-    	bagItemService.delete(item);
-    	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));
+    	if(obi.isPresent()) {
+    		bagItemService.delete(obi.get());	
+    	}
+    	
 	}
  
     
