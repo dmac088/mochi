@@ -74,12 +74,14 @@ function Product(props) {
     }
 
     useEffect(() => {
-        if(discovery.loaded) {
+        if(discovery.isDone) {
+            console.log('bang');
             if(prevLang !== lang || prevCurr !== curr || stateObject.loading) {
+                console.log('pop');
                 retrieveProduct(productCode);
             }
         }
-    }, [discovery.loaded, stateObject.loading, lang, curr]);
+    }, [discovery.isDone, stateObject.loading, lang, curr]);
 
     const { product } = stateObject;
     const { primaryCategory } = product;
