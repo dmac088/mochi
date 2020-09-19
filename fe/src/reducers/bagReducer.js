@@ -18,7 +18,8 @@ export default function (state = initialState, action) {
         case GET_BAG_STARTED:
             return {
                 ...state,
-                loading: true,
+                loading:        action.payload.loading,
+                isDone:         action.payload.isDone,
             }
 
         case GET_BAG_SUCCESS:
@@ -28,15 +29,16 @@ export default function (state = initialState, action) {
                 totalItems:     action.payload.bag.totalItems,
                 totalQuantity:  action.payload.bag.totalQuantity,
                 links:          action.payload.links,
-                loading: false,
-                isDone: true,
+                loading:        action.payload.loading,
+                isDone:         action.payload.isDone,
             }
 
         case GET_BAG_FAILURE:
             return {
                 ...state,
-                error: action.payload.error,
-                loading: false,
+                error:          action.payload.error,
+                loading:        action.payload.loading,
+                isDone:         action.payload.isDone,
             }
 
         default:

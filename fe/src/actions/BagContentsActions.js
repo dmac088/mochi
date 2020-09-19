@@ -11,9 +11,12 @@ import {
   REMOVE_BAG_ITEM_FAILURE,
 } from "./ActionTypes";
 
-
 export const getBagContentsStarted = () => ({
-  type: GET_BAG_CONTENTS_STARTED
+  type: GET_BAG_CONTENTS_STARTED,
+  payload: {
+    loading: true,
+    isDone: false,
+  }
 });
 
 export const getBagContentsSuccess = items => ({
@@ -21,6 +24,7 @@ export const getBagContentsSuccess = items => ({
   payload: {
     items: items,
     loading: false,
+    isDone: true,
   }
 });
 
@@ -28,6 +32,8 @@ export const getBagContentsFailure = error => ({
   type: GET_BAG_CONTENTS_FAILURE,
   payload: {
     error,
+    loading: false,
+    isDone: false,
   }
 });
 

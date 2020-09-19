@@ -18,28 +18,32 @@ export default function (state = initialState, action) {
         case GET_BAG_CONTENTS_STARTED:
             return {
                 ...state,
-                loading: true,
+                loading: action.payload.loading,
+                isDone: action.payload.isDone,
             }
 
         case GET_BAG_CONTENTS_SUCCESS:
             return {
                 ...state,
                 items: action.payload.items || [],
-                loading: false,
-                isDone: true,
+                loading: action.payload.loading,
+                isDone: action.payload.isDone,
             }
 
         case GET_BAG_CONTENTS_FAILURE:
             return {
                 ...state,
                 error: action.payload.error,
-                loading: false,
+                loading: action.payload.loading,
+                isDone: action.payload.isDone,
             }
 
         case REMOVE_BAG_ITEM_SUCCESS:
             return {
                 ...state,
                 items: action.payload.items || [],
+                loading: action.payload.loading,
+                isDone: action.payload.isDone,
             }
 
         default:

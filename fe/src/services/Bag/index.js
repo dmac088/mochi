@@ -83,10 +83,13 @@ export const getBagContents = () => {
 
         return axios.get(getState().bag.links.bagContents.href)
         .then((payload) => {
-            return payload.data._embedded.bagItemResources;
+            return (payload.data._embedded)
+            ? payload.data._embedded.bagItemResources
+            : [];
         }).then((items) => {
-            dispatch(getBagContentsSuccess(items || []));
+            dispatch(getBagContentsSuccess(items));
         }).catch((error) => {
+            console.log(error);
             dispatch(getBagContentsFailure(error.response));
         });
     }
