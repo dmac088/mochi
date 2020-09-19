@@ -1,5 +1,4 @@
 import { instance as axios } from "../../components/Layout/Helpers/api/axios";
-import LocalStorageService from "../../components/Layout/Helpers/Storage/Bag/LocalStorageService";
 import {
     getBagStarted,
     getBagSuccess,
@@ -17,14 +16,6 @@ import {
     removeBagItemSuccess,
     removeBagItemFailure,
 } from '../../actions/BagContentsActions';
-
-const localStorageService = LocalStorageService.getService();
-
-export const add = (item) => {
-    return (dispatch) => {
-        return dispatch(addItem(item));
-    }
-}
 
 export const addItem = (item) => {
     return (dispatch, getState) => {
@@ -44,9 +35,16 @@ export const addItem = (item) => {
 
 export const removeItem = (itemCode) => {
     return (dispatch, getState) => {
+
+        dispatch(removeBagItemStarted()); 
+
         return axios.post(getState().bag.links.removeItem.href,itemCode)
-                    .then((payload) => {
+                    .then(() => {
+                        dispatch(removeBagItemSuccess());
                         dispatch(getBagAndItems());
+                    })
+                    .catch(() => {
+                        dispatch(removeBagItemFailure()); 
                     });
     }
 }
@@ -60,7 +58,6 @@ export const getBagAndItems = () => {
     }
 }
     
-
 export const getBag = () => {
     return (dispatch, getState) => {
         const state = getState();
