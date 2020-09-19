@@ -31,7 +31,7 @@ export const getBagContentsFailure = error => ({
   }
 });
 
-export const raddBagItemStarted = () => ({
+export const addBagItemStarted = () => ({
   type: ADD_BAG_ITEM_STARTED
 });
 

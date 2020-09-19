@@ -10,28 +10,41 @@ import {
     getBagContentsStarted,
     getBagContentsSuccess,
     getBagContentsFailure,
+    addBagItemStarted,
+    addBagItemSuccess,
+    addBagItemFailure,
     removeBagItemStarted,
     removeBagItemSuccess,
+    removeBagItemFailure,
 } from '../../actions/BagContentsActions';
 
 const localStorageService = LocalStorageService.getService();
 
 export const add = (item) => {
     return (dispatch) => {
-        return dispatch(addItem(item))
-            .then(() => {
-              //  dispatch(getItems());
-            })
-            .catch((error) => {
-                console.log(error);
-            })
+        return dispatch(addItem(item));
     }
 }
 
 export const addItem = (item) => {
     return (dispatch, getState) => {
-        return axios.post(getState().bag.links.addItem.href,
-                          item)
+
+        dispatch(addBagItemStarted()); 
+
+        return axios.post(getState().bag.links.addItem.href,item)
+                    .then(() => {
+                        dispatch(addBagItemSuccess());
+                        dispatch(getBagAndItems());
+                    })
+                    .catch(() => {
+                        dispatch(addBagItemFailure()); 
+                    });
+    }
+}
+
+export const removeItem = (itemCode) => {
+    return (dispatch, getState) => {
+        return axios.post(getState().bag.links.removeItem.href,itemCode)
                     .then((payload) => {
                         dispatch(getBagAndItems());
                     });
@@ -82,14 +95,5 @@ export const getBagContents = () => {
     }
 }
 
-export const removeItem = (productCode) => {
-    return dispatch => {
-        dispatch(removeBagItemStarted());
-        const allItems = localStorageService.getItems();
-        const newAllItems = allItems.filter(i => i.productCode !== productCode);
-        localStorageService.setItems(JSON.stringify(newAllItems));
-        dispatch(removeBagItemSuccess(productCode));
-    }
-}
 
 

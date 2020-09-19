@@ -68,6 +68,11 @@ function Product(props) {
                             }));
     }
 
+    const removeFromBag = (e, productCode) => {
+        e.preventDefault();
+        dispatch(bagService.removeItem(productCode));
+    }
+
     useEffect(() => {
         if(discovery.loaded) {
             if(prevLang !== lang || prevCurr !== curr || stateObject.loading) {
