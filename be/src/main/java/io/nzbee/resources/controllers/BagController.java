@@ -76,13 +76,13 @@ public class BagController {
 													  					   @PathVariable String currency, 
 													  					   Principal principal) {
     	LOGGER.debug("call BagController.getBagContents");
-    	
     	Set<BagItem> sbi =  bagService.findByCode(locale,
 												  currency,
 												  principal.getName()).getBagItems();
     	
     	return ResponseEntity.ok(bagItemResourceAssembler.toCollectionModel(sbi.stream()
-    													 					   .map(bi -> bagItemDTOMapper.doToDto(bi)).collect(Collectors.toSet())));
+    													 					   .map(bi -> bagItemDTOMapper.doToDto(bi))
+    													 					   .collect(Collectors.toSet())));
     	
 	}
     

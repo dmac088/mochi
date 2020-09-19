@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
 import { useDispatch } from 'react-redux';

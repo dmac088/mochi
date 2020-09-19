@@ -18,6 +18,7 @@ import {
 } from '../../actions/BagContentsActions';
 
 export const addItem = (item) => {
+    console.log('addItem');
     return (dispatch, getState) => {
 
         dispatch(addBagItemStarted()); 
@@ -25,7 +26,9 @@ export const addItem = (item) => {
         return axios.post(getState().bag.links.addItem.href,item)
                     .then(() => {
                         dispatch(addBagItemSuccess());
-                        dispatch(getBagAndItems());
+                    })
+                    .then(() => {
+                        dispatch(getBag());
                     })
                     .catch(() => {
                         dispatch(addBagItemFailure()); 
@@ -41,19 +44,10 @@ export const removeItem = (itemCode) => {
         return axios.get(getState().bag.links.removeItem.href.replace('{itemCode}', itemCode))
                     .then(() => {
                         dispatch(removeBagItemSuccess());
-                        dispatch(getBagAndItems());
+                        dispatch(getBag());
                     })
                     .catch(() => {
                         dispatch(removeBagItemFailure()); 
-                    });
-    }
-}
-
-export const getBagAndItems = () => {
-    return (dispatch, getState) => {
-        dispatch(getBag())
-                    .then(() => {
-                        dispatch(getBagContents(getState().bag));
                     });
     }
 }
@@ -77,6 +71,7 @@ export const getBag = () => {
 
 //we need to inject the dependencies into the function
 export const getBagContents = () => {
+    console.log('getBagContents');
     return (dispatch, getState) => {
 
         dispatch(getBagContentsStarted());  
