@@ -109,7 +109,7 @@ public class BagController {
 	}
     
     @GetMapping("/Bag/{locale}/{currency}/Items/Remove/{itemCode}")
-	public void removeItemFromBag(	@PathVariable String locale, 
+	public ResponseEntity<Void> removeItemFromBag(	@PathVariable String locale, 
 															@PathVariable String currency,
 															@PathVariable String itemCode, 
 															Principal principal) {
@@ -125,7 +125,7 @@ public class BagController {
     	if(obi.isPresent()) {
     		bagItemService.delete(obi.get());	
     	}
-    	
+		return null;
 	}
  
     
