@@ -1,5 +1,7 @@
 package io.nzbee.entity.bag.item;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.bag.Bag;
@@ -8,7 +10,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
-import java.util.Optional;
 
 @Component
 public class BagItemMapperImpl implements IBagItemMapper {
@@ -30,17 +31,17 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	}
 
 	@Override
+	public BagItem entityToDo(io.nzbee.entity.bag.item.BagItem e) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public io.nzbee.entity.bag.item.BagItem doToEntity(BagItem d) {
 		Optional<io.nzbee.entity.product.Product> op = productService.findByCode(d.getProduct().getProductUPC());
 		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem(op.get());
 		bi.setQuantity(d.getQuantity());	
 		return bi;
-	}
-
-	@Override
-	public BagItem entityToDo(io.nzbee.entity.bag.item.BagItem e) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

@@ -4,12 +4,16 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class BagItemServiceImpl implements IBagItemService {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private IBagItemRepository bagItemRepository;
 	
@@ -50,8 +54,8 @@ public class BagItemServiceImpl implements IBagItemService {
 
 	@Override
 	public void delete(BagItem t) {
+		LOGGER.debug("call BagItemServiceImpl.delete with parameters {}", t.getBagItemId());
 		bagItemRepository.delete(t);
-		
 	}
 
 }
