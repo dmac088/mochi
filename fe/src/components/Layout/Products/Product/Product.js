@@ -61,6 +61,7 @@ function Product(props) {
     }
 
     const addToBag = (e, productCode, quantity) => {
+        console.log('addToBag');
         e.preventDefault();
         dispatch(bagService.addItem({
                                 "itemUPC": productCode, 
@@ -75,9 +76,7 @@ function Product(props) {
 
     useEffect(() => {
         if(discovery.isDone) {
-            console.log('bang');
             if(prevLang !== lang || prevCurr !== curr || stateObject.loading) {
-                console.log('pop');
                 retrieveProduct(productCode);
             }
         }
