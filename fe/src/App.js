@@ -12,8 +12,6 @@ import Landing from "./components/Layout/Landing/Landing";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
 import NotFound from "./components/Layout/NotFound";
 import Contact from "./components/Layout/Contact/Contact";
-import AddCapability from "./components/CategoryTool/AddCapability";
-import UpdateCapability from "./components/CategoryTool/UpdateCapability";
 import { Provider } from "react-redux";
 import store from "./store";
 import Container from "./components/Layout/Container";
@@ -48,18 +46,6 @@ function App() {
           <Route
             exact path="/:lang/:curr/contact"
             render={(props) => renderContainer(Contact, props)} />
-
-          {/* <Route
-            exact path="/:lang/:curr/dashboard"
-            render={(props) => renderContainer(Dashboard, props)} /> */}
-
-          <Route
-            exact path="/:lang/:curr/addCapability"
-            render={(props) => renderContainer(AddCapability, props)} />
-
-          <Route
-            exact path="/:lang/:curr/updateCapability"
-            render={(props) => renderContainer(UpdateCapability, props)} />
 
           <Route
             path="/:lang/:curr/myaccount"
