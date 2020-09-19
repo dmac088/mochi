@@ -107,22 +107,19 @@ public class BagController {
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));
 	}
     
-    @PostMapping("/Bag/{locale}/{currency}/Items/Remove")
+    @GetMapping("/Bag/{locale}/{currency}/Items/Remove/{itemCode}")
 	public ResponseEntity<BagResource>  removeItemFromBag(	@PathVariable String locale, 
 															@PathVariable String currency,
-															@RequestBody BagItemDTOIn dto, 
+															@PathVariable String itemCode, 
 															Principal principal) {
     	
-    	LOGGER.debug("call BagController.addItemToBag");
+    	LOGGER.debug("call BagController.removeItemFromBag for product code {} ", itemCode);
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	locale, 
     									currency, 
     									principal.getName());
     	
-    	
-    	BagItem item = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(dto.getItemUPC())).findAny().get();
-    	
-    	b.removeItem(item);
+    	BagItem item = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(itemCode)).findAny().get();
     	
     	bagItemService.delete(item);
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));

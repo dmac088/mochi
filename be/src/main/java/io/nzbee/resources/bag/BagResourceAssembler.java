@@ -19,6 +19,7 @@ public class BagResourceAssembler extends RepresentationModelAssemblerSupport<Ba
 		br.add(linkTo(methodOn(BagController.class).getCustomerBag(null, null, null)).withSelfRel());
 		br.add(linkTo(methodOn(BagController.class).getBagContents(null, null, null)).withRel("bagContents"));
 		br.add(linkTo(methodOn(BagController.class).addItemToBag(null, null, null, null)).withRel("addItem"));
+		br.add(linkTo(methodOn(BagController.class).removeItemFromBag(null, null, null, null)).withRel("removeItem"));
 		return br;
 	}
 

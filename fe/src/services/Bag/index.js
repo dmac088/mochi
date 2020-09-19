@@ -38,7 +38,7 @@ export const removeItem = (itemCode) => {
 
         dispatch(removeBagItemStarted()); 
 
-        return axios.post(getState().bag.links.removeItem.href,itemCode)
+        return axios.get(getState().bag.links.removeItem.href.replace('{itemCode}', itemCode))
                     .then(() => {
                         dispatch(removeBagItemSuccess());
                         dispatch(getBagAndItems());
