@@ -64,6 +64,11 @@ export const authenticate = (username, password) => {
             localStorageService.setToken(response.data);
             instance.defaults.headers.common['Authorization'] = 'Bearer ' + response.data.access_token;
           }
+          console.log(response.status);
+        })
+        .catch((error) => {
+          console.log(error);
+          dispatch(logoutSession());
         });
     }
   }
