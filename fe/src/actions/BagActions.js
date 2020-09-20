@@ -3,7 +3,12 @@ import {
   GET_BAG_STARTED,
   GET_BAG_SUCCESS,
   GET_BAG_FAILURE,
+  EMPTY_BAG,
 } from "./ActionTypes";
+
+export const emptyBag = () => ({
+  type: EMPTY_BAG
+});
 
 export const getBagStarted = () => ({
   type: GET_BAG_STARTED,

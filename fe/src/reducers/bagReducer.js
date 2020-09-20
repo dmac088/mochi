@@ -2,6 +2,7 @@ import {
     GET_BAG_STARTED,
     GET_BAG_SUCCESS,
     GET_BAG_FAILURE,
+    EMPTY_BAG,
 } from "../actions/ActionTypes";
 
 const initialState = {
@@ -15,6 +16,11 @@ const initialState = {
 
 export default function (state = initialState, action) {
     switch (action.type) {
+        case EMPTY_BAG:
+            return {
+                ...initialState,
+            }
+
         case GET_BAG_STARTED:
             return {
                 ...state,
