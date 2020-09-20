@@ -36,11 +36,7 @@ import { GET_SESSION_STARTED,
 
     case RESET_SESSION:
       return {
-        ...initialState.tokens,
-        loading: false,
-        isDone: false,
-        error: null,
-        authenticated: false,
+        ...initialState
       }
 
     default:

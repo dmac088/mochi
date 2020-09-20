@@ -1,5 +1,6 @@
 
 import {
+  EMPTY_BAG_CONTENTS,
   GET_BAG_CONTENTS_STARTED,
   GET_BAG_CONTENTS_SUCCESS,
   GET_BAG_CONTENTS_FAILURE,
@@ -10,6 +11,10 @@ import {
   REMOVE_BAG_ITEM_SUCCESS,
   REMOVE_BAG_ITEM_FAILURE,
 } from "./ActionTypes";
+
+export const emptyBagContents = () => ({
+  type: EMPTY_BAG_CONTENTS
+});
 
 export const getBagContentsStarted = () => ({
   type: GET_BAG_CONTENTS_STARTED,

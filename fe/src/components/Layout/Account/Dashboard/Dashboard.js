@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession } from '../../../../services/Session';
+import { clearBag } from '../../../../services/Bag';
 import { findByUserName } from '../../../../services/Customer';
 import { getAccountPath, getAccountSubPath } from "../../Helpers/Route/Route";
 import { matchPath } from 'react-router'
@@ -22,6 +23,7 @@ function Dashboard(props) {
   const logout = (e) => {
     e.preventDefault();
     dispatch(logoutSession());
+    dispatch(clearBag());
     history.push(getAccountPath(match));
   }
   

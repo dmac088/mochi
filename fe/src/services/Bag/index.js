@@ -3,7 +3,11 @@ import {
     getBagStarted,
     getBagSuccess,
     getBagFailure,
+    emptyBag
 } from '../../actions/BagActions';
+import { 
+    emptyBagContents,
+} from '../../actions/BagContentsActions';
 
 import {
     getBagContentsStarted,
@@ -66,6 +70,13 @@ export const getBag = () => {
         }).catch((error) => {
              dispatch(getBagFailure(error.response));
         });
+    }
+}
+
+export const clearBag = () => {
+    return (dispatch, getState) => {
+        dispatch(emptyBag());
+        dispatch(emptyBagContents());
     }
 }
 
