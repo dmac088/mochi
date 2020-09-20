@@ -15,12 +15,6 @@ function Bag() {
         dispatch(bagService.removeItem(e.target.id));
     }
 
-    // useEffect(() => {
-    //     if(!bag.loading && bag.isDone ) {
-    //         dispatch(bagService.getBagContents());
-    //     }
-    // }, [bag.loading, bag.isDone]);
-
     const renderCartProducts = (items = []) => {
         return items.map((product, index) => {
             return(

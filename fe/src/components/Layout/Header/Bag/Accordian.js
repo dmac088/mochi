@@ -12,6 +12,7 @@ function Accordion(props) {
   const { lang } = match.params;
 
   const bagContents = useSelector(state => state.bagContents);
+  const session = useSelector(state => state.session);
 
   const dispatch = useDispatch();
 
@@ -21,10 +22,10 @@ function Accordion(props) {
   }
 
   useEffect(() => {
-    if(!bag.loading && bag.isDone ) {
+    if(!bag.loading && bag.isDone && session.authenticated) {
         dispatch(bagService.getBagContents());
     }
-  }, [bag.loading, bag.isDone]);
+  }, [bag.loading, bag.isDone, session.authenticated]);
   
 
   const renderItems = (items = []) => {
