@@ -18,6 +18,7 @@ function BagMenu(props) {
 
   const bag = useSelector(state => state.bag);
   const discovery = useSelector(state => state.discovery);
+  const session = useSelector(state => state.session);
 
   const [stateInContainer, setInContainer] = useState(false);
 
@@ -44,10 +45,10 @@ function BagMenu(props) {
 
 
   useEffect(() => {
-    if(!discovery.loading && discovery.isDone ) {
+    if(!discovery.loading && discovery.isDone && session.authenticated ) {
         dispatch(bagService.getBag());
     }
-  }, [discovery.loading, discovery.isDone]);
+  }, [discovery.loading, discovery.isDone, session.authenticated]);
   
   let container = null;
 
