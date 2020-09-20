@@ -54,8 +54,7 @@ function BagMenu(props) {
   const setContainer = (c) => {
       container = c;
   }
-
-  console.log(bag);
+  
   return (
     <React.Fragment>
     {(bag.loading) 
