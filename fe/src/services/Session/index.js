@@ -82,7 +82,9 @@ export const authenticate = (username, password) => {
   export const logoutSession = () => {
     return (dispatch) => {
       const localStorageService = LocalStorageService.getService();
+      //clear tokens from local storage
       localStorageService.clearToken();
+      //clear session state in redux
       dispatch(clearSession());
     }
   }

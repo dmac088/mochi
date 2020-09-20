@@ -143,6 +143,9 @@ instance.interceptors.response.use((response) => {
                     }
                 })
                 .catch((err) => {
+                    console.log('not good! giving up! login again please!');
+                    store.dispatch(logoutSession())
+                    history.push(getAccountPath(match));
                     processQueue(err, null);
                     reject(err);
                 })
