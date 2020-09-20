@@ -25,7 +25,7 @@ function Admin() {
         ); 
      
         // Details of the uploaded file 
-        console.log(stateObject.selectedFile); 
+        //console.log(stateObject.selectedFile); 
         
         // Request made to the backend api 
         // Send formData object 
