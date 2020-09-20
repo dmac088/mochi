@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
-import { authenticate } from '../../../services/Session';
+import { authenticate } from '../../../services/Session/index';
+import { getBag } from '../../../services/Bag/index';
 
 function Login() {
 
@@ -33,7 +34,8 @@ function Login() {
 
   const login = (e) => {
     e.preventDefault();  
-    dispatch(authenticate(stateObject.username, stateObject.password));
+    dispatch(authenticate(stateObject.username, stateObject.password))
+    .then(() => dispatch(getBag()));
   }
 
   const status = (error) ? error.status : null;
