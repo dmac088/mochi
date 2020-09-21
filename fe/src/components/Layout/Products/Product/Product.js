@@ -8,8 +8,6 @@ function Product(props) {
     const { match } = props;
     const { productCode, lang, curr } = match.params;
     
-    const dispatch = useDispatch();
-
     const [stateObject, setObjectState] = useState({
         product: {},
         quantity: 1,
@@ -64,11 +62,6 @@ function Product(props) {
         console.log('addToBag');
         e.preventDefault();
         bagService.addToBag(productCode, quantity);
-    }
-
-    const removeFromBag = (e, productCode) => {
-        e.preventDefault();
-        dispatch(bagService.removeItem(productCode));
     }
 
     useEffect(() => {
