@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
 import Dashboard from './Dashboard/Dashboard'
 import Auth from '../Login/Auth';
 
