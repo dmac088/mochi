@@ -22,8 +22,10 @@ import {
 } from '../../actions/BagContentsActions';
 
 export const addItem = (item) => {
-    console.log('addItem');
+
     return (dispatch, getState) => {
+        if(!getState().session.authenticated) return;
+        if(!getState().bag) return;
 
         dispatch(addBagItemStarted()); 
 
