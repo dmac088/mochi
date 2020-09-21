@@ -24,8 +24,6 @@ import {
 export const addItem = (item) => {
 
     return (dispatch, getState) => {
-        if(!getState().session.authenticated) return;
-        if(!getState().bag) return;
 
         dispatch(addBagItemStarted()); 
 

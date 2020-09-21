@@ -1,18 +1,24 @@
 import React from 'react';
 import { Link } from "react-router-dom";
-import { getCategoryProductPath } from '../../Helpers/Route/Route';
+import { useSelector } from 'react-redux';
+import { getCategoryProductPath, getAccountPath } from '../../Helpers/Route/Route';
 import * as bagService from "../../../../services/Bag/index";
 import { useDispatch } from 'react-redux';
 
 
 function Product(props) {
-  const { match, category, toggleQuickView, product } = props;
+  const { history, match, category, toggleQuickView, product } = props;
 
   const dispatch = useDispatch();
+  const authenticated = useSelector(state => state.session.authenticated);
 
   const addToBag = (e) => {
     console.log('addToBag');
     e.preventDefault();
+    if(!authenticated) {
+      history.push(getAccountPath(match));
+      return;
+    }  
     dispatch(bagService.addItem({
       "itemUPC": e.target.id,
       "itemQty": 1,
