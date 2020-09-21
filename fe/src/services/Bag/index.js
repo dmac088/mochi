@@ -50,7 +50,7 @@ export const addToBag = (e) => {
 }
 
 const addItem = (item) => {
-
+    console.log('addItem');
     return (dispatch, getState) => {
 
         dispatch(addBagItemStarted());
@@ -69,6 +69,7 @@ const addItem = (item) => {
 }
 
 export const removeItem = (itemCode) => {
+    console.log('removeItem');
     return (dispatch, getState) => {
 
         dispatch(removeBagItemStarted());
@@ -76,6 +77,8 @@ export const removeItem = (itemCode) => {
         return axios.get(getState().bag.links.removeItem.href.replace('{itemCode}', itemCode))
             .then(() => {
                 dispatch(removeBagItemSuccess());
+            })
+            .then(() => {
                 dispatch(getBag());
             })
             .catch(() => {
@@ -85,6 +88,7 @@ export const removeItem = (itemCode) => {
 }
 
 export const getBag = () => {
+    console.log('getBag');
     return (dispatch, getState) => {
         const state = getState();
 
@@ -102,7 +106,8 @@ export const getBag = () => {
 }
 
 export const clearBag = () => {
-    return (dispatch, getState) => {
+    console.log('clearBag');
+    return (dispatch) => {
         dispatch(emptyBag());
         dispatch(emptyBagContents());
     }

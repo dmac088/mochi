@@ -6,7 +6,6 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Bag() {
 
-    const bag = useSelector(state => state.bag);
     const bagContents = useSelector(state => state.bagContents);
     const dispatch = useDispatch();
 
