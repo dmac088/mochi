@@ -56,4 +56,8 @@ public class Bag {
 	public int getTotalQuantity() {
 		return this.getBagItems().stream().mapToInt(BagItem::getQuantity).sum();
 	}
+	
+	public Double getTotalAmount() {
+		return this.getBagItems().stream().mapToDouble(bi -> bi.getQuantity() * bi.getProduct().getProductMarkdown()).sum();
+	}
 }

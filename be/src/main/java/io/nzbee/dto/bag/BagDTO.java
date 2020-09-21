@@ -9,6 +9,8 @@ public class BagDTO {
 	private int totalItems;
 	
 	private int totalQuantity;
+	
+	private Double totalAmount;
 
 	public String getBagStatusCode() {
 		return bagStatusCode;
@@ -40,6 +42,14 @@ public class BagDTO {
 
 	public void setTotalQuantity(int totalQuantity) {
 		this.totalQuantity = totalQuantity;
+	}
+
+	public Double getTotalAmount() {
+		return totalAmount;
+	}
+
+	public void setTotalAmount(Double totalAmount) {
+		this.totalAmount = totalAmount;
 	}
 	
 	
