@@ -6,7 +6,6 @@ import { slide } from '../../Helpers/Animation/Slide';
 import { getBagPath } from '../../Helpers/Route/Route';
 import { localization } from '../../Localization/Localization';
 import { useSelector, useDispatch } from 'react-redux';
-import { Spinner } from '../../Helpers/Animation/Spinner';
 import * as bagService from '../../../../services/Bag/index';
 
 function BagMenu(props) {
@@ -56,12 +55,8 @@ function BagMenu(props) {
       container = c;
   }
   
-  //console.log(bag);
   return (
     <React.Fragment>
-    {(bag.loading) 
-      ? <Spinner />
-      :
     <div 
         onMouseEnter={setIn}
         onMouseLeave={setNotIn}
@@ -88,7 +83,7 @@ function BagMenu(props) {
               bag={bag}/>
           </div>
       </Transition>
-    </div>}
+    </div>
     </React.Fragment>
   );
 }

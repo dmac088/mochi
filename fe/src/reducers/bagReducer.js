@@ -9,6 +9,7 @@ const initialState = {
     bagStatusCode: null,
     totalItems: 0,
     totalQuantity: 0,
+    totalAmount: 0,
     links: null,
     loading: false,
     isDone: false,
@@ -31,12 +32,8 @@ export default function (state = initialState, action) {
         case GET_BAG_SUCCESS:
             return {
                 ...state,
-                bagStatusCode:  action.payload.bag.bagStatusCode,
-                totalItems:     action.payload.bag.totalItems,
-                totalQuantity:  action.payload.bag.totalQuantity,
-                links:          action.payload.links,
-                loading:        action.payload.loading,
-                isDone:         action.payload.isDone,
+                ...action.payload.bag,
+                ...action.payload,
             }
 
         case GET_BAG_FAILURE:
