@@ -3,7 +3,7 @@ import queryString from 'query-string';
 
 function ShopHeader(props) {
 
-    const { page, history, changeGrid} = props;
+    const { page, history, changeGrid, type } = props;
 
     const changeSort = (e) => {
         e.preventDefault();
@@ -19,7 +19,7 @@ function ShopHeader(props) {
             search: '?' + new URLSearchParams(newQuery).toString(),
         });
     } 
-
+console.log(type);
     return (
         <div className="shop-header mb-35">
             <div className="row">
@@ -33,7 +33,8 @@ function ShopHeader(props) {
                     <div className="sort-by-dropdown d-flex align-items-center mb-xs-10">
                         <p className="mr-10">Sort By: </p>
                         <select onChange={changeSort} name="sort-by" id="sort-by" className="nice-select">
-                            <option value="bestMatch">Best match</option>
+                            {(type==='search') && <option value="bestMatch">Best match</option>}
+
                             <option value="nameAsc">Name [A-Z]</option>
                             <option value="nameDesc">Name [Z-A]</option>
                             <option value="priceAsc">Price: Low to High</option>
