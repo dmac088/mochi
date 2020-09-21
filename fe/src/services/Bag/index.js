@@ -26,9 +26,8 @@ import {
 } from '../../actions/BagContentsActions';
 
 
-export const addToBag = (e) => {
+export const addToBag = (productCode, quantity = 1) => {
     console.log('addToBag');
-    e.preventDefault();
 
     const authenticated = store.getState().session.authenticated;
 
@@ -43,8 +42,8 @@ export const addToBag = (e) => {
     }
 
     store.dispatch(addItem({
-        "itemUPC": e.target.id,
-        "itemQty": 1,
+        "itemUPC": productCode,
+        "itemQty": quantity,
     }));
 
 }

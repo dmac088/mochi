@@ -34,7 +34,8 @@ function Products(props) {
     });
 
     const addToBag = (e) => {
-        bagService.addToBag(e);
+        e.preventDefault();
+        bagService.addToBag(e.target.id);
     }
 
     const { categoryCode, type } = match.params;

@@ -8,7 +8,8 @@ function Product(props) {
   const { match, category, toggleQuickView, product } = props;
 
   const addToBag = (e) => {
-    bagService.addToBag(e);
+    e.preventDefault();
+    bagService.addToBag(e.target.id);
   }
 
   return (
