@@ -200,7 +200,8 @@ function Products(props) {
                                 <ShopHeader
                                     {...props}
                                     page={stateObject.page}
-                                    changeGrid={changeLayout} />
+                                    changeGrid={changeLayout}
+                                    type={type} />
                                 <div className=
                                     {(stateObject.gridLayout)
                                         ? "shop-product-wrap grid row no-gutters mb-35"
