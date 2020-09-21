@@ -4,7 +4,7 @@ import { logoutSession } from '../../../../services/Session';
 import { clearBag } from '../../../../services/Bag';
 import { findByUserName } from '../../../../services/Customer';
 import { getAccountPath, getAccountSubPath } from "../../Helpers/Route/Route";
-import { matchPath } from 'react-router'
+import { matchPath } from 'react-router';
 import { Link } from 'react-router-dom';
 import Default from "../Default/Default";
 import Orders from "../Orders/Orders";

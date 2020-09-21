@@ -62,11 +62,10 @@ function Product(props) {
 
     const addToBag = (e, productCode, quantity) => {
         console.log('addToBag');
-        e.preventDefault();
-        dispatch(bagService.addItem({
-                                "itemUPC": productCode, 
-                                "itemQty": quantity
-                            }));
+        // bagService.addItem({
+        //                         "itemUPC": productCode, 
+        //                         "itemQty": quantity
+        //                     }));
     }
 
     const removeFromBag = (e, productCode) => {

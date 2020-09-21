@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import queryString from 'query-string';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
 import * as bagService from "../../../services/Bag/index";
 import { findByCode } from '../../../services/Category';
@@ -19,7 +19,6 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Products(props) {
     const { toggleQuickView, match } = props;
-    const dispatch = useDispatch();
 
     const discovery = useSelector(state => state.discovery);
 
@@ -35,12 +34,7 @@ function Products(props) {
     });
 
     const addToBag = (e) => {
-        console.log('addToBag');
-        e.preventDefault();
-        dispatch(bagService.addItem({
-                                "itemUPC": e.target.id, 
-                                "itemQty": 1,
-                            }));
+        bagService.addToBag(e);
     }
 
     const { categoryCode, type } = match.params;

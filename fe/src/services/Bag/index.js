@@ -1,4 +1,8 @@
 import { instance as axios } from "../../components/Layout/Helpers/api/axios";
+import { history } from '../../components/Layout/Helpers/Route/History';
+import { getAccountPath } from "../../components/Layout/Helpers/Route/Route";
+import { matchPath } from 'react-router';
+import store from '../../store';
 import {
     getBagStarted,
     getBagSuccess,
@@ -21,7 +25,31 @@ import {
     removeBagItemFailure,
 } from '../../actions/BagContentsActions';
 
-export const addItem = (item) => {
+
+export const addToBag = (e) => {
+        console.log('addToBag');
+        e.preventDefault();
+
+        const authenticated = store.getState().session.authenticated;
+
+        if(!authenticated) {
+            const match = matchPath(history.location.pathname, {
+                path: "/:lang/:curr",
+                exact: false,
+                strict: true
+            });
+            history.push(getAccountPath(match));
+            return;
+        }
+
+        store.dispatch(addItem({
+                            "itemUPC": e.target.id, 
+                            "itemQty": 1,
+                        }));
+    
+}
+
+const addItem = (item) => {
 
     return (dispatch, getState) => {
 
