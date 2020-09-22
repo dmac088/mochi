@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Spinner } from '../../Helpers/Animation/Spinner';
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 import * as bagService from "../../../../services/Bag/index";
@@ -42,7 +42,6 @@ function Product(props) {
     }
 
     const discovery = useSelector(state => state.discovery);
-
 
     const retrieveProduct = (id) => {
         const url = discovery.links.getProduct.href.replace('{code}', id);

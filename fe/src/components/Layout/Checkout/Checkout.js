@@ -4,11 +4,9 @@ import { useSelector } from 'react-redux';
 function Checkout() {
 
   const bagContents = useSelector(state => state.bagContents);
-  console.log(bagContents);
 
   const renderItems = (items) => {
     return items.map(i => {
-      console.log(i);
       return <li>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.bagItemTotal}</span></li>
     })
   }

@@ -1,33 +1,18 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Slider from "react-slick";
-import * as productApi from '../../data/products/api';
 
 
 function ProductModal(props) {
 
-    getProduct = (locale, currency, id) =>
-        productApi.findById(locale, currency, id)
-            .then((response) => {
-                return response.text();
-            })
-            .then((responseText) => {
-                return JSON.parse(responseText);
-            })
-            .catch(() => {
-                console.log('getProducts failed!');
-            });
-
-
-
-    next = () => {
+    const next = () => {
         slider.slickNext();
     }
 
-    previous = () => {
+    const previous = () => {
         slider.slickPrev();
     }
 
-    changeImage = (e) => {
+    const changeImage = (e) => {
         e.preventDefault();
         setObjectState({
             "currentImage": e.target.src,
