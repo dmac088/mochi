@@ -92,7 +92,7 @@ public class BagController {
 														@RequestBody BagItemDTOIn dto, 
 														Principal principal) {
     	
-    	LOGGER.debug("call BagController.addItemToBag");
+    	LOGGER.debug("call BagController.addItemToBag with parameters {}, {}, {}, {}", locale, currency, dto.getItemUPC(), dto.getItemQty());
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	locale, 
     									currency, 
