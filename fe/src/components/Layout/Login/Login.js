@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux'
 import { authenticate } from '../../../services/Session/index';
 import { getBag } from '../../../services/Bag/index';
+import { getForgotPath } from "../Helpers/Route/Route";
 
-function Login() {
+function Login(props) {
+
+  const { match } = props;
 
   const [stateObject, setObjectState] = useState({
     username: null,
@@ -61,7 +64,7 @@ function Login() {
             </div>
           </div>
           <div className="col-md-4 mt-10 mb-20 text-left text-md-right">
-            <a href="#"> Forgotten password?</a>
+            <a href={getForgotPath(match)}> Forgot password?</a>
           </div>
           <div className="col-md-12">
             <button onClick={login} className="register-button mt-0">Login</button>
@@ -74,11 +77,6 @@ function Login() {
     </form>
   )
 }
-
-const mapStateToProps = state => ({
-  session: state.session,
-  error: state.error,
-})
 
 export default Login;
 

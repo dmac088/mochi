@@ -12,7 +12,8 @@ function Account(props) {
         {(authenticated)
         ? <Dashboard 
             {...props}/>
-        : <Auth />}
+        : <Auth 
+            {...props}/>}
       </React.Fragment>
     );
   }

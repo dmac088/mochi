@@ -1,6 +1,10 @@
 import React from 'react';
 
-function Forgot() {
+
+function Forgot(props) {
+
+    const { match, history } = props;
+
     return (
         <div className="page-content mb-50">
             <div className="container">
