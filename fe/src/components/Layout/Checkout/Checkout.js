@@ -6,6 +6,12 @@ function Checkout() {
   const bagContents = useSelector(state => state.bagContents);
   console.log(bagContents);
 
+  const renderItems = (items) => {
+    return items.map(i => {
+      return <li>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.itemQty * i.data.markdownPrice}</span></li>
+    })
+  }
+
     return(
       <React.Fragment>
         <div className="page-section section mb-50">
@@ -148,11 +154,8 @@ function Checkout() {
                             <h4>Product <span>Total</span></h4>
 
                             <ul>
-                              <li>Cillum dolore tortor nisl X 01 <span>$25.00</span></li>
-                              <li>Auctor gravida pellentesque X 02 <span>$50.00</span></li>
-                              <li>Condimentum posuere consectetur X 01 <span>$29.00</span></li>
-                              <li>Habitasse dictumst elementum X 01 <span>$10.00</span></li>
-                            </ul>
+                              {renderItems(bagContents.items)}
+                            </ul> 
 
                             <p>Sub Total <span>$104.00</span></p>
                             <p>Shipping Fee <span>$00.00</span></p>
