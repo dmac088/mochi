@@ -34,6 +34,10 @@ export const getAuthPath = (match) => {
     return getHomePath(match) + '/auth';
 }
 
+export const getForgotPath = (match) => {
+    return getHomePath(match) + '/forgot';
+}
+
 export const getAccountPath = (match) => {
     return getHomePath(match) + '/myaccount';
 }

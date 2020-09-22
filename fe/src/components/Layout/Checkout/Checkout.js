@@ -1,6 +1,11 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 
 function Checkout() {
+
+  const bagContents = useSelector(state => state.bagContents);
+  console.log(bagContents);
+
     return(
       <React.Fragment>
         <div className="page-section section mb-50">
@@ -8,9 +13,9 @@ function Checkout() {
             <div className="row">
               <div className="col-12">
                 <form action="#" className="checkout-form">
-                  <div className="row row-40">
-                    <div className="col-lg-7 mb-20">
-                      <div id="billing-form" className="mb-40">
+                  {/* <div className="row row-40"> */}
+                    {/* <div className="col-lg-7 mb-20"> */}
+                      {/* <div id="billing-form" className="mb-40">
                         <h4 className="checkout-title">Billing Address</h4>
                         <div className="row">
                           <div className="col-md-6 col-12 mb-20">
@@ -71,8 +76,8 @@ function Checkout() {
                             </div>
                           </div>
                         </div>
-                      </div>
-                      <div id="shipping-form" className="mb-40">
+                      </div> */}
+                      {/* <div id="shipping-form" className="mb-40">
                         <h4 className="checkout-title">Shipping Address</h4>
                         <div className="row">
                           <div className="col-md-6 col-12 mb-20">
@@ -127,16 +132,16 @@ function Checkout() {
 
                         </div>
 
-                      </div>
+                      </div> */}
 
-                    </div>
+                    {/* </div> */}
 
-                    <div className="col-lg-5">
-                      <div className="row">
+                    {/* <div className="col-lg-5"> */}
+                      {/* <div className="row"> */}
 
                         <div className="col-12 mb-60">
 
-                          <h4 className="checkout-title">Cart Total</h4>
+                          {/* <h4 className="checkout-title">Cart Total</h4> */}
 
                           <div className="checkout-cart-total">
 
@@ -158,7 +163,7 @@ function Checkout() {
 
                         </div>
 
-                        <div className="col-12">
+                        {/* <div className="col-12">
 
                           <h4 className="checkout-title">Payment Method</h4>
 
@@ -203,12 +208,12 @@ function Checkout() {
 
                           <button className="place-order">Place order</button>
 
-                        </div>
+                        </div> */}
 
-                      </div>
-                    </div>
+                      {/* </div> */}
+                    {/* </div> */}
 
-                  </div>
+                  {/* </div> */}
                 </form>
 
               </div>
