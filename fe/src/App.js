@@ -19,6 +19,7 @@ import Bag from "./components/Layout/Bag/Bag";
 import WishList from "./components/Layout/WishList/WishList";
 import Checkout from "./components/Layout/Checkout/Checkout";
 import Auth from "./components/Layout/Login/Auth";
+import Forgot from "./components/Layout/Login/Forgot";
 import Products from "./components/Layout/Products/Products";
 import Product from "./components/Layout/Products/Product/Product";
 
@@ -66,6 +67,10 @@ function App() {
           <Route
             exact path="/:lang/:curr/auth"
             render={(props) => renderContainer(Auth, props)} />
+
+          <Route
+            exact path="/:lang/:curr/forgot"
+            render={(props) => renderContainer(Forgot, props)} />     
 
           <Route
             exact path="/:lang/:curr/category/:categoryCode"
