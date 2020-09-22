@@ -13,6 +13,7 @@ public class BagItemDTOMapperImpl implements IBagItemDTOMapper {
 		bi.setItemDesc(d.getProduct().getProductDesc());
 		bi.setItemQty(d.getQuantity());
 		bi.setMarkdownPrice(d.getProduct().getProductMarkdown());
+		bi.setBagItemTotal(d.getBagItemTotal());
 		return bi;
 	}
 

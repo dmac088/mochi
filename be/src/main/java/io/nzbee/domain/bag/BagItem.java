@@ -44,4 +44,8 @@ public class BagItem {
 		return this.currency;
 	}
 	
+	public Double getBagItemTotal() {
+		return this.quantity * this.product.getProductMarkdown();
+	}
+	
 }
