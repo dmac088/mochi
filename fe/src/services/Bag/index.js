@@ -53,9 +53,7 @@ export const addToBag = (productCode, quantity = 1) => {
 
 export const updateBagItem = (productCode, quantity = 0) => {
     console.log('updateBagItem');
-
-    const authenticated = store.getState().session.authenticated;
-
+    
     if(isAuthenticated()) {
         store.dispatch(addItem({
             "itemUPC": productCode,
