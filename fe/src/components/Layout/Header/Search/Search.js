@@ -12,16 +12,21 @@ function Search(props) {
     const { lang } = match.params;
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
+    const [term, setTerm] = useState('NA');
     const links = useSelector(state => state.discovery.links);
 
     const handleClick = (e) => {
         e.preventDefault();
-        history.push(getSearchPath(match, e.target.id));
+        history.push(getSearchPath(match, term));
+    }
+
+    const changedInput = (value) => {
+        setTerm(value);
     }
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            history.push(getSearchPath(match, e.target.value));
+            history.push(getSearchPath(match, term));
         }
     }
 
@@ -53,6 +58,7 @@ function Search(props) {
                 minLength={((lang === 'en-GB') ? 3 : 1)}
                 onSearch={handleSearch}
                 onKeyDown={handleKeyDown}
+                onInputChange={value => changedInput(value)}
                 options={options}
                 placeholder="Search for products..."
                 inputProps={{
@@ -85,7 +91,7 @@ function Search(props) {
                     )
                 }}
             />
-            <button className="search">
+            <button id={term} onClick={handleClick} className="search">
                 <span className="icon_search"></span>
             </button>
         </div>
