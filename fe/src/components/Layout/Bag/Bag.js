@@ -44,8 +44,8 @@ function Bag() {
                 <td className="pro-quantity">
                   <div className="pro-qty">
                     <input type="text" defaultValue={product.data.itemQty} />
-                    <a onClick={incrementQty} href="#" className="inc qty-btn">+</a>
-                    <a onClick={decrementQty} href="#" className="dec qty-btn">-</a>
+                    <a id={product.data.itemUPC} onClick={incrementQty} href="#" className="inc qty-btn">+</a>
+                    <a id={product.data.itemUPC} onClick={decrementQty} href="#" className="dec qty-btn">-</a>
                   </div>
                 </td>
                 <td className="pro-subtotal">
