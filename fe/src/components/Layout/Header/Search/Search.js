@@ -14,8 +14,9 @@ function Search(props) {
     const [options, setOptions] = useState([]);
     const links = useSelector(state => state.discovery.links);
 
-    const handleClick = () => {
-        console.log('handleClick');
+    const handleClick = (e) => {
+        e.preventDefault();
+        history.push(getSearchPath(match, e.target.id));
     }
 
     const handleKeyDown = (e) => {
@@ -28,7 +29,6 @@ function Search(props) {
         setIsLoading(true);
 
         const SEARCH_URI = links.searchSuggestion.href.replace('{q}', query);
-
 
         axios.get(`${SEARCH_URI}`)
             .then((resp) => {
@@ -67,7 +67,7 @@ function Search(props) {
                 }}
                 renderMenuItemChildren={option => {
                     return (
-                        <div onClick={(e) => handleClick(e)}>
+                        <div id={option.suggestion} onClick={(e) => handleClick(e)}>
                             {option.suggestion}
                         </div>
                         // <div key={option.suggestion}>
