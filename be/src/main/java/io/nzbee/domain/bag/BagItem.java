@@ -35,7 +35,7 @@ public class BagItem {
 	public void addToQuantity(int quantity) {
 		this.quantity += quantity;
 	}
-
+	
 	public String getLocale() {
 		return this.locale;
 	}
