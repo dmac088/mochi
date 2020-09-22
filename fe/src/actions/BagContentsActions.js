@@ -10,6 +10,9 @@ import {
   REMOVE_BAG_ITEM_STARTED,
   REMOVE_BAG_ITEM_SUCCESS,
   REMOVE_BAG_ITEM_FAILURE,
+  UPDATE_BAG_ITEM_STARTED,
+  UPDATE_BAG_ITEM_SUCCESS,
+  UPDATE_BAG_ITEM_FAILURE,
 } from "./ActionTypes";
 
 export const emptyBagContents = () => ({
@@ -78,4 +81,20 @@ export const removeBagItemFailure = error => ({
   }
 });
 
+export const updateBagItemStarted = () => ({
+  type: UPDATE_BAG_ITEM_STARTED
+});
 
+export const updateBagItemSuccess = productCode => ({
+  type: UPDATE_BAG_ITEM_SUCCESS,
+  payload: {
+    productCode: productCode,
+  } 
+});
+
+export const updateBagItemFailure = error => ({
+  type: UPDATE_BAG_ITEM_FAILURE,
+  payload: {
+    error,
+  }
+});

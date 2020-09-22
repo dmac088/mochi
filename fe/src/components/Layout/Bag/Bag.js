@@ -1,13 +1,11 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
 import { useDispatch } from 'react-redux';
 import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
-function Bag(props ) {
+function Bag() {
 
-    const { match } = props;
-    const { lang, curr } = match.params;
     const bagContents = useSelector(state => state.bagContents);
     const dispatch = useDispatch();
 

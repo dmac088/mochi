@@ -11,9 +11,6 @@ import {
 } from '../../actions/BagActions';
 import {
     emptyBagContents,
-} from '../../actions/BagContentsActions';
-
-import {
     getBagContentsStarted,
     getBagContentsSuccess,
     getBagContentsFailure,
@@ -23,12 +20,13 @@ import {
     removeBagItemStarted,
     removeBagItemSuccess,
     removeBagItemFailure,
+    updateBagItemStarted,
+    updateBagItemSuccess,
+    updateBagItemFailure,
 } from '../../actions/BagContentsActions';
 
 
-export const addToBag = (productCode, quantity = 1) => {
-    console.log('addToBag');
-
+const isAuthenticated = () => {
     const authenticated = store.getState().session.authenticated;
 
     if (!authenticated) {
@@ -38,14 +36,32 @@ export const addToBag = (productCode, quantity = 1) => {
             strict: true
         });
         history.push(getAccountPath(match));
-        return;
     }
+    return authenticated;
+}
 
-    store.dispatch(addItem({
-        "itemUPC": productCode,
-        "itemQty": quantity,
-    }));
+export const addToBag = (productCode, quantity = 1) => {
+    console.log('addToBag');
 
+    if(isAuthenticated()) {
+        store.dispatch(addItem({
+            "itemUPC": productCode,
+            "itemQty": quantity,
+        }));
+    }
+}
+
+export const updateBagItem = (productCode, quantity = 0) => {
+    console.log('updateBagItem');
+
+    const authenticated = store.getState().session.authenticated;
+
+    if(isAuthenticated()) {
+        store.dispatch(addItem({
+            "itemUPC": productCode,
+            "itemQty": quantity,
+        }));
+    }
 }
 
 const addItem = (item) => {
@@ -82,6 +98,25 @@ export const removeItem = (itemCode) => {
             })
             .catch(() => {
                 dispatch(removeBagItemFailure());
+            });
+    }
+}
+
+const updateItem = (item) => {
+    console.log('updateItem');
+    return (dispatch, getState) => {
+
+        dispatch(updateBagItemStarted());
+
+        return axios.post(getState().bag.links.updateItem.href, item)
+            .then(() => {
+                dispatch(updateBagItemSuccess());
+            })
+            .then(() => {
+                dispatch(getBag());
+            })
+            .catch(() => {
+                dispatch(updateBagItemFailure());
             });
     }
 }
