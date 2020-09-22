@@ -41,6 +41,7 @@ public class Bag {
 		}
 	}
 	
+	
 	public void removeItem(BagItem bi) {
 		this.getBagItems().remove(bi);
 	}

@@ -16,12 +16,12 @@ function Bag() {
 
     const incrementQty = (e) => {
         e.preventDefault();
-        console.log('incrementQty');
+        bagService.addToBag(e.target.id);
     }
 
     const decrementQty = (e) => {
         e.preventDefault();
-        console.log('decrementQty');
+        bagService.addToBag(e.target.id, -1);
     }
 
     const renderCartProducts = (items = []) => {
