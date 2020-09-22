@@ -1,17 +1,29 @@
-import React from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
 import { useDispatch } from 'react-redux';
 import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
-function Bag() {
+function Bag(props ) {
 
+    const { match } = props;
+    const { lang, curr } = match.params;
     const bagContents = useSelector(state => state.bagContents);
     const dispatch = useDispatch();
 
     const removeItem = (e) => {
         e.preventDefault();
         dispatch(bagService.removeItem(e.target.id));
+    }
+
+    const incrementQty = (e) => {
+        e.preventDefault();
+        console.log('incrementQty');
+    }
+
+    const decrementQty = (e) => {
+        e.preventDefault();
+        console.log('decrementQty');
     }
 
     const renderCartProducts = (items = []) => {
@@ -34,6 +46,8 @@ function Bag() {
                 <td className="pro-quantity">
                   <div className="pro-qty">
                     <input type="text" defaultValue={product.data.itemQty} />
+                    <a onClick={incrementQty} href="#" className="inc qty-btn">+</a>
+                    <a onClick={decrementQty} href="#" className="dec qty-btn">-</a>
                   </div>
                 </td>
                 <td className="pro-subtotal">
