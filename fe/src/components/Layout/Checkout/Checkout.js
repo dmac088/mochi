@@ -8,7 +8,8 @@ function Checkout() {
 
   const renderItems = (items) => {
     return items.map(i => {
-      return <li>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.itemQty * i.data.markdownPrice}</span></li>
+      console.log(i);
+      return <li>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.bagItemTotal}</span></li>
     })
   }
 

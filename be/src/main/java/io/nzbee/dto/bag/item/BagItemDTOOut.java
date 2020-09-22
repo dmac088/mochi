@@ -13,6 +13,8 @@ public class BagItemDTOOut {
 	private String currency;
 	
 	private double markdownPrice;
+	
+	private double bagItemTotal;
 
 	public BagItemDTOOut() {
 		
@@ -64,5 +66,13 @@ public class BagItemDTOOut {
 
 	public void setMarkdownPrice(double markdownPrice) {
 		this.markdownPrice = markdownPrice;
+	}
+
+	public double getBagItemTotal() {
+		return bagItemTotal;
+	}
+
+	public void setBagItemTotal(double bagItemTotal) {
+		this.bagItemTotal = bagItemTotal;
 	}
 }
