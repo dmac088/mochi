@@ -51,17 +51,6 @@ export const addToBag = (productCode, quantity = 1) => {
     }
 }
 
-export const updateBagItem = (productCode, quantity = 0) => {
-    console.log('updateBagItem');
-
-    if (isAuthenticated()) {
-        store.dispatch(addItem({
-            "itemUPC": productCode,
-            "itemQty": quantity,
-        }));
-    }
-}
-
 const addItem = (item) => {
     console.log('addItem');
     return (dispatch, getState) => {
