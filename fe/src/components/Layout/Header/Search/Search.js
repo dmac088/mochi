@@ -12,25 +12,22 @@ function Search(props) {
     const { lang } = match.params;
     const [isLoading, setIsLoading] = useState(false);
     const [options, setOptions] = useState([]);
-    const [term, setTerm] = useState('NA');
+    const [term, setTerm] = useState('');
     const links = useSelector(state => state.discovery.links);
 
     const handleClick = (e) => {
         e.preventDefault();
-        history.push(getSearchPath(match, term));
-    }
-
-    const changedInput = (value) => {
-        setTerm(value);
+        history.push(getSearchPath(match, e.target.id));
     }
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            history.push(getSearchPath(match, term));
+            history.push(getSearchPath(match, e.target.value));
         }
     }
 
     const handleSearch = (query) => {
+        
         setIsLoading(true);
 
         const SEARCH_URI = links.searchSuggestion.href.replace('{q}', query);
@@ -51,6 +48,7 @@ function Search(props) {
 
     return (
         <div className="typeaheadwrapper">
+            
             <AsyncTypeahead
                 id="async-example"
                 isLoading={isLoading}
@@ -58,7 +56,6 @@ function Search(props) {
                 minLength={((lang === 'en-GB') ? 3 : 1)}
                 onSearch={handleSearch}
                 onKeyDown={handleKeyDown}
-                onInputChange={value => changedInput(value)}
                 options={options}
                 placeholder="Search for products..."
                 inputProps={{
@@ -76,18 +73,6 @@ function Search(props) {
                         <div id={option.suggestion} onClick={(e) => handleClick(e)}>
                             {option.suggestion}
                         </div>
-                        // <div key={option.suggestion}>
-                        //     {/* <img
-                        //         alt={option.login}
-                        //         src={option.avatar_url}
-                        //         style={{
-                        //             height: '24px',
-                        //             marginRight: '10px',
-                        //             width: '24px',
-                        //         }}
-                        //     /> */}
-                        //     <span>{option.suggestion}</span>
-                        // </div>
                     )
                 }}
             />
