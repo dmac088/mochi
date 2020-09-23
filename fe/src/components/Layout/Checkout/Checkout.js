@@ -6,8 +6,8 @@ function Checkout() {
   const bagContents = useSelector(state => state.bagContents);
 
   const renderItems = (items) => {
-    return items.map(i => {
-      return <li>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.bagItemTotal}</span></li>
+    return items.map((i, index) => {
+      return <li key={index}>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.bagItemTotal}</span></li>
     })
   }
 
