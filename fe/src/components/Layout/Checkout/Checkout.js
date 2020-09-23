@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 
 function Checkout() {
 
+  const bag = useSelector(state => state.bag);
   const bagContents = useSelector(state => state.bagContents);
 
   const renderItems = (items) => {
@@ -10,6 +11,8 @@ function Checkout() {
       return <li key={index}>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.bagItemTotal}</span></li>
     })
   }
+
+  console.log(bag);
 
     return(
       <React.Fragment>
@@ -31,10 +34,10 @@ function Checkout() {
                               {renderItems(bagContents.items)}
                             </ul> 
 
-                            <p>Sub Total <span>$104.00</span></p>
+                            <p>Sub Total <span>${bag.totalAmount}</span></p>
                             <p>Shipping Fee <span>$00.00</span></p>
 
-                            <h4>Grand Total <span>$104.00</span></h4>
+                            <h4>Grand Total <span>${bag.totalAmount}</span></h4>
 
                           </div>
 
