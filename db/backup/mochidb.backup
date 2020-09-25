@@ -1925,6 +1925,7 @@ CREATE TABLE inventory_transaction (
     inv_prc numeric NOT NULL,
     inv_ccy_id bigint NOT NULL,
     inv_trx_typ_id bigint NOT NULL,
+    inv_sup_id bigint NOT NULL,
     inv_trx_dt timestamp(4) with time zone NOT NULL
 );
 
@@ -2567,6 +2568,9 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 --
 
 CREATE TABLE supplier (
+    sup_id bigint NOT NULL,
+    sup_cd character(5),
+    sup_desc character varying(50)
 );
 
 
@@ -3774,6 +3778,7 @@ SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
 --
 
 COPY inventory_location (inv_loc_id, inv_loc_cd, inv_loc_desc) FROM stdin;
+1	LCK01	Lai Chi Kok Apartment
 \.
 
 
@@ -3781,7 +3786,7 @@ COPY inventory_location (inv_loc_id, inv_loc_cd, inv_loc_desc) FROM stdin;
 -- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY inventory_transaction (inv_trx_id, inv_loc_id, inv_prd_id, inv_qty, inv_prc, inv_ccy_id, inv_trx_typ_id, inv_trx_dt) FROM stdin;
+COPY inventory_transaction (inv_trx_id, inv_loc_id, inv_prd_id, inv_qty, inv_prc, inv_ccy_id, inv_trx_typ_id, inv_sup_id, inv_trx_dt) FROM stdin;
 \.
 
 
@@ -5581,7 +5586,7 @@ SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
 -- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY supplier  FROM stdin;
+COPY supplier (sup_id, sup_cd, sup_desc) FROM stdin;
 \.
 
 
@@ -6482,6 +6487,14 @@ ALTER TABLE ONLY role_type
 
 
 --
+-- Name: supplier supplier_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY supplier
+    ADD CONSTRAINT supplier_pkey PRIMARY KEY (sup_id);
+
+
+--
 -- Name: tag_attr_lcl tag_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6952,6 +6965,14 @@ ALTER TABLE ONLY inventory_transaction
 
 ALTER TABLE ONLY inventory_transaction
     ADD CONSTRAINT inventory_transaction_inv_prd_id_product_prd_id FOREIGN KEY (inv_prd_id) REFERENCES product(prd_id);
+
+
+--
+-- Name: inventory_transaction inventory_transaction_inv_sup_id_supplier_sup_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_transaction
+    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_sup_id) REFERENCES supplier(sup_id);
 
 
 --
