@@ -141,8 +141,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
 			ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
 
-			ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode)
-					.get();
+			ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
 
 			Optional<ProductPrice> oprcr = 
 					productPriceService.findOne(domainObject.getProductUPC(), 
