@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
@@ -21,19 +22,43 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
-import io.nzbee.domain.product.Accessories;
-import io.nzbee.domain.product.Product;
-import io.nzbee.domain.tag.Tag;
+import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.accessories.Accessories;
+import io.nzbee.entity.product.attribute.IProductAttributeService;
+import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.currency.ICurrencyService;
+import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.entity.product.price.IProductPriceService;
+import io.nzbee.entity.product.price.IProductPriceTypeService;
+import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.Tag;
 import io.nzbee.util.FileStorageServiceUpload;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.domain.department.Department;
-import io.nzbee.domain.ports.IBrandPortService;
-import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.domain.ports.IDepartmentPortService;
-import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.ports.ITagPortService;
+
+//import io.nzbee.domain.product.Accessories;
+//import io.nzbee.domain.product.Product;
+//import io.nzbee.domain.tag.Tag;
+//import io.nzbee.domain.brand.Brand;
+//import io.nzbee.domain.category.Category;
+//import io.nzbee.domain.category.ProductCategory;
+//import io.nzbee.domain.department.Department;
+//
+//import io.nzbee.domain.ports.IBrandPortService;
+//import io.nzbee.domain.ports.ICategoryPortService;
+//import io.nzbee.domain.ports.IDepartmentPortService;
+//import io.nzbee.domain.ports.IProductPortService;
+//import io.nzbee.domain.ports.ITagPortService;
 
 @Service
 @Transactional
@@ -42,22 +67,37 @@ public class ProductMasterService {
 	private static final Logger logger = LoggerFactory.getLogger(ProductMasterService.class);
 	
 	@Autowired
-	private IProductPortService productDomainService;
+	private IProductService productService;
+	
+	@Autowired
+	private IProductAttributeService productAttributeService;
 
 	@Autowired
-	private IBrandPortService brandDomainService; 
+	private IBrandService brandService; 
 	
 	@Autowired
-	private ICategoryPortService categoryDomainService; 
+	private ITagService tagService;
 	
 	@Autowired
-	private ITagPortService tagDomainService;
+	private ICategoryService categoryService; 
 	
 	@Autowired
-	private IDepartmentPortService departmentDomainService; 
+	private IDepartmentService departmentService; 
+
+	@Autowired
+	private IProductStatusRepository productStatusService;
+	
+	@Autowired
+	private ICurrencyService currencyService;
+	
+	@Autowired
+	private IProductPriceTypeService productPriceTypeService;
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
+    
+	@Autowired
+	private IProductPriceService productPriceService;
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -85,79 +125,167 @@ public class ProductMasterService {
 	}
 	
 	public void persistProductMaster(AccessoriesMasterSchema p) {
+		
+		//english with USD
+		Accessories pe = 
+		mapToDB(
+				 Constants.localeENGB, 
+				 Constants.currencyUSD,
+				 p.get_PRODUCT_UPC_CODE(),
+				 p.get_BRAND_CODE(),
+				 p.get_PRIMARY_CATEGORY_CODE(),
+				 p.get_PRODUCT_TEMPLATE_CODE(),
+				 p.get_PRODUCT_CREATED_DATE(),
+				 p.get_BRAND_DESCRIPTION_EN(),
+				 p.get_PRODUCT_LONG_DESCRIPTION_EN(),
+				 p.get_PRODUCT_RETAIL_PRICE_USD(),
+				 p.get_PRODUCT_MARKDOWN_PRICE_USD(),
+				 p.get_TAG_CODE_A(),
+				 p.get_TAG_CODE_B(),
+				 p.get_TAG_CODE_C(),
+				 p.get_TAG_CODE_D(),
+				 p.get_TAG_CODE_E()	
+		);
+		productService.save(pe);
+		
+		pe = mapToDB(
+				 Constants.localeZHHK, 
+				 Constants.currencyHKD,
+				 p.get_PRODUCT_UPC_CODE(),
+				 p.get_BRAND_CODE(),
+				 p.get_PRIMARY_CATEGORY_CODE(),
+				 p.get_PRODUCT_TEMPLATE_CODE(),
+				 p.get_PRODUCT_CREATED_DATE(),
+				 p.get_BRAND_DESCRIPTION_HK(),
+				 p.get_PRODUCT_LONG_DESCRIPTION_HK(),
+				 p.get_PRODUCT_RETAIL_PRICE_HKD(),
+				 p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
+				 p.get_TAG_CODE_A(),
+				 p.get_TAG_CODE_B(),
+				 p.get_TAG_CODE_C(),
+				 p.get_TAG_CODE_D(),
+				 p.get_TAG_CODE_E()	
+		);
+		productService.save(pe);
+		
+	}
+	
+	
+	private Accessories mapToDB(String locale, 
+						 String currency,
+						 String upcCode,
+						 String brandCode,
+						 String categoryCode,
+						 String templateCode,
+						 String productCreateDate,
+						 String productDesc,
+						 String productLongDesc,
+						 Double retailPrice,
+						 Double markdownPrice,
+						 String tagCodeA,
+						 String tagCodeB,
+						 String tagCodeC,
+						 String tagCodeD,
+						 String tagCodeE
+						 ) {
 		logger.debug("called persistProductMaster() ");
-		Brand bDo =
-				brandDomainService.findByCode(Constants.localeENGB, 
-											  p.get_BRAND_CODE());
 		
-		Category cDo = 
-				categoryDomainService.findByCode(   Constants.localeENGB,  
-													p.get_PRIMARY_CATEGORY_CODE());
+		Optional<Product> op = productService.findByCode(upcCode);
 		
-		Department dDo = 
-				departmentDomainService.findByCode(Constants.localeENGB, 
-												   p.get_PRODUCT_TEMPLATE_CODE());
+		Optional<Brand> ob = brandService.findByCode(locale, brandCode);
+		
+		Optional<Category> oc = categoryService.findByCode(locale, categoryCode);
+		
+		Optional<Department> od = departmentService.findByCode(locale, templateCode);
+		
+		Optional<ProductStatus> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
+		
+		Optional<ProductAttribute> opa = productAttributeService.findByCode(locale, upcCode);
+		
+		ProductAttribute pa = (opa.isPresent()) 
+		? opa.get()
+		: (new io.nzbee.entity.product.attribute.ProductAttribute());
 		
 		DateTimeFormatter format = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 		LocalDateTime createdDate = null;
-		createdDate = (p.get_PRODUCT_CREATED_DATE().length() == 0)
+		
+		createdDate = (productCreateDate.length() == 0)
 					  ? LocalDateTime.now()
-					  : LocalDateTime.parse(p.get_PRODUCT_CREATED_DATE(), format);
+					  : LocalDateTime.parse(productCreateDate, format);
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
-		Product pEn = new Accessories(
-								p.get_PRODUCT_UPC_CODE(),
-								createdDate,
-								p.get_PRODUCT_STATUS_CODE(),
-							   	p.get_PRODUCT_DESCRIPTION_EN(),
-							   	p.get_PRODUCT_LONG_DESCRIPTION_EN(),
-							   	p.get_PRODUCT_RETAIL_PRICE_USD(),
-							   	p.get_PRODUCT_MARKDOWN_PRICE_USD(),
-							   	p.get_PRODUCT_IMAGE_EN(),
-							   	Constants.localeENGB,
-							   	Constants.currencyUSD,
-							   	bDo,
-							   	dDo,
-							   	(ProductCategory) cDo);
+		Accessories pe = (op.isPresent()) 
+						 ? (Accessories) op.get()
+						 : new Accessories();			  
+					  
+		pe.setPrimaryCategory((CategoryProduct) oc.get());
+		pe.setBrand(ob.get());
+		pe.setDepartment(od.get());
+		pe.setProductUPC(upcCode);
+		pe.setProductCreateDt(createdDate);
+		pe.setProductStatus(ops.get());
+		
+		pe.setLocale(locale);
+		pe.setCurrency(currency);
+		
+		pa.setProductDesc(productDesc);
+		pa.setProductLongDesc(productLongDesc);
+		pa.setLclCd(locale);
+		
+		pa.setProduct(pe);
+		pe.setProductAttribute(pa);
+		
+		Currency curr = currencyService.findByCode(currency).get();
+		ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
+		ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
 
+		ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
+
+		Optional<ProductPrice> oprcr = 
+				productPriceService.findOne(upcCode, 
+											Constants.retailPriceCode, 
+											Constants.currencyUSD);
+
+		//retail price
+		ProductPrice prcr = (oprcr.isPresent()) 
+							? oprcr.get()
+							: new ProductPrice();
+
+		prcr.setType(ptr);
+		prcr.setCurrency(curr);
+		prcr.setPriceValue(retailPrice);
+
+		Optional<ProductPrice> oprcm = 
+				productPriceService.findOne(upcCode, 
+											Constants.markdownPriceCode, 
+											Constants.currencyUSD);
+
+		//markdown price
+		ProductPrice prcm = (oprcm.isPresent()) 
+							? oprcm.get()
+							: new ProductPrice();
+
+		prcm.setType(ptm);
+		prcm.setCurrency(curr);
+		prcm.setPriceValue(markdownPrice);
+		
+		pe.setProductStatus(ps);
+		pe.addProductPrice(prcr);
+		pe.addProductPrice(prcm);
+		
 		//add the tags to the domain object
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_A().toUpperCase(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_B().toUpperCase(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_C().toUpperCase(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_D().toUpperCase(), pEn);
-		addTagToProduct(Constants.localeENGB, p.get_TAG_CODE_E().toUpperCase(), pEn);
-	
-		productDomainService.save(pEn);
+		addTagToProduct(locale, tagCodeA.toUpperCase(), pe);
+		addTagToProduct(locale, tagCodeB.toUpperCase(), pe);
+		addTagToProduct(locale, tagCodeC.toUpperCase(), pe);
+		addTagToProduct(locale, tagCodeD.toUpperCase(), pe);
+		addTagToProduct(locale, tagCodeE.toUpperCase(), pe);
 		
-		
-		Product pCn = new Accessories(
-								p.get_PRODUCT_UPC_CODE(),
-								createdDate,
-								p.get_PRODUCT_STATUS_CODE(),
-							   	p.get_PRODUCT_DESCRIPTION_HK(),
-							   	p.get_PRODUCT_LONG_DESCRIPTION_HK(),
-							   	p.get_PRODUCT_RETAIL_PRICE_HKD(),
-							   	p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
-							   	p.get_PRODUCT_IMAGE_HK(),
-							   	Constants.localeZHHK,
-							   	Constants.currencyHKD,
-							   	bDo,
-							   	dDo,
-							   	(ProductCategory) cDo);
-		
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_A().toUpperCase(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_B().toUpperCase(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_C().toUpperCase(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_D().toUpperCase(), pCn);
-		addTagToProduct(Constants.localeZHHK, p.get_TAG_CODE_E().toUpperCase(), pCn);
-		
-		productDomainService.save(pCn);
-
+		return pe;
 	}
 	
 	private void addTagToProduct(String locale, String tagCode, Product p) {
 		if(tagCode.length() == 5) {
-			Tag t = tagDomainService.findByCode(locale, tagCode);
+			Tag t = tagService.findByCode(locale, tagCode).get();
 			p.addTag(t);
 		}
 	}
@@ -167,9 +295,9 @@ public class ProductMasterService {
 		List<AccessoriesMasterSchema> lpms = new ArrayList<AccessoriesMasterSchema>();
 	    try {
 	    
-	    	List<Accessories> productsList = productDomainService.findAllByType(Constants.localeENGB,
+	    	List<Accessories> productsList = productService.findAllByType(Constants.localeENGB,
 	    														  		 Constants.currencyHKD,
-	    														  		Accessories.class)
+	    														  		 Accessories.class)
 	    							  .stream()
 	    							  .map(p -> (Accessories) p)
 	    							  .collect(Collectors.toList());
@@ -178,7 +306,7 @@ public class ProductMasterService {
 	    	Map<String, AccessoriesMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new AccessoriesMasterSchema()));
 	 
 	    	
-	    	productsList.addAll(productDomainService.findAllByType(	Constants.localeZHHK,
+	    	productsList.addAll(productService.findAllByType(	Constants.localeZHHK,
 																Constants.currencyUSD,
 																Accessories.class)
 	    											.stream()
@@ -191,57 +319,54 @@ public class ProductMasterService {
 		    	
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
+		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus().getCode());
 		    	
-		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus());
-		    	
-		        if (p.getLclCd().equals(Constants.localeENGB)) 
-		        		{ pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDesc()); }
-		        if (p.getLclCd().equals(Constants.localeZHHK)) 
-        				{ pms.set_PRODUCT_DESCRIPTION_HK(p.getProductDesc()); }		
+		        if (p.getLocale().equals(Constants.localeENGB)) 
+		        		{ pms.set_PRODUCT_DESCRIPTION_EN(p.getProductAttribute().getProductDesc()); }
+		        if (p.getLocale().equals(Constants.localeZHHK)) 
+        				{ pms.set_PRODUCT_DESCRIPTION_HK(p.getProductAttribute().getProductDesc()); }		
 		        
 		        if (p.getCurrency().equals(Constants.currencyHKD)) 
-						{ pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getProductRetail()); 
-						  pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getProductMarkdown());}	
+						{ pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getCurrentRetailPriceHKD()); 
+						  pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getCurrentMarkdownPriceHKD());}	
 		        		
 		        if (p.getCurrency().equals(Constants.currencyUSD)) 
-						{ pms.set_PRODUCT_RETAIL_PRICE_USD(p.getProductRetail()); 
-						  pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getProductMarkdown());}
+						{ pms.set_PRODUCT_RETAIL_PRICE_USD(p.getCurrentRetailPriceUSD()); 
+						  pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getCurrentMarkdownPriceUSD());}
 		    	
-		    	Brand brand = brandDomainService.findByProductCode( p.getLclCd(), 
+		    	Optional<Brand> brand = brandService.findByProductCode( p.getLocale(), 
 																	p.getProductUPC());
 		    	
-		    	pms.set_BRAND_CODE(brand.getBrandCode());
+		    	pms.set_BRAND_CODE(brand.get().getBrandCode());
 		    	
-		    	if (p.getLclCd().equals(Constants.localeENGB)) 
-        				{ pms.set_BRAND_DESCRIPTION_EN(brand.getBrandDesc()); }
+		    	if (p.getLocale().equals(Constants.localeENGB)) 
+        				{ pms.set_BRAND_DESCRIPTION_EN(brand.get().getBrandDescENGB()); }
 		    	
-		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
-						{ pms.set_BRAND_DESCRIPTION_HK(brand.getBrandDesc()); }
+		    	if (p.getLocale().equals(Constants.localeZHHK)) 
+						{ pms.set_BRAND_DESCRIPTION_HK(brand.get().getBrandDescZHHK()); }
 		    	
-		    	ProductCategory c = categoryDomainService.findPrimaryByProductCode(p.getLclCd(),
-																		 		   p.getProductUPC()); 
+		    	Optional<Category> c = categoryService.findByCode(p.getLocale(), p.getPrimaryCategory().getCategoryCode());
 		    	
-		    	pms.set_PRIMARY_CATEGORY_CODE(c.getCategoryCode());
+		    	pms.set_PRIMARY_CATEGORY_CODE(c.get().getCategoryCode());
 		    	
-		    	if (p.getLclCd().equals(Constants.localeENGB)) 
-						{ pms.set_PRIMARY_CATEGORY_DESC_EN(c.getCategoryDesc()); 
-						  pms.set_PRODUCT_IMAGE_EN(p.getProductImage());}
+		    	if (p.getLocale().equals(Constants.localeENGB)) 
+						{ pms.set_PRIMARY_CATEGORY_DESC_EN(c.get().getCategoryDescENGB()); 
+						  pms.set_PRODUCT_IMAGE_EN(p.getProductImageENGB());}
 		    	
-		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
-						{ pms.set_PRIMARY_CATEGORY_DESC_HK(c.getCategoryDesc()); 
-						  pms.set_PRODUCT_IMAGE_HK(p.getProductImage());}
+		    	if (p.getLocale().equals(Constants.localeZHHK)) 
+						{ pms.set_PRIMARY_CATEGORY_DESC_HK(c.get().getCategoryDescZHHK()); 
+						  pms.set_PRODUCT_IMAGE_HK(p.getProductImageZHHK());}
 		    	
-		    	Department d = departmentDomainService.findByProductCode(p.getLclCd(),
-															 			 p.getCurrency(), 
-															 			 p.getProductUPC()); 
+		    	Optional<Department> d = departmentService.findByProductCode(p.getLocale(),
+															 	   p.getProductUPC()); 
 		    	
-		    	pms.set_PRODUCT_TEMPLATE_CODE(d.getDepartmentCode());
+		    	pms.set_PRODUCT_TEMPLATE_CODE(d.get().getDepartmentCode());
 		    	
-		    	if (p.getLclCd().equals(Constants.localeENGB)) 
-		    			{ pms.set_PRODUCT_TEMPLATE_DESC_EN(d.getDepartmentDesc()); } 
+		    	if (p.getLocale().equals(Constants.localeENGB)) 
+		    			{ pms.set_PRODUCT_TEMPLATE_DESC_EN(d.get().getDepartmentDescENGB()); } 
 		    	
-		    	if (p.getLclCd().equals(Constants.localeZHHK)) 
-						{ pms.set_PRODUCT_TEMPLATE_DESC_HK(d.getDepartmentDesc()); } 
+		    	if (p.getLocale().equals(Constants.localeZHHK)) 
+						{ pms.set_PRODUCT_TEMPLATE_DESC_HK(d.get().getDepartmentDescZHHK()); } 
 		    	
 	    	return pms;
 	    	}).collect(Collectors.toSet()));
