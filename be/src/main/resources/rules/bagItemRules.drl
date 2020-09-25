@@ -1,9 +1,13 @@
+package io.nzbee.domain;
+
+/*
 package com.javacodegeeks.drools;
 import com.javacodegeeks.drools.Cart;
 import com.javacodegeeks.drools.CartItem;
 import com.javacodegeeks.drools.CartStatus;
 import com.javacodegeeks.drools.Product;
 import java.util.List;
+*/
 
 global List<Product> outOfStockProducts;
 
