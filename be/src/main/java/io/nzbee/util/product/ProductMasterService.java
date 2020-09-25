@@ -124,6 +124,7 @@ public class ProductMasterService {
 		}
 	}
 	
+	@Transactional
 	public void persistProductMaster(AccessoriesMasterSchema p) {
 		
 		//english with USD
@@ -206,12 +207,10 @@ public class ProductMasterService {
 		? opa.get()
 		: (new io.nzbee.entity.product.attribute.ProductAttribute());
 		
-		DateTimeFormatter format = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
+		
 		LocalDateTime createdDate = null;
 		
-		createdDate = (productCreateDate.length() == 0)
-					  ? LocalDateTime.now()
-					  : LocalDateTime.parse(productCreateDate, format);
+		createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
 		Accessories pe = (op.isPresent()) 
@@ -274,11 +273,11 @@ public class ProductMasterService {
 		pe.addProductPrice(prcm);
 		
 		//add the tags to the domain object
-		addTagToProduct(locale, tagCodeA.toUpperCase(), pe);
-		addTagToProduct(locale, tagCodeB.toUpperCase(), pe);
-		addTagToProduct(locale, tagCodeC.toUpperCase(), pe);
-		addTagToProduct(locale, tagCodeD.toUpperCase(), pe);
-		addTagToProduct(locale, tagCodeE.toUpperCase(), pe);
+//		addTagToProduct(locale, tagCodeA.toUpperCase(), pe);
+//		addTagToProduct(locale, tagCodeB.toUpperCase(), pe);
+//		addTagToProduct(locale, tagCodeC.toUpperCase(), pe);
+//		addTagToProduct(locale, tagCodeD.toUpperCase(), pe);
+//		addTagToProduct(locale, tagCodeE.toUpperCase(), pe);
 		
 		return pe;
 	}

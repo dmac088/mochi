@@ -83,8 +83,8 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	@Caching(evict = {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.productUPC}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productId}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currecy, #product.productUPC}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productId}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productUPC}"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true)
 			})
 	public void save(Product product) {

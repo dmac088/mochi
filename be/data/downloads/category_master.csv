@@ -1,44 +1,89 @@
 _CATEGORY_CODE	_CATEGORY_DESC_EN	_CATEGORY_DESC_HK	_CATEGORY_LEVEL	_CATEGORY_TYPE	_PARENT_CATEGORY_CODE
-FET01	Featured	精選	1	productcategory	PRM02
-OFT01	"Other Fruit"	其他水果	2	productcategory	FRT01
-DUM05	"DUMMY 5"	"假 5"	1	productcategory	PRM01
-DUM07	"DUMMY 7"	"假 7"	1	productcategory	PRM01
-VEG01	Vegetables	蔬菜	1	productcategory	PRM01
-MEL01	Melons	瓜	2	productcategory	FRT01
-DRU01	Drupes	核果	2	productcategory	FRT01
-REV01	Red	紅色蔬菜	3	productcategory	ROV01
-PEC01	Pecans	胡桃	2	productcategory	NUT01
-DUM02	"DUMMY 2"	"假 2"	1	productcategory	PRM01
-POM01	Pomes	梨果	2	productcategory	FRT01
-OTH02	"Other Brands"	其他品牌	1	productcategory	BND01
-PRM01	ALL	ALL	0	productcategory	
-PIS01	Pistachios	開心果	2	productcategory	NUT01
-DUM08	"DUMMY 8"	"假 8"	1	productcategory	PRM01
-DGV01	"Dark Green"	深綠色蔬菜	2	productcategory	VEG01
-FBR01	"Featured Brands"	推薦品牌		brandcategory	
-TRO01	Tropical	熱帶	2	productcategory	FRT01
-BND01	"All Brands"	所有品牌	0	productcategory	
 DUM06	"DUMMY 6"	"假 6"	1	productcategory	PRM01
-DUM04	"DUMMY 4"	"假 4"	1	productcategory	PRM01
-PRM02	MISC	雜	0	productcategory	
-ROV01	"Red and Orange"	紅色和橙色蔬菜	2	productcategory	VEG01
-BER01	Berries	漿果	2	productcategory	FRT01
-BSP01	"Best Sellers"	最暢銷	1	productcategory	PRM02
+AHHAB	"Hair Bands"	頭箍	3	productcategory	AHAR1
 SVG01	Starchy	澱粉蔬菜	2	productcategory	VEG01
-NUT01	Nuts	堅果	1	productcategory	PRM01
-HAZ01	Hazelnuts	榛子	2	productcategory	NUT01
-ONT01	"Other Nuts"	其他堅果	2	productcategory	NUT01
-BAP01	"Beans and Peas"	豆類和豌豆	2	productcategory	VEG01
-DUM03	"DUMMY 3"	"假 3"	1	productcategory	PRM01
-DUM01	"DUMMY 1"	"假 1"	1	productcategory	PRM01
+DUM07	"DUMMY 7"	"假 7"	1	productcategory	PRM01
+AJBRA	Bracelets	"手鏈 "	3	productcategory	AJEW1
 CIT01	Citrus	柑橘	2	productcategory	FRT01
-UNK01	Unknown	未知	1	productcategory	PRM02
-PEA01	Peanuts	花生	2	productcategory	NUT01
-MAC01	Macadamia	澳洲	2	productcategory	NUT01
-BRA01	Brazil	巴西	2	productcategory	NUT01
-CAS01	Cashews	腰果	2	productcategory	NUT01
-DUM09	"DUMMY 9"	"假 9"	4	productcategory	REV01
-OTH01	Other	其他蔬菜	2	productcategory	VEG01
-FRT01	Fruit	水果	1	productcategory	PRM01
-ALM01	Almonds	杏仁	2	productcategory	NUT01
+FCLO1	"Clothes "	衣服	2	productcategory	FAS01
 ORV01	Orange	橙色蔬菜	3	productcategory	ROV01
+DUM05	"DUMMY 5"	"假 5"	1	productcategory	PRM01
+MEL01	Melons	瓜	2	productcategory	FRT01
+PRM01	ALL	ALL	0	productcategory	
+DUM09	"DUMMY 9"	"假 9"	4	productcategory	REV01
+AJEAR	Earrings	耳環	3	productcategory	AJEW1
+FCOO1	"Cool Stationary "	時尚文具	2	productcategory	FAS01
+AHAR1	"Hair Accessories"	髮飾	2	productcategory	ACC01
+DUM08	"DUMMY 8"	"假 8"	1	productcategory	PRM01
+HAZ01	Hazelnuts	榛子	2	productcategory	NUT01
+TRO01	Tropical	熱帶	2	productcategory	FRT01
+FHHAT	Hats	帽	3	productcategory	FHEA1
+FPAPP	Apple	"蘋果手機配件 "	3	productcategory	FPHO1
+ACC01	Accessories	配件	1	productcategory	PRM05
+AJNEC	Necklaces	項鍊	3	productcategory	AJEW1
+BRA01	Brazil	巴西	2	productcategory	NUT01
+DGV01	"Dark Green"	深綠色蔬菜	2	productcategory	VEG01
+NUT01	Nuts	堅果	1	productcategory	PRM01
+AHHAT	"Hair Ties "	頭髮橡筋	3	productcategory	AHAR1
+FCSCA	Scarfs	頸巾	3	productcategory	FCLO1
+FBR01	"Featured Brands"	推薦品牌		brandcategory	
+DUM01	"DUMMY 1"	"假 1"	1	productcategory	PRM01
+FCPOC	"Pockets "	文件袋	3	productcategory	FCOO1
+UNK01	Unknown	未知	1	productcategory	PRM02
+ROV01	"Red and Orange"	紅色和橙色蔬菜	2	productcategory	VEG01
+FPHO1	"Phone Accessories"	手機配件	2	productcategory	FAS01
+AHHAC	"Hair Clips"	髮夾	3	productcategory	AHAR1
+AOPAD	"Packing decorations"	包裝裝飾物	3	productcategory	AOTH1
+FBFAB	"Fashion Belts "	時尚皮帶	3	productcategory	FBEL1
+AOTH1	"Other Accessories "	其他飾物	2	productcategory	ACC01
+BER01	Berries	漿果	2	productcategory	FRT01
+ALM01	Almonds	杏仁	2	productcategory	NUT01
+BND01	"All Brands"	所有品牌	0	productcategory	
+AJRIN	Rings	戒指	3	productcategory	AJEW1
+HFLO1	Floor	地板	2	productcategory	HOM01
+BSP01	"Best Sellers"	最暢銷	1	productcategory	PRM02
+FHSUN	Sunglasses	太陽眼鏡	3	productcategory	FHEA1
+FCTOP	Tops	上衫	3	productcategory	FCLO1
+AJEW1	Jewelry	首飾	2	productcategory	ACC01
+FHEA1	"Head Accessories "	頭飾	2	productcategory	FAS01
+FCBOT	"Bottoms "	外褲	3	productcategory	FCLO1
+HFCUP	Cupboards	收納	3	productcategory	HFLO1
+FFOT1	Footwear	鞋類	2	productcategory	FAS01
+ONT01	"Other Nuts"	其他堅果	2	productcategory	NUT01
+OTH01	Other	其他蔬菜	2	productcategory	VEG01
+OTH02	"Other Brands"	其他品牌	1	productcategory	BND01
+FFSHO	Shoes	鞋	3	productcategory	FFOT1
+PIS01	Pistachios	開心果	2	productcategory	NUT01
+AOLAN	Lanyards	頸繩	3	productcategory	AOTH1
+CAS01	Cashews	腰果	2	productcategory	NUT01
+FET01	Featured	精選	1	productcategory	PRM02
+FBAG1	"Bags and wallets"	手袋銀包	2	productcategory	FAS01
+PEA01	Peanuts	花生	2	productcategory	NUT01
+PRM02	MISC	雜	0	productcategory	
+FBHAN	Handbags	包包	3	productcategory	FBAG1
+DRU01	Drupes	核果	2	productcategory	FRT01
+DUM03	"DUMMY 3"	"假 3"	1	productcategory	PRM01
+DUM02	"DUMMY 2"	"假 2"	1	productcategory	PRM01
+OFT01	"Other Fruit"	其他水果	2	productcategory	FRT01
+FFSLI	Slippers	拖鞋	3	productcategory	FFOT1
+MAC01	Macadamia	澳洲	2	productcategory	NUT01
+AJBRO	Brooch	胸針	3	productcategory	AJEW1
+FAS01	"Fashion "	時裝	1	productcategory	PRM05
+PRM05	"Master Category"	主類別	0	productcategory	
+VEG01	Vegetables	蔬菜	1	productcategory	PRM01
+REV01	Red	紅色蔬菜	3	productcategory	ROV01
+FBEL1	Belts	皮帶	2	productcategory	FAS01
+HFCAR	Carpets	地毯	3	productcategory	HFLO1
+FRT01	Fruit	水果	1	productcategory	PRM01
+POM01	Pomes	梨果	2	productcategory	FRT01
+AOKEY	Keyrings	鎖匙扣	3	productcategory	AOTH1
+FBBAC	Backpacks	背囊	3	productcategory	FBAG1
+FWWAT	"Fashion Watches"	時尚手錶	3	productcategory	FWAT1
+PEC01	Pecans	胡桃	2	productcategory	NUT01
+BAP01	"Beans and Peas"	豆類和豌豆	2	productcategory	VEG01
+DUM04	"DUMMY 4"	"假 4"	1	productcategory	PRM01
+FCJAC	Jackets	外褸	3	productcategory	FCLO1
+FBWAL	"Wallet "	銀包	3	productcategory	FBAG1
+HOM01	Home	家居	1	productcategory	PRM05
+FWAT1	Watches	手錶	2	productcategory	FAS01
+FFSOC	Socks	襪	3	productcategory	FFOT1
