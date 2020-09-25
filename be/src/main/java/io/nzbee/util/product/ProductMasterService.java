@@ -46,20 +46,6 @@ import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.Tag;
 import io.nzbee.util.FileStorageServiceUpload;
 
-//import io.nzbee.domain.product.Accessories;
-//import io.nzbee.domain.product.Product;
-//import io.nzbee.domain.tag.Tag;
-//import io.nzbee.domain.brand.Brand;
-//import io.nzbee.domain.category.Category;
-//import io.nzbee.domain.category.ProductCategory;
-//import io.nzbee.domain.department.Department;
-//
-//import io.nzbee.domain.ports.IBrandPortService;
-//import io.nzbee.domain.ports.ICategoryPortService;
-//import io.nzbee.domain.ports.IDepartmentPortService;
-//import io.nzbee.domain.ports.IProductPortService;
-//import io.nzbee.domain.ports.ITagPortService;
-
 @Service
 @Transactional
 public class ProductMasterService {
@@ -273,18 +259,19 @@ public class ProductMasterService {
 		pe.addProductPrice(prcm);
 		
 		//add the tags to the domain object
-//		addTagToProduct(locale, tagCodeA.toUpperCase(), pe);
-//		addTagToProduct(locale, tagCodeB.toUpperCase(), pe);
-//		addTagToProduct(locale, tagCodeC.toUpperCase(), pe);
-//		addTagToProduct(locale, tagCodeD.toUpperCase(), pe);
-//		addTagToProduct(locale, tagCodeE.toUpperCase(), pe);
+		addTagToProduct(locale, tagCodeA, pe);
+		addTagToProduct(locale, tagCodeB, pe);
+		addTagToProduct(locale, tagCodeC, pe);
+		addTagToProduct(locale, tagCodeD, pe);
+		addTagToProduct(locale, tagCodeE, pe);
 		
 		return pe;
 	}
 	
 	private void addTagToProduct(String locale, String tagCode, Product p) {
+		if (tagCode == null) return;
 		if(tagCode.length() == 5) {
-			Tag t = tagService.findByCode(locale, tagCode).get();
+			Tag t = tagService.findByCode(locale, tagCode.toUpperCase()).get();
 			p.addTag(t);
 		}
 	}
