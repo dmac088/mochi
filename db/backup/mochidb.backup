@@ -1887,6 +1887,19 @@ CREATE SEQUENCE hierarchy_hir_id_seq
 ALTER TABLE hierarchy_hir_id_seq OWNER TO mochidb_owner;
 
 --
+-- Name: inventory_location; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE inventory_location (
+    inv_loc_id bigint NOT NULL,
+    inv_loc_cd character(5) NOT NULL,
+    inv_loc_desc character varying(50)
+);
+
+
+ALTER TABLE inventory_location OWNER TO mochidb_owner;
+
+--
 -- Name: inventory_transaction_inv_trx_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -1968,16 +1981,6 @@ CREATE TABLE locale (
 
 
 ALTER TABLE locale OWNER TO mochidb_owner;
-
---
--- Name: location; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE location (
-);
-
-
-ALTER TABLE location OWNER TO mochidb_owner;
 
 --
 -- Name: order; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -3767,6 +3770,14 @@ SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
 
 
 --
+-- Data for Name: inventory_location; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY inventory_location (inv_loc_id, inv_loc_cd, inv_loc_desc) FROM stdin;
+\.
+
+
+--
 -- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4018,14 +4029,6 @@ zh-MO
 zh-SG
 zh-TW
 zu-ZA
-\.
-
-
---
--- Data for Name: location; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-COPY location  FROM stdin;
 \.
 
 
@@ -6167,6 +6170,30 @@ ALTER TABLE ONLY discount_type
 
 
 --
+-- Name: inventory_location inventory_location_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_location
+    ADD CONSTRAINT inventory_location_pkey PRIMARY KEY (inv_loc_id);
+
+
+--
+-- Name: inventory_transaction inventory_transaction_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_transaction
+    ADD CONSTRAINT inventory_transaction_pkey PRIMARY KEY (inv_trx_id);
+
+
+--
+-- Name: inventory_transaction_type inventory_transaction_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_transaction_type
+    ADD CONSTRAINT inventory_transaction_type_pkey PRIMARY KEY (inv_trx_typ_id);
+
+
+--
 -- Name: order_line order_line_ord_id_key; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6904,6 +6931,38 @@ ALTER TABLE ONLY department_attr_lcl
 
 
 --
+-- Name: inventory_transaction inventory_transaction_ccy_id_currency_ccy_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_transaction
+    ADD CONSTRAINT inventory_transaction_ccy_id_currency_ccy_id FOREIGN KEY (inv_ccy_id) REFERENCES currency(ccy_id);
+
+
+--
+-- Name: inventory_transaction inventory_transaction_inv_loc_id_inventory_location_inv_loc_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_transaction
+    ADD CONSTRAINT inventory_transaction_inv_loc_id_inventory_location_inv_loc_id FOREIGN KEY (inv_loc_id) REFERENCES inventory_location(inv_loc_id);
+
+
+--
+-- Name: inventory_transaction inventory_transaction_inv_prd_id_product_prd_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_transaction
+    ADD CONSTRAINT inventory_transaction_inv_prd_id_product_prd_id FOREIGN KEY (inv_prd_id) REFERENCES product(prd_id);
+
+
+--
+-- Name: inventory_transaction inventory_transaction_inv_trx_typ_id_inventory_transaction_type; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY inventory_transaction
+    ADD CONSTRAINT inventory_transaction_inv_trx_typ_id_inventory_transaction_type FOREIGN KEY (inv_trx_typ_id) REFERENCES inventory_transaction_type(inv_trx_typ_id);
+
+
+--
 -- Name: order_line order_line_order_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -7421,6 +7480,13 @@ GRANT ALL ON SEQUENCE hierarchy_hir_id_seq TO mochi_app;
 
 
 --
+-- Name: inventory_location; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE inventory_location TO mochi_app;
+
+
+--
 -- Name: inventory_transaction_inv_trx_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -7460,13 +7526,6 @@ GRANT ALL ON SEQUENCE layout_lay_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE locale TO mochi_app;
-
-
---
--- Name: location; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE location TO mochi_app;
 
 
 --
