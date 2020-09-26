@@ -59,8 +59,13 @@ public class ProductServiceImpl implements IProductService {
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		return productDAO.findAllByType(locale, currency, cls);
 	}
-
 	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	public <T> List<Product> findAllByType(Class<T> cls) {
+		return null;
+	}
+
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
