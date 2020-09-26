@@ -3,8 +3,6 @@ package io.nzbee.util.category;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,21 +21,11 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
-import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.entity.brand.Brand;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.CategoryAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.accessories.Accessories;
-import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.product.department.Department;
-import io.nzbee.entity.product.price.ProductPrice;
-import io.nzbee.entity.product.price.ProductPriceType;
-import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -181,55 +169,42 @@ public class CategoryMasterService {
 		logger.debug("called extractCategoryMaster() ");
 		List<CategoryMasterSchema> lpms = new ArrayList<CategoryMasterSchema>();
 	    try {
-		    	List<Category> categoryList = categoryService.findAll(Constants.localeENGB)
-		    							  						   .stream().collect(Collectors.toList());
+		    	List<Category> categoryList = new ArrayList<Category>(categoryService.findAll());
 		    	
 		    	//create a map of categories (full list)
 		    	Map<String, CategoryMasterSchema> map = categoryList
 		    												.stream().collect(Collectors.toMap(c -> c.getCategoryCode(), c -> new CategoryMasterSchema()));
 		 
-		    	
-		    	categoryList.addAll(categoryService.findAll(Constants.localeZHHK)
-		    											.stream().collect(Collectors.toList()));
-		    	
 		    	lpms.addAll(categoryList.stream().map(c -> {
 		    		
-		    	CategoryMasterSchema cms = map.get(c.getCategoryCode());
+		    		CategoryMasterSchema cms = map.get(c.getCategoryCode());
 		    		
-			    Optional<Category> cat = categoryService.findByCode(c.getLocale(),
-																c.getCategoryCode()); 
-			    	
-			    cms.set_CATEGORY_CODE(cat.get().getCategoryCode());
-			    cms.set_CATEGORY_TYPE(cat.get().getCategoryType());
+				    cms.set_CATEGORY_CODE(c.getCategoryCode());
+				    cms.set_CATEGORY_TYPE(c.getCategoryType().getCategoryTypeCode());
 			    
-			    if(cat.get().getCategoryType().equals(ProductCategory.class.getSimpleName().toLowerCase())) {
-			    	cms.set_PARENT_CATEGORY_CODE(((ProductCategory) c).getParentCode());
-			    	cms.set_CATEGORY_LEVEL(((ProductCategory) c).getCategoryLevel().toString());
-			    }
+				    if(c.getCategoryType().getCategoryTypeDesc().equals(CategoryProduct.class.getSimpleName().toLowerCase())) {
+				    	cms.set_PARENT_CATEGORY_CODE(((CategoryProduct) c).getCategoryParentCode());
+				    	cms.set_CATEGORY_LEVEL(((CategoryProduct) c).getCategoryLevel().toString());
+				    }
 			    	
-			    if (c.getLocale().equals(Constants.localeENGB)) {
-			    	cms.set_CATEGORY_DESC_EN(cat.get().getCategoryDescENGB());
-			    }
+				    cms.set_CATEGORY_DESC_EN(c.getCategoryDescENGB());
+				    cms.set_CATEGORY_DESC_HK(c.getCategoryDescZHHK());
 			    	
-			    if (c.getLocale().equals(Constants.localeZHHK)) {
-			    	cms.set_CATEGORY_DESC_HK(cat.get().getCategoryDescZHHK());
-			    }
-			    	
-			    return cms;
-		    }).collect(Collectors.toSet()));
+				    return cms;
+		    	}).collect(Collectors.toSet()));
 	    	
-	    	CsvMapper mapper = new CsvMapper(); 
-	        CsvSchema schema = mapper.schemaFor(CategoryMasterSchema.class)
+		    	CsvMapper mapper = new CsvMapper(); 
+		    	CsvSchema schema = mapper.schemaFor(CategoryMasterSchema.class)
 	        		.withHeader()
 	        		.withColumnSeparator('\t')
 	        		.withQuoteChar('"');
 	        
-	        ObjectWriter myObjectWriter = mapper.writer(schema);
-	        String ow = myObjectWriter.writeValueAsString(lpms);
-	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
-	        out.write(ow);
-	        out.flush();
-	        out.close();
+		        ObjectWriter myObjectWriter = mapper.writer(schema);
+		        String ow = myObjectWriter.writeValueAsString(lpms);
+		        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
+		        out.write(ow);
+		        out.flush();
+		        out.close();
 	        
 	    } catch (Exception e) {
 	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);

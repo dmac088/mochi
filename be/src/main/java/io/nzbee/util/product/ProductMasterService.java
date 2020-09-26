@@ -281,22 +281,14 @@ public class ProductMasterService {
 	    try {
 	    
 	    	List<Accessories> productsList = productService.findAllByType(Constants.localeENGB,
-	    														  		 Constants.currencyHKD,
-	    														  		 Accessories.class)
+	    														  		  Constants.currencyHKD,
+	    														  		  Accessories.class)
 	    							  .stream()
 	    							  .map(p -> (Accessories) p)
 	    							  .collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)
 	    	Map<String, AccessoriesMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new AccessoriesMasterSchema()));
-	 
-	    	
-	    	productsList.addAll(productService.findAllByType(	Constants.localeZHHK,
-																Constants.currencyUSD,
-																Accessories.class)
-	    											.stream()
-									    			.map(p -> (Accessories) p)
-													.collect(Collectors.toList()));
 	    	
 	    	lpms.addAll(productsList.stream().map(p -> {
 	    		
@@ -305,55 +297,25 @@ public class ProductMasterService {
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
 		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus().getCode());
+		    	pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDescENGB());
+        		pms.set_PRODUCT_DESCRIPTION_HK(p.getProductDescZHHK()); 		
+		        pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getCurrentRetailPriceHKD());
+		        pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getCurrentMarkdownPriceHKD());	
+		        pms.set_PRODUCT_RETAIL_PRICE_USD(p.getCurrentRetailPriceUSD()); 
+				pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getCurrentMarkdownPriceUSD());
+		    	pms.set_BRAND_CODE(p.getBrand().getBrandCode());
+		    	pms.set_BRAND_DESCRIPTION_EN(p.getBrand().getBrandDescENGB());
+		    	pms.set_BRAND_DESCRIPTION_HK(p.getBrand().getBrandDescZHHK());
+		    	pms.set_PRIMARY_CATEGORY_CODE(p.getPrimaryCategory().getCategoryCode());
+		    	pms.set_PRIMARY_CATEGORY_DESC_EN(p.getPrimaryCategory().getCategoryDescENGB());
+		    	pms.set_PRODUCT_IMAGE_EN(p.getProductImageENGB());
+		    	pms.set_PRIMARY_CATEGORY_DESC_HK(p.getPrimaryCategory().getCategoryDescZHHK());
+		    	pms.set_PRODUCT_IMAGE_HK(p.getProductImageZHHK());
+		    	pms.set_PRODUCT_TEMPLATE_CODE(p.getDepartment().getDepartmentCode());
+		    	pms.set_PRODUCT_TEMPLATE_DESC_EN(p.getDepartment().getDepartmentDescENGB());
+		    	pms.set_PRODUCT_TEMPLATE_DESC_HK(p.getDepartment().getDepartmentDescZHHK());
 		    	
-		        if (p.getLocale().equals(Constants.localeENGB)) 
-		        		{ pms.set_PRODUCT_DESCRIPTION_EN(p.getProductAttribute().getProductDesc()); }
-		        if (p.getLocale().equals(Constants.localeZHHK)) 
-        				{ pms.set_PRODUCT_DESCRIPTION_HK(p.getProductAttribute().getProductDesc()); }		
-		        
-		        if (p.getCurrency().equals(Constants.currencyHKD)) 
-						{ pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getCurrentRetailPriceHKD()); 
-						  pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getCurrentMarkdownPriceHKD());}	
-		        		
-		        if (p.getCurrency().equals(Constants.currencyUSD)) 
-						{ pms.set_PRODUCT_RETAIL_PRICE_USD(p.getCurrentRetailPriceUSD()); 
-						  pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getCurrentMarkdownPriceUSD());}
-		    	
-		    	Optional<Brand> brand = brandService.findByProductCode( p.getLocale(), 
-																	p.getProductUPC());
-		    	
-		    	pms.set_BRAND_CODE(brand.get().getBrandCode());
-		    	
-		    	if (p.getLocale().equals(Constants.localeENGB)) 
-        				{ pms.set_BRAND_DESCRIPTION_EN(brand.get().getBrandDescENGB()); }
-		    	
-		    	if (p.getLocale().equals(Constants.localeZHHK)) 
-						{ pms.set_BRAND_DESCRIPTION_HK(brand.get().getBrandDescZHHK()); }
-		    	
-		    	Optional<Category> c = categoryService.findByCode(p.getLocale(), p.getPrimaryCategory().getCategoryCode());
-		    	
-		    	pms.set_PRIMARY_CATEGORY_CODE(c.get().getCategoryCode());
-		    	
-		    	if (p.getLocale().equals(Constants.localeENGB)) 
-						{ pms.set_PRIMARY_CATEGORY_DESC_EN(c.get().getCategoryDescENGB()); 
-						  pms.set_PRODUCT_IMAGE_EN(p.getProductImageENGB());}
-		    	
-		    	if (p.getLocale().equals(Constants.localeZHHK)) 
-						{ pms.set_PRIMARY_CATEGORY_DESC_HK(c.get().getCategoryDescZHHK()); 
-						  pms.set_PRODUCT_IMAGE_HK(p.getProductImageZHHK());}
-		    	
-		    	Optional<Department> d = departmentService.findByProductCode(p.getLocale(),
-															 	   p.getProductUPC()); 
-		    	
-		    	pms.set_PRODUCT_TEMPLATE_CODE(d.get().getDepartmentCode());
-		    	
-		    	if (p.getLocale().equals(Constants.localeENGB)) 
-		    			{ pms.set_PRODUCT_TEMPLATE_DESC_EN(d.get().getDepartmentDescENGB()); } 
-		    	
-		    	if (p.getLocale().equals(Constants.localeZHHK)) 
-						{ pms.set_PRODUCT_TEMPLATE_DESC_HK(d.get().getDepartmentDescZHHK()); } 
-		    	
-	    	return pms;
+		    	return pms;
 	    	}).collect(Collectors.toSet()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
