@@ -114,8 +114,7 @@ public class ProductMasterService {
 	public void persistProductMaster(AccessoriesMasterSchema p) {
 		
 		//english with USD
-		Accessories pe = 
-		mapToDB(
+		Accessories pe = mapToAccessory(
 				 Constants.localeENGB, 
 				 Constants.currencyUSD,
 				 p.get_PRODUCT_UPC_CODE(),
@@ -135,7 +134,7 @@ public class ProductMasterService {
 		);
 		productService.save(pe);
 		
-		pe = mapToDB(
+		pe = mapToAccessory(
 				 Constants.localeZHHK, 
 				 Constants.currencyHKD,
 				 p.get_PRODUCT_UPC_CODE(),
@@ -158,7 +157,7 @@ public class ProductMasterService {
 	}
 	
 	
-	private Accessories mapToDB(String locale, 
+	private Accessories mapToAccessory(String locale, 
 						 String currency,
 						 String upcCode,
 						 String brandCode,
