@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
@@ -18,8 +19,9 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
-import io.nzbee.domain.ports.ITagPortService;
-import io.nzbee.domain.tag.Tag;
+import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -29,7 +31,7 @@ public class TagMasterService {
 	private static final Logger logger = LoggerFactory.getLogger(TagMasterService.class);
 	
 	@Autowired
-	private ITagPortService tagDomainService; 
+	private ITagService tagService; 
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -60,51 +62,72 @@ public class TagMasterService {
 	public void persistTagMaster(TagMasterSchema t) {
 		logger.debug("called persistTagMaster() ");
 		
-		Tag tEN = new Tag(	 t.get_TAG_CODE(),
+		Tag tEN = mapToTag(	 t.get_TAG_CODE(),
 							 t.get_TAG_DESC_EN().toUpperCase(),
 							 Constants.localeENGB);
 				
-		tagDomainService.save(tEN);
+		tagService.save(tEN);
 		
-		Tag tCN = new Tag(	t.get_TAG_CODE(),
-				 			t.get_TAG_DESC_HK(),
+		Tag tCN = mapToTag(	t.get_TAG_CODE(),
+				 			t.get_TAG_DESC_HK().toUpperCase(),
 				 		    Constants.localeZHHK);
 		
-		tagDomainService.save(tCN);
-
+		tagService.save(tCN);
+	}
+	
+	private Tag mapToTag(
+			String tagCode,
+			String tagDesc,
+			String locale
+			) {
+		
+		Optional<Tag> ot =tagService.findByCode(tagCode);
+		
+		io.nzbee.entity.tag.Tag t = 
+				(ot.isPresent())
+				? ot.get() 
+				: new Tag();
+				
+		TagAttribute ta = new TagAttribute();
+		
+		if(ot.isPresent()) {
+			Optional<TagAttribute> ota =
+			ot.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
+			ta = (ota.isPresent()) 
+			? ota.get()
+			: new TagAttribute();
+		}		
+		
+		ta.setTagDesc(tagDesc);
+		ta.setLclCd(locale);
+		ta.setTag(t);
+		
+		t.setTagCode(tagCode.toUpperCase());
+		t.setLocale(locale);
+		t.addTagAttribute(ta);
+		
+		return t;
 	}
 	
 	public void extractTagMaster(Resource resource) {
 		logger.debug("called extractTagMaster() ");
 		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
 	    try {
-		    	List<io.nzbee.domain.tag.Tag> tagList = tagDomainService.findAll(Constants.localeENGB)
-		    							  						   .stream().collect(Collectors.toList());
+		    	List<Tag> tagList = new ArrayList<Tag>(tagService.findAll(Constants.localeENGB));
 		    	
 		    	//create a map of categories (full list)
-		    	Map<String, TagMasterSchema> map = tagList
-		    												.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
+		    	Map<String, TagMasterSchema> map = tagList.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
 		 
-		    	
-		    	tagList.addAll(tagDomainService.findAll(Constants.localeZHHK)
-		    											.stream().collect(Collectors.toList()));
-		    	
 		    	lpms.addAll(tagList.stream().map(t -> {
 		    		
 		    	TagMasterSchema tms = map.get(t.getTagCode());
 		    		
-			    Tag tag = tagDomainService.findByCode(t.getLocale(),
-													  t.getTagCode()); 
+			    Optional<Tag> tag = tagService.findByCode(t.getLocale(),
+												t.getTagCode()); 
 			    	
-			    tms.set_TAG_CODE(tag.getTagCode());
-			    	
-			    if (t.getLocale().equals(Constants.localeENGB)) {
-			    	tms.set_TAG_DESC_EN(tag.getTagDesc());
-			    }
-			    	
-			    if (t.getLocale().equals(Constants.localeZHHK)) {
-			    	tms.set_TAG_DESC_HK(tag.getTagDesc());
-			    }
+			    tms.set_TAG_CODE(tag.get().getTagCode());
+			    tms.set_TAG_DESC_EN(tag.get().getTagDescENGB());
+			    tms.set_TAG_DESC_HK(tag.get().getTagDescZHHK());
 			    	
 			    return tms;
 		    }).collect(Collectors.toSet()));
