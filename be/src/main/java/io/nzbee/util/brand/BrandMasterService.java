@@ -6,6 +6,7 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
@@ -18,8 +19,8 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -29,7 +30,7 @@ public class BrandMasterService {
 	private static final Logger logger = LoggerFactory.getLogger(BrandMasterService.class);
 	
 	@Autowired
-	private IBrandPortService brandDomainService; 
+	private IBrandService brandService; 
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -60,24 +61,56 @@ public class BrandMasterService {
 	public void persistBrandMaster(BrandMasterSchema b) {
 		logger.debug("called persistBrandMaster() ");
 		
-		Brand bEN = new Brand(	 b.get_BRAND_CODE(),
-								 b.get_BRAND_DESC_EN(),
-								 Constants.localeENGB);
+		Brand bEN = mapToBrand( b.get_BRAND_CODE(),
+								b.get_BRAND_DESC_EN(),
+								Constants.localeENGB);
 				
-		brandDomainService.save(bEN);
+		brandService.save(bEN);
 		
-		Brand bCN = new Brand(	 b.get_BRAND_CODE(),
+		Brand bCN = mapToBrand(	 b.get_BRAND_CODE(),
 				 				 b.get_BRAND_DESC_HK(),
 				 				 Constants.localeZHHK);
 		
-		brandDomainService.save(bCN);
+		brandService.save(bCN);
+	}
+	
+	
+	private Brand mapToBrand(String brandCode,
+							 String brandDesc,
+							 String locale) {
+		Optional<Brand> ob = brandService.findByCode(brandCode);
+						
+		io.nzbee.entity.brand.Brand b = 
+		(ob.isPresent())
+		? ob.get() 
+		: new io.nzbee.entity.brand.Brand();
+		
+		io.nzbee.entity.brand.attribute.BrandAttribute ba = new io.nzbee.entity.brand.attribute.BrandAttribute();
+		if(ob.isPresent()) {
+			Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba =
+					ob.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
+			
+			ba = (oba.isPresent()) 
+			? oba.get()
+			: new io.nzbee.entity.brand.attribute.BrandAttribute();
+		}
+							
+		b.setBrandCode(brandCode);
+		b.setLocale(locale);
+		
+		ba.setBrandDesc(brandDesc);
+		ba.setLclCd(locale);
+		b.addAttribute(ba);
+		ba.setBrand(b);
+		
+		return b;
 	}
 	
 	public void extractBrandMaster(Resource resource) {
 		logger.debug("called extractBrandMaster() ");
 		List<BrandMasterSchema> lpms = new ArrayList<BrandMasterSchema>();
 	    try {
-		    	List<Brand> brandList = brandDomainService.findAll(Constants.localeENGB)
+		    	List<Brand> brandList = brandService.findAll(Constants.localeENGB)
 		    							  .stream().collect(Collectors.toList());
 		    	
 		    	brandList.stream().forEach(b -> {
@@ -89,43 +122,37 @@ public class BrandMasterService {
 		    					.stream().collect(Collectors.toMap(b -> b.getBrandCode(), b -> new BrandMasterSchema()));
 		 
 		    	
-		    	brandList.addAll(brandDomainService.findAll(Constants.localeZHHK)
+		    	brandList.addAll(brandService.findAll(Constants.localeZHHK)
 		    											.stream()
 										    			.map(p -> (Brand) p)
 														.collect(Collectors.toList()));
 		    	
 		    	lpms.addAll(brandList.stream().map(b -> {
 		    		
-		    	BrandMasterSchema bms = map.get(b.getBrandCode());
+		    		BrandMasterSchema bms = map.get(b.getBrandCode());
 		    		
-			    Brand bnd = brandDomainService.findByCode(b.getLocale(),
-														  b.getBrandCode()); 
+		    		Optional<Brand> bnd = brandService.findByCode(b.getLocale(),
+													          	b.getBrandCode()); 
 			    	
-			    bms.set_BRAND_CODE(bnd.getBrandCode());
-			   
-			    if (b.getLocale().equals(Constants.localeENGB)) {
-			    	bms.set_BRAND_DESC_EN(bnd.getBrandDesc());
-			    }
+				    bms.set_BRAND_CODE(bnd.get().getBrandCode());
+				    bms.set_BRAND_DESC_EN(bnd.get().getBrandDescENGB());
+				    bms.set_BRAND_DESC_HK(bnd.get().getBrandDescZHHK());
 			    	
-			    if (b.getLocale().equals(Constants.localeZHHK)) {
-			    	bms.set_BRAND_DESC_HK(bnd.getBrandDesc());
-			    }
-			    	
-			    return bms;
-		    }).collect(Collectors.toSet()));
+				    return bms;
+		    	}).collect(Collectors.toSet()));
 	    	
-	    	CsvMapper mapper = new CsvMapper(); 
-	        CsvSchema schema = mapper.schemaFor(BrandMasterSchema.class)
+		    	CsvMapper mapper = new CsvMapper(); 
+		    	CsvSchema schema = mapper.schemaFor(BrandMasterSchema.class)
 	        		.withHeader()
 	        		.withColumnSeparator('\t')
 	        		.withQuoteChar('"');
 	        
-	        ObjectWriter myObjectWriter = mapper.writer(schema);
-	        String ow = myObjectWriter.writeValueAsString(lpms);
-	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
-	        out.write(ow);
-	        out.flush();
-	        out.close();
+		    	ObjectWriter myObjectWriter = mapper.writer(schema);
+		    	String ow = myObjectWriter.writeValueAsString(lpms);
+		    	PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
+		    	out.write(ow);
+		    	out.flush();
+		    	out.close();
 	        
 	    } catch (Exception e) {
 	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
