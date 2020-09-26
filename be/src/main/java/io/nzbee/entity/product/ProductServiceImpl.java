@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
@@ -81,11 +82,11 @@ public class ProductServiceImpl implements IProductService {
 
 
 	@Override
-	@Caching(evict = {
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.productUPC}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productId}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productUPC}"),
-			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true)
+	@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true)
+	@Caching(put = {
+			  @CachePut(cacheNames = CACHE_NAME, key="{#product.productUPC}"),
+			  @CachePut(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productId}"),
+			  @CachePut(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productUPC}")
 			})
 	public void save(Product product) {
 		productDAO.save(product);
