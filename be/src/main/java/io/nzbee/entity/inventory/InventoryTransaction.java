@@ -14,7 +14,7 @@ import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.inventory.supplier.Supplier;
+import io.nzbee.entity.role.supplier.Supplier;
 
 @Entity
 @Table(name = "inventory_transaction", schema = "mochi")
