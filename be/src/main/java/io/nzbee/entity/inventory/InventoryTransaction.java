@@ -127,5 +127,4 @@ public class InventoryTransaction {
 		this.inventoryTransactionDate = inventoryTransactionDate;
 	}
 	
-	
 }
