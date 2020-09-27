@@ -1,7 +1,6 @@
 package io.nzbee.entity.inventory;
 
 import io.nzbee.entity.inventory.location.InventoryLocation;
-import io.nzbee.entity.inventory.supplier.Supplier;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.currency.Currency;
@@ -18,7 +17,6 @@ public abstract class InventoryTransaction_ {
 	public static volatile SingularAttribute<InventoryTransaction, InventoryType> inventoryType;
 	public static volatile SingularAttribute<InventoryTransaction, Double> quantity;
 	public static volatile SingularAttribute<InventoryTransaction, Double> price;
-	public static volatile SingularAttribute<InventoryTransaction, Supplier> supplier;
 	public static volatile SingularAttribute<InventoryTransaction, Long> inventroyTransactionId;
 	public static volatile SingularAttribute<InventoryTransaction, InventoryLocation> inventoryLocation;
 	public static volatile SingularAttribute<InventoryTransaction, LocalDateTime> inventoryTransactionDate;
@@ -28,7 +26,6 @@ public abstract class InventoryTransaction_ {
 	public static final String INVENTORY_TYPE = "inventoryType";
 	public static final String QUANTITY = "quantity";
 	public static final String PRICE = "price";
-	public static final String SUPPLIER = "supplier";
 	public static final String INVENTROY_TRANSACTION_ID = "inventroyTransactionId";
 	public static final String INVENTORY_LOCATION = "inventoryLocation";
 	public static final String INVENTORY_TRANSACTION_DATE = "inventoryTransactionDate";

@@ -2681,9 +2681,7 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 --
 
 CREATE TABLE supplier (
-    sup_id bigint NOT NULL,
-    sup_cd character(5),
-    sup_desc character varying(50)
+    sup_id bigint NOT NULL
 );
 
 
