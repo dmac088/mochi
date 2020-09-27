@@ -47,7 +47,6 @@ import io.nzbee.entity.tag.Tag;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-@Transactional
 public class ProductMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(ProductMasterService.class);
