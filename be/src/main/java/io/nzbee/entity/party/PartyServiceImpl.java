@@ -30,7 +30,6 @@ public class PartyServiceImpl implements IPartyService {
 
 	@Override
 	public Optional<Party> findById(long id) {
-		// TODO Auto-generated method stub
 		return partyRepository.findById(id);
 	}
 

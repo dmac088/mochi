@@ -1784,7 +1784,7 @@ ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE customer (
     rle_id bigint NOT NULL,
-    cst_id character(10) DEFAULT nextval('customer_cst_id_seq'::regclass)
+    cst_num character(10) DEFAULT nextval('customer_cst_id_seq'::regclass) NOT NULL
 );
 
 
@@ -2568,7 +2568,8 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 --
 
 CREATE TABLE supplier (
-    rle_id bigint NOT NULL
+    rle_id bigint NOT NULL,
+    sup_num character(10) NOT NULL
 );
 
 
@@ -3676,7 +3677,7 @@ COPY currency (ccy_id, ccy_cd) FROM stdin;
 -- Data for Name: customer; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY customer (rle_id, cst_id) FROM stdin;
+COPY customer (rle_id, cst_num) FROM stdin;
 1	1000000011
 232217	1000000026
 232221	1000000028
@@ -5589,7 +5590,7 @@ SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
 -- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY supplier (rle_id) FROM stdin;
+COPY supplier (rle_id, sup_num) FROM stdin;
 \.
 
 
@@ -6144,7 +6145,7 @@ ALTER TABLE ONLY currency
 --
 
 ALTER TABLE ONLY customer
-    ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_id);
+    ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_num);
 
 
 --
