@@ -35,25 +35,21 @@ public class PartyServiceImpl implements IPartyService {
 
 	@Override
 	public Optional<Party> findByCode(String code) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public void save(Party Party) {
-		// TODO Auto-generated method stub
 		partyRepository.save(Party);
 	}
 	
 	@Override
 	public void update(Party t) {
-		// TODO Auto-generated method stub
 		partyRepository.save(t);
 	}
 
 	@Override
 	public void delete(Party t) {
-		// TODO Auto-generated method stub
 		partyRepository.delete(t);
 	}
 
