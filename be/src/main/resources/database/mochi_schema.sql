@@ -2039,7 +2039,7 @@ CREATE TABLE inventory_transaction (
     inv_prc numeric NOT NULL,
     inv_ccy_id bigint NOT NULL,
     inv_trx_typ_id bigint NOT NULL,
-    inv_sup_id bigint NOT NULL,
+    inv_pty_id bigint NOT NULL,
     inv_trx_dt timestamp(4) with time zone NOT NULL
 );
 
@@ -3598,7 +3598,7 @@ ALTER TABLE ONLY inventory_transaction
 --
 
 ALTER TABLE ONLY inventory_transaction
-    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_sup_id) REFERENCES supplier(rle_id);
+    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_pty_id) REFERENCES supplier(rle_id);
 
 
 --

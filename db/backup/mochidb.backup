@@ -4058,6 +4058,7 @@ COPY order_line (ord_id, prd_id, ord_lne_no, qty, prm_id, amt) FROM stdin;
 --
 
 COPY organisation (org_id, org_nme, org_reg_no) FROM stdin;
+233055	Taobao	NA
 \.
 
 
@@ -4095,6 +4096,7 @@ COPY party (pty_id, pty_typ_id) FROM stdin;
 233022	1
 233024	1
 233054	1
+233055	2
 \.
 
 
@@ -4109,7 +4111,7 @@ SELECT pg_catalog.setval('party_party_id_seq', 1, false);
 -- Name: party_pty_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('party_pty_id_seq', 1, false);
+SELECT pg_catalog.setval('party_pty_id_seq', 1, true);
 
 
 --
@@ -5548,6 +5550,7 @@ COPY role (rle_id, rle_typ_id, rle_start_dt, pty_id) FROM stdin;
 233023	1	2020-06-11 00:00:00+08	233022
 233025	1	2020-06-11 00:00:00+08	233024
 233055	1	2020-08-20 00:00:00+08	233054
+233056	2	2020-09-28 11:04:23.6741+08	233055
 \.
 
 
