@@ -1925,7 +1925,7 @@ CREATE TABLE inventory_transaction (
     inv_prc numeric NOT NULL,
     inv_ccy_id bigint NOT NULL,
     inv_trx_typ_id bigint NOT NULL,
-    inv_sup_id bigint NOT NULL,
+    inv_pty_id bigint NOT NULL,
     inv_trx_dt timestamp(4) with time zone NOT NULL
 );
 
@@ -3784,7 +3784,7 @@ COPY inventory_location (inv_loc_id, inv_loc_cd, inv_loc_desc) FROM stdin;
 -- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY inventory_transaction (inv_trx_id, inv_loc_id, inv_prd_id, inv_qty, inv_prc, inv_ccy_id, inv_trx_typ_id, inv_sup_id, inv_trx_dt) FROM stdin;
+COPY inventory_transaction (inv_trx_id, inv_loc_id, inv_prd_id, inv_qty, inv_prc, inv_ccy_id, inv_trx_typ_id, inv_pty_id, inv_trx_dt) FROM stdin;
 \.
 
 
@@ -6974,7 +6974,7 @@ ALTER TABLE ONLY inventory_transaction
 --
 
 ALTER TABLE ONLY inventory_transaction
-    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_sup_id) REFERENCES supplier(rle_id);
+    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_pty_id) REFERENCES supplier(rle_id);
 
 
 --
