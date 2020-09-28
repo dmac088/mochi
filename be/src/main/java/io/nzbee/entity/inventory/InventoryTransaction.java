@@ -48,7 +48,7 @@ public class InventoryTransaction {
 	private InventoryType inventoryType;
 	
 	@ManyToOne
-	@JoinColumn(name="inv_sup_id")
+	@JoinColumn(name="inv_pty_id")
 	private Supplier supplier;
 	
 	@ManyToOne

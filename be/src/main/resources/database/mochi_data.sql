@@ -666,6 +666,7 @@ INSERT INTO party VALUES (233020, 1);
 INSERT INTO party VALUES (233022, 1);
 INSERT INTO party VALUES (233024, 1);
 INSERT INTO party VALUES (233054, 1);
+INSERT INTO party VALUES (233055, 2);
 
 
 --
@@ -1179,6 +1180,7 @@ INSERT INTO role VALUES (233021, 1, '2020-06-11 00:00:00+08', 233020);
 INSERT INTO role VALUES (233023, 1, '2020-06-11 00:00:00+08', 233022);
 INSERT INTO role VALUES (233025, 1, '2020-06-11 00:00:00+08', 233024);
 INSERT INTO role VALUES (233055, 1, '2020-08-20 00:00:00+08', 233054);
+INSERT INTO role VALUES (233056, 2, '2020-09-28 11:04:23.6741+08', 233055);
 
 
 --
@@ -1325,6 +1327,7 @@ SELECT pg_catalog.setval('layout_lay_id_seq', 4, true);
 -- Data for Name: organisation; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO organisation VALUES (233055, 'Taobao', 'NA');
 
 
 --
@@ -1338,7 +1341,7 @@ SELECT pg_catalog.setval('party_party_id_seq', 1, false);
 -- Name: party_pty_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('party_pty_id_seq', 1, false);
+SELECT pg_catalog.setval('party_pty_id_seq', 1, true);
 
 
 --
