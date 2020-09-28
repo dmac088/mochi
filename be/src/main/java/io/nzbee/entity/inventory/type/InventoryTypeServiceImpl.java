@@ -6,6 +6,8 @@ import java.util.Set;
 
 public class InventoryTypeServiceImpl implements IInventoryTypeService {
 
+	private IInventoryTypeRepository inventoryTypeRepository;
+	
 	@Override
 	public List<InventoryType> findAll() {
 		// TODO Auto-generated method stub
@@ -26,8 +28,7 @@ public class InventoryTypeServiceImpl implements IInventoryTypeService {
 
 	@Override
 	public Optional<InventoryType> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryTypeRepository.findByInventoryTypeCode(code);
 	}
 
 	@Override
