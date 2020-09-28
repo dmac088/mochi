@@ -1765,18 +1765,18 @@ CREATE TABLE currency (
 ALTER TABLE currency OWNER TO mochidb_owner;
 
 --
--- Name: customer_cst_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_num_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE customer_cst_id_seq
-    START WITH 1000000001
+CREATE SEQUENCE customer_cst_num_seq
+    START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
 
-ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
+ALTER TABLE customer_cst_num_seq OWNER TO mochidb_owner;
 
 --
 -- Name: customer; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -1784,7 +1784,7 @@ ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE customer (
     rle_id bigint NOT NULL,
-    cst_num character(10) DEFAULT nextval('customer_cst_id_seq'::regclass) NOT NULL
+    cst_num character(10) DEFAULT nextval('customer_cst_num_seq'::regclass) NOT NULL
 );
 
 
@@ -2564,12 +2564,26 @@ CREATE SEQUENCE role_type_role_typ_id_seq
 ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 --
+-- Name: supplier_sup_num_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE supplier_sup_num_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE supplier_sup_num_seq OWNER TO mochidb_owner;
+
+--
 -- Name: supplier; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE supplier (
     rle_id bigint NOT NULL,
-    sup_num character(10) NOT NULL
+    sup_num character(10) DEFAULT nextval('supplier_sup_num_seq'::regclass) NOT NULL
 );
 
 
@@ -3711,10 +3725,10 @@ COPY customer (rle_id, cst_num) FROM stdin;
 
 
 --
--- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_num_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000270, true);
+SELECT pg_catalog.setval('customer_cst_num_seq', 1, false);
 
 
 --
@@ -5595,6 +5609,13 @@ COPY supplier (rle_id, sup_num) FROM stdin;
 
 
 --
+-- Name: supplier_sup_num_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('supplier_sup_num_seq', 1, false);
+
+
+--
 -- Data for Name: tag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -7451,10 +7472,10 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE currency TO mochi_app;
 
 
 --
--- Name: customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_num_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT ALL ON SEQUENCE customer_cst_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE customer_cst_num_seq TO mochi_app;
 
 
 --
@@ -7847,6 +7868,13 @@ GRANT ALL ON SEQUENCE role_type_rle_typ_id_seq TO mochi_app;
 --
 
 GRANT ALL ON SEQUENCE role_type_role_typ_id_seq TO mochi_app;
+
+
+--
+-- Name: supplier_sup_num_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT ALL ON SEQUENCE supplier_sup_num_seq TO mochi_app;
 
 
 --

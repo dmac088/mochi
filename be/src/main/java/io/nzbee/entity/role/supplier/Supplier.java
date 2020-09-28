@@ -19,11 +19,11 @@ public class Supplier extends Role {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String SupplierNumber;
 
-	public String getCustomerNumber() {
+	public String getSupplierNumber() {
 		return SupplierNumber;
 	}
 
-	public void setCustomerNumber(String supplierNumber) {
+	public void setSupplierNumber(String supplierNumber) {
 		SupplierNumber = supplierNumber;
 	}
 	

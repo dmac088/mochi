@@ -156,6 +156,7 @@ DROP SEQUENCE mochi.tag_attr_lcl_tag_id_seq;
 DROP TABLE mochi.tag;
 DROP SEQUENCE mochi.tag_tag_id_seq;
 DROP TABLE mochi.supplier;
+DROP SEQUENCE mochi.supplier_sup_num_seq;
 DROP SEQUENCE mochi.role_type_role_typ_id_seq;
 DROP SEQUENCE mochi.role_type_rle_typ_id_seq;
 DROP TABLE mochi.role_type;
@@ -213,7 +214,7 @@ DROP TABLE mochi.department_attr_lcl;
 DROP TABLE mochi.department;
 DROP SEQUENCE mochi.product_type_prd_typ_id_seq;
 DROP TABLE mochi.customer;
-DROP SEQUENCE mochi.customer_cst_id_seq;
+DROP SEQUENCE mochi.customer_cst_num_seq;
 DROP TABLE mochi.currency;
 DROP TABLE mochi.category_type;
 DROP SEQUENCE mochi.category_type_cat_typ_id_seq;
@@ -1879,18 +1880,18 @@ CREATE TABLE currency (
 ALTER TABLE currency OWNER TO mochidb_owner;
 
 --
--- Name: customer_cst_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_num_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE SEQUENCE customer_cst_id_seq
-    START WITH 1000000001
+CREATE SEQUENCE customer_cst_num_seq
+    START WITH 1
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE
     CACHE 1;
 
 
-ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
+ALTER TABLE customer_cst_num_seq OWNER TO mochidb_owner;
 
 --
 -- Name: customer; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -1898,7 +1899,7 @@ ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE customer (
     rle_id bigint NOT NULL,
-    cst_num character(10) DEFAULT nextval('customer_cst_id_seq'::regclass) NOT NULL
+    cst_num character(10) DEFAULT nextval('customer_cst_num_seq'::regclass) NOT NULL
 );
 
 
@@ -2678,12 +2679,26 @@ CREATE SEQUENCE role_type_role_typ_id_seq
 ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 --
+-- Name: supplier_sup_num_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE SEQUENCE supplier_sup_num_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE supplier_sup_num_seq OWNER TO mochidb_owner;
+
+--
 -- Name: supplier; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
 CREATE TABLE supplier (
     rle_id bigint NOT NULL,
-    sup_num character(10) NOT NULL
+    sup_num character(10) DEFAULT nextval('supplier_sup_num_seq'::regclass) NOT NULL
 );
 
 
@@ -3989,10 +4004,10 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE currency TO mochi_app;
 
 
 --
--- Name: customer_cst_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_num_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT ALL ON SEQUENCE customer_cst_id_seq TO mochi_app;
+GRANT ALL ON SEQUENCE customer_cst_num_seq TO mochi_app;
 
 
 --
@@ -4385,6 +4400,13 @@ GRANT ALL ON SEQUENCE role_type_rle_typ_id_seq TO mochi_app;
 --
 
 GRANT ALL ON SEQUENCE role_type_role_typ_id_seq TO mochi_app;
+
+
+--
+-- Name: supplier_sup_num_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT ALL ON SEQUENCE supplier_sup_num_seq TO mochi_app;
 
 
 --
