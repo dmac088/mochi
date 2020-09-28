@@ -16,6 +16,8 @@ import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.util.FileStorageServiceUpload;
+import io.nzbee.entity.party.IPartyService;
+import io.nzbee.entity.party.organization.Organization;
 
 public class InventoryMasterService {
 	
@@ -27,7 +29,11 @@ public class InventoryMasterService {
 	@Autowired
 	private IProductService productservice;
 	
-	@Autowired IInventoryTypeService inventoryTypeService;
+	@Autowired 
+	private IInventoryTypeService inventoryTypeService;
+	
+	@Autowired
+	private IPartyService partyService;
 	
 	@Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -66,6 +72,7 @@ public class InventoryMasterService {
 		
 		Optional<InventoryType> it = inventoryTypeService.findByCode(ims.get_INVENTORY_TYPE_CODE());
 		
+		Optional<Organization> org = partyService.findByCode(code)
 		
 		
 /*		

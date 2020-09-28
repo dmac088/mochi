@@ -51,7 +51,6 @@ public class InventoryTransaction {
 	@JoinColumn(name="inv_pty_id")
 	private Supplier supplier;
 	
-	@ManyToOne
 	@Column(name="inv_trx_dt")
 	private LocalDateTime inventoryTransactionDate;
 	
