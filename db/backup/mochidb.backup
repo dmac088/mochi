@@ -1938,7 +1938,7 @@ ALTER TABLE inventory_transaction OWNER TO mochidb_owner;
 
 CREATE TABLE inventory_transaction_type (
     inv_trx_typ_id bigint NOT NULL,
-    inv_trx_typ_desc character varying(10) NOT NULL
+    inv_trx_typ_cd character varying(10) NOT NULL
 );
 
 
@@ -3799,7 +3799,7 @@ SELECT pg_catalog.setval('inventory_transaction_inv_trx_id_seq', 1, false);
 -- Data for Name: inventory_transaction_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY inventory_transaction_type (inv_trx_typ_id, inv_trx_typ_desc) FROM stdin;
+COPY inventory_transaction_type (inv_trx_typ_id, inv_trx_typ_cd) FROM stdin;
 1	IN
 2	OUT
 \.
