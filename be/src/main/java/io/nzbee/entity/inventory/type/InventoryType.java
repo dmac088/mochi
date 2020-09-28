@@ -16,8 +16,8 @@ public class InventoryType {
 	@Column(name="inv_trx_typ_id")
 	private Long inventoryTypeId;
 	
-	@Column(name="inv_trx_typ_desc")
-	private String inventoryTypeDesc;
+	@Column(name="inv_trx_typ_cd")
+	private String inventoryTypeCode;
 
 	public Long getInventoryTypeId() {
 		return inventoryTypeId;
@@ -27,12 +27,12 @@ public class InventoryType {
 		this.inventoryTypeId = inventoryTypeId;
 	}
 
-	public String getInventoryTypeDesc() {
-		return inventoryTypeDesc;
+	public String getInventoryTypeCode() {
+		return inventoryTypeCode;
 	}
 
-	public void setInventoryTypeDesc(String inventoryTypeDesc) {
-		this.inventoryTypeDesc = inventoryTypeDesc;
+	public void setInventoryTypeCode(String inventoryTypeCode) {
+		this.inventoryTypeCode = inventoryTypeCode;
 	}
 	
 }

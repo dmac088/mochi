@@ -2052,7 +2052,7 @@ ALTER TABLE inventory_transaction OWNER TO mochidb_owner;
 
 CREATE TABLE inventory_transaction_type (
     inv_trx_typ_id bigint NOT NULL,
-    inv_trx_typ_desc character varying(10) NOT NULL
+    inv_trx_typ_cd character varying(10) NOT NULL
 );
 
 
