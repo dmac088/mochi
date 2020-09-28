@@ -26,7 +26,7 @@ public class Customer extends Role {
 		this.setRoleType(new RoleType(roleTypeId));
 	}
 	
-	@Column(name="cst_id", insertable = false)
+	@Column(name="cst_num", insertable = false)
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private String CustomerNumber;
 

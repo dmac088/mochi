@@ -2,14 +2,7 @@ package io.nzbee.util.inventory;
 
 import java.io.File;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Optional;
-
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +11,10 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.inventory.IInventoryTransactionService;
 import io.nzbee.entity.inventory.InventoryTransaction;
-import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.role.supplier.Supplier;
 import io.nzbee.util.FileStorageServiceUpload;
 
 public class InventoryMasterService {

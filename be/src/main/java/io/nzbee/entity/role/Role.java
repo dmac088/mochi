@@ -14,8 +14,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
@@ -35,9 +33,6 @@ public class Role {
 	@GeneratedValue(strategy=GenerationType.AUTO)	
 	@Column(name="rle_id")
 	private Long roleId;
-	
-	@Transient
-	private Long roleTypeId = (long) 1;
 	
 	@Column(name="rle_start_dt")
 	private Date RoleStart; 

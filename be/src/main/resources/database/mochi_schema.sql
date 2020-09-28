@@ -1898,7 +1898,7 @@ ALTER TABLE customer_cst_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE customer (
     rle_id bigint NOT NULL,
-    cst_id character(10) DEFAULT nextval('customer_cst_id_seq'::regclass)
+    cst_num character(10) DEFAULT nextval('customer_cst_id_seq'::regclass) NOT NULL
 );
 
 
@@ -2682,7 +2682,8 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 --
 
 CREATE TABLE supplier (
-    rle_id bigint NOT NULL
+    rle_id bigint NOT NULL,
+    sup_num character(10) NOT NULL
 );
 
 
@@ -2889,7 +2890,7 @@ ALTER TABLE ONLY currency
 --
 
 ALTER TABLE ONLY customer
-    ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_id);
+    ADD CONSTRAINT customer_cst_id_key UNIQUE (cst_num);
 
 
 --
