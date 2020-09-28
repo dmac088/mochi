@@ -1219,10 +1219,10 @@ INSERT INTO customer VALUES (233055, '1000000269');
 
 
 --
--- Name: customer_cst_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+-- Name: customer_cst_num_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_id_seq', 1000000270, true);
+SELECT pg_catalog.setval('customer_cst_num_seq', 1, false);
 
 
 --
@@ -2528,6 +2528,13 @@ SELECT pg_catalog.setval('role_type_rle_typ_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
+
+
+--
+-- Name: supplier_sup_num_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
+--
+
+SELECT pg_catalog.setval('supplier_sup_num_seq', 1, false);
 
 
 --
