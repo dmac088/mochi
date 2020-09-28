@@ -1272,6 +1272,8 @@ INSERT INTO inventory_location VALUES (1, 'LCK01', 'Lai Chi Kok Apartment');
 -- Data for Name: inventory_transaction_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO inventory_transaction_type VALUES (1, 'IN');
+INSERT INTO inventory_transaction_type VALUES (2, 'OUT');
 
 
 --

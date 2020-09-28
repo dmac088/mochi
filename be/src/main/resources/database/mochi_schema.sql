@@ -18,6 +18,7 @@ SET search_path = mochi, pg_catalog;
 
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_tag_id_fkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_lcl_cd_fkey;
+ALTER TABLE ONLY mochi.supplier DROP CONSTRAINT supplier_role_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_role_typ_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_party_id_fkey;
 ALTER TABLE ONLY mochi.promotion_product DROP CONSTRAINT promotion_product_prm_id_fkey;
@@ -2681,7 +2682,7 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 --
 
 CREATE TABLE supplier (
-    sup_id bigint NOT NULL
+    rle_id bigint NOT NULL
 );
 
 
@@ -3240,7 +3241,7 @@ ALTER TABLE ONLY role_type
 --
 
 ALTER TABLE ONLY supplier
-    ADD CONSTRAINT supplier_pkey PRIMARY KEY (sup_id);
+    ADD CONSTRAINT supplier_pkey PRIMARY KEY (rle_id);
 
 
 --
@@ -3597,7 +3598,7 @@ ALTER TABLE ONLY inventory_transaction
 --
 
 ALTER TABLE ONLY inventory_transaction
-    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_sup_id) REFERENCES supplier(sup_id);
+    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_sup_id) REFERENCES supplier(rle_id);
 
 
 --
@@ -3790,6 +3791,14 @@ ALTER TABLE ONLY role
 
 ALTER TABLE ONLY role
     ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: supplier supplier_role_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY supplier
+    ADD CONSTRAINT supplier_role_id_fkey FOREIGN KEY (rle_id) REFERENCES role(rle_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
