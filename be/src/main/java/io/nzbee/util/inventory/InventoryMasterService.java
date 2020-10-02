@@ -2,6 +2,8 @@ package io.nzbee.util.inventory;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,6 +19,7 @@ import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.util.FileStorageServiceUpload;
 import io.nzbee.entity.party.IPartyService;
+import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.organization.Organization;
 
 public class InventoryMasterService {
@@ -72,8 +75,13 @@ public class InventoryMasterService {
 		
 		Optional<InventoryType> it = inventoryTypeService.findByCode(ims.get_INVENTORY_TYPE_CODE());
 		
-		Optional<Organization> org = partyService.findByCode(code)
+		Optional<Party> pty = partyService.findByCode(ims.get_INVENTORY_SUPPLIER_CODE());
 		
+		Organization supp = (Organization) pty.get();
+		
+		LocalDateTime trxDate = LocalDateTime.parse(ims.get_INVENTORY_TRANSACTION_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		
+		i.setInventoryTransactionDate(trxDate);
 		
 /*		
 		
