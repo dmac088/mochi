@@ -65,7 +65,7 @@ public class InventoryMasterService {
 	}
 	
 	public void persistInventoryTransactionMaster(InventoryMasterSchema ims) {
-		logger.debug("called persistBrandMaster() ");
+		logger.debug("called persistInventory() ");
 		
 		InventoryTransaction i = new InventoryTransaction();
 				
