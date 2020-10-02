@@ -2,9 +2,9 @@ package io.nzbee.entity.inventory;
 
 import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.InventoryType;
+import io.nzbee.entity.party.organization.Organization;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.role.supplier.Supplier;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
@@ -18,7 +18,7 @@ public abstract class InventoryTransaction_ {
 	public static volatile SingularAttribute<InventoryTransaction, InventoryType> inventoryType;
 	public static volatile SingularAttribute<InventoryTransaction, Double> quantity;
 	public static volatile SingularAttribute<InventoryTransaction, Double> price;
-	public static volatile SingularAttribute<InventoryTransaction, Supplier> supplier;
+	public static volatile SingularAttribute<InventoryTransaction, Organization> supplier;
 	public static volatile SingularAttribute<InventoryTransaction, Long> inventroyTransactionId;
 	public static volatile SingularAttribute<InventoryTransaction, InventoryLocation> inventoryLocation;
 	public static volatile SingularAttribute<InventoryTransaction, LocalDateTime> inventoryTransactionDate;
