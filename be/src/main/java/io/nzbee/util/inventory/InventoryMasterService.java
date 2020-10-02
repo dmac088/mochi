@@ -13,6 +13,8 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.inventory.IInventoryTransactionService;
 import io.nzbee.entity.inventory.InventoryTransaction;
+import io.nzbee.entity.inventory.location.IInventoryLocationService;
+import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.IProductService;
@@ -28,6 +30,9 @@ public class InventoryMasterService {
 	
 	@Autowired
 	private IInventoryTransactionService inventoryTransactionService;
+	
+	@Autowired
+	private IInventoryLocationService inventoryLocationService;
 	
 	@Autowired
 	private IProductService productservice;
@@ -69,7 +74,7 @@ public class InventoryMasterService {
 		
 		InventoryTransaction i = new InventoryTransaction();
 				
-		Optional<InventoryTransaction> il = inventoryTransactionService.findByCode(ims.get_INVENTORY_LOCATION_CODE());
+		Optional<InventoryLocation> il = inventoryLocationService.findByCode(ims.get_INVENTORY_LOCATION_CODE());
 		
 		Optional<Product> p = productservice.findByCode(ims.get_INVENTORY_PRODUCT_UPC());
 		
@@ -83,30 +88,11 @@ public class InventoryMasterService {
 		
 		i.setInventoryTransactionDate(trxDate);
 		
-/*		
-		
-		@Column(name="inv_qty")
-		private Double quantity;
-		
-		@Column(name="inv_prc")
-		private Double price;
-		
-		@ManyToOne
-		@JoinColumn(name="inv_ccy_id")
-		private Currency currency;
-		
-		@ManyToOne
-		@JoinColumn(name="inv_trx_typ_id")
-		private InventoryType inventoryType;
-		
-		@ManyToOne
-		@JoinColumn(name="inv_pty_id")
-		private Supplier supplier;
-		
-		@ManyToOne
-		@Column(name="inv_trx_dt")
-		private LocalDateTime inventoryTransactionDate;
-*/
+		i.setInventoryLocation(il.get());
+		i.setProduct(p.get());
+		i.setInventoryType(it.get());
+		i.setSupplier(supp);
+		i.setInventoryTransactionDate(trxDate);
 		
 		inventoryTransactionService.save(i);
 		

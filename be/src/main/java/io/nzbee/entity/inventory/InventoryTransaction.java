@@ -12,9 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.InventoryType;
+import io.nzbee.entity.party.organization.Organization;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.currency.Currency;
-import io.nzbee.entity.role.supplier.Supplier;
 
 @Entity
 @Table(name = "inventory_transaction", schema = "mochi")
@@ -49,7 +49,7 @@ public class InventoryTransaction {
 	
 	@ManyToOne
 	@JoinColumn(name="inv_pty_id")
-	private Supplier supplier;
+	private Organization supplier;
 	
 	@Column(name="inv_trx_dt")
 	private LocalDateTime inventoryTransactionDate;
@@ -110,11 +110,11 @@ public class InventoryTransaction {
 		this.inventoryType = inventoryType;
 	}
 
-	public Supplier getSupplier() {
+	public Organization getSupplier() {
 		return supplier;
 	}
 
-	public void setSupplier(Supplier supplier) {
+	public void setSupplier(Organization supplier) {
 		this.supplier = supplier;
 	}
 
