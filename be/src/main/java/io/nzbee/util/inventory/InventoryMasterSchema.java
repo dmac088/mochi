@@ -18,6 +18,8 @@ public class InventoryMasterSchema {
 	private String INVENTORY_SUPPLIER_ID;
 	
 	private String INVENTORY_TRANSACTION_DATE;
+	
+	private String INVENTORY_SUPPLIER_CODE;
 
 	public String get_INVENTORY_LOCATION_CODE() {
 		return INVENTORY_LOCATION_CODE;
@@ -82,6 +84,13 @@ public class InventoryMasterSchema {
 	public void set_INVENTORY_TRANSACTION_DATE(String iNVENTORY_TRANSACTION_DATE) {
 		INVENTORY_TRANSACTION_DATE = iNVENTORY_TRANSACTION_DATE;
 	}
-	
+
+	public String get_INVENTORY_SUPPLIER_CODE() {
+		return INVENTORY_SUPPLIER_CODE;
+	}
+
+	public void set_INVENTORY_SUPPLIER_CODE(String iNVENTORY_SUPPLIER_CODE) {
+		INVENTORY_SUPPLIER_CODE = iNVENTORY_SUPPLIER_CODE;
+	}
 	
 }

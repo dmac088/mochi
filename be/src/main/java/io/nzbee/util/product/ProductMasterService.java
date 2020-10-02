@@ -192,9 +192,7 @@ public class ProductMasterService {
 		: (new io.nzbee.entity.product.attribute.ProductAttribute());
 		
 		
-		LocalDateTime createdDate = null;
-		
-		createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
 		Accessories pe = (op.isPresent()) 
