@@ -6,4 +6,6 @@ public interface ICustomerService {
 
 	Optional<Customer> findByUsername(String userName);
 	
+	Optional<Customer> findByCustomerNumber(String customerNumber);
+	
 }
