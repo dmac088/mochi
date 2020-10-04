@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import javax.transaction.Transactional;
 
+import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,9 +88,11 @@ public class InventoryMasterService {
 		
 		Optional<InventoryType> it = inventoryTypeService.findByCode(ims.get_INVENTORY_TYPE_CODE());
 		
-		Optional<Supplier> sup = supplierService.findByCode(ims.get_INVENTORY_SUPPLIER_ID());
+		Optional<Supplier> osup = supplierService.findByCode(ims.get_INVENTORY_SUPPLIER_ID());
 
-		Organization supp = (Organization) sup.get().getRoleParty();
+		Supplier sup = (Supplier) Hibernate.unproxy(osup.get());
+		
+		Organization supp = (Organization) sup.getRoleParty();
 		
 		LocalDateTime trxDate = LocalDateTime.parse(ims.get_INVENTORY_TRANSACTION_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		

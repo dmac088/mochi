@@ -8,7 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "inventory_type", schema = "mochi")
+@Table(name = "inventory_transaction_type", schema = "mochi")
 public class InventoryType {
 
 	@Id
