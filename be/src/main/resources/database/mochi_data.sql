@@ -1253,7 +1253,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 233945, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234233, true);
 
 
 --
@@ -1279,16 +1279,105 @@ INSERT INTO inventory_transaction_type VALUES (2, 'OUT');
 
 
 --
--- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO supplier VALUES (233056, '1000000002');
-
-
---
 -- Data for Name: inventory_transaction; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO inventory_transaction VALUES (234138, 1, 11, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234139, 1, 21, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234140, 1, 23, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234141, 1, 25, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234142, 1, 26, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234143, 1, 28, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234144, 1, 30, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234145, 1, 17, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234146, 1, 16, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234147, 1, 14, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234148, 1, 15, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234149, 1, 19, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234150, 1, 20, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234151, 1, 22, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234152, 1, 24, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234153, 1, 27, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234154, 1, 29, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234155, 1, 18, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234156, 1, 233275, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234157, 1, 233282, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234158, 1, 233289, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234159, 1, 233296, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234160, 1, 233303, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234161, 1, 233310, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234162, 1, 233317, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234163, 1, 233324, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234164, 1, 233331, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234165, 1, 233338, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234166, 1, 233345, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234167, 1, 233352, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234168, 1, 233359, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234169, 1, 233366, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234170, 1, 233373, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234171, 1, 233380, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234172, 1, 233387, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234173, 1, 233394, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234174, 1, 233401, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234175, 1, 233408, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234176, 1, 233415, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234177, 1, 233422, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234178, 1, 233429, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234179, 1, 233436, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234180, 1, 233443, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234181, 1, 233450, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234182, 1, 233457, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234183, 1, 233464, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234184, 1, 233471, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234185, 1, 233478, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234186, 1, 233485, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234187, 1, 233492, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234188, 1, 233499, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234189, 1, 233506, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234190, 1, 233513, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234191, 1, 233520, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234192, 1, 233527, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234193, 1, 233534, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234194, 1, 233541, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234195, 1, 233548, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234196, 1, 233555, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234197, 1, 233562, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234198, 1, 233569, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234199, 1, 233576, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234200, 1, 233583, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234201, 1, 233590, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234202, 1, 233597, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234203, 1, 233604, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234204, 1, 233611, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234205, 1, 233618, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234206, 1, 233625, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234207, 1, 233632, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234208, 1, 233639, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234209, 1, 233646, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234210, 1, 233653, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234211, 1, 233660, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234212, 1, 233667, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234213, 1, 233674, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234214, 1, 233681, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234215, 1, 233688, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234216, 1, 233695, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234217, 1, 233702, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234218, 1, 233709, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234219, 1, 233716, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234220, 1, 233723, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234221, 1, 233730, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234222, 1, 13, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234223, 1, 4, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234224, 1, 7, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234225, 1, 9, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234226, 1, 12, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234227, 1, 1, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234228, 1, 10, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234229, 1, 8, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234230, 1, 6, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234231, 1, 2, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234232, 1, 3, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
+INSERT INTO inventory_transaction VALUES (234233, 1, 5, 10, 2.59, 2, 1, 233055, '2020-10-04 00:00:00+08');
 
 
 --
@@ -2529,6 +2618,13 @@ SELECT pg_catalog.setval('role_type_rle_typ_id_seq', 1, false);
 --
 
 SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
+
+
+--
+-- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO supplier VALUES (233056, '1000000002');
 
 
 --
