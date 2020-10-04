@@ -1282,6 +1282,7 @@ INSERT INTO inventory_transaction_type VALUES (2, 'OUT');
 -- Data for Name: supplier; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO supplier VALUES (233056, '1000000002');
 
 
 --
@@ -2534,7 +2535,7 @@ SELECT pg_catalog.setval('role_type_role_typ_id_seq', 1, false);
 -- Name: supplier_sup_num_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('supplier_sup_num_seq', 1, false);
+SELECT pg_catalog.setval('supplier_sup_num_seq', 1000000002, true);
 
 
 --

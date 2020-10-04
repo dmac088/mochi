@@ -19,6 +19,8 @@ import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.role.supplier.ISupplierService;
+import io.nzbee.entity.role.supplier.Supplier;
 import io.nzbee.util.FileStorageServiceUpload;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.Party;
@@ -41,7 +43,7 @@ public class InventoryMasterService {
 	private IInventoryTypeService inventoryTypeService;
 	
 	@Autowired
-	private IPartyService partyService;
+	private ISupplierService supplierService;
 	
 	@Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -80,9 +82,9 @@ public class InventoryMasterService {
 		
 		Optional<InventoryType> it = inventoryTypeService.findByCode(ims.get_INVENTORY_TYPE_CODE());
 		
-		Optional<Party> pty = partyService.findByCode(ims.get_INVENTORY_SUPPLIER_CODE());
-		
-		Organization supp = (Organization) pty.get();
+		Optional<Supplier> sup = supplierService.findByCode(ims.get_INVENTORY_SUPPLIER_CODE());
+
+		Organization supp = (Organization) sup.get().getRoleParty();
 		
 		LocalDateTime trxDate = LocalDateTime.parse(ims.get_INVENTORY_TRANSACTION_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		
