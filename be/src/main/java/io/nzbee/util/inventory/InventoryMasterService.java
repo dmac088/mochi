@@ -22,8 +22,6 @@ import io.nzbee.entity.product.Product;
 import io.nzbee.entity.role.supplier.ISupplierService;
 import io.nzbee.entity.role.supplier.Supplier;
 import io.nzbee.util.FileStorageServiceUpload;
-import io.nzbee.entity.party.IPartyService;
-import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.organization.Organization;
 
 public class InventoryMasterService {
@@ -82,7 +80,7 @@ public class InventoryMasterService {
 		
 		Optional<InventoryType> it = inventoryTypeService.findByCode(ims.get_INVENTORY_TYPE_CODE());
 		
-		Optional<Supplier> sup = supplierService.findByCode(ims.get_INVENTORY_SUPPLIER_CODE());
+		Optional<Supplier> sup = supplierService.findByCode(ims.get_INVENTORY_SUPPLIER_ID());
 
 		Organization supp = (Organization) sup.get().getRoleParty();
 		
