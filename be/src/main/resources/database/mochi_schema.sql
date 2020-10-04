@@ -43,7 +43,7 @@ ALTER TABLE ONLY mochi."order" DROP CONSTRAINT orders_party_id_fkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_product_id_fkey;
 ALTER TABLE ONLY mochi.order_line DROP CONSTRAINT order_line_order_id_fkey;
 ALTER TABLE ONLY mochi.inventory_transaction DROP CONSTRAINT inventory_transaction_inv_trx_typ_id_inventory_transaction_type;
-ALTER TABLE ONLY mochi.inventory_transaction DROP CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id;
+ALTER TABLE ONLY mochi.inventory_transaction DROP CONSTRAINT inventory_transaction_inv_pty_id_supplier_pty_id;
 ALTER TABLE ONLY mochi.inventory_transaction DROP CONSTRAINT inventory_transaction_inv_prd_id_product_prd_id;
 ALTER TABLE ONLY mochi.inventory_transaction DROP CONSTRAINT inventory_transaction_inv_loc_id_inventory_location_inv_loc_id;
 ALTER TABLE ONLY mochi.inventory_transaction DROP CONSTRAINT inventory_transaction_ccy_id_currency_ccy_id;
@@ -3610,11 +3610,11 @@ ALTER TABLE ONLY inventory_transaction
 
 
 --
--- Name: inventory_transaction inventory_transaction_inv_sup_id_supplier_sup_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: inventory_transaction inventory_transaction_inv_pty_id_supplier_pty_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY inventory_transaction
-    ADD CONSTRAINT inventory_transaction_inv_sup_id_supplier_sup_id FOREIGN KEY (inv_pty_id) REFERENCES supplier(rle_id);
+    ADD CONSTRAINT inventory_transaction_inv_pty_id_supplier_pty_id FOREIGN KEY (inv_pty_id) REFERENCES party(pty_id);
 
 
 --
