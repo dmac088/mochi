@@ -5,9 +5,14 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -24,6 +29,8 @@ import io.nzbee.entity.role.supplier.Supplier;
 import io.nzbee.util.FileStorageServiceUpload;
 import io.nzbee.entity.party.organization.Organization;
 
+@Service
+@Transactional
 public class InventoryMasterService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(InventoryMasterService.class);

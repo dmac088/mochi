@@ -3,6 +3,9 @@ package io.nzbee.entity.inventory.type;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Service;
+
+@Service
 public class InventoryTypeServiceImpl implements IInventoryTypeService {
 
 	private IInventoryTypeRepository inventoryTypeRepository;
