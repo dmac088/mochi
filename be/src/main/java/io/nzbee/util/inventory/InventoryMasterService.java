@@ -25,6 +25,8 @@ import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.role.supplier.ISupplierService;
 import io.nzbee.entity.role.supplier.Supplier;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -50,6 +52,9 @@ public class InventoryMasterService {
 	
 	@Autowired
 	private ISupplierService supplierService;
+	
+	@Autowired
+	private ICurrencyService currencyService;
 	
 	@Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -89,6 +94,8 @@ public class InventoryMasterService {
 		Optional<InventoryType> it = inventoryTypeService.findByCode(ims.get_INVENTORY_TYPE_CODE());
 		
 		Optional<Supplier> osup = supplierService.findByCode(ims.get_INVENTORY_SUPPLIER_ID());
+		
+		Optional<Currency> ocurr = currencyService.findByCode(ims.get_INVENTORY_CURRENCY_CODE());
 
 		Supplier sup = (Supplier) osup.get();
 		
@@ -103,7 +110,10 @@ public class InventoryMasterService {
 		i.setInventoryType(it.get());
 		i.setSupplier(supp);
 		i.setInventoryTransactionDate(trxDate);
-		
+		i.setQuantity(ims.get_INVENTORY_QUANTITY());
+		i.setPrice(ims.get_INVENTORY_PRICE());
+		i.setCurrency(ocurr.get());
+
 		inventoryTransactionService.save(i);
 		
 	}
