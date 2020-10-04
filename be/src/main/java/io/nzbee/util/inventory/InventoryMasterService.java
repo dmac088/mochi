@@ -90,9 +90,9 @@ public class InventoryMasterService {
 		
 		Optional<Supplier> osup = supplierService.findByCode(ims.get_INVENTORY_SUPPLIER_ID());
 
-		Supplier sup = (Supplier) Hibernate.unproxy(osup.get());
+		Supplier sup = (Supplier) osup.get();
 		
-		Organization supp = (Organization) sup.getRoleParty();
+		Organization supp = (Organization) Hibernate.unproxy(sup.getRoleParty());
 		
 		LocalDateTime trxDate = LocalDateTime.parse(ims.get_INVENTORY_TRANSACTION_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		
