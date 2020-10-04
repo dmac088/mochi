@@ -2,8 +2,6 @@ package io.nzbee.entity.bag.item;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +17,6 @@ public class BagItemServiceImpl implements IBagItemService {
 	
 	@Override
 	public List<BagItem> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BagItem> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

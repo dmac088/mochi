@@ -2683,7 +2683,7 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 --
 
 CREATE SEQUENCE supplier_sup_num_seq
-    START WITH 1
+    START WITH 1000000001
     INCREMENT BY 1
     NO MINVALUE
     NO MAXVALUE

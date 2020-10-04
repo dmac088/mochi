@@ -2,8 +2,6 @@ package io.nzbee.entity.inventory.location;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class InventoryLocationServiceImpl implements IInventoryLocationService {
@@ -13,12 +11,6 @@ public class InventoryLocationServiceImpl implements IInventoryLocationService {
 	
 	@Override
 	public List<InventoryLocation> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<InventoryLocation> findAll(String locale, String currency, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
