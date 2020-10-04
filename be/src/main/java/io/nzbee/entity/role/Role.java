@@ -4,6 +4,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -23,6 +24,7 @@ import io.nzbee.entity.party.Party;
 @Entity
 @Table(name = "role", schema = "mochi") 
 @Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="rle_typ_id")
 @JsonTypeInfo(
 	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
@@ -46,7 +48,7 @@ public class Role {
 	@JoinColumn(name="pty_id", nullable=false)
 	private Party roleParty;
 
-
+	
 	public Role() {
 		
 	}

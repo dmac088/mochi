@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Customer.class)
 public abstract class Customer_ extends io.nzbee.entity.role.Role_ {
 
-	public static volatile SingularAttribute<Customer, String> CustomerNumber;
+	public static volatile SingularAttribute<Customer, String> customerNumber;
 
-	public static final String CUSTOMER_NUMBER = "CustomerNumber";
+	public static final String CUSTOMER_NUMBER = "customerNumber";
 
 }
 

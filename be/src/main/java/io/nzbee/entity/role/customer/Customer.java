@@ -2,6 +2,7 @@ package io.nzbee.entity.role.customer;
 
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -16,6 +17,7 @@ import io.nzbee.entity.role.RoleType;
 @Entity
 @Table(name = "customer", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "rle_id")
+@DiscriminatorValue("1")
 public class Customer extends Role {
  
 	@Transient
@@ -28,13 +30,14 @@ public class Customer extends Role {
 	
 	@Column(name="cst_num", insertable = false)
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	private String CustomerNumber;
+	private String customerNumber;
 
 	public String getCustomerNumber() {
-		return CustomerNumber;
+		return customerNumber;
 	}
 
 	public void setCustomerNumber(String customerNumber) {
-		CustomerNumber = customerNumber;
+		this.customerNumber = customerNumber;
 	}
+
 }

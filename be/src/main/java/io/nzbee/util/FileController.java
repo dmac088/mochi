@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.nzbee.util.brand.BrandMasterService;
 import io.nzbee.util.category.CategoryMasterService;
+import io.nzbee.util.inventory.InventoryMasterService;
 import io.nzbee.util.product.ProductMasterService;
 import io.nzbee.util.tag.TagMasterService;
 
@@ -43,7 +44,10 @@ public class FileController {
     private BrandMasterService brandMasterService;
     
     @Autowired
-    private TagMasterService tagMasterService; 
+    private TagMasterService tagMasterService;
+    
+    @Autowired
+    private InventoryMasterService inventoryMasterService; 
     
 	@Autowired 
 	private FileStorageProperties fileStorageProperties;
@@ -282,6 +286,25 @@ public class FileController {
                .contentType(MediaType.parseMediaType(contentType))
                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + resource.getFilename() + "\"")
                .body(resource);
+    }
+    
+    
+    @PostMapping("/Inventory/Upload/")
+    public UploadFileResponse uploadInventoryFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadInventoryFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        inventoryMasterService.writeInventoryTransaction(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
     }
     
 }

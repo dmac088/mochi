@@ -15,4 +15,9 @@ public class CustomerService implements ICustomerService {
 		return customerRepository.findByRolePartyPartyUserUsername(userName);
 	}
 
+	@Override
+	public Optional<Customer> findByCustomerNumber(String customerNumber) {
+		return customerRepository.findByCustomerNumber(customerNumber);
+	}
+
 }
