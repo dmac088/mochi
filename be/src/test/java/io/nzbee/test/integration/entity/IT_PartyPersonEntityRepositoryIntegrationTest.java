@@ -1,6 +1,10 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -76,7 +80,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 	@Before
     public void setUp() { 
 
-		io.nzbee.entity.party.Party customer = partyEntityBeanFactory.getCustomerEntityBean();
+		Party customer = partyEntityBeanFactory.getCustomerEntityBean();
 	    	
    	    //persist a new transient test category
    	    entityManager.persist(customer);
@@ -89,7 +93,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
     public void whenFindByUsernameAndRole_thenReturnParty() {
 		
 		// when
-	    Party found = personService.findByUsernameAndRole("mackdad", Customer.class).get();
+	    Optional<Person> found = personService.findByUsernameAndRole("mackdad", Customer.class);
      
 	    // then
 	    assertFound(found);
@@ -97,17 +101,18 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
     }
 
 	
-    private void assertFound(final Party found) {
+    private void assertFound(Optional<Person> found) {
+    	assertTrue(found.isPresent());
     	
-	    assertThat(((Person) found).getGivenName())
+	    assertThat(((Person) found.get()).getGivenName())
 	    .isEqualTo("Test Given Name");
-	    assertThat(((Person) found).getFamilyName())
+	    assertThat(((Person) found.get()).getFamilyName())
 	    .isEqualTo("Test Family Name");
-	    assertThat(((Person) found).getUser().getUsername())
+	    assertThat(((Person) found.get()).getUser().getUsername())
 	    .isEqualTo("mackdad");
-	    assertThat(((Person) found).getUser().getUserRoles().stream().findFirst().get().getName())
+	    assertThat(((Person) found.get()).getUser().getUserRoles().stream().findFirst().get().getName())
 	    .isEqualTo("Customer");
-	    assertThat(((Customer)(((Person) found).getPartyRoles().stream().findFirst().get())).getCustomerNumber())
+	    assertThat(((Customer)(((Person) found.get()).getPartyRoles().stream().findFirst().get())).getCustomerNumber())
 	    .isEqualTo("9832145731");
 	    
     }

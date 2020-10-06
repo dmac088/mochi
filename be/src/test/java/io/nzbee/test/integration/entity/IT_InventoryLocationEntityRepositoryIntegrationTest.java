@@ -78,30 +78,33 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
 	@WithUserDetails(value = "admin")
     public void whenFindById_thenReturnInventoryLocation() {
     	
-    	InventoryLocation found = inventoryLocationService.findById(inventoryLocation.getLocationId()).get();
+    	Optional<InventoryLocation> found = inventoryLocationService.findById(inventoryLocation.getLocationId());
      
         // then
     	assertFound(found);
     }
-    
-    @Test
+ 
+
+	@Test
 	@WithUserDetails(value = "admin")
     public void thenFindByUsername_thenReturnInventoryLocation() {
     	
     	Optional<InventoryLocation> found = inventoryLocationService.findByCode("dmac088");
     	
-    	assertTrue(found.isPresent());
-    	assertFound(found.get());
+    	assertFound(found);
+    	
     }
  
     
-    private void assertFound(InventoryLocation found) {
+    private void assertFound(Optional<InventoryLocation> found) {
+    	assertTrue(found.isPresent());
+    	
     	assertNotNull(found);
     	
-    	assertThat(found.getLocationCode())
+    	assertThat(found.get().getLocationCode())
 	    .isEqualTo("TST01");
     	
-    	assertThat(found.getLocationDesc())
+    	assertThat(found.get().getLocationDesc())
 	    .isEqualTo("test location");
     	
     }
