@@ -3,8 +3,6 @@ package io.nzbee.test.integration.beans;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -15,13 +13,11 @@ import io.nzbee.entity.inventory.location.IInventoryLocationService;
 import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
-import io.nzbee.entity.party.organization.Organization;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.role.supplier.ISupplierService;
-import io.nzbee.entity.role.supplier.Supplier;
 
 
 @Service(value = "inventoryTransactionEntityBeanFactory")

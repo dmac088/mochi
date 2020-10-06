@@ -2,6 +2,10 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +16,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -51,9 +57,11 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	@Autowired
 	private IInventoryTransactionService inventoryTransactionService;
    
+	@MockBean
+    private JavaMailSender mailSender;
+	
 	private InventoryTransaction inventoryTransaction = null;
 	
-    
     @Before
     public void setUp() { 
     	this.persistNewInventoryTransaction();
@@ -73,7 +81,7 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
     @Test
     public void whenFindById_thenReturnInventoryTransaction() {
     	
-    	InventoryTransaction found = inventoryTransactionService.findById(inventoryTransaction.getInventroyTransactionId()).get();
+    	Optional<InventoryTransaction> found = inventoryTransactionService.findById(inventoryTransaction.getInventroyTransactionId());
      
     	assertFound(found);
     }
@@ -82,31 +90,33 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	@WithUserDetails(value = "admin")
     public void thenFindByUsername_thenReturnBag() {
     	
-    	InventoryTransaction found = inventoryTransactionService.findByCode("dmac088").get();
+    	Optional<InventoryTransaction> found = inventoryTransactionService.findByCode("dmac088");
     	
     	assertFound(found);
     }
  
     
-    private void assertFound(InventoryTransaction found) {
+    private void assertFound(Optional<InventoryTransaction> found) {
     	assertNotNull(found);
+    	assertTrue(found.isPresent());
+    	assertNotNull(found.get());
     	
-    	assertThat(found.getInventoryLocation().getLocationCode())
+    	assertThat(found.get().getInventoryLocation().getLocationCode())
 	    .isEqualTo("LCK01");
     	
-    	assertThat(found.getInventoryType().getInventoryTypeCode())
+    	assertThat(found.get().getInventoryType().getInventoryTypeCode())
 	    .isEqualTo("IN");
     	
-    	assertThat(found.getCurrency().getCode())
+    	assertThat(found.get().getCurrency().getCode())
 	    .isEqualTo(Constants.currencyHKD);
     	
 //    	assertThat(found.getSupplier().getOrganizationName())
 //	    .isEqualTo("Taobao");
     	
-    	assertThat(found.getQuantity())
+    	assertThat(found.get().getQuantity())
 	    .isEqualTo(new Double(5));
     	
-    	assertThat(found.getPrice())
+    	assertThat(found.get().getPrice())
 	    .isEqualTo(new Double(15.20));
     }
     
