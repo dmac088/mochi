@@ -29,7 +29,7 @@ public class InventoryLocation {
 	public void setLocationId(Long locationId) {
 		this.locationId = locationId;
 	}
-
+	
 	public String getLocationCode() {
 		return locationCode;
 	}
