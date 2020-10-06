@@ -66,7 +66,7 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
     
 	public InventoryLocation persistNewInventoryLocation() {
 		
-		inventoryLocation = inventoryLocationEntityBeanFactory.getInventoryTransactionEntityBean();
+		inventoryLocation = inventoryLocationEntityBeanFactory.getInventoryLocationEntityBean();
 	    
 	    entityManager.persist(inventoryLocation);
 	    
@@ -76,7 +76,7 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
     
     @Test
 	@WithUserDetails(value = "admin")
-    public void whenFindById_thenReturnBag() {
+    public void whenFindById_thenReturnInventoryLocation() {
     	
     	InventoryLocation found = inventoryLocationService.findById(inventoryLocation.getLocationId()).get();
      
@@ -86,7 +86,7 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
     
     @Test
 	@WithUserDetails(value = "admin")
-    public void thenFindByUsername_thenReturnBag() {
+    public void thenFindByUsername_thenReturnInventoryLocation() {
     	
     	Optional<InventoryLocation> found = inventoryLocationService.findByCode("dmac088");
     	
