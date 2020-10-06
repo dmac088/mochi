@@ -83,7 +83,6 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 
 		Party customer = partyEntityBeanFactory.getCustomerEntityBean();
 	    	
-   	    //persist a new transient test category
    	    entityManager.persist(customer);
    
     }

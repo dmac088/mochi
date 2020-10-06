@@ -97,6 +97,7 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
  
     
     private void assertFound(Optional<InventoryLocation> found) {
+    	assertNotNull(found);
     	assertTrue(found.isPresent());
     	
     	assertNotNull(found);
