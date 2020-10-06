@@ -10,7 +10,7 @@ import io.nzbee.entity.inventory.location.InventoryLocation;
 public class InventoryLocationEntityBeanFactory {
 
 	@Bean
-	public final InventoryLocation getInventoryTransactionEntityBean() {
+	public final InventoryLocation getInventoryLocationEntityBean() {
 		InventoryLocation inventoryLocation = new InventoryLocation();
 		
 		inventoryLocation.setLocationCode("TST01");

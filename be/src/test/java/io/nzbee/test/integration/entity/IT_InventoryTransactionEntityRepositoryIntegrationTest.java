@@ -2,8 +2,6 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -14,8 +12,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -24,14 +20,9 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.bag.Bag;
-import io.nzbee.entity.bag.IBagService;
-import io.nzbee.entity.bag.status.BagStatus;
-import io.nzbee.entity.bag.status.IBagStatusService;
-import io.nzbee.entity.party.person.IPersonService;
-import io.nzbee.entity.party.person.Person;
-import io.nzbee.entity.role.customer.Customer;
-import io.nzbee.test.integration.beans.BagEntityBeanFactory;
+import io.nzbee.entity.inventory.IInventoryTransactionService;
+import io.nzbee.entity.inventory.InventoryTransaction;
+import io.nzbee.test.integration.beans.InventoryTransactionEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -55,51 +46,35 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private BagEntityBeanFactory bagEntityBeanFactory;
+	private InventoryTransactionEntityBeanFactory inventoryTransactionEntityBeanFactory;
  
-    @Autowired
-    private IBagService bagService;
-    
-    @Autowired
-    private IBagStatusService bagStatusService;
-    
 	@Autowired
-    private IPersonService personService;
- 
-	private Bag bag = null;
+	private IInventoryTransactionService inventoryTransactionService;
+   
+	private InventoryTransaction inventoryTransaction = null;
 	
-	@MockBean
-    private JavaMailSender mailSender;
     
     @Before
     public void setUp() { 
-    	this.persistNewBag();
+    	this.persistNewInventoryTransaction();
     }
     
-	public Bag persistNewBag() {
-		
-		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
-    	Optional<BagStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
-		
-		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
-	    bag.setBagStatus(bs.get());
+	public InventoryTransaction persistNewInventoryTransaction() {
+	
+		inventoryTransaction = inventoryTransactionEntityBeanFactory.getInventoryTransactionEntityBean();
 	    
-	    //persist a new transient test category
-	    entityManager.persist(bag);
+	    entityManager.persist(inventoryTransaction);
 	    
-	    return bag;
+	    return inventoryTransaction;
 	    
 	}
    
     
     @Test
-	@WithUserDetails(value = "admin")
-    public void whenFindById_thenReturnBag() {
+    public void whenFindById_thenReturnInventoryTransaction() {
     	
-    	//persist a bag and then make sure we can retrieve it by id
-    	Bag found = bagService.findById(bag.getBagId()).get();
+    	InventoryTransaction found = inventoryTransactionService.findById(inventoryTransaction.getInventroyTransactionId()).get();
      
-        // then
     	assertFound(found);
     }
     
@@ -107,25 +82,32 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	@WithUserDetails(value = "admin")
     public void thenFindByUsername_thenReturnBag() {
     	
-    	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<Bag> found = bagService.findByCode("dmac088");
+    	InventoryTransaction found = inventoryTransactionService.findByCode("dmac088").get();
     	
-    	assertTrue(found.isPresent());
-    	assertFound(found.get());
+    	assertFound(found);
     }
  
     
-    private void assertFound(final Bag found) {
-    	assertNotNull(bag);
+    private void assertFound(InventoryTransaction found) {
+    	assertNotNull(found);
     	
-    	assertThat(found.getBagStatus().getCode())
-	    .isEqualTo(Constants.bagStatusCodeNew);
+    	assertThat(found.getInventoryLocation().getLocationCode())
+	    .isEqualTo("LCK01");
     	
-    	assertThat(found.getBagStatus().getDesc())
-	    .isEqualTo(Constants.bagStatusDescNew);
+    	assertThat(found.getInventoryType().getInventoryTypeCode())
+	    .isEqualTo("IN");
     	
-    	assertNotNull(found.getBagCreatedDateTime());
-    	assertNotNull(found.getBagUpdatedDateTime());
+    	assertThat(found.getCurrency().getCode())
+	    .isEqualTo(Constants.currencyHKD);
+    	
+//    	assertThat(found.getSupplier().getOrganizationName())
+//	    .isEqualTo("Taobao");
+    	
+    	assertThat(found.getQuantity())
+	    .isEqualTo(new Double(5));
+    	
+    	assertThat(found.getPrice())
+	    .isEqualTo(new Double(15.20));
     }
     
     @After
