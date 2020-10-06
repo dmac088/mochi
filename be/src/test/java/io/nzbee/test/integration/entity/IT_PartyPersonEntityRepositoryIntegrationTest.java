@@ -1,6 +1,7 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
 import java.util.Optional;
@@ -102,6 +103,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 
 	
     private void assertFound(Optional<Person> found) {
+    	assertNotNull(found);
     	assertTrue(found.isPresent());
     	
 	    assertThat(((Person) found.get()).getGivenName())
