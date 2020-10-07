@@ -40,7 +40,10 @@ public class Role {
 	private Date RoleStart; 
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="rle_typ_id", nullable=false)
+	@JoinColumn(name="rle_typ_id", 
+				nullable=false,
+				updatable = false, 
+			    insertable = false)
 	private RoleType roleType;
 
 	@JsonBackReference
