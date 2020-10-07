@@ -18,7 +18,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -67,14 +66,11 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
     	this.persistNewInventoryTransaction();
     }
     
-	public InventoryTransaction persistNewInventoryTransaction() {
+	public void persistNewInventoryTransaction() {
 	
 		inventoryTransaction = inventoryTransactionEntityBeanFactory.getInventoryTransactionEntityBean();
 	    
 	    entityManager.persist(inventoryTransaction);
-	    
-	    return inventoryTransaction;
-	    
 	}
    
     

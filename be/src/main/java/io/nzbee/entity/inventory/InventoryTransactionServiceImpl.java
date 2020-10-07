@@ -20,14 +20,12 @@ public class InventoryTransactionServiceImpl implements IInventoryTransactionSer
 
 	@Override
 	public Optional<InventoryTransaction> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryTransactionRepository.findById(id);
 	}
 
 	@Override
 	public Optional<InventoryTransaction> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		//inventoryTransactionRepository.find
 	}
 
 	@Override
