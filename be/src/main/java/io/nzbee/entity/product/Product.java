@@ -306,9 +306,10 @@ public abstract class Product {
 						CascadeType.PERSIST,
 			            CascadeType.MERGE
 			    })
-	@JoinTable(name = "product_category", schema="mochi", 
-		   joinColumns 			= @JoinColumn(name = "prd_id"), 
-		   inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
+	@JoinTable(		name 				= "product_category", 
+					schema				= "mochi", 
+		   			joinColumns 		= @JoinColumn(name = "prd_id"), 
+		   			inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
 	@IndexedEmbedded(	prefix="product.categories.", 
 						includeEmbeddedObjectId=true)
 	private Set<CategoryProduct> categories = new HashSet<CategoryProduct>();
