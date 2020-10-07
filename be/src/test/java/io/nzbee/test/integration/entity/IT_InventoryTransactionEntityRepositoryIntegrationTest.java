@@ -87,10 +87,9 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
     }
     
     @Test
-	@WithUserDetails(value = "admin")
-    public void thenFindByUsername_thenReturnBag() {
+    public void thenFindByCode_thenReturnInventoryTransaction() {
     	
-    	Optional<InventoryTransaction> found = inventoryTransactionService.findByCode("dmac088");
+    	Optional<InventoryTransaction> found = inventoryTransactionService.findByCode("");
     	
     	assertFound(found);
     }
@@ -99,7 +98,6 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
     private void assertFound(Optional<InventoryTransaction> found) {
     	assertNotNull(found);
     	assertTrue(found.isPresent());
-    	assertNotNull(found.get());
     	
     	assertThat(found.get().getInventoryLocation().getLocationCode())
 	    .isEqualTo("LCK01");
