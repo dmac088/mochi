@@ -19,8 +19,7 @@ public class InventoryLocationServiceImpl implements IInventoryLocationService {
 
 	@Override
 	public Optional<InventoryLocation> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return inventoryLocationRepository.findById(id);
 	}
 
 	@Override

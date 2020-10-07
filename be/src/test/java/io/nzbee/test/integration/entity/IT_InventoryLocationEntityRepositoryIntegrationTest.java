@@ -16,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -64,18 +63,17 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
     	this.persistNewInventoryLocation();
     }
     
-	public InventoryLocation persistNewInventoryLocation() {
+	public void persistNewInventoryLocation() {
 		
 		inventoryLocation = inventoryLocationEntityBeanFactory.getInventoryLocationEntityBean();
 	    
 	    entityManager.persist(inventoryLocation);
+	    entityManager.flush();
 	    
-	    return inventoryLocation;
 	}
    
     
     @Test
-	@WithUserDetails(value = "admin")
     public void whenFindById_thenReturnInventoryLocation() {
     	
     	Optional<InventoryLocation> found = inventoryLocationService.findById(inventoryLocation.getLocationId());
@@ -86,10 +84,9 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
  
 
 	@Test
-	@WithUserDetails(value = "admin")
-    public void thenFindByUsername_thenReturnInventoryLocation() {
+    public void thenFindByCode_thenReturnInventoryLocation() {
     	
-    	Optional<InventoryLocation> found = inventoryLocationService.findByCode("dmac088");
+    	Optional<InventoryLocation> found = inventoryLocationService.findByCode("TST01");
     	
     	assertFound(found);
     	
@@ -99,8 +96,6 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
     private void assertFound(Optional<InventoryLocation> found) {
     	assertNotNull(found);
     	assertTrue(found.isPresent());
-    	
-    	assertNotNull(found);
     	
     	assertThat(found.get().getLocationCode())
 	    .isEqualTo("TST01");
