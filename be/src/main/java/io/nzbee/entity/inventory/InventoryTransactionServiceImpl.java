@@ -26,6 +26,7 @@ public class InventoryTransactionServiceImpl implements IInventoryTransactionSer
 	@Override
 	public Optional<InventoryTransaction> findByCode(String code) {
 		//inventoryTransactionRepository.find
+		return null;
 	}
 
 	@Override
