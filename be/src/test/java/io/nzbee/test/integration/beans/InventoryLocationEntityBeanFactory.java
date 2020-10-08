@@ -15,7 +15,7 @@ public class InventoryLocationEntityBeanFactory {
 		
 		inventoryLocation.setLocationCode("TST01");
 		inventoryLocation.setLocationDesc("test location");
-		inventoryLocation.setLocationIsActive("N");
+		inventoryLocation.setLocationIsActive(true);
 		
 		return inventoryLocation;
 	}

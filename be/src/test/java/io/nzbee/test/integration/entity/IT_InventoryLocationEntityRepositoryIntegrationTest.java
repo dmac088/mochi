@@ -69,7 +69,6 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
 	    
 	    entityManager.persist(inventoryLocation);
 	    entityManager.flush();
-	    
 	}
    
     
@@ -94,6 +93,7 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
  
     
     private void assertFound(Optional<InventoryLocation> found) {
+    	
     	assertNotNull(found);
     	assertTrue(found.isPresent());
     	
@@ -102,6 +102,8 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
     	
     	assertThat(found.get().getLocationDesc())
 	    .isEqualTo("test location");
+    	
+    	assertThat(found.get().getLocationIsActive()).isTrue();
     	
     }
     
