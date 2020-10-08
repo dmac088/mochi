@@ -402,8 +402,8 @@ public abstract class Product {
 	public Double getCurrentRetailPriceHKD() {
 		 Optional<ProductPrice> priceVal = 
 				 this.prices.stream().filter(p ->
-										 	p.getCurrency().getCode().equals("HKD")
-										 	&& p.getType().getCode().equals("RET01")
+										 	p.getCurrency().getCode().equals(Constants.currencyHKD)
+										 	&& p.getType().getCode().equals(Constants.retailPriceCode)
 						 			).findFirst();
 				 
 		 return (priceVal.isPresent()) 
@@ -417,8 +417,8 @@ public abstract class Product {
 	public Double getCurrentRetailPriceUSD() {
 		Optional<ProductPrice> priceVal = 
 				 this.prices.stream().filter(p ->
-										 	p.getCurrency().getCode().equals("USD")
-										 	&& p.getType().getCode().equals("RET01")
+										 	p.getCurrency().getCode().equals(Constants.currencyUSD)
+										 	&& p.getType().getCode().equals(Constants.retailPriceCode)
 						 			).findFirst();
 				 
 		return (priceVal.isPresent()) 
@@ -432,8 +432,8 @@ public abstract class Product {
 	public Double getCurrentMarkdownPriceHKD() {
 		Optional<ProductPrice> priceVal = 
 				 this.prices.stream().filter(p ->
-										 	p.getCurrency().getCode().equals("HKD") && 
-										 	p.getType().getCode().equals("MKD01")
+										 	p.getCurrency().getCode().equals(Constants.currencyHKD) && 
+										 	p.getType().getCode().equals(Constants.markdownPriceCode)
 						 			).findFirst();
 				 
 		return (priceVal.isPresent()) 
@@ -447,8 +447,8 @@ public abstract class Product {
 	public Double getCurrentMarkdownPriceUSD() {
 		Optional<ProductPrice> priceVal = 
 				 this.prices.stream().filter(p ->
-										 	p.getCurrency().getCode().equals("USD") && 
-										 	p.getType().getCode().equals("MKD01")
+										 	p.getCurrency().getCode().equals(Constants.currencyUSD) && 
+										 	p.getType().getCode().equals(Constants.markdownPriceCode)
 						 			).findFirst();
 				 
 		return (priceVal.isPresent()) 
