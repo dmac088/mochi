@@ -19,6 +19,7 @@ SET search_path = mochi, pg_catalog;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_tag_id_fkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.supplier DROP CONSTRAINT supplier_role_id_fkey;
+ALTER TABLE ONLY mochi.stock_on_hand DROP CONSTRAINT stock_on_hand_prd_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_role_typ_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_party_id_fkey;
 ALTER TABLE ONLY mochi.promotion_product DROP CONSTRAINT promotion_product_prm_id_fkey;
@@ -89,6 +90,7 @@ ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT uc_bag_item;
 ALTER TABLE ONLY mochi.tag DROP CONSTRAINT tag_pkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT tag_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.supplier DROP CONSTRAINT supplier_pkey;
+ALTER TABLE ONLY mochi.stock_on_hand DROP CONSTRAINT stock_on_hand_pkey;
 ALTER TABLE ONLY mochi.role_type DROP CONSTRAINT role_type_rle_typ_desc_key;
 ALTER TABLE ONLY mochi.role_type DROP CONSTRAINT role_type_pkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_pty_id_key;
@@ -157,6 +159,7 @@ DROP TABLE mochi.tag;
 DROP SEQUENCE mochi.tag_tag_id_seq;
 DROP TABLE mochi.supplier;
 DROP SEQUENCE mochi.supplier_sup_num_seq;
+DROP TABLE mochi.stock_on_hand;
 DROP SEQUENCE mochi.role_type_role_typ_id_seq;
 DROP SEQUENCE mochi.role_type_rle_typ_id_seq;
 DROP TABLE mochi.role_type;
@@ -2680,6 +2683,18 @@ CREATE SEQUENCE role_type_role_typ_id_seq
 ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 --
+-- Name: stock_on_hand; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE stock_on_hand (
+    prd_id bigint NOT NULL,
+    qty_on_hnd bigint NOT NULL
+);
+
+
+ALTER TABLE stock_on_hand OWNER TO mochidb_owner;
+
+--
 -- Name: supplier_sup_num_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3254,6 +3269,14 @@ ALTER TABLE ONLY role_type
 
 
 --
+-- Name: stock_on_hand stock_on_hand_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY stock_on_hand
+    ADD CONSTRAINT stock_on_hand_pkey PRIMARY KEY (prd_id);
+
+
+--
 -- Name: supplier supplier_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3808,6 +3831,14 @@ ALTER TABLE ONLY role
 
 ALTER TABLE ONLY role
     ADD CONSTRAINT role_role_typ_id_fkey FOREIGN KEY (rle_typ_id) REFERENCES role_type(rle_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: stock_on_hand stock_on_hand_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY stock_on_hand
+    ADD CONSTRAINT stock_on_hand_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
 
 
 --
