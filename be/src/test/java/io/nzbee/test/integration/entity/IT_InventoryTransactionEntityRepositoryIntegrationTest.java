@@ -96,8 +96,8 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
     	assertThat(found.get().getCurrency().getCode())
 	    .isEqualTo(Constants.currencyHKD);
     	
-//    	assertThat(found.getSupplier().getOrganizationName())
-//	    .isEqualTo("Taobao");
+    	assertThat(found.get().getSupplier().getOrganizationName())
+	    .isEqualTo("Taobao");
     	
     	assertThat(found.get().getQuantity())
 	    .isEqualTo(new Double(5));

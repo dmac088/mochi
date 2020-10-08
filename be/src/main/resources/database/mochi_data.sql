@@ -1267,7 +1267,7 @@ SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
 -- Data for Name: inventory_location; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO inventory_location VALUES (1, 'LCK01', 'Lai Chi Kok Apartment', 'Y');
+INSERT INTO inventory_location VALUES (1, 'LCK01', 'Lai Chi Kok Apartment', true);
 
 
 --

@@ -11,10 +11,12 @@ public abstract class InventoryLocation_ {
 	public static volatile SingularAttribute<InventoryLocation, Long> locationId;
 	public static volatile SingularAttribute<InventoryLocation, String> locationDesc;
 	public static volatile SingularAttribute<InventoryLocation, String> locationCode;
+	public static volatile SingularAttribute<InventoryLocation, String> locationIsActive;
 
 	public static final String LOCATION_ID = "locationId";
 	public static final String LOCATION_DESC = "locationDesc";
 	public static final String LOCATION_CODE = "locationCode";
+	public static final String LOCATION_IS_ACTIVE = "locationIsActive";
 
 }
 

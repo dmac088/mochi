@@ -3,6 +3,8 @@ package io.nzbee.test.integration.beans;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
@@ -13,11 +15,13 @@ import io.nzbee.entity.inventory.location.IInventoryLocationService;
 import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
+import io.nzbee.entity.party.organization.Organization;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.role.supplier.ISupplierService;
+import io.nzbee.entity.role.supplier.Supplier;
 
 
 @Service(value = "inventoryTransactionEntityBeanFactory")
@@ -46,7 +50,7 @@ public class InventoryTransactionEntityBeanFactory {
 		Optional<InventoryLocation> iL 	= inventoryLocationService.findByCode("LCK01");
 		Optional<InventoryType> iT 		= inventoryTypeService.findByCode("IN");
 		Optional<Currency> iC 			= currencyService.findByCode(Constants.currencyHKD);
-		//Optional<Supplier> iS 			= supplierService.findByCode("1000000002");
+		Optional<Supplier> iS 			= supplierService.findByCode("1000000002");
 		Optional<Product> iP 			= productService.findByCode("30833030");
 		
 		inventoryTransaction.setInventoryLocation(iL.get());
@@ -55,7 +59,7 @@ public class InventoryTransactionEntityBeanFactory {
 		
 		inventoryTransaction.setCurrency(iC.get());
 		
-		//inventoryTransaction.setSupplier((Organization) Hibernate.unproxy(iS.get().getRoleParty()));
+		inventoryTransaction.setSupplier((Organization) Hibernate.unproxy(iS.get().getRoleParty()));
 		
 		inventoryTransaction.setProduct(iP.get());
 		
