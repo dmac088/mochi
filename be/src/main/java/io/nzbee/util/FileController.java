@@ -13,6 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import io.nzbee.util.brand.BrandMasterService;
 import io.nzbee.util.category.CategoryMasterService;
+import io.nzbee.util.inventory.InventoryLocationMasterService;
 import io.nzbee.util.inventory.InventoryMasterService;
 import io.nzbee.util.product.ProductMasterService;
 import io.nzbee.util.tag.TagMasterService;
@@ -48,6 +49,9 @@ public class FileController {
     
     @Autowired
     private InventoryMasterService inventoryMasterService; 
+    
+    @Autowired
+    private InventoryLocationMasterService inventoryLocationMasterService;
     
 	@Autowired 
 	private FileStorageProperties fileStorageProperties;
@@ -297,6 +301,24 @@ public class FileController {
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
         inventoryMasterService.writeInventoryTransaction(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
+    @PostMapping("/InventoryLocation/Upload/")
+    public UploadFileResponse uploadInventoryLocationFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadInventoryLocationFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        inventoryLocationMasterService.writeInventoryLocation(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
