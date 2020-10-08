@@ -4435,6 +4435,13 @@ GRANT ALL ON SEQUENCE role_type_role_typ_id_seq TO mochi_app;
 
 
 --
+-- Name: stock_on_hand; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE stock_on_hand TO mochi_app;
+
+
+--
 -- Name: supplier_sup_num_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
