@@ -173,7 +173,7 @@ public class ProductMasterService {
 						 String tagCodeD,
 						 String tagCodeE
 						 ) {
-		logger.debug("called persistProductMaster() ");
+		logger.debug("called mapToAccessory() ");
 		
 		Optional<Product> op = productService.findByCode(upcCode);
 		
@@ -225,7 +225,7 @@ public class ProductMasterService {
 		Optional<ProductPrice> oprcr = 
 				productPriceService.findOne(upcCode, 
 											Constants.retailPriceCode, 
-											Constants.currencyUSD);
+											currency);
 
 		//retail price
 		ProductPrice prcr = (oprcr.isPresent()) 
@@ -239,7 +239,7 @@ public class ProductMasterService {
 		Optional<ProductPrice> oprcm = 
 				productPriceService.findOne(upcCode, 
 											Constants.markdownPriceCode, 
-											Constants.currencyUSD);
+											currency);
 
 		//markdown price
 		ProductPrice prcm = (oprcm.isPresent()) 
