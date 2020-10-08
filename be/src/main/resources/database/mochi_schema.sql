@@ -2009,7 +2009,7 @@ CREATE TABLE inventory_location (
     inv_loc_id bigint NOT NULL,
     inv_loc_cd character(5) NOT NULL,
     inv_loc_desc character varying(50) NOT NULL,
-    inv_loc_act_flg character(1)
+    inv_loc_act boolean NOT NULL
 );
 
 

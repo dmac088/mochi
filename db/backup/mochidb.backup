@@ -1894,7 +1894,7 @@ CREATE TABLE inventory_location (
     inv_loc_id bigint NOT NULL,
     inv_loc_cd character(5) NOT NULL,
     inv_loc_desc character varying(50) NOT NULL,
-    inv_loc_act_flg character(1)
+    inv_loc_act boolean NOT NULL
 );
 
 
@@ -3791,8 +3791,8 @@ SELECT pg_catalog.setval('hierarchy_hir_id_seq', 43, true);
 -- Data for Name: inventory_location; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY inventory_location (inv_loc_id, inv_loc_cd, inv_loc_desc, inv_loc_act_flg) FROM stdin;
-1	LCK01	Lai Chi Kok Apartment	Y
+COPY inventory_location (inv_loc_id, inv_loc_cd, inv_loc_desc, inv_loc_act) FROM stdin;
+1	LCK01	Lai Chi Kok Apartment	t
 \.
 
 
@@ -6126,7 +6126,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 210, true);
+SELECT pg_catalog.setval('user_role_id_seq', 211, true);
 
 
 --

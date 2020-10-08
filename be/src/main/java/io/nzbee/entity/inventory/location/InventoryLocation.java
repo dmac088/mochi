@@ -21,6 +21,9 @@ public class InventoryLocation {
 	
 	@Column(name="inv_loc_desc")
 	private String locationDesc;
+	
+	@Column(name="inv_loc_act_flg")
+	private String locationIsActive;
 
 	public Long getLocationId() {
 		return locationId;
@@ -45,5 +48,14 @@ public class InventoryLocation {
 	public void setLocationDesc(String locationDesc) {
 		this.locationDesc = locationDesc;
 	}
+
+	public String getLocationIsActive() {
+		return locationIsActive;
+	}
+
+	public void setLocationIsActive(String locationIsActive) {
+		this.locationIsActive = locationIsActive;
+	}
+	
 	
 }

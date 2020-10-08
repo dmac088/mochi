@@ -47,7 +47,7 @@ public class Role {
 	private RoleType roleType;
 
 	@JsonBackReference
-	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional=false)
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="pty_id", nullable=false)
 	private Party roleParty;
 
