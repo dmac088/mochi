@@ -86,6 +86,7 @@ public class ProductMasterService {
 
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
+	@Transactional
 	public void writeAccessoriesMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
@@ -109,7 +110,6 @@ public class ProductMasterService {
 		}
 	}
 	
-	@Transactional
 	public void persistProductMaster(AccessoriesMasterSchema p) {
 		
 		//english with USD
