@@ -261,7 +261,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	private void assertAllCategoriesFound(final Set<Category> found) {
 
 		assertThat(found).isNotNull();
-		assertThat(found).size().isEqualTo(43);
+		assertThat(found).size().isEqualTo(88);
 	}
 
 	private void assertAllBrandCategoriesFound(final Set<Category> found) {
@@ -273,7 +273,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	private void assertAllProductCategoriesFound(final Set<Category> found) {
 
 		assertThat(found).isNotNull();
-		assertThat(found).size().isEqualTo(42);
+		assertThat(found).size().isEqualTo(88);
 	}
 
 	@After
