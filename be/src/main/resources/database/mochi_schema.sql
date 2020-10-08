@@ -2008,7 +2008,8 @@ ALTER TABLE hierarchy_hir_id_seq OWNER TO mochidb_owner;
 CREATE TABLE inventory_location (
     inv_loc_id bigint NOT NULL,
     inv_loc_cd character(5) NOT NULL,
-    inv_loc_desc character varying(50)
+    inv_loc_desc character varying(50) NOT NULL,
+    inv_loc_act_flg character(1)
 );
 
 
