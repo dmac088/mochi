@@ -82,14 +82,6 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
-    @Test
-    public void thenFindByCode_thenReturnInventoryTransaction() {
-    	
-    	Optional<InventoryTransaction> found = inventoryTransactionService.findByCode("");
-    	
-    	assertFound(found);
-    }
- 
     
     private void assertFound(Optional<InventoryTransaction> found) {
     	assertNotNull(found);
