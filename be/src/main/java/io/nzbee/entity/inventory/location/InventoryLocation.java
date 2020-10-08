@@ -22,8 +22,8 @@ public class InventoryLocation {
 	@Column(name="inv_loc_desc")
 	private String locationDesc;
 	
-	@Column(name="inv_loc_act_flg")
-	private String locationIsActive;
+	@Column(name="inv_loc_act")
+	private boolean locationIsActive;
 
 	public Long getLocationId() {
 		return locationId;
@@ -49,11 +49,11 @@ public class InventoryLocation {
 		this.locationDesc = locationDesc;
 	}
 
-	public String getLocationIsActive() {
+	public boolean getLocationIsActive() {
 		return locationIsActive;
 	}
 
-	public void setLocationIsActive(String locationIsActive) {
+	public void setLocationIsActive(boolean locationIsActive) {
 		this.locationIsActive = locationIsActive;
 	}
 	

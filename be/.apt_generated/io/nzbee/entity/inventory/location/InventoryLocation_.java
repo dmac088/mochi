@@ -11,7 +11,7 @@ public abstract class InventoryLocation_ {
 	public static volatile SingularAttribute<InventoryLocation, Long> locationId;
 	public static volatile SingularAttribute<InventoryLocation, String> locationDesc;
 	public static volatile SingularAttribute<InventoryLocation, String> locationCode;
-	public static volatile SingularAttribute<InventoryLocation, String> locationIsActive;
+	public static volatile SingularAttribute<InventoryLocation, Boolean> locationIsActive;
 
 	public static final String LOCATION_ID = "locationId";
 	public static final String LOCATION_DESC = "locationDesc";
