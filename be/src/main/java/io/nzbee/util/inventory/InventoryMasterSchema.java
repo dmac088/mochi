@@ -7,7 +7,7 @@ public class InventoryMasterSchema {
 		
 	private String INVENTORY_PRODUCT_UPC;
 	
-	private double INVENTORY_QUANTITY;
+	private Long INVENTORY_QUANTITY;
 	
 	private double INVENTORY_PRICE;
 	
@@ -35,11 +35,11 @@ public class InventoryMasterSchema {
 		this.INVENTORY_PRODUCT_UPC = INVENTORY_PRODUCT_UPC;
 	}
 
-	public double get_INVENTORY_QUANTITY() {
+	public Long get_INVENTORY_QUANTITY() {
 		return this.INVENTORY_QUANTITY;
 	}
 
-	public void set_INVENTORY_QUANTITY(double INVENTORY_QUANTITY) {
+	public void set_INVENTORY_QUANTITY(Long INVENTORY_QUANTITY) {
 		this.INVENTORY_QUANTITY = INVENTORY_QUANTITY;
 	}
 
@@ -47,7 +47,7 @@ public class InventoryMasterSchema {
 		return this.INVENTORY_PRICE;
 	}
 
-	public void set_INVENTORY_PRICE(double INVENTORY_PRICE) {
+	public void set_INVENTORY_PRICE(Long INVENTORY_PRICE) {
 		this.INVENTORY_PRICE = INVENTORY_PRICE;
 	}
 
