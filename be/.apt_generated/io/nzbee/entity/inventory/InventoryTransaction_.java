@@ -16,7 +16,7 @@ public abstract class InventoryTransaction_ {
 
 	public static volatile SingularAttribute<InventoryTransaction, Product> product;
 	public static volatile SingularAttribute<InventoryTransaction, InventoryType> inventoryType;
-	public static volatile SingularAttribute<InventoryTransaction, Double> quantity;
+	public static volatile SingularAttribute<InventoryTransaction, Long> quantity;
 	public static volatile SingularAttribute<InventoryTransaction, Double> price;
 	public static volatile SingularAttribute<InventoryTransaction, Organization> supplier;
 	public static volatile SingularAttribute<InventoryTransaction, Long> inventroyTransactionId;
