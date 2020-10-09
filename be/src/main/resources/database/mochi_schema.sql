@@ -77,6 +77,7 @@ ALTER TABLE ONLY mochi.department DROP CONSTRAINT uc_prd_typ_cd;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT uc_prd_sts_cd;
 ALTER TABLE ONLY mochi.product_rating DROP CONSTRAINT uc_prd_rat;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT uc_prd_lcl_1;
+ALTER TABLE ONLY mochi.stock_on_hand DROP CONSTRAINT uc_prd_id;
 ALTER TABLE ONLY mochi.category_type DROP CONSTRAINT uc_cat_typ_cd;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT uc_cat_lcl;
 ALTER TABLE ONLY mochi.category_attr_lcl DROP CONSTRAINT uc_cat_desc;
@@ -3379,6 +3380,14 @@ ALTER TABLE ONLY category_attr_lcl
 
 ALTER TABLE ONLY category_type
     ADD CONSTRAINT uc_cat_typ_cd UNIQUE (cat_typ_cd);
+
+
+--
+-- Name: stock_on_hand uc_prd_id; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY stock_on_hand
+    ADD CONSTRAINT uc_prd_id UNIQUE (soh_prd_id);
 
 
 --
