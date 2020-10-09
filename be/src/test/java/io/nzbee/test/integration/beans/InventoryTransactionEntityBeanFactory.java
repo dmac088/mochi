@@ -63,7 +63,7 @@ public class InventoryTransactionEntityBeanFactory {
 		
 		inventoryTransaction.setProduct(iP.get());
 		
-		inventoryTransaction.setQuantity(new Double(5));
+		inventoryTransaction.setQuantity(new Long(5));
 		
 		inventoryTransaction.setPrice(new Double(15.20));
 		
