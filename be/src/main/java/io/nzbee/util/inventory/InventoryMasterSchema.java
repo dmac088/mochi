@@ -47,7 +47,7 @@ public class InventoryMasterSchema {
 		return this.INVENTORY_PRICE;
 	}
 
-	public void set_INVENTORY_PRICE(Long INVENTORY_PRICE) {
+	public void set_INVENTORY_PRICE(double INVENTORY_PRICE) {
 		this.INVENTORY_PRICE = INVENTORY_PRICE;
 	}
 

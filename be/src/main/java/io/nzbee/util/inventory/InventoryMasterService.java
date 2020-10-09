@@ -29,6 +29,8 @@ import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.role.supplier.ISupplierService;
 import io.nzbee.entity.role.supplier.Supplier;
+import io.nzbee.entity.stock.IStockOnHandService;
+import io.nzbee.entity.stock.StockOnHand;
 import io.nzbee.util.FileStorageServiceUpload;
 import io.nzbee.entity.party.organization.Organization;
 
@@ -59,6 +61,9 @@ public class InventoryMasterService {
 	@Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
+	@Autowired
+	private IStockOnHandService stockOnHandService;
+	
 	public void writeInventoryTransaction(String fileName) {
 		logger.debug("called writeInventoryTransaction with parameter {} ", fileName);
 		try {
@@ -83,7 +88,7 @@ public class InventoryMasterService {
 	}
 	
 	public void persistInventoryTransactionMaster(InventoryMasterSchema ims) {
-		logger.debug("called persistInventory() ");
+		logger.debug("called persistInventoryTransactionMaster() ");
 		
 		InventoryTransaction i = new InventoryTransaction();
 				
@@ -104,7 +109,6 @@ public class InventoryMasterService {
 		LocalDateTime trxDate = LocalDateTime.parse(ims.get_INVENTORY_TRANSACTION_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		
 		i.setInventoryTransactionDate(trxDate);
-		
 		i.setInventoryLocation(il.get());
 		i.setProduct(p.get());
 		i.setInventoryType(it.get());
@@ -113,9 +117,19 @@ public class InventoryMasterService {
 		i.setQuantity(ims.get_INVENTORY_QUANTITY());
 		i.setPrice(ims.get_INVENTORY_PRICE());
 		i.setCurrency(ocurr.get());
+		
+		//ensure the SOH is updated
+		Optional<StockOnHand> osoh = stockOnHandService.findByProductCode(ims.get_INVENTORY_PRODUCT_UPC()); 
+		
+		StockOnHand soh = osoh.isPresent()
+						  ? osoh.get()
+						  : new StockOnHand();
+						  
+		soh.setProduct(p.get());
+		soh.setStockOnHand(((soh.getStockOnHand() == null) ? 0 : soh.getStockOnHand()) + ims.get_INVENTORY_QUANTITY());
 
 		inventoryTransactionService.save(i);
-		
+		stockOnHandService.save(soh);
 	}
 	
 	
