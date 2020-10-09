@@ -30,8 +30,7 @@ public class StockOnHandServiceImpl implements IStockOnHandService {
 
 	@Override
 	public void save(StockOnHand t) {
-		// TODO Auto-generated method stub
-		
+		stockOnHandRepository.save(t);
 	}
 
 	@Override
@@ -44,6 +43,11 @@ public class StockOnHandServiceImpl implements IStockOnHandService {
 	public void delete(StockOnHand t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Optional<StockOnHand> findByProductCode(String productCode) {
+		return stockOnHandRepository.findByProductProductUPC(productCode);
 	}
 
 	

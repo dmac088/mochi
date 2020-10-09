@@ -86,9 +86,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		query.setParameter("categoryCode", categoryCode);
 		
-		Double result = (new BigDecimal(query.getSingleResult().toString())).doubleValue();
+		Optional<Object> result = Optional.ofNullable(query.getSingleResult());
 		
-		return result;
+		return result.isPresent()
+			   ? new Double(result.get().toString())
+			   : new Double(0);
 	}
 	
 	
