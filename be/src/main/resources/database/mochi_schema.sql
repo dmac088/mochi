@@ -2687,8 +2687,9 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 --
 
 CREATE TABLE stock_on_hand (
-    prd_id bigint NOT NULL,
-    qty_on_hnd bigint NOT NULL
+    soh_id bigint NOT NULL,
+    soh_prd_id bigint NOT NULL,
+    soh_qty bigint NOT NULL
 );
 
 
@@ -3273,7 +3274,7 @@ ALTER TABLE ONLY role_type
 --
 
 ALTER TABLE ONLY stock_on_hand
-    ADD CONSTRAINT stock_on_hand_pkey PRIMARY KEY (prd_id);
+    ADD CONSTRAINT stock_on_hand_pkey PRIMARY KEY (soh_id);
 
 
 --
@@ -3838,7 +3839,7 @@ ALTER TABLE ONLY role
 --
 
 ALTER TABLE ONLY stock_on_hand
-    ADD CONSTRAINT stock_on_hand_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+    ADD CONSTRAINT stock_on_hand_prd_id_fkey FOREIGN KEY (soh_prd_id) REFERENCES product(prd_id);
 
 
 --

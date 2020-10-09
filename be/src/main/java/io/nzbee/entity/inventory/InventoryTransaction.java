@@ -34,7 +34,7 @@ public class InventoryTransaction {
 	private Product product;
 	
 	@Column(name="inv_qty")
-	private Double quantity;
+	private Long quantity;
 	
 	@Column(name="inv_prc")
 	private Double price;
@@ -78,11 +78,11 @@ public class InventoryTransaction {
 		this.product = product;
 	}
 
-	public Double getQuantity() {
+	public Long getQuantity() {
 		return quantity;
 	}
 
-	public void setQuantity(Double quantity) {
+	public void setQuantity(Long quantity) {
 		this.quantity = quantity;
 	}
 
