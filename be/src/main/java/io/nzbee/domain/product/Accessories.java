@@ -20,6 +20,7 @@ public class Accessories extends Product {
 					   	 String productImage,
 					   	 String lclCd,
 					   	 String currency,
+					   	 boolean inStock,
 					   	 Brand brand,
 					   	 Department department,
 					   	 ProductCategory category) {
@@ -34,6 +35,7 @@ public class Accessories extends Product {
 			  productImage,
 			  lclCd,
 			  currency,
+			  inStock,
 			  brand,
 			  department,
 			  category);

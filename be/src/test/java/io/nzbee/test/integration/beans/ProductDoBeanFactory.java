@@ -25,6 +25,7 @@ public class ProductDoBeanFactory {
 								   "test_image.jpg",
 								   "en-GB",
 								   "HKD",
+								   true,
 								   new Brand("ENZ01",
 											 "Enza",
 											 20,

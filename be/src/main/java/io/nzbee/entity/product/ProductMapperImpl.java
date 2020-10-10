@@ -41,6 +41,7 @@ public class ProductMapperImpl implements IProductMapper {
 				   	e.getProductAttribute().getProductImage(),
 				   	e.getLocale(),
 				   	e.getCurrency(),
+				   	e.isInStock(),
 				   	brand,
 				   	department,
 				   	category
@@ -66,6 +67,7 @@ public class ProductMapperImpl implements IProductMapper {
 				   	e.getProductAttribute().getProductImage(),
 				   	e.getLocale(),
 				   	e.getCurrency(),
+				   	e.isInStock(),
 				   	brandMapper.entityToDo(e.getBrand()),
 				   	departmentMapper.entityToDo(e.getDepartment()),
 				   	(ProductCategory) categoryMapper.entityToDo(e.getPrimaryCategory()));
