@@ -41,6 +41,8 @@ public abstract class Product {
 	
 	private String currency;
 	
+	private boolean inStock;
+	
 	protected String productType;
 
 	@JsonIgnore
@@ -64,6 +66,7 @@ public abstract class Product {
 				   	String 			productImage,
 				   	String 			lclCd,
 				   	String 			currency,
+				   	boolean			inStock,
 				   	Brand 			brand,
 				   	Department 		department,
 				   	ProductCategory category) {
@@ -86,6 +89,10 @@ public abstract class Product {
 					this.productLongDesc = productLongDesc;
 	}
 	
+	public boolean isInStock() {
+		return inStock;
+	}
+
 	public String getProductStatus() {
 		return productStatus;
 	}
