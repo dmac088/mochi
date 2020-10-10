@@ -162,7 +162,8 @@ filters = {
 	    columns = {
 	    		@ColumnResult(name = "retail_price"),
 	    		@ColumnResult(name = "markdown_price"),
-	    		@ColumnResult(name = "prd_img_pth")
+	    		@ColumnResult(name = "prd_img_pth"),
+	    		@ColumnResult(name = "prd_in_stock")
 	    },		
 	    entities = {
 	            @EntityResult(
@@ -377,6 +378,9 @@ public abstract class Product {
 
 	@Transient
 	private CategoryProduct primaryCategory;
+	
+	@Transient 
+	private boolean inStock;
 	
 	public Product() {
 	}
@@ -717,6 +721,18 @@ public abstract class Product {
 		category.removeProduct(this);
 	}
 	
+    public String getTypeDiscriminator() {
+		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
+	}
+
+	public boolean isInStock() {
+		return inStock;
+	}
+
+	public void setInStock(boolean inStock) {
+		this.inStock = inStock;
+	}
+	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -728,9 +744,6 @@ public abstract class Product {
     public int hashCode() {
     	return Objects.hash(this.getProductUPC());
     }
-    
-    public String getTypeDiscriminator() {
-		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
-	}
-			
+ 
+	
 }

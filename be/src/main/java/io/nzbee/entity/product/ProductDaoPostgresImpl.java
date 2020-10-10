@@ -606,13 +606,14 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   dattr.dept_desc,   " +
 						"	   bnd.bnd_id,   " + 
 						"	   bnd.bnd_cd,   " + 
-						"	   bal.bnd_lcl_id,		  " + 
+						"	   bal.bnd_lcl_id,  " + 
 						"	   bal.bnd_desc,   " + 
 						"	   ps.prd_sts_id,   " + 
 						"	   ps.prd_sts_cd,   " + 
 						"	   ps.prd_sts_desc,  " + 
 						"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
+						"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
 						"      :currency as ccy_cd, " +
 						"	   :locale as lcl_cd ") + 
 		
@@ -695,6 +696,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	ON ptags.tag_id = tag.tag_id "
 				   : 	"") +
 		
+		"	LEFT JOIN mochi.stock_on_hand soh " +
+		"	ON prd.prd_id = soh.soh_prd_id " +
 		
 		"WHERE 0=0 " +
 		"AND prd_sts_cd = 			:activeProductCode  " + 
