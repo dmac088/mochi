@@ -1,7 +1,6 @@
 package io.nzbee.search;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -33,23 +32,14 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
-import io.nzbee.entity.brand.Brand;
-import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.product.department.Department;
-import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
-import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.search.facet.SearchFacetDiscrete;
 import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.accessories.Accessories;
-import io.nzbee.entity.product.attribute.ProductAttribute;
 import io.nzbee.Constants;
 import io.nzbee.entity.PageableUtil;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
 
 @Service
 public class SearchServiceImpl implements ISearchService {
@@ -473,62 +463,9 @@ public class SearchServiceImpl implements ISearchService {
 	}
 
 	private void setProductProjection(FullTextQuery jpaQuery) {
-		jpaQuery.setProjection("productUPC");
-							
+		jpaQuery.setProjection("productUPC");							
 	}
 
-	private Product mapResultToEntity(Object[] r, String locale, String currency) {
-		
-		Product p = new Accessories();
-
-		ProductAttribute pa = new ProductAttribute();
-		pa.setProductDesc(r[2].toString());
-		pa.setProductLongDesc((!(r[19] == null)) ? r[19].toString() : "");
-		pa.setProductImage(r[3].toString());
-		pa.setLclCd(locale);
-
-		ProductStatus ps = new ProductStatus();
-		ps.setCode(r[17].toString());
-		ps.setDesc(r[18].toString());
-		p.setProductStatus(ps);
-
-		p.setUPC(r[5].toString());
-		p.setProductCreateDt((LocalDateTime) r[6]);
-		p.setRetailPrice(Double.parseDouble(r[10].toString()));
-		p.setMarkdownPrice(Double.parseDouble(r[11].toString()));
-		p.setLocale(locale);
-		p.setCurrency(currency);
-		p.setProductAttribute(pa);
-
-		CategoryProduct cp = new CategoryProduct();
-		CategoryAttribute ca = new CategoryAttribute();
-		cp.setCategoryCode(r[15].toString());
-		ca.setCategoryDesc(r[14].toString());
-		ca.setLclCd(locale);
-		cp.setCategoryAttribute(ca);
-		p.setPrimaryCategory(cp);
-
-		BrandAttribute ba = new BrandAttribute();
-		ba.setBrandDesc(r[8].toString());
-		ba.setLclCd(locale);
-
-		Brand b = new Brand();
-		b.setBrandCode(r[7].toString());
-		b.setCurrency(currency);
-		b.setLocale(locale);
-		b.setBrandAttribute(ba);
-		p.setBrand(b);
-
-		DepartmentAttribute da = new DepartmentAttribute();
-		da.setLclCd(locale);
-		da.setDesc(r[14].toString());
-		Department d = new Department();
-		d.setDepartmentCode(r[13].toString());
-		d.setAttribute(da);
-		p.setDepartment(d);
-
-		return p;
-	}
 
 	private Sort getSortField(String field, String currency, String locale) {
 		LOGGER.debug("call getSortField with parameters {} {} {} ", field, currency, locale);
