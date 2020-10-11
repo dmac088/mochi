@@ -132,19 +132,15 @@ public abstract class Category implements ISearchDimension {
 
 	@NaturalId
 	@Column(name="cat_cd", unique = true, updatable = false)
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	protected String categoryCode;
 
 	@Column(name="cat_lvl")
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryLevel;
 	
 	@Column(name="cat_prnt_cd")
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String categoryParentCode;
 	
 	@Column(name="cat_prnt_id")
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private Long categoryParentId;
 
 	public Long getCategoryParentId() {
@@ -262,14 +258,14 @@ public abstract class Category implements ISearchDimension {
 	
 	@Transient
 	@JsonIgnore
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeENGB))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getCategoryDescENGB() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc();
 	}
 	
 	@Transient
 	@JsonIgnore
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeZHHK))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getCategoryDescZHHK() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getCategoryDesc();
 	}

@@ -7,9 +7,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.hibernate.search.annotations.Field;
-import org.hibernate.search.annotations.Store;
-
 @Entity
 @Table(name = "bag_status", schema = "mochi")
 public class BagStatus {
@@ -20,11 +17,9 @@ public class BagStatus {
 	private Long bagStatusId;
 
 	@Column(name="bag_sts_cd")
-	@Field(store=Store.YES)
 	private String bagStatusCode;
 	
 	@Column(name="bag_sts_desc")
-	@Field(store=Store.YES)
 	private String bagStatusDesc;
 
 	public Long getbagStatusId() {

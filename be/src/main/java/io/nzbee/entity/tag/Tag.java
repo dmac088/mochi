@@ -154,7 +154,7 @@ public class Tag implements ISearchDimension {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeENGB))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getTagDescENGB() {
 		Optional<TagAttribute> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst();
 		return (ota.isPresent()) 
@@ -163,7 +163,7 @@ public class Tag implements ISearchDimension {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeZHHK))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getTagDescZHHK() {
 		Optional<TagAttribute> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		return (ota.isPresent()) 

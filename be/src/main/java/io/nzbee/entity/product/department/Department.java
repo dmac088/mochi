@@ -21,6 +21,8 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 
 @Entity
@@ -34,7 +36,6 @@ public class Department {
 
 	@NaturalId
 	@Column(name="dept_cd", unique = true, updatable = false)
-	@Field(store=Store.YES,analyze=Analyze.NO)
 	private String departmentCode;
 	
 	@Column(name="dept_class")
@@ -76,18 +77,18 @@ public class Department {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getDepartmentDescENGB() {
 		Optional<DepartmentAttribute> d = this.getAttributes().stream()
-				.filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+				.filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
 		return ((d.isPresent()) ? d.get().getDesc() : "novalue");
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getDepartmentDescZHHK() {
 		Optional<DepartmentAttribute> d = this.getAttributes().stream()
-				.filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+				.filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		return ((d.isPresent()) ? d.get().getDesc() : "novalue");
 		
 	}

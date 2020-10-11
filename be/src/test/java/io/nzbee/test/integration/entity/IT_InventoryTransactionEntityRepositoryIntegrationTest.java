@@ -100,7 +100,7 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	    .isEqualTo("Taobao");
     	
     	assertThat(found.get().getQuantity())
-	    .isEqualTo(new Double(5));
+	    .isEqualTo(new Long(5));
     	
     	assertThat(found.get().getPrice())
 	    .isEqualTo(new Double(15.20));

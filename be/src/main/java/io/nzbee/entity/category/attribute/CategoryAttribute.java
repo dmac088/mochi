@@ -26,7 +26,7 @@ public class CategoryAttribute {
 	private Long categoryAttributeId;
 
 	@Column(name="cat_desc")
-	@Field(analyze = Analyze.YES, store=Store.YES)
+	@Field(analyze = Analyze.YES, store=Store.NO)
 	private String categoryDesc;
 
 	@Column(name="lcl_cd")	

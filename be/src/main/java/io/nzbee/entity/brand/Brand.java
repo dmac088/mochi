@@ -26,6 +26,8 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.brand.attribute.BrandAttribute;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.product.Product;
@@ -63,7 +65,6 @@ public class Brand implements ISearchDimension {
 
 	@NaturalId
 	@Column(name="bnd_cd", unique = true, updatable = false)
-	@Field(analyze = Analyze.NO, store=Store.YES)
 	private String brandCode;
 	
 	@ManyToMany(mappedBy = "brands")
@@ -105,9 +106,9 @@ public class Brand implements ISearchDimension {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "en-GB"))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getBrandDescENGB() {
-		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst();
+		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
 		if(pa.isPresent()) {
 			return pa.get().getBrandDesc();
 		}
@@ -115,9 +116,9 @@ public class Brand implements ISearchDimension {
 	}
 	
 	@Transient
-	@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = "zh-HK"))
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getBrandDescZHHK() {
-		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals("zh-HK")).findFirst();
+		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		if(pa.isPresent()) {
 			return pa.get().getBrandDesc();
 		}

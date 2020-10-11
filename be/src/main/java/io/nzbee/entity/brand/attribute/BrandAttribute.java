@@ -26,7 +26,7 @@ public class BrandAttribute {
 	private Long brandAttributeId;
 
 	@Column(name="bnd_desc")
-	@Field(analyze = Analyze.YES, store=Store.YES)
+	@Field(analyze = Analyze.YES, store=Store.NO)
 	private String brandDesc;
 	
 	@Column(name="lcl_cd")	
