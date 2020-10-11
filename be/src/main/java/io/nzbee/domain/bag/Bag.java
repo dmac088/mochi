@@ -63,4 +63,12 @@ public class Bag {
 		bagItems.add(bagItem);
 		bagItem.setBagItemStatus("PND01");
 	}
+	
+	public BagIssues getBagIssues() {
+		return bagIssues;
+	}
+
+	public boolean hasIssues() {
+		return bagIssues.hasIssues();
+	}
 }
