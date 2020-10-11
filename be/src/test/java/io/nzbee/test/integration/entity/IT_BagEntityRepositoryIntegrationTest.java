@@ -26,8 +26,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.bag.IBagService;
-import io.nzbee.entity.bag.status.BagStatus;
-import io.nzbee.entity.bag.status.IBagStatusService;
+import io.nzbee.entity.bag.status.BagItemStatus;
+import io.nzbee.entity.bag.status.IBagItemStatusService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
@@ -61,7 +61,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     private IBagService bagService;
     
     @Autowired
-    private IBagStatusService bagStatusService;
+    private IBagItemStatusService bagStatusService;
     
 	@Autowired
     private IPersonService personService;
@@ -79,7 +79,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	public Bag persistNewBag() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
-    	Optional<BagStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
+    	Optional<BagItemStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
 		
 		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    bag.setBagStatus(bs.get());

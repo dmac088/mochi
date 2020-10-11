@@ -6,12 +6,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag; 
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.entity.bag.item.BagItem;
 import io.nzbee.entity.bag.item.IBagItemMapper;
-import io.nzbee.entity.bag.status.IBagStatusService;
 import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
@@ -27,9 +25,6 @@ public class BagMapperImpl implements IBagMapper {
 	
 	@Autowired
 	private IPersonService personService;
-	
-	@Autowired
-	private IBagStatusService bagStatusService;
 	
 	@Autowired
 	private IBagService bagService;
@@ -67,12 +62,10 @@ public class BagMapperImpl implements IBagMapper {
 	@Override
 	public io.nzbee.entity.bag.Bag doToEntity(Bag d) {
 		//get the bag, status, and customer from the database
-		Optional<io.nzbee.entity.bag.Bag> obe 						= bagService.findByCode(d.getCustomer().getUserName());
-		Optional<io.nzbee.entity.bag.status.BagStatus> onbs 		= bagStatusService.findByCode(Constants.bagStatusCodeNew);
+		Optional<io.nzbee.entity.bag.Bag> obe 						= bagService.findByCode(d.getCustomer().getUserName());		
 		Optional<io.nzbee.entity.party.person.Person> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
 					
 		io.nzbee.entity.bag.Bag nbe = new io.nzbee.entity.bag.Bag();
-		nbe.setBagStatus(onbs.get());
 		nbe.setBagCreatedDateTime(LocalDateTime.now());
 		nbe.setBagUpdatedDateTime(LocalDateTime.now());
 				
