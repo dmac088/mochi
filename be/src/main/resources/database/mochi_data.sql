@@ -673,7 +673,7 @@ INSERT INTO party VALUES (233055, 2);
 -- Data for Name: bag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag VALUES (233760, 233024, 1, '2020-09-19 11:20:11.58+08', '2020-10-11 10:05:30.642+08');
+INSERT INTO bag VALUES (233760, 233024, '2020-09-19 11:20:11.58+08', '2020-10-11 14:15:28.511+08');
 
 
 --
@@ -684,19 +684,18 @@ SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
 
 
 --
+-- Data for Name: bag_item_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO bag_item_status VALUES (1, 'NEW01', 'New');
+INSERT INTO bag_item_status VALUES (2, 'PRO01', 'Processed');
+INSERT INTO bag_item_status VALUES (3, 'PND01', 'Pending');
+
+
+--
 -- Data for Name: bag_item; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag_item VALUES (234430, 233760, 25, 1);
-
-
---
--- Data for Name: bag_status; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO bag_status VALUES (1, 'NEW01', 'New');
-INSERT INTO bag_status VALUES (2, 'PRO01', 'Processed');
-INSERT INTO bag_status VALUES (3, 'PND01', 'Pending');
 
 
 --
@@ -1253,7 +1252,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234430, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234433, true);
 
 
 --

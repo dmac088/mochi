@@ -5,10 +5,20 @@ import io.nzbee.domain.product.Product;
 public class BagItem {
 
 	private Bag bag;
+	
 	private Product product;
+	
 	private int quantity;
+	
 	private String locale;
+	
 	private String currency;
+	
+	private boolean errors;
+	
+	private String error;
+	
+	private String bagItemStatus;
 	
 	public BagItem(Bag bag, 
 			  	   Product p, 
@@ -18,6 +28,7 @@ public class BagItem {
 		this.quantity = quantity;
 		this.locale = p.getLclCd();
 		this.currency = p.getCurrency();
+		this.bagItemStatus 		= "NEW01";
 	}
 
 	public Bag getBag() {
@@ -46,6 +57,30 @@ public class BagItem {
 	
 	public Double getBagItemTotal() {
 		return this.quantity * this.product.getProductMarkdown();
+	}
+
+	public boolean isErrors() {
+		return errors;
+	}
+
+	public void setErrors(boolean errors) {
+		this.errors = errors;
+	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+	
+	public void setBagItemStatus(String bagItemStatus) {
+		this.bagItemStatus = bagItemStatus;
+	}
+
+	public String getBagItemStatus() {
+		return bagItemStatus;
 	}
 	
 }

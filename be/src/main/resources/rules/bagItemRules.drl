@@ -1,9 +1,13 @@
 package io.nzbee.domain;
 
+import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.BagItem;
+import io.nzbee.domain.product.Product;
+import java.util.List;
+
 /*
-package com.javacodegeeks.drools;
 import com.javacodegeeks.drools.Cart;
-import com.javacodegeeks.drools.CartItem;
+import com.javacodegeeks.drools.bagItem;
 import com.javacodegeeks.drools.CartStatus;
 import com.javacodegeeks.drools.Product;
 import java.util.List;
@@ -11,86 +15,90 @@ import java.util.List;
 
 global List<Product> outOfStockProducts;
 
-function String pendingItemKey(CartItem cartItem) { 
-return cartItem.getCart().getCustomer().getId() + "-"+ cartItem.getProduct().getDesc();
+
+function String pendingItemKey(BagItem bagItem) { 
+	return bagItem.getBag().getCustomer().getCustomerID() + "-"+ bagItem.getProduct().getProductDesc();
 }
+
 //Is it out of stock?
-/*
+
+
 rule "Is Out-Of Stock"
 when
-$cartItem : CartItem(cartStatus != CartStatus.PROCESSED && product.getAvailableQty() == 0)
+$bagItem : BagItem(!bagItemStatus.equals("PRO01") && !product.isInStock())
 then
 System.out.println("\nIs Out-Of Stock Rule");
 System.out.println("************************************");
-String error = "Can't process as " +  $cartItem.getProduct().getDesc() + " is Out-Of-Stock" ;
+String error = "Can't process as " +  $bagItem.getProduct().getProductDesc() + " is Out-Of-Stock" ;
 System.out.println(error);
-$cartItem.setErrors(true);
-$cartItem.setError(error);
-$cartItem.getCart().logItemError(pendingItemKey($cartItem), $cartItem);
-outOfStockProducts.add($cartItem.getProduct());
+$bagItem.setErrors(true);
+$bagItem.setError(error);
+$bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
+outOfStockProducts.add($bagItem.getProduct());
 end
-*/
 
+/*
 rule "Verify Qty"
 when
-$cartItem : CartItem(cartStatus != CartStatus.PROCESSED, qty > product.getAvailableQty())
+$bagItem : bagItem(cartStatus != CartStatus.PROCESSED, qty > product.getAvailableQty())
 then
 System.out.println("\nVerify Qty Rule");
 System.out.println("************************************");
-String error = "Can't process as only " +  $cartItem.getProduct().getAvailableQty() + " of " 
-+ $cartItem.getProduct().getDesc() + " are left whereas qty requested is " + $cartItem.getQty();
+String error = "Can't process as only " +  $bagItem.getProduct().getAvailableQty() + " of " 
++ $bagItem.getProduct().getDesc() + " are left whereas qty requested is " + $bagItem.getQty();
 System.out.println(error);
- $cartItem.setErrors(true);
-$cartItem.setError(error);
-$cartItem.getCart().logItemError(pendingItemKey($cartItem), $cartItem);
+ $bagItem.setErrors(true);
+$bagItem.setError(error);
+$bagItem.getCart().logItemError(pendingItemKey($bagItem), $bagItem);
 end
+*/
 
 /*
 rule "If has coupon, 5% discount"
 when
-$cartItem : CartItem(cartStatus != CartStatus.PROCESSED, cart.customer.coupon == 'DISC01')
+$bagItem : bagItem(cartStatus != CartStatus.PROCESSED, cart.customer.coupon == 'DISC01')
 then
-if (!$cartItem.hasErrors()) {
+if (!$bagItem.hasErrors()) {
     System.out.println("\nIf has coupon, 5% discount Rule");
     System.out.println("************************************");
-    double discount = ((double)$cartItem.getCart().getTotalPrice())*0.05d;
-    System.out.println("Coupon Rule: Process " + $cartItem.getProduct() + ", qty " + $cartItem.getQty() + ", apply discount " + discount);
-    $cartItem.getCart().addDiscount(discount);
+    double discount = ((double)$bagItem.getCart().getTotalPrice())*0.05d;
+    System.out.println("Coupon Rule: Process " + $bagItem.getProduct() + ", qty " + $bagItem.getQty() + ", apply discount " + discount);
+    $bagItem.getCart().addDiscount(discount);
 }
 end
 
 rule "If new, 2% discount"
 when
-$cartItem : CartItem(cartStatus != CartStatus.PROCESSED, cart.customer.isNew())
+$bagItem : bagItem(cartStatus != CartStatus.PROCESSED, cart.customer.isNew())
 then
-if (!$cartItem.hasErrors()) {
+if (!$bagItem.hasErrors()) {
     System.out.println("\nIf new, 2% discount Rule");
     System.out.println("************************************");
-    double discount = ((double)$cartItem.getCart().getTotalPrice())*0.2d;
-    System.out.println("New Customer Rule: Process " + $cartItem.getProduct() + ", qty " + $cartItem.getQty() + ", apply discount " + discount);
-    $cartItem.getCart().addDiscount(discount);
+    double discount = ((double)$bagItem.getCart().getTotalPrice())*0.2d;
+    System.out.println("New Customer Rule: Process " + $bagItem.getProduct() + ", qty " + $bagItem.getQty() + ", apply discount " + discount);
+    $bagItem.getCart().addDiscount(discount);
 }
 end
 
 rule "Has customer registered for the product?" salience 1
 when
-$cartItem : CartItem(cartStatus != CartStatus.PROCESSED, product.isRequiresRegisteration(), !cart.customer.isRegistered(product))
+$bagItem : bagItem(cartStatus != CartStatus.PROCESSED, product.isRequiresRegisteration(), !cart.customer.isRegistered(product))
 then
 System.out.println("\nHas customer registered for the product? Rule");
 System.out.println("************************************");
-String error = "Can't process " + $cartItem.getProduct() + ", as requires registration. Customer not registered for the product!";
+String error = "Can't process " + $bagItem.getProduct() + ", as requires registration. Customer not registered for the product!";
 System.out.println(error);
-$cartItem.setErrors(true);
-$cartItem.setError(error);
-$cartItem.getCart().logItemError(pendingItemKey($cartItem), $cartItem);
+$bagItem.setErrors(true);
+$bagItem.setError(error);
+$bagItem.getCart().logItemError(pendingItemKey($bagItem), $bagItem);
 end
 
-rule "Add Processed CartItem to Order"
+rule "Add Processed bagItem to Order"
 when
-$cartItem : CartItem(cartStatus == CartStatus.PROCESSED)
+$bagItem : bagItem(cartStatus == CartStatus.PROCESSED)
 then
-System.out.println("\nAdd Processed CartItem to Order Rule");
+System.out.println("\nAdd Processed bagItem to Order Rule");
 System.out.println("************************************");
-System.out.println("Add to order " + $cartItem);
+System.out.println("Add to order " + $bagItem);
 end
 */
