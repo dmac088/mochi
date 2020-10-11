@@ -507,6 +507,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		product.setRetailPrice(((BigDecimal) o[11]).doubleValue());
 		product.setMarkdownPrice(((BigDecimal) o[12]).doubleValue());
+		product.setInStock((boolean) o[14]);
 		
 		product.setLocale(locale);
 		product.setCurrency(currency);

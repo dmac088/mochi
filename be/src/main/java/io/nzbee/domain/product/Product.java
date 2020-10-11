@@ -87,6 +87,7 @@ public abstract class Product {
 					this.categories.add(category);
 					this.productStatus = productStatus;
 					this.productLongDesc = productLongDesc;
+					this.inStock = inStock;
 	}
 	
 	public boolean isInStock() {

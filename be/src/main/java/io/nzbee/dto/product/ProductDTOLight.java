@@ -27,6 +27,8 @@ public class ProductDTOLight {
 	
 	private String currency;
 	
+	private boolean inStock;
+	
 	public String getProductUPC() {
 		return productUPC;
 	}
@@ -106,4 +108,13 @@ public class ProductDTOLight {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+
+	public boolean isInStock() {
+		return inStock;
+	}
+
+	public void setInStock(boolean inStock) {
+		this.inStock = inStock;
+	}
+	
 }

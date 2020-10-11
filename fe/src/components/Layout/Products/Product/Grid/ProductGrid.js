@@ -6,12 +6,12 @@ const images = require.context('../../../../../assets/images/products', true);
 
 function ProductGrid(props) {
   const { match, toggleQuickView, addToBag, product } = props;
-  
+  console.log(product);
   return (
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
         <div className="image">
-
+        <span class="onsale">Sale!</span>
         <Link to={`${getCategoryProductPath(match, product.data.productUPC)}`}>
           {/* <span className="onsale">Sale!</span> */}
           <img src={product._links.defaultImage.href} className="img-fluid" />
