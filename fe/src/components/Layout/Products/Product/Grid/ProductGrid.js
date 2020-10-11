@@ -11,7 +11,7 @@ function ProductGrid(props) {
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
         <div className="image">
-        <span class="onsale">Sale!</span>
+        {!product.data.inStock && <span class="onsale">Out Of Stock!</span>}
         <Link to={`${getCategoryProductPath(match, product.data.productUPC)}`}>
           {/* <span className="onsale">Sale!</span> */}
           <img src={product._links.defaultImage.href} className="img-fluid" />
