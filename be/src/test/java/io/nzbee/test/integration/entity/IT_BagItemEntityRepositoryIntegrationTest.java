@@ -26,8 +26,8 @@ import io.nzbee.Constants;
 import io.nzbee.entity.bag.item.BagItem;
 import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.bag.item.IBagItemService;
-import io.nzbee.entity.bag.status.BagStatus;
-import io.nzbee.entity.bag.status.IBagStatusService;
+import io.nzbee.entity.bag.status.BagItemStatus;
+import io.nzbee.entity.bag.status.IBagItemStatusService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.product.IProductService;
@@ -66,7 +66,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     private IProductService productService;
     
     @Autowired
-    private IBagStatusService bagStatusService;
+    private IBagItemStatusService bagStatusService;
     
 	@Autowired
     private IPersonService personService;
@@ -84,7 +84,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	public BagItem persistNewBag() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
-    	Optional<BagStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
+    	Optional<BagItemStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
     	
 		Bag bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    bag.setBagStatus(bs.get());

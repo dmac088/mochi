@@ -75,7 +75,7 @@ public class IT_BagDoServiceImplIntegrationTest {
 
 	private void assertFound(Bag found) {
 
-		assertThat(found.getBagStatus()).isEqualTo(BagStatus.NEW);
+		assertThat(found.getBagStatus()).isEqualTo(BagItemStatus.NEW);
 
 		assertThat(found.getBagItems().size()).isEqualTo(2);
 

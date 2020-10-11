@@ -8,18 +8,18 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "bag_status", schema = "mochi")
-public class BagStatus {
+@Table(name = "bag_item_status", schema = "mochi")
+public class BagItemStatus {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="bag_sts_id")
+	@Column(name="bag_item_sts_id")
 	private Long bagStatusId;
 
-	@Column(name="bag_sts_cd")
+	@Column(name="bag_item_sts_cd")
 	private String bagStatusCode;
 	
-	@Column(name="bag_sts_desc")
+	@Column(name="bag_item_sts_desc")
 	private String bagStatusDesc;
 
 	public Long getbagStatusId() {

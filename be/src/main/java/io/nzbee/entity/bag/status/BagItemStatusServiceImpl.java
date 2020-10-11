@@ -6,41 +6,41 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BagStatusServiceImpl implements IBagStatusService {
+public class BagItemStatusServiceImpl implements IBagItemStatusService {
 
 	@Autowired
-	private IBagStatusRepository bagStatusRepository;
+	private IBagItemStatusRepository bagStatusRepository;
 	
 	@Override
-	public List<BagStatus> findAll() {
+	public List<BagItemStatus> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Optional<BagStatus> findById(long id) {
+	public Optional<BagItemStatus> findById(long id) {
 		return bagStatusRepository.findById(id);
 	}
 
 	@Override
-	public Optional<BagStatus> findByCode(String code) {
+	public Optional<BagItemStatus> findByCode(String code) {
 		return bagStatusRepository.findByBagStatusCode(code);
 	}
 
 	@Override
-	public void save(BagStatus t) {
+	public void save(BagItemStatus t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(BagStatus t) {
+	public void update(BagItemStatus t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(BagStatus t) {
+	public void delete(BagItemStatus t) {
 		// TODO Auto-generated method stub
 		
 	}

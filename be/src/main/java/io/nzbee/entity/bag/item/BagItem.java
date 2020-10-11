@@ -4,6 +4,7 @@ import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.status.BagItemStatus;
 import io.nzbee.entity.product.Product;
 
 @Entity
@@ -31,6 +33,9 @@ public class BagItem {
 	@JoinColumn(name="prd_id")
 	private Product product;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="bag_item_sts_id")
+	private BagItemStatus bagItemStatus;
 	
 	public BagItem() {
 	
@@ -71,6 +76,14 @@ public class BagItem {
 		this.product = product;
 	}
 	
+	public BagItemStatus getBagItemStatus() {
+		return bagItemStatus;
+	}
+
+	public void setBagItemStatus(BagItemStatus bagItemStatus) {
+		this.bagItemStatus = bagItemStatus;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;

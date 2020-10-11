@@ -7,20 +7,15 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.entity.bag.item.BagItem;
-import io.nzbee.entity.bag.status.BagStatus;
 import io.nzbee.entity.party.Party;
 
 @Entity
@@ -41,25 +36,12 @@ public class Bag {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	private Set<BagItem> bagItems = new HashSet<BagItem>();
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="bag_sts_id")
-	private BagStatus bagStatus;
-	
-	
+		
 	@Column(name="bag_crd_dt")
 	private LocalDateTime bagCreatedDateTime;
 
 	@Column(name="bag_upd_dt")
 	private LocalDateTime bagUpdatedDateTime;
-
-	public BagStatus getBagStatus() {
-		return bagStatus;
-	}
-
-	public void setBagStatus(BagStatus bagStatus) {
-		this.bagStatus = bagStatus;
-	}
 
 	public Long getBagId() {
 		return bagId;
