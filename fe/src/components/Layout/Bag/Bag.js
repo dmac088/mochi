@@ -6,6 +6,7 @@ import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
 
 function Bag() {
 
+    const bag = useSelector(state => state.bag);
     const bagContents = useSelector(state => state.bagContents);
     const dispatch = useDispatch();
 
@@ -61,6 +62,7 @@ function Bag() {
           });
       }
 
+      console.log(bag);
     return (
         <React.Fragment>
             {(bagContents.loading) 
@@ -139,8 +141,8 @@ function Bag() {
                                 <div className="col-lg-6 col-12 d-flex">
                                     <div className="cart-summary">
                                         <div className="cart-summary-wrap">
-                                            <h4>Cart Summary</h4>
-                                            <p>Sub Total <span>$1250.00</span></p>
+                                            <h4>Bag Summary</h4>
+                                            <p>Sub Total <span>${bag.totalAmount}</span></p>
                                             <p>Shipping Cost <span>$00.00</span></p>
                                             <h2>Grand Total <span>$1250.00</span></h2>
                                         </div>
