@@ -27,6 +27,7 @@ public class ProductDTOFullMapperImpl implements IProductDTOFullMapper {
 		pdto.setLocale(d.getLclCd());
 		pdto.setCurrency(d.getCurrency());
 		pdto.setProductType(d.getProductType());
+		pdto.setInStock(d.isInStock());
 		
 		return pdto;
 	}

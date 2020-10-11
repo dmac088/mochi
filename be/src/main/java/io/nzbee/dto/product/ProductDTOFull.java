@@ -31,6 +31,8 @@ public class ProductDTOFull {
 	
 	private String currency;
 	
+	private boolean inStock;
+	
 	public String getProductUPC() {
 		return productUPC;
 	}
@@ -126,4 +128,14 @@ public class ProductDTOFull {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
+
+	public boolean isInStock() {
+		return inStock;
+	}
+
+	public void setInStock(boolean inStock) {
+		this.inStock = inStock;
+	}
+	
 }
+

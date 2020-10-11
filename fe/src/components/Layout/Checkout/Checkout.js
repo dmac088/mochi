@@ -11,9 +11,6 @@ function Checkout() {
       return <li key={index}>{i.data.itemDesc} x {i.data.itemQty}<span>${i.data.bagItemTotal}</span></li>
     })
   }
-
-  console.log(bag);
-
     return(
       <React.Fragment>
         <div className="page-section section mb-50">
