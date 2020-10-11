@@ -21,6 +21,7 @@ function Product(props) {
         </Link>
         <div className="product-hover-icons">
           <a id={product.data.productUPC} href="#" className="active" onClick={addToBag} href="#" data-tooltip="Add to bag"> <span id={product.data.productUPC} className="icon_cart_alt" /></a>
+
           {/* <a id="#test" href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a> */}
           <a id="#test" href="#" onClick={(e) => toggleQuickView(e, product)} data-tooltip="Quick view" data-toggle="modal" data-target={"#modal-"} >
             <span className="icon_search" />

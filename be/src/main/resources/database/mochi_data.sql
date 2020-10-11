@@ -673,7 +673,7 @@ INSERT INTO party VALUES (233055, 2);
 -- Data for Name: bag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag VALUES (233760, 233024, 1, '2020-09-19 11:20:11.58+08', '2020-10-08 21:45:49.436+08');
+INSERT INTO bag VALUES (233760, 233024, 1, '2020-09-19 11:20:11.58+08', '2020-10-11 10:05:30.642+08');
 
 
 --
@@ -687,6 +687,7 @@ SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
 -- Data for Name: bag_item; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO bag_item VALUES (234430, 233760, 25, 1);
 
 
 --
@@ -1252,7 +1253,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234429, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234430, true);
 
 
 --
@@ -2655,7 +2656,6 @@ INSERT INTO stock_on_hand VALUES (234295, 233345, 10);
 INSERT INTO stock_on_hand VALUES (234297, 233352, 10);
 INSERT INTO stock_on_hand VALUES (234299, 233359, 10);
 INSERT INTO stock_on_hand VALUES (234301, 233366, 10);
-INSERT INTO stock_on_hand VALUES (234303, 233373, 10);
 INSERT INTO stock_on_hand VALUES (234305, 233380, 10);
 INSERT INTO stock_on_hand VALUES (234307, 233387, 10);
 INSERT INTO stock_on_hand VALUES (234309, 233394, 10);
@@ -2719,6 +2719,7 @@ INSERT INTO stock_on_hand VALUES (234423, 6, 10);
 INSERT INTO stock_on_hand VALUES (234425, 2, 10);
 INSERT INTO stock_on_hand VALUES (234427, 3, 10);
 INSERT INTO stock_on_hand VALUES (234429, 5, 10);
+INSERT INTO stock_on_hand VALUES (234303, 233373, 0);
 
 
 --

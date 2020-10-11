@@ -11,15 +11,16 @@ function ProductGrid(props) {
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
         <div className="image">
-        {!product.data.inStock && <span class="onsale">Out Of Stock!</span>}
+        {!product.data.inStock && <span className="onsale">Out Of Stock!</span>}
         <Link to={`${getCategoryProductPath(match, product.data.productUPC)}`}>
           {/* <span className="onsale">Sale!</span> */}
           <img src={product._links.defaultImage.href} className="img-fluid" />
         </Link>
           <div className="product-hover-icons">
+          {product.data.inStock && 
             <a id={product.data.productUPC} onClick={addToBag} href="#" data-tooltip="Add to bag"> 
               <span id={product.data.productUPC} className="icon_cart_alt" />
-            </a>
+            </a>}
             {/* <a href="#" data-tooltip="Add to wishlist"> <span className="icon_heart_alt" /> </a> */}
             <a id={product.data.productUPC}
               onClick={(e) => toggleQuickView(e, product)}
