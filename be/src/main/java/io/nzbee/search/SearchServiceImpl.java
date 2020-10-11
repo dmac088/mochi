@@ -43,6 +43,7 @@ import io.nzbee.search.facet.SearchFacetDiscrete;
 import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
+import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.entity.product.accessories.Accessories;
 import io.nzbee.entity.product.attribute.ProductAttribute;
@@ -64,6 +65,9 @@ public class SearchServiceImpl implements ISearchService {
 
 	@Autowired
 	private IFacetServices facetServices;
+	
+	@Autowired
+	private IProductService productService;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -437,10 +441,9 @@ public class SearchServiceImpl implements ISearchService {
 		Sort sort = getSortField(sortBy, currency, transLcl);
 		jpaQuery.setSort(sort);
 
-		setProductProjection(jpaQuery, lcl, currency);
-		List<Object[]> finalResult = jpaQuery.getResultList();
-		List<Product> lp = finalResult.stream().map(r -> this.mapResultToEntity(r, lcl, currency)).collect(Collectors.toList());
-
+		setProductProjection(jpaQuery);
+		List<Object[]> result = jpaQuery.getResultList();
+		List<Product> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
 
 	}
@@ -460,38 +463,18 @@ public class SearchServiceImpl implements ISearchService {
 		FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(query, Product.class);
 		jpaQuery.setMaxResults(20);
 
-		setProductProjection(jpaQuery, locale, currency);
+		setProductProjection(jpaQuery);
 		@SuppressWarnings("unchecked")
-		List<Object[]> results = jpaQuery.getResultList();
-		List<Product> lp = results.stream().map(r -> this.mapResultToEntity(r, locale, currency))
-				.collect(Collectors.toList());
+		List<Object[]> result = jpaQuery.getResultList();
+		List<Product> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
 		return lp.stream().map(p -> p.getProductAttribute().getProductDesc()).toArray(String[]::new);
 
 	}
 
-	private void setProductProjection(FullTextQuery jpaQuery, String locale, String currency) {
-		String transLcl = cleanLocale(locale);
-		jpaQuery.setProjection(	"Id", 
-								"productId", 
-								"productDesc" + transLcl, 
-								"productImage" + transLcl, 
-								"lclCd",
-								"productUPC", 
-								"productCreateDt", 
-								"product.brand.brandCode", 
-								"product.brand.brandDesc" + transLcl,
-								"brandDescForIndex", 
-								"currentRetailPrice" + currency, 
-								"currentMarkdownPrice" + currency,
-								"displayCategories" + transLcl, 
-								"product.department.departmentCode",
-								"product.department.departmentDesc" + transLcl, 
-								"product.primarycategory.categoryCode", 
-								"product.primarycategory.categoryDesc" + transLcl,
-								"product.status.productStatusCode", 
-								"product.status.productStatusDesc",
-								"productLongDesc" + transLcl);
+	private void setProductProjection(FullTextQuery jpaQuery) {
+		jpaQuery.setProjection("productUPC");
+							
 	}
 
 	private Product mapResultToEntity(Object[] r, String locale, String currency) {

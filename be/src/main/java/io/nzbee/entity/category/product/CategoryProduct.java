@@ -36,7 +36,6 @@ public class CategoryProduct extends Category  {
 	@Transient
 	private boolean hasParent;
 	
-	@Field(store=Store.YES,analyze=Analyze.NO)
 	public String getCategoryCode() {
 		return super.getCategoryCode();
 	}

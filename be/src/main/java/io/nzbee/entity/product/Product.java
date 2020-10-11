@@ -299,7 +299,6 @@ public abstract class Product {
 	private String productUPC;
 	
 	@Column(name="prd_crtd_dt")
-	@Field(store=Store.YES)
 	private LocalDateTime productCreateDt;
 
 	@ManyToMany(fetch = FetchType.LAZY, 
@@ -335,11 +334,9 @@ public abstract class Product {
 	private ProductAttribute productAttribute;
 
 	@Transient
-	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double retailPrice;
 	
 	@Transient
-	@Field(store=Store.YES,analyze=Analyze.NO)
 	private Double markdownPrice;
 	
 	@Transient 
@@ -399,7 +396,6 @@ public abstract class Product {
 	}
 
 
-	
 	@Field(store=Store.YES)
 	@SortableField
 	@Transient
@@ -476,7 +472,7 @@ public abstract class Product {
 	
 	@Transient
 	@Fields({
-			  @Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeENGB)),
+			  @Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB)),
 			  @Field(name = "edgeNGramTitleENGB", index = Index.YES, store = Store.NO,
 			  			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerENGB")),
 			  @Field(name = "nGramTitleENGB", index = Index.YES, store = Store.NO,
@@ -489,7 +485,7 @@ public abstract class Product {
 	
 	@Transient
 	@Fields({
-		@Field(analyze = Analyze.YES, store=Store.YES, analyzer = @Analyzer(definition = Constants.localeZHHK)),
+		@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK)),
 		@Field(name = "edgeNGramTitleZHHK", index = Index.YES, store = Store.NO,
 			analyze = Analyze.YES, analyzer = @Analyzer(definition = "autocompleteEdgeAnalyzerZHHK")),
 		@Field(name = "nGramTitleZHHK", index = Index.YES, store = Store.NO,
@@ -503,7 +499,7 @@ public abstract class Product {
 	@Transient
 	@Fields({
 		@Field(	analyze = Analyze.YES, 
-				store=Store.YES, 
+				store=Store.NO, 
 				analyzer = @Analyzer(definition = Constants.localeENGB))
 	})
 	public String getProductLongDescENGB() {
@@ -514,7 +510,7 @@ public abstract class Product {
 	@Transient
 	@Fields({
 		@Field(	analyze = Analyze.YES, 
-				store=Store.YES, 
+				store=Store.NO, 
 				analyzer = @Analyzer(definition = Constants.localeZHHK))
 	})
 	public String getProductLongDescZHHK() {
@@ -534,13 +530,11 @@ public abstract class Product {
 		return this.getProductDescZHHK();
 	}
 	
-	@Field(analyze=Analyze.NO, store=Store.YES)
 	public String getProductImageENGB() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
 		return (pa.isPresent()) ? pa.get().getProductImage() : "unknown.jpg";
 	}
 	
-	@Field(analyze=Analyze.NO, store=Store.YES)
 	public String getProductImageZHHK() {
 		Optional<ProductAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		return (pa.isPresent()) ? pa.get().getProductImage() : "unknown.jpg";
