@@ -9,13 +9,14 @@ import io.nzbee.domain.product.Product;
 public class Bag {
 	
 	private Set<BagItem> bagItems;
-	private BagStatus bagStatus;
+	
 	private Customer customer;
+	
+	private BagIssues bagIssues = new BagIssues();
 
 	public Bag(	Customer customer) {
 		this.customer 		= customer;
 		this.bagItems 		= new HashSet<BagItem>();
-		this.bagStatus 		= BagStatus.NEW;
 	}
 	
 	public Customer getCustomer() {
@@ -41,13 +42,8 @@ public class Bag {
 		}
 	}
 	
-	
 	public void removeItem(BagItem bi) {
 		this.getBagItems().remove(bi);
-	}
-	
-	public BagStatus getBagStatus() {
-		return bagStatus;
 	}
 	
 	public int getTotalItems() {
@@ -60,5 +56,11 @@ public class Bag {
 	
 	public Double getTotalAmount() {
 		return this.getBagItems().stream().mapToDouble(bi -> bi.getQuantity() * bi.getProduct().getProductMarkdown()).sum();
+	}
+	
+	public void logItemError(String key, BagItem bagItem) {
+		bagIssues.logItemError(key, bagItem);
+		bagItems.add(bagItem);
+		bagItem.setBagItemStatus("PND01");
 	}
 }

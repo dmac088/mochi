@@ -10,8 +10,6 @@ public class BagDTOMapperImpl implements IBagDTOMapper {
 	@Override
 	public BagDTO doToDto(Bag d) {
 		BagDTO dto = new BagDTO();
-		dto.setBagStatusCode(d.getBagStatus().toString());
-		dto.setBagStatusDesc(d.getBagStatus().toString());
 		dto.setTotalItems(d.getTotalItems());
 		dto.setTotalQuantity(d.getTotalQuantity());
 		dto.setTotalAmount(d.getTotalAmount());
