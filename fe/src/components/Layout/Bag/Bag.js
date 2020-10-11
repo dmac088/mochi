@@ -144,7 +144,7 @@ function Bag() {
                                             <h4>Bag Summary</h4>
                                             <p>Sub Total <span>${bag.totalAmount}</span></p>
                                             <p>Shipping Cost <span>$00.00</span></p>
-                                            <h2>Grand Total <span>$1250.00</span></h2>
+                                            <h2>Grand Total <span>$00.00</span></h2>
                                         </div>
                                         <div className="cart-summary-button">
                                             <button className="checkout-btn">Checkout</button>
