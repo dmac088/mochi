@@ -3,11 +3,11 @@ import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.product.Product;
 import java.util.*;
 
-//global List<Product> outOfStockProducts;
+global List<Product> outOfStockProducts;
 
-//function String pendingItemKey(BagItem bagItem) { 
-//	return bagItem.getBag().getCustomer().getCustomerID() + "-"+ bagItem.getProduct().getProductDesc();
-//}
+function String pendingItemKey(BagItem bagItem) { 
+	return bagItem.getBag().getCustomer().getCustomerID() + "-"+ bagItem.getProduct().getProductDesc();
+}
 //Is it out of stock?
 rule "Is Out-Of Stock"
 	when
