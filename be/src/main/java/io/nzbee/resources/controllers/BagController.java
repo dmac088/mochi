@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.kie.api.runtime.KieContainer;
+import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +58,9 @@ public class BagController {
     @Autowired
     private BagItemResourceAssembler bagItemResourceAssembler; 
     
+    @Autowired
+    private KieContainer kC;
+    
 
     public BagController() {
         super();
@@ -93,6 +98,9 @@ public class BagController {
 														Principal principal) {
     	
     	LOGGER.debug("call BagController.addItemToBag with parameters {}, {}, {}, {}", locale, currency, dto.getItemUPC(), dto.getItemQty());
+    	
+        KieSession kSession = kC.newKieSession("ksession-rules");
+        
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	locale, 
     									currency, 
@@ -102,7 +110,15 @@ public class BagController {
 												currency, 
 												dto.getItemUPC());
     	
-		b.addItem(p, dto.getItemQty());
+    	BagItem bagItem = new BagItem(b, p, dto.getItemQty());
+		
+    	kSession.insert(bagItem);
+    	System.out.println("************* Fire Rules **************");
+        kSession.fireAllRules(); 
+        System.out.println("************************************");
+        System.out.println("Customer bag\n" + b.getCustomer().getUserName());
+        
+		b.addItem(bagItem);
 		
     	bagService.save(b);
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));
