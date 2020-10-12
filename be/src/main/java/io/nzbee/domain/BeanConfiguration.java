@@ -75,19 +75,5 @@ public class BeanConfiguration {
     public IBagItemDTOMapper bagItemDtoMapper() {
 		return new BagItemDTOMapperImpl();
     }
-    
-    private static final String drlFile = "bagItemRules.drl";
-    
-    @Bean
-    public KieContainer kieContainer() {
-        KieServices kieServices = KieServices.Factory.get();
- 
-        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-        kieFileSystem.write(ResourceFactory.newClassPathResource(drlFile));
-        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
-        kieBuilder.buildAll();
-        KieModule kieModule = kieBuilder.getKieModule();
- 
-        return kieServices.newKieContainer(kieModule.getReleaseId());
-    }
+  
 }

@@ -1,26 +1,24 @@
-package io.nzbee.domain;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.product.Product;
-import java.util.List;
+import java.util.*;
 
-global List<Product> outOfStockProducts;
+//global List<Product> outOfStockProducts;
 
-function String pendingItemKey(BagItem bagItem) { 
-	return bagItem.getBag().getCustomer().getCustomerID() + "-"+ bagItem.getProduct().getProductDesc();
-}
+//function String pendingItemKey(BagItem bagItem) { 
+//	return bagItem.getBag().getCustomer().getCustomerID() + "-"+ bagItem.getProduct().getProductDesc();
+//}
 //Is it out of stock?
 rule "Is Out-Of Stock"
-when
-$bagItem : BagItem(!bagItemStatus.equals("PRO01") && !product.isInStock())
-then
-System.out.println("\nIs Out-Of Stock Rule");
-System.out.println("************************************");
-String error = "Can't process as " +  $bagItem.getProduct().getProductDesc() + " is Out-Of-Stock" ;
-System.out.println(error);
-$bagItem.setErrors(true);
-$bagItem.setError(error);
-$bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
-outOfStockProducts.add($bagItem.getProduct());
+	when
+		bagItemInstance:BagItem(!bagItemStatus.equals("PRO01") && !product.isInStock());
+	then
+		System.out.println("\nIs Out-Of Stock Rule");
+		System.out.println("************************************");
+		String error = "Can't process as " + bagItemInstance.getProduct().getProductDesc() + " is Out-Of-Stock" ;
+		System.out.println(error);
+		bagItemInstance.setErrors(true);
+		bagItemInstance.setError(error);
+		bagItemInstance.getBag().logItemError(pendingItemKey(bagItemInstance), bagItemInstance);
+		outOfStockProducts.add(bagItemInstance.getProduct());
 end
-
