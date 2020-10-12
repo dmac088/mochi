@@ -37,15 +37,15 @@ public class BagItem {
 	@JoinColumn(name="bag_item_sts_id")
 	private BagItemStatus bagItemStatus;
 	
-	public BagItem() {
-	
-	}
-
 	@Column(name="qty")
 	private int quantity;
 	
 	public Long getBagItemId() {
 		return bagItemId;
+	}
+	
+	public BagItem() {
+	
 	}
 	
 	public BagItem(Product p) {

@@ -1,8 +1,13 @@
 package io.nzbee.domain;
 
+import org.kie.api.KieServices;
+import org.kie.api.builder.KieBuilder;
+import org.kie.api.builder.KieFileSystem;
+import org.kie.api.builder.KieModule;
+import org.kie.api.runtime.KieContainer;
+import org.kie.internal.io.ResourceFactory;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
 import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.BagServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
@@ -69,6 +74,20 @@ public class BeanConfiguration {
     @Bean
     public IBagItemDTOMapper bagItemDtoMapper() {
 		return new BagItemDTOMapperImpl();
-    	
+    }
+    
+    private static final String drlFile = "bagItemRules.drl";
+    
+    @Bean
+    public KieContainer kieContainer() {
+        KieServices kieServices = KieServices.Factory.get();
+ 
+        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
+        kieFileSystem.write(ResourceFactory.newClassPathResource(drlFile));
+        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
+        kieBuilder.buildAll();
+        KieModule kieModule = kieBuilder.getKieModule();
+ 
+        return kieServices.newKieContainer(kieModule.getReleaseId());
     }
 }
