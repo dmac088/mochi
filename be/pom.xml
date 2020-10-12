@@ -173,15 +173,13 @@
 	</dependencies>
 	<properties>
 		<java.version>1.8</java.version>
-		<drools-version>7.4.1.Final</drools-version>
+		<drools-version>7.0.0.Final</drools-version>
+		<jbpm.version>7.0.0.Final</jbpm.version>
 	</properties>
 	<build>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
-			</resource>
-			<resource>
-				<directory>src/main/resources/rules</directory>
 			</resource>
 		</resources>
 		<plugins>
