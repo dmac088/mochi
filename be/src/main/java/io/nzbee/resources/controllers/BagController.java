@@ -99,7 +99,7 @@ public class BagController {
     	
     	LOGGER.debug("call BagController.addItemToBag with parameters {}, {}, {}, {}", locale, currency, dto.getItemUPC(), dto.getItemQty());
     	
-        KieSession kSession = kC.newKieSession("ksession-rules");
+    	KieSession kieSession = kC.newKieSession();
         
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	locale, 
@@ -112,9 +112,9 @@ public class BagController {
     	
     	BagItem bagItem = new BagItem(b, p, dto.getItemQty());
 		
-    	kSession.insert(bagItem);
+    	kieSession.insert(bagItem);
     	System.out.println("************* Fire Rules **************");
-        kSession.fireAllRules(); 
+    	kieSession.fireAllRules(); 
         System.out.println("************************************");
         System.out.println("Customer bag\n" + b.getCustomer().getUserName());
         
