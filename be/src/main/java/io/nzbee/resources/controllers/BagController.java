@@ -116,7 +116,7 @@ public class BagController {
 		System.out.println("Condition evaluation = " + (!bagItem.getBagItemStatus().equals("test") && !bagItem.getProduct().isInStock()));
     	kieSession.insert(bagItem);
     	System.out.println("************* Fire Rules **************");
-    	kieSession.fireAllRules(); 
+    	kieSession.fireAllRules();
         System.out.println("************************************");
         System.out.println("Customer bag\n" + b.getCustomer().getUserName());
         
