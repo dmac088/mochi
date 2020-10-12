@@ -59,7 +59,7 @@ public class BagController {
     private BagItemResourceAssembler bagItemResourceAssembler; 
     
     @Autowired
-    private KieContainer kC;
+    private KieContainer kieContainer;
     
 
     public BagController() {
@@ -99,7 +99,7 @@ public class BagController {
     	
     	LOGGER.debug("call BagController.addItemToBag with parameters {}, {}, {}, {}", locale, currency, dto.getItemUPC(), dto.getItemQty());
     	
-    	KieSession kieSession = kC.newKieSession();
+    	KieSession kieSession = kieContainer.newKieSession();
         
     	//here we get the bag and bagItems but the products are null
     	Bag b = bagService.findByCode(	locale, 
@@ -111,7 +111,9 @@ public class BagController {
 												dto.getItemUPC());
     	
     	BagItem bagItem = new BagItem(b, p, dto.getItemQty());
-		
+		System.out.println("Bag item status = " + bagItem.getBagItemStatus());
+		System.out.println("Product is in stock = " + bagItem.getProduct().isInStock());
+		System.out.println("Condition evaluation = " + (!bagItem.getBagItemStatus().equals("test") && !bagItem.getProduct().isInStock()));
     	kieSession.insert(bagItem);
     	System.out.println("************* Fire Rules **************");
     	kieSession.fireAllRules(); 
