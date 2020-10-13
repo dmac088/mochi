@@ -2547,34 +2547,10 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 
 
 --
--- Data for Name: promotion_brand; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Data for Name: promotion_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
 SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
-
-
---
--- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Data for Name: promotion_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
 
 
 --
