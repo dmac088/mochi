@@ -20,6 +20,7 @@ public class BagItem {
 	
 	private String bagItemStatus;
 	
+	
 	public BagItem(Bag bag, 
 			  	   Product p, 
 			  	   int quantity) {

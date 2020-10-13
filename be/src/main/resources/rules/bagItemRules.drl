@@ -5,8 +5,6 @@ import java.util.List;
 
 dialect "mvel"
 
-global List<Product> outOfStockProducts;
-
 function String pendingItemKey(BagItem bagItem) { 
 	return bagItem.getBag().getCustomer().getCustomerID() + "-"+ bagItem.getProduct().getProductDesc();
 }
@@ -22,5 +20,4 @@ System.out.println(error);
 $bagItem.setErrors(true);
 $bagItem.setError(error);
 $bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
-outOfStockProducts.add($bagItem.getProduct());
 end
