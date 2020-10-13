@@ -119,7 +119,7 @@ public class BagController {
     	kieSession.insert(bagItem);
     	System.out.println("************* Fire Rules **************");
     	List<Product> lp = new ArrayList<Product>();
-    	//kieSession.setGlobal("outOfStockProducts", lp);
+    	kieSession.setGlobal("outOfStockProducts", lp);
     	System.out.println("fact count = " + kieSession.getFactCount());
     	System.out.println("rules fired = " + kieSession.fireAllRules());
         System.out.println("************************************");
