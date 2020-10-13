@@ -1,24 +1,8 @@
-import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
-import io.nzbee.domain.product.Product;
-import java.util.*;
 
-global List<Product> outOfStockProducts;
+dialect "mvel"
 
-function String pendingItemKey(BagItem bagItem) { 
-	return bagItem.getBag().getCustomer().getCustomerID() + "-"+ bagItem.getProduct().getProductDesc();
-}
-//Is it out of stock?
-rule "Is Out-Of Stock"
-	when
-		bagItemInstance:BagItem(!bagItemStatus.equals("PRO01") && !product.isInStock());
-	then
-		System.out.println("\nIs Out-Of Stock Rule");
-		System.out.println("************************************");
-		String error = "Can't process as " + bagItemInstance.getProduct().getProductDesc() + " is Out-Of-Stock" ;
-		System.out.println(error);
-		bagItemInstance.setErrors(true);
-		bagItemInstance.setError(error);
-		bagItemInstance.getBag().logItemError(pendingItemKey(bagItemInstance), bagItemInstance);
-		outOfStockProducts.add(bagItemInstance.getProduct());
+rule 	"Test Rule"
+when 	bagItemObject : BagItem("0"=="0")
+then 	System.out.println("\nTest rule");
 end
