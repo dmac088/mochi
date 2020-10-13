@@ -1,4 +1,5 @@
 import React from 'react';
+import './ListSidebar.css';
 
 const renderItems = (items, modFacet) => {
   return items.map((i, index) => {
