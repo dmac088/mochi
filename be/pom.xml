@@ -173,8 +173,8 @@
 	</dependencies>
 	<properties>
 		<java.version>1.8</java.version>
-		<drools-version>7.0.0.Final</drools-version>
-		<jbpm.version>7.0.0.Final</jbpm.version>
+		<drools-version>7.42.0.Final</drools-version>
+		<jbpm.version>7.42.0.Final</jbpm.version>
 	</properties>
 	<build>
 		<resources>
