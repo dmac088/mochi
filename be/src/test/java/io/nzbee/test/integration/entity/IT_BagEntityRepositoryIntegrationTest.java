@@ -1,6 +1,5 @@
 package io.nzbee.test.integration.entity;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.Optional;
@@ -23,11 +22,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
 import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.bag.IBagService;
-import io.nzbee.entity.bag.status.BagItemStatus;
-import io.nzbee.entity.bag.status.IBagItemStatusService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.role.customer.Customer;
