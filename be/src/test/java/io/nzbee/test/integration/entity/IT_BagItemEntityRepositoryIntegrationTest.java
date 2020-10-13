@@ -65,9 +65,6 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     @Autowired
     private IProductService productService;
     
-    @Autowired
-    private IBagItemStatusService bagStatusService;
-    
 	@Autowired
     private IPersonService personService;
  
@@ -84,10 +81,8 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	public BagItem persistNewBag() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
-    	Optional<BagItemStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
     	
 		Bag bag = bagEntityBeanFactory.getBagEntityBean(p.get());
-	    bag.setBagStatus(bs.get());
 	    
 	    Product product = productService.findByCode("23464789").get();
 	        

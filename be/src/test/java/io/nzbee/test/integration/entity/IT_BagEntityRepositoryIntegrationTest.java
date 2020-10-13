@@ -60,9 +60,6 @@ public class IT_BagEntityRepositoryIntegrationTest {
     @Autowired
     private IBagService bagService;
     
-    @Autowired
-    private IBagItemStatusService bagStatusService;
-    
 	@Autowired
     private IPersonService personService;
  
@@ -79,10 +76,8 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	public Bag persistNewBag() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
-    	Optional<BagItemStatus> bs = bagStatusService.findByCode(Constants.bagStatusCodeNew);
 		
 		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
-	    bag.setBagStatus(bs.get());
 	    
 	    //persist a new transient test category
 	    entityManager.persist(bag);
@@ -117,12 +112,6 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
     private void assertFound(final Bag found) {
     	assertNotNull(bag);
-    	
-    	assertThat(found.getBagStatus().getCode())
-	    .isEqualTo(Constants.bagStatusCodeNew);
-    	
-    	assertThat(found.getBagStatus().getDesc())
-	    .isEqualTo(Constants.bagStatusDescNew);
     	
     	assertNotNull(found.getBagCreatedDateTime());
     	assertNotNull(found.getBagUpdatedDateTime());
