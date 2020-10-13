@@ -4,4 +4,6 @@ import io.nzbee.domain.IService;
 
 public interface IBagItemService extends IService<BagItem> {
 
+	void checkAllBagItemRules(BagItem object);
+	
 }
