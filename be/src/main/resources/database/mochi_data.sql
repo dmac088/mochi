@@ -2086,12 +2086,6 @@ INSERT INTO product_attr_lcl VALUES (50, 25, 'Driscolls', 'water-melon.jpg', 'zh
 
 
 --
--- Data for Name: product_bundle; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
 -- Data for Name: product_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2551,6 +2545,12 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 --
 
 SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
+
+
+--
+-- Data for Name: promotion_mechanic; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
 
 
 --
