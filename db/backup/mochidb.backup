@@ -2220,19 +2220,6 @@ CREATE TABLE product_attr_lcl (
 ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
 
 --
--- Name: product_bundle; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE product_bundle (
-    prd_bdl_id bigint NOT NULL,
-    bdl_id bigint NOT NULL,
-    prd_id bigint NOT NULL
-);
-
-
-ALTER TABLE product_bundle OWNER TO mochidb_owner;
-
---
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2400,7 +2387,8 @@ CREATE TABLE promotion (
     prm_lng_desc character varying,
     prm_st_dt timestamp(4) with time zone NOT NULL,
     prm_en_dt timestamp(4) with time zone NOT NULL,
-    prm_typ_id bigint NOT NULL
+    prm_typ_id bigint NOT NULL,
+    prm_mec_id bigint
 );
 
 
@@ -2419,6 +2407,19 @@ CREATE SEQUENCE promotion_category_prm_cat_id_seq
 
 
 ALTER TABLE promotion_category_prm_cat_id_seq OWNER TO mochidb_owner;
+
+--
+-- Name: promotion_mechanic; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE promotion_mechanic (
+    prm_mec_id bigint NOT NULL,
+    prm_mec_cd character(5) NOT NULL,
+    prm_mec_desc character varying
+);
+
+
+ALTER TABLE promotion_mechanic OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -5073,14 +5074,6 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd, prd_ln
 
 
 --
--- Data for Name: product_bundle; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-COPY product_bundle (prd_bdl_id, bdl_id, prd_id) FROM stdin;
-\.
-
-
---
 -- Data for Name: product_category; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5528,7 +5521,7 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 -- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt, prm_typ_id) FROM stdin;
+COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt, prm_typ_id, prm_mec_id) FROM stdin;
 \.
 
 
@@ -5537,6 +5530,14 @@ COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt
 --
 
 SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
+
+
+--
+-- Data for Name: promotion_mechanic; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY promotion_mechanic (prm_mec_id, prm_mec_cd, prm_mec_desc) FROM stdin;
+\.
 
 
 --
@@ -6166,7 +6167,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 216, true);
+SELECT pg_catalog.setval('user_role_id_seq', 217, true);
 
 
 --
@@ -6493,14 +6494,6 @@ ALTER TABLE ONLY product_attr_lcl
 
 
 --
--- Name: product_bundle product_bundle_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY product_bundle
-    ADD CONSTRAINT product_bundle_pkey PRIMARY KEY (prd_bdl_id, bdl_id, prd_id);
-
-
---
 -- Name: product_category product_category_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6562,6 +6555,14 @@ ALTER TABLE ONLY product_tag
 
 ALTER TABLE ONLY department
     ADD CONSTRAINT product_type_pkey PRIMARY KEY (dept_id);
+
+
+--
+-- Name: promotion_mechanic promotion_mechanic_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_mechanic
+    ADD CONSTRAINT promotion_mechanic_pkey PRIMARY KEY (prm_mec_id);
 
 
 --
@@ -6778,6 +6779,14 @@ ALTER TABLE ONLY department
 
 ALTER TABLE ONLY promotion
     ADD CONSTRAINT uc_prm_cd UNIQUE (prm_cd);
+
+
+--
+-- Name: promotion_mechanic uc_prm_mec_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_mechanic
+    ADD CONSTRAINT uc_prm_mec_cd UNIQUE (prm_mec_cd);
 
 
 --
@@ -7896,6 +7905,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion TO mochi_app;
 --
 
 GRANT ALL ON SEQUENCE promotion_category_prm_cat_id_seq TO mochi_app;
+
+
+--
+-- Name: promotion_mechanic; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_mechanic TO mochi_app;
 
 
 --
