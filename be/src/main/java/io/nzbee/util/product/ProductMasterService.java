@@ -87,7 +87,6 @@ public class ProductMasterService {
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Transactional
-	//@CacheEvict(cacheNames = ProductServiceImpl.CACHE_NAME, allEntries = true)
 	public void writeAccessoriesMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
@@ -122,7 +121,7 @@ public class ProductMasterService {
 				 p.get_PRIMARY_CATEGORY_CODE(),
 				 p.get_PRODUCT_TEMPLATE_CODE(),
 				 p.get_PRODUCT_CREATED_DATE(),
-				 p.get_BRAND_DESCRIPTION_EN(),
+				 p.get_PRODUCT_DESCRIPTION_EN(),
 				 p.get_PRODUCT_LONG_DESCRIPTION_EN(),
 				 p.get_PRODUCT_RETAIL_PRICE_USD(),
 				 p.get_PRODUCT_MARKDOWN_PRICE_USD(),
@@ -142,7 +141,7 @@ public class ProductMasterService {
 				 p.get_PRIMARY_CATEGORY_CODE(),
 				 p.get_PRODUCT_TEMPLATE_CODE(),
 				 p.get_PRODUCT_CREATED_DATE(),
-				 p.get_BRAND_DESCRIPTION_HK(),
+				 p.get_PRODUCT_DESCRIPTION_HK(),
 				 p.get_PRODUCT_LONG_DESCRIPTION_HK(),
 				 p.get_PRODUCT_RETAIL_PRICE_HKD(),
 				 p.get_PRODUCT_MARKDOWN_PRICE_HKD(),
