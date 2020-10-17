@@ -371,7 +371,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		brandAttribute.setLclCd(locale);
 		
 		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setId(Long.parseLong(t.get("brandId").toString()));
+		brandEntity.setBrandId(Long.parseLong(t.get("brandId").toString()));
 		brandEntity.setBrandCode(t.get("brandCode").toString());
 		brandEntity.setLocale(locale);
 		
@@ -381,7 +381,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	public void save(Brand t) {
 		em.persist(t);
-		em.flush();
 	}
 	
 	@Override
