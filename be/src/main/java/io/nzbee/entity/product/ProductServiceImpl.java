@@ -97,7 +97,7 @@ public class ProductServiceImpl implements IProductService {
 			@CacheEvict(cacheNames = CACHE_NAME, key="#product.productUPC"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productUPC}")
-			})
+	})
 	public void save(Product product) {
 		productDAO.save(product);
 	}

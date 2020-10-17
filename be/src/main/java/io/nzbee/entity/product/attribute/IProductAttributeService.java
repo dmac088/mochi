@@ -14,11 +14,12 @@ public interface IProductAttributeService extends ILocalizedDao<ProductAttribute
 
 	Optional<ProductAttribute> getProductAttribute(Long id, String locale);
 
-	Optional<ProductAttribute> findById(String locale, String currency, long id);
+	Optional<ProductAttribute> findById(String locale, String currency, Long id);
 
 	List<ProductAttribute> findAll(String locale, String currency);
 
 	Optional<ProductAttribute> findByDesc(String locale, String currency, String desc);
 
 	List<ProductAttribute> findAll(String locale, String currency, Set<String> codes);
+
 }

@@ -26,6 +26,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.Category;
@@ -43,6 +45,8 @@ import io.nzbee.entity.product.Product_;
 public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+	public static final String CACHE_NAME = "categoryCache";
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -116,6 +120,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="#categoryCode")
+			}
+	)
 	public Optional<Category> findByCode(String categoryCode) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
 		
@@ -167,8 +176,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				// .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode)
 				 .setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
 		
@@ -199,8 +206,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
-				 //.setParameter("retailPriceCode", Constants.retailPriceCode)
-				 //.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
@@ -285,9 +290,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toSet());
 	}
 	
+	
 	@Override
-	public Optional<Category> findById(String locale, long id) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, id);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #categoryId}")
+			}
+	)
+	public Optional<Category> findById(String locale, Long categoryId) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, categoryId);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -305,7 +316,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("categoryId", id)
+				 .setParameter("categoryId", categoryId)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 
@@ -321,9 +332,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String desc) {
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #categoryDesc}")
+			}
+	)
+	public Optional<Category> findByDesc(String locale, String categoryDesc) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, desc);
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, categoryDesc);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -341,7 +357,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("categoryDesc", desc)
+				 .setParameter("categoryDesc", categoryDesc)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 
 		try {
@@ -357,9 +373,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 
 	@Override
-	public Optional<Category> findByCode(String locale, String code) {
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #categoryCode}")
+			}
+		)
+	public Optional<Category> findByCode(String locale, String categoryCode) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, code);
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, categoryCode);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -376,7 +397,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 true,
 															 false), "CategoryMapping")
 				 .setParameter("locale", locale)
-				 .setParameter("categoryCode", code)
+				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 

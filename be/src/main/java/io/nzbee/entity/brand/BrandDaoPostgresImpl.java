@@ -44,7 +44,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Brand> findById(String locale, long id) {
+	public Optional<Brand> findById(String locale, Long id) {
 		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}, {}", locale, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();

@@ -44,7 +44,7 @@ import io.nzbee.entity.product.status.ProductStatus;
 
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
-
+ 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	private static final String CACHE_NAME = "productCache";   
 	
@@ -55,7 +55,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 		put = {
-				@CachePut(value = CACHE_NAME, key="#productUPC"),
 				@CachePut(value = CACHE_NAME, key="#productUPC")
 		}
 	)
@@ -124,8 +123,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	
 	@Override
-	public Optional<Product> findById(String locale, String currency, long id) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findById parameters : {}, {}, {}", locale, currency, id);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #currency, #productId}")
+			}
+	)
+	public Optional<Product> findById(String locale, String currency, Long productId) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findById parameters : {}, {}, {}", locale, currency, productId);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 false,
@@ -141,7 +145,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("productId", id)
+		.setParameter("productId", productId)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
@@ -158,11 +162,16 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 	
 	@Override
-	public Optional<Product> findByCode(String locale, String currency, String code) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, currency, code);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #currency, #productUPC}")
+			}
+	)
+	public Optional<Product> findByCode(String locale, String currency, String productUPC) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, currency, productUPC);
 		
 		final List<String> productCodes = new ArrayList<String>();
-		productCodes.add(code);
+		productCodes.add(productUPC);
 		
 		Query query = em.createNativeQuery(this.constructSQL(!productCodes.isEmpty(),
 															 false,
@@ -198,8 +207,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 	
 	@Override
-	public Optional<Product> findByDesc(String locale, String currency, String desc) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findByDesc with parameters : {}, {}, {}", locale, currency, desc);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #currency, #productDesc}")
+			}
+	)
+	public Optional<Product> findByDesc(String locale, String currency, String productDesc) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findByDesc with parameters : {}, {}, {}", locale, currency, productDesc);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 true,
@@ -215,7 +229,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 ""), "ProductMapping")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
-		.setParameter("productDesc", desc)
+		.setParameter("productDesc", productDesc)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
@@ -795,7 +809,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 
 	@Override
-	public Optional<Product> findById(String locale, long id) {
+	public Optional<Product> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -820,6 +834,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 }

@@ -23,8 +23,6 @@ public interface IProductDao extends ILocalizedDao<Product> {
 
 	Optional<Product> findByCode(String locale, String currency, String code);
 
-	Optional<Product> findById(String locale, String currency, long id);
-
 	Optional<Product> findByDesc(String locale, String currency, String desc);
 
 	List<Product> findAll(String locale, String currency);
@@ -32,6 +30,8 @@ public interface IProductDao extends ILocalizedDao<Product> {
 	List<Product> findAll(String locale, String currency, Set<String> codes);
 
 	Optional<Product> findByCode(String productUPC);
+
+	Optional<Product> findById(String locale, String currency, Long productId);
 
 	
 }
