@@ -96,8 +96,8 @@ public class CategoryMasterService {
 				?  mapToProductCategory(
 						c.get_CATEGORY_CODE(),
 						new Long(c.get_CATEGORY_LEVEL()),
-						c.get_CATEGORY_DESC_HK(),
 						c.get_PARENT_CATEGORY_CODE(),
+						c.get_CATEGORY_DESC_HK(),
 						Constants.localeZHHK)
 				:  mapToBrandCategory(
 						c.get_CATEGORY_CODE(),
