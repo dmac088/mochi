@@ -1,0 +1,45 @@
+_CATEGORY_CODE	_CATEGORY_DESC_EN	_CATEGORY_DESC_HK	_CATEGORY_LEVEL	_CATEGORY_TYPE	_PARENT_CATEGORY_CODE
+FET01	Featured	精選	1	productcategory	PRM02
+OFT01	"Other Fruit"	其他水果	2	productcategory	FRT01
+DUM05	"DUMMY 5"	"假 5"	1	productcategory	PRM01
+DUM07	"DUMMY 7"	"假 7"	1	productcategory	PRM01
+VEG01	Vegetables	蔬菜	1	productcategory	PRM01
+MEL01	Melons	瓜	2	productcategory	FRT01
+DRU01	Drupes	核果	2	productcategory	FRT01
+REV01	Red	紅色蔬菜	3	productcategory	ROV01
+PEC01	Pecans	胡桃	2	productcategory	NUT01
+DUM02	"DUMMY 2"	"假 2"	1	productcategory	PRM01
+POM01	Pomes	梨果	2	productcategory	FRT01
+OTH02	"Other Brands"	其他品牌	1	productcategory	BND01
+PRM01	ALL	ALL	0	productcategory	
+PIS01	Pistachios	開心果	2	productcategory	NUT01
+DUM08	"DUMMY 8"	"假 8"	1	productcategory	PRM01
+DGV01	"Dark Green"	深綠色蔬菜	2	productcategory	VEG01
+FBR01	"Featured Brands"	推薦品牌		brandcategory	
+TRO01	Tropical	熱帶	2	productcategory	FRT01
+BND01	"All Brands"	所有品牌	0	productcategory	
+DUM06	"DUMMY 6"	"假 6"	1	productcategory	PRM01
+DUM04	"DUMMY 4"	"假 4"	1	productcategory	PRM01
+PRM02	MISC	雜	0	productcategory	
+ROV01	"Red and Orange"	紅色和橙色蔬菜	2	productcategory	VEG01
+BER01	Berries	漿果	2	productcategory	FRT01
+BSP01	"Best Sellers"	最暢銷	1	productcategory	PRM02
+SVG01	Starchy	澱粉蔬菜	2	productcategory	VEG01
+NUT01	Nuts	堅果	1	productcategory	PRM01
+HAZ01	Hazelnuts	榛子	2	productcategory	NUT01
+ONT01	"Other Nuts"	其他堅果	2	productcategory	NUT01
+BAP01	"Beans and Peas"	豆類和豌豆	2	productcategory	VEG01
+DUM03	"DUMMY 3"	"假 3"	1	productcategory	PRM01
+DUM01	"DUMMY 1"	"假 1"	1	productcategory	PRM01
+CIT01	Citrus	柑橘	2	productcategory	FRT01
+UNK01	Unknown	未知	1	productcategory	PRM02
+PEA01	Peanuts	花生	2	productcategory	NUT01
+MAC01	Macadamia	澳洲	2	productcategory	NUT01
+BRA01	Brazil	巴西	2	productcategory	NUT01
+CAS01	Cashews	腰果	2	productcategory	NUT01
+DUM09	"DUMMY 9"	"假 9"	4	productcategory	REV01
+OTH01	Other	其他蔬菜	2	productcategory	VEG01
+FRT01	Fruit	水果	1	productcategory	PRM01
+ALM01	Almonds	杏仁	2	productcategory	NUT01
+ORV01	Orange	橙色蔬菜	3	productcategory	ROV01
+TEST3	Test EN2	Test CN2	2	productcategory	FRT01
