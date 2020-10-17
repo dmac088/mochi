@@ -27,6 +27,7 @@ public class InventoryLocationMasterService {
 	@Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
+	@Transactional
 	public void writeInventoryLocation(String fileName) {
 		logger.debug("called writeInventoryLocation with parameter {} ", fileName);
 		try {

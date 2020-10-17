@@ -35,6 +35,7 @@ public class BrandMasterService {
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
+    @Transactional
 	public void writeBrandMaster(String fileName) {
 		logger.debug("called writeBrandMaster with parameter {} ", fileName);
 		try {
