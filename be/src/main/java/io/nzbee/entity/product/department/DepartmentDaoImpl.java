@@ -42,7 +42,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	}
 	
 	@Override
-	public Optional<Department> findById(String locale, long id) {
+	public Optional<Department> findById(String locale, Long id) {
 		
 		LOGGER.debug("call DepartmentDaoImpl.findById parameters : {}, {}, {}", locale, id);
 		

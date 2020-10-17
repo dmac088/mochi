@@ -15,7 +15,7 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	private ProductAttributeRepository productAttributeRepository; 
 	
 	@Override
-	public Optional<ProductAttribute> findById(String locale, String currency, long id) {
+	public Optional<ProductAttribute> findById(String locale, String currency, Long id) {
 		return productAttributeRepository.findById(id);
 	}
 	
@@ -98,7 +98,7 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	}
 
 	@Override
-	public Optional<ProductAttribute> findById(String locale, long id) {
+	public Optional<ProductAttribute> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

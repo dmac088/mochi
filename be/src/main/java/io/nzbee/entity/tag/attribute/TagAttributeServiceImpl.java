@@ -14,7 +14,7 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	private TagAttributeRepository TagAttributeRepository; 
 	
 	@Override
-	public Optional<TagAttribute> findById(String locale, long id) {
+	public Optional<TagAttribute> findById(String locale, Long id) {
 		return TagAttributeRepository.findById(id);
 	}
 	

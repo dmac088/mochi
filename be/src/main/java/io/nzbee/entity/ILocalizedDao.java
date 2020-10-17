@@ -6,7 +6,7 @@ import javax.persistence.Tuple;
 
 public interface ILocalizedDao<T> {
     
-    Optional<T> findById(String locale, long id);
+    Optional<T> findById(String locale, Long id);
     
     Optional<T> findByCode(String locale, String code);
     
@@ -29,6 +29,7 @@ public interface ILocalizedDao<T> {
 	T objectToEntity(Object[] o, String locale);
 
 	T objectToEntity(Tuple t, String locale);
+
 
 	
 }

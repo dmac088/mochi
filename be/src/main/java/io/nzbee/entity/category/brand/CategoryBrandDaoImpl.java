@@ -78,7 +78,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 	
 	@Override
-	public Optional<CategoryBrand> findById(String locale, long id) {
+	public Optional<CategoryBrand> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

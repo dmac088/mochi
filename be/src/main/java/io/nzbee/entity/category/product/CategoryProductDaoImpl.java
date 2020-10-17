@@ -127,7 +127,7 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	}
 	
 	@Override
-	public Optional<CategoryProduct> findById(String locale, long id) {
+	public Optional<CategoryProduct> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

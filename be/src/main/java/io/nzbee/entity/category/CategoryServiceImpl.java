@@ -104,7 +104,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			//@CacheEvict(cacheNames = CACHE_NAME,  allEntries = true),
 			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryCode"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryCode}")

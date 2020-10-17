@@ -14,7 +14,7 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 	private CategoryAttributeRepository CategoryAttributeRepository; 
 	
 	@Override
-	public Optional<CategoryAttribute> findById(String locale, long id) {
+	public Optional<CategoryAttribute> findById(String locale, Long id) {
 		return CategoryAttributeRepository.findById(id);
 	}
 	

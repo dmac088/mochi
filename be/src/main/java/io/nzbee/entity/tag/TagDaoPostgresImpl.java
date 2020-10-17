@@ -38,7 +38,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Tag> findById(String locale, long id) {
+	public Optional<Tag> findById(String locale, Long id) {
 		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}, {}", locale, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
