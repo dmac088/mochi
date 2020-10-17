@@ -37,8 +37,15 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public Optional<Category> findByDesc(String locale, String desc) {
-		return categoryDAO.findByDesc(locale, desc);
+	@Cacheable(cacheNames = CACHE_NAME, key="#categoryCode")
+	public Optional<Category> findByCode(String categoryCode) {
+		return categoryDAO.findByCode(categoryCode);
+	}
+	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryDesc}")
+	public Optional<Category> findByDesc(String locale, String categoryDesc) {
+		return categoryDAO.findByDesc(locale, categoryDesc);
 	}
 	
 	@Override
@@ -86,10 +93,23 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	public Set<Category> findAll() {
+		return categoryDAO.findAll();
+	}
+
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	public Set<Category> findAll(String lcl, String currency, Set<String> codes) {
+		return categoryDAO.findAll(lcl, codes);
+	}
+
+	
+	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.categoryCode}"),
+			//@CacheEvict(cacheNames = CACHE_NAME,  allEntries = true),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryCode"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryCode}")
 	})
@@ -126,22 +146,5 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
 
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAll() {
-		return categoryDAO.findAll();
-	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAll(String lcl, String currency, Set<String> codes) {
-		return categoryDAO.findAll(lcl, codes);
-	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key="#categoryCode")
-	public Optional<Category> findByCode(String categoryCode) {
-		return categoryDAO.findByCode(categoryCode);
-	}
 
 }
