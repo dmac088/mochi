@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -44,12 +46,19 @@ import io.nzbee.entity.product.status.ProductStatus;
 public class ProductDaoPostgresImpl implements IProductDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	private static final String CACHE_NAME = "productCache";   
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
 	@Override
+	@Caching(
+		put = {
+				@CachePut(value = CACHE_NAME, key="#productUPC"),
+				@CachePut(value = CACHE_NAME, key="#productUPC")
+		}
+	)
 	public Optional<Product> findByCode(String productUPC) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findByCode parameters : {}", productUPC);
 		

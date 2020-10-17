@@ -65,13 +65,12 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	@Caching(
 			evict = {
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
-				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
+				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="#category.categoryCode"),
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")
 			})
-	public CategoryProduct save(CategoryProduct category) {
+	public void save(CategoryProduct category) {
 		productCategoryDao.save(category);
-		return category;
 	}
 	
 	@Override

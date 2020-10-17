@@ -16,7 +16,7 @@ import io.nzbee.entity.category.ICategoryService;
 @Service(value = "productEntityService")
 public class ProductServiceImpl implements IProductService {
 	
-	public static final String CACHE_NAME = "productCache";      
+	private static final String CACHE_NAME = "productCache";      
 	
 	@Autowired
 	private IProductDao productDAO;
@@ -98,9 +98,8 @@ public class ProductServiceImpl implements IProductService {
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productUPC}")
 			})
-	public Product save(Product product) {
+	public void save(Product product) {
 		productDAO.save(product);
-		return product;
 	}
 
 	
