@@ -79,6 +79,7 @@ public class BrandMasterService {
 	private Brand mapToBrand(String brandCode,
 							 String brandDesc,
 							 String locale) {
+		
 		Optional<Brand> ob = brandService.findByCode(brandCode);
 						
 		io.nzbee.entity.brand.Brand b = 

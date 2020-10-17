@@ -22,6 +22,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.Brand_;
@@ -38,14 +40,21 @@ import io.nzbee.entity.product.status.ProductStatus_;
 public class BrandDaoPostgresImpl  implements IBrandDao { 
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+	private static final String CACHE_NAME = "brandCache";
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
 	@Override
-	public Optional<Brand> findById(String locale, Long id) {
-		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}, {}", locale, id);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #brandId}")
+			}
+	)
+	public Optional<Brand> findById(String locale, Long brandId) {
+		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}, {}", locale, brandId);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -61,7 +70,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		);
 		
 		cq.where(cb.and(
-				cb.equal(root.get(Brand_.brandId), id),
+				cb.equal(root.get(Brand_.brandId), brandId),
 				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
 				)
 		);
@@ -80,8 +89,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public Optional<Brand> findByCode(String code) {
-		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}", code);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="#brandCode")
+			}
+	)
+	public Optional<Brand> findByCode(String brandCode) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}", brandCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -92,7 +106,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
 		conditions.add(
-				cb.equal(root.get(Brand_.BRAND_CODE), code)
+				cb.equal(root.get(Brand_.BRAND_CODE), brandCode)
 		);
 		
 		TypedQuery<Brand> query = em.createQuery(cq
@@ -111,8 +125,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	public Optional<Brand> findByCode(String locale, String code) {
-		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, code);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #brandCode}")
+			}
+	)
+	public Optional<Brand> findByCode(String locale, String brandCode) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, brandCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -128,7 +147,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		);
 		
 		cq.where(cb.and(
-				cb.equal(root.get(Brand_.brandCode), code),
+				cb.equal(root.get(Brand_.brandCode), brandCode),
 				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
 				)
 		);
@@ -148,8 +167,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 
 	
 	@Override
-	public Optional<Brand> findByDesc(String locale, String desc) {
-		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}, {}", locale, desc);
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #brandDesc}")
+			}
+	)
+	public Optional<Brand> findByDesc(String locale, String brandDesc) {
+		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}, {}", locale, brandDesc);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -165,7 +189,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		);
 		
 		cq.where(cb.and(
-				cb.equal(attribute.get(BrandAttribute_.brandDesc), desc),
+				cb.equal(attribute.get(BrandAttribute_.brandDesc), brandDesc),
 				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
 				)
 		);
@@ -248,6 +272,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME + "ByProductCode", key="{#locale, #productCode}")
+			}
+	)
 	public Optional<Brand> findByProductCode(String locale, String productCode) {
 		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}, {}", locale, productCode);
 		

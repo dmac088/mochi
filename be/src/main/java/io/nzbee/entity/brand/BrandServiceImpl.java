@@ -18,26 +18,27 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	private IBrandDao brandDao; 
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
-	public Optional<Brand> findById(String locale, long Id) {
-		return brandDao.findById(locale, Id);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandId}")
+	public Optional<Brand> findById(String locale, Long brandId) {
+		return brandDao.findById(locale, brandId);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#code}")
-	public Optional<Brand> findByCode(String code) {
-		return brandDao.findByCode(code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "#brandCode")
+	public Optional<Brand> findByCode(String brandCode) {
+		return brandDao.findByCode(brandCode);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
-	public Optional<Brand> findByCode(String locale, String code) {
-		return brandDao.findByCode(locale, code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandCode}")
+	public Optional<Brand> findByCode(String locale, String brandCode) {
+		return brandDao.findByCode(locale, brandCode);
 	}
 	
 	@Override
-	public Optional<Brand> findByDesc(String locale, String desc) {
-		return brandDao.findByDesc(locale, desc);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandDesc}")
+	public Optional<Brand> findByDesc(String locale, String brandDesc) {
+		return brandDao.findByDesc(locale, brandDesc);
 	}
 	
 	@Override
