@@ -22,7 +22,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryId}")
-	public Optional<Category> findById(String locale, long categoryId) {
+	public Optional<Category> findById(String locale, Long categoryId) {
 		return categoryDAO.findById(locale, categoryId);
 	}
 

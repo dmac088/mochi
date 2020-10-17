@@ -135,7 +135,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Optional<Product> findById(String locale, long id) {
+	public Optional<Product> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

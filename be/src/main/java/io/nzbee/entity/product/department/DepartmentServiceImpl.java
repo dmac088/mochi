@@ -24,7 +24,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	}
 
 	@Override
-	public Optional<Department> findById(String locale, long id) {
+	public Optional<Department> findById(String locale, Long id) {
 		return departmentDao.findById(locale, id) ;
 	}
 

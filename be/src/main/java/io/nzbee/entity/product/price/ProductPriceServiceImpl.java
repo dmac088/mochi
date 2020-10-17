@@ -25,7 +25,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 	
 	@Override
-	public Optional<ProductPrice> findById(String locale, String currency, long id) {
+	public Optional<ProductPrice> findById(String locale, String currency, Long id) {
 		return productPriceRepository.findById(id);
 	}
 
@@ -80,7 +80,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public Optional<ProductPrice> findById(String locale, long id) {
+	public Optional<ProductPrice> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
