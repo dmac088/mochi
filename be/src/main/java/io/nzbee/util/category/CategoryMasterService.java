@@ -29,7 +29,6 @@ import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-@Transactional
 public class CategoryMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(CategoryMasterService.class);
@@ -40,6 +39,7 @@ public class CategoryMasterService {
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
+    @Transactional
 	public void writeCategoryMaster(String fileName) {
 		logger.debug("called writeCategoryMaster with parameter {} ", fileName);
 		try {
@@ -76,7 +76,6 @@ public class CategoryMasterService {
 		}
 	}
 	
-	@Transactional
 	public void persistCategoryMaster(CategoryMasterSchema c) {
 		logger.debug("called persistCategoryMaster() ");
 		

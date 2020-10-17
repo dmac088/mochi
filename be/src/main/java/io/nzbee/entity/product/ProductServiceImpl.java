@@ -36,6 +36,12 @@ public class ProductServiceImpl implements IProductService {
 	public Optional<Product> findByCode(String locale, String currency, String code) {
 		return productDAO.findByCode(locale, currency, code);
 	}
+	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key="#productUPC")
+	public Optional<Product> findByCode(String productUPC) {
+		return productDAO.findByCode(productUPC);
+	}
 
 	@Override
 	public Optional<Product> findByDesc(String locale, String currency, String desc) {
@@ -97,11 +103,7 @@ public class ProductServiceImpl implements IProductService {
 		return product;
 	}
 
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key="#productUPC")
-	public Optional<Product> findByCode(String productUPC) {
-		return productDAO.findByCode(productUPC);
-	}
+	
 	
 	@Override
 	public void update(Product t) {

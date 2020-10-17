@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.CategoryServiceImpl;
 
 @Service
-public class CategoryProductService implements ICategoryProductService {
+public class CategoryProductServiceImpl implements ICategoryProductService {
 
 	private static final String CACHE_NAME = "productCategoryCache";
 	
@@ -21,14 +21,14 @@ public class CategoryProductService implements ICategoryProductService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME)
-	public List<CategoryProduct> findAllByProductCode(String locale, String productCode) {
-		return productCategoryDao.findAllByProductCode(locale, productCode);
+	public List<CategoryProduct> findAllByProductCode(String locale, String prodctUPC) {
+		return productCategoryDao.findAllByProductCode(locale, prodctUPC);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CategoryServiceImpl.CACHE_NAME, key = "{#locale, #code}")
-	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String code) {
-		return productCategoryDao.findPrimaryByProductCode(locale, code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #prodctUPC}")
+	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String prodctUPC) {
+		return productCategoryDao.findPrimaryByProductCode(locale, prodctUPC);
 	}
 
 	@Override
@@ -65,7 +65,6 @@ public class CategoryProductService implements ICategoryProductService {
 	@Caching(
 			evict = {
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
-				@CacheEvict(cacheNames = CACHE_NAME, allEntries = true),
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")

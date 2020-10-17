@@ -2,9 +2,13 @@ package io.nzbee.entity.category;
 
 import java.util.Optional;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.category.Category;
 import io.nzbee.search.IFacetService;
@@ -12,6 +16,8 @@ import io.nzbee.search.IFacetService;
 @Service(value = "categoryEntityService")
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
 
+	
+	private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
 	public static final String CACHE_NAME = "categoryCache";
 	
 	@Autowired
@@ -19,15 +25,15 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	private ICategoryDao categoryDAO;
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
-	public Optional<Category> findById(String locale, long id) {
-		return categoryDAO.findById(locale, id);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryId}")
+	public Optional<Category> findById(String locale, long categoryId) {
+		return categoryDAO.findById(locale, categoryId);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
-	public Optional<Category> findByCode(String locale, String code) {
-		return categoryDAO.findByCode(locale, code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryCode}")
+	public Optional<Category> findByCode(String locale, String categoryCode) {
+		return categoryDAO.findByCode(locale, categoryCode);
 	}
 	
 	@Override
@@ -80,9 +86,16 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public Category save(Category t) {
-		categoryDAO.save(t);
-		return t;
+	@Caching(evict = {
+			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
+			@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
+			@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
+			@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")
+	})
+	public Category save(Category category) {
+		logger.debug("called CategoryServiceImpl.save()");
+		categoryDAO.save(category);
+		return category;
 	}
 
 	@Override
