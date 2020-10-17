@@ -64,6 +64,7 @@ public class InventoryMasterService {
 	@Autowired
 	private IStockOnHandService stockOnHandService;
 	
+	@Transactional
 	public void writeInventoryTransaction(String fileName) {
 		logger.debug("called writeInventoryTransaction with parameter {} ", fileName);
 		try {
