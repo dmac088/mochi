@@ -86,7 +86,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	
         // when
     	Brand found = brandService.findById(Constants.localeENGB, 
-				  							brand.getId()).get();
+				  							brand.getBrandId()).get();
      
         // then
     	assertFound(found);
