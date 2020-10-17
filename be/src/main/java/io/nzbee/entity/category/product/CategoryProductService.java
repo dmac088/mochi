@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
@@ -64,14 +63,12 @@ public class CategoryProductService implements ICategoryProductService {
 
 	@Override
 	@Caching(
-			put = {
-				@CachePut(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
-				@CachePut(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
-				@CachePut(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")
-			},
 			evict = {
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
 				@CacheEvict(cacheNames = CACHE_NAME, allEntries = true),
+				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
+				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
+				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")
 			})
 	public CategoryProduct save(CategoryProduct category) {
 		productCategoryDao.save(category);
