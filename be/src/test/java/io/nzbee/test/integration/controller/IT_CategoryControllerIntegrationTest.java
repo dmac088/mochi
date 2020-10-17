@@ -33,7 +33,7 @@ import io.nzbee.entity.category.brand.CategoryBrandMapperImpl;
 import io.nzbee.entity.category.brand.CategoryBrandServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductDaoImpl;
 import io.nzbee.entity.category.product.CategoryProductMapperImpl;
-import io.nzbee.entity.category.product.CategoryProductService;
+import io.nzbee.entity.category.product.CategoryProductServiceImpl;
 import io.nzbee.resources.category.CategoryFacetMapper;
 import io.nzbee.resources.category.CategoryFacetResourceAssembler;
 import io.nzbee.resources.category.CategoryResourceAssembler;
@@ -49,7 +49,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @ContextConfiguration(classes = {CategoryController.class, 
 							     CategoryServiceImpl.class,
 							     PostgresCategoryAdapter.class,
-							     CategoryProductService.class,
+							     CategoryProductServiceImpl.class,
 							     CategoryProductDaoImpl.class,
 							     CategoryBrandServiceImpl.class,
 							     CategoryBrandDaoImpl.class,
