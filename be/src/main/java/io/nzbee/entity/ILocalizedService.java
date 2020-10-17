@@ -16,7 +16,7 @@ public interface ILocalizedService<T> {
 	
 	Optional<T> findByDesc(String locale, String desc);
 	
-	T save(T t);
+	void save(T t);
 	
 	void update(T t);
 	

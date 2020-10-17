@@ -50,9 +50,9 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
-	public Optional<Tag> findByCode(String locale, String code) {
-		return productTagDAO.findByCode(locale, code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #tagCode}")
+	public Optional<Tag> findByCode(String locale, String tagCode) {
+		return productTagDAO.findByCode(locale, tagCode);
 	}
 
 	@Override
@@ -61,9 +61,9 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#code}")
-	public Optional<Tag> findByCode(String code) {
-		return productTagDAO.findByCode(code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "#tagCode")
+	public Optional<Tag> findByCode(String tagCode) {
+		return productTagDAO.findByCode(tagCode);
 	}
 	
 	@Override
@@ -89,14 +89,13 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	@Caching(evict = {
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.tagCode}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.tagCode"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagId}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagCode}"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 			allEntries = true)
 			})
-	public Tag save(Tag tag) {
+	public void save(Tag tag) {
 		productTagDAO.save(tag);
-		return tag;
 	}
 
 	@Override

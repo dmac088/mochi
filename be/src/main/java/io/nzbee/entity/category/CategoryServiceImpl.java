@@ -2,8 +2,6 @@ package io.nzbee.entity.category;
 
 import java.util.Optional;
 import java.util.Set;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
@@ -15,9 +13,7 @@ import io.nzbee.search.IFacetService;
 
 @Service(value = "categoryEntityService")
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
-
 	
-	private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
 	public static final String CACHE_NAME = "categoryCache";
 	
 	@Autowired
@@ -113,10 +109,8 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryCode}")
 	})
-	public Category save(Category category) {
-		logger.debug("called CategoryServiceImpl.save()");
+	public void save(Category category) {
 		categoryDAO.save(category);
-		return category;
 	}
 
 	@Override

@@ -81,13 +81,12 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 			evict = {
 				@CacheEvict(cacheNames = CACHE_NAME + "Other", 			allEntries = true),
 				@CacheEvict(cacheNames = CACHE_NAME + "ByProductCode", 	allEntries = true),
-				@CacheEvict(cacheNames = CACHE_NAME, key="{#brand.brandCode}"),
+				@CacheEvict(cacheNames = CACHE_NAME, key="#brand.brandCode"),
 				@CacheEvict(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandId}"),
 				@CacheEvict(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandCode}"),
 			})
-	public Brand save(Brand brand) {
+	public void save(Brand brand) {
 		brandDao.save(brand);
-		return brand;
 	}
 
 	@Override

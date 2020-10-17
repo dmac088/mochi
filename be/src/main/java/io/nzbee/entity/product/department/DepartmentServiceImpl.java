@@ -45,9 +45,8 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 
 	@Override
-	public Department save(Department t) {
+	public void save(Department t) {
 		departmentDao.save(t);
-		return t;
 	}
 
 	@Override

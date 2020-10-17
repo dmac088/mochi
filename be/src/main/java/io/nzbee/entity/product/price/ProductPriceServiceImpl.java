@@ -53,9 +53,8 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public ProductPrice save(ProductPrice t) {
+	public void save(ProductPrice t) {
 		productPriceRepository.save(t);
-		return t;
 	}
 
 	@Override
