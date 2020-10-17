@@ -45,9 +45,9 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 
 	@Override
-	public void save(Department t) {
-		// TODO Auto-generated method stub
-		
+	public Department save(Department t) {
+		departmentDao.save(t);
+		return t;
 	}
 
 	@Override

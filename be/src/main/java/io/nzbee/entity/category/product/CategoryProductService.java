@@ -5,6 +5,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
@@ -62,27 +63,25 @@ public class CategoryProductService implements ICategoryProductService {
 	}
 
 	@Override
-	@Caching(evict = {
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
-			  @CacheEvict(cacheNames = CACHE_NAME, allEntries = true),
+	@Caching(
+			put = {
+				@CachePut(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
+				@CachePut(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
+				@CachePut(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")
+			},
+			evict = {
+				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
+				@CacheEvict(cacheNames = CACHE_NAME, allEntries = true),
 			})
-	public void save(CategoryProduct category) {
+	public CategoryProduct save(CategoryProduct category) {
 		productCategoryDao.save(category);
+		return category;
 	}
 	
 	@Override
-	@Caching(evict = {
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}"),
-			  @CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
-			  @CacheEvict(cacheNames = CACHE_NAME, allEntries = true),
-			})
-	public void merge(CategoryProduct category) {
-		productCategoryDao.merge(category);
+	public CategoryProduct merge(CategoryProduct category) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

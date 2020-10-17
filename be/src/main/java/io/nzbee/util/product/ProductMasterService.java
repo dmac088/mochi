@@ -87,6 +87,7 @@ public class ProductMasterService {
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Transactional
+	//@CacheEvict(cacheNames = ProductServiceImpl.CACHE_NAME, allEntries = true)
 	public void writeAccessoriesMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
