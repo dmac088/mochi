@@ -49,8 +49,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
-
-
 	@Override
 	public Optional<Product> findByCode(String productUPC) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findByCode parameters : {}", productUPC);

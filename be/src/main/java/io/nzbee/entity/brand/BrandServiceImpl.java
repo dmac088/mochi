@@ -4,6 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
@@ -77,15 +78,19 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 
 	@Override
-	@Caching(evict = {
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#brand.brandCode}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandId}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandCode}"),
+	@Caching(
+			put = {
+			  @CachePut(cacheNames = CACHE_NAME, key="{#brand.brandCode}"),
+			  @CachePut(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandId}"),
+			  @CachePut(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandCode}"),
+			},
+			evict = {
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 			allEntries = true),
 			  @CacheEvict(cacheNames = CACHE_NAME + "ByProductCode", 	allEntries = true)
 			})
-	public void save(Brand brand) {
+	public Brand save(Brand brand) {
 		brandDao.save(brand);
+		return brand;
 	}
 
 	@Override

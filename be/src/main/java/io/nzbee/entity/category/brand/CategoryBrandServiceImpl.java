@@ -49,9 +49,9 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	}
 
 	@Override
-	public void save(CategoryBrand t) {
+	public CategoryBrand save(CategoryBrand t) {
 		brandCategoryDao.save(t);
-		
+		return t;
 	}
 
 	@Override

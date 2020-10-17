@@ -80,9 +80,9 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public void save(Category t) {
-		// TODO Auto-generated method stub
-		
+	public Category save(Category t) {
+		categoryDAO.save(t);
+		return t;
 	}
 
 	@Override
