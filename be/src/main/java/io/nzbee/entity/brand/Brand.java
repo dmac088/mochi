@@ -97,11 +97,11 @@ public class Brand implements ISearchDimension {
 		return locale;
 	}
 
-	public Long getId() {
+	public Long getBrandId() {
 		return this.brandId;
 	}
 	
-	public void setId(Long id) {
+	public void setBrandId(Long id) {
 		this.brandId = id;
 	}
 	
