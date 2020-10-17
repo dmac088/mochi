@@ -110,7 +110,6 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	@Override
 	public void save(CategoryBrand t) {
 		em.persist(t);
-		em.flush();
 	}
 
 	@Override

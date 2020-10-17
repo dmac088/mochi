@@ -10,7 +10,7 @@ public interface ILocalizedService<T> {
 	
 	Set<T> findAll(String locale, Set<String> codes);
 	
-	Optional<T> findById(String locale, long id);
+	Optional<T> findById(String locale, Long id);
 	
 	Optional<T> findByCode(String locale, String code);
 	
@@ -21,5 +21,6 @@ public interface ILocalizedService<T> {
 	void update(T t);
 	
 	void delete(T t);
+
 
 }
