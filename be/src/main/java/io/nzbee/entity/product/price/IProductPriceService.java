@@ -16,7 +16,7 @@ public interface IProductPriceService extends ILocalizedService<ProductPrice> {
 			String priceTypeCode,
 			String currencyCode);
 
-	Optional<ProductPrice> findById(String locale, String currency, long id);
+	Optional<ProductPrice> findById(String locale, String currency, Long id);
 
 	List<ProductPrice> findAll(String locale, String currency);
 
@@ -25,5 +25,6 @@ public interface IProductPriceService extends ILocalizedService<ProductPrice> {
 	Optional<ProductPrice> findByCode(String locale, String currency, String code);
 
 	Optional<ProductPrice> findByDesc(String locale, String currency, String desc);
+
 	
 }

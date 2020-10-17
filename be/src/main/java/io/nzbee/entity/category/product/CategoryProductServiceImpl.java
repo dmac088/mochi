@@ -44,7 +44,7 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	}
 
 	@Override
-	public Optional<CategoryProduct> findById(String locale, long id) {
+	public Optional<CategoryProduct> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

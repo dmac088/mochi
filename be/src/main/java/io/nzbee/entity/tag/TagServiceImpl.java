@@ -45,7 +45,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
-	public Optional<Tag> findById(String locale, long id) {
+	public Optional<Tag> findById(String locale, Long id) {
 		return productTagDAO.findById(locale, id);
 	}
 
