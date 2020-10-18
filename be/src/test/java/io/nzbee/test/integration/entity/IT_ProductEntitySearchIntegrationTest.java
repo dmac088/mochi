@@ -610,9 +610,10 @@ public class IT_ProductEntitySearchIntegrationTest {
 		// when
 		String[] sp = productService.getSuggestion("apple", Constants.localeENGB, Constants.currencyUSD);
 		
+		System.out.println("results = " + String.join(",", sp));
         // then
 		assertThat(sp.length)
-        .isEqualTo(1);
+        .isEqualTo(10);
 	}
 	
 	
