@@ -32,7 +32,7 @@ ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_lcl_cd_fkey;
-ALTER TABLE ONLY mochi.product_accessories DROP CONSTRAINT product_accessories_prd_id_fkey;
+ALTER TABLE ONLY mochi.product_basic DROP CONSTRAINT product_accessories_prd_id_fkey;
 ALTER TABLE ONLY mochi.person DROP CONSTRAINT person_person_id_fkey;
 ALTER TABLE ONLY mochi.party DROP CONSTRAINT party_pty_typ_id_fkey;
 ALTER TABLE ONLY mochi.organisation DROP CONSTRAINT organisation_org_id_fkey;
@@ -107,7 +107,7 @@ ALTER TABLE ONLY mochi.product_promotion DROP CONSTRAINT product_promotion_pkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_pkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_pkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_pkey;
-ALTER TABLE ONLY mochi.product_accessories DROP CONSTRAINT product_accessories_pkey;
+ALTER TABLE ONLY mochi.product_basic DROP CONSTRAINT product_accessories_pkey;
 ALTER TABLE ONLY mochi.price_type DROP CONSTRAINT price_type_pkey;
 ALTER TABLE ONLY mochi.price DROP CONSTRAINT price_pkey;
 ALTER TABLE ONLY mochi.department_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_3;
@@ -177,8 +177,8 @@ DROP SEQUENCE mochi.product_rating_prd_rat_id_seq;
 DROP TABLE mochi.product_promotion;
 DROP TABLE mochi.product_category;
 DROP SEQUENCE mochi.product_category_prd_cat_id_seq;
+DROP TABLE mochi.product_basic;
 DROP TABLE mochi.product_attr_lcl;
-DROP TABLE mochi.product_accessories;
 DROP TABLE mochi.product;
 DROP TABLE mochi.price_type;
 DROP TABLE mochi.price;
@@ -2302,17 +2302,6 @@ CREATE TABLE product (
 ALTER TABLE product OWNER TO mochidb_owner;
 
 --
--- Name: product_accessories; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE product_accessories (
-    prd_id bigint NOT NULL
-);
-
-
-ALTER TABLE product_accessories OWNER TO mochidb_owner;
-
---
 -- Name: product_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2327,6 +2316,17 @@ CREATE TABLE product_attr_lcl (
 
 
 ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
+
+--
+-- Name: product_basic; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE product_basic (
+    prd_id bigint NOT NULL
+);
+
+
+ALTER TABLE product_basic OWNER TO mochidb_owner;
 
 --
 -- Name: product_category_prd_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -3042,10 +3042,10 @@ ALTER TABLE ONLY price_type
 
 
 --
--- Name: product_accessories product_accessories_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_basic product_accessories_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_accessories
+ALTER TABLE ONLY product_basic
     ADD CONSTRAINT product_accessories_pkey PRIMARY KEY (prd_id);
 
 
@@ -3435,7 +3435,7 @@ ALTER TABLE ONLY accessories_attr_lcl
 --
 
 ALTER TABLE ONLY accessories_attr_lcl
-    ADD CONSTRAINT accessories_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product_accessories(prd_id);
+    ADD CONSTRAINT accessories_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product_basic(prd_id);
 
 
 --
@@ -3639,10 +3639,10 @@ ALTER TABLE ONLY person
 
 
 --
--- Name: product_accessories product_accessories_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_basic product_accessories_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY product_accessories
+ALTER TABLE ONLY product_basic
     ADD CONSTRAINT product_accessories_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
 
 
@@ -4160,17 +4160,17 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product TO mochi_app;
 
 
 --
--- Name: product_accessories; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_accessories TO mochi_app;
-
-
---
 -- Name: product_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_attr_lcl TO mochi_app;
+
+
+--
+-- Name: product_basic; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_basic TO mochi_app;
 
 
 --

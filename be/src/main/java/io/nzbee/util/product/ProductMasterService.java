@@ -29,9 +29,9 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.accessories.Accessories;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.basic.ProductBasic;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.Department;
@@ -87,7 +87,7 @@ public class ProductMasterService {
 	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Transactional
-	public void writeAccessoriesMaster(String fileName) {
+	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
 			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
@@ -98,8 +98,8 @@ public class ProductMasterService {
 	    				.withQuoteChar('"');
 	    	
 	        CsvMapper mapper = new CsvMapper();
-	        MappingIterator<AccessoriesMasterSchema> readValues =
-	        	mapper.readerFor(AccessoriesMasterSchema.class).with(bootstrapSchema).readValues(file);
+	        MappingIterator<ProductMasterSchema> readValues =
+	        	mapper.readerFor(ProductMasterSchema.class).with(bootstrapSchema).readValues(file);
 	        
 	        readValues.readAll().stream().forEach(p -> {
 	        	this.persistProductMaster(p);
@@ -110,10 +110,10 @@ public class ProductMasterService {
 		}
 	}
 	
-	public void persistProductMaster(AccessoriesMasterSchema p) {
+	public void persistProductMaster(ProductMasterSchema p) {
 		
 		//english with USD
-		Accessories pe = mapToAccessory(
+		ProductBasic pe = mapToAccessory(
 				 Constants.localeENGB, 
 				 Constants.currencyUSD,
 				 p.get_PRODUCT_UPC_CODE(),
@@ -156,7 +156,7 @@ public class ProductMasterService {
 	}
 	
 	
-	private Accessories mapToAccessory(String locale, 
+	private ProductBasic mapToAccessory(String locale, 
 						 String currency,
 						 String upcCode,
 						 String brandCode,
@@ -195,9 +195,9 @@ public class ProductMasterService {
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
-		Accessories pe = (op.isPresent()) 
-						 ? (Accessories) op.get()
-						 : new Accessories();			  
+		ProductBasic pe = (op.isPresent()) 
+						 ? (ProductBasic) op.get()
+						 : new ProductBasic();			  
 					  
 		pe.setPrimaryCategory((CategoryProduct) oc.get());
 		pe.setBrand(ob.get());
@@ -274,22 +274,22 @@ public class ProductMasterService {
 	
 	public void extractProductMaster(Resource resource) {
 		logger.debug("called extractProductMaster() ");
-		List<AccessoriesMasterSchema> lpms = new ArrayList<AccessoriesMasterSchema>();
+		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
-	    	List<Accessories> productsList = productService.findAllByType(Constants.localeENGB,
+	    	List<ProductBasic> productsList = productService.findAllByType(Constants.localeENGB,
 	    														  		  Constants.currencyHKD,
-	    														  		  Accessories.class)
+	    														  		  ProductBasic.class)
 	    							  .stream()
-	    							  .map(p -> (Accessories) p)
+	    							  .map(p -> (ProductBasic) p)
 	    							  .collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)
-	    	Map<String, AccessoriesMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new AccessoriesMasterSchema()));
+	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new ProductMasterSchema()));
 	    	
 	    	lpms.addAll(productsList.stream().map(p -> {
 	    		
-		    	AccessoriesMasterSchema pms = map.get(p.getProductUPC());
+		    	ProductMasterSchema pms = map.get(p.getProductUPC());
 		    	
 		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
 		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
@@ -316,7 +316,7 @@ public class ProductMasterService {
 	    	}).collect(Collectors.toSet()));
 	    	
 	    	CsvMapper mapper = new CsvMapper(); 
-	        CsvSchema schema = mapper.schemaFor(AccessoriesMasterSchema.class)
+	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class)
 	        		.withHeader()
 	        		.withColumnSeparator('\t')
 	        		.withQuoteChar('"');

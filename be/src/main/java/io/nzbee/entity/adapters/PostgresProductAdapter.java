@@ -16,7 +16,7 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.Accessories;
+import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.brand.IBrandService;
@@ -93,13 +93,13 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional
 	public void save(Product domainObject) {
-		if (domainObject instanceof Accessories) {
+		if (domainObject instanceof BasicProduct) {
 
 			Optional<io.nzbee.entity.product.Product> op = productService.findByCode(domainObject.getProductUPC());
 
-			io.nzbee.entity.product.accessories.Accessories product = (op.isPresent()) 
-					? (io.nzbee.entity.product.accessories.Accessories) op.get()
-					: new io.nzbee.entity.product.accessories.Accessories();
+			io.nzbee.entity.product.basic.ProductBasic product = (op.isPresent()) 
+					? (io.nzbee.entity.product.basic.ProductBasic) op.get()
+					: new io.nzbee.entity.product.basic.ProductBasic();
 
 			// find the department
 			io.nzbee.entity.product.department.Department d = departmentService.findByCode(domainObject.getLclCd(), 
@@ -223,8 +223,8 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional(readOnly = true)
 	public <T> Set<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
-		Class<?> clazz = cls.equals(Accessories.class) ? io.nzbee.entity.product.accessories.Accessories.class
-				: io.nzbee.entity.product.accessories.Accessories.class;
+		Class<?> clazz = cls.equals(BasicProduct.class) ? io.nzbee.entity.product.basic.ProductBasic.class
+				: io.nzbee.entity.product.basic.ProductBasic.class;
 
 		List<io.nzbee.entity.product.Product> lp = productService.findAllByType(locale, currency, clazz);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());

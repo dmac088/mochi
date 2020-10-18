@@ -1,7 +1,7 @@
 package io.nzbee.util.product;
 
 
-public class AccessoriesMasterSchema {
+public class ProductMasterSchema {
 
 	private String PRODUCT_UPC_CODE;
 	

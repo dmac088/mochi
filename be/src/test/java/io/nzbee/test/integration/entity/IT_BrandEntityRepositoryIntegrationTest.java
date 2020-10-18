@@ -197,7 +197,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
      
         //then
     	assertNotNull(lb);
-    	assertThat(lb.size()).isEqualTo(3);
+    	assertThat(lb.size()).isEqualTo(2);
 
 	}
     

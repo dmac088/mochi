@@ -7,7 +7,7 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.category.ICategoryMapper;
-import io.nzbee.entity.product.accessories.Accessories;
+import io.nzbee.entity.product.basic.ProductBasic;
 import io.nzbee.entity.product.department.IDepartmentMapper;
 
 @Component(value="productMapper")
@@ -29,8 +29,8 @@ public class ProductMapperImpl implements IProductMapper {
 													Department department, 
 													ProductCategory category) {
 		
-		if(e instanceof Accessories) {
-			io.nzbee.domain.product.Product pO = new io.nzbee.domain.product.Accessories(
+		if(e instanceof ProductBasic) {
+			io.nzbee.domain.product.Product pO = new io.nzbee.domain.product.BasicProduct(
 					e.getProductUPC(),
 				   	e.getProductCreateDt(),
 				   	e.getProductStatus().getCode(),
@@ -54,9 +54,9 @@ public class ProductMapperImpl implements IProductMapper {
 	@Override
 	public io.nzbee.domain.product.Product entityToDo(Product e) {
 		// TODO Auto-generated method stub
-		if(e instanceof Accessories) {
+		if(e instanceof ProductBasic) {
 			io.nzbee.domain.product.Product pO = 
-				new io.nzbee.domain.product.Accessories(
+				new io.nzbee.domain.product.BasicProduct(
 					e.getProductUPC(),
 				   	e.getProductCreateDt(),
 				   	e.getProductStatus().getCode(),

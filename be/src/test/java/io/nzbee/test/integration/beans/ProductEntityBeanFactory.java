@@ -9,8 +9,8 @@ import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.accessories.Accessories;
 import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.basic.ProductBasic;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentService;
@@ -48,7 +48,7 @@ public class ProductEntityBeanFactory {
 	
 	public final Product getProductEntityBean() {
 	
-		Accessories product = new Accessories();
+		ProductBasic product = new ProductBasic();
 		product.setProductCreateDt(LocalDateTime.now());
 		product.setUPC("123456789");
 		

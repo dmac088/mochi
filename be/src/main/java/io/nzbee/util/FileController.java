@@ -57,13 +57,13 @@ public class FileController {
 	private FileStorageProperties fileStorageProperties;
     
     @PostMapping("/Product/Upload/")
-    public UploadFileResponse uploadAccessoriesFile(@RequestParam("file") MultipartFile uploadFile) {
+    public UploadFileResponse uploadProductFile(@RequestParam("file") MultipartFile uploadFile) {
     	
     	logger.debug("called uploadFile with parameters {} ", uploadFile );
 
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        productMasterService.writeAccessoriesMaster(fileName);
+        productMasterService.writeProductMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
