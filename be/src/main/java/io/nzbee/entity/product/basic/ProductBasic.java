@@ -1,4 +1,4 @@
-package io.nzbee.entity.product.accessories;
+package io.nzbee.entity.product.basic;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -10,10 +10,10 @@ import io.nzbee.entity.product.Product;
 
 @Indexed
 @Entity
-@Table(name = "product_accessories", schema = "mochi")
+@Table(name = "product_basic", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
 @DiscriminatorValue("2")
-public class Accessories extends Product  {
+public class ProductBasic extends Product  {
 
 
 	

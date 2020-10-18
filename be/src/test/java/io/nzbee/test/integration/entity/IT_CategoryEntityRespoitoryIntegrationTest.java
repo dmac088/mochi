@@ -222,7 +222,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
-		assertThat(found).isEqualTo(new Double("20.79"));
+		assertThat(found).isEqualTo(new Double("20.8"));
 	}
 
 	@Test
@@ -233,7 +233,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
-		assertThat(found).isEqualTo(new Double("13.86"));
+		assertThat(found).isEqualTo(new Double("13.8"));
 	}
 
 	@Test
@@ -244,7 +244,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
-		assertThat(found).isEqualTo(new Double("109.62"));
+		assertThat(found).isEqualTo(new Double("109.6"));
 	}
 
 	@Test
@@ -255,7 +255,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
-		assertThat(found).isEqualTo(new Double("10.98"));
+		assertThat(found).isEqualTo(new Double("11.0"));
 	}
 
 	private void assertAllCategoriesFound(final Set<Category> found) {
@@ -273,7 +273,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	private void assertAllProductCategoriesFound(final Set<Category> found) {
 
 		assertThat(found).isNotNull();
-		assertThat(found).size().isEqualTo(88);
+		assertThat(found).size().isEqualTo(87);
 	}
 
 	@After

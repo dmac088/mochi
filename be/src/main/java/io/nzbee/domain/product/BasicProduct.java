@@ -7,10 +7,10 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 
 
-@JsonTypeName("accessories")
-public class Accessories extends Product {
+@JsonTypeName("product")
+public class BasicProduct extends Product {
 
-	public Accessories(	 String productUPC,
+	public BasicProduct(	 String productUPC,
 						 LocalDateTime   productCreateDt,
 					   	 String productStatus,
 					   	 String productDesc,

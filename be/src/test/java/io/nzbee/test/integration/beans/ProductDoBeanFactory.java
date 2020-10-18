@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
-import io.nzbee.domain.product.Accessories;
+import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
 
 @Service
@@ -15,7 +15,7 @@ public class ProductDoBeanFactory {
 	
 	public final Product getProductDoBean() {
 		
-		return new Accessories(	"3254354673",
+		return new BasicProduct(	"3254354673",
 								   LocalDateTime.now(),
 								   "ACT01",
 								   "Test Product Description",
