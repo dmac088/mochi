@@ -30,6 +30,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.entity.product.Product;
 import io.nzbee.search.IFacetService;
@@ -579,6 +581,39 @@ public class IT_ProductEntitySearchIntegrationTest {
 		.isEqualTo(13);
 	}
 	
+	
+	@Test
+	public void whenEnterSearchTermKor_thenReturnCorrectSuggestions() {
+		
+		// when
+		String[] sp = productService.getSuggestion("kor", Constants.localeENGB, Constants.currencyUSD);
+		
+        // then
+		assertThat(sp.length)
+        .isEqualTo(12);
+	}
+	
+	@Test
+	public void whenEnterSearchTermPretty_thenReturnCorrectSuggestions() {
+		
+		// when
+		String[] sp = productService.getSuggestion("pretty", Constants.localeENGB, Constants.currencyUSD);
+		
+        // then
+		assertThat(sp.length)
+        .isEqualTo(7);
+	}
+	
+	@Test
+	public void whenEnterSearchTermApple_thenReturnCorrectSuggestions() {
+		
+		// when
+		String[] sp = productService.getSuggestion("apple", Constants.localeENGB, Constants.currencyUSD);
+		
+        // then
+		assertThat(sp.length)
+        .isEqualTo(1);
+	}
 	
 	
 	@After
