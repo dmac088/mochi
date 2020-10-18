@@ -18,7 +18,7 @@ spring:
   devtools:
     restart:
       enabled: false
-      exclude: data/downloads/**,target/**
+      exclude: downloads/**,target/**
       
   servlet:
     multipart:
@@ -53,7 +53,7 @@ logging:
 file:
   upload-dir: data/uploads/
   download-dir: data/downloads/
-  product-master-file: food_master.csv
+  product-master-file: product_master.tsv
   
 
 
