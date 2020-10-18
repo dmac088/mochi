@@ -579,6 +579,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 		.isEqualTo(13);
 	}
 	
+	
+	
 	@After
 	public void closeConnection() {
 	 	entityManager.close();
