@@ -32,57 +32,68 @@ import io.nzbee.util.product.ProductMasterService;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "tst")
 @SqlGroup({
-		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
-		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_ProductUploadForUpdateIntegrationTest {
+	@Sql(scripts = "/database/mochi_schema.sql",
+			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+			transactionManager = "mochiTransactionManagerOwner",
+			transactionMode = TransactionMode.ISOLATED)), 
+	@Sql(scripts = "/database/mochi_data.sql",
+			config = @SqlConfig(dataSource = "mochiDataSource", 
+			transactionManager = "mochiTransactionManager",
+			transactionMode = TransactionMode.ISOLATED))
+})
+public class IT_ProductUploadForCreateIntegrationTest {
 
 	@TestConfiguration
-	static class ProductUploadRepositoryIntegrationTest {
-
-	}
-
+    static class ProductUploadRepositoryIntegrationTest {
+        
+    }
+	
 	@MockBean
-	private JavaMailSender mailSender;
-
+    private JavaMailSender mailSender;
+	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager entityManager;
-
-	@Autowired
-	private ProductMasterService pms;
-
-	@Autowired
-	private IProductService productService;
-
+	
+    @Autowired
+    private ProductMasterService pms;
+    
+    @Autowired
+    private IProductService productService;
+	
 	@Before
 	public void persistANewProduct() {
 		String path = "src/test/resources";
 		File file = new File(path);
-
-		pms.writeProductMaster(file.getAbsolutePath() + "/data/product/update/product_master.tsv");
+	
+		pms.writeProductMaster(file.getAbsolutePath() + "/data/product/create/product_master.tsv");
 	}
-
+	
 	@Test
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ENGB_USD() {
-		// when
-		Product found = productService.findByCode(Constants.localeENGB, Constants.currencyUSD, "12383658").get();
-
-		// then
-		assertFound_ENGB_USD(found);
+		 // when
+    	Product found = productService.findByCode(  Constants.localeENGB, 
+				  								  	Constants.currencyUSD,  
+												  	"43254232").get();
+     
+        // then
+    	assertFound_ENGB_USD(found);
 	}
-
+	
 	@Test
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ZHHK_HKD() {
-		// when
-		Product found = productService.findByCode(Constants.localeZHHK, Constants.currencyHKD, "12383658").get();
-
-		// then
-		assertFound_ZHHK_HKD(found);
+		 // when
+    	Product found = productService.findByCode(  Constants.localeZHHK, 
+				  								  	Constants.currencyHKD,  
+												  	"43254232").get();
+     
+        // then
+    	assertFound_ZHHK_HKD(found);
 	}
-
+	
 	private void assertFound_ENGB_USD(final Product found) {
 
-		assertThat(found.getUPC()).isEqualTo("12383658");
+		assertThat(found.getUPC()).isEqualTo("43254232");
 
 		assertThat(found.getProductAttribute().getProductDesc()).isEqualTo("organic cucumber");
 
@@ -118,7 +129,7 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 
 	private void assertFound_ZHHK_HKD(final Product found) {
 
-		assertThat(found.getUPC()).isEqualTo("12383658");
+		assertThat(found.getUPC()).isEqualTo("43254232");
 
 		assertThat(found.getProductAttribute().getProductDesc()).isEqualTo("有機黃瓜");
 
@@ -151,9 +162,9 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 		assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
 				.isTrue();
 	}
-
-	@After
-	public void closeConnection() {
-		entityManager.close();
-	}
+	
+    @After
+    public void closeConnection() {
+    	entityManager.close();
+    }
 }
