@@ -744,6 +744,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
 		
+		LOGGER.debug(sql);
+		
 		return sql;
 	}
 
