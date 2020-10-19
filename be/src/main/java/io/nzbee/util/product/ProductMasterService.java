@@ -215,6 +215,7 @@ public class ProductMasterService {
 		
 		pa.setProduct(pe);
 		pe.setProductAttribute(pa);
+		pe.addProductAttribute(pa);
 		
 		Currency curr = currencyService.findByCode(currency).get();
 		ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
