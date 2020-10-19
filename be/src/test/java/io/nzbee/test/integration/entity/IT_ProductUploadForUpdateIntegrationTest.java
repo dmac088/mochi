@@ -41,7 +41,7 @@ import io.nzbee.util.product.ProductMasterService;
 			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
-public class IT_ProductUploadIntegrationTest {
+public class IT_ProductUploadForUpdateIntegrationTest {
 
 	@TestConfiguration
     static class ProductUploadRepositoryIntegrationTest {
@@ -86,7 +86,10 @@ private void assertFound(final Product found) {
         .isEqualTo("12383658");
     	
     	assertThat(found.getProductAttribute().getProductDesc())
-        .isEqualTo("cucumber");
+        .isEqualTo("organic cucumber");
+    	
+    	assertThat(found.getProductAttribute().getProductLongDesc())
+        .isEqualTo("newly fresh organic cucumber");
     	
     	assertThat(found.getDepartment().getDepartmentCode())
     	.isEqualTo("ACC01");
@@ -95,28 +98,25 @@ private void assertFound(final Product found) {
     	.isEqualTo("ACT01");
     	
     	assertThat(found.getBrand().getBrandCode())
-    	.isEqualTo("DIV01");
+    	.isEqualTo("DRI01");
     	
     	assertNotNull(found.getPrimaryCategory());
-    	assertThat(found.getPrimaryCategory().getCategoryCode().equals("DGV01")).isTrue();
-    	
-    	assertNotNull(found.getCategories());
-    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("DGV01")).findFirst().isPresent()).isTrue();
-    	
-    	assertThat(found.getCurrentRetailPriceUSD())
-    	.isEqualTo(new Double(6.2));
+    	assertThat(found.getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
     	
     	assertThat(found.getCurrentRetailPriceHKD())
-    	.isEqualTo(new Double(48));
+    	.isEqualTo(new Double(60));
     	
-    	assertThat(found.getCurrentMarkdownPriceUSD())
-    	.isEqualTo(new Double(5.5));
+    	assertThat(found.getCurrentRetailPriceUSD())
+    	.isEqualTo(new Double(8));
     	
     	assertThat(found.getCurrentMarkdownPriceHKD())
-    	.isEqualTo(new Double(43.2));
+    	.isEqualTo(new Double(55));
+    	
+    	assertThat(found.getCurrentMarkdownPriceUSD())
+    	.isEqualTo(new Double(7));
     	
     	assertNotNull(found.getTags());
-    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("GFR01")).findFirst().isPresent()).isTrue();
+    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }
 	
     @After
