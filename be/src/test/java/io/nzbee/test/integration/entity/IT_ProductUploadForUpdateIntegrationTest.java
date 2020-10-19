@@ -2,7 +2,11 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.io.File;
+import java.util.Optional;
+
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -65,7 +69,7 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 	@Test
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ENGB_USD() {
 		// when
-		Product found = productService.findByCode(Constants.localeENGB, Constants.currencyUSD, "12383658").get();
+		Optional<Product> found = productService.findByCode(Constants.localeENGB, Constants.currencyUSD, "12383658");
 
 		// then
 		assertFound_ENGB_USD(found);
@@ -74,81 +78,89 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 	@Test
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ZHHK_HKD() {
 		// when
-		Product found = productService.findByCode(Constants.localeZHHK, Constants.currencyHKD, "12383658").get();
+		Optional<Product> found = productService.findByCode(Constants.localeZHHK, Constants.currencyHKD, "12383658");
 
 		// then
 		assertFound_ZHHK_HKD(found);
 	}
 
-	private void assertFound_ENGB_USD(final Product found) {
+	private void assertFound_ENGB_USD(Optional<Product> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
 
-		assertThat(found.getUPC()).isEqualTo("12383658");
+		assertThat(found.get().getUPC()).isEqualTo("12383658");
 
-		assertThat(found.getProductAttribute().getProductDesc()).isEqualTo("organic cucumber");
+		assertThat(found.get().getProductAttribute().getProductDesc()).isEqualTo("organic cucumber");
 
-		assertThat(found.getProductAttribute().getProductLongDesc()).isEqualTo("newly fresh organic cucumber");
+		assertThat(found.get().getProductAttribute().getProductLongDesc()).isEqualTo("newly fresh organic cucumber");
 
-		assertThat(found.getDepartment().getDepartmentCode()).isEqualTo("ACC01");
+		assertThat(found.get().getDepartment().getDepartmentCode()).isEqualTo("ACC01");
 
-		assertThat(found.getProductStatus().getCode()).isEqualTo("ACT01");
+		assertThat(found.get().getProductStatus().getCode()).isEqualTo("ACT01");
 
-		assertThat(found.getBrand().getBrandCode()).isEqualTo("DRI01");
+		assertThat(found.get().getBrand().getBrandCode()).isEqualTo("DRI01");
 
-		assertNotNull(found.getPrimaryCategory());
-		assertThat(found.getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
+		assertNotNull(found.get().getPrimaryCategory());
+		assertThat(found.get().getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
 
-		assertThat(found.getCurrency()).isEqualTo(Constants.currencyUSD);
+		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyUSD);
 
-		assertThat(found.getRetailPrice()).isEqualTo(new Double(8));
+		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(8));
 
-		assertThat(found.getMarkdownPrice()).isEqualTo(new Double(7));
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7));
 
-		assertThat(found.getCurrentRetailPriceHKD()).isEqualTo(new Double(60));
+		assertThat(found.get().getCurrentRetailPriceHKD()).isEqualTo(new Double(60));
 
-		assertThat(found.getCurrentRetailPriceUSD()).isEqualTo(new Double(8));
+		assertThat(found.get().getCurrentRetailPriceUSD()).isEqualTo(new Double(8));
 
-		assertThat(found.getCurrentMarkdownPriceHKD()).isEqualTo(new Double(55));
+		assertThat(found.get().getCurrentMarkdownPriceHKD()).isEqualTo(new Double(55));
 
-		assertThat(found.getCurrentMarkdownPriceUSD()).isEqualTo(new Double(7));
+		assertThat(found.get().getCurrentMarkdownPriceUSD()).isEqualTo(new Double(7));
 
-		assertNotNull(found.getTags());
-		assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
+		assertNotNull(found.get().getTags());
+		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
 				.isTrue();
 	}
 
-	private void assertFound_ZHHK_HKD(final Product found) {
+	private void assertFound_ZHHK_HKD(Optional<Product> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
 
-		assertThat(found.getUPC()).isEqualTo("12383658");
+		assertThat(found.get().getUPC()).isEqualTo("12383658");
 
-		assertThat(found.getProductAttribute().getProductDesc()).isEqualTo("有機黃瓜");
+		assertThat(found.get().getProductAttribute().getProductDesc()).isEqualTo("有機黃瓜");
 
-		assertThat(found.getProductAttribute().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
+		assertThat(found.get().getProductAttribute().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
 
-		assertThat(found.getDepartment().getDepartmentCode()).isEqualTo("ACC01");
+		assertThat(found.get().getDepartment().getDepartmentCode()).isEqualTo("ACC01");
 
-		assertThat(found.getProductStatus().getCode()).isEqualTo("ACT01");
+		assertThat(found.get().getProductStatus().getCode()).isEqualTo("ACT01");
 
-		assertThat(found.getBrand().getBrandCode()).isEqualTo("DRI01");
+		assertThat(found.get().getBrand().getBrandCode()).isEqualTo("DRI01");
 
-		assertNotNull(found.getPrimaryCategory());
-		assertThat(found.getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
+		assertNotNull(found.get().getPrimaryCategory());
+		assertThat(found.get().getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
 
-		assertThat(found.getCurrency()).isEqualTo(Constants.currencyHKD);
+		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyHKD);
 
-		assertThat(found.getRetailPrice()).isEqualTo(new Double(60));
+		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));
 
-		assertThat(found.getMarkdownPrice()).isEqualTo(new Double(55));
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55));
 
-		assertThat(found.getCurrentRetailPriceHKD()).isEqualTo(new Double(60));
+		assertThat(found.get().getCurrentRetailPriceHKD()).isEqualTo(new Double(60));
 
-		assertThat(found.getCurrentRetailPriceUSD()).isEqualTo(new Double(8));
+		assertThat(found.get().getCurrentRetailPriceUSD()).isEqualTo(new Double(8));
 
-		assertThat(found.getCurrentMarkdownPriceHKD()).isEqualTo(new Double(55));
+		assertThat(found.get().getCurrentMarkdownPriceHKD()).isEqualTo(new Double(55));
 
-		assertThat(found.getCurrentMarkdownPriceUSD()).isEqualTo(new Double(7));
+		assertThat(found.get().getCurrentMarkdownPriceUSD()).isEqualTo(new Double(7));
 
-		assertNotNull(found.getTags());
-		assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
+		assertNotNull(found.get().getTags());
+		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
 				.isTrue();
 	}
 
