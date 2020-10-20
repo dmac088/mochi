@@ -62,17 +62,17 @@ public class TagMasterService {
 	public void persistTagMaster(TagMasterSchema t) {
 		logger.debug("called persistTagMaster() ");
 		
-		Tag tEN = mapToTag(	 t.get_TAG_CODE(),
-							 t.get_TAG_DESC_EN().toUpperCase(),
-							 Constants.localeENGB);
-				
-		tagService.save(tEN);
-		
 		Tag tCN = mapToTag(	t.get_TAG_CODE(),
-				 			t.get_TAG_DESC_HK().toUpperCase(),
+				 			t.get_TAG_DESC_HK(),
 				 		    Constants.localeZHHK);
 		
 		tagService.save(tCN);
+		
+		Tag tEN = mapToTag(	 t.get_TAG_CODE(),
+				 t.get_TAG_DESC_EN(),
+				 Constants.localeENGB);
+	
+		tagService.save(tEN);
 	}
 	
 	private Tag mapToTag(
