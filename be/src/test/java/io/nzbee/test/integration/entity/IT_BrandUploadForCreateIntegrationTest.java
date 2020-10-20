@@ -83,7 +83,7 @@ public class IT_BrandUploadForCreateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getBrandAttribute().getBrandDesc())
-		.isEqualTo("test brand");
+		.isEqualTo("test brand en");
 		
 	}
 
@@ -94,7 +94,7 @@ public class IT_BrandUploadForCreateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getBrandAttribute().getBrandDesc())
-		.isEqualTo("測試標籤");
+		.isEqualTo("test brand hk");
 	}
 
 	@After
