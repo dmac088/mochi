@@ -35,7 +35,7 @@ import io.nzbee.util.tag.TagMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_TagUploadForUpdateIntegrationTest {
+public class IT_TagUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -55,22 +55,22 @@ public class IT_TagUploadForUpdateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeTagMaster(file.getAbsolutePath() + "/data/product/tag/update/tag_master.tsv");
+		pms.writeTagMaster(file.getAbsolutePath() + "/data/product/tag/create/tag_master.tsv");
 	}
 
 	@Test
-	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ENGB() {
+	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ENGB() {
 		// when
-		Optional<Tag> found = tagService.findByCode(Constants.localeENGB, "GFR01");
+		Optional<Tag> found = tagService.findByCode(Constants.localeENGB, "TST01");
 
 		// then
 		assertFound_ENGB(found);
 	}
 
 	@Test
-	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ZHHK() {
+	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ZHHK() {
 		// when
-		Optional<Tag> found = tagService.findByCode(Constants.localeZHHK, "GFR01");
+		Optional<Tag> found = tagService.findByCode(Constants.localeZHHK, "TST01");
 
 		// then
 		assertFound_ZHHK(found);
@@ -83,7 +83,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getTagAttribute().getTagDesc())
-		.isEqualTo("Gluten Free Test");
+		.isEqualTo("test tag");
 		
 	}
 
@@ -94,7 +94,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getTagAttribute().getTagDesc())
-		.isEqualTo("無麩質測試");
+		.isEqualTo("測試標籤");
 	}
 
 	@After
