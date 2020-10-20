@@ -61,7 +61,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
 		// when
-		Optional<Brand> found = brandService.findByCode(Constants.localeENGB, "GFR01");
+		Optional<Brand> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
 
 		// then
 		assertFound_ENGB(found);
@@ -70,7 +70,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
 		// when
-		Optional<Brand> found = brandService.findByCode(Constants.localeZHHK, "GFR01");
+		Optional<Brand> found = brandService.findByCode(Constants.localeZHHK, "ENZ01");
 
 		// then
 		assertFound_ZHHK(found);
@@ -83,7 +83,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getBrandAttribute().getBrandDesc())
-		.isEqualTo("Gluten Free Test");
+		.isEqualTo("Enza Update EN");
 		
 	}
 
@@ -94,7 +94,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getBrandAttribute().getBrandDesc())
-		.isEqualTo("無麩質測試");
+		.isEqualTo("Enza Update HK");
 	}
 
 	@After
