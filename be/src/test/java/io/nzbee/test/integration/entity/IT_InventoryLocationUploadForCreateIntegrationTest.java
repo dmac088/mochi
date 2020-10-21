@@ -79,7 +79,7 @@ public class IT_InventoryLocationUploadForCreateIntegrationTest {
 		.isEqualTo("Test Create Location Description");
 		
 		assertThat(found.get().getLocationIsActive())
-		.isEqualTo("Y");
+		.isEqualTo(true);
 		
 	}
 
