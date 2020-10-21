@@ -60,6 +60,7 @@ public class InventoryLocationMasterService {
 							   ? oil.get()
 							   : new InventoryLocation();
 		
+		iL.setLocationCode(ims.get_INVENTORY_LOCATION_CODE());					   
 		iL.setLocationDesc(ims.get_INVENTORY_LOCATION_DESC());
 		iL.setLocationIsActive(ims.get_INVENTORY_LOCATION_IS_ACTIVE().equals("Y"));
 							   
