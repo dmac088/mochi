@@ -112,6 +112,8 @@ public class CategoryMasterService {
 												 String categoryDesc,
 												 String locale
 												 ) {
+		logger.debug("called mapToProductCategory() ");
+		
 		Optional<Category> oc = categoryService.findByCode(categoryCode);
 		
 		CategoryProduct cp = (oc.isPresent()) 
@@ -142,6 +144,8 @@ public class CategoryMasterService {
 											 String categoryDesc,
 											 String locale
 											) {
+		logger.debug("called mapToBrandCategory() ");
+		
 		Optional<Category> oc = 
 				categoryService.findByCode(locale, categoryCode);
 		

@@ -553,8 +553,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public void save(Category t) {
-		// TODO Auto-generated method stub
-		
+		em.persist(t);
 	}
 
 	@Override
