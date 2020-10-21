@@ -53,16 +53,17 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeInventoryTransaction(file.getAbsolutePath() + "/data/product/inventory/create/inventory_master.tsv");
+		pms.writeInventoryTransaction(file.getAbsolutePath() + "/data/inventory/inventory.tsv");
 	}
 
 	@Test
-	public void whenInventoryTransactionUploadedForCreate_thenReturnCorrectlyCreatedInventoryTransaction_ENGB() {
+	public void whenInventoryTransactionUploaded_thenReturnInventoryTransaction() {
+		
 		// when
-//		Optional<InventoryTransaction> found = inventoryService.findByCode(Constants.localeENGB, "TST01");
+		Optional<InventoryTransaction> found = inventoryService.findByCode("3577789");
 
-		// then
-//		assertFound(found);
+		//then
+		assertFound(found);
 	}
 	
 	private void assertFound(Optional<InventoryTransaction> found) {
@@ -73,6 +74,7 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 		
 		
 	}
+	
 	@After
 	public void closeConnection() {
 		entityManager.close();
