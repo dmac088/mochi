@@ -1,9 +1,12 @@
 package io.nzbee.test.integration.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
 import java.io.File;
 import java.util.Optional;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -24,6 +27,8 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.inventory.IInventoryTransactionService;
 import io.nzbee.entity.inventory.InventoryTransaction;
+import io.nzbee.entity.stock.IStockOnHandService;
+import io.nzbee.entity.stock.StockOnHand;
 import io.nzbee.util.inventory.InventoryMasterService;
 
 @RunWith(SpringRunner.class)
@@ -47,9 +52,12 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 
 	@Autowired
 	private IInventoryTransactionService inventoryService;
+	
+	@Autowired
+	private IStockOnHandService sohService;
 
 	@Before
-	public void persistANewInventoryTransaction() {
+	public void persistNewInventoryTransaction() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
@@ -57,21 +65,40 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 	}
 
 	@Test
-	public void whenInventoryTransactionUploaded_thenReturnInventoryTransaction() {
+	public void whenInventoryTransactionUploaded_thenReturnCorrectInventoryTransactionCount() {
 		
 		// when
-		Optional<InventoryTransaction> found = inventoryService.findByCode("3577789");
+		Set<InventoryTransaction> found = inventoryService.findByProductCode("3577789");
 
 		//then
 		assertFound(found);
 	}
 	
-	private void assertFound(Optional<InventoryTransaction> found) {
+	@Test
+	public void whenInventoryTransactionUploaded_thenReturnCorrectStockOnHand() {
+		
+		// when
+		Optional<StockOnHand> found = sohService.findByProductCode("3577789");
+
+		//then
+		assertFound(found);
+	}	
+	
+	private void assertFound(Set<InventoryTransaction> found) {
+		
+		assertNotNull(found);
+		
+		assertThat(found.size()).isEqualTo(2);
+		
+	}
+	
+	private void assertFound(Optional<StockOnHand> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
+		assertThat(found.get().getStockOnHand()).isEqualTo(25);
 		
 	}
 	
