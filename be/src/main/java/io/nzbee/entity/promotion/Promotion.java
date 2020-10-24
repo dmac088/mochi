@@ -42,7 +42,7 @@ public class Promotion {
 	private LocalDateTime promotionEndDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prm_typ_id")
+	@JoinColumn(name="prm_typ_id", updatable = false, insertable = false)
 	private PromotionType promotionType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
