@@ -15,7 +15,7 @@ public class PromotionMechanicServiceImpl implements IPromotionMechanicService {
 	private IPromotionMechanicRepository promotionMechanicRepository; 
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#promotionMechanicId}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionMechanicId")
 	public Optional<PromotionMechanic> findById(Long promotionMechanicId) {
 		return promotionMechanicRepository.findById(promotionMechanicId);
 	}
