@@ -1,7 +1,7 @@
 package io.nzbee.entity.bag.status;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,13 @@ public class BagItemStatusServiceImpl implements IBagItemStatusService {
 	private IBagItemStatusRepository bagStatusRepository;
 	
 	@Override
-	public List<BagItemStatus> findAll() {
+	public Set<BagItemStatus> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Optional<BagItemStatus> findById(long id) {
+	public Optional<BagItemStatus> findById(Long id) {
 		return bagStatusRepository.findById(id);
 	}
 

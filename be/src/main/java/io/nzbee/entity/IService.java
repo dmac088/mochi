@@ -1,13 +1,13 @@
 package io.nzbee.entity;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 public interface IService<T> {
 
-	public List<T> findAll();
+	public Set<T> findAll();
 	
-	public Optional<T> findById(long id);
+	public Optional<T> findById(Long id);
 	
 	public Optional<T> findByCode(String code);
 	
@@ -16,5 +16,6 @@ public interface IService<T> {
 	public void update(T t);
 	
 	public void delete(T t);
+
 	
 }

@@ -1,9 +1,9 @@
 package io.nzbee.entity.party.person;
 
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
@@ -21,8 +21,8 @@ public class PersonServiceImpl implements IPersonService {
 	@Override
 	@PreAuthorize("hasAuthority('PERSON_READER')")
 	@Transactional(readOnly = true)
-	public List<Person> findAll() {
-		List<Person> Persons = new ArrayList<>();
+	public Set<Person> findAll() {
+		Set<Person> Persons = new HashSet<>();
 		Iterator<Person> i = personRepository.findAll().iterator();
 		while(i.hasNext()) {
 			  Persons.add(i.next());
@@ -34,7 +34,7 @@ public class PersonServiceImpl implements IPersonService {
 	@Override
 	@PreAuthorize("hasAuthority('PERSON_READ')")
 	@Transactional(readOnly = true)
-	public Optional<Person> findById(long id) {
+	public Optional<Person> findById(Long id) {
 		return personRepository.findByPartyId(id);
 	}
 	

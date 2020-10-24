@@ -1,7 +1,7 @@
 package io.nzbee.entity.inventory.location;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +12,13 @@ public class InventoryLocationServiceImpl implements IInventoryLocationService {
 	private IInventoryLocationRepository inventoryLocationRepository;
 	
 	@Override
-	public List<InventoryLocation> findAll() {
+	public Set<InventoryLocation> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<InventoryLocation> findById(long id) {
+	public Optional<InventoryLocation> findById(Long id) {
 		return inventoryLocationRepository.findById(id);
 	}
 

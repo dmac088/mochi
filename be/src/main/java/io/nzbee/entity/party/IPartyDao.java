@@ -1,11 +1,10 @@
 package io.nzbee.entity.party;
 
-import java.util.List;
-
+import java.util.Set;
 import io.nzbee.entity.IDao;
 
 public interface IPartyDao extends IDao<Party> {
 	
-	List<Party> findAllByRoleName(String roleClassType);
+	Set<Party> findAllByRoleName(String roleClassType);
 
 }
