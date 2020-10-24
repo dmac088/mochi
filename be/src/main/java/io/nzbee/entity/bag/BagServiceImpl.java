@@ -1,7 +1,8 @@
 package io.nzbee.entity.bag;
 
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,13 +13,13 @@ public class BagServiceImpl implements IBagService {
 	private IBagRepository bagRepository;
 	
 	@Override
-	public List<Bag> findAll() {
+	public Set<Bag> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Bag> findById(long id) {
+	public Optional<Bag> findById(Long id) {
 		return bagRepository.findById(id);
 	}
 

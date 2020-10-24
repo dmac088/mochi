@@ -1,6 +1,6 @@
 package io.nzbee.entity.party;
-import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -18,17 +18,17 @@ public class PartyServiceImpl implements IPartyService {
 	private IPartyDao partyDAO;
 	
 	@Override
-	public List<Party> findByRoleType(Class<?> roleType) {
+	public Set<Party> findByRoleType(Class<?> roleType) {
 		return partyDAO.findAllByRoleName(roleType.getSimpleName());
 	}
 	
 	@Override
-	public List<Party> findAll() {
+	public Set<Party> findAll() {
 		return partyRepository.findAll();
 	}
 
 	@Override
-	public Optional<Party> findById(long id) {
+	public Optional<Party> findById(Long id) {
 		return partyRepository.findById(id);
 	}
 

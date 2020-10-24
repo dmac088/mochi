@@ -3,6 +3,9 @@ package io.nzbee.entity.party;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
@@ -33,7 +36,7 @@ public class PartyDaoImpl implements IPartyDao {
 	private EntityManager em;
 	
 	@Override
-	public List<Party> findAllByRoleName(String roleClassType) {
+	public Set<Party> findAllByRoleName(String roleClassType) {
 		
 		LOGGER.debug("call PartyDaoImpl.findAllByRoleName parameters : {}", roleClassType);
 		
@@ -56,7 +59,7 @@ public class PartyDaoImpl implements IPartyDao {
 				.distinct(false)
 		);
 		
-		return query.getResultList();
+		return query.getResultStream().collect(Collectors.toSet());
 	}
 	
 	@Override

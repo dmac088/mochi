@@ -1,8 +1,7 @@
 package io.nzbee.entity.inventory.type;
 
-import java.util.List;
 import java.util.Optional;
-
+import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,13 +12,13 @@ public class InventoryTypeServiceImpl implements IInventoryTypeService {
 	private IInventoryTypeRepository inventoryTypeRepository;
 	
 	@Override
-	public List<InventoryType> findAll() {
+	public Set<InventoryType> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<InventoryType> findById(long id) {
+	public Optional<InventoryType> findById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

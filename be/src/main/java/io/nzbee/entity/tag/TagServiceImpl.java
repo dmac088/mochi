@@ -93,7 +93,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.tagCode"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagId}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagCode}"),
-			  @CacheEvict(cacheNames = CACHE_NAME + "Other", 			allEntries = true)
+			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
 	public void save(Tag tag) {
 		productTagDAO.save(tag);
