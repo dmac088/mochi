@@ -2,26 +2,23 @@ package io.nzbee.util.promotion;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-import java.util.Set;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-import org.springframework.core.io.Resource;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.Constants;
 import io.nzbee.entity.promotion.Promotion;
+import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
+import io.nzbee.entity.promotion.type.IPromotionTypeService;
+import io.nzbee.entity.promotion.type.PromotionType;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
 
@@ -32,6 +29,12 @@ public class PromotionMasterService {
 	
 	@Autowired
 	private IPromotionService promotionService;
+	
+	@Autowired
+	private IPromotionTypeService promotionTypeService;
+	
+	@Autowired
+	private IPromotionMechanicService promotionMechanicService;
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
@@ -65,35 +68,46 @@ public class PromotionMasterService {
 	public void persistPromotionMaster(PromotionMasterSchema pms) {
 		logger.debug("called persistPromotionMaster() ");
 		
-		Promotion cEN = mapToPromotion(
-						pms.get
-						pms.get_CATEGORY_DESC_HK());
+		Promotion p = mapToPromotion(pms.get_PROMOTION_CODE(),
+									 pms.get_PROMOTION_DESC(),
+									 pms.get_PROMOTION_START_DATE(),
+									 pms.get_PROMOTION_END_DATE(),
+									 pms.get_PROMOTION_ACTIVE(),
+									 pms.get_PROMOTION_MECHANIC_CODE(),
+									 pms.get_PROMOTION_TYPE_CODE());
 
-		promotionService.save(cCN);
+		promotionService.save(p);
 	}
 	
-	private Promotion mapToPromotion(String promotionCode,
-									 String promotionDesc) {
-		logger.debug("called mapToProductPromotion() ");
+	private Promotion mapToPromotion(String 		promotionCode,
+									 String 		promotionDesc,
+									 String 		promotionStartDate,
+									 String 		promotionEndDate,
+									 String 		promotionActive,
+									 String 		promotionMechanicCode,
+									 String 		promotionTypeCode) {
+		logger.debug("called mapToPromotion() ");
 		
-		Optional<Promotion> oc = promotionService.findByCode(promotionCode);
+		Optional<Promotion> op = promotionService.findByCode(promotionCode);
 		
-		PromotionProduct cp = (oc.isPresent()) 
-							 ? (PromotionProduct) Hibernate.unproxy(oc.get())
-							 : new PromotionProduct();
-							 
+		Promotion p = (op.isPresent()) 
+					  ? (Promotion) Hibernate.unproxy(op.get())
+					  : new Promotion();
+					  
+		LocalDateTime psd = LocalDateTime.parse(promotionStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		LocalDateTime ped = LocalDateTime.parse(promotionEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+					  
+		Optional<PromotionType> pt = promotionTypeService.findByCode(promotionTypeCode);
+		Optional<PromotionMechanic> pm = promotionMechanicService.findByCode(promotionMechanicCode);
 		
+		p.setPromotionCode(promotionCode);
+		p.setPromotionShortDesc(promotionDesc);
+		p.setPromotionStartDate(psd);
+		p.setPromotionEndDate(ped);
+		p.setPromotionType(pt.get());
+		p.setPromotionMechanic(pm.get());
 		
-		cp.setPromotionCode(promotionCode);
-		cp.setPromotionLevel(promotionLevel);
-		cp.setPromotionParentCode(parentPromotionCode);
-		
-		ca.setPromotionDesc(promotionDesc);
-		ca.setLclCd(locale);
-		ca.setPromotion(cp);
-		cp.addPromotionAttribute(ca);
-		
-		return cp;
+		return p;
 	}
 	
 	
