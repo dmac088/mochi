@@ -32,9 +32,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #code}")
-	public Optional<Product> findByCode(String locale, String currency, String code) {
-		return productDAO.findByCode(locale, currency, code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #productUPC}")
+	public Optional<Product> findByCode(String locale, String currency, String productUPC) {
+		return productDAO.findByCode(locale, currency, productUPC);
 	}
 	
 	@Override
