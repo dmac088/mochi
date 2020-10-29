@@ -280,10 +280,12 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	.isEqualTo("PLA01");
     	
     	assertNotNull(found.getPrimaryCategory());
-    	assertThat(found.getPrimaryCategory().getCategoryCode().equals("FRT01")).isTrue();
+    	assertThat(found.getPrimaryCategory().getCategoryCode().equals("POM01")).isTrue();
     	
     	assertNotNull(found.getCategories());
-    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("FRT01")).findFirst().isPresent()).isTrue();
+    	assertThat(found.getCategories().size()).isEqualTo(2);
+    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent()).isTrue();
+    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findFirst().isPresent()).isTrue();
     	
     	assertThat(found.getCurrentRetailPriceUSD())
     	.isEqualTo(new Double(7.8));
