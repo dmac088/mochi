@@ -2,12 +2,9 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
-
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -131,7 +128,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 				 																  "123456789");
      
         //then
-    	assertTrue(found.size() == 1);
+    	assertThat(found.size()).isEqualTo(2);
     }
 	
 	@Test
@@ -150,7 +147,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 "priceAsc");
     
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(12));
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
     }
 	
 	
@@ -191,7 +188,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     														 "priceAsc");
     
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(3));
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
     }
 	
 	
@@ -215,7 +212,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
         //then
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(2));
     }
 	
 	@Test

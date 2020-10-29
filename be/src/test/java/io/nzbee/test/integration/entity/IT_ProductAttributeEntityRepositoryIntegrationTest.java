@@ -102,7 +102,9 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     private void assertFound(final Product found) {
     	assertThat(found.getUPC())
         .isEqualTo("123456789");
-    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("FRT01")).findFirst().isPresent())
+    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent())
+    	.isTrue();
+    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findFirst().isPresent())
     	.isTrue();
     	assertThat(found.getDepartment().getDepartmentCode())
     	.isEqualTo("ACC01");
