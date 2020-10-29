@@ -104,7 +104,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	Product found = productService.findByCode(Constants.localeENGB, 
 				  								  Constants.currencyUSD,  
 												  "123456789").get();
-     
+    	
         // then
     	assertFound(found);
 	}
