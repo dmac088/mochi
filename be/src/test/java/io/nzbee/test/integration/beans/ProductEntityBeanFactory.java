@@ -95,13 +95,16 @@ public class ProductEntityBeanFactory {
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 				
 		//we need a category
-		CategoryProduct cp = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
-																		  "FRT01").get();
+		CategoryProduct cpf = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
+																		  "POM01").get();
 				
-				
+		CategoryProduct cpv = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
+				  														  "CIT01").get();
+		
 		//add the category to the product
-		product.addProductCategory(cp);
-		product.setPrimaryCategory(cp);
+		product.addProductCategory(cpf);
+		product.addProductCategory(cpv);
+		product.setPrimaryCategory(cpf);
 		
 		//we should add a tag
 		Tag t = tagService.findByCode(	Constants.localeENGB, 
