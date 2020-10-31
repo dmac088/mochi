@@ -56,9 +56,9 @@ import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
-import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 
 @Entity
 @Table(name = "product", schema = "mochi")
@@ -313,7 +313,7 @@ public abstract class ProductEntity {
 	   inverseJoinColumns 	= @JoinColumn(name = "tag_id"))
 	@IndexedEmbedded(	prefix="product.tags.", 
 						includeEmbeddedObjectId=true)
-	private Set<Tag> tags = new HashSet<Tag>();
+	private Set<TagEntity> tags = new HashSet<TagEntity>();
 
 	@OneToMany(	mappedBy="product",  
 				cascade = CascadeType.ALL,
@@ -356,7 +356,7 @@ public abstract class ProductEntity {
 	@OneToMany(	mappedBy="product",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	Set<ProductPrice> prices = new HashSet<ProductPrice>();
+	Set<ProductPriceEntity> prices = new HashSet<ProductPriceEntity>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_cat_id")
@@ -390,7 +390,7 @@ public abstract class ProductEntity {
 	@SortableField
 	@Transient
 	public Double getCurrentRetailPriceHKD() {
-		 Optional<ProductPrice> priceVal = 
+		 Optional<ProductPriceEntity> priceVal = 
 				 this.prices.stream().filter(p ->
 										 	p.getCurrency().getCode().equals(Constants.currencyHKD)
 										 	&& p.getType().getCode().equals(Constants.retailPriceCode)
@@ -405,7 +405,7 @@ public abstract class ProductEntity {
 	@SortableField
 	@Transient
 	public Double getCurrentRetailPriceUSD() {
-		Optional<ProductPrice> priceVal = 
+		Optional<ProductPriceEntity> priceVal = 
 				 this.prices.stream().filter(p ->
 										 	p.getCurrency().getCode().equals(Constants.currencyUSD)
 										 	&& p.getType().getCode().equals(Constants.retailPriceCode)
@@ -420,7 +420,7 @@ public abstract class ProductEntity {
 	@SortableField
 	@Transient
 	public Double getCurrentMarkdownPriceHKD() {
-		Optional<ProductPrice> priceVal = 
+		Optional<ProductPriceEntity> priceVal = 
 				 this.prices.stream().filter(p ->
 										 	p.getCurrency().getCode().equals(Constants.currencyHKD) && 
 										 	p.getType().getCode().equals(Constants.markdownPriceCode)
@@ -435,7 +435,7 @@ public abstract class ProductEntity {
 	@SortableField
 	@Transient
 	public Double getCurrentMarkdownPriceUSD() {
-		Optional<ProductPrice> priceVal = 
+		Optional<ProductPriceEntity> priceVal = 
 				 this.prices.stream().filter(p ->
 										 	p.getCurrency().getCode().equals(Constants.currencyUSD) && 
 										 	p.getType().getCode().equals(Constants.markdownPriceCode)
@@ -551,11 +551,11 @@ public abstract class ProductEntity {
 		this.categories = categories;
 	}
 	
-	public Set<Tag> getTags() {
+	public Set<TagEntity> getTags() {
 		return this.tags;
 	}
 	
-	public void setTags(Set<Tag> tags) {
+	public void setTags(Set<TagEntity> tags) {
 		this.tags = tags;
 	}
 	
@@ -599,11 +599,11 @@ public abstract class ProductEntity {
 		this.productCreateDt = productCreateDt;
 	}
 	
-	public Set<ProductPrice> getPrices() {
+	public Set<ProductPriceEntity> getPrices() {
 		return this.prices;
 	}
 
-	public void setPrices(Set<ProductPrice> productPrices) {
+	public void setPrices(Set<ProductPriceEntity> productPrices) {
 		this.prices = productPrices;
 	}
 
@@ -639,12 +639,12 @@ public abstract class ProductEntity {
 		this.markdownPrice = markdownPrice;
 	}
 	
-	public void addTag(Tag tag) {
+	public void addTag(TagEntity tag) {
 		this.getTags().add(tag);
 		tag.getProducts().add(this);
 	}
 	
-	public void removeTag(Tag tag) {
+	public void removeTag(TagEntity tag) {
 		this.getTags().remove(tag);
 		tag.getProducts().remove(this);
 	}
@@ -669,12 +669,12 @@ public abstract class ProductEntity {
 		productAttribute.setProduct(null);
 	}
 	
-	public void addProductPrice(ProductPrice productPrice) {
+	public void addProductPrice(ProductPriceEntity productPrice) {
 		this.getPrices().add(productPrice);
 		productPrice.setProduct(this);
 	}
 	
-	public void removeProductPrice(ProductPrice productPrice) {
+	public void removeProductPrice(ProductPriceEntity productPrice) {
 		this.getPrices().remove(productPrice);
 		productPrice.setProduct(null);
 	}

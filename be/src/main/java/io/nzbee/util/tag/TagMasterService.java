@@ -20,7 +20,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.util.FileStorageServiceUpload;
 
@@ -62,31 +62,31 @@ public class TagMasterService {
 	public void persistTagMaster(TagMasterSchema t) {
 		logger.debug("called persistTagMaster() ");
 		
-		Tag tCN = mapToTag(	t.get_TAG_CODE(),
+		TagEntity tCN = mapToTag(	t.get_TAG_CODE(),
 				 			t.get_TAG_DESC_HK(),
 				 		    Constants.localeZHHK);
 		
 		tagService.save(tCN);
 		
-		Tag tEN = mapToTag(	 t.get_TAG_CODE(),
+		TagEntity tEN = mapToTag(	 t.get_TAG_CODE(),
 				 t.get_TAG_DESC_EN(),
 				 Constants.localeENGB);
 	
 		tagService.save(tEN);
 	}
 	
-	private Tag mapToTag(
+	private TagEntity mapToTag(
 			String tagCode,
 			String tagDesc,
 			String locale
 			) {
 		
-		Optional<Tag> ot =tagService.findByCode(tagCode);
+		Optional<TagEntity> ot =tagService.findByCode(tagCode);
 		
-		io.nzbee.entity.tag.Tag t = 
+		io.nzbee.entity.tag.TagEntity t = 
 				(ot.isPresent())
 				? ot.get() 
-				: new Tag();
+				: new TagEntity();
 				
 		TagAttribute ta = new TagAttribute();
 		
@@ -113,7 +113,7 @@ public class TagMasterService {
 		logger.debug("called extractTagMaster() ");
 		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
 	    try {
-		    	List<Tag> tagList = new ArrayList<Tag>(tagService.findAll(Constants.localeENGB));
+		    	List<TagEntity> tagList = new ArrayList<TagEntity>(tagService.findAll(Constants.localeENGB));
 		    	
 		    	//create a map of categories (full list)
 		    	Map<String, TagMasterSchema> map = tagList.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
@@ -122,7 +122,7 @@ public class TagMasterService {
 		    		
 		    	TagMasterSchema tms = map.get(t.getTagCode());
 		    		
-			    Optional<Tag> tag = tagService.findByCode(t.getLocale(),
+			    Optional<TagEntity> tag = tagService.findByCode(t.getLocale(),
 												t.getTagCode()); 
 			    	
 			    tms.set_TAG_CODE(tag.get().getTagCode());

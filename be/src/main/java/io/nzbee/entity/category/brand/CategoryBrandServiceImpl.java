@@ -14,36 +14,37 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	private ICategoryBrandDao brandCategoryDao;
 	
 	@Override
-	public List<CategoryBrand> findAllByBrandCode(String locale, String currency, String brandCode) {
-		return brandCategoryDao.findAllByBrandCode(locale, currency, brandCode);
-	}
-
-	@Override
-	public Set<CategoryBrand> findAll(String locale) {
+	public List<CategoryBrandDTO> findAllByBrandCode(String locale, String currency, String brandCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<CategoryBrand> findAll(String locale, Set<String> codes) {
+	public Set<CategoryBrandDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findById(String locale, Long id) {
+	public Set<CategoryBrandDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByCode(String locale, String code) {
+	public Optional<CategoryBrandDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByDesc(String locale, String desc) {
+	public Optional<CategoryBrandDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryBrandDTO> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

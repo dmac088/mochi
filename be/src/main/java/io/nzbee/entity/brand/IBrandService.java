@@ -5,7 +5,7 @@ import java.util.Set;
 import io.nzbee.entity.ILocalizedService;
 import io.nzbee.search.ISearchDimensionService;
 
-public interface IBrandService extends ILocalizedService<BrandDTO, BrandEntity>, ISearchDimensionService<BrandEntity> {
+public interface IBrandService extends ILocalizedService<BrandDTO, BrandEntity>, ISearchDimensionService<BrandDTO> {
 
 	Set<BrandDTO> findAll(String locale, Set<String> brandCodes);
 	

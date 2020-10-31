@@ -6,25 +6,25 @@ import java.util.Set;
 
 import io.nzbee.entity.ILocalizedService;
 
-public interface IProductPriceService extends ILocalizedService<ProductPrice> {
+public interface IProductPriceService extends ILocalizedService<ProductPriceDTO, ProductPriceEntity> {
 	
-	Optional<ProductPrice> findOne( Long productId, 
+	Optional<ProductPriceEntity> findOne( Long productId, 
 									String priceTypeCode,
 									String currencyCode);
 	
-	Optional<ProductPrice> findOne(String productCode, 
+	Optional<ProductPriceEntity> findOne(String productCode, 
 			String priceTypeCode,
 			String currencyCode);
 
-	Optional<ProductPrice> findById(String locale, String currency, Long id);
+	Optional<ProductPriceEntity> findById(String locale, String currency, Long id);
 
-	List<ProductPrice> findAll(String locale, String currency);
+	List<ProductPriceEntity> findAll(String locale, String currency);
 
-	List<ProductPrice> findAll(String locale, String currency, Set<String> codes);
+	List<ProductPriceEntity> findAll(String locale, String currency, Set<String> codes);
 
-	Optional<ProductPrice> findByCode(String locale, String currency, String code);
+	Optional<ProductPriceEntity> findByCode(String locale, String currency, String code);
 
-	Optional<ProductPrice> findByDesc(String locale, String currency, String desc);
+	Optional<ProductPriceEntity> findByDesc(String locale, String currency, String desc);
 
 	
 }

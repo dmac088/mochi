@@ -14,29 +14,33 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	private TagAttributeRepository TagAttributeRepository; 
 	
 	@Override
-	public Optional<TagAttribute> findById(String locale, Long id) {
-		return TagAttributeRepository.findById(id);
+	public Optional<TagAttributeDTO> findById(String locale, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+		//return TagAttributeRepository.findById(id);
 	}
 	
 	@Override
-	public Set<TagAttribute> findAll(String locale) {
+	public Set<TagAttributeDTO> findAll(String locale) {
 		return null;//TagAttributeRepository.findAll();
 	}
 	
 
 	@Override
-	public Optional<TagAttribute> findByCode(String locale, String code) {
-		return TagAttributeRepository.findByLclCdAndTagTagCode(locale, code);
+	public Optional<TagAttributeDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+		//return TagAttributeRepository.findByLclCdAndTagTagCode(locale, code);
 	}
 
 	@Override
-	public Optional<TagAttribute> findByDesc(String locale, String desc) {
+	public Optional<TagAttributeDTO> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	public Set<TagAttribute> findAll(String locale, Set<String> codes) {
+	public Set<TagAttributeDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -73,27 +77,53 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	}
 
 	@Override
-	public TagAttribute objectToEntity(Object[] o, String locale, String currency) {
+	public TagAttributeDTO objectToDTO(Tuple t, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public TagAttribute objectToEntity(Tuple t, String locale, String currency) {
+	public TagAttributeDTO objectToDTO(Object[] o, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public TagAttribute objectToEntity(Object[] o, String locale) {
+	public TagAttributeDTO objectToDTO(Tuple t, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public TagAttribute objectToEntity(Tuple t, String locale) {
+	public TagAttributeDTO objectToDTO(Object[] o, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
+	
+//	@Override
+//	public TagAttribute objectToEntity(Object[] o, String locale, String currency) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public TagAttribute objectToEntity(Tuple t, String locale, String currency) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public TagAttribute objectToEntity(Object[] o, String locale) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public TagAttribute objectToEntity(Tuple t, String locale) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 }

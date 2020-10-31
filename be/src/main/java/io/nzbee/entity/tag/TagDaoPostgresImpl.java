@@ -1,6 +1,5 @@
 package io.nzbee.entity.tag;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,9 +12,9 @@ import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import java.util.Arrays;
 import org.hibernate.Session;
 import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
@@ -25,8 +24,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.Tag_;
-import io.nzbee.entity.tag.attribute.TagAttribute;
-import io.nzbee.entity.tag.attribute.TagAttribute_;
 
 @Component 
 public class TagDaoPostgresImpl implements ITagDao {
@@ -38,70 +35,73 @@ public class TagDaoPostgresImpl implements ITagDao {
 	private EntityManager em;
 	
 	@Override
-	public Optional<Tag> findById(String locale, Long id) {
-		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}, {}", locale, id);
+	public Optional<TagDTO> findById(String locale, Long id) {
+		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, id);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+		List<Long> ltids = Arrays.asList(id);
 		
-		Root<Tag> root = cq.from(Tag.class);
-
-		List<Predicate> conditions = new ArrayList<Predicate>();	
-		conditions.add(cb.equal(root.get(Tag_.tagId), id));
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 true),"TagMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("tagIDs", ltids)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		TypedQuery<Tag> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
 		
-		return Optional.ofNullable(query.getSingleResult());
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new TagDTOResultTransformer());
+		
+		@SuppressWarnings("unchecked")
+		TagDTO result = (TagDTO) query.getSingleResult();
+		
+		return Optional.ofNullable(result);
 	}
 	
 	@Override
-	public Optional<Tag> findByCode(String locale, String code) {
+	public Optional<TagDTO> findByCode(String locale, String code) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, code);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<String> ltc = Arrays.asList(code);
 		
-		Root<Tag> root = cq.from(Tag.class);
-		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
-				
-		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
-						root.get(Tag_.TAG_CODE).alias("tagCode"),
-						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
-						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
-		);
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false),"TagMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("tagCodes", ltc)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		cq.where(cb.and (cb.equal(attribute.get(TagAttribute_.lclCd), locale),
-				cb.equal(root.get(Tag_.TAG_CODE), code)));
 		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new TagDTOResultTransformer());
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		@SuppressWarnings("unchecked")
+		TagDTO result = (TagDTO) query.getSingleResult();
 		
-		try {
-			
-			Tuple tuple = query.getSingleResult();
-			return Optional.ofNullable(this.objectToEntity(tuple, locale));
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		return Optional.ofNullable(result);
 	}
 	
 	
 	@Override
-	public Optional<Tag> findByCode(String code) {
+	public Optional<TagEntity> findByCode(String code) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}", code);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Tag> cq = cb.createQuery(Tag.class);
+		CriteriaQuery<TagEntity> cq = cb.createQuery(TagEntity.class);
 		
-		Root<Tag> root = cq.from(Tag.class);
+		Root<TagEntity> root = cq.from(TagEntity.class);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
@@ -109,14 +109,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 				cb.equal(root.get(Tag_.TAG_CODE), code)
 		);
 		
-		TypedQuery<Tag> query = em.createQuery(cq
+		TypedQuery<TagEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
 		
 		try {
-			Tag tag = query.getSingleResult();
+			TagEntity tag = query.getSingleResult();
 			return Optional.ofNullable(tag);
 		} 
 		catch(NoResultException nre) {
@@ -127,165 +127,111 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	
 	@Override
-	public Optional<Tag> findByDesc(String locale, String desc) {
+	public Optional<TagDTO> findByDesc(String locale, String desc) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}", locale, desc);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<String> ltd = Arrays.asList(desc);
 		
-		Root<Tag> root = cq.from(Tag.class);
-		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
-				
-		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
-						root.get(Tag_.TAG_CODE).alias("tagCode"),
-						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
-						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
-		);
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false),"TagMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("tagDescriptions", ltd)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		cq.where(cb.and (cb.equal(attribute.get(TagAttribute_.LCL_CD), locale),
-				cb.equal(attribute.get(TagAttribute_.TAG_DESC), desc)));
 		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new TagDTOResultTransformer());
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		@SuppressWarnings("unchecked")
+		TagDTO result = (TagDTO) query.getSingleResult();
 		
-		try {
-			
-			Tuple tuple = query.getSingleResult();
-			return Optional.ofNullable(this.objectToEntity(tuple, locale));
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		return Optional.ofNullable(result);
 	}
 
 
 	@Override
-	public Set<Tag> findAll(String locale, Set<String> codes) {
-		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-				
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
-				
-		Root<Tag> root = cq.from(Tag.class);
-		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
-		
-		
-		Predicate p1 = cb.equal(attribute.get(TagAttribute_.lclCd), locale);
-		Predicate p2 = root.get(Tag_.TAG_CODE).in(codes);
-		Predicate fp = p1; //final predicate
-		
+	public Set<TagDTO> findAll(String locale, Set<String> tagCodes) {
+		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(tagCodes));
 
-		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
-						root.get(Tag_.TAG_CODE).alias("tagCode"),
-						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
-						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
-		);
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 !tagCodes.isEmpty(),
+															 false,
+															 false),"TagMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		
-		if(!codes.isEmpty()) {
-			fp = cb.and(p1, p2);
+		if(!tagCodes.isEmpty()) {
+			query.setParameter("tagCodes", tagCodes);
 		}
-		cq.where(fp);
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-				
-		List<Tuple> tuples = query.getResultList();
-				
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new TagDTOResultTransformer());
+		
+		@SuppressWarnings("unchecked")
+		Set<TagDTO> results = (Set<TagDTO>) query.getResultStream().collect(Collectors.toSet());
+		
+		return results;
 	}
 	
 	@Override
-	public void save(Tag t) {
+	public void save(TagEntity t) {
 		em.persist(t);
 	}
 
 	@Override
-	public void update(Tag t, String[] params) {
+	public void update(TagEntity t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Tag t) {
+	public void delete(TagEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Set<Tag> findAll(String locale) {
+	public Set<TagDTO> findAll(String locale) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale);
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false),"TagMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				
-		Root<Tag> root = cq.from(Tag.class);
-		Join<Tag, TagAttribute> attribute = root.join(Tag_.attributes);
-	
-		cq.multiselect(	root.get(Tag_.TAG_ID).alias("tagId"),
-						root.get(Tag_.TAG_CODE).alias("tagCode"),
-						attribute.get(TagAttribute_.TAG_ATTRIBUTE_ID).alias("tagAttributeId"),
-						attribute.get(TagAttribute_.TAG_DESC).alias("tagDesc")
-		);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new TagDTOResultTransformer());
 		
-		cq.where(cb.equal(attribute.get(TagAttribute_.lclCd), locale));
-				
-		TypedQuery<Tuple> query = em.createQuery(cq);
-				
-		List<Tuple> tuples = query.getResultList();
-				
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
+		@SuppressWarnings("unchecked")
+		Set<TagDTO> results = (Set<TagDTO>) query.getResultStream().collect(Collectors.toSet());
+		
+		return results;
+		
 	}
 
-	@Override
-	public Tag objectToEntity(Object[] o, String locale, String currency) {
-		Tag tagEntity = objectToEntity(o,locale);
-		tagEntity.setCurrency(currency);
-		return tagEntity;
-	}
-
-	@Override
-	public Tag objectToEntity(Tuple t, String locale, String currency) {
-		Tag tagEntity = objectToEntity(t,locale);
-		tagEntity.setCurrency(currency);
-		return tagEntity;
-	}
 	
 	@Override
-	public Tag objectToEntity(Object[] o, String locale) {
-		Tag tag = (Tag) o[0];
-		
-		tag.setTagAttribute(((TagAttribute) o[1]));
-		
-		tag.setObjectCount(((BigInteger)o[2]).intValue());
-		
-		tag.setLocale(locale);
-		
-		return tag;
-	}
-
-	@Override
-	public Tag objectToEntity(Tuple t, String locale) {
-		Tag tagEntity = new Tag();
-		TagAttribute tagAttribute = new TagAttribute();
-				
-		tagAttribute.setId(Long.parseLong(t.get("tagAttributeId").toString()));
-		tagAttribute.setTag(tagEntity);
-		tagAttribute.setTagDesc(t.get("tagDesc").toString());
-		tagAttribute.setLclCd(locale);
-				
-		tagEntity.addTagAttribute(tagAttribute);
-		tagEntity.setTagAttribute(tagAttribute);
-		tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
-		tagEntity.setTagCode(t.get("tagCode").toString());
-		
-		tagEntity.setLocale(locale);
-		
-		return tagEntity;
-	}
-	
-	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
+	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, max price = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
@@ -293,7 +239,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 		Query query = session.createNativeQuery(constructSQL(
 															 !categoryCodes.isEmpty(),
 															 !brandCodes.isEmpty(),
-															 !(maxPrice == null)),"TagMapping")
+															 !(maxPrice == null),
+															 false,
+															 false,
+															 false),"TagMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -312,10 +261,13 @@ public class TagDaoPostgresImpl implements ITagDao {
 			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		}
 		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new TagDTOResultTransformer());
 		
-		return results.stream().map(b -> this.objectToEntity(b, locale, currency)).collect(Collectors.toList());
+		@SuppressWarnings("unchecked")
+		List<TagDTO> results = query.getResultList();
+		
+		return results;
 		
 	}
 	
@@ -323,7 +275,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 	private String constructSQL(
 			boolean hasCategories,
 			boolean hasBrands,
-			boolean hasPrice
+			boolean hasPrice,
+			boolean hasTagCodes,
+			boolean hasTagDescriptions,
+			boolean hasTagIds
 		) {
 		String sql = "WITH recursive descendants AS " + 
 				"( " + 
@@ -365,62 +320,135 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"          GROUP BY  coalesce(s2.cat_id,s1.cat_id), " +
 				"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
 				")" + 
-			"			select t.tag_id,  " + 
-			"				   t.tag_cd, " + 
-			"				   lcl.tag_lcl_id, " + 
-			"				   lcl.tag_desc, " + 
-			"				   lcl.lcl_cd, 		" + 
-			"				   count(distinct p.upc_cd) as object_count  " + 
-			"			from categories c  " + 
-			"				inner join mochi.product_category pc " + 
-			"					on c.cat_id = pc.cat_id " + 
-			"				 " + 
-			"				inner join mochi.product p " + 
-			"					on pc.prd_id = p.prd_id " + 
-			"				 " + 
-			"				inner join mochi.product_status ps " + 
-			"					on p.prd_sts_id = ps.prd_sts_id " + 
-			"					and ps.prd_sts_cd = :activeProductCode " + 
-			"									  " + 
-			"				inner join mochi.brand b " +
-			" 					on p.bnd_id = b.bnd_id " +
-						
-			"				inner join mochi.product_tag pt " + 
-			"					on p.prd_id = pt.prd_id " + 
-			 
-			"				inner join mochi.tag t " + 
-			"					on pt.tag_id = t.tag_id " + 
-			 
-			"				inner join mochi.tag_attr_lcl lcl " + 
-			"					on t.tag_id = lcl.tag_id " + 
-			"					and lcl.lcl_cd = :locale  " + 
-			 
-			((hasPrice) ?
-							"inner join  ( " +
-									"	SELECT prd_id, " +  
-									"		   prc_val " + 
-									"		FROM mochi.price mprc " + 
-									"		INNER JOIN mochi.currency mcurr " + 
-								    "		ON         mprc.ccy_id = mcurr.ccy_id  " + 
-									"		AND        mcurr.ccy_cd = :currency  " +
-									"		INNER JOIN mochi.price_type mpt " +
-									"		ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
-									"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
-									"		) mprc  " +
-							"		ON p.prd_id = mprc.prd_id  " +
-							"		AND prc_val <= :maxPrice " 
-							: "") +
-			
-			"			where 0=0  " +
-			((hasBrands) ? 	" 		AND b.bnd_cd in 	:brandCodes " : "") +
-			"			group by t.tag_id,  " + 
-			"				   t.tag_cd, " + 
-			"				   lcl.tag_lcl_id, " + 
-			"				   lcl.tag_desc, " + 
-			"				   lcl.lcl_cd"	;
+				"			select t.tag_id,  " + 
+				"				   t.tag_cd, " + 
+				"				   lcl.tag_lcl_id, " + 
+				"				   lcl.tag_desc, " + 
+				"				   lcl.lcl_cd, 		" + 
+				"				   count(distinct p.upc_cd) as object_count  " + 
+				"			from categories c  " + 
+				"				inner join mochi.product_category pc " + 
+				"					on c.cat_id = pc.cat_id " + 
+				"				 " + 
+				"				inner join mochi.product p " + 
+				"					on pc.prd_id = p.prd_id " + 
+				"				 " + 
+				"				inner join mochi.product_status ps " + 
+				"					on p.prd_sts_id = ps.prd_sts_id " + 
+				"					and ps.prd_sts_cd = :activeProductCode " + 
+				"									  " + 
+				"				inner join mochi.brand b " +
+				" 					on p.bnd_id = b.bnd_id " +
+							
+				"				inner join mochi.product_tag pt " + 
+				"					on p.prd_id = pt.prd_id " + 
+				 
+				"				inner join mochi.tag t " + 
+				"					on pt.tag_id = t.tag_id " + 
+				 
+				"				inner join mochi.tag_attr_lcl lcl " + 
+				"					on t.tag_id = lcl.tag_id " + 
+				"					and lcl.lcl_cd = :locale  " + 
+				 
+				((hasPrice) ?
+								"inner join  ( " +
+										"	SELECT prd_id, " +  
+										"		   prc_val " + 
+										"		FROM mochi.price mprc " + 
+										"		INNER JOIN mochi.currency mcurr " + 
+									    "		ON         mprc.ccy_id = mcurr.ccy_id  " + 
+										"		AND        mcurr.ccy_cd = :currency  " +
+										"		INNER JOIN mochi.price_type mpt " +
+										"		ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
+										"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
+										"		) mprc  " +
+								"		ON p.prd_id = mprc.prd_id  " +
+								"		AND prc_val <= :maxPrice " 
+								: "") +
+				
+				"			where 0=0  " +
+				((hasBrands) ? 				" 	AND b.bnd_cd in 	:brandCodes " 			: "") +
+				((hasTagCodes) ? 			" 	AND t.tag_cd in 	:tagCodes " 			: "") +
+				((hasTagDescriptions) ? 	" 	AND lcl.tag_desc in 	:tagDescriptions " 	: "") +
+				((hasTagIds) ? 	" 				AND t.tag_id 	 in 	:tagIDs " 	: "") +
+				"			group by t.tag_id,  " + 
+				"				   t.tag_cd, " + 
+				"				   lcl.tag_lcl_id, " + 
+				"				   lcl.tag_desc, " + 
+				"				   lcl.lcl_cd"	;
 		
 	return sql;
 	}
 
+	@Override
+	public TagDTO objectToDTO(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TagDTO objectToDTO(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TagDTO objectToDTO(Tuple t, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TagDTO objectToDTO(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+//	@Override
+//	public TagEntity objectToEntity(Object[] o, String locale, String currency) {
+//		TagEntity tagEntity = objectToEntity(o,locale);
+//		tagEntity.setCurrency(currency);
+//		return tagEntity;
+//	}
+//
+//	@Override
+//	public TagEntity objectToEntity(Tuple t, String locale, String currency) {
+//		TagEntity tagEntity = objectToEntity(t,locale);
+//		tagEntity.setCurrency(currency);
+//		return tagEntity;
+//	}
+//	
+//	@Override
+//	public TagEntity objectToEntity(Object[] o, String locale) {
+//		TagEntity tag = (TagEntity) o[0];
+//		
+//		tag.setTagAttribute(((TagAttribute) o[1]));
+//		
+//		tag.setObjectCount(((BigInteger)o[2]).intValue());
+//		
+//		tag.setLocale(locale);
+//		
+//		return tag;
+//	}
+//
+//	@Override
+//	public TagEntity objectToEntity(Tuple t, String locale) {
+//		TagEntity tagEntity = new TagEntity();
+//		TagAttribute tagAttribute = new TagAttribute();
+//				
+//		tagAttribute.setId(Long.parseLong(t.get("tagAttributeId").toString()));
+//		tagAttribute.setTag(tagEntity);
+//		tagAttribute.setTagDesc(t.get("tagDesc").toString());
+//		tagAttribute.setLclCd(locale);
+//				
+//		tagEntity.addTagAttribute(tagAttribute);
+//		tagEntity.setTagAttribute(tagAttribute);
+//		tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
+//		tagEntity.setTagCode(t.get("tagCode").toString());
+//		
+//		tagEntity.setLocale(locale);
+//		
+//		return tagEntity;
+//	}
 
 }

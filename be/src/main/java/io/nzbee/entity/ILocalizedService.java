@@ -22,5 +22,4 @@ public interface ILocalizedService<T, Z> {
 	
 	void delete(Z t);
 
-
 }

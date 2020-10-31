@@ -13,7 +13,7 @@ import io.nzbee.entity.product.ProductEntity;
 @Table(name = "product_basic", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")
 @DiscriminatorValue("2")
-public class ProductBasic extends ProductEntity  {
+public class ProductBasicEntity extends ProductEntity  {
 
 
 	

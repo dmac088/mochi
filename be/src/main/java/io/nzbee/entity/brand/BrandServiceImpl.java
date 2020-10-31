@@ -70,6 +70,11 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public Optional<BrandDTO> findByProductCode(String locale, String productCode) {
 		return brandDao.findByProductCode(locale, productCode);
 	}
+	
+	@Override
+	public Set<BrandDTO> findAll(String locale, String currency, Set<String> brandCodes) {
+		return brandDao.findAll(locale, brandCodes);
+	}
 
 	@Override
 	@Caching(
@@ -110,6 +115,5 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public String tokenToCode(String token) {
 		return token;
 	}
-
-
+	
 }

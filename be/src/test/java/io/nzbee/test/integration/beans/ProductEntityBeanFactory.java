@@ -10,16 +10,16 @@ import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
-import io.nzbee.entity.product.basic.ProductBasic;
+import io.nzbee.entity.product.basic.ProductBasicEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
-import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "tst")
@@ -48,7 +48,7 @@ public class ProductEntityBeanFactory {
 	
 	public final ProductEntity getProductEntityBean() {
 	
-		ProductBasic product = new ProductBasic();
+		ProductBasicEntity product = new ProductBasicEntity();
 		product.setProductCreateDt(LocalDateTime.now());
 		product.setUPC("123456789");
 		
@@ -69,8 +69,8 @@ public class ProductEntityBeanFactory {
 		ProductPriceType ppt = productPriceTypeService.findByCode("RET01").get();
 		Currency currHKD = currencyService.findByCode("HKD").get();
 		Currency currUSD = currencyService.findByCode("USD").get();
-		ProductPrice priceHKD = new ProductPrice();
-		ProductPrice priceUSD = new ProductPrice();
+		ProductPriceEntity priceHKD = new ProductPriceEntity();
+		ProductPriceEntity priceUSD = new ProductPriceEntity();
 		priceHKD.setType(ppt);
 		priceUSD.setType(ppt);
 		priceHKD.setCurrency(currHKD);
@@ -107,7 +107,7 @@ public class ProductEntityBeanFactory {
 		product.setPrimaryCategory(cpf);
 		
 		//we should add a tag
-		Tag t = tagService.findByCode(	Constants.localeENGB, 
+		TagEntity t = tagService.findByCode(	Constants.localeENGB, 
 										"ORG01").get();
 		
 		product.addTag(t);

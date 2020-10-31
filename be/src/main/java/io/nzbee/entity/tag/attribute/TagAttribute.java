@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 
 @Entity
 @Table(name = "tag_attr_lcl", schema = "mochi")
@@ -31,7 +31,7 @@ public class TagAttribute {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="tag_id")
-	private Tag tag;
+	private TagEntity tag;
 	
 	public Long getTagId() {
 		return tagAttributeId;
@@ -45,11 +45,11 @@ public class TagAttribute {
 		tagAttributeId = id;
 	}
 	
-	public Tag getTag() {
+	public TagEntity getTag() {
 		return tag;
 	}
 
-	public void setTag(Tag tag) {
+	public void setTag(TagEntity tag) {
 		this.tag = tag;
 	}
 

@@ -21,7 +21,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
+	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		return productTagDAO.findAll(
 									locale, 
 									currency, 
@@ -33,43 +33,43 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Tag> findAll(String locale) {
+	public Set<TagDTO> findAll(String locale) {
 		return productTagDAO.findAll(locale);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Tag> findAll(String locale, Set<String> codes) {
+	public Set<TagDTO> findAll(String locale, Set<String> codes) {
 		return productTagDAO.findAll(locale, codes);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
-	public Optional<Tag> findById(String locale, Long id) {
+	public Optional<TagDTO> findById(String locale, Long id) {
 		return productTagDAO.findById(locale, id);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #tagCode}")
-	public Optional<Tag> findByCode(String locale, String tagCode) {
+	public Optional<TagDTO> findByCode(String locale, String tagCode) {
 		return productTagDAO.findByCode(locale, tagCode);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #tagDesc}")
-	public Optional<Tag> findByDesc(String locale, String tagDesc) {
+	public Optional<TagDTO> findByDesc(String locale, String tagDesc) {
 		return productTagDAO.findByDesc(locale, tagDesc);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#tagCode")
-	public Optional<Tag> findByCode(String tagCode) {
+	public Optional<TagEntity> findByCode(String tagCode) {
 		return productTagDAO.findByCode(tagCode);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Tag> findAll(String lcl, String currency, Set<String> codes) {
+	public Set<TagDTO> findAll(String lcl, String currency, Set<String> codes) {
 		return productTagDAO.findAll(lcl, codes);
 	}
 	
@@ -95,18 +95,18 @@ public class TagServiceImpl implements ITagService, IFacetService {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagCode}"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
-	public void save(Tag tag) {
+	public void save(TagEntity tag) {
 		productTagDAO.save(tag);
 	}
 
 	@Override
-	public void update(Tag t) {
+	public void update(TagEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Tag t) {
+	public void delete(TagEntity t) {
 		// TODO Auto-generated method stub
 		
 	}

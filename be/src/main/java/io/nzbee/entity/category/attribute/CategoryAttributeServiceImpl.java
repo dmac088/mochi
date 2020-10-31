@@ -15,18 +15,21 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 	
 	@Override
 	public Optional<CategoryAttributeDTO> findById(String locale, Long id) {
-		return CategoryAttributeRepository.findById(id);
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override
 	public Set<CategoryAttributeDTO> findAll(String locale) {
-		return null;//CategoryAttributeRepository.findAll();
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 
 	@Override
 	public Optional<CategoryAttributeDTO> findByCode(String locale, String code) {
-		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryCode(locale, code);
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

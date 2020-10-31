@@ -37,6 +37,7 @@ import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.PageableUtil;
@@ -292,7 +293,7 @@ public class SearchServiceImpl implements ISearchService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public Page<ProductEntity> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
+	public PageImpl<ProductDTO> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
 			int size, String sortBy, Set<io.nzbee.search.facet.IFacet> facetPayload,
 			Set<io.nzbee.search.facet.IFacet> returnFacets) {
 
@@ -433,8 +434,8 @@ public class SearchServiceImpl implements ISearchService {
 
 		setProductProjection(jpaQuery);
 		List<Object[]> result = jpaQuery.getResultList();
-		List<ProductEntity> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
-		return new PageImpl<ProductEntity>(lp, pageable, jpaQuery.getResultSize());
+		List<ProductDTO> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		return new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
 
 	}
 
@@ -456,9 +457,9 @@ public class SearchServiceImpl implements ISearchService {
 		setProductProjection(jpaQuery);
 		@SuppressWarnings("unchecked")
 		List<Object[]> result = jpaQuery.getResultList();
-		List<ProductEntity> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		List<ProductDTO> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
-		return lp.stream().map(p -> p.getProductAttribute().getProductDesc()).toArray(String[]::new);
+		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
 
 	}
 

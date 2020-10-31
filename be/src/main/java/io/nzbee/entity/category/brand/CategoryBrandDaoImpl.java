@@ -1,31 +1,15 @@
 package io.nzbee.entity.category.brand;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.brand.Brand_;
-import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.category.type.CategoryType_;
 
 @Service
 public class CategoryBrandDaoImpl implements ICategoryBrandDao {
@@ -38,71 +22,77 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	
 	@Override
 	public List<CategoryBrand> findAllByBrandCode(String locale, String currency, String brandCode) {
-		LOGGER.debug("call CategoryBrandDaoImpl.findAllByBrandCode parameters : {}, {}, {}", locale, currency, brandCode);
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
-		
-		Root<CategoryBrand> root = cq.from(CategoryBrand.class);
-		
-		Join<CategoryBrand, CategoryAttributeEntity> attribute = root.join(Category_.attributes);
-		Join<CategoryBrand, BrandEntity> products = root.join(CategoryBrand_.brands);
-		Join<CategoryBrand, CategoryType> type = root.join(Category_.categoryType);
-		
-		cq.multiselect(	root.get(CategoryBrand_.categoryId).alias("categoryId"),
-						root.get(CategoryBrand_.categoryCode).alias("categoryCode"),
-						attribute.get(CategoryAttribute_.categoryAttributeId).alias("categoryAttributeId"),
-						attribute.get(CategoryAttribute_.categoryDesc).alias("categoryDesc"),
-						type.get(CategoryType_.categoryTypeCode).alias("categoryTypeCode"),
-						type.get(CategoryType_.categoryTypeDesc).alias("categoryTypeDesc")
-		);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-	
-		if(!(brandCode == null)) {
-			
-			cq.where(cb.and(
-					cb.equal(products.get(Brand_.brandCode), brandCode),
-					cb.equal(attribute.get(CategoryAttribute_.lclCd), locale)
-					)
-			);
-			
-			conditions.add(cb.equal(products.get(Brand_.brandCode), brandCode));
-		}
-		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		List<Tuple> tuples = query.getResultList();
-		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
+//	@Override
+//	public List<CategoryBrand> findAllByBrandCode(String locale, String currency, String brandCode) {
+//		LOGGER.debug("call CategoryBrandDaoImpl.findAllByBrandCode parameters : {}, {}, {}", locale, currency, brandCode);
+//		
+//		CriteriaBuilder cb = em.getCriteriaBuilder();
+//		
+//		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+//		
+//		Root<CategoryBrand> root = cq.from(CategoryBrand.class);
+//		
+//		Join<CategoryBrand, CategoryAttributeEntity> attribute = root.join(Category_.attributes);
+//		Join<CategoryBrand, BrandEntity> products = root.join(CategoryBrand_.brands);
+//		Join<CategoryBrand, CategoryType> type = root.join(Category_.categoryType);
+//		
+//		cq.multiselect(	root.get(CategoryBrand_.categoryId).alias("categoryId"),
+//						root.get(CategoryBrand_.categoryCode).alias("categoryCode"),
+//						attribute.get(CategoryAttribute_.categoryAttributeId).alias("categoryAttributeId"),
+//						attribute.get(CategoryAttribute_.categoryDesc).alias("categoryDesc"),
+//						type.get(CategoryType_.categoryTypeCode).alias("categoryTypeCode"),
+//						type.get(CategoryType_.categoryTypeDesc).alias("categoryTypeDesc")
+//		);
+//		
+//		List<Predicate> conditions = new ArrayList<Predicate>();
+//	
+//		if(!(brandCode == null)) {
+//			
+//			cq.where(cb.and(
+//					cb.equal(products.get(Brand_.brandCode), brandCode),
+//					cb.equal(attribute.get(CategoryAttribute_.lclCd), locale)
+//					)
+//			);
+//			
+//			conditions.add(cb.equal(products.get(Brand_.brandCode), brandCode));
+//		}
+//		
+//		TypedQuery<Tuple> query = em.createQuery(cq);
+//		List<Tuple> tuples = query.getResultList();
+//		
+//		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
+//	}
+	
 	@Override
-	public Optional<CategoryBrand> findById(String locale, Long id) {
+	public Optional<CategoryBrandDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByCode(String locale, String code) {
+	public Optional<CategoryBrandDTO> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryBrand> findByDesc(String locale, String desc) {
+	public Optional<CategoryBrandDTO> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<CategoryBrand> findAll(String locale) {
+	public Set<CategoryBrandDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<CategoryBrand> findAll(String locale, Set<String> codes) {
+	public Set<CategoryBrandDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -125,43 +115,69 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public CategoryBrand objectToEntity(Object[] o, String locale, String currency) {
+	public CategoryBrandDTO objectToDTO(Tuple t, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public CategoryBrand objectToEntity(Tuple t, String locale, String currency) {
-		CategoryBrand cb = objectToEntity(t,locale);
-		cb.setCurrency(currency);
-		return cb; 
-	}
-
-	@Override
-	public CategoryBrand objectToEntity(Object[] o, String locale) {
+	public CategoryBrandDTO objectToDTO(Object[] o, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public CategoryBrand objectToEntity(Tuple t, String locale) {
-		CategoryAttributeEntity ca = new CategoryAttributeEntity();
-		ca.setCategoryDesc(t.get("categoryDesc").toString());
-		ca.setLclCd(locale);
-		
-		CategoryType ct = new CategoryType();
-		ct.setCategoryTypeCode(t.get("categoryTypeCode").toString());
-		ct.setCategoryTypeDesc(t.get("categoryTypeDesc").toString());
-		
-		CategoryBrand cp = new CategoryBrand();
-		cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
-		cp.setCategoryCode(t.get("categoryCode").toString());
-		cp.setLocale(locale);
-		
-		cp.setCategoryAttribute(ca);
-		cp.setCategoryType(ct);
-		
-		return cp; 
+	public CategoryBrandDTO objectToDTO(Tuple t, String locale) {
+		// TODO Auto-generated method stub
+		return null;
 	}
+
+	@Override
+	public CategoryBrandDTO objectToDTO(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+
+//	@Override
+//	public CategoryBrand objectToEntity(Object[] o, String locale, String currency) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public CategoryBrand objectToEntity(Tuple t, String locale, String currency) {
+//		CategoryBrand cb = objectToEntity(t,locale);
+//		cb.setCurrency(currency);
+//		return cb; 
+//	}
+//
+//	@Override
+//	public CategoryBrand objectToEntity(Object[] o, String locale) {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//
+//	@Override
+//	public CategoryBrand objectToEntity(Tuple t, String locale) {
+//		CategoryAttributeEntity ca = new CategoryAttributeEntity();
+//		ca.setCategoryDesc(t.get("categoryDesc").toString());
+//		ca.setLclCd(locale);
+//		
+//		CategoryType ct = new CategoryType();
+//		ct.setCategoryTypeCode(t.get("categoryTypeCode").toString());
+//		ct.setCategoryTypeDesc(t.get("categoryTypeDesc").toString());
+//		
+//		CategoryBrand cp = new CategoryBrand();
+//		cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
+//		cp.setCategoryCode(t.get("categoryCode").toString());
+//		cp.setLocale(locale);
+//		
+//		cp.setCategoryAttribute(ca);
+//		cp.setCategoryType(ct);
+//		
+//		return cp; 
+//	}
 
 }

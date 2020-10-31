@@ -6,7 +6,7 @@ import io.nzbee.entity.ILocalizedService;
 import io.nzbee.entity.category.Category;
 import io.nzbee.search.ISearchDimensionService;
 
-public interface ICategoryService extends ILocalizedService<CategoryDTO, Category>, ISearchDimensionService<Category> {
+public interface ICategoryService extends ILocalizedService<CategoryDTO, Category>, ISearchDimensionService<CategoryDTO> {
 
 	Set<Category> findByParent(String locale, String parentCategoryCode);
 
