@@ -28,11 +28,11 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.category.product.CategoryProduct_;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.Product_;
@@ -95,18 +95,18 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	
 	@Override
-	public Set<Category> findAll() {
+	public Set<CategoryEntity> findAll() {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll ");
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
 		
-		Root<Category> root = cq.from(Category.class);
+		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
-		TypedQuery<Category> query = em.createQuery(cq
+		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
@@ -121,14 +121,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 					@CachePut(value = CACHE_NAME, key="#categoryCode")
 			}
 	)
-	public Optional<Category> findByCode(String categoryCode) {
+	public Optional<CategoryEntity> findByCode(String categoryCode) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
 		
-		Root<Category> root = cq.from(Category.class);
+		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
@@ -136,14 +136,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				cb.equal(root.get(Category_.CATEGORY_CODE), categoryCode)
 		);
 		
-		TypedQuery<Category> query = em.createQuery(cq
+		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
 		
 		try {
-			Category p = query.getSingleResult();
+			CategoryEntity p = query.getSingleResult();
 			return Optional.ofNullable(p);
 		} 
 		catch(NoResultException nre) {
@@ -410,17 +410,17 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 
 	@Override
-	public Set<Category> findByParent(String parentCategoryCode, String locale) {
+	public Set<CategoryEntity> findByParent(String parentCategoryCode, String locale) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByParent parameters : {}, {}", parentCategoryCode, locale);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
 		
-		Root<Category> root = cq.from(Category.class);
+		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
 		
-		Join<Category, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
-		Join<Category, Category> parent = root.join(Category_.parent);
+		Join<CategoryEntity, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
+		Join<CategoryEntity, CategoryEntity> parent = root.join(Category_.parent);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 	
@@ -430,7 +430,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		
-		TypedQuery<Category> query = em.createQuery(cq
+		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)
@@ -441,16 +441,16 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	
 	@Override
-	public Set<Category> findByLevel(String locale, Long level) {
+	public Set<CategoryEntity> findByLevel(String locale, Long level) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByLevel parameters : {}, {}", locale, level);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
 		
-		Root<Category> root = cq.from(Category.class);
+		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
 		
-		Join<Category, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
+		Join<CategoryEntity, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!(level == null)) {
@@ -459,7 +459,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		
-		TypedQuery<Category> query = em.createQuery(cq
+		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)
@@ -469,16 +469,16 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
-	public Set<Category> findAllByProductCode(String locale, String productCode) {
+	public Set<CategoryEntity> findAllByProductCode(String locale, String productCode) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByProductCode parameters : {}, {}, {}", locale, productCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
+		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
 		
-		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
-		Join<CategoryProduct, CategoryAttributeEntity> categoryAttribute = root.join(CategoryProduct_.attributes);
-		Join<CategoryProduct, ProductEntity> product = root.join(CategoryProduct_.products);
+		Root<CategoryProductEntity> root = cq.from(CategoryProductEntity.class);
+		Join<CategoryProductEntity, CategoryAttributeEntity> categoryAttribute = root.join(CategoryProduct_.attributes);
+		Join<CategoryProductEntity, ProductEntity> product = root.join(CategoryProduct_.products);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(product.get(Product_.productUPC), productCode));
@@ -486,7 +486,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
 		
-		TypedQuery<Category> query = em.createQuery(cq
+		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(true)
@@ -548,18 +548,18 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 //	}
 	
 	@Override
-	public void save(Category t) {
+	public void save(CategoryEntity t) {
 		em.persist(t);
 	}
 
 	@Override
-	public void update(Category t, String[] params) {
+	public void update(CategoryEntity t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Category t) {
+	public void delete(CategoryEntity t) {
 		// TODO Auto-generated method stub
 	}	
 	

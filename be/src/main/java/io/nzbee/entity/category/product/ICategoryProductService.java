@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import io.nzbee.entity.ILocalizedService;
 
-public interface ICategoryProductService extends ILocalizedService<CategoryProductDTO, CategoryProduct> {
+public interface ICategoryProductService extends ILocalizedService<CategoryProductDTO, CategoryProductEntity> {
 
 	List<CategoryProductDTO> findAllByProductCode(String locale, String productCode);
 

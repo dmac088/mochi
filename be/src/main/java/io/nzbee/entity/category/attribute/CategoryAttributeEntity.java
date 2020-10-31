@@ -14,7 +14,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
@@ -34,9 +34,9 @@ public class CategoryAttributeEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_id")
-	private Category category;
+	private CategoryEntity category;
 	
-	public Category getCategory() {
+	public CategoryEntity getCategory() {
 		return category;
 	}
 	
@@ -44,7 +44,7 @@ public class CategoryAttributeEntity {
 		return categoryAttributeId;
 	}
 
-	public void setCategory(Category productCategory) {
+	public void setCategory(CategoryEntity productCategory) {
 		this.category = productCategory;
 	}
 

@@ -69,18 +69,18 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")
 			})
-	public void save(CategoryProduct category) {
+	public void save(CategoryProductEntity category) {
 		productCategoryDao.save(category);
 	}
 
 	@Override
-	public void update(CategoryProduct t) {
+	public void update(CategoryProductEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(CategoryProduct t) {
+	public void delete(CategoryProductEntity t) {
 		// TODO Auto-generated method stub
 		
 	}

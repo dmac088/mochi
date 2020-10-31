@@ -27,7 +27,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByCode(String locale, String code) {
-		io.nzbee.entity.brand.BrandEntity b = brandService.findByCode(locale, code)
+		io.nzbee.entity.brand.BrandDTO b = brandService.findByCode(locale, code)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
 		return entityToDo(b);
 	}
@@ -35,7 +35,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByProductCode(String locale, String productCode) {
-		io.nzbee.entity.brand.BrandEntity b = brandService.findByProductCode(locale, productCode)
+		io.nzbee.entity.brand.BrandDTO b = brandService.findByProductCode(locale, productCode)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product code " + productCode));
 		return entityToDo(b);
 	}
@@ -43,7 +43,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByDesc(String locale, String desc) {
-		io.nzbee.entity.brand.BrandEntity b = brandService.findByDesc(locale, desc)
+		io.nzbee.entity.brand.BrandDTO b = brandService.findByDesc(locale, desc)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product desc " + desc));
 		return entityToDo(b);
 	}
@@ -108,11 +108,11 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		brandService.save(b);		
 	}
 	
-	private Brand entityToDo(io.nzbee.entity.brand.BrandEntity e) {
+	private Brand entityToDo(io.nzbee.entity.brand.BrandDTO e) {
 		return	new Brand(
 					 e.getBrandCode(),
-					 e.getBrandAttribute().getBrandDesc(),
-					 e.getCount(),
+					 e.getBrandDesc(),
+					 0,//e.getCount(),
 					 e.getLocale()
 					);
 	}

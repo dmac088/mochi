@@ -9,8 +9,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 
 	
 	@Override
-	public ProductCategory entityToDo(CategoryProduct e) {
-		System.out.println(e.getLocale());
+	public ProductCategory entityToDo(CategoryProductDTO e) {
 		return new ProductCategory(
 				e.getCategoryCode(),
 				e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findAny().get().getCategoryDesc(),
@@ -26,10 +25,10 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 	}
 
 	@Override
-	public CategoryProduct doToEntity(ProductCategory d) {
+	public CategoryProductDTO doToEntity(ProductCategory d) {
 		ProductCategory pc = (ProductCategory) d;
 		
-		CategoryProduct cp = new CategoryProduct();
+		CategoryProductEntity cp = new CategoryProductEntity();
 		cp.setCategoryCode(pc.getCategoryCode());
 		cp.setLocale(pc.getLocale());
 		cp.setCategoryLevel(pc.getCategoryLevel());

@@ -21,11 +21,11 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.brand.CategoryBrandEntity;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -59,10 +59,10 @@ public class CategoryMasterService {
 	        });
 	        
 	        
-	        Set<Category> lc = categoryService.findAll();
+	        Set<CategoryEntity> lc = categoryService.findAll();
 	        lc.stream().forEach(c -> {
 	        	if(!(c.getCategoryParentCode() == null)) {
-	        		Optional<io.nzbee.entity.category.Category> opc = categoryService.findByCode(c.getCategoryParentCode());
+	        		Optional<io.nzbee.entity.category.CategoryEntity> opc = categoryService.findByCode(c.getCategoryParentCode());
 	        		if(opc.isPresent()) {
 	        			c.setCategoryParentId(opc.get().getCategoryId());
 	        			categoryService.save(c);
@@ -79,7 +79,7 @@ public class CategoryMasterService {
 	public void persistCategoryMaster(CategoryMasterSchema c) {
 		logger.debug("called persistCategoryMaster() ");
 		
-		Category cEN = c.get_CATEGORY_TYPE().equals("productcategory")
+		CategoryEntity cEN = c.get_CATEGORY_TYPE().equals("productcategory")
 						? mapToProductCategory(c.get_CATEGORY_CODE(),
 											   new Long(c.get_CATEGORY_LEVEL()),
 											   c.get_PARENT_CATEGORY_CODE(),
@@ -91,7 +91,7 @@ public class CategoryMasterService {
 
 		categoryService.save(cEN);
 		
-		Category cCN =	c.get_CATEGORY_TYPE().equals("productcategory")
+		CategoryEntity cCN =	c.get_CATEGORY_TYPE().equals("productcategory")
 				?  mapToProductCategory(
 						c.get_CATEGORY_CODE(),
 						new Long(c.get_CATEGORY_LEVEL()),
@@ -106,7 +106,7 @@ public class CategoryMasterService {
 		categoryService.save(cCN);
 	}
 	
-	private CategoryProduct mapToProductCategory(String categoryCode,
+	private CategoryProductEntity mapToProductCategory(String categoryCode,
 												 Long   categoryLevel,
 												 String parentCategoryCode,
 												 String categoryDesc,
@@ -114,11 +114,11 @@ public class CategoryMasterService {
 												 ) {
 		logger.debug("called mapToProductCategory() ");
 		
-		Optional<Category> oc = categoryService.findByCode(categoryCode);
+		Optional<CategoryEntity> oc = categoryService.findByCode(categoryCode);
 		
-		CategoryProduct cp = (oc.isPresent()) 
-							 ? (CategoryProduct) Hibernate.unproxy(oc.get())
-							 : new CategoryProduct();
+		CategoryProductEntity cp = (oc.isPresent()) 
+							 ? (CategoryProductEntity) Hibernate.unproxy(oc.get())
+							 : new CategoryProductEntity();
 							 
 		CategoryAttributeEntity ca = new CategoryAttributeEntity();
 		if (oc.isPresent()) {
@@ -140,18 +140,18 @@ public class CategoryMasterService {
 		return cp;
 	}
 	
-	private CategoryBrand mapToBrandCategory(String categoryCode,
+	private CategoryBrandEntity mapToBrandCategory(String categoryCode,
 											 String categoryDesc,
 											 String locale
 											) {
 		logger.debug("called mapToBrandCategory() ");
 		
-		Optional<Category> oc = 
+		Optional<CategoryEntity> oc = 
 				categoryService.findByCode(locale, categoryCode);
 		
-		CategoryBrand cb = (oc.isPresent()) 
-				 ? (CategoryBrand) oc.get()
-				 : new CategoryBrand();
+		CategoryBrandEntity cb = (oc.isPresent()) 
+				 ? (CategoryBrandEntity) oc.get()
+				 : new CategoryBrandEntity();
 
 		CategoryAttributeEntity ca = (oc.isPresent()) 
 				 ? cb.getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst().get()
@@ -172,7 +172,7 @@ public class CategoryMasterService {
 		logger.debug("called extractCategoryMaster() ");
 		List<CategoryMasterSchema> lpms = new ArrayList<CategoryMasterSchema>();
 	    try {
-		    	List<Category> categoryList = new ArrayList<Category>(categoryService.findAll());
+		    	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>(categoryService.findAll());
 		    	
 		    	//create a map of categories (full list)
 		    	Map<String, CategoryMasterSchema> map = categoryList
@@ -185,9 +185,9 @@ public class CategoryMasterService {
 				    cms.set_CATEGORY_CODE(c.getCategoryCode());
 				    cms.set_CATEGORY_TYPE(c.getCategoryType().getCategoryTypeCode());
 			    
-				    if(c.getCategoryType().getCategoryTypeDesc().equals(CategoryProduct.class.getSimpleName().toLowerCase())) {
-				    	cms.set_PARENT_CATEGORY_CODE(((CategoryProduct) c).getCategoryParentCode());
-				    	cms.set_CATEGORY_LEVEL(((CategoryProduct) c).getCategoryLevel().toString());
+				    if(c.getCategoryType().getCategoryTypeDesc().equals(CategoryProductEntity.class.getSimpleName().toLowerCase())) {
+				    	cms.set_PARENT_CATEGORY_CODE(((CategoryProductEntity) c).getCategoryParentCode());
+				    	cms.set_CATEGORY_LEVEL(((CategoryProductEntity) c).getCategoryLevel().toString());
 				    }
 			    	
 				    cms.set_CATEGORY_DESC_EN(c.getCategoryDescENGB());

@@ -6,10 +6,10 @@ import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
-@StaticMetamodel(CategoryBrand.class)
-public abstract class CategoryBrand_ extends io.nzbee.entity.category.CategoryEntity_ {
+@StaticMetamodel(CategoryBrandEntity.class)
+public abstract class CategoryBrandEntity_ extends io.nzbee.entity.category.CategoryEntity_ {
 
-	public static volatile SetAttribute<CategoryBrand, BrandEntity> brands;
+	public static volatile SetAttribute<CategoryBrandEntity, BrandEntity> brands;
 
 	public static final String BRANDS = "brands";
 

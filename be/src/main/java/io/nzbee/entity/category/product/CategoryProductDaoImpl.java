@@ -44,11 +44,11 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
-		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
+		Root<CategoryProductEntity> root = cq.from(CategoryProductEntity.class);
 		
-		Join<CategoryProduct, CategoryAttributeEntity> attribute = root.join(Category_.attributes);
-		Join<CategoryProduct, ProductEntity> products = root.join(CategoryProduct_.products);
-		Join<CategoryProduct, CategoryType> type = root.join(Category_.categoryType);
+		Join<CategoryProductEntity, CategoryAttributeEntity> attribute = root.join(Category_.attributes);
+		Join<CategoryProductEntity, ProductEntity> products = root.join(CategoryProduct_.products);
+		Join<CategoryProductEntity, CategoryType> type = root.join(Category_.categoryType);
 		
 		cq.multiselect(	root.get(CategoryProduct_.categoryId).alias("categoryId"),
 						root.get(CategoryProduct_.categoryCode).alias("categoryCode"),
@@ -87,9 +87,9 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<ProductEntity> root = cq.from(ProductEntity.class);
-		Join<ProductEntity, CategoryProduct> primaryCategory = root.join(Product_.primaryCategoryIndex);
-		Join<CategoryProduct, CategoryAttributeEntity> attribute = primaryCategory.join(Category_.attributes);
-		Join<CategoryProduct, CategoryType> type = primaryCategory.join(Category_.categoryType);
+		Join<ProductEntity, CategoryProductEntity> primaryCategory = root.join(Product_.primaryCategoryIndex);
+		Join<CategoryProductEntity, CategoryAttributeEntity> attribute = primaryCategory.join(Category_.attributes);
+		Join<CategoryProductEntity, CategoryType> type = primaryCategory.join(Category_.categoryType);
 		
 		cq.multiselect(	primaryCategory.get(CategoryProduct_.categoryId).alias("categoryId"),
 						primaryCategory.get(CategoryProduct_.categoryCode).alias("categoryCode"),
@@ -157,18 +157,18 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	}
 
 	@Override
-	public void save(CategoryProduct t) {
+	public void save(CategoryProductEntity t) {
 		em.persist(t);
 	}
 
 	@Override
-	public void update(CategoryProduct t, String[] params) {
+	public void update(CategoryProductEntity t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(CategoryProduct t) {
+	public void delete(CategoryProductEntity t) {
 		// TODO Auto-generated method stub
 		
 	}

@@ -26,7 +26,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
@@ -124,7 +124,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     public void whenFindByProductCode_thenReturnProductCategories() {
     	
         // when
-    	List<CategoryProduct> found = productCategoryService.findAllByProductCode(Constants.localeENGB, 
+    	List<CategoryProductEntity> found = productCategoryService.findAllByProductCode(Constants.localeENGB, 
 				 																  "123456789");
      
         //then

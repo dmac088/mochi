@@ -8,7 +8,7 @@ import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 
 	@Override
-	public BrandCategory entityToDo(CategoryBrand e) {
+	public BrandCategory entityToDo(CategoryBrandDTO e) {
 		return new BrandCategory(
 				e.getCategoryCode(),
 				e.getCategoryAttribute().getCategoryDesc(),
@@ -20,10 +20,10 @@ public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 	}
 
 	@Override
-	public CategoryBrand doToEntity(BrandCategory d) {
+	public CategoryBrandEntity doToEntity(BrandCategory d) {
 		BrandCategory bc = (BrandCategory) d;
 		
-		CategoryBrand cb = new CategoryBrand();
+		CategoryBrandEntity cb = new CategoryBrandEntity();
 		cb.setCategoryCode(bc.getCategoryCode());
 		cb.setLocale(bc.getLocale());
 		cb.setObjectCount(bc.getCount());

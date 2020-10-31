@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.search.IFacetService;
 
 @Service(value = "categoryEntityService")
@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key="#categoryCode")
-	public Optional<Category> findByCode(String categoryCode) {
+	public Optional<CategoryEntity> findByCode(String categoryCode) {
 		return categoryDAO.findByCode(categoryCode);
 	}
 	
@@ -78,19 +78,19 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findByParent(String locale, String parentCategoryCode) {
+	public Set<CategoryEntity> findByParent(String locale, String parentCategoryCode) {
 		return categoryDAO.findByParent(locale, parentCategoryCode);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAllForLevel(String locale, Long level) {
+	public Set<CategoryEntity> findAllForLevel(String locale, Long level) {
 		return categoryDAO.findByLevel(locale, level);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAll() {
+	public Set<CategoryEntity> findAll() {
 		return categoryDAO.findAll();
 	}
 	
@@ -107,18 +107,18 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryCode}")
 	})
-	public void save(Category category) {
+	public void save(CategoryEntity category) {
 		categoryDAO.save(category);
 	}
 
 	@Override
-	public void update(Category t) {
+	public void update(CategoryEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Category t) {
+	public void delete(CategoryEntity t) {
 		// TODO Auto-generated method stub
 		
 	}

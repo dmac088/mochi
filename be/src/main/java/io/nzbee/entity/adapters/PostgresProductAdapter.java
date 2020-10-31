@@ -22,7 +22,7 @@ import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -105,13 +105,13 @@ public class PostgresProductAdapter implements IProductPortService {
 			io.nzbee.entity.product.department.DepartmentEntity d = departmentService.findByCode(domainObject.getLclCd(), 
 																						   domainObject.getDepartment().getDepartmentCode()).get();			
 			// get all the categories
-			Set<io.nzbee.entity.category.product.CategoryProduct> lcp = 
+			Set<io.nzbee.entity.category.product.CategoryProductEntity> lcp = 
 					categoryService.findAll( domainObject.getLclCd(), 
 											 domainObject.getCategories().stream().map(cc -> cc.getCategoryCode())
 									.collect(Collectors.toSet()))
-					.stream().map(cd -> (CategoryProduct) Hibernate.unproxy(cd)).collect(Collectors.toSet());
+					.stream().map(cd -> (CategoryProductEntity) Hibernate.unproxy(cd)).collect(Collectors.toSet());
 
-			io.nzbee.entity.category.product.CategoryProduct primaryCategory = (CategoryProduct) categoryService
+			io.nzbee.entity.category.product.CategoryProductEntity primaryCategory = (CategoryProductEntity) categoryService
 					.findByCode(domainObject.getLclCd(),
 							domainObject.getPrimaryCategory().getCategoryCode()).get();
 
@@ -278,7 +278,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	private Product mapHelper(io.nzbee.entity.product.ProductEntity pe) {
 		io.nzbee.entity.brand.BrandEntity be = pe.getBrand();
 		io.nzbee.entity.product.department.DepartmentEntity de = pe.getDepartment();
-		io.nzbee.entity.category.Category c = pe.getPrimaryCategory();
+		io.nzbee.entity.category.CategoryEntity c = pe.getPrimaryCategory();
 
 		Brand bdo = brandMapper.entityToDo(be, pe.getLocale(), pe.getCurrency());
 		Department ddo = departmentMapper.entityToDo(de, pe.getLocale());

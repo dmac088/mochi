@@ -21,7 +21,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	private EntityManager em;
 	
 	@Override
-	public List<CategoryBrand> findAllByBrandCode(String locale, String currency, String brandCode) {
+	public List<CategoryBrandEntity> findAllByBrandCode(String locale, String currency, String brandCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -98,18 +98,18 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public void save(CategoryBrand t) {
+	public void save(CategoryBrandEntity t) {
 		em.persist(t);
 	}
 
 	@Override
-	public void update(CategoryBrand t, String[] params) {
+	public void update(CategoryBrandEntity t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(CategoryBrand t) {
+	public void delete(CategoryBrandEntity t) {
 		// TODO Auto-generated method stub
 		
 	}

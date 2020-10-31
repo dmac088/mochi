@@ -7,10 +7,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.brand.CategoryBrandEntity;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 
 
 @Service(value = "categoryEntityBeanFactory")
@@ -18,8 +18,8 @@ import io.nzbee.entity.category.product.CategoryProduct;
 public class CategoryEntityBeanFactory {
 
 	@Bean
-	public final Category getProductCategoryEntityBean() {
-		final Category category = new CategoryProduct();
+	public final CategoryEntity getProductCategoryEntityBean() {
+		final CategoryEntity category = new CategoryProductEntity();
 	
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
@@ -34,8 +34,8 @@ public class CategoryEntityBeanFactory {
 	}
 	
 	@Bean
-	public final Category getBrandCategoryEntityBean() {
-		final Category category = new CategoryBrand();
+	public final CategoryEntity getBrandCategoryEntityBean() {
+		final CategoryEntity category = new CategoryBrandEntity();
 		
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(2));
@@ -51,10 +51,10 @@ public class CategoryEntityBeanFactory {
 	
 	
 	@Bean
-	public final List<Category> getProductCategoryEntityListBean() {
-		List<Category> lc = new ArrayList<Category>();
+	public final List<CategoryEntity> getProductCategoryEntityListBean() {
+		List<CategoryEntity> lc = new ArrayList<CategoryEntity>();
 		
-		final Category category = this.getProductCategoryEntityBean();
+		final CategoryEntity category = this.getProductCategoryEntityBean();
 		
 		lc.add(category);
 		
@@ -62,10 +62,10 @@ public class CategoryEntityBeanFactory {
 	}
 	
 	@Bean
-	public final List<Category> getBrandCategoryEntityListBean() {
-		List<Category> lc = new ArrayList<Category>();
+	public final List<CategoryEntity> getBrandCategoryEntityListBean() {
+		List<CategoryEntity> lc = new ArrayList<CategoryEntity>();
 		
-		final Category category = this.getBrandCategoryEntityBean();
+		final CategoryEntity category = this.getBrandCategoryEntityBean();
 		
 		lc.add(category);
 		

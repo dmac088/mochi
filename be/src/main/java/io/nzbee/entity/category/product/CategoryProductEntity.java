@@ -11,7 +11,7 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.product.ProductEntity;
 
 @Entity
@@ -19,7 +19,7 @@ import io.nzbee.entity.product.ProductEntity;
 @PrimaryKeyJoinColumn(name = "cat_id")
 @DiscriminatorValue("1")
 @JsonTypeName("categoryproduct")
-public class CategoryProduct extends Category  {
+public class CategoryProductEntity extends CategoryEntity  {
 	
 	
 	@ManyToMany(mappedBy = "categories")
@@ -103,8 +103,8 @@ public class CategoryProduct extends Category  {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CategoryProduct)) return false;
-        return categoryCode != null && categoryCode.equals(((Category) o).getCategoryCode());
+        if (!(o instanceof CategoryProductEntity)) return false;
+        return categoryCode != null && categoryCode.equals(((CategoryEntity) o).getCategoryCode());
     }
  
     @Override
