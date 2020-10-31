@@ -7,7 +7,7 @@ import io.nzbee.entity.category.CategoryDTO;
 public class CategoryProductDTO extends CategoryDTO {
 
 	public CategoryProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		// TODO Auto-generated constructor stub
+		super(tuple, aliasToIndexMap);
 	}
 
 }
