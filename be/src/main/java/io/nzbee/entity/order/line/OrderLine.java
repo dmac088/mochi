@@ -1,22 +1,22 @@
 package io.nzbee.entity.order.line;
 
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 
 //@Entity
 public class OrderLine {
 
-	private Product product;
+	private ProductEntity product;
 	private int quantity;
 	
 	public OrderLine() {
 		super();
 	}
 	
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return this.product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
 	

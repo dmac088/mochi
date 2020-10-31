@@ -1,6 +1,6 @@
 package io.nzbee.entity.category.brand;
 
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -9,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(CategoryBrand.class)
 public abstract class CategoryBrand_ extends io.nzbee.entity.category.Category_ {
 
-	public static volatile SetAttribute<CategoryBrand, Brand> brands;
+	public static volatile SetAttribute<CategoryBrand, BrandEntity> brands;
 
 	public static final String BRANDS = "brands";
 

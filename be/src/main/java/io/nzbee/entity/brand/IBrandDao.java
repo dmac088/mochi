@@ -4,16 +4,16 @@ import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.ILocalizedDao;
 
-public interface IBrandDao extends ILocalizedDao<Brand> {
+public interface IBrandDao extends ILocalizedDao<BrandDTO, BrandEntity> {
 	
-	Set<Brand> findAll(String locale,  Set<String> brandCodes); 
+	Set<BrandDTO> findAll(String locale,  Set<String> brandCodes); 
 	
-	Optional<Brand> findByProductCode(String locale, String productCode);
+	Optional<BrandDTO> findByProductCode(String locale, String productCode);
 
-	Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	Set<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> tagCodes, Double maxPrice);
 
-	Set<Brand> findAllByCategory(String locale, String categoryCode);
+	Set<BrandDTO> findAllByCategory(String locale, String categoryCode);
 
-	Optional<Brand> findByCode(String code);
+	Optional<BrandEntity> findByCode(String code);
 }

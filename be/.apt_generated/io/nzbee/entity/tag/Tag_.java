@@ -1,6 +1,6 @@
 package io.nzbee.entity.tag;
 
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
@@ -14,7 +14,7 @@ public abstract class Tag_ {
 	public static volatile SingularAttribute<Tag, String> tagCode;
 	public static volatile SingularAttribute<Tag, Long> tagId;
 	public static volatile SetAttribute<Tag, TagAttribute> attributes;
-	public static volatile SetAttribute<Tag, Product> products;
+	public static volatile SetAttribute<Tag, ProductEntity> products;
 
 	public static final String TAG_CODE = "tagCode";
 	public static final String TAG_ID = "tagId";

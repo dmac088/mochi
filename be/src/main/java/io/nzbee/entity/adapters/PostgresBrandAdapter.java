@@ -27,7 +27,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByCode(String locale, String code) {
-		io.nzbee.entity.brand.Brand b = brandService.findByCode(locale, code)
+		io.nzbee.entity.brand.BrandEntity b = brandService.findByCode(locale, code)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
 		return entityToDo(b);
 	}
@@ -35,7 +35,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByProductCode(String locale, String productCode) {
-		io.nzbee.entity.brand.Brand b = brandService.findByProductCode(locale, productCode)
+		io.nzbee.entity.brand.BrandEntity b = brandService.findByProductCode(locale, productCode)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product code " + productCode));
 		return entityToDo(b);
 	}
@@ -43,7 +43,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByDesc(String locale, String desc) {
-		io.nzbee.entity.brand.Brand b = brandService.findByDesc(locale, desc)
+		io.nzbee.entity.brand.BrandEntity b = brandService.findByDesc(locale, desc)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product desc " + desc));
 		return entityToDo(b);
 	}
@@ -79,22 +79,22 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Transactional
 	public void save(Brand domainObject) {
 		
-		Optional<io.nzbee.entity.brand.Brand> ob = 
+		Optional<io.nzbee.entity.brand.BrandEntity> ob = 
 				brandService.findByCode(domainObject.getBrandCode());
 						
-		io.nzbee.entity.brand.Brand b = 
+		io.nzbee.entity.brand.BrandEntity b = 
 		(ob.isPresent())
 		? ob.get() 
-		: new io.nzbee.entity.brand.Brand();
+		: new io.nzbee.entity.brand.BrandEntity();
 		
-		io.nzbee.entity.brand.attribute.BrandAttribute ba = new io.nzbee.entity.brand.attribute.BrandAttribute();
+		io.nzbee.entity.brand.attribute.BrandAttributeEntity ba = new io.nzbee.entity.brand.attribute.BrandAttributeEntity();
 		if(ob.isPresent()) {
-			Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba =
+			Optional<io.nzbee.entity.brand.attribute.BrandAttributeEntity> oba =
 					ob.get().getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
 			
 			ba = (oba.isPresent()) 
 			? oba.get()
-			: new io.nzbee.entity.brand.attribute.BrandAttribute();
+			: new io.nzbee.entity.brand.attribute.BrandAttributeEntity();
 		}
 							
 		b.setBrandCode(domainObject.getBrandCode());
@@ -108,7 +108,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		brandService.save(b);		
 	}
 	
-	private Brand entityToDo(io.nzbee.entity.brand.Brand e) {
+	private Brand entityToDo(io.nzbee.entity.brand.BrandEntity e) {
 		return	new Brand(
 					 e.getBrandCode(),
 					 e.getBrandAttribute().getBrandDesc(),

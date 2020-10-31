@@ -22,19 +22,19 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
-import io.nzbee.entity.product.attribute.ProductAttribute;
+import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.basic.ProductBasic;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
-import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
@@ -175,21 +175,21 @@ public class ProductMasterService {
 						 ) {
 		logger.debug("called mapToAccessory() ");
 		
-		Optional<Product> op = productService.findByCode(upcCode);
+		Optional<ProductEntity> op = productService.findByCode(upcCode);
 		
-		Optional<Brand> ob = brandService.findByCode(locale, brandCode);
+		Optional<BrandEntity> ob = brandService.findByCode(locale, brandCode);
 		
 		Optional<Category> oc = categoryService.findByCode(locale, categoryCode);
 		
-		Optional<Department> od = departmentService.findByCode(locale, templateCode);
+		Optional<DepartmentEntity> od = departmentService.findByCode(locale, templateCode);
 		
 		Optional<ProductStatus> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
 		
-		Optional<ProductAttribute> opa = productAttributeService.findByCode(locale, upcCode);
+		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
 		
-		ProductAttribute pa = (opa.isPresent()) 
+		ProductAttributeEntity pa = (opa.isPresent()) 
 		? opa.get()
-		: (new io.nzbee.entity.product.attribute.ProductAttribute());
+		: (new io.nzbee.entity.product.attribute.ProductAttributeEntity());
 		
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -265,7 +265,7 @@ public class ProductMasterService {
 		return pe;
 	}
 	
-	private void addTagToProduct(String locale, String tagCode, Product p) {
+	private void addTagToProduct(String locale, String tagCode, ProductEntity p) {
 		if (tagCode == null) return;
 		if(tagCode.length() == 5) {
 			Tag t = tagService.findByCode(locale, tagCode.toUpperCase()).get();
@@ -286,7 +286,7 @@ public class ProductMasterService {
 	    							  .collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)
-	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((Product) p).getProductUPC(), p -> new ProductMasterSchema()));
+	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((ProductEntity) p).getProductUPC(), p -> new ProductMasterSchema()));
 	    	
 	    	lpms.addAll(productsList.stream().map(p -> {
 	    		

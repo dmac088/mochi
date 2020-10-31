@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -46,7 +48,7 @@ public abstract class Product {
 	protected String productType;
 
 	@JsonIgnore
-	private List<ProductCategory> categories;
+	private Set<ProductCategory> categories;
 
 	@JsonIgnore
 	private Department department;
@@ -69,7 +71,8 @@ public abstract class Product {
 				   	boolean			inStock,
 				   	Brand 			brand,
 				   	Department 		department,
-				   	ProductCategory category) {
+				   	ProductCategory category,
+				   	Set<ProductCategory> productCategories) {
 		
 					this.productUPC = productUPC;
 					this.productCreateDt = productCreateDt;
@@ -82,7 +85,7 @@ public abstract class Product {
 					this.brand = brand;
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
-					this.categories = new ArrayList<ProductCategory>();
+					this.categories = productCategories;
 					this.primaryCategory = category;
 					this.categories.add(category);
 					this.productStatus = productStatus;
@@ -98,7 +101,7 @@ public abstract class Product {
 		return productStatus;
 	}
 	
-	public List<ProductCategory> getCategories() {
+	public Set<ProductCategory> getCategories() {
 		return categories;
 	}
 

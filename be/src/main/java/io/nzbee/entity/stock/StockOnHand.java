@@ -10,7 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "stock_on_hand", schema = "mochi")
@@ -23,7 +23,7 @@ public class StockOnHand {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="soh_prd_id")
-	private Product product;
+	private ProductEntity product;
 	
 	@Column(name="soh_qty")
 	private Long stockOnHand;
@@ -44,11 +44,11 @@ public class StockOnHand {
 		this.stockOnHand = stockOnHand;
 	}
 
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
 	

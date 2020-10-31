@@ -25,7 +25,7 @@ import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.role.IRoleTypeRepository;
 import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
@@ -246,7 +246,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		//get the product of the item the customer wishes to add
 		String upc = bagItem.getProduct().getProductUPC();
-		Product p = productService.findByCode(upc)
+		ProductEntity p = productService.findByCode(upc)
 					.orElseThrow(() -> new ProductException("Customer with UPC " + upc + " not found!"));
 		
 		

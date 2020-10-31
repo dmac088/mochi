@@ -6,8 +6,8 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Product;
 
-public interface IProductMapper extends IMapper<Product, io.nzbee.entity.product.Product> {
+public interface IProductMapper extends IMapper<Product, io.nzbee.entity.product.ProductEntity> {
 
-	Product entityToDo(io.nzbee.entity.product.Product e, Brand brand, Department department, ProductCategory category);
+	Product entityToDo(io.nzbee.entity.product.ProductEntity e, Brand brand, Department department, ProductCategory category);
 
 }

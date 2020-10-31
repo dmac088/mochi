@@ -11,7 +11,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.DepartmentEntity;
 
 @Entity
 @Table(name = "department_attr_lcl", schema = "mochi")
@@ -30,7 +30,7 @@ public class DepartmentAttribute {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="dept_id")
-	private Department department;
+	private DepartmentEntity department;
 	
 	public Long getId() {
 		return Id;
@@ -56,11 +56,11 @@ public class DepartmentAttribute {
 		this.departmentDesc = departmentDesc;
 	}
 
-	public Department getDepartment() {
+	public DepartmentEntity getDepartment() {
 		return department;
 	}
 
-	public void setDepartment(Department department) {
+	public void setDepartment(DepartmentEntity department) {
 		this.department = department;
 	}
 

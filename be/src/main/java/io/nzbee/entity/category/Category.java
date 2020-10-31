@@ -38,7 +38,7 @@ import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.type.CategoryType;
@@ -76,7 +76,7 @@ import io.nzbee.search.ISearchDimension;
                         @FieldResult(name = "attributes", 					column = "cat_id")
                     }),
             @EntityResult(
-                    entityClass = CategoryAttribute.class,
+                    entityClass = CategoryAttributeEntity.class,
                     fields = {
                         @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
                         @FieldResult(name = "categoryId", 					column = "cat_id"),
@@ -107,7 +107,7 @@ import io.nzbee.search.ISearchDimension;
                         @FieldResult(name = "attributes", 					column = "cat_prnt_id")
 	                }),
 	        @EntityResult(
-	                entityClass = CategoryAttribute.class,
+	                entityClass = CategoryAttributeEntity.class,
 	                fields = {
 	                    @FieldResult(name = "categoryAttributeId", 			column = "cat_prnt_lcl_id"),
 	                    @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
@@ -167,10 +167,10 @@ public abstract class Category implements ISearchDimension {
 	@OneToMany(	mappedBy="category",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private Set<CategoryAttribute> attributes = new HashSet<CategoryAttribute>();
+	private Set<CategoryAttributeEntity> attributes = new HashSet<CategoryAttributeEntity>();
 
 	@Transient 
-	private CategoryAttribute categoryAttribute;
+	private CategoryAttributeEntity categoryAttribute;
 
 	@Transient
 	@JsonIgnore
@@ -318,28 +318,28 @@ public abstract class Category implements ISearchDimension {
 		this.maxMarkdownPrice = maxMarkdownPrice;
 	} 
 	
-	public Set<CategoryAttribute> getAttributes() {
+	public Set<CategoryAttributeEntity> getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(Set<CategoryAttribute> attributes) {
+	public void setAttributes(Set<CategoryAttributeEntity> attributes) {
 		this.attributes = attributes;
 	}
 	
-	public CategoryAttribute getCategoryAttribute() {
+	public CategoryAttributeEntity getCategoryAttribute() {
 		return categoryAttribute;
 	}
 
-	public void setCategoryAttribute(CategoryAttribute categoryAttribute) {
+	public void setCategoryAttribute(CategoryAttributeEntity categoryAttribute) {
 		this.categoryAttribute = categoryAttribute;
 	}
 
-	public void addCategoryAttribute(CategoryAttribute categoryAttribute) {
+	public void addCategoryAttribute(CategoryAttributeEntity categoryAttribute) {
 		this.getAttributes().add(categoryAttribute);
 		categoryAttribute.setCategory(this);		
 	}
 	
-	public void removeCategoryAttribute(CategoryAttribute categoryAttribute) {
+	public void removeCategoryAttribute(CategoryAttributeEntity categoryAttribute) {
 		this.getAttributes().remove(categoryAttribute);
 		categoryAttribute.setCategory(null);
 	}

@@ -4,21 +4,21 @@ import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.ILocalizedDao;
 
-public interface ICategoryDao extends ILocalizedDao<Category> {
+public interface ICategoryDao extends ILocalizedDao<CategoryDTO, Category> {
 	
 	Set<Category> findByParent(String locale, String parentCategoryCode);
 	
 	Set<Category> findByLevel(String locale, Long level);
 
-	Set<Category> findAll(String locale);
+	Set<CategoryDTO> findAll(String locale);
 	
-	Set<Category> findAll(String locale, Set<String> categoryCodes);
+	Set<CategoryDTO> findAll(String locale, Set<String> categoryCodes);
 	
 	Set<Category> findAllByProductCode(String locale, String productCode);
 
-	<T> Set<Category> findAllByType(String locale, Class<T> cls);
+	<T> Set<CategoryDTO> findAllByType(String locale, Class<T> cls);
 
-	Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);
 
 	Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes,

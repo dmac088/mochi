@@ -25,7 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.util.brand.BrandMasterService;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +61,7 @@ public class IT_BrandUploadForCreateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForCreate_thenReturnCorrectlyCreatedBrand_ENGB() {
 		// when
-		Optional<Brand> found = brandService.findByCode(Constants.localeENGB, "TST01");
+		Optional<BrandEntity> found = brandService.findByCode(Constants.localeENGB, "TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -70,13 +70,13 @@ public class IT_BrandUploadForCreateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForCreate_thenReturnCorrectlyCreatedBrand_ZHHK() {
 		// when
-		Optional<Brand> found = brandService.findByCode(Constants.localeZHHK, "TST01");
+		Optional<BrandEntity> found = brandService.findByCode(Constants.localeZHHK, "TST01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<Brand> found) {
+	private void assertFound_ENGB(Optional<BrandEntity> found) {
 		
 		assertNotNull(found);
 		
@@ -87,7 +87,7 @@ public class IT_BrandUploadForCreateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<Brand> found) {
+	private void assertFound_ZHHK(Optional<BrandEntity> found) {
 		
 		assertNotNull(found);
 		

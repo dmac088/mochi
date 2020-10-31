@@ -28,7 +28,7 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 import io.nzbee.search.ISearchDimension;
 
@@ -69,7 +69,7 @@ public class Tag implements ISearchDimension {
 
 	@ManyToMany(mappedBy = "tags")
 	@JsonIgnore
-    private Set<Product> products = new HashSet<Product>();
+    private Set<ProductEntity> products = new HashSet<ProductEntity>();
 
 	@OneToMany(mappedBy="tag",
 			   cascade = CascadeType.ALL)
@@ -117,7 +117,7 @@ public class Tag implements ISearchDimension {
 		this.tagAttribute = attribute;
 	}
 
-	public Set<Product> getProducts() {
+	public Set<ProductEntity> getProducts() {
 		return products;
 	}
 
@@ -171,12 +171,12 @@ public class Tag implements ISearchDimension {
 				: "Empty"; 
 	}
 	
-	public void addProduct(Product product) {
+	public void addProduct(ProductEntity product) {
 		this.getProducts().add(product);
 		product.addTag(this);
 	}
 	
-	public void removeProduct(Product product) {
+	public void removeProduct(ProductEntity product) {
 		this.getProducts().remove(product);
 		product.removeTag(this);
 	}

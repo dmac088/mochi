@@ -7,25 +7,25 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.entity.ILocalizedService;
 
-public interface IProductService extends ILocalizedService<Product> {
+public interface IProductService extends ILocalizedService<ProductEntity> {
 	
-	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
+	<T> List<ProductEntity> findAllByType(String locale, String currency, Class<T> cls);
 
-	Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	Page<ProductEntity> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
 
-	Optional<Product> findByCode(String locale, String currency, String code);
+	Optional<ProductEntity> findByCode(String locale, String currency, String code);
 
-	Optional<Product> findById(String locale, String currency, long id);
+	Optional<ProductEntity> findById(String locale, String currency, long id);
 
-	Optional<Product> findByDesc(String locale, String currency, String desc);
+	Optional<ProductEntity> findByDesc(String locale, String currency, String desc);
 
-	List<Product> findAll(String locale, String currency);
+	List<ProductEntity> findAll(String locale, String currency);
 
-	List<Product> findAll(String locale, String currency, Set<String> productCodes);
+	List<ProductEntity> findAll(String locale, String currency, Set<String> productCodes);
 
-	Optional<Product> findByCode(String productUPC);
+	Optional<ProductEntity> findByCode(String productUPC);
 
-	<T> List<Product> findAllByType(Class<T> cls);
+	<T> List<ProductEntity> findAllByType(Class<T> cls);
  
 }

@@ -25,7 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.util.product.ProductMasterService;
 
 @RunWith(SpringRunner.class)
@@ -68,7 +68,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
 	@Test
 	public void whenProductUploadedForCreation_thenReturnCreatedProduct_ENGB_USD() {
 		 // when
-    	Optional<Product> found = productService.findByCode(  	Constants.localeENGB, 
+    	Optional<ProductEntity> found = productService.findByCode(  	Constants.localeENGB, 
 							  								  	Constants.currencyUSD,  
 															  	"43254232");
      
@@ -79,7 +79,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
 	@Test
 	public void whenProductUploadedForCreation_thenReturnCreatedProduct_ZHHK_HKD() {
 		 // when
-    	Optional<Product> found = productService.findByCode(  	Constants.localeZHHK, 
+    	Optional<ProductEntity> found = productService.findByCode(  	Constants.localeZHHK, 
 							  								  	Constants.currencyHKD,  
 															  	"43254232");
      
@@ -87,7 +87,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
     	assertFound_ZHHK_HKD(found);
 	}
 	
-	private void assertFound_ENGB_USD(Optional<Product> found) {
+	private void assertFound_ENGB_USD(Optional<ProductEntity> found) {
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
@@ -127,7 +127,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
 				.isTrue();
 	}
 
-	private void assertFound_ZHHK_HKD(Optional<Product> found) {
+	private void assertFound_ZHHK_HKD(Optional<ProductEntity> found) {
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());

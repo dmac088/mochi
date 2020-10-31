@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class DepartmentMapper implements IDepartmentMapper {
 
 	@Override
-	public io.nzbee.domain.department.Department entityToDo(Department e, String locale) {
+	public io.nzbee.domain.department.Department entityToDo(DepartmentEntity e, String locale) {
 		io.nzbee.domain.department.Department dO = 
 				new io.nzbee.domain.department.Department(
 						e.getDepartmentCode(),
@@ -18,13 +18,13 @@ public class DepartmentMapper implements IDepartmentMapper {
 	}
 
 	@Override
-	public io.nzbee.domain.department.Department entityToDo(Department e) {
+	public io.nzbee.domain.department.Department entityToDo(DepartmentEntity e) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Department doToEntity(io.nzbee.domain.department.Department d) {
+	public DepartmentEntity doToEntity(io.nzbee.domain.department.Department d) {
 		// TODO Auto-generated method stub
 		return null;
 	}

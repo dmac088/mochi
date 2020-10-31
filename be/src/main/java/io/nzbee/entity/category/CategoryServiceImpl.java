@@ -22,13 +22,13 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryId}")
-	public Optional<Category> findById(String locale, Long categoryId) {
+	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
 		return categoryDAO.findById(locale, categoryId);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryCode}")
-	public Optional<Category> findByCode(String locale, String categoryCode) {
+	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
 		return categoryDAO.findByCode(locale, categoryCode);
 	}
 	
@@ -40,13 +40,13 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryDesc}")
-	public Optional<Category> findByDesc(String locale, String categoryDesc) {
+	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
 		return categoryDAO.findByDesc(locale, categoryDesc);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
+	public Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
 			Set<String> tags, Double maxPrice) {
 		return categoryDAO.findAll(locale, currency, categoryCode, categoryCodes, brands, tags, maxPrice);
 	}
@@ -60,19 +60,19 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAll(String locale) {
+	public Set<CategoryDTO> findAll(String locale) {
 		return categoryDAO.findAll(locale);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAll(String locale, Set<String> categoryCodes) {
+	public Set<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
 		return categoryDAO.findAll(locale, categoryCodes);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public <T> Set<Category> findAll(String locale, Class<T> classType) {
+	public <T> Set<CategoryDTO> findAll(String locale, Class<T> classType) {
 		return categoryDAO.findAllByType(locale, classType);
 	}
 
@@ -93,13 +93,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	public Set<Category> findAll() {
 		return categoryDAO.findAll();
 	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<Category> findAll(String lcl, String currency, Set<String> codes) {
-		return categoryDAO.findAll(lcl, codes);
-	}
-
 	
 	@Override
 	@Caching(evict = {

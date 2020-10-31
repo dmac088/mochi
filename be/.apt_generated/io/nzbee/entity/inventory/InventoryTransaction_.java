@@ -3,7 +3,7 @@ package io.nzbee.entity.inventory;
 import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.party.organization.Organization;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
@@ -14,7 +14,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(InventoryTransaction.class)
 public abstract class InventoryTransaction_ {
 
-	public static volatile SingularAttribute<InventoryTransaction, Product> product;
+	public static volatile SingularAttribute<InventoryTransaction, ProductEntity> product;
 	public static volatile SingularAttribute<InventoryTransaction, InventoryType> inventoryType;
 	public static volatile SingularAttribute<InventoryTransaction, Long> quantity;
 	public static volatile SingularAttribute<InventoryTransaction, Double> price;

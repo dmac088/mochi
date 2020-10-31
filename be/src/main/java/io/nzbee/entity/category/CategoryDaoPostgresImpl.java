@@ -1,8 +1,6 @@
 
 package io.nzbee.entity.category;
 
-import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -32,13 +30,11 @@ import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
-import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.CategoryProduct_;
-import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.Product_;
 
 @Component(value="categoryEntityPostgresDao")
@@ -158,7 +154,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	
 	@Override
-	public <T> Set<Category> findAllByType(String locale, Class<T> cls) {
+	public <T> Set<CategoryDTO> findAllByType(String locale, Class<T> cls) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
@@ -183,12 +179,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toSet());
+		return results.stream().map(c -> this.objectToDTO(c, locale)).collect(Collectors.toSet());
 	}
 	
 	
 	@Override
-	public Set<Category> findAll(String locale) {
+	public Set<CategoryDTO> findAll(String locale) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}", locale);
 		
 		Session session = em.unwrap(Session.class);
@@ -210,13 +206,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toSet());
+		return results.stream().map(c -> this.objectToDTO(c, locale)).collect(Collectors.toSet());
 	}
 	
 
 
 	@Override
-	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
+	public Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes), StringUtils.join(tagCodes));
 		
@@ -255,12 +251,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale, currency)).collect(Collectors.toSet());
+		return results.stream().map(c -> this.objectToDTO(c, locale, currency)).collect(Collectors.toSet());
 	}
 
 
 	@Override
-	public Set<Category> findAll(String locale, Set<String> categoryCodes) {
+	public Set<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(categoryCodes, ','));
 		
@@ -287,7 +283,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		@SuppressWarnings("unchecked")
 		List<Object[]> results = query.getResultList();
 		
-		return results.stream().map(c -> this.objectToEntity(c, locale)).collect(Collectors.toSet());
+		return results.stream().map(c -> this.objectToDTO(c, locale)).collect(Collectors.toSet());
 	}
 	
 	
@@ -297,7 +293,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #categoryId}")
 			}
 	)
-	public Optional<Category> findById(String locale, Long categoryId) {
+	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, categoryId);
 		
 		Session session = em.unwrap(Session.class);
@@ -323,7 +319,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		try {
 			Object[] c = (Object[])query.getSingleResult();
 			
-			Category category = this.objectToEntity(c, locale);
+			CategoryDTO category = this.objectToDTO(c, locale);
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -337,7 +333,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #categoryDesc}")
 			}
 	)
-	public Optional<Category> findByDesc(String locale, String categoryDesc) {
+	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, categoryDesc);
 		
@@ -363,7 +359,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		try {
 			Object[] c = (Object[])query.getSingleResult();
 			
-			Category category = this.objectToEntity(c, locale);
+			CategoryDTO category = this.objectToDTO(c, locale);
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -378,7 +374,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #categoryCode}")
 			}
 		)
-	public Optional<Category> findByCode(String locale, String categoryCode) {
+	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, categoryCode);
 		
@@ -404,7 +400,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		try {
 			Object[] c = (Object[])query.getSingleResult();
 			
-			Category category = this.objectToEntity(c, locale);
+			CategoryDTO category = this.objectToDTO(c, locale);
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -423,7 +419,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		Root<Category> root = cq.from(Category.class);
 		
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<Category, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
 		Join<Category, Category> parent = root.join(Category_.parent);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -454,7 +450,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		Root<Category> root = cq.from(Category.class);
 		
-		Join<Category, CategoryAttribute> categoryAttribute = root.join(Category_.attributes);
+		Join<Category, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!(level == null)) {
@@ -481,8 +477,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		CriteriaQuery<Category> cq = cb.createQuery(Category.class);
 		
 		Root<CategoryProduct> root = cq.from(CategoryProduct.class);
-		Join<CategoryProduct, CategoryAttribute> categoryAttribute = root.join(CategoryProduct_.attributes);
-		Join<CategoryProduct, Product> product = root.join(CategoryProduct_.products);
+		Join<CategoryProduct, CategoryAttributeEntity> categoryAttribute = root.join(CategoryProduct_.attributes);
+		Join<CategoryProduct, ProductEntity> product = root.join(CategoryProduct_.products);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		conditions.add(cb.equal(product.get(Product_.productUPC), productCode));
@@ -499,57 +495,57 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return query.getResultStream().collect(Collectors.toSet());
 	}
 
-	@Override
-	public Category objectToEntity(Tuple t, String locale, String currency) {
-		Category c = objectToEntity(t, locale);
-		c.setCurrency(currency);
-		return c;
-	}
-	
-	@Override
-	public Category objectToEntity(Object[] o, String locale, String currency) {
-		Category c = objectToEntity(o, locale);
-		c.setCurrency(currency);
-		return c;
-	}
-	
-	@Override
-	public Category objectToEntity(Object[] o, String locale) {
-		Category category = (Category) o[0];
-		category.setCategoryAttribute(((CategoryAttribute) o[1]));
-		category.setCategoryType((CategoryType) o[2]);
-		if(category instanceof CategoryProduct) {
-			((CategoryProduct) category).setHasParent(o[3] != null);
-			if(((CategoryProduct) category).hasParent()) {
-				//we have a parent
-				Category parentCategory = (Category) o[3];
-				parentCategory.setCategoryAttribute(((CategoryAttribute) o[4]));
-				parentCategory.setCategoryType((CategoryType) o[5]);
-				category.setParent(parentCategory);
-			}
-		}
-		category.setObjectCount(((BigDecimal)o[6]).intValue());
-		category.setChildCount(((BigInteger)o[7]).longValue());
-		category.setLocale(locale);
-		
-		return category;
-	}
-
-	@Override
-	public Category objectToEntity(Tuple t, String locale) {
-		Category c =  t.get("categoryType").toString().equals("PRD01") 
-				? new CategoryProduct()
-				: new CategoryBrand();
-	
-		c.setCategoryCode(t.get("categoryCode").toString());
-		CategoryAttribute ca = new CategoryAttribute();
-		ca.setCategoryDesc(t.get("categoryDesc").toString());
-		c.setCategoryAttribute(ca);
-		
-		c.setLocale(locale);
-		
-		return c;
-	}
+//	@Override
+//	public Category objectToEntity(Tuple t, String locale, String currency) {
+//		Category c = objectToEntity(t, locale);
+//		c.setCurrency(currency);
+//		return c;
+//	}
+//	
+//	@Override
+//	public Category objectToEntity(Object[] o, String locale, String currency) {
+//		Category c = objectToEntity(o, locale);
+//		c.setCurrency(currency);
+//		return c;
+//	}
+//	
+//	@Override
+//	public Category objectToEntity(Object[] o, String locale) {
+//		Category category = (Category) o[0];
+//		category.setCategoryAttribute(((CategoryAttributeEntity) o[1]));
+//		category.setCategoryType((CategoryType) o[2]);
+//		if(category instanceof CategoryProduct) {
+//			((CategoryProduct) category).setHasParent(o[3] != null);
+//			if(((CategoryProduct) category).hasParent()) {
+//				//we have a parent
+//				Category parentCategory = (Category) o[3];
+//				parentCategory.setCategoryAttribute(((CategoryAttributeEntity) o[4]));
+//				parentCategory.setCategoryType((CategoryType) o[5]);
+//				category.setParent(parentCategory);
+//			}
+//		}
+//		category.setObjectCount(((BigDecimal)o[6]).intValue());
+//		category.setChildCount(((BigInteger)o[7]).longValue());
+//		category.setLocale(locale);
+//		
+//		return category;
+//	}
+//
+//	@Override
+//	public Category objectToEntity(Tuple t, String locale) {
+//		Category c =  t.get("categoryType").toString().equals("PRD01") 
+//				? new CategoryProduct()
+//				: new CategoryBrand();
+//	
+//		c.setCategoryCode(t.get("categoryCode").toString());
+//		CategoryAttributeEntity ca = new CategoryAttributeEntity();
+//		ca.setCategoryDesc(t.get("categoryDesc").toString());
+//		c.setCategoryAttribute(ca);
+//		
+//		c.setLocale(locale);
+//		
+//		return c;
+//	}
 	
 	@Override
 	public void save(Category t) {
@@ -847,6 +843,34 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
 			
 		return sql;
+	}
+
+
+	@Override
+	public CategoryDTO objectToDTO(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public CategoryDTO objectToDTO(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public CategoryDTO objectToDTO(Tuple t, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public CategoryDTO objectToDTO(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

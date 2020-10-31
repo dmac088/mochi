@@ -27,53 +27,53 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #id}")
-	public Optional<Product> findById(String locale, String currency, long id) {
+	public Optional<ProductEntity> findById(String locale, String currency, long id) {
 		return productDAO.findById(locale, currency, id);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #productUPC}")
-	public Optional<Product> findByCode(String locale, String currency, String productUPC) {
+	public Optional<ProductEntity> findByCode(String locale, String currency, String productUPC) {
 		return productDAO.findByCode(locale, currency, productUPC);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key="#productUPC")
-	public Optional<Product> findByCode(String productUPC) {
+	public Optional<ProductEntity> findByCode(String productUPC) {
 		return productDAO.findByCode(productUPC);
 	}
 
 	@Override
-	public Optional<Product> findByDesc(String locale, String currency, String desc) {
+	public Optional<ProductEntity> findByDesc(String locale, String currency, String desc) {
 		return productDAO.findByDesc(locale, currency, desc);
 	}
 	
 	@Override
-	public List<Product> findAll(String locale, String currency) {
+	public List<ProductEntity> findAll(String locale, String currency) {
 		return productDAO.findAll(locale, currency);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<Product> findAll(String locale, String currency, Set<String> productCodes) {
+	public List<ProductEntity> findAll(String locale, String currency, Set<String> productCodes) {
 		return productDAO.findAll(locale, currency, productCodes);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
+	public <T> List<ProductEntity> findAllByType(String locale, String currency, Class<T> cls) {
 		return productDAO.findAllByType(locale, currency, cls);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public <T> List<Product> findAllByType(Class<T> cls) {
+	public <T> List<ProductEntity> findAllByType(Class<T> cls) {
 		return null;
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	public Page<ProductEntity> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		return productDAO.findAll(
 								  locale,
@@ -98,50 +98,50 @@ public class ProductServiceImpl implements IProductService {
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productUPC}")
 	})
-	public void save(Product product) {
+	public void save(ProductEntity product) {
 		productDAO.save(product);
 	}
 
 	
 	
 	@Override
-	public void update(Product t) {
+	public void update(ProductEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Product t) {
+	public void delete(ProductEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Optional<Product> findByCode(String locale, String code) {
+	public Optional<ProductEntity> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Product> findAll(String locale) {
+	public Set<ProductEntity> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Product> findAll(String locale, Set<String> codes) {
+	public Set<ProductEntity> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Product> findById(String locale, Long id) {
+	public Optional<ProductEntity> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Product> findByDesc(String locale, String desc) {
+	public Optional<ProductEntity> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

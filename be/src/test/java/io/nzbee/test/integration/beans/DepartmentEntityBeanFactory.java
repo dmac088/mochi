@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 
 @Service(value = "productTypeEntityBeanFactory")
@@ -12,8 +12,8 @@ import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 public class DepartmentEntityBeanFactory {
 
 	@Bean
-	public final Department getDepartmentEntityBean() {
-		Department dept = new Department();
+	public final DepartmentEntity getDepartmentEntityBean() {
+		DepartmentEntity dept = new DepartmentEntity();
 		DepartmentAttribute da = new DepartmentAttribute();
 		
 		da.setDesc("test department");

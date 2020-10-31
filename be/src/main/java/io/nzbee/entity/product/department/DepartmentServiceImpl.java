@@ -12,51 +12,51 @@ public class DepartmentServiceImpl implements IDepartmentService{
     private IDepartmentDao departmentDao;
 	
 	@Override
-	public Set<Department> findAll(String locale) {
+	public Set<DepartmentDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Department> findAll(String locale, Set<String> codes) {
+	public Set<DepartmentDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Department> findById(String locale, Long id) {
+	public Optional<DepartmentDTO> findById(String locale, Long id) {
 		return departmentDao.findById(locale, id) ;
 	}
 
 	@Override
-	public Optional<Department> findByCode(String locale, String code) {
+	public Optional<DepartmentDTO> findByCode(String locale, String code) {
 		return departmentDao.findByCode(locale, code);
 	}
 
 	@Override
-	public Optional<Department> findByDesc(String locale, String desc) {
+	public Optional<DepartmentDTO> findByDesc(String locale, String desc) {
 		return departmentDao.findByDesc(locale, desc);
 	}
 	
 	@Override
-	public Optional<Department> findByProductCode(String locale, String productCode) {
+	public Optional<DepartmentDTO> findByProductCode(String locale, String productCode) {
 		return departmentDao.findByProductCode(locale, productCode);
 	}
 
 
 	@Override
-	public void save(Department t) {
+	public void save(DepartmentEntity t) {
 		departmentDao.save(t);
 	}
 
 	@Override
-	public void update(Department t) {
+	public void update(DepartmentEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Department t) {
+	public void delete(DepartmentEntity t) {
 		departmentDao.save(t);
 	}
 

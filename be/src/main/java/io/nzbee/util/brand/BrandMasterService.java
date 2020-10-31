@@ -19,7 +19,7 @@ import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.util.FileStorageServiceUpload;
 
@@ -62,13 +62,13 @@ public class BrandMasterService {
 	public void persistBrandMaster(BrandMasterSchema b) {
 		logger.debug("called persistBrandMaster() ");
 		
-		Brand bEN = mapToBrand( b.get_BRAND_CODE(),
+		BrandEntity bEN = mapToBrand( b.get_BRAND_CODE(),
 								b.get_BRAND_DESC_EN(),
 								Constants.localeENGB);
 				
 		brandService.save(bEN);
 		
-		Brand bCN = mapToBrand(	 b.get_BRAND_CODE(),
+		BrandEntity bCN = mapToBrand(	 b.get_BRAND_CODE(),
 				 				 b.get_BRAND_DESC_HK(),
 				 				 Constants.localeZHHK);
 		
@@ -76,25 +76,25 @@ public class BrandMasterService {
 	}
 	
 	
-	private Brand mapToBrand(String brandCode,
+	private BrandEntity mapToBrand(String brandCode,
 							 String brandDesc,
 							 String locale) {
 		
-		Optional<Brand> ob = brandService.findByCode(brandCode);
+		Optional<BrandEntity> ob = brandService.findByCode(brandCode);
 						
-		io.nzbee.entity.brand.Brand b = 
+		io.nzbee.entity.brand.BrandEntity b = 
 		(ob.isPresent())
 		? ob.get() 
-		: new io.nzbee.entity.brand.Brand();
+		: new io.nzbee.entity.brand.BrandEntity();
 		
-		io.nzbee.entity.brand.attribute.BrandAttribute ba = new io.nzbee.entity.brand.attribute.BrandAttribute();
+		io.nzbee.entity.brand.attribute.BrandAttributeEntity ba = new io.nzbee.entity.brand.attribute.BrandAttributeEntity();
 		if(ob.isPresent()) {
-			Optional<io.nzbee.entity.brand.attribute.BrandAttribute> oba =
+			Optional<io.nzbee.entity.brand.attribute.BrandAttributeEntity> oba =
 					ob.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
 			
 			ba = (oba.isPresent()) 
 			? oba.get()
-			: new io.nzbee.entity.brand.attribute.BrandAttribute();
+			: new io.nzbee.entity.brand.attribute.BrandAttributeEntity();
 		}
 							
 		b.setBrandCode(brandCode);
@@ -112,11 +112,11 @@ public class BrandMasterService {
 		logger.debug("called extractBrandMaster() ");
 		List<BrandMasterSchema> lpms = new ArrayList<BrandMasterSchema>();
 	    try {
-		    	List<Brand> brandList = brandService.findAll(Constants.localeENGB)
+		    	List<BrandEntity> brandList = brandService.findAll(Constants.localeENGB)
 		    							  .stream().collect(Collectors.toList());
 		    	
 		    	brandList.stream().forEach(b -> {
-		    		System.out.println(((Brand) b).getBrandCode());
+		    		System.out.println(((BrandEntity) b).getBrandCode());
 		    	});
 		    	
 		    	//create a map of brands (full list)
@@ -126,14 +126,14 @@ public class BrandMasterService {
 		    	
 		    	brandList.addAll(brandService.findAll(Constants.localeZHHK)
 		    											.stream()
-										    			.map(p -> (Brand) p)
+										    			.map(p -> (BrandEntity) p)
 														.collect(Collectors.toList()));
 		    	
 		    	lpms.addAll(brandList.stream().map(b -> {
 		    		
 		    		BrandMasterSchema bms = map.get(b.getBrandCode());
 		    		
-		    		Optional<Brand> bnd = brandService.findByCode(b.getLocale(),
+		    		Optional<BrandEntity> bnd = brandService.findByCode(b.getLocale(),
 													          	b.getBrandCode()); 
 			    	
 				    bms.set_BRAND_CODE(bnd.get().getBrandCode());

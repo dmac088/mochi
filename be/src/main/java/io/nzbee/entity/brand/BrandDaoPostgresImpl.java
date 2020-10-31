@@ -1,7 +1,7 @@
 package io.nzbee.entity.brand;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -13,7 +13,6 @@ import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.hibernate.Session;
@@ -27,14 +26,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.Brand_;
-import io.nzbee.entity.brand.attribute.BrandAttribute;
-import io.nzbee.entity.brand.attribute.BrandAttribute_;
-import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.brand.CategoryBrand_;
-import io.nzbee.entity.product.Product;
-import io.nzbee.entity.product.Product_;
-import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.product.status.ProductStatus_;
 
 @Component
 public class BrandDaoPostgresImpl  implements IBrandDao { 
@@ -53,39 +44,31 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #brandId}")
 			}
 	)
-	public Optional<Brand> findById(String locale, Long brandId) {
-		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}, {}", locale, brandId);
+	public Optional<BrandDTO> findById(String locale, Long brandId) {
+		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}", locale, brandId);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<Long> lbid = Arrays.asList(brandId);
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		Query query = session.createNativeQuery(constructSQL(true,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 true), "BrandMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("brandIds", lbid);
 		
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		);
 		
-		cq.where(cb.and(
-				cb.equal(root.get(Brand_.brandId), brandId),
-				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
-				)
-		);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		BrandDTO result = (BrandDTO) query.getSingleResult();
 		
-		try {
-			Tuple tuple = query.getSingleResult();
-			
-			Brand brand = this.objectToEntity(tuple, locale);
-			return Optional.ofNullable(brand);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		return Optional.ofNullable(result);
 	}
 	
 	@Override
@@ -94,14 +77,14 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = CACHE_NAME, key="#brandCode")
 			}
 	)
-	public Optional<Brand> findByCode(String brandCode) {
+	public Optional<BrandEntity> findByCode(String brandCode) {
 		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}", brandCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Brand> cq = cb.createQuery(Brand.class);
+		CriteriaQuery<BrandEntity> cq = cb.createQuery(BrandEntity.class);
 		
-		Root<Brand> root = cq.from(Brand.class);
+		Root<BrandEntity> root = cq.from(BrandEntity.class);
 
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
@@ -109,14 +92,14 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				cb.equal(root.get(Brand_.BRAND_CODE), brandCode)
 		);
 		
-		TypedQuery<Brand> query = em.createQuery(cq
+		TypedQuery<BrandEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
 		);
 		
 		try {
-			Brand brand = query.getSingleResult();
+			BrandEntity brand = query.getSingleResult();
 			return Optional.ofNullable(brand);
 		} 
 		catch(NoResultException nre) {
@@ -130,39 +113,31 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #brandCode}")
 			}
 	)
-	public Optional<Brand> findByCode(String locale, String brandCode) {
+	public Optional<BrandDTO> findByCode(String locale, String brandCode) {
 		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, brandCode);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<String> lbc = Arrays.asList(brandCode);
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
-
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		);
+		Query query = session.createNativeQuery(constructSQL(true,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false), "BrandMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("brandCodes", lbc);
 		
-		cq.where(cb.and(
-				cb.equal(root.get(Brand_.brandCode), brandCode),
-				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
-				)
-		);
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		try {
-			Tuple tuple = query.getSingleResult();
-			
-			Brand brand = this.objectToEntity(tuple, locale);
-			return Optional.ofNullable(brand);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		BrandDTO result = (BrandDTO) query.getSingleResult();
+		
+		return Optional.ofNullable(result);
 	}
 
 	
@@ -172,102 +147,87 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #brandDesc}")
 			}
 	)
-	public Optional<Brand> findByDesc(String locale, String brandDesc) {
-		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}, {}", locale, brandDesc);
+	public Optional<BrandDTO> findByDesc(String locale, String brandDesc) {
+		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}", locale, brandDesc);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<String> lbd = Arrays.asList(brandDesc);
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		Query query = session.createNativeQuery(constructSQL(true,
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false), "BrandMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("brandDescriptions", lbd);
 		
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		);
 		
-		cq.where(cb.and(
-				cb.equal(attribute.get(BrandAttribute_.brandDesc), brandDesc),
-				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
-				)
-		);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		BrandDTO result = (BrandDTO) query.getSingleResult();
 		
-		try {
-			Tuple tuple = query.getSingleResult();
-			
-			Brand brand = this.objectToEntity(tuple, locale);
-			return Optional.ofNullable(brand);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		return Optional.ofNullable(result);
 	}
 	
 	@Override
-	public Set<Brand> findAll(String locale, Set<String> brandCodes) {
+	public Set<BrandDTO> findAll(String locale, Set<String> brandCodes) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(brandCodes, ','));
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<String> lbc = brandCodes.stream().collect(Collectors.toList());
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		Query query = session.createNativeQuery(constructSQL(true,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false), "BrandMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("brandCodes", lbc);
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
 		
-		if(!brandCodes.isEmpty()) {
-			conditions.add(root.in(Brand_.brandCode).in(brandCodes));
-		}
-
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		List<BrandDTO> results = query.getResultList();
 		
-		List<Tuple> tuples = query.getResultList();
-		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
+		return results.stream().collect(Collectors.toSet());
 	}
 	
 	@Override
-	public Set<Brand> findAllByCategory(String locale, String categoryCode) {
-		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}, {}", locale, categoryCode);
+	public Set<BrandDTO> findAllByCategory(String locale, String categoryCode) {
+		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}", locale, categoryCode);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<String> lc = new ArrayList<String>(Arrays.asList(categoryCode));
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, Product> brand = root.join(Brand_.products);
-		Join<Brand, CategoryBrand> category = root.join(Brand_.categories);
-		Join<Product, ProductStatus> status = brand.join(Product_.productStatus);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		Query query = session.createNativeQuery(constructSQL(true,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false), "BrandMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("categoryCodes", lc);
 		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(status.get(ProductStatus_.productStatusCode), Constants.activeSKUCode));
-		conditions.add(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
-		conditions.add(cb.equal(category.get(CategoryBrand_.categoryCode), categoryCode));
-
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		);
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		List<Tuple> tuples = query.getResultList();
+		List<BrandDTO> results = query.getResultList();
 		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
+		return results.stream().collect(Collectors.toSet());
 	}
 	
 
@@ -277,71 +237,60 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = CACHE_NAME + "ByProductCode", key="{#locale, #productCode}")
 			}
 	)
-	public Optional<Brand> findByProductCode(String locale, String productCode) {
-		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}, {}", locale, productCode);
+	public Optional<BrandDTO> findByProductCode(String locale, String productCode) {
+		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}", locale, productCode);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		List<String> lpc = new ArrayList<String>(Arrays.asList(productCode));
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
-		Join<Brand, Product> product = root.join(Brand_.products);
-
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		);
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false,
+															 false), "BrandMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("productCodes", lpc);
 		
-		cq.where(cb.and(
-				cb.equal(product.get(Product_.productUPC), productCode),
-				cb.equal(attribute.get(BrandAttribute_.lclCd), locale)
-				)
-		);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+		BrandDTO result = (BrandDTO) query.getSingleResult();
 		
-		try {
-			Tuple tuple = query.getSingleResult();
-			
-			Brand brand = this.objectToEntity(tuple, locale);
-			return Optional.ofNullable(brand);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		return Optional.ofNullable(result);
 	}
 	
 	@Override
-	public Set<Brand> findAll(String locale) {
-		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale);
+	public Set<BrandDTO> findAll(String locale) {
+		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}", locale);
+				
+		Session session = em.unwrap(Session.class);
 		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false), "BrandMapping")
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		Root<Brand> root = cq.from(Brand.class);
-		Join<Brand, BrandAttribute> attribute = root.join(Brand_.attributes);
+		List<BrandDTO> results = query.getResultList();
 		
-		cq.multiselect(	root.get(Brand_.brandId).alias("brandId"),
-						root.get(Brand_.brandCode).alias("brandCode"),
-						attribute.get(BrandAttribute_.brandAttributeId).alias("brandAttributeId"),
-						attribute.get(BrandAttribute_.brandDesc).alias("brandDesc")
-		);
-		
-		cq.where(cb.equal(attribute.get(BrandAttribute_.lclCd), locale));
-		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
-		List<Tuple> tuples = query.getResultList();
-		
-		return tuples.stream().map(t -> this.objectToEntity(t, locale)).collect(Collectors.toSet());
-		
+		return results.stream().collect(Collectors.toSet());
 	}
 	
 	@Override
-	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	public Set<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
@@ -349,7 +298,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		Query query = session.createNativeQuery(constructSQL(
 															 !categoryCodes.isEmpty(),
 															 !tagCodes.isEmpty(),
-															 !(maxPrice == null)), "BrandMapping")
+															 !(maxPrice == null),
+															 false,
+															 false,
+															 false,
+															 false), "BrandMapping")
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -368,79 +321,41 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		}
 		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		return results.stream().map(b -> this.objectToEntity(b, locale, currency)).collect(Collectors.toSet());
+		List<BrandDTO> results = query.getResultList();
+		
+		return results.stream().collect(Collectors.toSet());
 		
 	}
 	
 	@Override
-	public Brand objectToEntity(Object[] o, String locale, String currency) {
-		Brand brandEntity = this.objectToEntity(o, locale);
-		brandEntity.setCurrency(currency);
-		return brandEntity;
-	}
-
-	@Override
-	public Brand objectToEntity(Tuple t, String locale, String currency) {
-		Brand brandEntity = this.objectToEntity(t, locale);
-		brandEntity.setCurrency(currency);
-		return brandEntity;
-	}
-	
-	@Override
-	public Brand objectToEntity(Tuple t, String locale) {
-		Brand brandEntity = new Brand();
-		BrandAttribute brandAttribute = new BrandAttribute();
-		
-		brandAttribute.setId(Long.parseLong(t.get("brandAttributeId").toString()));
-		brandAttribute.setBrand(brandEntity);
-		brandAttribute.setBrandDesc(t.get("brandDesc").toString());
-		brandAttribute.setLclCd(locale);
-		
-		brandEntity.setBrandAttribute(brandAttribute);
-		brandEntity.setBrandId(Long.parseLong(t.get("brandId").toString()));
-		brandEntity.setBrandCode(t.get("brandCode").toString());
-		brandEntity.setLocale(locale);
-		
-		return brandEntity;
-	}
-	
-	@Override
-	public void save(Brand t) {
+	public void save(BrandEntity t) {
 		em.persist(t);
 	}
 	
 	@Override
-	public void update(Brand t, String[] params) {
+	public void update(BrandEntity t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 	
 	@Override
-	public void delete(Brand t) {
+	public void delete(BrandEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
-	public Brand objectToEntity(Object[] o, String locale) {
-		Brand brand = (Brand) o[0];
-		brand.setBrandAttribute(((BrandAttribute) o[1]));
-		
-		brand.setObjectCount(((BigInteger)o[2]).intValue());
-		
-		brand.setLocale(locale);
-		
-		return brand;
-	}
 	
 	private String constructSQL(
 			boolean hasCategories,
 			boolean hasTags,
-			boolean hasPrice
-		) {
+			boolean hasPrice,
+			boolean hasProductCodes,
+			boolean hasBrandCodes,
+			boolean hasBrandDescriptions,
+			boolean hasBrandIds) {
 	String sql = "WITH recursive descendants AS " + 
 			"( " + 
 			"          SELECT    t.cat_id, " + 
@@ -482,11 +397,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
 			")" + 
 			"select b.bnd_id, " + 
-			"	   b.bnd_cd," + 
-			"	   lcl.bnd_lcl_id," + 
-			"	   lcl.bnd_desc," + 
-			"	   lcl.lcl_cd, " +		
-			"	   count(distinct p.upc_cd) as object_count " + 
+			"	    b.bnd_cd," + 
+			"	    lcl.bnd_lcl_id," + 
+			"	    lcl.bnd_desc," + 
+			"	    lcl.lcl_cd, " +		
+			"	    count(distinct p.upc_cd) as object_count " + 
 			"from categories c " + 
 			"	inner join mochi.product_category pc" + 
 			"		on c.cat_id = pc.cat_id" + 
@@ -530,7 +445,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				: "") + 
 			"						 " + 
 			"where 0=0 " + 
-			((hasTags) ? 	" 		AND t.tag_cd in 	:tagCodes " : "") +
+			((hasTags) ? 	" 					AND t.tag_cd in 	:tagCodes " 			: "") +
+			((hasProductCodes) ? " 				AND p.prd_cd in 	:productCodes " 		: "") +
+			((hasBrandCodes) ? " 				AND b.bnd_cd in 	:brandCodes " 			: "") +
+			((hasBrandDescriptions) ? " 		AND lcl.bnd_desc in :brandDescriptions " 	: "") +
+			((hasBrandIds) ? " 					AND b.bnd_id in 	:brandIds " 			: "") +
 			"group by b.bnd_id, " + 
 			"	   b.bnd_cd," + 
 			"	   lcl.bnd_desc," + 
@@ -538,6 +457,30 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"	   lcl.lcl_cd"	;
 		
 	return sql;
+	}
+
+	@Override
+	public BrandDTO objectToDTO(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BrandDTO objectToDTO(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BrandDTO objectToDTO(Tuple t, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public BrandDTO objectToDTO(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

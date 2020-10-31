@@ -17,7 +17,7 @@ import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.party.organization.Organization;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.role.supplier.ISupplierService;
@@ -51,7 +51,7 @@ public class InventoryTransactionEntityBeanFactory {
 		Optional<InventoryType> iT 		= inventoryTypeService.findByCode("IN");
 		Optional<Currency> iC 			= currencyService.findByCode(Constants.currencyHKD);
 		Optional<Supplier> iS 			= supplierService.findByCode("1000000002");
-		Optional<Product> iP 			= productService.findByCode("30833030");
+		Optional<ProductEntity> iP 			= productService.findByCode("30833030");
 		
 		inventoryTransaction.setInventoryLocation(iL.get());
 		

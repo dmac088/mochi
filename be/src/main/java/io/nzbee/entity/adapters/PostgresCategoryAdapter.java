@@ -15,7 +15,7 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProduct;
@@ -137,12 +137,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 								 ? (CategoryProduct) Hibernate.unproxy(oc.get())
 								 : new CategoryProduct();
 								 
-			CategoryAttribute ca = new CategoryAttribute();
+			CategoryAttributeEntity ca = new CategoryAttributeEntity();
 			if (oc.isPresent()) {
-				Optional<CategoryAttribute> oca = cp.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
+				Optional<CategoryAttributeEntity> oca = cp.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
 				ca = (oca.isPresent()) 
 					? oca.get()
-					: new CategoryAttribute();
+					: new CategoryAttributeEntity();
 			}
 			
 			cp.setCategoryCode(domainObject.getCategoryCode());
@@ -167,9 +167,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 					 ? (CategoryBrand) oc.get()
 					 : new CategoryBrand();
 
-			CategoryAttribute ca = (oc.isPresent()) 
+			CategoryAttributeEntity ca = (oc.isPresent()) 
 					 ? cb.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst().get()
-					 : new CategoryAttribute();
+					 : new CategoryAttributeEntity();
 			
 			ca.setCategoryDesc(domainObject.getCategoryDesc());
 			ca.setLclCd(domainObject.getLocale());

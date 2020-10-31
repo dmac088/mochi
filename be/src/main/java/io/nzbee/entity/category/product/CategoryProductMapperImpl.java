@@ -2,7 +2,7 @@ package io.nzbee.entity.category.product;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 
 @Component
 public class CategoryProductMapperImpl implements ICategoryProductMapper {
@@ -10,10 +10,10 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 	
 	@Override
 	public ProductCategory entityToDo(CategoryProduct e) {
-		
+		System.out.println(e.getLocale());
 		return new ProductCategory(
 				e.getCategoryCode(),
-				e.getCategoryAttribute().getCategoryDesc(),
+				e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findAny().get().getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
 				e.getCount(),
@@ -35,7 +35,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 		cp.setCategoryLevel(pc.getCategoryLevel());
 		cp.setObjectCount(pc.getCount());
 		
-		CategoryAttribute ca = new CategoryAttribute();
+		CategoryAttributeEntity ca = new CategoryAttributeEntity();
 		ca.setCategoryDesc(pc.getCategoryDesc());
 		ca.setLclCd(pc.getLocale());
 		

@@ -8,30 +8,30 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import io.nzbee.entity.ILocalizedDao;
 
-public interface IProductDao extends ILocalizedDao<Product> {
+public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 	
-	Page<Product> findAll(	String locale, 
+	Page<ProductDTO> findAll(	String locale, 
 							String currency, 
 							Pageable pageable,
 							String orderby);
 
-	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
+	<T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls);
 
 
-	Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
 
-	Optional<Product> findByCode(String locale, String currency, String code);
+	Optional<ProductDTO> findByCode(String locale, String currency, String code);
 
-	Optional<Product> findByDesc(String locale, String currency, String desc);
+	Optional<ProductDTO> findByDesc(String locale, String currency, String desc);
 
-	List<Product> findAll(String locale, String currency);
+	List<ProductDTO> findAll(String locale, String currency);
 
-	List<Product> findAll(String locale, String currency, Set<String> codes);
+	List<ProductDTO> findAll(String locale, String currency, Set<String> codes);
 
-	Optional<Product> findByCode(String productUPC);
+	Optional<ProductEntity> findByCode(String productUPC);
 
-	Optional<Product> findById(String locale, String currency, Long productId);
+	Optional<ProductDTO> findById(String locale, String currency, Long productId);
 
 	
 }

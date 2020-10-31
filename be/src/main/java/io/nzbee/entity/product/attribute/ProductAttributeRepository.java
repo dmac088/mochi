@@ -5,14 +5,14 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface ProductAttributeRepository extends CrudRepository<ProductAttribute, Long> {
+public interface ProductAttributeRepository extends CrudRepository<ProductAttributeEntity, Long> {
 
-	List<ProductAttribute> findAll();
+	List<ProductAttributeEntity> findAll();
 
-	List<ProductAttribute> findByLclCd(String lcl);
+	List<ProductAttributeEntity> findByLclCd(String lcl);
 
-	Optional<ProductAttribute> findByLclCdAndProductProductId(String lcl, Long id);
+	Optional<ProductAttributeEntity> findByLclCdAndProductProductId(String lcl, Long id);
 	
-	Optional<ProductAttribute> findByLclCdAndProductProductUPC(String lcl, String code);
+	Optional<ProductAttributeEntity> findByLclCdAndProductProductUPC(String lcl, String code);
 
 }

@@ -21,42 +21,42 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME)
-	public List<CategoryProduct> findAllByProductCode(String locale, String prodctUPC) {
+	public List<CategoryProductDTO> findAllByProductCode(String locale, String prodctUPC) {
 		return productCategoryDao.findAllByProductCode(locale, prodctUPC);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #prodctUPC}")
-	public Optional<CategoryProduct> findPrimaryByProductCode(String locale, String prodctUPC) {
+	public Optional<CategoryProductDTO> findPrimaryByProductCode(String locale, String prodctUPC) {
 		return productCategoryDao.findPrimaryByProductCode(locale, prodctUPC);
 	}
 
 	@Override
-	public Set<CategoryProduct> findAll(String locale) {
+	public Set<CategoryProductDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<CategoryProduct> findAll(String locale, Set<String> codes) {
+	public Set<CategoryProductDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findById(String locale, Long id) {
+	public Optional<CategoryProductDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findByCode(String locale, String code) {
+	public Optional<CategoryProductDTO> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<CategoryProduct> findByDesc(String locale, String desc) {
+	public Optional<CategoryProductDTO> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -71,12 +71,6 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 			})
 	public void save(CategoryProduct category) {
 		productCategoryDao.save(category);
-	}
-	
-	@Override
-	public CategoryProduct merge(CategoryProduct category) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

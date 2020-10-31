@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import io.nzbee.entity.ILocalizedService;
 
-public interface IDepartmentService extends ILocalizedService<Department> {
+public interface IDepartmentService extends ILocalizedService<DepartmentDTO, DepartmentEntity> {
 
-	Optional<Department> findByProductCode(String locale, String productCode);
+	Optional<DepartmentDTO> findByProductCode(String locale, String productCode);
 	
 }

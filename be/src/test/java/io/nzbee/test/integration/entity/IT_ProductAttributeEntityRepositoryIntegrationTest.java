@@ -22,7 +22,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -59,9 +59,9 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     @Autowired
     private IProductService productService;
     
-    private Product p = null;
+    private ProductEntity p = null;
     
-	public Product persistNewProduct() {
+	public ProductEntity persistNewProduct() {
     	
 		p = productEntityBeanFactory.getProductEntityBean();
 	    
@@ -79,7 +79,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnProduct() {
 		 // when
-    	Product found = productService.findById(  Constants.localeENGB, 
+    	ProductEntity found = productService.findById(  Constants.localeENGB, 
 												  Constants.currencyHKD,  
 												  p.getProductId()).get();
      
@@ -91,7 +91,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByCode(Constants.localeENGB, 
+    	ProductEntity found = productService.findByCode(Constants.localeENGB, 
 				  								  Constants.currencyHKD,  
 												  "123456789").get();
      
@@ -99,7 +99,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     	assertFound(found);
 	}
 	 
-    private void assertFound(final Product found) {
+    private void assertFound(final ProductEntity found) {
     	assertThat(found.getUPC())
         .isEqualTo("123456789");
     	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent())

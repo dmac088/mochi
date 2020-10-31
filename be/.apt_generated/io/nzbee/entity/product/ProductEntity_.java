@@ -1,9 +1,9 @@
 package io.nzbee.entity.product;
 
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.product.attribute.ProductAttribute;
-import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.attribute.ProductAttributeEntity;
+import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.price.ProductPrice;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.Tag;
@@ -14,20 +14,20 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
-@StaticMetamodel(Product.class)
-public abstract class Product_ {
+@StaticMetamodel(ProductEntity.class)
+public abstract class ProductEntity_ {
 
-	public static volatile SingularAttribute<Product, Long> productId;
-	public static volatile SingularAttribute<Product, String> productUPC;
-	public static volatile SingularAttribute<Product, ProductStatus> productStatus;
-	public static volatile SingularAttribute<Product, LocalDateTime> productCreateDt;
-	public static volatile SetAttribute<Product, ProductAttribute> attributes;
-	public static volatile SetAttribute<Product, CategoryProduct> categories;
-	public static volatile SingularAttribute<Product, Department> department;
-	public static volatile SetAttribute<Product, ProductPrice> prices;
-	public static volatile SingularAttribute<Product, CategoryProduct> primaryCategoryIndex;
-	public static volatile SingularAttribute<Product, Brand> brand;
-	public static volatile SetAttribute<Product, Tag> tags;
+	public static volatile SingularAttribute<ProductEntity, Long> productId;
+	public static volatile SingularAttribute<ProductEntity, String> productUPC;
+	public static volatile SingularAttribute<ProductEntity, ProductStatus> productStatus;
+	public static volatile SingularAttribute<ProductEntity, LocalDateTime> productCreateDt;
+	public static volatile SetAttribute<ProductEntity, ProductAttributeEntity> attributes;
+	public static volatile SetAttribute<ProductEntity, CategoryProduct> categories;
+	public static volatile SingularAttribute<ProductEntity, DepartmentEntity> department;
+	public static volatile SetAttribute<ProductEntity, ProductPrice> prices;
+	public static volatile SingularAttribute<ProductEntity, CategoryProduct> primaryCategoryIndex;
+	public static volatile SingularAttribute<ProductEntity, BrandEntity> brand;
+	public static volatile SetAttribute<ProductEntity, Tag> tags;
 
 	public static final String PRODUCT_ID = "productId";
 	public static final String PRODUCT_UP_C = "productUPC";

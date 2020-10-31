@@ -23,7 +23,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -120,12 +120,12 @@ public class CategoryMasterService {
 							 ? (CategoryProduct) Hibernate.unproxy(oc.get())
 							 : new CategoryProduct();
 							 
-		CategoryAttribute ca = new CategoryAttribute();
+		CategoryAttributeEntity ca = new CategoryAttributeEntity();
 		if (oc.isPresent()) {
-			Optional<CategoryAttribute> oca = cp.getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
+			Optional<CategoryAttributeEntity> oca = cp.getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
 			ca = (oca.isPresent()) 
 				? oca.get()
-				: new CategoryAttribute();
+				: new CategoryAttributeEntity();
 		}
 		
 		cp.setCategoryCode(categoryCode);
@@ -153,9 +153,9 @@ public class CategoryMasterService {
 				 ? (CategoryBrand) oc.get()
 				 : new CategoryBrand();
 
-		CategoryAttribute ca = (oc.isPresent()) 
+		CategoryAttributeEntity ca = (oc.isPresent()) 
 				 ? cb.getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst().get()
-				 : new CategoryAttribute();
+				 : new CategoryAttributeEntity();
 		
 		ca.setCategoryDesc(categoryDesc);
 		ca.setLclCd(locale);

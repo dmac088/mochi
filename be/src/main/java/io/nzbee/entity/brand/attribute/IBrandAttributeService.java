@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import io.nzbee.entity.ILocalizedDao;
 
-public interface IBrandAttributeService extends ILocalizedDao<BrandAttribute> {
+public interface IBrandAttributeService extends ILocalizedDao<BrandAttributeDTO, BrandAttributeEntity> {
 	
-	Optional<BrandAttribute> getBrandAttributeEN(Long id);
+	Optional<BrandAttributeEntity> getBrandAttributeEN(Long id);
 	
-	Optional<BrandAttribute> getBrandAttributeHK(Long id);
+	Optional<BrandAttributeEntity> getBrandAttributeHK(Long id);
 
-	Optional<BrandAttribute> getBrandAttribute(Long id, String locale);
+	Optional<BrandAttributeEntity> getBrandAttribute(Long id, String locale);
 
 
 }
