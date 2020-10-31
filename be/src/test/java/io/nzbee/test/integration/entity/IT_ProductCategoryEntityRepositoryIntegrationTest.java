@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 
@@ -63,7 +63,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     private ICategoryService categoryService;
    
     
-    private io.nzbee.entity.category.Category category = null;
+    private io.nzbee.entity.category.CategoryEntity category = null;
     
     @Before
     public void setUp() { 
@@ -71,7 +71,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     
-	public io.nzbee.entity.category.Category persistNewCategory() {
+	public io.nzbee.entity.category.CategoryEntity persistNewCategory() {
     	
 		category = categoryEntityBeanFactory.getProductCategoryEntityBean();
 	    
@@ -88,7 +88,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findById(Constants.localeENGB, 
+    	CategoryEntity found = categoryService.findById(Constants.localeENGB, 
 												  category.getCategoryId()).get();
      
         // then
@@ -99,7 +99,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByCode(Constants.localeENGB, 
+    	CategoryEntity found = categoryService.findByCode(Constants.localeENGB, 
 				 									"TST02").get();
      
         // then
@@ -110,7 +110,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByExistingCode_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByCode(Constants.localeENGB, 
+    	CategoryEntity found = categoryService.findByCode(Constants.localeENGB, 
 				 									"FET01").get();
      
     	assertThat(found.getCategoryCode())
@@ -127,7 +127,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnProductCategory() {
     	
         // when
-    	Category found = categoryService.findByDesc(Constants.localeENGB,
+    	CategoryEntity found = categoryService.findByDesc(Constants.localeENGB,
 				 									"test product category").get();
      
         //then
@@ -142,7 +142,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	Set<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    	Set<CategoryEntity> lc = categoryService.findAll(Constants.localeENGB, 
     												Constants.currencyUSD, 
     												"FRT01",
     												categories,
@@ -165,7 +165,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	Set<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    	Set<CategoryEntity> lc = categoryService.findAll(Constants.localeENGB, 
     												Constants.currencyUSD, 
     												"FRT01", 
     												categories,
@@ -188,7 +188,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	tags.add("GFR01");
     	
     	//when
-    	Set<Category> lc = categoryService.findAll(Constants.localeENGB, 
+    	Set<CategoryEntity> lc = categoryService.findAll(Constants.localeENGB, 
     												Constants.currencyUSD, 
     												"FRT01", 
     												categories,
@@ -203,7 +203,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
   
-    private void assertFound(final Category found) {
+    private void assertFound(final CategoryEntity found) {
     	
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");

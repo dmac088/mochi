@@ -24,9 +24,9 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -179,7 +179,7 @@ public class ProductMasterService {
 		
 		Optional<BrandEntity> ob = brandService.findByCode(locale, brandCode);
 		
-		Optional<Category> oc = categoryService.findByCode(locale, categoryCode);
+		Optional<CategoryEntity> oc = categoryService.findByCode(locale, categoryCode);
 		
 		Optional<DepartmentEntity> od = departmentService.findByCode(locale, templateCode);
 		
@@ -199,7 +199,7 @@ public class ProductMasterService {
 						 ? (ProductBasicEntity) op.get()
 						 : new ProductBasicEntity();			  
 					  
-		pe.setPrimaryCategory((CategoryProduct) oc.get());
+		pe.setPrimaryCategory((CategoryProductEntity) oc.get());
 		pe.setBrand(ob.get());
 		pe.setDepartment(od.get());
 		pe.setProductUPC(upcCode);

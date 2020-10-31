@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.basic.ProductBasicEntity;
@@ -95,10 +95,10 @@ public class ProductEntityBeanFactory {
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 				
 		//we need a category
-		CategoryProduct cpf = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
+		CategoryProductEntity cpf = (CategoryProductEntity) categoryService.findByCode(Constants.localeENGB, 
 																		  "POM01").get();
 				
-		CategoryProduct cpv = (CategoryProduct) categoryService.findByCode(Constants.localeENGB, 
+		CategoryProductEntity cpv = (CategoryProductEntity) categoryService.findByCode(Constants.localeENGB, 
 				  														  "CIT01").get();
 		
 		//add the category to the product

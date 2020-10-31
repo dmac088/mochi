@@ -50,18 +50,18 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	}
 
 	@Override
-	public void save(CategoryBrand t) {
+	public void save(CategoryBrandEntity t) {
 		brandCategoryDao.save(t);
 	}
 
 	@Override
-	public void update(CategoryBrand t) {
+	public void update(CategoryBrandEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(CategoryBrand t) {
+	public void delete(CategoryBrandEntity t) {
 		// TODO Auto-generated method stub
 		
 	}

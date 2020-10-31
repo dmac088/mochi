@@ -15,15 +15,15 @@ import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.CategoryEntity;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 
 @Entity
 @Table(name = "category_brand", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "cat_id")
 @DiscriminatorValue("2")
 @JsonTypeName("categorybrand")
-public class CategoryBrand extends Category {
+public class CategoryBrandEntity extends CategoryEntity {
 
 	@ManyToMany(fetch = FetchType.LAZY, 
 				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
@@ -37,7 +37,7 @@ public class CategoryBrand extends Category {
 	@Transient
 	private int brandCount;
 	
-	public CategoryBrand() {
+	public CategoryBrandEntity() {
 		super();
 	}
 
@@ -95,8 +95,8 @@ public class CategoryBrand extends Category {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof CategoryProduct)) return false;
-        return categoryCode != null && categoryCode.equals(((Category) o).getCategoryCode());
+        if (!(o instanceof CategoryProductEntity)) return false;
+        return categoryCode != null && categoryCode.equals(((CategoryEntity) o).getCategoryCode());
     }
  
     @Override

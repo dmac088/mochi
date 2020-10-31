@@ -16,9 +16,10 @@ import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
+import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
 
@@ -63,7 +64,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Category findByCode(String locale, String code) {
-		io.nzbee.entity.category.Category cp = categoryService.findByCode(locale, code)
+		io.nzbee.entity.category.CategoryDTO cp = categoryService.findByCode(locale, code)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
 		return categoryMapper.entityToDo(cp);
 	}	
@@ -71,7 +72,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Category findByDesc(String locale, String desc) {
-		io.nzbee.entity.category.Category cp = categoryService.findByDesc(locale, desc)
+		io.nzbee.entity.category.CategoryDTO cp = categoryService.findByDesc(locale, desc)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
 		return categoryMapper.entityToDo(cp);
 	}
@@ -86,7 +87,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public ProductCategory findPrimaryByProductCode(String locale, String productCode) {
-		CategoryProduct cp = categoryProductService.findPrimaryByProductCode(locale, productCode)
+		CategoryProductDTO cp = categoryProductService.findPrimaryByProductCode(locale, productCode)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
 		return (ProductCategory) categoryMapper.entityToDo(cp);		
 	}
@@ -113,14 +114,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Set<ProductCategory> findAllProductCategories(String locale) {
-		return categoryService.findAll(locale, CategoryProduct.class)
+		return categoryService.findAll(locale, CategoryProductEntity.class)
 				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Set<BrandCategory> findAllBrandCategories(String locale) {
-		return categoryService.findAll(locale, CategoryBrand.class)
+		return categoryService.findAll(locale, CategoryBrandEntity.class)
 				.stream().map(c -> (BrandCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
 	}
 	
@@ -130,12 +131,12 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if (domainObject instanceof ProductCategory) {
 			
-			Optional<io.nzbee.entity.category.Category> oc = 
+			Optional<io.nzbee.entity.category.CategoryEntity> oc = 
 					categoryService.findByCode(domainObject.getCategoryCode());
 			
-			CategoryProduct cp = (oc.isPresent()) 
-								 ? (CategoryProduct) Hibernate.unproxy(oc.get())
-								 : new CategoryProduct();
+			CategoryProductEntity cp = (oc.isPresent()) 
+								 ? (CategoryProductEntity) Hibernate.unproxy(oc.get())
+								 : new CategoryProductEntity();
 								 
 			CategoryAttributeEntity ca = new CategoryAttributeEntity();
 			if (oc.isPresent()) {
@@ -159,13 +160,13 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if(domainObject instanceof BrandCategory) {			
 			
-			Optional<io.nzbee.entity.category.Category> oc = 
+			Optional<io.nzbee.entity.category.CategoryDTO> oc = 
 					categoryService.findByCode(domainObject.getLocale(), 
 											   domainObject.getCategoryCode());
 			
-			CategoryBrand cb = (oc.isPresent()) 
-					 ? (CategoryBrand) oc.get()
-					 : new CategoryBrand();
+			CategoryBrandEntity cb = (oc.isPresent()) 
+					 ? (CategoryBrandEntity) oc.get()
+					 : new CategoryBrandEntity();
 
 			CategoryAttributeEntity ca = (oc.isPresent()) 
 					 ? cb.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst().get()

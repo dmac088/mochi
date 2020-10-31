@@ -53,7 +53,7 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.price.ProductPriceEntity;
@@ -302,7 +302,7 @@ public abstract class ProductEntity {
 		   			inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
 	@IndexedEmbedded(	prefix="product.categories.", 
 						includeEmbeddedObjectId=true)
-	private Set<CategoryProduct> categories = new HashSet<CategoryProduct>();
+	private Set<CategoryProductEntity> categories = new HashSet<CategoryProductEntity>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 				cascade = {
@@ -361,10 +361,10 @@ public abstract class ProductEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_cat_id")
 	@IndexedEmbedded(prefix="product.primarycategory.")
-	private CategoryProduct primaryCategoryIndex; 
+	private CategoryProductEntity primaryCategoryIndex; 
 
 	@Transient
-	private CategoryProduct primaryCategory;
+	private CategoryProductEntity primaryCategory;
 	
 	@Transient 
 	private boolean inStock;
@@ -372,15 +372,15 @@ public abstract class ProductEntity {
 	public ProductEntity() {
 	}
 
-	public CategoryProduct getPrimaryCategory() {
+	public CategoryProductEntity getPrimaryCategory() {
 		return primaryCategory;
 	}
 	
-	public CategoryProduct getPrimaryCategoryIndex() {
+	public CategoryProductEntity getPrimaryCategoryIndex() {
 		return primaryCategoryIndex;
 	}
 
-	public void setPrimaryCategory(CategoryProduct primaryCategoryIndex) {
+	public void setPrimaryCategory(CategoryProductEntity primaryCategoryIndex) {
 		this.primaryCategoryIndex = primaryCategoryIndex; 
 		this.primaryCategory = primaryCategoryIndex;
 	}
@@ -543,11 +543,11 @@ public abstract class ProductEntity {
 		return productId;
 	}
 
-	public Set<CategoryProduct> getCategories() {
+	public Set<CategoryProductEntity> getCategories() {
 		return this.categories;
 	}
 	
-	public void setCategories(Set<CategoryProduct> categories) {
+	public void setCategories(Set<CategoryProductEntity> categories) {
 		this.categories = categories;
 	}
 	
@@ -649,12 +649,12 @@ public abstract class ProductEntity {
 		tag.getProducts().remove(this);
 	}
 	
-	public void addProductCategory(CategoryProduct categoryProduct) {
+	public void addProductCategory(CategoryProductEntity categoryProduct) {
 		this.getCategories().add(categoryProduct);
 		categoryProduct.getProducts().add(this);
 	}
 	
-	public void removeProductCategory(CategoryProduct categoryProduct) {
+	public void removeProductCategory(CategoryProductEntity categoryProduct) {
 		this.getCategories().remove(categoryProduct);
 		categoryProduct.getProducts().remove(this);
 	}
@@ -695,12 +695,12 @@ public abstract class ProductEntity {
 		this.currency = currency;
 	}
 	
-	public void addCategory(CategoryProduct category) {
+	public void addCategory(CategoryProductEntity category) {
 		this.getCategories().add(category);
 		category.getProducts().add(this);
 	}
 	
-	public void removeCategory(CategoryProduct category) {
+	public void removeCategory(CategoryProductEntity category) {
 		this.getCategories().remove(category);
 		category.removeProduct(this);
 	}

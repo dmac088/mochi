@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
-import io.nzbee.entity.category.brand.CategoryBrand;
+import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.search.ISearchDimension;
 
@@ -69,7 +69,7 @@ public class BrandEntity implements ISearchDimension {
 	
 	@ManyToMany(mappedBy = "brands")
 	@JsonIgnore
-	private Set<CategoryBrand> categories = new HashSet<CategoryBrand>();
+	private Set<CategoryBrandEntity> categories = new HashSet<CategoryBrandEntity>();
 
 	@OneToMany(	mappedBy="brand",
 				cascade = CascadeType.ALL,
@@ -160,7 +160,7 @@ public class BrandEntity implements ISearchDimension {
 		return attributes;
 	}
 	
-	public Set<CategoryBrand> getCategories() {
+	public Set<CategoryBrandEntity> getCategories() {
 		return categories;
 	}
 	
@@ -174,12 +174,12 @@ public class BrandEntity implements ISearchDimension {
 		brandAttribute.setBrand(null);
 	}
 	
-	public void addBrandCategory(CategoryBrand categoryBrand) {
+	public void addBrandCategory(CategoryBrandEntity categoryBrand) {
 		this.getCategories().add(categoryBrand);
 		categoryBrand.addBrand(this);
 	}
 
-	public void removeBrandCategory(CategoryBrand categoryBrand) {
+	public void removeBrandCategory(CategoryBrandEntity categoryBrand) {
 		this.getCategories().remove(categoryBrand);
 		categoryBrand.removeBrand(this);
 	}

@@ -26,7 +26,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.util.category.CategoryMasterService;
 
 @RunWith(SpringRunner.class)
@@ -63,7 +63,7 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenCategoryUploadedForCreate_thenReturnCorrectlyCreatedCategory_ENGB() {
 		// when
-		Optional<Category> found = categoryService.findByCode(Constants.localeENGB, "TST01");
+		Optional<CategoryEntity> found = categoryService.findByCode(Constants.localeENGB, "TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -72,13 +72,13 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 	@Test
 	public void whenCategoryUploadedForCreate_thenReturnCorrectlyCreatedCategory_ZHHK() {
 		// when
-		Optional<Category> found = categoryService.findByCode(Constants.localeZHHK, "TST01");
+		Optional<CategoryEntity> found = categoryService.findByCode(Constants.localeZHHK, "TST01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<Category> found) {
+	private void assertFound_ENGB(Optional<CategoryEntity> found) {
 		
 		assertNotNull(found);
 		
@@ -95,7 +95,7 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<Category> found) {
+	private void assertFound_ZHHK(Optional<CategoryEntity> found) {
 		
 		assertNotNull(found);
 		

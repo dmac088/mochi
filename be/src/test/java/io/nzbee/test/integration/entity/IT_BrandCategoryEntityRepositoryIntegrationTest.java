@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
@@ -70,7 +70,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     @Autowired
     private ICategoryService categoryService;
  
-	private io.nzbee.entity.category.Category category = null;
+	private io.nzbee.entity.category.CategoryEntity category = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -80,7 +80,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	this.persistNewCategory();
     }
     
-	public io.nzbee.entity.category.Category persistNewCategory() {
+	public io.nzbee.entity.category.CategoryEntity persistNewCategory() {
     	
 		category = categoryEntityBeanFactory.getBrandCategoryEntityBean();
 	    	
@@ -96,7 +96,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findById(Constants.localeENGB, 
+    	CategoryEntity found = categoryService.findById(Constants.localeENGB, 
 												  category.getCategoryId()).get();
      
         // then
@@ -108,7 +108,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findByCode(Constants.localeENGB, 
+    	CategoryEntity found = categoryService.findByCode(Constants.localeENGB, 
 				 									"TST02").get();
      
         // then
@@ -120,14 +120,14 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrandCategory() {
     	
         // when
-    	Category found = categoryService.findByDesc(Constants.localeENGB, 
+    	CategoryEntity found = categoryService.findByDesc(Constants.localeENGB, 
 				 									"test brand category").get();
      
         //then
     	assertFound(found);
     }
     
-    private void assertFound(final Category found) {
+    private void assertFound(final CategoryEntity found) {
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
 	    assertThat(found.getCategoryLevel())

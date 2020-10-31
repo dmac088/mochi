@@ -1,6 +1,6 @@
 package io.nzbee.entity.category.attribute;
 
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -11,7 +11,7 @@ public abstract class CategoryAttributeEntit_ {
 
 	public static volatile SingularAttribute<CategoryAttributeEntity, String> lclCd;
 	public static volatile SingularAttribute<CategoryAttributeEntity, Long> categoryAttributeId;
-	public static volatile SingularAttribute<CategoryAttributeEntity, Category> category;
+	public static volatile SingularAttribute<CategoryAttributeEntity, CategoryEntity> category;
 	public static volatile SingularAttribute<CategoryAttributeEntity, String> categoryDesc;
 
 	public static final String LCL_CD = "lclCd";

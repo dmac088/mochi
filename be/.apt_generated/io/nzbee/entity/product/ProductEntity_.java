@@ -1,7 +1,7 @@
 package io.nzbee.entity.product;
 
 import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.price.ProductPriceEntity;
@@ -22,10 +22,10 @@ public abstract class ProductEntity_ {
 	public static volatile SingularAttribute<ProductEntity, ProductStatus> productStatus;
 	public static volatile SingularAttribute<ProductEntity, LocalDateTime> productCreateDt;
 	public static volatile SetAttribute<ProductEntity, ProductAttributeEntity> attributes;
-	public static volatile SetAttribute<ProductEntity, CategoryProduct> categories;
+	public static volatile SetAttribute<ProductEntity, CategoryProductEntity> categories;
 	public static volatile SingularAttribute<ProductEntity, DepartmentEntity> department;
 	public static volatile SetAttribute<ProductEntity, ProductPriceEntity> prices;
-	public static volatile SingularAttribute<ProductEntity, CategoryProduct> primaryCategoryIndex;
+	public static volatile SingularAttribute<ProductEntity, CategoryProductEntity> primaryCategoryIndex;
 	public static volatile SingularAttribute<ProductEntity, BrandEntity> brand;
 	public static volatile SetAttribute<ProductEntity, TagEntity> tags;
 

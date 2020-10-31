@@ -23,10 +23,10 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.Category;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.brand.CategoryBrandEntity;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -56,7 +56,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
-		Set<Category> found = categoryService.findAll(Constants.localeENGB);
+		Set<CategoryEntity> found = categoryService.findAll(Constants.localeENGB);
 
 		// then
 		assertAllCategoriesFound(found);
@@ -70,7 +70,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		Set<Category> found = categoryService.findAll(Constants.localeENGB,
+		Set<CategoryEntity> found = categoryService.findAll(Constants.localeENGB,
 													  Constants.currencyHKD, 
 													  ls);
 
@@ -87,7 +87,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		Set<Category> found = categoryService.findAll(Constants.localeENGB, 
+		Set<CategoryEntity> found = categoryService.findAll(Constants.localeENGB, 
 													  ls);
 
 		// then
@@ -103,7 +103,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		Set<Category> found = categoryService.findAll(Constants.localeENGB, 
+		Set<CategoryEntity> found = categoryService.findAll(Constants.localeENGB, 
 													  Constants.currencyHKD, 
 													  "FRT01", 
 													  ls, 
@@ -120,7 +120,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategories_thenReturnAllCategories() {
 		
 		//when
-		Set<Category> found = categoryService.findAll(		Constants.localeENGB, 
+		Set<CategoryEntity> found = categoryService.findAll(		Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
@@ -137,7 +137,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategoriesWithNullPrice_thenReturnAllCategories() {
 		
 		//when
-		Set<Category> found = categoryService.findAll(		Constants.localeENGB, 
+		Set<CategoryEntity> found = categoryService.findAll(		Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
@@ -154,7 +154,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
 
 		// when
-		Set<Category> found = categoryService.findAll(Constants.localeENGB, CategoryBrand.class);
+		Set<CategoryEntity> found = categoryService.findAll(Constants.localeENGB, CategoryBrandEntity.class);
 
 		// then
 		assertAllBrandCategoriesFound(found);
@@ -164,7 +164,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
 
 		// when
-		Set<Category> found = categoryService.findAll(Constants.localeENGB, CategoryProduct.class);
+		Set<CategoryEntity> found = categoryService.findAll(Constants.localeENGB, CategoryProductEntity.class);
 
 		// then
 		assertAllProductCategoriesFound(found);
@@ -258,19 +258,19 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertThat(found).isEqualTo(new Double("11.0"));
 	}
 
-	private void assertAllCategoriesFound(final Set<Category> found) {
+	private void assertAllCategoriesFound(final Set<CategoryEntity> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(88);
 	}
 
-	private void assertAllBrandCategoriesFound(final Set<Category> found) {
+	private void assertAllBrandCategoriesFound(final Set<CategoryEntity> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(1);
 	}
 
-	private void assertAllProductCategoriesFound(final Set<Category> found) {
+	private void assertAllProductCategoriesFound(final Set<CategoryEntity> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(87);

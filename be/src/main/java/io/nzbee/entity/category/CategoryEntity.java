@@ -39,8 +39,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.category.product.CategoryProduct;
+import io.nzbee.entity.category.brand.CategoryBrandEntity;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.search.ISearchDimension;
 
@@ -52,8 +52,8 @@ import io.nzbee.search.ISearchDimension;
 	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property="type")
-@JsonSubTypes( {@JsonSubTypes.Type(value = CategoryProduct.class, 	name = "categoryproduct"),
-			    @JsonSubTypes.Type(value = CategoryBrand.class, 	name = "categorybrand")})
+@JsonSubTypes( {@JsonSubTypes.Type(value = CategoryProductEntity.class, 	name = "categoryproduct"),
+			    @JsonSubTypes.Type(value = CategoryBrandEntity.class, 	name = "categorybrand")})
 @SqlResultSetMapping(
     name = "CategoryMapping",
     columns = {
@@ -62,7 +62,7 @@ import io.nzbee.search.ISearchDimension;
     },
     entities = {
             @EntityResult(
-                    entityClass = Category.class,
+                    entityClass = CategoryEntity.class,
                     discriminatorColumn="cat_typ_id",
                     fields = {
                         @FieldResult(name = "categoryId", 					column = "cat_id"),
@@ -93,7 +93,7 @@ import io.nzbee.search.ISearchDimension;
 	                }),
 	            //now we initialize the parent category
 	        @EntityResult(
-	                entityClass = Category.class,
+	                entityClass = CategoryEntity.class,
 	                discriminatorColumn="cat_typ_id",
 	                fields = {
 	                    @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
@@ -123,7 +123,7 @@ import io.nzbee.search.ISearchDimension;
 	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_prnt_typ_desc")
 	                }),
 	    })
-public abstract class Category implements ISearchDimension {
+public abstract class CategoryEntity implements ISearchDimension {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -162,7 +162,7 @@ public abstract class Category implements ISearchDimension {
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false, insertable = false, updatable = false)
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
-	private Category parent;
+	private CategoryEntity parent;
 	
 	@OneToMany(	mappedBy="category",
 				cascade = CascadeType.ALL,
@@ -213,9 +213,9 @@ public abstract class Category implements ISearchDimension {
 		return this.getCategoryTokenField();
 	}
 	
-	private String createCategoryToken(Category category, List<String> lc) {
+	private String createCategoryToken(CategoryEntity category, List<String> lc) {
 		lc.add(category.getCategoryCode());
-		Optional<Category> parent = category.getParent();
+		Optional<CategoryEntity> parent = category.getParent();
 		if(!parent.isPresent()) {
 			StringBuilder sb = new StringBuilder();
 			Lists.reverse(lc).stream().forEach(s -> sb.append("/").append(s));
@@ -240,11 +240,11 @@ public abstract class Category implements ISearchDimension {
 		this.childCount = childCount;
 	}
 	
-	public Optional<Category> getParent() {
+	public Optional<CategoryEntity> getParent() {
 		return Optional.ofNullable(parent);
 	}
 
-	public void setParent(Category parent) {
+	public void setParent(CategoryEntity parent) {
 		this.parent = parent;
 	}
 
@@ -365,7 +365,7 @@ public abstract class Category implements ISearchDimension {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     Category pcDto = (Category) o;
+	     CategoryEntity pcDto = (CategoryEntity) o;
 	     return this.getCategoryCode() == pcDto.getCategoryCode();
 	}
 
