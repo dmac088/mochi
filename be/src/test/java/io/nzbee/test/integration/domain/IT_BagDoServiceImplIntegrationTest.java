@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +75,10 @@ public class IT_BagDoServiceImplIntegrationTest {
 	}
 
 	private void assertFound(Bag found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(!found.getBagItems().isEmpty());
 
 		assertThat(found.getBagItems().size()).isEqualTo(2);
 

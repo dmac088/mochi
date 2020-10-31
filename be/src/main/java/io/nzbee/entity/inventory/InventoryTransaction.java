@@ -13,7 +13,7 @@ import javax.persistence.Table;
 import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.party.organization.Organization;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 
 @Entity
@@ -31,7 +31,7 @@ public class InventoryTransaction {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="inv_prd_id")
-	private Product product;
+	private ProductEntity product;
 	
 	@Column(name="inv_qty")
 	private Long quantity;
@@ -70,11 +70,11 @@ public class InventoryTransaction {
 		this.inventoryLocation = inventoryLocation;
 	}
 
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
 

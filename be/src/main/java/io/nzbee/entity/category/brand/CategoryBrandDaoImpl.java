@@ -19,10 +19,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.Brand_;
 import io.nzbee.entity.category.Category_;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.attribute.CategoryAttribute_;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryType_;
@@ -46,8 +46,8 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 		
 		Root<CategoryBrand> root = cq.from(CategoryBrand.class);
 		
-		Join<CategoryBrand, CategoryAttribute> attribute = root.join(Category_.attributes);
-		Join<CategoryBrand, Brand> products = root.join(CategoryBrand_.brands);
+		Join<CategoryBrand, CategoryAttributeEntity> attribute = root.join(Category_.attributes);
+		Join<CategoryBrand, BrandEntity> products = root.join(CategoryBrand_.brands);
 		Join<CategoryBrand, CategoryType> type = root.join(Category_.categoryType);
 		
 		cq.multiselect(	root.get(CategoryBrand_.categoryId).alias("categoryId"),
@@ -145,7 +145,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
 	@Override
 	public CategoryBrand objectToEntity(Tuple t, String locale) {
-		CategoryAttribute ca = new CategoryAttribute();
+		CategoryAttributeEntity ca = new CategoryAttributeEntity();
 		ca.setCategoryDesc(t.get("categoryDesc").toString());
 		ca.setLclCd(locale);
 		

@@ -33,7 +33,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.search.IFacetService;
 import io.nzbee.search.facet.IFacet;
 
@@ -80,7 +80,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		  = Search.getFullTextEntityManager(entityManager);
 		try {
 			fullTextEntityManager
-			.createIndexer( Product.class )
+			.createIndexer( ProductEntity.class )
 			.batchSizeToLoadObjects( 25 )
 			.cacheMode( CacheMode.NORMAL )
 			.threadsToLoadObjects( 12 )

@@ -1,5 +1,7 @@
 package io.nzbee.entity.product;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.brand.Brand;
@@ -24,7 +26,7 @@ public class ProductMapperImpl implements IProductMapper {
 	
 	@Override
 	public io.nzbee.domain.product.Product entityToDo(
-													Product e, 
+													ProductEntity e, 
 													Brand brand, 
 													Department department, 
 													ProductCategory category) {
@@ -44,15 +46,16 @@ public class ProductMapperImpl implements IProductMapper {
 				   	e.isInStock(),
 				   	brand,
 				   	department,
-				   	category
-				   	);
+				   	category,
+				   	e.getCategories().stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet()));
+				   
 			return pO;
 		}
 		return null;
 	}
 
 	@Override
-	public io.nzbee.domain.product.Product entityToDo(Product e) {
+	public io.nzbee.domain.product.Product entityToDo(ProductEntity e) {
 		// TODO Auto-generated method stub
 		if(e instanceof ProductBasic) {
 			io.nzbee.domain.product.Product pO = 
@@ -70,14 +73,15 @@ public class ProductMapperImpl implements IProductMapper {
 				   	e.isInStock(),
 				   	brandMapper.entityToDo(e.getBrand()),
 				   	departmentMapper.entityToDo(e.getDepartment()),
-				   	(ProductCategory) categoryMapper.entityToDo(e.getPrimaryCategory()));
+				   	(ProductCategory) categoryMapper.entityToDo(e.getPrimaryCategory()),
+				    e.getCategories().stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet()));
 			return pO;
 		}
 		return null;
 	}
 
 	@Override
-	public Product doToEntity(io.nzbee.domain.product.Product d) {
+	public ProductEntity doToEntity(io.nzbee.domain.product.Product d) {
 		// TODO Auto-generated method stub
 		return null;
 	}

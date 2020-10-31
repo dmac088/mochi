@@ -27,7 +27,7 @@ import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 
 @Entity
 @Table(name = "department", schema = "mochi")
-public class Department {
+public class DepartmentEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

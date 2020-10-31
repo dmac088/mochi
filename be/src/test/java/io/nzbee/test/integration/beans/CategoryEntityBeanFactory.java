@@ -8,7 +8,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrand;
 import io.nzbee.entity.category.product.CategoryProduct;
 
@@ -24,7 +24,7 @@ public class CategoryEntityBeanFactory {
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
 
-		final CategoryAttribute categoryAttribute = new CategoryAttribute();
+		final CategoryAttributeEntity categoryAttribute = new CategoryAttributeEntity();
 		categoryAttribute.setCategory(category);
 		categoryAttribute.setCategoryDesc("test product category");
 		categoryAttribute.setLclCd(Constants.localeENGB);
@@ -40,7 +40,7 @@ public class CategoryEntityBeanFactory {
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(2));
 
-		final CategoryAttribute categoryAttribute = new CategoryAttribute();
+		final CategoryAttributeEntity categoryAttribute = new CategoryAttributeEntity();
 		categoryAttribute.setCategory(category);
 		categoryAttribute.setCategoryDesc("test brand category");
 		categoryAttribute.setLclCd(Constants.localeENGB);

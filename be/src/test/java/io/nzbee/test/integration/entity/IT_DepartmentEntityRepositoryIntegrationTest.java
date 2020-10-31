@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.department.Department;
+import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -61,14 +61,14 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
     @Autowired
     private IDepartmentService departmentService;
 	
-    private Department department = null;
+    private DepartmentEntity department = null;
     
 	@Before
     public void setUp() { 
 		department = this.persistNewProductType();
     }
 	
-	public Department persistNewProductType() {
+	public DepartmentEntity persistNewProductType() {
     	
 		department = departmentEntityBeanFactory.getDepartmentEntityBean();
 	   
@@ -84,7 +84,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findById(Constants.localeENGB,
+	    	DepartmentEntity found = departmentService.findById(Constants.localeENGB,
 	    												  department.getId()).get();
 	     
 	        // then
@@ -95,7 +95,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByCode_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findByCode(Constants.localeENGB,
+	    	DepartmentEntity found = departmentService.findByCode(Constants.localeENGB,
 															"TST01").get();
 	     
 	        // then
@@ -106,14 +106,14 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByDesc_thenReturnDepartment() {
 	    	
 	        // when
-	    	Department found = departmentService.findByDesc(Constants.localeENGB,
+	    	DepartmentEntity found = departmentService.findByDesc(Constants.localeENGB,
 															"test department").get();
 	     
 	        // then
 	    	assertFound(found);
 	 }
 	
-	 private void assertFound(final Department found) {
+	 private void assertFound(final DepartmentEntity found) {
 	    	
 	    	assertThat(found.getDepartmentCode())
 	        .isEqualTo("TST01");

@@ -1,6 +1,6 @@
 package io.nzbee.entity.stock;
 
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
@@ -9,7 +9,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(StockOnHand.class)
 public abstract class StockOnHand_ {
 
-	public static volatile SingularAttribute<StockOnHand, Product> product;
+	public static volatile SingularAttribute<StockOnHand, ProductEntity> product;
 	public static volatile SingularAttribute<StockOnHand, Long> stockOnHandId;
 	public static volatile SingularAttribute<StockOnHand, Long> stockOnHand;
 

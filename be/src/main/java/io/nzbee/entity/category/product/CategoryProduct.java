@@ -12,7 +12,7 @@ import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.entity.category.Category;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "category_product", schema = "mochi")
@@ -24,7 +24,7 @@ public class CategoryProduct extends Category  {
 	
 	@ManyToMany(mappedBy = "categories")
     @JsonIgnore
-    private Set<Product> products = new HashSet<Product>();
+    private Set<ProductEntity> products = new HashSet<ProductEntity>();
 	
 	@Transient
 	private int productCount;
@@ -44,7 +44,7 @@ public class CategoryProduct extends Category  {
 		this.hasParent = hasParent;
 	}
 
-	public Set<Product> getProducts() {
+	public Set<ProductEntity> getProducts() {
 		return products;
 	}
 
@@ -58,12 +58,12 @@ public class CategoryProduct extends Category  {
 		productCount = count;
 	}
 	
-	public void addProduct(Product product) {
+	public void addProduct(ProductEntity product) {
 		this.getProducts().add(product);
 		product.getCategories().add(this);
 	}
 	
-	public void removeProduct(Product product) {
+	public void removeProduct(ProductEntity product) {
 		this.getProducts().remove(product);
 		product.removeProductCategory(this);
 	}

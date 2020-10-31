@@ -1,11 +1,18 @@
 package io.nzbee.test.integration.beans;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.HashSet;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.brand.IBrandService;
+import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
+import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
 
@@ -13,9 +20,27 @@ import io.nzbee.domain.product.Product;
 @Profile(value = "tst")
 public class ProductDoBeanFactory {
 	
+	@Autowired
+	private ICategoryService cs;
+	
+	@Autowired
+	private IBrandService bs;
+	
+	@Autowired
+	private IDepartmentService ds;
+	
+	
 	public final Product getProductDoBean() {
 		
-		return new BasicProduct(	"3254354673",
+		ProductCategory pc1 = (ProductCategory) cs.findByCode(Constants.localeENGB, "POM01");
+		
+		ProductCategory pc2 = (ProductCategory) cs.findByCode(Constants.localeENGB, "CIT01");
+		
+		Brand brand = bs.findByCode(Constants.localeENGB, "ENZ01");
+		
+		Department department = ds.findByCode(Constants.localeENGB, "ACC01");
+		
+		return new BasicProduct(   "3254354673",
 								   LocalDateTime.now(),
 								   "ACT01",
 								   "Test Product Description",
@@ -26,20 +51,9 @@ public class ProductDoBeanFactory {
 								   "en-GB",
 								   "HKD",
 								   true,
-								   new Brand("ENZ01",
-											 "Enza",
-											 20,
-											 "en-GB"),
-								   new Department("ACC01",
-												  "Accessories",
-												  "en-GB"),
-								   new ProductCategory("FRT01", 
-										   			   "test category", 
-										   			   true, 
-										   			   new Long(1), 
-										   			   0, 
-										   			   "PNT01", 
-										   			   new Long(10),
-										   			   "en-GB"));
+								   brand,
+								   department,
+								   pc1,
+								   new HashSet<ProductCategory>(Arrays.asList(pc1,pc2)));
 	}
 }

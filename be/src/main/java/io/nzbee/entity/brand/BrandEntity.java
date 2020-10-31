@@ -28,9 +28,9 @@ import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.attribute.BrandAttribute;
+import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrand;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.search.ISearchDimension;
 
 @Entity
@@ -42,13 +42,13 @@ import io.nzbee.search.ISearchDimension;
 	    },
 	    entities = {
 	            @EntityResult(
-	                    entityClass = Brand.class,
+	                    entityClass = BrandEntity.class,
 	                    fields = {
 	                        @FieldResult(name = "brandId", 			column = "bnd_id"),
 	                        @FieldResult(name = "brandCode", 		column = "bnd_cd")
 	                    }),
 	            @EntityResult(
-	                    entityClass = BrandAttribute.class,
+	                    entityClass = BrandAttributeEntity.class,
 	                    fields = {
 	                        @FieldResult(name = "brandAttributeId", column = "bnd_lcl_id"),
 	                        @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
@@ -56,7 +56,7 @@ import io.nzbee.search.ISearchDimension;
 	                        @FieldResult(name = "brand", 			column = "bnd_id")
 	                    })
 		    })
-public class Brand implements ISearchDimension {
+public class BrandEntity implements ISearchDimension {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -74,15 +74,15 @@ public class Brand implements ISearchDimension {
 	@OneToMany(	mappedBy="brand",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private Set<Product> products = new HashSet<Product>();
+	private Set<ProductEntity> products = new HashSet<ProductEntity>();
 
 	@OneToMany(	mappedBy="brand",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private Set<BrandAttribute> attributes = new HashSet<BrandAttribute>();
+	private Set<BrandAttributeEntity> attributes = new HashSet<BrandAttributeEntity>();
 	
 	@Transient
-	private BrandAttribute brandAttribute;
+	private BrandAttributeEntity brandAttribute;
 	
 	@Transient
 	private String locale;
@@ -108,7 +108,7 @@ public class Brand implements ISearchDimension {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getBrandDescENGB() {
-		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
+		Optional<BrandAttributeEntity> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
 		if(pa.isPresent()) {
 			return pa.get().getBrandDesc();
 		}
@@ -118,7 +118,7 @@ public class Brand implements ISearchDimension {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getBrandDescZHHK() {
-		Optional<BrandAttribute> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
+		Optional<BrandAttributeEntity> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		if(pa.isPresent()) {
 			return pa.get().getBrandDesc();
 		}
@@ -140,23 +140,23 @@ public class Brand implements ISearchDimension {
 		this.brandCode = brandCode;
 	}
 
-	public Set<Product> getProducts() {
+	public Set<ProductEntity> getProducts() {
 		return products;
 	}
 
-	public void setProducts(Set<Product> products) {
+	public void setProducts(Set<ProductEntity> products) {
 		this.products = products;
 	}
 	
-	public BrandAttribute getBrandAttribute() {
+	public BrandAttributeEntity getBrandAttribute() {
 		return brandAttribute;
 	}
 
-	public void setBrandAttribute(BrandAttribute brandAttribute) {
+	public void setBrandAttribute(BrandAttributeEntity brandAttribute) {
 		this.brandAttribute = brandAttribute;
 	}
 	
-	public Set<BrandAttribute> getAttributes() {
+	public Set<BrandAttributeEntity> getAttributes() {
 		return attributes;
 	}
 	
@@ -164,12 +164,12 @@ public class Brand implements ISearchDimension {
 		return categories;
 	}
 	
-	public void addAttribute(BrandAttribute brandAttribute) {
+	public void addAttribute(BrandAttributeEntity brandAttribute) {
 		this.getAttributes().add(brandAttribute);
 		brandAttribute.setBrand(this);		
 	}
 	
-	public void removeAttribute(BrandAttribute brandAttribute) {
+	public void removeAttribute(BrandAttributeEntity brandAttribute) {
 		this.getAttributes().remove(brandAttribute);
 		brandAttribute.setBrand(null);
 	}
@@ -227,8 +227,8 @@ public class Brand implements ISearchDimension {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Brand)) return false;
-        return brandCode != null && brandCode.equals(((Brand) o).getBrandCode());
+        if (!(o instanceof BrandEntity)) return false;
+        return brandCode != null && brandCode.equals(((BrandEntity) o).getBrandCode());
     }
  
     @Override

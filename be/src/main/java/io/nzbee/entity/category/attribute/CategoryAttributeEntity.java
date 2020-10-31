@@ -18,7 +18,7 @@ import io.nzbee.entity.category.Category;
 
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
-public class CategoryAttribute {
+public class CategoryAttributeEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -77,10 +77,10 @@ public class CategoryAttribute {
 	    if (this == obj) {
 	        return true;
         }
-	    if (!(obj instanceof CategoryAttribute)) {
+	    if (!(obj instanceof CategoryAttributeEntity)) {
 	            return false;
 	    }
-	    CategoryAttribute that = (CategoryAttribute) obj;
+	    CategoryAttributeEntity that = (CategoryAttributeEntity) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.getCategoryDesc(), that.getCategoryDesc());
 	      eb.append(this.getLclCd(), that.getLclCd());

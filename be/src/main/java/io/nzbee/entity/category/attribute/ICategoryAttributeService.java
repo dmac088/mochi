@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import io.nzbee.entity.ILocalizedDao;
 
-public interface ICategoryAttributeService extends ILocalizedDao<CategoryAttribute> {
+public interface ICategoryAttributeService extends ILocalizedDao<CategoryAttributeDTO, CategoryAttributeEntity> {
 	
-	Optional<CategoryAttribute> getCategoryAttributeEN(Long id);
+	Optional<CategoryAttributeEntity> getCategoryAttributeEN(Long id);
 	
-	Optional<CategoryAttribute> getCategoryAttributeHK(Long id);
+	Optional<CategoryAttributeEntity> getCategoryAttributeHK(Long id);
 
-	Optional<CategoryAttribute> getCategoryAttribute(Long id, String locale);
+	Optional<CategoryAttributeEntity> getCategoryAttribute(Long id, String locale);
 }

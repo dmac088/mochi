@@ -5,14 +5,14 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface IBrandAttributeRepository extends CrudRepository<BrandAttribute, Long> {
+public interface IBrandAttributeRepository extends CrudRepository<BrandAttributeEntity, Long> {
 
-	List<BrandAttribute> findAll();
+	List<BrandAttributeEntity> findAll();
 
-	List<BrandAttribute> findByLclCd(String lcl);
+	List<BrandAttributeEntity> findByLclCd(String lcl);
 
-	Optional<BrandAttribute> findByLclCdAndBrandBrandId(String lcl, Long id);
+	Optional<BrandAttributeEntity> findByLclCdAndBrandBrandId(String lcl, Long id);
 	
-	Optional<BrandAttribute> findByLclCdAndBrandBrandCode(String lcl, String code);
+	Optional<BrandAttributeEntity> findByLclCdAndBrandBrandCode(String lcl, String code);
 
 }

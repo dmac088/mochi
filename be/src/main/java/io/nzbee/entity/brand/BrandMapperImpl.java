@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 public class BrandMapperImpl implements IBrandMapper {
 
 	@Override
-	public io.nzbee.domain.brand.Brand entityToDo(Brand e, String locale, String currency) {
+	public io.nzbee.domain.brand.Brand entityToDo(BrandEntity e, String locale, String currency) {
 
 		io.nzbee.domain.brand.Brand bo = 
 				new io.nzbee.domain.brand.Brand(
@@ -19,13 +19,13 @@ public class BrandMapperImpl implements IBrandMapper {
 	}
 
 	@Override
-	public io.nzbee.domain.brand.Brand entityToDo(Brand e) {
+	public io.nzbee.domain.brand.Brand entityToDo(BrandEntity e) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Brand doToEntity(io.nzbee.domain.brand.Brand d) {
+	public BrandEntity doToEntity(io.nzbee.domain.brand.Brand d) {
 		// TODO Auto-generated method stub
 		return null;
 	}

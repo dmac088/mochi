@@ -28,7 +28,7 @@ import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.test.integration.beans.BagEntityBeanFactory;
 
@@ -81,7 +81,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     	
 		Bag bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
-	    Product product = productService.findByCode("23464789").get();
+	    ProductEntity product = productService.findByCode("23464789").get();
 	        
 	    bagItem = new BagItem(product);
 	    bagItem.setQuantity(2);

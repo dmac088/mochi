@@ -11,11 +11,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "product_attr_lcl", schema = "mochi")
-public class ProductAttribute {
+public class ProductAttributeEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -36,7 +36,7 @@ public class ProductAttribute {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_id")
-	private Product product;
+	private ProductEntity product;
 	
 	public Long getId() {
 		return Id;
@@ -50,11 +50,11 @@ public class ProductAttribute {
 		return this.getProduct().getProductId();
 	}
 	
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
 	
@@ -103,10 +103,10 @@ public class ProductAttribute {
 	    if (this == obj) {
 	        return true;
         }
-	    if (!(obj instanceof ProductAttribute)) {
+	    if (!(obj instanceof ProductAttributeEntity)) {
 	            return false;
 	    }
-	    ProductAttribute that = (ProductAttribute) obj;
+	    ProductAttributeEntity that = (ProductAttributeEntity) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.getLclCd(), that.getLclCd());
 	      return eb.isEquals();

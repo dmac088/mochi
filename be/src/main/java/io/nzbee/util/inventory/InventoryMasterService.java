@@ -24,7 +24,7 @@ import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.entity.inventory.type.IInventoryTypeService;
 import io.nzbee.entity.inventory.type.InventoryType;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.role.supplier.ISupplierService;
@@ -95,7 +95,7 @@ public class InventoryMasterService {
 				
 		Optional<InventoryLocation> il = inventoryLocationService.findByCode(ims.get_INVENTORY_LOCATION_CODE());
 		
-		Optional<Product> p = productservice.findByCode(ims.get_INVENTORY_PRODUCT_UPC());
+		Optional<ProductEntity> p = productservice.findByCode(ims.get_INVENTORY_PRODUCT_UPC());
 		
 		Optional<InventoryType> it = inventoryTypeService.findByCode(ims.get_INVENTORY_TYPE_CODE());
 		

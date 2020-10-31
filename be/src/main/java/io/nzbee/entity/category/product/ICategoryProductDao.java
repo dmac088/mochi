@@ -5,13 +5,10 @@ import java.util.Optional;
 
 import io.nzbee.entity.ILocalizedDao;
 
-public interface ICategoryProductDao extends ILocalizedDao<CategoryProduct> {
+public interface ICategoryProductDao extends ILocalizedDao<CategoryProductDTO, CategoryProduct> {
 	
-	List<CategoryProduct> findAllByProductCode(String locale, String productCode);
+	List<CategoryProductDTO> findAllByProductCode(String locale, String productCode);
 
-	Optional<CategoryProduct> findPrimaryByProductCode(String locale, String productCode);
-
-	void merge(CategoryProduct t);
-
+	Optional<CategoryProductDTO> findPrimaryByProductCode(String locale, String productCode);
 
 }

@@ -37,7 +37,7 @@ import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.PageableUtil;
 
@@ -253,7 +253,7 @@ public class SearchServiceImpl implements ISearchService {
 	
 	private void getPriceFacets(String locale, 
 								String currency, 
-								List<Product> results,
+								List<ProductEntity> results,
 								Set<Facet> facets,
 								QueryBuilder queryBuilder, 
 								FullTextQuery jpaQuery
@@ -292,7 +292,7 @@ public class SearchServiceImpl implements ISearchService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public Page<Product> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
+	public Page<ProductEntity> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
 			int size, String sortBy, Set<io.nzbee.search.facet.IFacet> facetPayload,
 			Set<io.nzbee.search.facet.IFacet> returnFacets) {
 
@@ -302,7 +302,7 @@ public class SearchServiceImpl implements ISearchService {
 
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
 														 .buildQueryBuilder()
-														 .forEntity(Product.class)
+														 .forEntity(ProductEntity.class)
 														 .overridesForField("productDesc", lcl)
 														 .overridesForField("productLongDesc", lcl)
 														 .overridesForField("product.brand.brandDesc", lcl)
@@ -326,7 +326,7 @@ public class SearchServiceImpl implements ISearchService {
 				
 				.createQuery();
 
-		final FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, Product.class);
+		final FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductEntity.class);
 
 		//initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
@@ -343,7 +343,7 @@ public class SearchServiceImpl implements ISearchService {
 		
 		//get the price facets, which are range facets
 		jpaQuery.setSort(getSortField("priceDesc", currency, transLcl));
-		List<Product> results = new ArrayList<Product>();
+		List<ProductEntity> results = new ArrayList<ProductEntity>();
 		results.addAll(jpaQuery.getResultList());
 
 		if(results.size() > size) {
@@ -433,8 +433,8 @@ public class SearchServiceImpl implements ISearchService {
 
 		setProductProjection(jpaQuery);
 		List<Object[]> result = jpaQuery.getResultList();
-		List<Product> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
-		return new PageImpl<Product>(lp, pageable, jpaQuery.getResultSize());
+		List<ProductEntity> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		return new PageImpl<ProductEntity>(lp, pageable, jpaQuery.getResultSize());
 
 	}
 
@@ -443,20 +443,20 @@ public class SearchServiceImpl implements ISearchService {
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
-		QueryBuilder titleQB = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(Product.class)
+		QueryBuilder titleQB = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(ProductEntity.class)
 				.get();
 
 		Query query = titleQB.phrase().withSlop(2).onField(TITLE_NGRAM_INDEX + cleanLocale(locale))
 				.andField(TITLE_EDGE_NGRAM_INDEX + cleanLocale(locale)).boostedTo(5).sentence(searchTerm.toLowerCase())
 				.createQuery();
 
-		FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(query, Product.class);
+		FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(query, ProductEntity.class);
 		jpaQuery.setMaxResults(20);
 
 		setProductProjection(jpaQuery);
 		@SuppressWarnings("unchecked")
 		List<Object[]> result = jpaQuery.getResultList();
-		List<Product> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		List<ProductEntity> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
 		return lp.stream().map(p -> p.getProductAttribute().getProductDesc()).toArray(String[]::new);
 

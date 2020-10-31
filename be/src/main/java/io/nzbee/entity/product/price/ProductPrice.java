@@ -9,7 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 
 @Entity
@@ -34,7 +34,7 @@ public class ProductPrice {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_id", nullable=false, updatable = false, insertable = true)
-	private Product product;
+	private ProductEntity product;
 
     public Long getId() {
 		return id;
@@ -64,18 +64,18 @@ public class ProductPrice {
 		this.currency = priceCurrency;
 	}
 	
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
 	
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Product)) return false;
+        if (!(o instanceof ProductEntity)) return false;
         return id != null && id.equals(((ProductPrice) o).getId());
     }
 

@@ -2,7 +2,7 @@ package io.nzbee.entity.category.brand;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.BrandCategory;
-import io.nzbee.entity.category.attribute.CategoryAttribute;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 
 @Component
 public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
@@ -28,7 +28,7 @@ public class CategoryBrandMapperImpl implements ICategoryBrandMapper {
 		cb.setLocale(bc.getLocale());
 		cb.setObjectCount(bc.getCount());
 		
-		CategoryAttribute ca = new CategoryAttribute();
+		CategoryAttributeEntity ca = new CategoryAttributeEntity();
 		ca.setCategoryDesc(bc.getCategoryDesc());
 		ca.setLclCd(bc.getLocale());
 		

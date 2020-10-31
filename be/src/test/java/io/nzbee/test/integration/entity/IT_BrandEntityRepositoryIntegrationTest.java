@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
 
@@ -63,7 +63,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     @Autowired
     private IBrandService brandService;
     
-	private Brand brand = null;
+	private BrandEntity brand = null;
     
     @Before
     public void setUp() { 
@@ -85,7 +85,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findById(Constants.localeENGB, 
+    	BrandEntity found = brandService.findById(Constants.localeENGB, 
 				  							brand.getBrandId()).get();
      
         // then
@@ -97,7 +97,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findByCode("en-GB", 
+    	BrandEntity found = brandService.findByCode("en-GB", 
 											  "TST02").get();
      
         // then
@@ -109,7 +109,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrand() {
     	
         // when
-    	Brand found = brandService.findByDesc(Constants.localeENGB, 
+    	BrandEntity found = brandService.findByDesc(Constants.localeENGB, 
 				 							  "test brand").get();
      
         //then
@@ -123,7 +123,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	Set<String> tagCodes 		= new HashSet<String>();
     	
         // when
-    	Set<Brand> lb = brandService.findAll(	Constants.localeENGB, 
+    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
 				  								Constants.currencyUSD, 
 				  								"FRT01", 
 				  								categoryCodes, 
@@ -144,7 +144,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	categoryCodes.add("POM01");
     	
         // when
-    	Set<Brand> lb = brandService.findAll(	Constants.localeENGB, 
+    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
 				  								Constants.currencyUSD, 
 				  								"FRT01", 
 				  								categoryCodes, 
@@ -165,7 +165,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("32.4");
 
 		// when
-    	Set<Brand> lb = brandService.findAll(	Constants.localeENGB, 
+    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
 				  								Constants.currencyHKD, 
 				  								"FRT01", 
 				  								categoryCodes, 
@@ -187,7 +187,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("4.15");
 
 		// when
-    	Set<Brand> lb = brandService.findAll(	Constants.localeENGB, 
+    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
 				  								Constants.currencyUSD, 
 				  								"FRT01", 
 				  								categoryCodes, 
@@ -201,7 +201,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 
 	}
     
-    private void assertFound(final Brand found) {
+    private void assertFound(final BrandEntity found) {
     	
     	assertThat(found.getBrandCode())
         .isEqualTo("TST02");

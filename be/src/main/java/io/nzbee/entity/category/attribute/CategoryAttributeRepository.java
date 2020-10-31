@@ -5,14 +5,14 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface CategoryAttributeRepository extends CrudRepository<CategoryAttribute, Long> {
+public interface CategoryAttributeRepository extends CrudRepository<CategoryAttributeEntity, Long> {
 
-	List<CategoryAttribute> findAll();
+	List<CategoryAttributeEntity> findAll();
 
-	List<CategoryAttribute> findByLclCd(String lcl);
+	List<CategoryAttributeEntity> findByLclCd(String lcl);
 
-	Optional<CategoryAttribute> findByLclCdAndCategoryCategoryId(String lcl, Long id);
+	Optional<CategoryAttributeEntity> findByLclCdAndCategoryCategoryId(String lcl, Long id);
 	
-	Optional<CategoryAttribute> findByLclCdAndCategoryCategoryCode(String lcl, String code);
+	Optional<CategoryAttributeEntity> findByLclCdAndCategoryCategoryCode(String lcl, String code);
 
 }

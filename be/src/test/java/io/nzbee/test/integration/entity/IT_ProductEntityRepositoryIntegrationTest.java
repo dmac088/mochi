@@ -29,7 +29,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -69,9 +69,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     @Autowired
     private ICategoryProductService productCategoryService;
     
-    private Product product = null;
+    private ProductEntity product = null;
     
-	public Product persistNewProduct() {
+	public ProductEntity persistNewProduct() {
     	
 		product = productEntityBeanFactory.getProductEntityBean();
 	    
@@ -89,7 +89,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnProduct() {
 		 // when
-    	Product found = productService.findById(  Constants.localeENGB, 
+    	ProductEntity found = productService.findById(  Constants.localeENGB, 
 				  								  Constants.currencyUSD,  
 												  product.getProductId()).get();
      
@@ -101,7 +101,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByCode(Constants.localeENGB, 
+    	ProductEntity found = productService.findByCode(Constants.localeENGB, 
 				  								  Constants.currencyUSD,  
 												  "123456789").get();
     	
@@ -112,7 +112,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByDesc_thenReturnProduct() {
 		 // when
-    	Product found = productService.findByDesc(Constants.localeENGB, 
+    	ProductEntity found = productService.findByDesc(Constants.localeENGB, 
 				  								  Constants.currencyUSD,  
 												  "test product").get();
      
@@ -135,7 +135,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     public void whenFindForFruitCategory_thenReturnAllFruitProducts() {
     	
         // when
-    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    	Page<ProductEntity> found =		 productService.findAll( Constants.localeENGB, 
     														 Constants.currencyUSD, 
     														 "FRT01", 
     														 new HashSet<String>(), 
@@ -155,7 +155,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     public void whenFindForFruitCategoryWithNullPrice_thenReturnAllFruitProducts() {
     	
         // when
-    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    	Page<ProductEntity> found =		 productService.findAll( Constants.localeENGB, 
     														 Constants.currencyUSD, 
     														 "FRT01", 
     														 new HashSet<String>(), 
@@ -176,7 +176,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		categories.add("POM01");
 		
         // when
-    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    	Page<ProductEntity> found =		 productService.findAll( Constants.localeENGB, 
     														 Constants.currencyUSD, 
     														 "FRT01", 
     														 categories, 
@@ -199,7 +199,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		tags.add("ORG01");
 		
         // when
-    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    	Page<ProductEntity> found =		 productService.findAll( Constants.localeENGB, 
     														 Constants.currencyUSD, 
     														 "FRT01", 
     														 new HashSet<String>(), 
@@ -222,7 +222,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		brands.add("ENZ01");
 		
         // when
-    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    	Page<ProductEntity> found =		 productService.findAll( Constants.localeENGB, 
     														 Constants.currencyUSD, 
     														 "FRT01", 
     														 new HashSet<String>(), 
@@ -245,7 +245,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		brands.add("ENZ01");
 		
         // when
-    	Page<Product> found =		 productService.findAll( Constants.localeENGB, 
+    	Page<ProductEntity> found =		 productService.findAll( Constants.localeENGB, 
     														 Constants.currencyUSD, 
     														 "PRM01", 
     														 new HashSet<String>(), 
@@ -262,7 +262,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     }
 	
 	 
-    private void assertFound(final Product found) {
+    private void assertFound(final ProductEntity found) {
     	
     	assertThat(found.getUPC())
         .isEqualTo("123456789");

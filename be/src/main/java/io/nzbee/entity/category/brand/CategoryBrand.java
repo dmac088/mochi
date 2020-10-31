@@ -14,7 +14,7 @@ import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.category.Category;
 import io.nzbee.entity.category.product.CategoryProduct;
 
@@ -32,7 +32,7 @@ public class CategoryBrand extends Category {
     		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
     @OrderBy
     @JsonIgnore
-    private Set<Brand> brands;
+    private Set<BrandEntity> brands;
 	
 	@Transient
 	private int brandCount;
@@ -51,12 +51,12 @@ public class CategoryBrand extends Category {
 		this.brandCount = count;
 	}
 	
-	public void addBrand(Brand brand) {
+	public void addBrand(BrandEntity brand) {
 		this.brands.add(brand);
 		brand.addBrandCategory(this);
 	}
 	
-	public void removeBrand(Brand brand) {
+	public void removeBrand(BrandEntity brand) {
 		this.brands.remove(brand);
 		brand.removeBrandCategory(this);
 	}

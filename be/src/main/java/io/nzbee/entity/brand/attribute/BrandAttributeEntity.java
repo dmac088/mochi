@@ -14,11 +14,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-import io.nzbee.entity.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 
 @Entity
 @Table(name = "brand_attr_lcl", schema = "mochi")
-public class BrandAttribute {
+public class BrandAttributeEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -34,9 +34,9 @@ public class BrandAttribute {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="bnd_id")
-	private Brand brand;
+	private BrandEntity brand;
 	
-	public Brand getBrand() {
+	public BrandEntity getBrand() {
 		return this.brand;
 	}
 	
@@ -48,7 +48,7 @@ public class BrandAttribute {
 		brandAttributeId = id;
 	}
 
-	public void setBrand(Brand brand) {
+	public void setBrand(BrandEntity brand) {
 		this.brand = brand;
 	}
 
@@ -81,10 +81,10 @@ public class BrandAttribute {
 	    if (this == obj) {
 	        return true;
         }
-	    if (!(obj instanceof BrandAttribute)) {
+	    if (!(obj instanceof BrandAttributeEntity)) {
 	            return false;
 	    }
-	    BrandAttribute that = (BrandAttribute) obj;
+	    BrandAttributeEntity that = (BrandAttributeEntity) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.getBrandDesc(), that.getBrandDesc());
 	      eb.append(this.getLclCd(), that.getLclCd());

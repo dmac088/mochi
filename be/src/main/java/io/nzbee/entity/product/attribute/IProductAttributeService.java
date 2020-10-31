@@ -6,20 +6,20 @@ import java.util.Set;
 
 import io.nzbee.entity.ILocalizedDao;
 
-public interface IProductAttributeService extends ILocalizedDao<ProductAttribute> {
+public interface IProductAttributeService extends ILocalizedDao<ProductAttributeDTO, ProductAttributeEntity> {
 	
-	Optional<ProductAttribute> getProductAttributeEN(Long id);
+	Optional<ProductAttributeEntity> getProductAttributeEN(Long id);
 	
-	Optional<ProductAttribute> getProductAttributeHK(Long id);
+	Optional<ProductAttributeEntity> getProductAttributeHK(Long id);
 
-	Optional<ProductAttribute> getProductAttribute(Long id, String locale);
+	Optional<ProductAttributeEntity> getProductAttribute(Long id, String locale);
 
-	Optional<ProductAttribute> findById(String locale, String currency, Long id);
+	Optional<ProductAttributeEntity> findById(String locale, String currency, Long id);
 
-	List<ProductAttribute> findAll(String locale, String currency);
+	List<ProductAttributeEntity> findAll(String locale, String currency);
 
-	Optional<ProductAttribute> findByDesc(String locale, String currency, String desc);
+	Optional<ProductAttributeEntity> findByDesc(String locale, String currency, String desc);
 
-	List<ProductAttribute> findAll(String locale, String currency, Set<String> codes);
+	List<ProductAttributeEntity> findAll(String locale, String currency, Set<String> codes);
 
 }

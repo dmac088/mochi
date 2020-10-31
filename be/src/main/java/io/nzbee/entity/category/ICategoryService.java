@@ -6,15 +6,15 @@ import io.nzbee.entity.ILocalizedService;
 import io.nzbee.entity.category.Category;
 import io.nzbee.search.ISearchDimensionService;
 
-public interface ICategoryService extends ILocalizedService<Category>, ISearchDimensionService<Category> {
+public interface ICategoryService extends ILocalizedService<CategoryDTO, Category>, ISearchDimensionService<Category> {
 
 	Set<Category> findByParent(String locale, String parentCategoryCode);
 
 	Set<Category> findAllForLevel(String locale, Long level);
 	
-	<T> Set<Category> findAll(String locale, Class<T> classType);
+	<T> Set<CategoryDTO> findAll(String locale, Class<T> classType);
 
-	Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brands, Set<String> tags, Double maxPrice);
 
 	Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes,
@@ -24,7 +24,7 @@ public interface ICategoryService extends ILocalizedService<Category>, ISearchDi
 	
 	Optional<Category> findByCode(String categoryCode);
 
-	Optional<Category> findByCode(String locale, String categoryCode);
+	Optional<CategoryDTO> findByCode(String locale, String categoryCode);
 
 
 }

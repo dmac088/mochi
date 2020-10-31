@@ -14,7 +14,7 @@ import javax.persistence.Table;
 
 import io.nzbee.entity.bag.Bag;
 import io.nzbee.entity.bag.status.BagItemStatus;
-import io.nzbee.entity.product.Product;
+import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "bag_item", schema = "mochi")
@@ -31,7 +31,7 @@ public class BagItem {
 	
 	@ManyToOne
 	@JoinColumn(name="prd_id")
-	private Product product;
+	private ProductEntity product;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="bag_item_sts_id")
@@ -48,7 +48,7 @@ public class BagItem {
 	
 	}
 	
-	public BagItem(Product p) {
+	public BagItem(ProductEntity p) {
 		this.product = p;
 	}
 	
@@ -68,11 +68,11 @@ public class BagItem {
 		this.bag = bag;
 	}
 	
-	public Product getProduct() {
+	public ProductEntity getProduct() {
 		return product;
 	}
 
-	public void setProduct(Product product) {
+	public void setProduct(ProductEntity product) {
 		this.product = product;
 	}
 	

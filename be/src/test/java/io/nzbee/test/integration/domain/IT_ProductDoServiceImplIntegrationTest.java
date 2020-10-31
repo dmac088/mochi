@@ -87,6 +87,17 @@ public class IT_ProductDoServiceImplIntegrationTest {
     	
 	    assertThat(found.getProductDesc())
 	    .isEqualTo("Test Product Description");
+	    
+	    assertNotNull(found.getCategories());
+	    
+	    assertThat(found.getCategories().size())
+	    .isEqualTo(2);
+	    
+	    assertThat(found.getCategories().stream().filter(c -> c.getCategoryCode().equals("POM01")).findAny().isPresent())
+	    .isTrue();
+	    
+	    assertThat(found.getCategories().stream().filter(c -> c.getCategoryCode().equals("CIT01")).findAny().isPresent())
+	    .isTrue();
     }
 	
 }
