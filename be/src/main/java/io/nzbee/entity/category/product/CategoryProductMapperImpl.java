@@ -7,12 +7,11 @@ import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 @Component
 public class CategoryProductMapperImpl implements ICategoryProductMapper {
 
-	
 	@Override
-	public ProductCategory entityToDo(CategoryProductDTO e) {
+	public ProductCategory DTOToDo(CategoryProductDTO dto) {
 		return new ProductCategory(
-				e.getCategoryCode(),
-				e.getAttributes().stream().filter(c -> c.getLclCd().equals(e.getLocale())).findAny().get().getCategoryDesc(),
+				dto.getCategoryCode(),
+				dto.getCategoryDesc(),
 				true,
 				e.getCategoryLevel(),
 				e.getCount(),
@@ -20,12 +19,12 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 				? e.getParent().get().getCategoryCode()
 				: null,
 				e.getChildCount(),
-				e.getLocale()
+				dto.getLocale()
 			 );
 	}
 
 	@Override
-	public CategoryProductDTO doToEntity(ProductCategory d) {
+	public CategoryProductEntity doToEntity(ProductCategory d) {
 		ProductCategory pc = (ProductCategory) d;
 		
 		CategoryProductEntity cp = new CategoryProductEntity();

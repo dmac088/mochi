@@ -2,6 +2,8 @@ package io.nzbee.entity.category;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.domain.category.Category;
 import io.nzbee.entity.category.brand.CategoryBrandDTO;
 import io.nzbee.entity.category.brand.ICategoryBrandMapper;
 import io.nzbee.entity.category.product.CategoryProductDTO;
@@ -15,21 +17,20 @@ public class CategoryMapperImpl implements ICategoryMapper {
 	
 	@Autowired
 	private ICategoryBrandMapper categoryBrandMapper;
-	
-	public io.nzbee.domain.category.Category entityToDo(CategoryDTO e) {
-	
-		if(e instanceof CategoryProductDTO) {
-			return categoryProductMapper.entityToDo((CategoryProductDTO) e);
-		}
-		if(e instanceof CategoryBrandDTO) {
-			return categoryBrandMapper.entityToDo((CategoryBrandDTO) e);
-		}
+
+	@Override
+	public CategoryEntity doToEntity(io.nzbee.domain.category.Category d) {
 		return null;
-		
 	}
 
 	@Override
-	public CategoryDTO doToEntity(io.nzbee.domain.category.Category d) {
+	public Category DTOToDo(CategoryDTO dto) {
+		if(dto instanceof CategoryProductDTO) {
+			return categoryProductMapper.DTOToDo((CategoryProductDTO) dto);
+		}
+		if(dto instanceof CategoryBrandDTO) {
+			return categoryBrandMapper.DTOToDo((CategoryBrandDTO) dto);
+		}
 		return null;
 	}
 
