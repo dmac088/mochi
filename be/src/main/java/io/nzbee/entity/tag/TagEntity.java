@@ -42,7 +42,7 @@ import io.nzbee.search.ISearchDimension;
 	    },
 	    entities = {
 	            @EntityResult(
-	                    entityClass = Tag.class,
+	                    entityClass = TagEntity.class,
 	                    fields = {
 	                        @FieldResult(name = "tagId", 			column = "tag_id"),
 	                        @FieldResult(name = "tagCode", 			column = "tag_cd")
@@ -56,7 +56,7 @@ import io.nzbee.search.ISearchDimension;
 	                        @FieldResult(name = "tag", 				column = "tag_id")
 	                    })
 		    })
-public class Tag implements ISearchDimension {
+public class TagEntity implements ISearchDimension {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -214,8 +214,8 @@ public class Tag implements ISearchDimension {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Tag)) return false;
-        return tagCode != null && tagCode.equals(((Tag) o).getTagCode());
+        if (!(o instanceof TagEntity)) return false;
+        return tagCode != null && tagCode.equals(((TagEntity) o).getTagCode());
     }
  
     @Override

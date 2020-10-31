@@ -1,6 +1,5 @@
 package io.nzbee.entity.product;
 
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -32,15 +31,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
-import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.product.CategoryProduct;
-import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.product.attribute.ProductAttributeEntity;
-import io.nzbee.entity.product.department.DepartmentEntity;
-import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
-import io.nzbee.entity.product.status.ProductStatus;
 
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
@@ -108,12 +98,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 ""), "ProductMapping")
 				
-				.setParameter("locale", locale)
-				.setParameter("currency", currency)
-				.setParameter("activeProductCode", Constants.activeSKUCode)
-				.setParameter("retailPriceCode", Constants.retailPriceCode)
-				.setParameter("markdownPriceCode", Constants.markdownPriceCode)
-				.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+		.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()))
+		
+		.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
 		
 		
 		@SuppressWarnings("unchecked")
@@ -150,6 +143,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+		
 		.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
@@ -197,12 +191,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		if(!productCodes.isEmpty()) {
 			query.setParameter("productCodes", productCodes);
 		}
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
 
 		try {
-			Object[] p = (Object[])query.getSingleResult();
-			
-			ProductDTO product = this.objectToDTO(p, locale, currency);
-			return Optional.ofNullable(product);
+			ProductDTO p = (ProductDTO) query.getSingleResult();
+			return Optional.ofNullable(p);
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -237,12 +232,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
 
 		try {
-			Object[] p = (Object[])query.getSingleResult();
-			
-			ProductDTO product = this.objectToDTO(p, locale, currency);
-			return Optional.ofNullable(product);
+			ProductDTO p = (ProductDTO) query.getSingleResult();
+			return Optional.ofNullable(p);
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -271,16 +266,19 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("retailPriceCode", Constants.retailPriceCode)
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 				 
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
 		
-		return results.stream().map(p -> this.objectToDTO(p, locale, currency)).collect(Collectors.toList());
+		@SuppressWarnings("unchecked")
+		List<ProductDTO> results = query.getResultList();
+		
+		return results;
 	}
 
 	@Override
 	public List<ProductDTO> findAll(	String locale, 
-									String currency, 
-									Set<String> codes) {
+										String currency, 
+										Set<String> codes) {
 		
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes, ','));
 		
@@ -310,19 +308,21 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			query.setParameter("productCodes", dummy);
 		}
 		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
 		
 		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		List<ProductDTO> results = query.getResultList();
 		
-		return results.stream().map(p -> this.objectToDTO(p, locale, currency)).collect(Collectors.toList());
+		return results;
 	}
 
 	
 	@Override
 	public Page<ProductDTO> findAll(	String locale, 
-									String currency, 
-									Pageable pageable, 
-									String orderby) {
+										String currency, 
+										Pageable pageable, 
+										String orderby) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}, {}", locale, currency, pageable, orderby);
 		
 		//first get the result count
@@ -372,13 +372,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("offset", pageable.getOffset());
 		
 
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
+		
 		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		List<ProductDTO> results = query.getResultList();
 		
-		List<ProductDTO> lp = 
-				results.stream().map(p -> this.objectToDTO(p, locale, currency)).collect(Collectors.toList());
-		
-		return new PageImpl<ProductDTO>(lp, pageable, total);
+		return new PageImpl<ProductDTO>(results, pageable, total);
 	}
 	
 	
@@ -491,52 +491,53 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			query.setParameter("maxPrice", maxPrice);
 		}
 		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
+		
 		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		List<ProductDTO> results = query.getResultList();
 		
-		List<ProductDTO> lp = 
-		results.stream().map(p -> this.objectToDTO(p, locale, currency)).collect(Collectors.toList());
-		
-		return new PageImpl<ProductDTO>(lp, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
+		return new PageImpl<ProductDTO>(results, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
 	}
 	
 	@Override
 	public ProductDTO objectToDTO(Object[] o, String locale, String currency) {
 		
-		ProductEntity product = (ProductEntity) o[0];
-		DepartmentEntity department = (DepartmentEntity) o[5];
-		DepartmentAttribute departmentAttribute = (DepartmentAttribute) o[6];
-		department.setAttribute(departmentAttribute);
-		
-		product.setProductStatus((ProductStatus) o[1]);
-		product.setDepartment(department);
-		product.setProductAttribute((ProductAttributeEntity) o[2]);
-		
-		BrandEntity brand = (BrandEntity) o[3];
-		product.setBrand(brand);
-		brand.setBrandAttribute((BrandAttributeEntity) o[4]);
-		
-		CategoryProduct category = (CategoryProduct) o[7];
-		CategoryAttributeEntity categoryAttribute = (CategoryAttributeEntity) o[8];
-		categoryAttribute.setCategory(category);
-		category.setCategoryAttribute(categoryAttribute);
-		
-		product.setPrimaryCategory(category);
-
-		CategoryType categoryType = (CategoryType) o[9];
-		category.setCategoryType(categoryType);
-		
-		CategoryProduct parent = (CategoryProduct) o[10];
-		category.setParent(parent);
-		
-		product.setRetailPrice(((BigDecimal) o[11]).doubleValue());
-		product.setMarkdownPrice(((BigDecimal) o[12]).doubleValue());
-		product.setInStock((boolean) o[14]);
-		
-		product.setLocale(locale);
-		product.setCurrency(currency);
-		
-		return product;
+		return null;
+//		ProductEntity product = (ProductEntity) o[0];
+//		DepartmentEntity department = (DepartmentEntity) o[5];
+//		DepartmentAttribute departmentAttribute = (DepartmentAttribute) o[6];
+//		department.setAttribute(departmentAttribute);
+//		
+//		product.setProductStatus((ProductStatus) o[1]);
+//		product.setDepartment(department);
+//		product.setProductAttribute((ProductAttributeEntity) o[2]);
+//		
+//		BrandEntity brand = (BrandEntity) o[3];
+//		product.setBrand(brand);
+//		brand.setBrandAttribute((BrandAttributeEntity) o[4]);
+//		
+//		CategoryProduct category = (CategoryProduct) o[7];
+//		CategoryAttributeEntity categoryAttribute = (CategoryAttributeEntity) o[8];
+//		categoryAttribute.setCategory(category);
+//		category.setCategoryAttribute(categoryAttribute);
+//		
+//		product.setPrimaryCategory(category);
+//
+//		CategoryType categoryType = (CategoryType) o[9];
+//		category.setCategoryType(categoryType);
+//		
+//		CategoryProduct parent = (CategoryProduct) o[10];
+//		category.setParent(parent);
+//		
+//		product.setRetailPrice(((BigDecimal) o[11]).doubleValue());
+//		product.setMarkdownPrice(((BigDecimal) o[12]).doubleValue());
+//		product.setInStock((boolean) o[14]);
+//		
+//		product.setLocale(locale);
+//		product.setCurrency(currency);
+//		
+//		return product;
 	}
 	
 	private String constructSQL(boolean hasProductCodes,
@@ -836,6 +837,30 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 	@Override
 	public Set<ProductDTO> findAll(String locale, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDTO objectToDTO(Tuple t, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDTO objectToDTO(Object[] o, String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDTO objectToDTO(Tuple t, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}

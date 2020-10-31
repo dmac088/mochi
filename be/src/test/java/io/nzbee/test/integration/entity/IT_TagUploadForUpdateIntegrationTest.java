@@ -25,7 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.util.tag.TagMasterService;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +61,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 	@Test
 	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ENGB() {
 		// when
-		Optional<Tag> found = tagService.findByCode(Constants.localeENGB, "GFR01");
+		Optional<TagEntity> found = tagService.findByCode(Constants.localeENGB, "GFR01");
 
 		// then
 		assertFound_ENGB(found);
@@ -70,13 +70,13 @@ public class IT_TagUploadForUpdateIntegrationTest {
 	@Test
 	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ZHHK() {
 		// when
-		Optional<Tag> found = tagService.findByCode(Constants.localeZHHK, "GFR01");
+		Optional<TagEntity> found = tagService.findByCode(Constants.localeZHHK, "GFR01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<Tag> found) {
+	private void assertFound_ENGB(Optional<TagEntity> found) {
 		
 		assertNotNull(found);
 		
@@ -87,7 +87,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<Tag> found) {
+	private void assertFound_ZHHK(Optional<TagEntity> found) {
 		
 		assertNotNull(found);
 		

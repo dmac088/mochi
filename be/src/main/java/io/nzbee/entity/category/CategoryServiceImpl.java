@@ -95,6 +95,12 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
+	public Set<CategoryDTO> findAll(String locale, String currency, Set<String> categoryCodes) {
+		return categoryDAO.findAll(locale, categoryCodes);
+	}
+
+	
+	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
 			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryCode"),
@@ -131,6 +137,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	public String tokenToCode(String token) {
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
+
 
 
 }

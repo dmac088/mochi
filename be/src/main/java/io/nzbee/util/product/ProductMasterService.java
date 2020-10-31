@@ -31,19 +31,19 @@ import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
-import io.nzbee.entity.product.basic.ProductBasic;
+import io.nzbee.entity.product.basic.ProductBasicEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
-import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatus;
 import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -113,7 +113,7 @@ public class ProductMasterService {
 	public void persistProductMaster(ProductMasterSchema p) {
 		
 		//english with USD
-		ProductBasic pe = mapToAccessory(
+		ProductBasicEntity pe = mapToAccessory(
 				 Constants.localeENGB, 
 				 Constants.currencyUSD,
 				 p.get_PRODUCT_UPC_CODE(),
@@ -156,7 +156,7 @@ public class ProductMasterService {
 	}
 	
 	
-	private ProductBasic mapToAccessory(String locale, 
+	private ProductBasicEntity mapToAccessory(String locale, 
 						 String currency,
 						 String upcCode,
 						 String brandCode,
@@ -195,9 +195,9 @@ public class ProductMasterService {
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
 		//this is the upload template for food, another will be created for Jewellery and other product types
-		ProductBasic pe = (op.isPresent()) 
-						 ? (ProductBasic) op.get()
-						 : new ProductBasic();			  
+		ProductBasicEntity pe = (op.isPresent()) 
+						 ? (ProductBasicEntity) op.get()
+						 : new ProductBasicEntity();			  
 					  
 		pe.setPrimaryCategory((CategoryProduct) oc.get());
 		pe.setBrand(ob.get());
@@ -223,29 +223,29 @@ public class ProductMasterService {
 
 		ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
 
-		Optional<ProductPrice> oprcr = 
+		Optional<ProductPriceEntity> oprcr = 
 				productPriceService.findOne(upcCode, 
 											Constants.retailPriceCode, 
 											currency);
 
 		//retail price
-		ProductPrice prcr = (oprcr.isPresent()) 
+		ProductPriceEntity prcr = (oprcr.isPresent()) 
 							? oprcr.get()
-							: new ProductPrice();
+							: new ProductPriceEntity();
 
 		prcr.setType(ptr);
 		prcr.setCurrency(curr);
 		prcr.setPriceValue(retailPrice);
 
-		Optional<ProductPrice> oprcm = 
+		Optional<ProductPriceEntity> oprcm = 
 				productPriceService.findOne(upcCode, 
 											Constants.markdownPriceCode, 
 											currency);
 
 		//markdown price
-		ProductPrice prcm = (oprcm.isPresent()) 
+		ProductPriceEntity prcm = (oprcm.isPresent()) 
 							? oprcm.get()
-							: new ProductPrice();
+							: new ProductPriceEntity();
 
 		prcm.setType(ptm);
 		prcm.setCurrency(curr);
@@ -268,7 +268,7 @@ public class ProductMasterService {
 	private void addTagToProduct(String locale, String tagCode, ProductEntity p) {
 		if (tagCode == null) return;
 		if(tagCode.length() == 5) {
-			Tag t = tagService.findByCode(locale, tagCode.toUpperCase()).get();
+			TagEntity t = tagService.findByCode(locale, tagCode.toUpperCase()).get();
 			p.addTag(t);
 		}
 	}
@@ -278,11 +278,11 @@ public class ProductMasterService {
 		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
 	    try {
 	    
-	    	List<ProductBasic> productsList = productService.findAllByType(Constants.localeENGB,
+	    	List<ProductBasicEntity> productsList = productService.findAllByType(Constants.localeENGB,
 	    														  		  Constants.currencyHKD,
-	    														  		  ProductBasic.class)
+	    														  		  ProductBasicEntity.class)
 	    							  .stream()
-	    							  .map(p -> (ProductBasic) p)
+	    							  .map(p -> (ProductBasicEntity) p)
 	    							  .collect(Collectors.toList());
 	    	
 	    	//create a map of products (full list)

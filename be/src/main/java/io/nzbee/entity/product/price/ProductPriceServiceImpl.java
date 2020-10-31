@@ -14,85 +14,85 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	private IProductPriceRepository productPriceRepository; 
 	
 	@Override
-	public Optional<ProductPrice> findOne(Long productId, String priceTypeCode, String currencyCode) {
+	public Optional<ProductPriceEntity> findOne(Long productId, String priceTypeCode, String currencyCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<ProductPrice> findOne(String productCode, String priceTypeCode, String currencyCode) {
+	public Optional<ProductPriceEntity> findOne(String productCode, String priceTypeCode, String currencyCode) {
 		return productPriceRepository.findByTypeCodeAndProductProductUPCAndCurrencyCode(priceTypeCode, productCode, currencyCode);
 	}
 	
 	@Override
-	public Optional<ProductPrice> findById(String locale, String currency, Long id) {
+	public Optional<ProductPriceEntity> findById(String locale, String currency, Long id) {
 		return productPriceRepository.findById(id);
 	}
 
 	@Override
-	public List<ProductPrice> findAll(String locale, String currency) {
+	public List<ProductPriceEntity> findAll(String locale, String currency) {
 		return productPriceRepository.findAll();
 	}
 	
 
 	@Override
-	public List<ProductPrice> findAll(String locale, String currency, Set<String> codes) {
+	public List<ProductPriceEntity> findAll(String locale, String currency, Set<String> codes) {
 		return productPriceRepository.findAll();
 	}
 	
 	@Override
-	public Optional<ProductPrice> findByCode(String locale, String currency, String code) {
+	public Optional<ProductPriceEntity> findByCode(String locale, String currency, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<ProductPrice> findByDesc(String locale, String currency, String desc) {
+	public Optional<ProductPriceEntity> findByDesc(String locale, String currency, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void save(ProductPrice t) {
+	public void save(ProductPriceEntity t) {
 		productPriceRepository.save(t);
 	}
 
 	@Override
-	public void update(ProductPrice t) {
+	public void update(ProductPriceEntity t) {
 		productPriceRepository.save(t);
 	}
 
 	@Override
-	public void delete(ProductPrice t) {
+	public void delete(ProductPriceEntity t) {
 		productPriceRepository.delete(t);
 	}
 
 	@Override
-	public Set<ProductPrice> findAll(String locale) {
+	public Set<ProductPriceDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<ProductPrice> findAll(String locale, Set<String> codes) {
+	public Set<ProductPriceDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<ProductPrice> findById(String locale, Long id) {
+	public Optional<ProductPriceDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<ProductPrice> findByCode(String locale, String code) {
+	public Optional<ProductPriceDTO> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<ProductPrice> findByDesc(String locale, String desc) {
+	public Optional<ProductPriceDTO> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}

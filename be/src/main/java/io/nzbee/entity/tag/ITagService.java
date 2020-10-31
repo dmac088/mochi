@@ -6,12 +6,12 @@ import java.util.Set;
 import io.nzbee.entity.ILocalizedService;
 import io.nzbee.search.ISearchDimensionService;
 
-public interface ITagService  extends ILocalizedService<Tag>, ISearchDimensionService<Tag> {
+public interface ITagService  extends ILocalizedService<TagDTO, TagEntity>, ISearchDimensionService<TagDTO> {
 
-	List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Double maxPrice);
 
-	Optional<Tag> findByCode(String tagCode);
+	Optional<TagEntity> findByCode(String tagCode);
 
 	
 }

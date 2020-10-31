@@ -14,7 +14,7 @@ import io.nzbee.entity.product.currency.Currency;
 
 @Entity
 @Table(name = "price", schema = "mochi")
-public class ProductPrice {
+public class ProductPriceEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -76,7 +76,7 @@ public class ProductPrice {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof ProductEntity)) return false;
-        return id != null && id.equals(((ProductPrice) o).getId());
+        return id != null && id.equals(((ProductPriceEntity) o).getId());
     }
 
 

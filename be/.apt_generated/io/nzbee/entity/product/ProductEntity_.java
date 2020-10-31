@@ -4,9 +4,9 @@ import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.category.product.CategoryProduct;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
-import io.nzbee.entity.product.price.ProductPrice;
+import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.status.ProductStatus;
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
@@ -24,10 +24,10 @@ public abstract class ProductEntity_ {
 	public static volatile SetAttribute<ProductEntity, ProductAttributeEntity> attributes;
 	public static volatile SetAttribute<ProductEntity, CategoryProduct> categories;
 	public static volatile SingularAttribute<ProductEntity, DepartmentEntity> department;
-	public static volatile SetAttribute<ProductEntity, ProductPrice> prices;
+	public static volatile SetAttribute<ProductEntity, ProductPriceEntity> prices;
 	public static volatile SingularAttribute<ProductEntity, CategoryProduct> primaryCategoryIndex;
 	public static volatile SingularAttribute<ProductEntity, BrandEntity> brand;
-	public static volatile SetAttribute<ProductEntity, Tag> tags;
+	public static volatile SetAttribute<ProductEntity, TagEntity> tags;
 
 	public static final String PRODUCT_ID = "productId";
 	public static final String PRODUCT_UP_C = "productUPC";

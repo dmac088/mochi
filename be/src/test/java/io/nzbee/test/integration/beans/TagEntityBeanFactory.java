@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
-import io.nzbee.entity.tag.Tag;
+import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.entity.tag.attribute.TagAttribute;
 
 
@@ -13,8 +13,8 @@ import io.nzbee.entity.tag.attribute.TagAttribute;
 public class TagEntityBeanFactory {
 	
 	@Bean
-	public final Tag getTagEntityBean() {
-		final Tag tag = new Tag();
+	public final TagEntity getTagEntityBean() {
+		final TagEntity tag = new TagEntity();
 		tag.setTagCode("TST02");
 
 		final TagAttribute tagAttribute = new TagAttribute();

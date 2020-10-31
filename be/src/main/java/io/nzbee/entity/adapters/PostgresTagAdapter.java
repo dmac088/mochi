@@ -23,7 +23,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public Tag findByCode(String locale, String code) {
-		io.nzbee.entity.tag.Tag t = tagService.findByCode(locale, code)
+		io.nzbee.entity.tag.TagEntity t = tagService.findByCode(locale, code)
 				.orElseThrow(() -> new TagNotFoundException("Tag with code " + code + " not found!"));
 		return this.entityToDo(t);
 	}
@@ -32,7 +32,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public Tag findByDesc(String locale, String desc) {
-		io.nzbee.entity.tag.Tag t = tagService.findByDesc(locale, desc)
+		io.nzbee.entity.tag.TagEntity t = tagService.findByDesc(locale, desc)
 				.orElseThrow(() -> new TagNotFoundException("Tag with desc " + desc + " not found!"));
 		return this.entityToDo(t);
 	}
@@ -66,14 +66,14 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Transactional
 	public void save(Tag domainObject) {
 		
-		Optional<io.nzbee.entity.tag.Tag> ot = 
+		Optional<io.nzbee.entity.tag.TagEntity> ot = 
 				tagService.findByCode(domainObject.getTagCode().toUpperCase());
 		
 		
-		io.nzbee.entity.tag.Tag t = 
+		io.nzbee.entity.tag.TagEntity t = 
 				(ot.isPresent())
 				? ot.get() 
-				: new io.nzbee.entity.tag.Tag();
+				: new io.nzbee.entity.tag.TagEntity();
 				
 		io.nzbee.entity.tag.attribute.TagAttribute ta = new io.nzbee.entity.tag.attribute.TagAttribute();
 		
@@ -97,7 +97,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 		tagService.save(t);
 	}
 	
-	private Tag entityToDo(io.nzbee.entity.tag.Tag te) {
+	private Tag entityToDo(io.nzbee.entity.tag.TagEntity te) {
 		return new Tag(
 				te.getCode(),
 				te.getTagAttribute().getTagDesc(),
