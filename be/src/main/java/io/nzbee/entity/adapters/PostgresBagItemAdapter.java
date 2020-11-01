@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.ports.IBagItemPortService;
-import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.bag.item.IBagItemMapper;
 import io.nzbee.entity.bag.item.IBagItemService;
@@ -50,9 +50,9 @@ public class PostgresBagItemAdapter implements IBagItemPortService {
 	public void delete(BagItem domainObject) {
 		LOGGER.debug("call PostgresBagItemAdapter.delete with parameters {}", domainObject.getProduct().getProductUPC());
 		Optional<Person> op = personService.findByUsernameAndRole(domainObject.getBag().getCustomer().getUserName(), Customer.class);
-		Bag b = op.get().getBag();
-		Optional<io.nzbee.entity.bag.item.BagItem> obi = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(domainObject.getProduct().getProductUPC())).findAny();
-		io.nzbee.entity.bag.item.BagItem bi = obi.get();
+		BagEntity b = op.get().getBag();
+		Optional<io.nzbee.entity.bag.item.BagItemEntity> obi = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(domainObject.getProduct().getProductUPC())).findAny();
+		io.nzbee.entity.bag.item.BagItemEntity bi = obi.get();
 		b.removeItem(bi);
 		bagService.save(b); 
 	}

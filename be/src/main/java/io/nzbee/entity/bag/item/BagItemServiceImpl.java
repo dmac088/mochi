@@ -16,36 +16,36 @@ public class BagItemServiceImpl implements IBagItemService {
 	private IBagItemRepository bagItemRepository;
 	
 	@Override
-	public Set<BagItem> findAll() {
+	public Set<BagItemEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<BagItem> findById(Long id) {
+	public Optional<BagItemEntity> findById(Long id) {
 		return bagItemRepository.findById(id);
 	}
 
 	@Override
-	public Optional<BagItem> findByCode(String code) {
+	public Optional<BagItemEntity> findByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void save(BagItem t) {
+	public void save(BagItemEntity t) {
 		bagItemRepository.save(t);
 		
 	}
 
 	@Override
-	public void update(BagItem t) {
+	public void update(BagItemEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(BagItem t) {
+	public void delete(BagItemEntity t) {
 		LOGGER.debug("call BagItemServiceImpl.delete with parameters {}", t.getBagItemId());
 		bagItemRepository.delete(t);
 	}

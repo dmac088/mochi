@@ -26,16 +26,16 @@ public class PostgresBagAdapter implements IBagPortService {
 	
 	@Override
 	public Bag findByCode(String locale, String currency, String userName) {
-		Optional<io.nzbee.entity.bag.Bag> ob = bagService.findByCode(userName);
+		Optional<io.nzbee.entity.bag.BagEntity> ob = bagService.findByCode(userName);
 		
 		Person p = (ob.isPresent())
 				   ? (Person) ob.get().getParty()
 				   : personService.findByUsernameAndRole(userName, Customer.class).get();
 		
 		//if there is no current bag, get a new one
-		io.nzbee.entity.bag.Bag b = (ob.isPresent())
+		io.nzbee.entity.bag.BagEntity b = (ob.isPresent())
 									? ob.get()
-									: new io.nzbee.entity.bag.Bag();
+									: new io.nzbee.entity.bag.BagEntity();
 	
 		//map the bag to a domain object
 		return bagMapper.entityToDo(locale, currency, p, b);
@@ -55,7 +55,7 @@ public class PostgresBagAdapter implements IBagPortService {
 
 	@Override
 	public void save(Bag domainObject) {
-		io.nzbee.entity.bag.Bag b = bagMapper.doToEntity(domainObject);
+		io.nzbee.entity.bag.BagEntity b = bagMapper.doToEntity(domainObject);
 		bagService.save(b);
 	}
 

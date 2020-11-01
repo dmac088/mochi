@@ -8,14 +8,14 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
-@StaticMetamodel(BagItem.class)
-public abstract class BagItem_ {
+@StaticMetamodel(BagItemEntity.class)
+public abstract class BagItemEntity_ {
 
-	public static volatile SingularAttribute<BagItem, ProductEntity> product;
-	public static volatile SingularAttribute<BagItem, Integer> quantity;
-	public static volatile SingularAttribute<BagItem, BagEntity> bag;
-	public static volatile SingularAttribute<BagItem, Long> bagItemId;
-	public static volatile SingularAttribute<BagItem, BagItemStatus> bagItemStatus;
+	public static volatile SingularAttribute<BagItemEntity, ProductEntity> product;
+	public static volatile SingularAttribute<BagItemEntity, Integer> quantity;
+	public static volatile SingularAttribute<BagItemEntity, BagEntity> bag;
+	public static volatile SingularAttribute<BagItemEntity, Long> bagItemId;
+	public static volatile SingularAttribute<BagItemEntity, BagItemStatus> bagItemStatus;
 
 	public static final String PRODUCT = "product";
 	public static final String QUANTITY = "quantity";

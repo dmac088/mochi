@@ -22,8 +22,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.bag.item.BagItem;
-import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.item.BagItemEntity;
+import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
@@ -65,7 +65,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	@Autowired
     private IPersonService personService;
  
-	private BagItem bagItem = null;
+	private BagItemEntity bagItem = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -75,15 +75,15 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     	this.persistNewBag();
     }
     
-	public BagItem persistNewBag() {
+	public BagItemEntity persistNewBag() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
     	
-		Bag bag = bagEntityBeanFactory.getBagEntityBean(p.get());
+		BagEntity bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
 	    ProductEntity product = productService.findByCode("23464789").get();
 	        
-	    bagItem = new BagItem(product);
+	    bagItem = new BagItemEntity(product);
 	    bagItem.setQuantity(2);
 	    bag.addItem(bagItem);
 	    
@@ -100,14 +100,14 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     	Long itemId = bagItem.getBagItemId();
     	
         // when
-    	BagItem found = bagItemService.findById(itemId).get();
+    	BagItemEntity found = bagItemService.findById(itemId).get();
      
         // then
     	assertFound(found);
     }
  
     
-    private void assertFound(final BagItem found) {
+    private void assertFound(final BagItemEntity found) {
     	assertNotNull(found);
     	
     	assertThat(found.getQuantity())

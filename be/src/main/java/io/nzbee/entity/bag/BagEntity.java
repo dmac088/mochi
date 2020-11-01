@@ -15,12 +15,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.nzbee.entity.bag.item.BagItem;
+import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.party.Party;
 
 @Entity
 @Table(name = "bag", schema = "mochi")
-public class Bag {
+public class BagEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -35,7 +35,7 @@ public class Bag {
 	@OneToMany(	mappedBy="bag",
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private Set<BagItem> bagItems = new HashSet<BagItem>();
+	private Set<BagItemEntity> bagItems = new HashSet<BagItemEntity>();
 		
 	@Column(name="bag_crd_dt")
 	private LocalDateTime bagCreatedDateTime;
@@ -55,20 +55,20 @@ public class Bag {
 		this.party = party;
 	}
 
-	public Set<BagItem> getBagItems() {
+	public Set<BagItemEntity> getBagItems() {
 		return bagItems;
 	}
 
-	public void setBagItems(Set<BagItem> bagItems) {
+	public void setBagItems(Set<BagItemEntity> bagItems) {
 		this.bagItems = bagItems;
 	}
 	
-	public void addItem(BagItem bi) {
+	public void addItem(BagItemEntity bi) {
 		this.getBagItems().add(bi);
 		bi.setBag(this);
 	}
 	
-	public void removeItem(BagItem bi) {
+	public void removeItem(BagItemEntity bi) {
 		this.getBagItems().remove(bi);
 		bi.setBag(null);
 	}
@@ -92,8 +92,8 @@ public class Bag {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Bag)) return false;
-        return bagId != null && bagId.equals(((Bag) o).getBagId());
+        if (!(o instanceof BagEntity)) return false;
+        return bagId != null && bagId.equals(((BagEntity) o).getBagId());
     }
  
     @Override
