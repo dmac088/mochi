@@ -5,6 +5,4 @@ import io.nzbee.entity.IMapper;
 
 public interface IDepartmentMapper extends IMapper<Department, DepartmentEntity, DepartmentDTO> {
 
-	Department entityToDo(DepartmentEntity department, String locale);
-
 }

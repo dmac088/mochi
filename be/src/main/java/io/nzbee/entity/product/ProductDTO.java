@@ -5,7 +5,9 @@ import java.util.Map;
 import java.util.Set;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
+import io.nzbee.entity.product.attribute.ProductAttributeDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
+import io.nzbee.entity.product.status.ProductStatusDTO;
 
 public class ProductDTO {
 	
@@ -15,11 +17,13 @@ public class ProductDTO {
     
     public static final String DESC_ALIAS = "prd_desc";
     
+    public static final String IN_STOCK_ALIAS = "prd_in_stock";
+    
     protected Long productId;
 
 	protected String productUPC;
 
-	protected String productDesc;
+	protected ProductAttributeDTO productAttribute;
 	
 	protected LocalDateTime productCreateDt;
 	
@@ -48,17 +52,15 @@ public class ProductDTO {
 	
 	
 	//stock and status
-	protected String productStatus;
+	protected ProductStatusDTO productStatus;
 	
 	protected boolean inStock;
 	
 
 	public ProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.productId = ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
-        this.productUPC = tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
-        this.productDesc = tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
-    //    this.productCreateDt = tuple[aliasToIndexMap.get(CREATED_DATE_ALIAS)].;
-        
+		this.productId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+        this.productUPC 	= tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
+        this.inStock 		= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
 	}
 	
 
@@ -78,13 +80,10 @@ public class ProductDTO {
 		this.productCreateDt = productCreateDt;
 	}
 
-	public String getProductDesc() {
-		return productDesc;
+	public ProductAttributeDTO getProductAttribute() {
+		return productAttribute;
 	}
 
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
-	}
 
 	public CategoryProductDTO getPrimaryCategory() {
 		return primaryCategory;
@@ -150,11 +149,11 @@ public class ProductDTO {
 		this.department = department;
 	}
 
-	public String getProductStatus() {
+	public ProductStatusDTO getProductStatus() {
 		return productStatus;
 	}
 
-	public void setProductStatus(String productStatus) {
+	public void setProductStatus(ProductStatusDTO productStatus) {
 		this.productStatus = productStatus;
 	}
 

@@ -2,26 +2,25 @@ package io.nzbee.entity.product.department;
 
 import org.springframework.stereotype.Component;
 
+import io.nzbee.domain.department.Department;
+
 @Component(value="departmentMapper")
 public class DepartmentMapper implements IDepartmentMapper {
 
+	
+	
 	@Override
-	public io.nzbee.domain.department.Department entityToDo(DepartmentEntity e, String locale) {
+	public Department DTOToDo(DepartmentDTO dto) {
 		io.nzbee.domain.department.Department dO = 
 				new io.nzbee.domain.department.Department(
-						e.getDepartmentCode(),
-						e.getAttribute().getDesc(),
-						locale
+						dto.getDepartmentCode(),
+						dto.getDepartmentDesc(),
+						dto.getLocale()
 				);
 	
 		return dO;
 	}
 
-	@Override
-	public io.nzbee.domain.department.Department entityToDo(DepartmentEntity e) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public DepartmentEntity doToEntity(io.nzbee.domain.department.Department d) {

@@ -12,8 +12,7 @@ public class BrandCategory extends Category {
 	public BrandCategory(	String categoryCode,
 							String categoryDesc,
 							boolean isHierarchical,
-							Long level,
-							int objectCount,
+							Long objectCount,
 							String locale) {
 		super(categoryCode, 
 			  categoryDesc, 

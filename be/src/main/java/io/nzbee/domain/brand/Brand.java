@@ -18,7 +18,7 @@ public class Brand implements ILocalizedDomainObject {
 	
 	private String locale;
 	
-	private int objectCount;
+	private Long objectCount;
 	
 	@JsonIgnore
 	private List<Product> products;
@@ -38,7 +38,7 @@ public class Brand implements ILocalizedDomainObject {
 
 	public Brand(String brandCode,
 				 String brandDesc,
-				 int objectCount,
+				 Long objectCount,
 				 String locale) {
 				 this.brandCode = brandCode;
 				 this.brandDesc = brandDesc;
@@ -48,7 +48,7 @@ public class Brand implements ILocalizedDomainObject {
 			 	 this.objectCount = objectCount;
 	}
 	
-	public int getCount() {
+	public Long getCount() {
 		return objectCount;
 	}
 

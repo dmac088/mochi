@@ -11,6 +11,8 @@ public class BrandDTO {
     public static final String DESC_ALIAS = "bnd_desc";
     
     public static final String LOCALE_CODE_ALIAS = "lcl_cd";
+    
+    public static final String COUNT_ALIAS = "object_count";
 	
 	private Long brandId;
 	
@@ -19,12 +21,15 @@ public class BrandDTO {
 	private String brandDesc;
 	
 	private String locale;
+	
+	private Long count; 
 
 	public BrandDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.brandId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
+		this.count 		= ((Number) tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)]).longValue();
 	}
 
 	public static String getIdAlias() {
@@ -57,6 +62,10 @@ public class BrandDTO {
 
 	public String getLocale() {
 		return locale;
+	}
+
+	public Long getCount() {
+		return count;
 	}
 	
 }

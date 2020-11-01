@@ -23,7 +23,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.status.IProductStatusRepository;
-import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.test.integration.beans.ProductStatusEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -60,14 +60,14 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
     @Autowired
     private IProductStatusRepository productStatusRepository;
 	
-    private ProductStatus productStatus = null;
+    private ProductStatusEntity productStatus = null;
     
 	@Before
     public void setUp() { 
     	productStatus = this.persistNewProductStatus();
     }
 	
-	public ProductStatus persistNewProductStatus() {
+	public ProductStatusEntity persistNewProductStatus() {
     	
 		productStatus = productStatusEntityBeanFactory.getProductStatusEntityBean();
 	   
@@ -83,7 +83,7 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	 public void whenFindById_thenReturnProductStatus() {
 	    	
 	        // when
-	    	ProductStatus found = productStatusRepository.findById(productStatus.getProductStatusId()).get();
+	    	ProductStatusEntity found = productStatusRepository.findById(productStatus.getProductStatusId()).get();
 	     
 	        // then
 	    	assertFound(found);
@@ -93,13 +93,13 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	 public void whenFindByCode_thenReturnProductStatus() {
 	    	
 	        // when
-	    	ProductStatus found = productStatusRepository.findByProductStatusCode(productStatus.getCode()).get();
+	    	ProductStatusEntity found = productStatusRepository.findByProductStatusCode(productStatus.getCode()).get();
 	     
 	        // then
 	    	assertFound(found);
 	 }
 	
-	 private void assertFound(final ProductStatus found) {
+	 private void assertFound(final ProductStatusEntity found) {
 	    	
 	    	assertThat(found.getCode())
 	        .isEqualTo("TST01");

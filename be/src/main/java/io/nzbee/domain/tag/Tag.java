@@ -18,14 +18,14 @@ public class Tag implements ILocalizedDomainObject {
 	
 	private String locale;
 	
-	private int objectCount;
+	private Long objectCount;
 
 	@JsonIgnore
 	private List<Product> products;
 
 	public Tag(	String tagCode,
 				String tagDesc,
-				int objectCount,
+				Long objectCount,
 				String locale,
 				String currency) {
 		this.tagCode = tagCode;
@@ -44,7 +44,7 @@ public class Tag implements ILocalizedDomainObject {
 	this.products = new ArrayList<Product>();
 	}
 	
-	public int getCount() {
+	public Long getCount() {
 		return objectCount;
 	}
 

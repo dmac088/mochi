@@ -3,8 +3,8 @@ import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface IProductStatusRepository extends CrudRepository<ProductStatus, Long> {
+public interface IProductStatusRepository extends CrudRepository<ProductStatusEntity, Long> {
 	
-	Optional<ProductStatus> findByProductStatusCode(String code); 
+	Optional<ProductStatusEntity> findByProductStatusCode(String code); 
 	
 }

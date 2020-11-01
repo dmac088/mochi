@@ -13,12 +13,10 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 				dto.getCategoryCode(),
 				dto.getCategoryDesc(),
 				true,
-				e.getCategoryLevel(),
-				e.getCount(),
-				e.getParent().isPresent()
-				? e.getParent().get().getCategoryCode()
-				: null,
-				e.getChildCount(),
+				dto.getCategoryLevel(),
+				dto.getProductCount(),
+				dto.getParentCategory().getCategoryCode(),
+				dto.getChildCategoryCount(),
 				dto.getLocale()
 			 );
 	}

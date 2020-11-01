@@ -29,7 +29,7 @@ public interface ISearchDimension {
 	
 	String getCurrency();
 	
-	int getCount();
+	Long getCount();
 	
 	boolean isHierarchical();
 

@@ -35,19 +35,19 @@ public class CategoryBrandEntity extends CategoryEntity {
     private Set<BrandEntity> brands;
 	
 	@Transient
-	private int brandCount;
+	private Long brandCount;
 	
 	public CategoryBrandEntity() {
 		super();
 	}
 
 	@Override
-	public int getObjectCount() {
+	public Long getObjectCount() {
 		return brandCount;
 	}
 
 	@Override
-	public void setObjectCount(int count) {
+	public void setObjectCount(Long count) {
 		this.brandCount = count;
 	}
 	
@@ -83,7 +83,7 @@ public class CategoryBrandEntity extends CategoryEntity {
 	}
 
 	@Override
-	public int getCount() {
+	public Long getCount() {
 		return this.getObjectCount();
 	}
 
