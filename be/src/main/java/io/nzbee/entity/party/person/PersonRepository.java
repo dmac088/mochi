@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface PersonRepository extends CrudRepository<Person, Long> {
+public interface PersonRepository extends CrudRepository<PersonEntity, Long> {
 
-	Optional<Person> findByPartyId(Long id);
+	Optional<PersonEntity> findByPartyId(Long id);
 
 }

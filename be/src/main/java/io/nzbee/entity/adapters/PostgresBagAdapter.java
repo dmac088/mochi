@@ -8,7 +8,7 @@ import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
-import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.role.customer.Customer;
 
 @Service
@@ -28,8 +28,8 @@ public class PostgresBagAdapter implements IBagPortService {
 	public Bag findByCode(String locale, String currency, String userName) {
 		Optional<io.nzbee.entity.bag.BagEntity> ob = bagService.findByCode(userName);
 		
-		Person p = (ob.isPresent())
-				   ? (Person) ob.get().getParty()
+		PersonEntity p = (ob.isPresent())
+				   ? (PersonEntity) ob.get().getParty()
 				   : personService.findByUsernameAndRole(userName, Customer.class).get();
 		
 		//if there is no current bag, get a new one

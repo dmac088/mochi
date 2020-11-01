@@ -7,7 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.party.Party;
-import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.security.user.User;
 import io.nzbee.security.user.role.IUserRoleService;
@@ -31,7 +31,7 @@ public class PartyEntityBeanFactory {
 		user.setPassword("mackdad1234");
 		user.getUserRoles().add(ur);
 		
-		final Person person = new Person();
+		final PersonEntity person = new PersonEntity();
 		
 		person.setFamilyName("Test Family Name");
 		person.setGivenName("Test Given Name");
