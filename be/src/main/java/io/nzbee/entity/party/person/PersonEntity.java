@@ -14,7 +14,7 @@ import io.nzbee.entity.party.Party;
 @Table(name = "person", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "psn_id")
 @DiscriminatorValue("1")
-public class Person extends Party  implements Serializable {
+public class PersonEntity extends Party  implements Serializable {
 	
 	private static final long serialVersionUID = -5851002761066421365L;
 

@@ -37,24 +37,24 @@ public class PersonDaoImpl implements IPersonDao {
 	private EntityManager em;
 	
 	@Override
-	public List<Person> findAllByRoleName(String roleClassType) {
+	public List<PersonEntity> findAllByRoleName(String roleClassType) {
 		
 		LOGGER.debug("call PersonDaoImpl.findAllByRoleName parameters : {}", roleClassType);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Person> cq = cb.createQuery(Person.class);
+		CriteriaQuery<PersonEntity> cq = cb.createQuery(PersonEntity.class);
 		
-		Root<Person> root = cq.from(Person.class);
+		Root<PersonEntity> root = cq.from(PersonEntity.class);
 		
-		Join<Person, Role> partyRole = root.join(Person_.partyRoles);
+		Join<PersonEntity, Role> partyRole = root.join(Person_.partyRoles);
 		Join<Role, RoleType> roleType = partyRole.join(Role_.roleType);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		
 		conditions.add(cb.equal(roleType.get(RoleType_.roleTypeDesc), roleClassType));
 		
-		TypedQuery<Person> query = em.createQuery(cq
+		TypedQuery<PersonEntity> query = em.createQuery(cq
 				.select(root)
 				.where(conditions.toArray(new Predicate[] {}))
 				.distinct(false)
@@ -64,18 +64,18 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 
 	@Override
-	public Optional<Person> findByUsernameAndRole(String userName, String roleClassType) {
+	public Optional<PersonEntity> findByUsernameAndRole(String userName, String roleClassType) {
 
 		LOGGER.debug("call PersonDaoImpl.findAllByUsernameAndRole parameters : {}, {}", userName, roleClassType);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Person> cq = cb.createQuery(Person.class);
+		CriteriaQuery<PersonEntity> cq = cb.createQuery(PersonEntity.class);
 		
-		Root<Person> root = cq.from(Person.class);
+		Root<PersonEntity> root = cq.from(PersonEntity.class);
 		
-		Join<Person, Role> partyRole = root.join(Person_.partyRoles);
-		Join<Person, User> partyUser = root.join(Party_.partyUser);
+		Join<PersonEntity, Role> partyRole = root.join(Person_.partyRoles);
+		Join<PersonEntity, User> partyUser = root.join(Party_.partyUser);
 		Join<Role, RoleType> roleType = partyRole.join(Role_.roleType);
 
 		cq.where(cb.and(
@@ -83,10 +83,10 @@ public class PersonDaoImpl implements IPersonDao {
 			cb.equal(partyUser.get(User_.username), userName))
 		);
 		
-		TypedQuery<Person> query = em.createQuery(cq);
+		TypedQuery<PersonEntity> query = em.createQuery(cq);
 		
 		try {
-			Person p = query.getSingleResult();
+			PersonEntity p = query.getSingleResult();
 			return Optional.ofNullable(p);
 		} 
 		catch(NoResultException nre) {
@@ -95,55 +95,55 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 	
 	@Override
-	public Optional<Person> findById(long id) {
+	public Optional<PersonEntity> findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<Person> findByCode(String code) {
+	public Optional<PersonEntity> findByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Person> findAll() {
+	public List<PersonEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Person> findAll(List<String> codes) {
+	public List<PersonEntity> findAll(List<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void save(Person t) {
+	public void save(PersonEntity t) {
 		em.persist(t);
 		em.flush();
 	}
 
 	@Override
-	public void update(Person t, String[] params) {
+	public void update(PersonEntity t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(Person t) {
+	public void delete(PersonEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Person objectToEntity(Object[] o) {
+	public PersonEntity objectToEntity(Object[] o) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Person objectToEntity(Tuple t) {
+	public PersonEntity objectToEntity(Tuple t) {
 		// TODO Auto-generated method stub
 		return null;
 	}

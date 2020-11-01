@@ -23,7 +23,7 @@ import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
-import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.role.IRoleTypeRepository;
@@ -70,7 +70,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Customer findByUsername(String userName) {
-		Person p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
+		PersonEntity p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
 		return personMapper.entityToDo(p);
 	}
@@ -119,7 +119,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		io.nzbee.entity.role.RoleType roleType = roleTypeRepository.findByRoleTypeDesc(io.nzbee.entity.role.customer.Customer.class.getSimpleName()).get();
 		c.setRoleType(roleType);
 		
-		Person p = new Person();
+		PersonEntity p = new PersonEntity();
 		p.setGivenName(domainObject.getGivenName());
 		p.setFamilyName(domainObject.getFamilyName());
 		p.setEnabled(domainObject.isEnabled());
@@ -137,7 +137,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Transactional
 	public void update(Customer domainObject) {
 		//in our domain world a customer is a person
-		Person p = personService.findByUsernameAndRole(domainObject.getUserName(), io.nzbee.entity.role.customer.Customer.class).get();
+		PersonEntity p = personService.findByUsernameAndRole(domainObject.getUserName(), io.nzbee.entity.role.customer.Customer.class).get();
 		
 		p.setGivenName(domainObject.getGivenName());
 		p.setFamilyName(domainObject.getFamilyName());
@@ -149,7 +149,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional
 	public void delete(Customer object) {
-		Person t = personService.findByUsernameAndRole(object.getUserName(), io.nzbee.entity.role.customer.Customer.class)
+		PersonEntity t = personService.findByUsernameAndRole(object.getUserName(), io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerException("Customer with username " + object.getUserName() + " not found!"));
 		personService.delete(t);
 		
@@ -172,7 +172,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional
 	public void delete(String userName) {
-		Person t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
+		PersonEntity t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
 		personService.delete(t);
 	}
@@ -212,7 +212,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		final VerificationToken token = tokenRepository.findByToken(verificationToken);
         if (token != null) {
             User u = token.getUser();
-            Optional<Person> p = personService.findByUsernameAndRole(u.getUsername(), io.nzbee.entity.role.customer.Customer.class);
+            Optional<PersonEntity> p = personService.findByUsernameAndRole(u.getUsername(), io.nzbee.entity.role.customer.Customer.class);
             return personMapper.entityToDo(p.get());
         }
         return null;
@@ -240,7 +240,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	public void addItemToBag(Customer c, BagItem bagItem) {
 		
 		//get the party of the bag, which will be a person
-		Person t = personService.findByUsernameAndRole(c.getUserName(), io.nzbee.entity.role.customer.Customer.class)
+		PersonEntity t = personService.findByUsernameAndRole(c.getUserName(), io.nzbee.entity.role.customer.Customer.class)
 					.orElseThrow(() -> new CustomerException("Customer with username " + c.getUserName() + " not found!"));
 		
 		

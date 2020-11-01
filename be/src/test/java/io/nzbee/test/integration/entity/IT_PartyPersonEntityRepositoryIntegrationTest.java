@@ -27,7 +27,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
-import io.nzbee.entity.party.person.Person;
+import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.role.customer.Customer;
 import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
 
@@ -93,7 +93,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
     public void whenFindByUsernameAndRole_thenReturnParty() {
 		
 		// when
-	    Optional<Person> found = personService.findByUsernameAndRole("mackdad", Customer.class);
+	    Optional<PersonEntity> found = personService.findByUsernameAndRole("mackdad", Customer.class);
      
 	    // then
 	    assertFound(found);
@@ -101,19 +101,19 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
     }
 
 	
-    private void assertFound(Optional<Person> found) {
+    private void assertFound(Optional<PersonEntity> found) {
     	assertNotNull(found);
     	assertTrue(found.isPresent());
     	
-	    assertThat(((Person) found.get()).getGivenName())
+	    assertThat(((PersonEntity) found.get()).getGivenName())
 	    .isEqualTo("Test Given Name");
-	    assertThat(((Person) found.get()).getFamilyName())
+	    assertThat(((PersonEntity) found.get()).getFamilyName())
 	    .isEqualTo("Test Family Name");
-	    assertThat(((Person) found.get()).getUser().getUsername())
+	    assertThat(((PersonEntity) found.get()).getUser().getUsername())
 	    .isEqualTo("mackdad");
-	    assertThat(((Person) found.get()).getUser().getUserRoles().stream().findFirst().get().getName())
+	    assertThat(((PersonEntity) found.get()).getUser().getUserRoles().stream().findFirst().get().getName())
 	    .isEqualTo("Customer");
-	    assertThat(((Customer)(((Person) found.get()).getPartyRoles().stream().findFirst().get())).getCustomerNumber())
+	    assertThat(((Customer)(((PersonEntity) found.get()).getPartyRoles().stream().findFirst().get())).getCustomerNumber())
 	    .isEqualTo("9832145731");
 	    
     }
