@@ -1,10 +1,11 @@
 package io.nzbee.entity.bag.item;
 
+import io.nzbee.domain.bag.BagItem;
 import io.nzbee.entity.IMapper;
 import io.nzbee.entity.bag.item.BagItemEntity;
 
-public interface IBagItemMapper extends IMapper<io.nzbee.domain.bag.BagItem, BagItemEntity>{
+public interface IBagItemMapper extends IMapper<BagItem, BagItemEntity, BagItemDTO>{
 
-	io.nzbee.domain.bag.BagItem entityToDo(String locale, String currency, BagItemEntity e);
+	BagItem DTOToDo(String locale, String currency, BagItemEntity e);
 	
 }

@@ -12,6 +12,7 @@ import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.bag.item.IBagItemMapper;
 import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
+import io.nzbee.entity.party.person.PersonDTO;
 import io.nzbee.entity.party.person.PersonEntity;
 
 @Component
@@ -31,16 +32,10 @@ public class BagMapperImpl implements IBagMapper {
 	
 
 	@Override
-	public Bag DTOToDo(BagEntity dto) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Bag entityToDo(String locale, String currency, PersonEntity p, io.nzbee.entity.bag.BagEntity e) {
+	public Bag DTOToDo(String locale, String currency, PersonDTO pDto, BagDTO bDto) {
 		
 		//we need a customer to instantiate a new bag
-		Customer c = personMapper.entityToDo(p);
+		Customer c = personMapper.DTOToDo(pDto);
 		
 		//create a new bag domain object
 		Bag b = new Bag(c);
@@ -62,7 +57,7 @@ public class BagMapperImpl implements IBagMapper {
 	@Override
 	public io.nzbee.entity.bag.BagEntity doToEntity(Bag d) {
 		//get the bag, status, and customer from the database
-		Optional<io.nzbee.entity.bag.BagEntity> obe 						= bagService.findByCode(d.getCustomer().getUserName());		
+		Optional<io.nzbee.entity.bag.BagEntity> obe 					= bagService.findByCode(d.getCustomer().getUserName());		
 		Optional<io.nzbee.entity.party.person.PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
 					
 		io.nzbee.entity.bag.BagEntity nbe = new io.nzbee.entity.bag.BagEntity();
@@ -105,12 +100,11 @@ public class BagMapperImpl implements IBagMapper {
 	}
 
 	@Override
-	public Bag entityToDo(PersonEntity p, io.nzbee.entity.bag.BagEntity e) {
+	public Bag DTOToDo(BagDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
-
-
+	
+	
 }

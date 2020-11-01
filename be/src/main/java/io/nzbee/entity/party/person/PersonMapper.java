@@ -7,12 +7,11 @@ import org.springframework.stereotype.Component;
 public class PersonMapper implements IPersonMapper {
 
 	@Override
-	public Customer DTOToDo(PersonEntity e) {
+	public Customer DTOToDo(PersonDTO dto) {
 
-		io.nzbee.domain.customer.Customer co 
-		= new Customer(
-			e.getGivenName(),
-			e.getFamilyName(),
+		Customer co = new Customer(
+			dto.getGivenName(),
+			dto.getFamilyName(),
 			e.getUser().getUsername(),
 			((io.nzbee.entity.role.customer.Customer) 
 				e.getPartyRoles().stream().filter(r -> r.getRoleType().getRoleTypeDesc().equals(Customer.class.getSimpleName())).findFirst().get()).getCustomerNumber(),
@@ -21,5 +20,10 @@ public class PersonMapper implements IPersonMapper {
 		return co;	
 	}
 
+	@Override
+	public PersonEntity doToEntity(Customer d) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
