@@ -3,9 +3,9 @@ package io.nzbee.entity.bag;
 import java.util.Optional;
 import org.springframework.data.repository.CrudRepository;
 
-public interface IBagRepository extends CrudRepository<Bag, Long> {
+public interface IBagRepository extends CrudRepository<BagEntity, Long> {
 
-	Optional<Bag> findByPartyPartyUserUsername(String userName);
+	Optional<BagEntity> findByPartyPartyUserUsername(String userName);
 	
 }
 

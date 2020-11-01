@@ -19,7 +19,7 @@ import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTOIn;
-import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonMapper;
 import io.nzbee.entity.party.person.IPersonService;
@@ -251,13 +251,13 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		
 		//get the bag of the person
-		Optional<Bag> ob = bagService.findByCode(c.getUserName());
+		Optional<BagEntity> ob = bagService.findByCode(c.getUserName());
 		
-		Bag b = (ob.isPresent()) 
+		BagEntity b = (ob.isPresent()) 
 				? ob.get()
-				: new Bag();
+				: new BagEntity();
 		
-		io.nzbee.entity.bag.item.BagItem bi = new io.nzbee.entity.bag.item.BagItem(p);
+		io.nzbee.entity.bag.item.BagItemEntity bi = new io.nzbee.entity.bag.item.BagItemEntity(p);
 		bi.setQuantity(bagItem.getQuantity());
 		b.addItem(bi);
 		

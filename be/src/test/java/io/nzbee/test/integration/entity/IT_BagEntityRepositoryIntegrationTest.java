@@ -22,7 +22,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.Person;
@@ -59,7 +59,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	@Autowired
     private IPersonService personService;
  
-	private Bag bag = null;
+	private BagEntity bag = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -69,7 +69,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	this.persistNewBag();
     }
     
-	public Bag persistNewBag() {
+	public BagEntity persistNewBag() {
 		
 		Optional<Person> p = personService.findByUsernameAndRole("dmac088", Customer.class);
 		
@@ -88,7 +88,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBag() {
     	
     	//persist a bag and then make sure we can retrieve it by id
-    	Bag found = bagService.findById(bag.getBagId()).get();
+    	BagEntity found = bagService.findById(bag.getBagId()).get();
      
         // then
     	assertFound(found);
@@ -99,14 +99,14 @@ public class IT_BagEntityRepositoryIntegrationTest {
     public void thenFindByUsername_thenReturnBag() {
     	
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<Bag> found = bagService.findByCode("dmac088");
+    	Optional<BagEntity> found = bagService.findByCode("dmac088");
     	
     	assertTrue(found.isPresent());
     	assertFound(found.get());
     }
  
     
-    private void assertFound(final Bag found) {
+    private void assertFound(final BagEntity found) {
     	assertNotNull(bag);
     	
     	assertNotNull(found.getBagCreatedDateTime());

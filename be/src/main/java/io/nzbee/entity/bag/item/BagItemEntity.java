@@ -12,13 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.status.BagItemStatus;
 import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "bag_item", schema = "mochi")
-public class BagItem {
+public class BagItemEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -27,7 +27,7 @@ public class BagItem {
 
 	@ManyToOne
 	@JoinColumn(name="bag_id")
-	private Bag bag;
+	private BagEntity bag;
 	
 	@ManyToOne
 	@JoinColumn(name="prd_id")
@@ -44,11 +44,11 @@ public class BagItem {
 		return bagItemId;
 	}
 	
-	public BagItem() {
+	public BagItemEntity() {
 	
 	}
 	
-	public BagItem(ProductEntity p) {
+	public BagItemEntity(ProductEntity p) {
 		this.product = p;
 	}
 	
@@ -60,11 +60,11 @@ public class BagItem {
 		this.quantity = quantity;
 	}
 
-	public Bag getBag() {
+	public BagEntity getBag() {
 		return bag;
 	}
 
-	public void setBag(Bag bag) {
+	public void setBag(BagEntity bag) {
 		this.bag = bag;
 	}
 	
@@ -87,8 +87,8 @@ public class BagItem {
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BagItem)) return false;
-        return bagItemId != null && bagItemId.equals(((BagItem) o).getBagItemId());
+        if (!(o instanceof BagItemEntity)) return false;
+        return bagItemId != null && bagItemId.equals(((BagItemEntity) o).getBagItemId());
     }
  
     @Override

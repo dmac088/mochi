@@ -21,7 +21,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
-import io.nzbee.entity.bag.Bag;
+import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.role.Role;
 import io.nzbee.security.user.User;
 
@@ -68,7 +68,7 @@ public abstract class Party {
 				fetch = FetchType.LAZY,
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
-	private Bag bag;
+	private BagEntity bag;
 	
 
 	public Party() {
@@ -126,11 +126,11 @@ public abstract class Party {
 		user.setParty(this);
 	}
 
-	public Bag getBag() {
+	public BagEntity getBag() {
 		return bag;
 	}
 
-	public void setBag(Bag bag) {
+	public void setBag(BagEntity bag) {
 		this.bag = bag;
 	}
 	
