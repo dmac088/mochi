@@ -27,7 +27,7 @@ public class CategoryProductEntity extends CategoryEntity  {
     private Set<ProductEntity> products = new HashSet<ProductEntity>();
 	
 	@Transient
-	private int productCount;
+	private Long productCount;
 	
 	@Transient
 	private boolean hasParent;
@@ -49,12 +49,12 @@ public class CategoryProductEntity extends CategoryEntity  {
 	}
 
 	@Override
-	public int getObjectCount() {
+	public Long getObjectCount() {
 		return productCount;
 	}
 
 	@Override
-	public void setObjectCount(int count) {
+	public void setObjectCount(Long count) {
 		productCount = count;
 	}
 	
@@ -91,7 +91,7 @@ public class CategoryProductEntity extends CategoryEntity  {
 	}
 
 	@Override
-	public int getCount() {
+	public Long getCount() {
 		return this.getObjectCount();
 	}
 

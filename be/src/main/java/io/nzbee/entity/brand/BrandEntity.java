@@ -91,7 +91,7 @@ public class BrandEntity implements ISearchDimension {
 	private String currency;
 	
 	@Transient
-	private int objectCount;
+	private Long objectCount;
 
 	public String getLocale() {
 		return locale;
@@ -196,11 +196,11 @@ public class BrandEntity implements ISearchDimension {
 		this.currency = currency;
 	}
 	
-	public int getObjectCount() {
+	public Long getObjectCount() {
 		return objectCount;
 	}
 
-	public void setObjectCount(int objectCount) {
+	public void setObjectCount(Long objectCount) {
 		this.objectCount = objectCount;
 	}
 
@@ -215,7 +215,7 @@ public class BrandEntity implements ISearchDimension {
 	}
 
 	@Override
-	public int getCount() {
+	public Long getCount() {
 		return this.getObjectCount();
 	}
 

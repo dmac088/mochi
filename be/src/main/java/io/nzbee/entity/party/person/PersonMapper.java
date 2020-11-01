@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 public class PersonMapper implements IPersonMapper {
 
 	@Override
-	public Customer entityToDo(Person e) {
+	public Customer DTOToDo(Person e) {
 
 		io.nzbee.domain.customer.Customer co 
 		= new Customer(
@@ -21,10 +21,5 @@ public class PersonMapper implements IPersonMapper {
 		return co;	
 	}
 
-	@Override
-	public Person doToEntity(Customer d) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 }

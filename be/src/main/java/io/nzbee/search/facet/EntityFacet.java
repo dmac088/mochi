@@ -17,7 +17,7 @@ public class EntityFacet implements IFacet {
 	
 	private boolean isHierarchical;
 	
-	private int count;
+	private Long count;
 	
 	public EntityFacet() {
 		super();
@@ -58,11 +58,11 @@ public class EntityFacet implements IFacet {
 	}
 
 	@Override
-	public int getCount() {
+	public Long getCount() {
 		return count;
 	}
 
-	public void setCount(int count) {
+	public void setCount(Long count) {
 		this.count = count;
 	}
 
@@ -90,6 +90,5 @@ public class EntityFacet implements IFacet {
 	public void setFacetingName(String name) {
 		this.facetingName = name.toLowerCase();
 	}
-	
 	
 }

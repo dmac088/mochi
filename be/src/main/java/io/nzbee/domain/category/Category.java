@@ -16,14 +16,14 @@ public abstract class Category implements ILocalizedDomainObject {
 	private String categoryCode;
 	private String categoryDesc;
 	protected String categoryType;
-	private int objectCount;
+	private Long objectCount;
 	private String locale;
 	
 
 	public Category(		String categoryCode, 
 							String categoryDesc,
 							String lclCd, 
-							int objectCount 
+							Long objectCount 
 					) {
 		super();
 		this.categoryCode 	= categoryCode;
@@ -54,7 +54,7 @@ public abstract class Category implements ILocalizedDomainObject {
 		return categoryType;
 	}
 	
-	public int getCount() {
+	public Long getCount() {
 		return objectCount;
 	}
 	

@@ -228,9 +228,9 @@ public abstract class CategoryEntity implements ISearchDimension {
 		this.currency = currency;
 	}
 
-	public abstract int getObjectCount();
+	public abstract Long getObjectCount();
 	
-	public abstract void setObjectCount(int count);
+	public abstract void setObjectCount(Long count);
 	
 	public Long getChildCount() {
 		return childCount;

@@ -57,7 +57,7 @@ import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.price.ProductPriceEntity;
-import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.entity.tag.TagEntity;
 
 @Entity
@@ -351,7 +351,7 @@ public abstract class ProductEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prd_sts_id")
 	@IndexedEmbedded(prefix="product.status.")
-	private ProductStatus productStatus;
+	private ProductStatusEntity productStatus;
 
 	@OneToMany(	mappedBy="product",
 				cascade = CascadeType.ALL,
@@ -615,11 +615,11 @@ public abstract class ProductEntity {
 		this.brand = brand;
 	}
 	
-	public ProductStatus getProductStatus() {
+	public ProductStatusEntity getProductStatus() {
 		return productStatus;
 	}
 
-	public void setProductStatus(ProductStatus productStatus) {
+	public void setProductStatus(ProductStatusEntity productStatus) {
 		this.productStatus = productStatus;
 	}
 	

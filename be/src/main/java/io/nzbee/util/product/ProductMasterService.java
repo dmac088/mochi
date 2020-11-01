@@ -41,7 +41,7 @@ import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
-import io.nzbee.entity.product.status.ProductStatus;
+import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -183,7 +183,7 @@ public class ProductMasterService {
 		
 		Optional<DepartmentEntity> od = departmentService.findByCode(locale, templateCode);
 		
-		Optional<ProductStatus> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
+		Optional<ProductStatusEntity> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
 		
 		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
 		
@@ -221,7 +221,7 @@ public class ProductMasterService {
 		ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
 		ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
 
-		ProductStatus ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
+		ProductStatusEntity ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
 
 		Optional<ProductPriceEntity> oprcr = 
 				productPriceService.findOne(upcCode, 

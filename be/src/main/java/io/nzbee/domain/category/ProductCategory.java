@@ -24,7 +24,7 @@ public class ProductCategory extends Category {
 							String categoryDesc,
 							boolean isHierarchical,
 							Long level,
-							int objectCount,
+							Long objectCount,
 							String parentCode,
 							Long childCount,
 							String locale) {
@@ -56,9 +56,8 @@ public class ProductCategory extends Category {
 		this.categoryType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.products = new ArrayList<Product>();
 	}
-	
-	
-	
+
+
 	public void addProduct(Product product) {
 		this.getProducts().add(product);
 	}

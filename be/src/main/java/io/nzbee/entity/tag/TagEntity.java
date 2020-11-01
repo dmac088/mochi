@@ -85,7 +85,7 @@ public class TagEntity implements ISearchDimension {
 	private TagAttribute tagAttribute;
 	
 	@Transient
-	private int objectCount;
+	private Long objectCount;
 
 	public Long getTagId() {
 		return tagId;
@@ -145,11 +145,11 @@ public class TagEntity implements ISearchDimension {
 		return currency;
 	}
 	
-	public int getObjectCount() {
+	public Long getObjectCount() {
 		return objectCount;
 	}
 
-	public void setObjectCount(int objectCount) {
+	public void setObjectCount(Long objectCount) {
 		this.objectCount = objectCount;
 	}
 	
@@ -197,7 +197,7 @@ public class TagEntity implements ISearchDimension {
 	}
 
 	@Override
-	public int getCount() {
+	public Long getCount() {
 		return this.objectCount;
 	}
 

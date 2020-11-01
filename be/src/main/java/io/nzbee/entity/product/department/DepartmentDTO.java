@@ -4,17 +4,21 @@ import java.util.Map;
 
 public class DepartmentDTO {
 	
-public static final String ID_ALIAS = "dept_id";
+	public static final String ID_ALIAS = "dept_id";
 	
 	public static final String CODE_ALIAS = "dept_cd";
     
     public static final String DESC_ALIAS = "dept_desc";
+    
+    public static final String LOCALE_CODE_ALIAS = "lcl_cd";
 	
 	private Long departmentId;
 	
 	private String departmentCode;
 	
 	private String departmentDesc;
+	
+	private String locale;
 
 	public DepartmentDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.departmentId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
@@ -46,6 +50,8 @@ public static final String ID_ALIAS = "dept_id";
 		this.departmentDesc = departmentDesc;
 	}
 
-	
-	
+	public String getLocale() {
+		return locale;
+	}
+
 }
