@@ -57,7 +57,6 @@ public class ProductCategory extends Category {
 		this.products = new ArrayList<Product>();
 	}
 
-
 	public void addProduct(Product product) {
 		this.getProducts().add(product);
 	}

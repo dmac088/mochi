@@ -41,13 +41,11 @@ public class BagItemMapperImpl implements IBagItemMapper {
 		return bi;
 	}
 
-
-
 	@Override
 	public BagItem DTOToDo(BagItemDTO dto) {
-		Bag b = bagMapper.entityToDo(e.getBag());
-		Product p = productMapper.entityToDo(productService.findByCode(locale, currency, e.getProduct().getProductUPC()).get());
-		return new BagItem(b, p, e.getQuantity());
+		Bag b = bagMapper.DTOToDo(dto.getBag());
+		Product p = productMapper.DTOToDo(dto.getProduct());
+		return new BagItem(b, p, dto.getQuantity());
 	}
 
 }

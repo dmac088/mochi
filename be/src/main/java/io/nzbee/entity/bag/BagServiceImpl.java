@@ -29,6 +29,12 @@ public class BagServiceImpl implements IBagService {
 	}
 
 	@Override
+	public Set<BagEntity> findAll(Set<String> userNames) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
 	public void save(BagEntity t) {
 		bagRepository.save(t);
 	}
@@ -43,6 +49,42 @@ public class BagServiceImpl implements IBagService {
 	public void delete(BagEntity t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Set<BagDTO> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<BagDTO> findAll(String locale, Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BagDTO> findById(String locale, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BagDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BagDTO> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

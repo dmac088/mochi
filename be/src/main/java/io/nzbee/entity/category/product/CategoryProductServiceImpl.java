@@ -103,4 +103,10 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 		return null;
 	}
 
+	@Override
+	public Set<CategoryProductEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

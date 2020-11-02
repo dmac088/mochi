@@ -845,13 +845,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return sql;
 	}
 
-
 	@Override
 	public CategoryDTO objectToDTO(Tuple t, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public CategoryDTO objectToDTO(Object[] o, String locale) {
@@ -859,13 +857,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return null;
 	}
 
-
 	@Override
 	public CategoryDTO objectToDTO(Tuple t, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
 
 	@Override
 	public CategoryDTO objectToDTO(Object[] o, String locale, String currency) {
@@ -873,16 +869,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return null;
 	}
 
-
 	@Override
 	public Optional<CategoryEntity> findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-
 	@Override
-	public Set<CategoryEntity> findAll(List<String> codes) {
+	public Set<CategoryEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

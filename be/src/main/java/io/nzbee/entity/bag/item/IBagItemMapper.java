@@ -6,6 +6,6 @@ import io.nzbee.entity.bag.item.BagItemEntity;
 
 public interface IBagItemMapper extends IMapper<BagItem, BagItemEntity, BagItemDTO>{
 
-	BagItem DTOToDo(String locale, String currency, BagItemDTO e);
+	//BagItem DTOToDo(String locale, String currency, BagItemDTO e);
 	
 }

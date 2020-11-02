@@ -1,7 +1,9 @@
 package io.nzbee.entity.tag;
 
+import org.springframework.stereotype.Component;
 import io.nzbee.domain.tag.Tag;
 
+@Component
 public class TagMapperImpl implements ITagMapper {
 
 	@Override

@@ -11,11 +11,9 @@ import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.bag.item.IBagItemMapper;
-import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.CustomerDTO;
-import io.nzbee.entity.party.person.PersonEntity;
 
 @Component
 public class BagMapperImpl implements IBagMapper {
@@ -32,9 +30,6 @@ public class BagMapperImpl implements IBagMapper {
 	@Autowired
 	private IBagService bagService;
 	
-	@Autowired
-	private IBagItemService bagItemService;
-
 	@Override
 	public Bag DTOToDo(String locale, String currency, CustomerDTO pDto, BagDTO bDto) {
 		
@@ -45,13 +40,13 @@ public class BagMapperImpl implements IBagMapper {
 		Bag b = new Bag(c);
 		
 		
-		bagItemService
+		//bagItemService
 		
 		
 		
 		//map the entity bagItems to the domain bagItems
-		Set<BagItem> sbi = 	 e.getBagItems().stream()
-							 .map(bi -> bagItemMapper.entityToDo(locale, currency, bi))
+		Set<BagItem> sbi = 	 bDto.getBagItems().stream()
+							 .map(bi -> bagItemMapper.DTOToDo(bi))
 							 .collect(Collectors.toSet());
 		
 		//use the add item method on the domain object to 

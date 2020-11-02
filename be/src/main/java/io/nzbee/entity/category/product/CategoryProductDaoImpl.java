@@ -216,7 +216,7 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	}
 
 	@Override
-	public Set<CategoryProductEntity> findAll(List<String> codes) {
+	public Set<CategoryProductEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

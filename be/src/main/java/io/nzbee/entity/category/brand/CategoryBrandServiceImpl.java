@@ -84,4 +84,10 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 		return null;
 	}
 
+	@Override
+	public Set<CategoryBrandEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
