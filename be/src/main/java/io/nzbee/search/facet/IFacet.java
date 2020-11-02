@@ -27,6 +27,6 @@ public interface IFacet {
 	
 	public String getFacetingName();
 	
-	public Long getCount();
+	public int getCount();
 	
 }

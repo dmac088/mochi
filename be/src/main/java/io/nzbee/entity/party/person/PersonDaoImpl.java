@@ -121,7 +121,6 @@ public class PersonDaoImpl implements IPersonDao {
 	@Override
 	public void save(PersonEntity t) {
 		em.persist(t);
-		em.flush();
 	}
 
 	@Override

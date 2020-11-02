@@ -17,7 +17,7 @@ public class EntityFacet implements IFacet {
 	
 	private boolean isHierarchical;
 	
-	private Long count;
+	private int count;
 	
 	public EntityFacet() {
 		super();
@@ -58,11 +58,11 @@ public class EntityFacet implements IFacet {
 	}
 
 	@Override
-	public Long getCount() {
+	public int getCount() {
 		return count;
 	}
 
-	public void setCount(Long count) {
+	public void setCount(int count) {
 		this.count = count;
 	}
 

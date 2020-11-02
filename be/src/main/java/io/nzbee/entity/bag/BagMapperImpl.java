@@ -10,16 +10,16 @@ import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.bag.item.IBagItemMapper;
-import io.nzbee.entity.party.person.IPersonMapper;
+import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
-import io.nzbee.entity.party.person.PersonDTO;
+import io.nzbee.entity.party.person.CustomerDTO;
 import io.nzbee.entity.party.person.PersonEntity;
 
 @Component
 public class BagMapperImpl implements IBagMapper {
 	
 	@Autowired
-	private IPersonMapper personMapper;
+	private ICustomerMapper personMapper;
 	
 	@Autowired
 	private IBagItemMapper bagItemMapper;
@@ -32,7 +32,7 @@ public class BagMapperImpl implements IBagMapper {
 	
 
 	@Override
-	public Bag DTOToDo(String locale, String currency, PersonDTO pDto, BagDTO bDto) {
+	public Bag DTOToDo(String locale, String currency, CustomerDTO pDto, BagDTO bDto) {
 		
 		//we need a customer to instantiate a new bag
 		Customer c = personMapper.DTOToDo(pDto);
