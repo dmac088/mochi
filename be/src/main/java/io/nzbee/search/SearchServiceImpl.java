@@ -459,7 +459,7 @@ public class SearchServiceImpl implements ISearchService {
 		List<Object[]> result = jpaQuery.getResultList();
 		List<ProductDTO> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
-		return lp.stream().map(p -> p.getProductAttribute().getProductShortDesc()).toArray(String[]::new);
+		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
 
 	}
 
