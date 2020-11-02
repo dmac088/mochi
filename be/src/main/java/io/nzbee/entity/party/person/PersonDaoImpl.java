@@ -18,13 +18,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.party.Party_;
+import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.role.Role;
 import io.nzbee.entity.role.RoleType;
 import io.nzbee.entity.role.RoleType_;
 import io.nzbee.entity.role.Role_;
 import io.nzbee.security.user.User;
 import io.nzbee.security.user.User_;
-
 
 @Component(value="personDao")
 public class PersonDaoImpl implements IPersonDao {
@@ -46,7 +46,7 @@ public class PersonDaoImpl implements IPersonDao {
 		
 		Root<PersonEntity> root = cq.from(PersonEntity.class);
 		
-		Join<PersonEntity, Role> partyRole = root.join(Person_.partyRoles);
+		Join<PersonEntity, Role> partyRole = root.join(PersonEntity_.partyRoles);
 		Join<Role, RoleType> roleType = partyRole.join(Role_.roleType);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -73,7 +73,7 @@ public class PersonDaoImpl implements IPersonDao {
 		
 		Root<PersonEntity> root = cq.from(PersonEntity.class);
 		
-		Join<PersonEntity, Role> partyRole = root.join(Person_.partyRoles);
+		Join<PersonEntity, Role> partyRole = root.join(PersonEntity_.partyRoles);
 		Join<PersonEntity, User> partyUser = root.join(Party_.partyUser);
 		Join<Role, RoleType> roleType = partyRole.join(Role_.roleType);
 

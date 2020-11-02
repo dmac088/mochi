@@ -1,6 +1,7 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import javax.persistence.EntityManager;
 
@@ -108,7 +109,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	    	
 	        // when
 	    	DepartmentDTO found = departmentService.findByDesc(Constants.localeENGB,
-															"test department").get();
+															   "test department").get();
 	     
 	        // then
 	    	assertFound(found);
@@ -116,6 +117,8 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	
 	 private void assertFound(final DepartmentDTO found) {
 	    	
+		 	assertNotNull(found);
+		 
 	    	assertThat(found.getDepartmentCode())
 	        .isEqualTo("TST01");
 	

@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.Product_;
+import io.nzbee.entity.product.ProductEntity_;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute_;
 
@@ -52,33 +52,30 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	@Override
 	public Optional<DepartmentDTO> findById(String locale, Long id) {
 		
-		LOGGER.debug("call DepartmentDaoImpl.findById parameters : {}, {}, {}", locale, id);
+		LOGGER.debug("call DepartmentDaoImpl.findById parameters : {}, {}", locale, id);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		CriteriaQuery<DepartmentDTO> cq = cb.createQuery(DepartmentDTO.class);
 		
 		Root<DepartmentEntity> root = cq.from(DepartmentEntity.class);
-		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(Department_.attributes);
+		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(DepartmentEntity_.attributes);
 		
-		cq.multiselect(	root.get(Department_.departmentId).alias("departmentId"),
-						root.get(Department_.departmentCode).alias("departmentCode"),
-						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
-						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
-		);
+		cq.select(cb.construct(		DepartmentDTO.class, 
+							   		root.get(DepartmentEntity_.departmentId),
+							   		root.get(DepartmentEntity_.departmentCode),
+							   		attribute.get(DepartmentAttribute_.departmentDesc),
+							   		attribute.get(DepartmentAttribute_.lclCd)
+		));
 		
 		cq.where(cb.and(
-				cb.equal(root.get(Department_.departmentId), id),
-				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
-				)
+				 cb.equal(root.get(DepartmentEntity_.departmentId), id),
+				 cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale))
 		);
-		
-		TypedQuery<Tuple> query = em.createQuery(cq);
+
 		
 		try {
-			Tuple tuple = query.getSingleResult();
-			
-			DepartmentDTO department = this.objectToDTO(tuple, locale);
+			DepartmentDTO department = em.createQuery(cq).getSingleResult();
 			return Optional.ofNullable(department);
 		} 
 		catch(NoResultException nre) {
@@ -96,16 +93,16 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<DepartmentEntity> root = cq.from(DepartmentEntity.class);
-		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(Department_.attributes);
+		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(DepartmentEntity_.attributes);
 		
-		cq.multiselect(	root.get(Department_.departmentId).alias("departmentId"),
-						root.get(Department_.departmentCode).alias("departmentCode"),
+		cq.multiselect(	root.get(DepartmentEntity_.departmentId).alias("departmentId"),
+						root.get(DepartmentEntity_.departmentCode).alias("departmentCode"),
 						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
 						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
 		);
 		
 		cq.where(cb.and(
-				cb.equal(root.get(Department_.departmentCode), code),
+				cb.equal(root.get(DepartmentEntity_.departmentCode), code),
 				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
 				)
 		);
@@ -133,10 +130,10 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<DepartmentEntity> root = cq.from(DepartmentEntity.class);
-		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(Department_.attributes);
+		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(DepartmentEntity_.attributes);
 		
-		cq.multiselect(	root.get(Department_.departmentId).alias("departmentId"),
-						root.get(Department_.departmentCode).alias("departmentCode"),
+		cq.multiselect(	root.get(DepartmentEntity_.departmentId).alias("departmentId"),
+						root.get(DepartmentEntity_.departmentCode).alias("departmentCode"),
 						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
 						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
 		);
@@ -170,17 +167,17 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<ProductEntity> root = cq.from(ProductEntity.class);
-		Join<ProductEntity, DepartmentEntity> dept = root.join(Product_.department);
-		Join<DepartmentEntity, DepartmentAttribute> attribute = dept.join(Department_.attributes);
+		Join<ProductEntity, DepartmentEntity> dept = root.join(ProductEntity_.department);
+		Join<DepartmentEntity, DepartmentAttribute> attribute = dept.join(DepartmentEntity_.attributes);
 		
-		cq.multiselect(	dept.get(Department_.departmentId).alias("departmentId"),
-						dept.get(Department_.departmentCode).alias("departmentCode"),
+		cq.multiselect(	dept.get(DepartmentEntity_.departmentId).alias("departmentId"),
+						dept.get(DepartmentEntity_.departmentCode).alias("departmentCode"),
 						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
 						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
 		);
 		
 		cq.where(cb.and(
-				cb.equal(root.get(Product_.productUPC), productCode),
+				cb.equal(root.get(ProductEntity_.productUPC), productCode),
 				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
 				)
 		);
@@ -229,8 +226,8 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 
 	@Override
 	public DepartmentDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
 		return null;
+		
 	}
 
 	@Override
