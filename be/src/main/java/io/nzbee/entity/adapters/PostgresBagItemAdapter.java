@@ -15,7 +15,7 @@ import io.nzbee.entity.bag.item.IBagItemMapper;
 import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
-import io.nzbee.entity.role.customer.Customer;
+import io.nzbee.entity.role.customer.CustomerEntity;
 
 @Service
 public class PostgresBagItemAdapter implements IBagItemPortService {
@@ -49,7 +49,7 @@ public class PostgresBagItemAdapter implements IBagItemPortService {
 	@Override
 	public void delete(BagItem domainObject) {
 		LOGGER.debug("call PostgresBagItemAdapter.delete with parameters {}", domainObject.getProduct().getProductUPC());
-		Optional<PersonEntity> op = personService.findByUsernameAndRole(domainObject.getBag().getCustomer().getUserName(), Customer.class);
+		Optional<PersonEntity> op = personService.findByUsernameAndRole(domainObject.getBag().getCustomer().getUserName(), CustomerEntity.class);
 		BagEntity b = op.get().getBag();
 		Optional<io.nzbee.entity.bag.item.BagItemEntity> obi = b.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(domainObject.getProduct().getProductUPC())).findAny();
 		io.nzbee.entity.bag.item.BagItemEntity bi = obi.get();

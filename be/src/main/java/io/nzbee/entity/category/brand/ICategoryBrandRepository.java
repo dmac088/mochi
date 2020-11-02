@@ -1,8 +1,12 @@
 package io.nzbee.entity.category.brand;
 
-public interface ICategoryBrandRepository {
+import java.util.Set;
 
-	
+import org.springframework.data.repository.CrudRepository;
+
+public interface ICategoryBrandRepository extends CrudRepository<CategoryBrandEntity, Long> {
+
+	Set<CategoryBrandEntity> findAll();
 	
 	
 }

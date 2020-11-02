@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -14,11 +12,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	//private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
+	
+	@Autowired
+	private ICategoryBrandRepository categoryBrandRepository;
 	
 	@Override
 	public List<CategoryBrandEntity> findAllByBrandCode(String locale, String currency, String brandCode) {
@@ -28,8 +29,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	
 	@Override
 	public Optional<CategoryBrandEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryBrandRepository.findById(id);
 	}
 
 	@Override
@@ -40,8 +40,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
 	@Override
 	public Set<CategoryBrandEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return categoryBrandRepository.findAll();
 	}
 
 	@Override
@@ -49,47 +48,6 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-//	@Override
-//	public List<CategoryBrand> findAllByBrandCode(String locale, String currency, String brandCode) {
-//		LOGGER.debug("call CategoryBrandDaoImpl.findAllByBrandCode parameters : {}, {}, {}", locale, currency, brandCode);
-//		
-//		CriteriaBuilder cb = em.getCriteriaBuilder();
-//		
-//		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
-//		
-//		Root<CategoryBrand> root = cq.from(CategoryBrand.class);
-//		
-//		Join<CategoryBrand, CategoryAttributeEntity> attribute = root.join(Category_.attributes);
-//		Join<CategoryBrand, BrandEntity> products = root.join(CategoryBrand_.brands);
-//		Join<CategoryBrand, CategoryType> type = root.join(Category_.categoryType);
-//		
-//		cq.multiselect(	root.get(CategoryBrand_.categoryId).alias("categoryId"),
-//						root.get(CategoryBrand_.categoryCode).alias("categoryCode"),
-//						attribute.get(CategoryAttribute_.categoryAttributeId).alias("categoryAttributeId"),
-//						attribute.get(CategoryAttribute_.categoryDesc).alias("categoryDesc"),
-//						type.get(CategoryType_.categoryTypeCode).alias("categoryTypeCode"),
-//						type.get(CategoryType_.categoryTypeDesc).alias("categoryTypeDesc")
-//		);
-//		
-//		List<Predicate> conditions = new ArrayList<Predicate>();
-//	
-//		if(!(brandCode == null)) {
-//			
-//			cq.where(cb.and(
-//					cb.equal(products.get(Brand_.brandCode), brandCode),
-//					cb.equal(attribute.get(CategoryAttribute_.lclCd), locale)
-//					)
-//			);
-//			
-//			conditions.add(cb.equal(products.get(Brand_.brandCode), brandCode));
-//		}
-//		
-//		TypedQuery<Tuple> query = em.createQuery(cq);
-//		List<Tuple> tuples = query.getResultList();
-//		
-//		return tuples.stream().map(t -> this.objectToEntity(t, locale, currency)).collect(Collectors.toList());
-//	}
 	
 	@Override
 	public Optional<CategoryBrandDTO> findById(String locale, Long id) {

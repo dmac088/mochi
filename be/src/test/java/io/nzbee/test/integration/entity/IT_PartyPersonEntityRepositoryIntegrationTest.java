@@ -28,7 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
-import io.nzbee.entity.role.customer.Customer;
+import io.nzbee.entity.role.customer.CustomerEntity;
 import io.nzbee.test.integration.beans.PartyEntityBeanFactory;
 
 
@@ -93,7 +93,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
     public void whenFindByUsernameAndRole_thenReturnParty() {
 		
 		// when
-	    Optional<PersonEntity> found = personService.findByUsernameAndRole("mackdad", Customer.class);
+	    Optional<PersonEntity> found = personService.findByUsernameAndRole("mackdad", CustomerEntity.class);
      
 	    // then
 	    assertFound(found);
@@ -113,7 +113,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 	    .isEqualTo("mackdad");
 	    assertThat(((PersonEntity) found.get()).getUser().getUserRoles().stream().findFirst().get().getName())
 	    .isEqualTo("Customer");
-	    assertThat(((Customer)(((PersonEntity) found.get()).getPartyRoles().stream().findFirst().get())).getCustomerNumber())
+	    assertThat(((CustomerEntity)(((PersonEntity) found.get()).getPartyRoles().stream().findFirst().get())).getCustomerNumber())
 	    .isEqualTo("9832145731");
 	    
     }

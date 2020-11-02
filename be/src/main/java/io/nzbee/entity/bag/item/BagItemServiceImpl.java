@@ -17,8 +17,7 @@ public class BagItemServiceImpl implements IBagItemService {
 	
 	@Override
 	public Set<BagItemEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return bagItemRepository.findAll();
 	}
 
 	@Override
