@@ -22,7 +22,7 @@ public class PersonEntity extends Party  implements Serializable {
 	private String givenName;
 	
 	@Column(name="psn_fml_nm")
-	private String FamilyName;
+	private String familyName;
 	
 	@Column(name="enb")
 	private boolean enabled;
@@ -36,11 +36,11 @@ public class PersonEntity extends Party  implements Serializable {
 	}
 
 	public String getFamilyName() {
-		return FamilyName;
+		return familyName;
 	}
 
 	public void setFamilyName(String familyName) {
-		FamilyName = familyName;
+		this.familyName = familyName;
 	}
 	
 	public boolean isEnabled() {

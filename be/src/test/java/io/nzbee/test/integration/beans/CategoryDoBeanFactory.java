@@ -17,12 +17,14 @@ public class CategoryDoBeanFactory {
 	
 	public final ProductCategory getProductCategoryDoBean() {
 		
+	
+		
 		ProductCategory category = 
 				new ProductCategory("TST01",
 									"test product category",
 									true,
 									new Long(2),
-									0,									
+									new Long(0),									
 									"FRT01",
 									new Long(10),
 									"en-GB");
@@ -36,7 +38,6 @@ public class CategoryDoBeanFactory {
 									"test brand category",
 									false,
 									new Long(0),
-									0,
 									"en-GB");
 		
 	}

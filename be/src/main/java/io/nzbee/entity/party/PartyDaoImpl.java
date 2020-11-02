@@ -77,12 +77,6 @@ public class PartyDaoImpl implements IPartyDao {
 	}
 
 	@Override
-	public Set<Party> findAll(List<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void save(Party t) {
 		// TODO Auto-generated method stub
 		
@@ -98,5 +92,11 @@ public class PartyDaoImpl implements IPartyDao {
 	public void delete(Party t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Set<Party> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

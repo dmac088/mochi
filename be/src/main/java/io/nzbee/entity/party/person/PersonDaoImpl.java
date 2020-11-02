@@ -112,12 +112,6 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 
 	@Override
-	public Set<PersonEntity> findAll(List<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void save(PersonEntity t) {
 		em.persist(t);
 	}
@@ -132,6 +126,12 @@ public class PersonDaoImpl implements IPersonDao {
 	public void delete(PersonEntity t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Set<PersonEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

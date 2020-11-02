@@ -70,9 +70,10 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Customer findByUsername(String userName) {
-		PersonEntity p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.CustomerEntity.class)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
-		return customerMapper.DTOToDo(p);
+//		CustomerDTO c = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.CustomerEntity.class)
+//				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
+//		return customerMapper.DTOToDo(c);
+		return null;
 	}
 
 	@Override
@@ -209,12 +210,12 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Customer getCustomer(String verificationToken) {
-		final VerificationToken token = tokenRepository.findByToken(verificationToken);
-        if (token != null) {
-            User u = token.getUser();
-            Optional<PersonEntity> p = personService.findByUsernameAndRole(u.getUsername(), io.nzbee.entity.role.customer.CustomerEntity.class);
-            return customerMapper.DTOToDo(p.get());
-        }
+//		final VerificationToken token = tokenRepository.findByToken(verificationToken);
+//        if (token != null) {
+//            User u = token.getUser();
+//            Optional<PersonEntity> p = personService.findByUsernameAndRole(u.getUsername(), io.nzbee.entity.role.customer.CustomerEntity.class);
+//            return customerMapper.DTOToDo(p.get());
+//        }
         return null;
 	}
 	

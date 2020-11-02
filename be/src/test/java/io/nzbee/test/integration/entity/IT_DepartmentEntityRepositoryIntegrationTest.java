@@ -24,6 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.Constants;
+import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
 
@@ -84,7 +85,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
-	    	DepartmentEntity found = departmentService.findById(Constants.localeENGB,
+		 	DepartmentDTO found = departmentService.findById(Constants.localeENGB,
 	    												  department.getId()).get();
 	     
 	        // then
@@ -95,7 +96,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByCode_thenReturnDepartment() {
 	    	
 	        // when
-	    	DepartmentEntity found = departmentService.findByCode(Constants.localeENGB,
+		 DepartmentDTO found = departmentService.findByCode(Constants.localeENGB,
 															"TST01").get();
 	     
 	        // then
@@ -106,19 +107,19 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByDesc_thenReturnDepartment() {
 	    	
 	        // when
-	    	DepartmentEntity found = departmentService.findByDesc(Constants.localeENGB,
+	    	DepartmentDTO found = departmentService.findByDesc(Constants.localeENGB,
 															"test department").get();
 	     
 	        // then
 	    	assertFound(found);
 	 }
 	
-	 private void assertFound(final DepartmentEntity found) {
+	 private void assertFound(final DepartmentDTO found) {
 	    	
 	    	assertThat(found.getDepartmentCode())
 	        .isEqualTo("TST01");
 	
-	    	assertThat(found.getDepartmentDescENGB())
+	    	assertThat(found.getDepartmentDesc())
 	        .isEqualTo("test department");
 	
 	 }

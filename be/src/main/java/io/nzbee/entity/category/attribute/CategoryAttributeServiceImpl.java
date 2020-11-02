@@ -1,6 +1,5 @@
 package io.nzbee.entity.category.attribute;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
@@ -115,9 +114,8 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 		return null;
 	}
 
-
 	@Override
-	public Set<CategoryAttributeEntity> findAll(List<String> codes) {
+	public Set<CategoryAttributeEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

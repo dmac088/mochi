@@ -146,4 +146,10 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
 
+	@Override
+	public Set<CategoryEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

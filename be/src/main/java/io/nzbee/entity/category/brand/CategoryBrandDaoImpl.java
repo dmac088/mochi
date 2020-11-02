@@ -44,12 +44,6 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public Set<CategoryBrandEntity> findAll(List<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
-	@Override
 	public Optional<CategoryBrandDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -116,6 +110,12 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
 	@Override
 	public CategoryBrandDTO objectToDTO(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<CategoryBrandEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

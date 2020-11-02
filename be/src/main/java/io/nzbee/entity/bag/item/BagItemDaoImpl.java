@@ -1,6 +1,5 @@
 package io.nzbee.entity.bag.item;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -25,7 +24,7 @@ public class BagItemDaoImpl implements IBagItemDao {
 	}
 
 	@Override
-	public Set<BagItemEntity> findAll(List<String> codes) {
+	public Set<BagItemEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

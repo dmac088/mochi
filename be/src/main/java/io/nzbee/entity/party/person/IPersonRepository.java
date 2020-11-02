@@ -9,16 +9,16 @@ public interface IPersonRepository extends CrudRepository<PersonEntity, Long> {
 
 	Optional<PersonEntity> findByPartyId(Long id);
 
-	@Query(	  " SELECT new io.nzbee.entity.party.person.CustomerDTO(a.partyId, "
-			+ "														a.firstName, "
-			+ "														a.lastName, "
-			+ "														u.userName, "
-			+ "														c.customerNumber,"
-			+ "														u.isEnabled) "
+	@Query(	  " SELECT new io.nzbee.entity.party.person.CustomerDTO(p.partyId, "
+			+ "														p.givenName, "
+			+ "														p.familyName, "
+			+ "														u.username, "
+			+ "														'1',"
+			+ "														u.enabled) "
 			+ " FROM PersonEntity p "
-			+ " JOIN UserEntity u "
-			+ " JOIN CustomerEntity c "
-			+ " WHERE p.personId = :id ")
+			+ " JOIN p.partyUser u "
+		//	+ " JOIN p.partyRoles c "
+			+ " WHERE p.partyId = :id ")
 	Optional<CustomerDTO> findDTOByPartyId(Long id);
 	
 }
