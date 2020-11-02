@@ -236,10 +236,10 @@ public class PostgresProductAdapter implements IProductPortService {
 
 		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
 					size, sort, selectedFacets, returnFacets).map(p -> {
-					Brand b = brandMapper.entityToDo(p.getBrand(), locale, currency);
-					Department d = departmentMapper.entityToDo(p.getDepartment(), locale);
-					ProductCategory pc = (ProductCategory) categoryMapper.entityToDo(p.getPrimaryCategory());
-					Product pDo = productMapper.entityToDo(p, b, d, pc);
+					Brand b = brandMapper.DTOToDo(p.getBrand(), locale, currency);
+					Department d = departmentMapper.DTOToDo(p.getDepartment(), locale);
+					ProductCategory pc = (ProductCategory) categoryMapper.DTOToDo(p.getPrimaryCategory());
+					Product pDo = productMapper.DTOToDo(p, b, d, pc);
 					return pDo;
 				});
 	}
@@ -280,10 +280,10 @@ public class PostgresProductAdapter implements IProductPortService {
 		io.nzbee.entity.product.department.DepartmentEntity de = pe.getDepartment();
 		io.nzbee.entity.category.CategoryEntity c = pe.getPrimaryCategory();
 
-		Brand bdo = brandMapper.entityToDo(be, pe.getLocale(), pe.getCurrency());
-		Department ddo = departmentMapper.entityToDo(de, pe.getLocale());
-		ProductCategory cdo = (ProductCategory) categoryMapper.entityToDo(c);
-		return productMapper.entityToDo(pe, bdo, ddo, cdo);
+		Brand bdo = brandMapper.DTOToDo(be, pe.getLocale(), pe.getCurrency());
+		Department ddo = departmentMapper.DTOToDo(de, pe.getLocale());
+		ProductCategory cdo = (ProductCategory) categoryMapper.DTOToDo(c);
+		return productMapper.DTOToDo(pe, bdo, ddo, cdo);
 	}
 
 	@Override

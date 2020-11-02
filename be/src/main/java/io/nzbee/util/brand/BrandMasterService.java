@@ -108,57 +108,57 @@ public class BrandMasterService {
 		return b;
 	}
 	
-	public void extractBrandMaster(Resource resource) {
-		logger.debug("called extractBrandMaster() ");
-		List<BrandMasterSchema> lpms = new ArrayList<BrandMasterSchema>();
-	    try {
-		    	List<BrandEntity> brandList = brandService.findAll(Constants.localeENGB)
-		    							  .stream().collect(Collectors.toList());
-		    	
-		    	brandList.stream().forEach(b -> {
-		    		System.out.println(((BrandEntity) b).getBrandCode());
-		    	});
-		    	
-		    	//create a map of brands (full list)
-		    	Map<String, BrandMasterSchema> map = brandList
-		    					.stream().collect(Collectors.toMap(b -> b.getBrandCode(), b -> new BrandMasterSchema()));
-		 
-		    	
-		    	brandList.addAll(brandService.findAll(Constants.localeZHHK)
-		    											.stream()
-										    			.map(p -> (BrandEntity) p)
-														.collect(Collectors.toList()));
-		    	
-		    	lpms.addAll(brandList.stream().map(b -> {
-		    		
-		    		BrandMasterSchema bms = map.get(b.getBrandCode());
-		    		
-		    		Optional<BrandEntity> bnd = brandService.findByCode(b.getLocale(),
-													          	b.getBrandCode()); 
-			    	
-				    bms.set_BRAND_CODE(bnd.get().getBrandCode());
-				    bms.set_BRAND_DESC_EN(bnd.get().getBrandDescENGB());
-				    bms.set_BRAND_DESC_HK(bnd.get().getBrandDescZHHK());
-			    	
-				    return bms;
-		    	}).collect(Collectors.toSet()));
-	    	
-		    	CsvMapper mapper = new CsvMapper(); 
-		    	CsvSchema schema = mapper.schemaFor(BrandMasterSchema.class)
-	        		.withHeader()
-	        		.withColumnSeparator('\t')
-	        		.withQuoteChar('"');
-	        
-		    	ObjectWriter myObjectWriter = mapper.writer(schema);
-		    	String ow = myObjectWriter.writeValueAsString(lpms);
-		    	PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
-		    	out.write(ow);
-		    	out.flush();
-		    	out.close();
-	        
-	    } catch (Exception e) {
-	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
-	    }
-	}
+//	public void extractBrandMaster(Resource resource) {
+//		logger.debug("called extractBrandMaster() ");
+//		List<BrandMasterSchema> lpms = new ArrayList<BrandMasterSchema>();
+//	    try {
+//		    	List<BrandEntity> brandList = brandService.findAll(Constants.localeENGB)
+//		    							  .stream().collect(Collectors.toList());
+//		    	
+//		    	brandList.stream().forEach(b -> {
+//		    		System.out.println(((BrandEntity) b).getBrandCode());
+//		    	});
+//		    	
+//		    	//create a map of brands (full list)
+//		    	Map<String, BrandMasterSchema> map = brandList
+//		    					.stream().collect(Collectors.toMap(b -> b.getBrandCode(), b -> new BrandMasterSchema()));
+//		 
+//		    	
+//		    	brandList.addAll(brandService.findAll(Constants.localeZHHK)
+//		    											.stream()
+//										    			.map(p -> (BrandEntity) p)
+//														.collect(Collectors.toList()));
+//		    	
+//		    	lpms.addAll(brandList.stream().map(b -> {
+//		    		
+//		    		BrandMasterSchema bms = map.get(b.getBrandCode());
+//		    		
+//		    		Optional<BrandEntity> bnd = brandService.findByCode(b.getLocale(),
+//													          	b.getBrandCode()); 
+//			    	
+//				    bms.set_BRAND_CODE(bnd.get().getBrandCode());
+//				    bms.set_BRAND_DESC_EN(bnd.get().getBrandDescENGB());
+//				    bms.set_BRAND_DESC_HK(bnd.get().getBrandDescZHHK());
+//			    	
+//				    return bms;
+//		    	}).collect(Collectors.toSet()));
+//	    	
+//		    	CsvMapper mapper = new CsvMapper(); 
+//		    	CsvSchema schema = mapper.schemaFor(BrandMasterSchema.class)
+//	        		.withHeader()
+//	        		.withColumnSeparator('\t')
+//	        		.withQuoteChar('"');
+//	        
+//		    	ObjectWriter myObjectWriter = mapper.writer(schema);
+//		    	String ow = myObjectWriter.writeValueAsString(lpms);
+//		    	PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
+//		    	out.write(ow);
+//		    	out.flush();
+//		    	out.close();
+//	        
+//	    } catch (Exception e) {
+//	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
+//	    }
+//	}
 	
 }

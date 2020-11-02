@@ -85,4 +85,22 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 		
 	}
 
+	@Override
+	public Set<CategoryProductEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryProductEntity> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryProductEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

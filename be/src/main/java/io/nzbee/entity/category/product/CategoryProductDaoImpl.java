@@ -197,51 +197,28 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		return null;
 	}
 
-	
-	
-//	@Override
-//	public CategoryProduct objectToEntity(Object[] o, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public CategoryProduct objectToEntity(Tuple t, String locale, String currency) {
-//		CategoryProduct cp = objectToEntity(t, locale);
-//		cp.setCurrency(currency);
-//		return cp;
-//	}
-//
-//	@Override
-//	public void merge(CategoryProduct t) {
-//		em.merge(t);
-//	}
-//
-//	@Override
-//	public CategoryProduct objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public CategoryProduct objectToEntity(Tuple t, String locale) {
-//		CategoryAttribute ca = new CategoryAttribute();
-//		ca.setCategoryDesc(t.get("categoryDesc").toString());
-//		ca.setLclCd(locale);
-//		
-//		CategoryType ct = new CategoryType();
-//		ct.setCategoryTypeCode(t.get("categoryTypeCode").toString());
-//		ct.setCategoryTypeDesc(t.get("categoryTypeDesc").toString());
-//		
-//		CategoryProduct cp = new CategoryProduct();
-//		cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
-//		cp.setCategoryCode(t.get("categoryCode").toString());
-//		cp.setCategoryLevel(Long.parseLong(t.get("categoryLevel").toString()));
-//		cp.setLocale(locale);
-//		cp.setCategoryAttribute(ca);
-//		cp.setCategoryType(ct);
-//		
-//		return cp;
-//	}
+	@Override
+	public Optional<CategoryProductEntity> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryProductEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<CategoryProductEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<CategoryProductEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

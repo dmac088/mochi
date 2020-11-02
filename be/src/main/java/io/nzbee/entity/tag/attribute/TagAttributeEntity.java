@@ -16,7 +16,7 @@ import io.nzbee.entity.tag.TagEntity;
 
 @Entity
 @Table(name = "tag_attr_lcl", schema = "mochi")
-public class TagAttribute {
+public class TagAttributeEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -82,10 +82,10 @@ public class TagAttribute {
 	    if (this == obj) {
 	        return true;
         }
-	    if (!(obj instanceof TagAttribute)) {
+	    if (!(obj instanceof TagAttributeEntity)) {
 	            return false;
 	    }
-	    TagAttribute that = (TagAttribute) obj;
+	    TagAttributeEntity that = (TagAttributeEntity) obj;
 	      EqualsBuilder eb = new EqualsBuilder();
 	      eb.append(this.getTag().getCode(), that.getTag().getCode());
 	      eb.append(this.getLclCd(), that.getLclCd());

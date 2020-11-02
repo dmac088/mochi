@@ -1,5 +1,6 @@
 package io.nzbee.entity.product.department;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -29,6 +30,9 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
+	@Autowired
+	private IDepartmentRepository departmentRepository;
+	
 	@Override
 	public Set<DepartmentDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
@@ -39,6 +43,11 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	public Set<DepartmentDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	@Override
+	public Optional<DepartmentEntity> findById(long id) {
+		return departmentRepository.findById(id);
 	}
 	
 	@Override
@@ -193,7 +202,6 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	@Override
 	public void save(DepartmentEntity t) {
 		em.persist(t);
-		em.flush();
 	}
 	
 	@Override
@@ -231,71 +239,22 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
 
-//	@Override
-//	public Department objectToEntity(Object[] o, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public Department objectToEntity(Tuple t, String locale, String currency) {
-//		Department departmentEntity = objectToEntity(t, locale);
-//		departmentEntity.setCurrency(currency);
-//		return departmentEntity;
-//	}
-//
-//	@Override
-//	public Department objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public Optional<DepartmentEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
-//	@Override
-//	public Department objectToEntity(Tuple t, String locale) {
-//		Department departmentEntity = new Department();
-//		DepartmentAttribute departmentAttribute = new DepartmentAttribute();
-//		
-//		departmentAttribute.setId(Long.parseLong(t.get("departmentAttributeId").toString()));
-//		departmentAttribute.setDepartment(departmentEntity);
-//		departmentAttribute.setDesc(t.get("departmentDesc").toString());
-//		departmentAttribute.setLclCd(locale);
-//		
-//		departmentEntity.setAttribute(departmentAttribute);
-//		departmentEntity.getAttributes().add(departmentAttribute);
-//		departmentEntity.setId(Long.parseLong(t.get("departmentId").toString()));
-//		departmentEntity.setDepartmentCode(t.get("departmentCode").toString());
-//		departmentEntity.setLocale(locale);
-//		
-//		return departmentEntity;
-//	}
-//
-//	@Override
-//	public DepartmentDTO objectToEntity(Tuple t, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public DepartmentDTO objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public DepartmentDTO objectToEntity(Tuple t, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public DepartmentDTO objectToDTO(Object[] o, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public Set<DepartmentEntity> findAll() {
+		return departmentRepository.findAll();
+	}
 
-	
+	@Override
+	public Set<DepartmentEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

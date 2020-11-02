@@ -16,7 +16,21 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	
 	@Autowired
 	private IBrandDao brandDao; 
+	
+	@Autowired
+	private IBrandRepository brandRepository;
 
+	@Override
+	public Set<BrandEntity> findAll() {
+		return brandRepository.findAll();
+	}
+
+	@Override
+	public Optional<BrandEntity> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}	
+	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandId}")
 	public Optional<BrandDTO> findById(String locale, Long brandId) {

@@ -16,7 +16,7 @@ public class TagFacetMapper implements IFacetMapper<Tag> {
 		ef.setDesc(tag.getTagDesc());
 		ef.setHierarchical(true);
 		ef.setValue(tag.getTagCode());
-		ef.setCount(tag.getCount());
+		ef.setCount(tag.getCount().intValue());
 		return ef;
 	}
 

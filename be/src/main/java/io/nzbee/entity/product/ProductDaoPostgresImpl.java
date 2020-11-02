@@ -865,6 +865,24 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return null;
 	}
 
+	@Override
+	public Optional<ProductEntity> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<ProductEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<ProductEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 }

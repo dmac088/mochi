@@ -2,23 +2,16 @@ package io.nzbee.util.product;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
@@ -177,15 +170,15 @@ public class ProductMasterService {
 		
 		Optional<ProductEntity> op = productService.findByCode(upcCode);
 		
-		Optional<BrandEntity> ob = brandService.findByCode(locale, brandCode);
+		Optional<BrandEntity> ob = brandService.findByCode(brandCode);
 		
-		Optional<CategoryEntity> oc = categoryService.findByCode(locale, categoryCode);
+		Optional<CategoryEntity> oc = categoryService.findByCode(categoryCode);
 		
-		Optional<DepartmentEntity> od = departmentService.findByCode(locale, templateCode);
+		Optional<DepartmentEntity> od = departmentService.findByCode(templateCode);
 		
 		Optional<ProductStatusEntity> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
 		
-		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
+		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(upcCode);
 		
 		ProductAttributeEntity pa = (opa.isPresent()) 
 		? opa.get()
@@ -268,70 +261,70 @@ public class ProductMasterService {
 	private void addTagToProduct(String locale, String tagCode, ProductEntity p) {
 		if (tagCode == null) return;
 		if(tagCode.length() == 5) {
-			TagEntity t = tagService.findByCode(locale, tagCode.toUpperCase()).get();
+			TagEntity t = tagService.findByCode(tagCode.toUpperCase()).get();
 			p.addTag(t);
 		}
 	}
 	
-	public void extractProductMaster(Resource resource) {
-		logger.debug("called extractProductMaster() ");
-		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
-	    try {
-	    
-	    	List<ProductBasicEntity> productsList = productService.findAllByType(Constants.localeENGB,
-	    														  		  Constants.currencyHKD,
-	    														  		  ProductBasicEntity.class)
-	    							  .stream()
-	    							  .map(p -> (ProductBasicEntity) p)
-	    							  .collect(Collectors.toList());
-	    	
-	    	//create a map of products (full list)
-	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((ProductEntity) p).getProductUPC(), p -> new ProductMasterSchema()));
-	    	
-	    	lpms.addAll(productsList.stream().map(p -> {
-	    		
-		    	ProductMasterSchema pms = map.get(p.getProductUPC());
-		    	
-		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
-		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
-		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus().getCode());
-		    	pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDescENGB());
-        		pms.set_PRODUCT_DESCRIPTION_HK(p.getProductDescZHHK()); 		
-		        pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getCurrentRetailPriceHKD());
-		        pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getCurrentMarkdownPriceHKD());	
-		        pms.set_PRODUCT_RETAIL_PRICE_USD(p.getCurrentRetailPriceUSD()); 
-				pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getCurrentMarkdownPriceUSD());
-		    	pms.set_BRAND_CODE(p.getBrand().getBrandCode());
-		    	pms.set_BRAND_DESCRIPTION_EN(p.getBrand().getBrandDescENGB());
-		    	pms.set_BRAND_DESCRIPTION_HK(p.getBrand().getBrandDescZHHK());
-		    	pms.set_PRIMARY_CATEGORY_CODE(p.getPrimaryCategory().getCategoryCode());
-		    	pms.set_PRIMARY_CATEGORY_DESC_EN(p.getPrimaryCategory().getCategoryDescENGB());
-		    	pms.set_PRODUCT_IMAGE_EN(p.getProductImageENGB());
-		    	pms.set_PRIMARY_CATEGORY_DESC_HK(p.getPrimaryCategory().getCategoryDescZHHK());
-		    	pms.set_PRODUCT_IMAGE_HK(p.getProductImageZHHK());
-		    	pms.set_PRODUCT_TEMPLATE_CODE(p.getDepartment().getDepartmentCode());
-		    	pms.set_PRODUCT_TEMPLATE_DESC_EN(p.getDepartment().getDepartmentDescENGB());
-		    	pms.set_PRODUCT_TEMPLATE_DESC_HK(p.getDepartment().getDepartmentDescZHHK());
-		    	
-		    	return pms;
-	    	}).collect(Collectors.toSet()));
-	    	
-	    	CsvMapper mapper = new CsvMapper(); 
-	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class)
-	        		.withHeader()
-	        		.withColumnSeparator('\t')
-	        		.withQuoteChar('"');
-	        
-	        ObjectWriter myObjectWriter = mapper.writer(schema);
-	        String ow = myObjectWriter.writeValueAsString(lpms);
-	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
-	        out.write(ow);
-	        out.flush();
-	        out.close();
-	        
-	    } catch (Exception e) {
-	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
-	    }
-	}
+//	public void extractProductMaster(Resource resource) {
+//		logger.debug("called extractProductMaster() ");
+//		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
+//	    try {
+//	    
+//	    	List<ProductBasicEntity> productsList = productService.findAllByType(Constants.localeENGB,
+//	    														  		  Constants.currencyHKD,
+//	    														  		  ProductBasicEntity.class)
+//	    							  .stream()
+//	    							  .map(p -> (ProductBasicEntity) p)
+//	    							  .collect(Collectors.toList());
+//	    	
+//	    	//create a map of products (full list)
+//	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((ProductEntity) p).getProductUPC(), p -> new ProductMasterSchema()));
+//	    	
+//	    	lpms.addAll(productsList.stream().map(p -> {
+//	    		
+//		    	ProductMasterSchema pms = map.get(p.getProductUPC());
+//		    	
+//		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
+//		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
+//		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus().getCode());
+//		    	pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDescENGB());
+//        		pms.set_PRODUCT_DESCRIPTION_HK(p.getProductDescZHHK()); 		
+//		        pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getCurrentRetailPriceHKD());
+//		        pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getCurrentMarkdownPriceHKD());	
+//		        pms.set_PRODUCT_RETAIL_PRICE_USD(p.getCurrentRetailPriceUSD()); 
+//				pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getCurrentMarkdownPriceUSD());
+//		    	pms.set_BRAND_CODE(p.getBrand().getBrandCode());
+//		    	pms.set_BRAND_DESCRIPTION_EN(p.getBrand().getBrandDescENGB());
+//		    	pms.set_BRAND_DESCRIPTION_HK(p.getBrand().getBrandDescZHHK());
+//		    	pms.set_PRIMARY_CATEGORY_CODE(p.getPrimaryCategory().getCategoryCode());
+//		    	pms.set_PRIMARY_CATEGORY_DESC_EN(p.getPrimaryCategory().getCategoryDescENGB());
+//		    	pms.set_PRODUCT_IMAGE_EN(p.getProductImageENGB());
+//		    	pms.set_PRIMARY_CATEGORY_DESC_HK(p.getPrimaryCategory().getCategoryDescZHHK());
+//		    	pms.set_PRODUCT_IMAGE_HK(p.getProductImageZHHK());
+//		    	pms.set_PRODUCT_TEMPLATE_CODE(p.getDepartment().getDepartmentCode());
+//		    	pms.set_PRODUCT_TEMPLATE_DESC_EN(p.getDepartment().getDepartmentDescENGB());
+//		    	pms.set_PRODUCT_TEMPLATE_DESC_HK(p.getDepartment().getDepartmentDescZHHK());
+//		    	
+//		    	return pms;
+//	    	}).collect(Collectors.toSet()));
+//	    	
+//	    	CsvMapper mapper = new CsvMapper(); 
+//	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class)
+//	        		.withHeader()
+//	        		.withColumnSeparator('\t')
+//	        		.withQuoteChar('"');
+//	        
+//	        ObjectWriter myObjectWriter = mapper.writer(schema);
+//	        String ow = myObjectWriter.writeValueAsString(lpms);
+//	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
+//	        out.write(ow);
+//	        out.flush();
+//	        out.close();
+//	        
+//	    } catch (Exception e) {
+//	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
+//	    }
+//	}
 	
 }

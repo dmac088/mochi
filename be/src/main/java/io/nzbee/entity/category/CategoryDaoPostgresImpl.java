@@ -874,6 +874,20 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 
 
+	@Override
+	public Optional<CategoryEntity> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public Set<CategoryEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
 
 	
 

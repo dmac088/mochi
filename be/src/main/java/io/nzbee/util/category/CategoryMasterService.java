@@ -2,22 +2,15 @@ package io.nzbee.util.category;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.transaction.Transactional;
-import org.springframework.core.io.Resource;
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.MappingIterator;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
@@ -140,14 +133,13 @@ public class CategoryMasterService {
 		return cp;
 	}
 	
-	private CategoryBrandEntity mapToBrandCategory(String categoryCode,
-											 String categoryDesc,
-											 String locale
+	private CategoryBrandEntity mapToBrandCategory(	String categoryCode,
+											 		String categoryDesc,
+											 		String locale
 											) {
 		logger.debug("called mapToBrandCategory() ");
 		
-		Optional<CategoryEntity> oc = 
-				categoryService.findByCode(locale, categoryCode);
+		Optional<CategoryEntity> oc = categoryService.findByCode(categoryCode);
 		
 		CategoryBrandEntity cb = (oc.isPresent()) 
 				 ? (CategoryBrandEntity) oc.get()
@@ -168,50 +160,50 @@ public class CategoryMasterService {
 		return cb;
 	}
 	
-	public void extractCategoryMaster(Resource resource) {
-		logger.debug("called extractCategoryMaster() ");
-		List<CategoryMasterSchema> lpms = new ArrayList<CategoryMasterSchema>();
-	    try {
-		    	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>(categoryService.findAll());
-		    	
-		    	//create a map of categories (full list)
-		    	Map<String, CategoryMasterSchema> map = categoryList
-		    												.stream().collect(Collectors.toMap(c -> c.getCategoryCode(), c -> new CategoryMasterSchema()));
-		 
-		    	lpms.addAll(categoryList.stream().map(c -> {
-		    		
-		    		CategoryMasterSchema cms = map.get(c.getCategoryCode());
-		    		
-				    cms.set_CATEGORY_CODE(c.getCategoryCode());
-				    cms.set_CATEGORY_TYPE(c.getCategoryType().getCategoryTypeCode());
-			    
-				    if(c.getCategoryType().getCategoryTypeDesc().equals(CategoryProductEntity.class.getSimpleName().toLowerCase())) {
-				    	cms.set_PARENT_CATEGORY_CODE(((CategoryProductEntity) c).getCategoryParentCode());
-				    	cms.set_CATEGORY_LEVEL(((CategoryProductEntity) c).getCategoryLevel().toString());
-				    }
-			    	
-				    cms.set_CATEGORY_DESC_EN(c.getCategoryDescENGB());
-				    cms.set_CATEGORY_DESC_HK(c.getCategoryDescZHHK());
-			    	
-				    return cms;
-		    	}).collect(Collectors.toSet()));
-	    	
-		    	CsvMapper mapper = new CsvMapper(); 
-		    	CsvSchema schema = mapper.schemaFor(CategoryMasterSchema.class)
-	        		.withHeader()
-	        		.withColumnSeparator('\t')
-	        		.withQuoteChar('"');
-	        
-		        ObjectWriter myObjectWriter = mapper.writer(schema);
-		        String ow = myObjectWriter.writeValueAsString(lpms);
-		        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
-		        out.write(ow);
-		        out.flush();
-		        out.close();
-	        
-	    } catch (Exception e) {
-	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
-	    }
-	}
+//	public void extractCategoryMaster(Resource resource) {
+//		logger.debug("called extractCategoryMaster() ");
+//		List<CategoryMasterSchema> lpms = new ArrayList<CategoryMasterSchema>();
+//	    try {
+//		    	List<CategoryEntity> categoryList = new ArrayList<CategoryEntity>(categoryService.findAll());
+//		    	
+//		    	//create a map of categories (full list)
+//		    	Map<String, CategoryMasterSchema> map = categoryList
+//		    												.stream().collect(Collectors.toMap(c -> c.getCategoryCode(), c -> new CategoryMasterSchema()));
+//		 
+//		    	lpms.addAll(categoryList.stream().map(c -> {
+//		    		
+//		    		CategoryMasterSchema cms = map.get(c.getCategoryCode());
+//		    		
+//				    cms.set_CATEGORY_CODE(c.getCategoryCode());
+//				    cms.set_CATEGORY_TYPE(c.getCategoryType().getCategoryTypeCode());
+//			    
+//				    if(c.getCategoryType().getCategoryTypeDesc().equals(CategoryProductEntity.class.getSimpleName().toLowerCase())) {
+//				    	cms.set_PARENT_CATEGORY_CODE(((CategoryProductEntity) c).getCategoryParentCode());
+//				    	cms.set_CATEGORY_LEVEL(((CategoryProductEntity) c).getCategoryLevel().toString());
+//				    }
+//			    	
+//				    cms.set_CATEGORY_DESC_EN(c.getCategoryDescENGB());
+//				    cms.set_CATEGORY_DESC_HK(c.getCategoryDescZHHK());
+//			    	
+//				    return cms;
+//		    	}).collect(Collectors.toSet()));
+//	    	
+//		    	CsvMapper mapper = new CsvMapper(); 
+//		    	CsvSchema schema = mapper.schemaFor(CategoryMasterSchema.class)
+//	        		.withHeader()
+//	        		.withColumnSeparator('\t')
+//	        		.withQuoteChar('"');
+//	        
+//		        ObjectWriter myObjectWriter = mapper.writer(schema);
+//		        String ow = myObjectWriter.writeValueAsString(lpms);
+//		        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
+//		        out.write(ow);
+//		        out.flush();
+//		        out.close();
+//	        
+//	    } catch (Exception e) {
+//	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
+//	    }
+//	}
 	
 }

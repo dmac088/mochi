@@ -13,6 +13,7 @@ import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
@@ -50,7 +51,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Transactional(readOnly = true)
 	public Set<Category> findAll(String locale, Set<String> codes) {
 		return categoryService.findAll(locale, codes)
-				.stream().map(c -> (Category) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (Category) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -58,7 +59,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = ", locale, currency, categoryCode, brandCodes, tagCodes, maxPrice);
 		return categoryService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice)
-				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -66,7 +67,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Category findByCode(String locale, String code) {
 		io.nzbee.entity.category.CategoryDTO cp = categoryService.findByCode(locale, code)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
-		return categoryMapper.entityToDo(cp);
+		return categoryMapper.DTOToDo(cp);
 	}	
 	
 	@Override
@@ -74,14 +75,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public Category findByDesc(String locale, String desc) {
 		io.nzbee.entity.category.CategoryDTO cp = categoryService.findByDesc(locale, desc)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
-		return categoryMapper.entityToDo(cp);
+		return categoryMapper.DTOToDo(cp);
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Set<ProductCategory> findAllByProductCode(String locale, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, productCode)
-				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -89,7 +90,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	public ProductCategory findPrimaryByProductCode(String locale, String productCode) {
 		CategoryProductDTO cp = categoryProductService.findPrimaryByProductCode(locale, productCode)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
-		return (ProductCategory) categoryMapper.entityToDo(cp);		
+		return (ProductCategory) categoryMapper.DTOToDo(cp);		
 	}
 
 	@Override
@@ -108,21 +109,21 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Transactional(readOnly = true)
 	public Set<Category> findAll(String locale) {
 		return categoryService.findAll(locale)
-				.stream().map(c -> categoryMapper.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Set<ProductCategory> findAllProductCategories(String locale) {
 		return categoryService.findAll(locale, CategoryProductEntity.class)
-				.stream().map(c -> (ProductCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Set<BrandCategory> findAllBrandCategories(String locale) {
 		return categoryService.findAll(locale, CategoryBrandEntity.class)
-				.stream().map(c -> (BrandCategory) categoryMapper.entityToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (BrandCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -160,9 +161,8 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		
 		if(domainObject instanceof BrandCategory) {			
 			
-			Optional<io.nzbee.entity.category.CategoryDTO> oc = 
-					categoryService.findByCode(domainObject.getLocale(), 
-											   domainObject.getCategoryCode());
+			Optional<CategoryEntity> oc = 
+					categoryService.findByCode(domainObject.getCategoryCode());
 			
 			CategoryBrandEntity cb = (oc.isPresent()) 
 					 ? (CategoryBrandEntity) oc.get()

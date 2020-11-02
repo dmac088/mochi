@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.exceptions.brand.BrandNotFoundException;
 
@@ -21,7 +22,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale) {
 		return brandService.findAll(locale)
-				.stream().map(b -> this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> this.DTOToDo(b)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -29,7 +30,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	public Brand findByCode(String locale, String code) {
 		io.nzbee.entity.brand.BrandDTO b = brandService.findByCode(locale, code)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
-		return entityToDo(b);
+		return DTOToDo(b);
 	}
 	
 	@Override
@@ -37,7 +38,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	public Brand findByProductCode(String locale, String productCode) {
 		io.nzbee.entity.brand.BrandDTO b = brandService.findByProductCode(locale, productCode)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product code " + productCode));
-		return entityToDo(b);
+		return DTOToDo(b);
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	public Brand findByDesc(String locale, String desc) {
 		io.nzbee.entity.brand.BrandDTO b = brandService.findByDesc(locale, desc)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product desc " + desc));
-		return entityToDo(b);
+		return DTOToDo(b);
 	}
 
 	@Override
@@ -58,21 +59,21 @@ public class PostgresBrandAdapter implements IBrandPortService {
 									categoryCodes,
 									tagCodes,
 				 					maxPrice)
-				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toSet());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, String category) {
 		return brandService.findAll(locale, category)
-				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toSet());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public Set<Brand> findAll(String locale, Set<String> codes) {
 		return brandService.findAll(locale, codes)
-				.stream().map(b -> (Brand) this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -108,12 +109,11 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		brandService.save(b);		
 	}
 	
-	private Brand entityToDo(io.nzbee.entity.brand.BrandDTO e) {
+	private Brand DTOToDo(BrandDTO dto) {
 		return	new Brand(
-					 e.getBrandCode(),
-					 e.getBrandDesc(),
-					 0,//e.getCount(),
-					 e.getLocale()
+					 dto.getBrandCode(),
+					 dto.getBrandDesc(),
+					 dto.getLocale()
 					);
 	}
 	

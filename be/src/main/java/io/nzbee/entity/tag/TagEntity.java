@@ -29,7 +29,7 @@ import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.tag.attribute.TagAttribute;
+import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 import io.nzbee.search.ISearchDimension;
 
 @Entity
@@ -48,7 +48,7 @@ import io.nzbee.search.ISearchDimension;
 	                        @FieldResult(name = "tagCode", 			column = "tag_cd")
 	                    }),
 	            @EntityResult(
-	                    entityClass = TagAttribute.class,
+	                    entityClass = TagAttributeEntity.class,
 	                    fields = {
 	                        @FieldResult(name = "tagAttributeId", 	column = "tag_lcl_id"),
 	                        @FieldResult(name = "tagDesc", 			column = "tag_desc"),
@@ -73,7 +73,7 @@ public class TagEntity implements ISearchDimension {
 
 	@OneToMany(mappedBy="tag",
 			   cascade = CascadeType.ALL)
-	private Set<TagAttribute> attributes = new HashSet<TagAttribute>();
+	private Set<TagAttributeEntity> attributes = new HashSet<TagAttributeEntity>();
 	
 	@Transient
 	private String locale;
@@ -82,7 +82,7 @@ public class TagEntity implements ISearchDimension {
 	private String currency;
 	
 	@Transient 
-	private TagAttribute tagAttribute;
+	private TagAttributeEntity tagAttribute;
 	
 	@Transient
 	private Long objectCount;
@@ -109,11 +109,11 @@ public class TagEntity implements ISearchDimension {
 		this.tagCode = tagCode;
 	}
 	
-	public TagAttribute getTagAttribute() {
+	public TagAttributeEntity getTagAttribute() {
 		return tagAttribute;
 	}
 
-	public void setTagAttribute(TagAttribute attribute) {
+	public void setTagAttribute(TagAttributeEntity attribute) {
 		this.tagAttribute = attribute;
 	}
 
@@ -121,11 +121,11 @@ public class TagEntity implements ISearchDimension {
 		return products;
 	}
 
-	public Set<TagAttribute> getAttributes() {
+	public Set<TagAttributeEntity> getAttributes() {
 		return attributes;
 	}
 	
-	public void setAttributes(Set<TagAttribute> attributes) {
+	public void setAttributes(Set<TagAttributeEntity> attributes) {
 		this.attributes = attributes;
 	}
 	
@@ -156,7 +156,7 @@ public class TagEntity implements ISearchDimension {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getTagDescENGB() {
-		Optional<TagAttribute> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst();
+		Optional<TagAttributeEntity> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst();
 		return (ota.isPresent()) 
 				? ota.get().getTagDesc()
 				: "Empty"; 
@@ -165,7 +165,7 @@ public class TagEntity implements ISearchDimension {
 	@Transient
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getTagDescZHHK() {
-		Optional<TagAttribute> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst();
+		Optional<TagAttributeEntity> ota = this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst();
 		return (ota.isPresent()) 
 				? ota.get().getTagDesc()
 				: "Empty"; 
@@ -181,12 +181,12 @@ public class TagEntity implements ISearchDimension {
 		product.removeTag(this);
 	}
 	
-	public void addTagAttribute(TagAttribute tagAttribute) {
+	public void addTagAttribute(TagAttributeEntity tagAttribute) {
 		this.getAttributes().add(tagAttribute);
 		tagAttribute.setTag(this);
 	}
 	
-	public void removeTagAttribute(TagAttribute tagAttribute) {
+	public void removeTagAttribute(TagAttributeEntity tagAttribute) {
 		this.getAttributes().remove(tagAttribute);
 		tagAttribute.setTag(null);
 	}

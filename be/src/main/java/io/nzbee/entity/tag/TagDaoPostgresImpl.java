@@ -35,6 +35,25 @@ public class TagDaoPostgresImpl implements ITagDao {
 	private EntityManager em;
 	
 	@Override
+	public Optional<TagEntity> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<TagEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<TagEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
 	public Optional<TagDTO> findById(String locale, Long id) {
 		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, id);
 		
@@ -403,52 +422,5 @@ public class TagDaoPostgresImpl implements ITagDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-//	@Override
-//	public TagEntity objectToEntity(Object[] o, String locale, String currency) {
-//		TagEntity tagEntity = objectToEntity(o,locale);
-//		tagEntity.setCurrency(currency);
-//		return tagEntity;
-//	}
-//
-//	@Override
-//	public TagEntity objectToEntity(Tuple t, String locale, String currency) {
-//		TagEntity tagEntity = objectToEntity(t,locale);
-//		tagEntity.setCurrency(currency);
-//		return tagEntity;
-//	}
-//	
-//	@Override
-//	public TagEntity objectToEntity(Object[] o, String locale) {
-//		TagEntity tag = (TagEntity) o[0];
-//		
-//		tag.setTagAttribute(((TagAttribute) o[1]));
-//		
-//		tag.setObjectCount(((BigInteger)o[2]).intValue());
-//		
-//		tag.setLocale(locale);
-//		
-//		return tag;
-//	}
-//
-//	@Override
-//	public TagEntity objectToEntity(Tuple t, String locale) {
-//		TagEntity tagEntity = new TagEntity();
-//		TagAttribute tagAttribute = new TagAttribute();
-//				
-//		tagAttribute.setId(Long.parseLong(t.get("tagAttributeId").toString()));
-//		tagAttribute.setTag(tagEntity);
-//		tagAttribute.setTagDesc(t.get("tagDesc").toString());
-//		tagAttribute.setLclCd(locale);
-//				
-//		tagEntity.addTagAttribute(tagAttribute);
-//		tagEntity.setTagAttribute(tagAttribute);
-//		tagEntity.setTagId(Long.parseLong(t.get("tagId").toString()));
-//		tagEntity.setTagCode(t.get("tagCode").toString());
-//		
-//		tagEntity.setLocale(locale);
-//		
-//		return tagEntity;
-//	}
 
 }

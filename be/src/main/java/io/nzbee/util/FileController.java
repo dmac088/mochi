@@ -105,7 +105,7 @@ public class FileController {
         }
         
         //write the product master data to file
-        productMasterService.extractProductMaster(resource);
+       //productMasterService.extractProductMaster(resource);
         
         return ResponseEntity.ok()
                .contentType(MediaType.parseMediaType(contentType))
@@ -165,7 +165,7 @@ public class FileController {
         }
         
         //write the product master data to file
-        categoryMasterService.extractCategoryMaster(resource);
+        //categoryMasterService.extractCategoryMaster(resource);
         
         return ResponseEntity.ok()
                .contentType(MediaType.parseMediaType(contentType))
@@ -225,7 +225,7 @@ public class FileController {
         }
         
         //write the brand master data to file
-        brandMasterService.extractBrandMaster(resource);
+        //brandMasterService.extractBrandMaster(resource);
         
         return ResponseEntity.ok()
                .contentType(MediaType.parseMediaType(contentType))
