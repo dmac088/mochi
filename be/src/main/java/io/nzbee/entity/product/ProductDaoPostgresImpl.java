@@ -42,6 +42,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
+	@Override
+	public Set<ProductEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	@Override
 	@Caching(
@@ -80,7 +85,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 	
 	@Override
-	public <T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls) {
+	public <T> Set<ProductDTO> findAllByType(String locale, String currency, Class<T> cls) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAllByType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
@@ -109,10 +114,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
 		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
-		
-		return results.stream().map(p -> this.objectToDTO(p, locale, currency)).collect(Collectors.toList());
+		return new HashSet<ProductDTO>(query.getResultList());
 	}
 	
 	
@@ -148,10 +150,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
 		try {
-			Object[] p = (Object[])query.getSingleResult();
-			
-			ProductDTO product = this.objectToDTO(p, locale, currency);
-			return Optional.ofNullable(product);
+			return Optional.ofNullable((ProductDTO) query.getSingleResult());
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -196,8 +195,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setResultTransformer(new ProductDTOResultTransformer());
 
 		try {
-			ProductDTO p = (ProductDTO) query.getSingleResult();
-			return Optional.ofNullable(p);
+			return Optional.ofNullable((ProductDTO) query.getSingleResult());
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -236,8 +234,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setResultTransformer(new ProductDTOResultTransformer());
 
 		try {
-			ProductDTO p = (ProductDTO) query.getSingleResult();
-			return Optional.ofNullable(p);
+			return Optional.ofNullable((ProductDTO) query.getSingleResult());
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -245,7 +242,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 	
 	@Override
-	public List<ProductDTO> findAll(String locale, String currency) {
+	public Set<ProductDTO> findAll(String locale, String currency) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
@@ -269,14 +266,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
-		List<ProductDTO> results = query.getResultList();
+		return new HashSet<ProductDTO>(query.getResultList());
 		
-		return results;
 	}
 
 	@Override
-	public List<ProductDTO> findAll(	String locale, 
+	public Set<ProductDTO> findAll(	String locale, 
 										String currency, 
 										Set<String> codes) {
 		
@@ -311,10 +306,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
-		List<ProductDTO> results = query.getResultList();
-		
-		return results;
+		return new HashSet<ProductDTO>(query.getResultList());
 	}
 
 	
@@ -877,12 +869,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return null;
 	}
 
-	@Override
-	public Set<ProductEntity> findAll(List<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
+	
 
 }

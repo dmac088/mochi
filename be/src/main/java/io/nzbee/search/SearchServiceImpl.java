@@ -26,7 +26,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -434,8 +433,8 @@ public class SearchServiceImpl implements ISearchService {
 
 		setProductProjection(jpaQuery);
 		List<Object[]> result = jpaQuery.getResultList();
-		List<ProductDTO> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
-		return new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
+		Set<ProductDTO> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		return new PageImpl<ProductDTO>(new ArrayList<ProductDTO>(lp), pageable, jpaQuery.getResultSize());
 
 	}
 
@@ -457,7 +456,7 @@ public class SearchServiceImpl implements ISearchService {
 		setProductProjection(jpaQuery);
 		@SuppressWarnings("unchecked")
 		List<Object[]> result = jpaQuery.getResultList();
-		List<ProductDTO> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		Set<ProductDTO> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
 		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
 

@@ -129,5 +129,11 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public String tokenToCode(String token) {
 		return token;
 	}
+
+	@Override
+	public Set<BrandEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

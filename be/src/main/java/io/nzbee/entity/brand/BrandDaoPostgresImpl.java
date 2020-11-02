@@ -496,7 +496,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 
 	@Override
-	public Set<BrandEntity> findAll(List<String> codes) {
+	public Set<BrandEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -123,5 +123,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		
 	}
 
+	@Override
+	public Set<TagEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

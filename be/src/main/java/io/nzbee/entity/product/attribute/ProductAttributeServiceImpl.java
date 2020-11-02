@@ -1,6 +1,5 @@
 package io.nzbee.entity.product.attribute;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +29,7 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	}
 
 	@Override
-	public Set<ProductAttributeEntity> findAll(List<String> codes) {
+	public Set<ProductAttributeEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -10,7 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
+import io.nzbee.entity.tag.ITagMapper;
 import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.TagDTO;
+import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.exceptions.tag.TagNotFoundException;
 
 @Component
@@ -19,22 +22,25 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Autowired 
 	private ITagService tagService;
 	
+	@Autowired
+	private ITagMapper tagMapper;
+	
 	@Override
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public Tag findByCode(String locale, String code) {
-		io.nzbee.entity.tag.TagEntity t = tagService.findByCode(locale, code)
+		TagDTO t = tagService.findByCode(locale, code)
 				.orElseThrow(() -> new TagNotFoundException("Tag with code " + code + " not found!"));
-		return this.entityToDo(t);
+		return tagMapper.DTOToDo(t);
 	}
 
 	@Override
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public Tag findByDesc(String locale, String desc) {
-		io.nzbee.entity.tag.TagEntity t = tagService.findByDesc(locale, desc)
+		TagDTO t = tagService.findByDesc(locale, desc)
 				.orElseThrow(() -> new TagNotFoundException("Tag with desc " + desc + " not found!"));
-		return this.entityToDo(t);
+		return tagMapper.DTOToDo(t);
 	}
 	
 	@Override
@@ -42,7 +48,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Transactional(readOnly = true)
 	public Set<Tag> findAll(String locale) {
 		return tagService.findAll(locale)
-				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
+				.stream().map(t -> tagMapper.DTOToDo(t)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -51,7 +57,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	public Set<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Double maxPrice) {
 		return tagService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice)
-				.stream().map(b -> (Tag) this.entityToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Tag) tagMapper.DTOToDo(b)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -59,7 +65,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Transactional(readOnly = true)
 	public Set<Tag> findAll(String locale, Set<String> codes) {
 		return tagService.findAll(locale, codes)
-				.stream().map(t -> this.entityToDo(t)).collect(Collectors.toSet());
+				.stream().map(t -> tagMapper.DTOToDo(t)).collect(Collectors.toSet());
 	}
 	
 	@Override
@@ -97,15 +103,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 		tagService.save(t);
 	}
 	
-	private Tag entityToDo(io.nzbee.entity.tag.TagEntity te) {
-		return new Tag(
-				te.getCode(),
-				te.getTagAttribute().getTagDesc(),
-				te.getCount(),
-				te.getLocale(),
-				te.getCurrency()
-				);
-	}
 
 	@Override
 	public void update(Tag domainObject) {
