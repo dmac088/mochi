@@ -2,9 +2,7 @@ package io.nzbee.entity;
 
 import java.util.List;
 import java.util.Optional;
-
-import javax.persistence.Tuple;
-
+import java.util.Set;
 
 public interface IDao<T> {
     
@@ -12,18 +10,14 @@ public interface IDao<T> {
     
     Optional<T> findByCode(String code);
     
-    List<T> findAll();
+    Set<T> findAll();
     
-    List<T> findAll(List<String> codes);
+    Set<T> findAll(List<String> codes);
      
     void save(T t);
      
     void update(T t, String[] params);
      
     void delete(T t);
-
-    T objectToEntity(Object[] o);
-	
-    T objectToEntity(Tuple t);
 	
 }

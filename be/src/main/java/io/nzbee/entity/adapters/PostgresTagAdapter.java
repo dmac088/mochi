@@ -75,14 +75,14 @@ public class PostgresTagAdapter  implements ITagPortService {
 				? ot.get() 
 				: new io.nzbee.entity.tag.TagEntity();
 				
-		io.nzbee.entity.tag.attribute.TagAttribute ta = new io.nzbee.entity.tag.attribute.TagAttribute();
+		io.nzbee.entity.tag.attribute.TagAttributeEntity ta = new io.nzbee.entity.tag.attribute.TagAttributeEntity();
 		
 		if(ot.isPresent()) {
-			Optional<io.nzbee.entity.tag.attribute.TagAttribute> ota =
+			Optional<io.nzbee.entity.tag.attribute.TagAttributeEntity> ota =
 			ot.get().getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
 			ta = (ota.isPresent()) 
 			? ota.get()
-			: new io.nzbee.entity.tag.attribute.TagAttribute();
+			: new io.nzbee.entity.tag.attribute.TagAttributeEntity();
 		}		
 		
 		ta.setTagDesc(domainObject.getTagDesc());

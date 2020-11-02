@@ -1,5 +1,6 @@
 package io.nzbee.entity.category.attribute;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
@@ -11,11 +12,27 @@ import io.nzbee.Constants;
 public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 
 	@Autowired
-	private CategoryAttributeRepository CategoryAttributeRepository; 
+	private CategoryAttributeRepository categoryAttributeRepository; 
+	
+	@Override
+	public Optional<CategoryAttributeEntity> findById(long id) {
+		return categoryAttributeRepository.findById(id);
+	}
+
+	@Override
+	public Optional<CategoryAttributeEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<CategoryAttributeEntity> findAll() {
+		return categoryAttributeRepository.findAll();
+	}
+
 	
 	@Override
 	public Optional<CategoryAttributeDTO> findById(String locale, Long id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	
@@ -24,7 +41,6 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
 
 	@Override
 	public Optional<CategoryAttributeDTO> findByCode(String locale, String code) {
@@ -47,32 +63,32 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 
 	@Override
 	public void save(CategoryAttributeEntity t) {
-		CategoryAttributeRepository.save(t);
+		categoryAttributeRepository.save(t);
 	}
 
 	@Override
 	public void update(CategoryAttributeEntity t, String[] params) {
-		CategoryAttributeRepository.save(t);
+		categoryAttributeRepository.save(t);
 	}
 
 	@Override
 	public void delete(CategoryAttributeEntity t) {
-		CategoryAttributeRepository.delete(t);		
+		categoryAttributeRepository.delete(t);		
 	}
 
 	@Override
 	public Optional<CategoryAttributeEntity> getCategoryAttribute(Long id, String locale) {
-		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryId(locale, id);
+		return categoryAttributeRepository.findByLclCdAndCategoryCategoryId(locale, id);
 	}
 	
 	@Override
 	public Optional<CategoryAttributeEntity> getCategoryAttributeEN(Long id) {
-		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeENGB, id);
+		return categoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeENGB, id);
 	}
 	
 	@Override
 	public Optional<CategoryAttributeEntity> getCategoryAttributeHK(Long id) {
-		return CategoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeZHHK, id);
+		return categoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeZHHK, id);
 	}
 
 	@Override
@@ -99,30 +115,12 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 		return null;
 	}
 
-	
-	
-//	@Override
-//	public CategoryAttributeEntity objectToEntity(Object[] o, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public CategoryAttributeEntity objectToEntity(Tuple t, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public CategoryAttributeEntity objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public CategoryAttributeEntity objectToEntity(Tuple t, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
+	@Override
+	public Set<CategoryAttributeEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

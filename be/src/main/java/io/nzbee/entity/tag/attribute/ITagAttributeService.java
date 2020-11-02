@@ -4,11 +4,11 @@ import java.util.Optional;
 
 import io.nzbee.entity.ILocalizedDao;
 
-public interface ITagAttributeService extends ILocalizedDao<TagAttributeDTO, TagAttribute> {
+public interface ITagAttributeService extends ILocalizedDao<TagAttributeDTO, TagAttributeEntity> {
 	
-	Optional<TagAttribute> getTagAttributeEN(Long id);
+	Optional<TagAttributeEntity> getTagAttributeEN(Long id);
 	
-	Optional<TagAttribute> getTagAttributeHK(Long id);
+	Optional<TagAttributeEntity> getTagAttributeHK(Long id);
 
-	Optional<TagAttribute> getTagAttribute(Long id, String locale);
+	Optional<TagAttributeEntity> getTagAttribute(Long id, String locale);
 }

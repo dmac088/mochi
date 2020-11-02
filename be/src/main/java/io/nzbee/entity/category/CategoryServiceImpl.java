@@ -20,6 +20,14 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Qualifier(value = "categoryEntityPostgresDao")
 	private ICategoryDao categoryDAO;
 	
+	@Autowired
+	private ICategoryRepository categoryRepository;
+	
+	@Override
+	public Optional<CategoryEntity> findById(Long id) {
+		return categoryRepository.findById(id);
+	}
+	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryId}")
 	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
@@ -137,7 +145,5 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	public String tokenToCode(String token) {
 		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
-
-
 
 }

@@ -5,16 +5,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import javax.persistence.EntityManager;
-import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +21,6 @@ import io.nzbee.entity.role.Role;
 import io.nzbee.entity.role.RoleType;
 import io.nzbee.entity.role.RoleType_;
 import io.nzbee.entity.role.Role_;
-
 
 @Component(value="partyDao")
 public class PartyDaoImpl implements IPartyDao {
@@ -75,13 +71,13 @@ public class PartyDaoImpl implements IPartyDao {
 	}
 
 	@Override
-	public List<Party> findAll() {
+	public Set<Party> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Party> findAll(List<String> codes) {
+	public Set<Party> findAll(List<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -102,17 +98,5 @@ public class PartyDaoImpl implements IPartyDao {
 	public void delete(Party t) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public Party objectToEntity(Object[] o) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Party objectToEntity(Tuple t) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

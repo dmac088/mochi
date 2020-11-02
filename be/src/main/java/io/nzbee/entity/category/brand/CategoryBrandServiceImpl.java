@@ -66,4 +66,22 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 		
 	}
 
+	@Override
+	public Set<CategoryBrandEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryBrandEntity> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryBrandEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

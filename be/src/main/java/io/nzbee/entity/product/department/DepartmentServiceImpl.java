@@ -11,6 +11,9 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	@Autowired
     private IDepartmentDao departmentDao;
 	
+	@Autowired
+    private IDepartmentRepository departmentRepository;
+	
 	@Override
 	public Set<DepartmentDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
@@ -23,6 +26,21 @@ public class DepartmentServiceImpl implements IDepartmentService{
 		return null;
 	}
 
+	@Override
+	public Set<DepartmentEntity> findAll() {
+		return departmentRepository.findAll();
+	}
+
+	@Override
+	public Optional<DepartmentEntity> findById(Long id) {
+		return departmentRepository.findById(id);
+	}
+
+	@Override
+	public Optional<DepartmentEntity> findByCode(String code) {
+		return departmentRepository.findByDepartmentCode(code);
+	}
+	
 	@Override
 	public Optional<DepartmentDTO> findById(String locale, Long id) {
 		return departmentDao.findById(locale, id) ;

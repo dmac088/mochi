@@ -3,16 +3,15 @@ package io.nzbee.entity.party.person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -107,13 +106,13 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 
 	@Override
-	public List<PersonEntity> findAll() {
+	public Set<PersonEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<PersonEntity> findAll(List<String> codes) {
+	public Set<PersonEntity> findAll(List<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -134,16 +133,5 @@ public class PersonDaoImpl implements IPersonDao {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public PersonEntity objectToEntity(Object[] o) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PersonEntity objectToEntity(Tuple t) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 }

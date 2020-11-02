@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.TagEntity;
-import io.nzbee.entity.tag.attribute.TagAttribute;
+import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 
 
 @Service(value = "tagEntityBeanFactory")
@@ -17,7 +17,7 @@ public class TagEntityBeanFactory {
 		final TagEntity tag = new TagEntity();
 		tag.setTagCode("TST02");
 
-		final TagAttribute tagAttribute = new TagAttribute();
+		final TagAttributeEntity tagAttribute = new TagAttributeEntity();
 		tagAttribute.setTag(tag);
 		tagAttribute.setTagDesc("test tag");
 		tagAttribute.setLclCd(Constants.localeENGB);

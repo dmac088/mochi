@@ -3,7 +3,7 @@ package io.nzbee.entity;
 import java.util.Optional;
 import java.util.Set;
 
-public interface ILocalizedService<T, Z> {
+public interface ILocalizedService<T, Z> extends IService<Z> {
 
 	
 	Set<T> findAll(String locale);
@@ -16,10 +16,4 @@ public interface ILocalizedService<T, Z> {
 	
 	Optional<T> findByDesc(String locale, String desc);
 	
-	void save(Z t);
-	
-	void update(Z t);
-	
-	void delete(Z t);
-
 }

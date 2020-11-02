@@ -47,7 +47,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	private IPersonService personService;
 	
 	@Autowired
-	private ICustomerMapper personMapper;
+	private ICustomerMapper customerMapper;
 	
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
@@ -72,7 +72,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	public Customer findByUsername(String userName) {
 		PersonEntity p = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.Customer.class)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
-		return personMapper.entityToDo(p);
+		return customerMapper.DTOToDo(p);
 	}
 
 	@Override
@@ -213,7 +213,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
         if (token != null) {
             User u = token.getUser();
             Optional<PersonEntity> p = personService.findByUsernameAndRole(u.getUsername(), io.nzbee.entity.role.customer.Customer.class);
-            return personMapper.entityToDo(p.get());
+            return customerMapper.DTOToDo(p.get());
         }
         return null;
 	}

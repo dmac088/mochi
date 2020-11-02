@@ -16,7 +16,7 @@ public class CategoryFacetMapper implements IFacetMapper<Category> {
 		ef.setDesc(category.getCategoryDesc());
 		ef.setHierarchical(true);
 		ef.setValue(category.getCategoryCode());
-		ef.setCount(category.getCount());
+		ef.setCount(category.getCount().intValue());
 		return ef;
 	}
 

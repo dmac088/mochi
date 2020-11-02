@@ -1,5 +1,6 @@
 package io.nzbee.entity.tag.attribute;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
@@ -11,7 +12,30 @@ import io.nzbee.Constants;
 public class TagAttributeServiceImpl implements ITagAttributeService {
 
 	@Autowired
-	private TagAttributeRepository TagAttributeRepository; 
+	private ITagAttributeRepository tagAttributeRepository; 
+	
+	@Override
+	public Optional<TagAttributeEntity> findById(long id) {
+		return tagAttributeRepository.findById(id);
+	}
+
+	@Override
+	public Optional<TagAttributeEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<TagAttributeEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<TagAttributeEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	@Override
 	public Optional<TagAttributeDTO> findById(String locale, Long id) {
@@ -24,7 +48,6 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	public Set<TagAttributeDTO> findAll(String locale) {
 		return null;//TagAttributeRepository.findAll();
 	}
-	
 
 	@Override
 	public Optional<TagAttributeDTO> findByCode(String locale, String code) {
@@ -47,33 +70,33 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 
 
 	@Override
-	public void save(TagAttribute t) {
-		TagAttributeRepository.save(t);
+	public void save(TagAttributeEntity t) {
+		tagAttributeRepository.save(t);
 	}
 
 	@Override
-	public void update(TagAttribute t, String[] params) {
-		TagAttributeRepository.save(t);
+	public void update(TagAttributeEntity t, String[] params) {
+		tagAttributeRepository.save(t);
 	}
 
 	@Override
-	public void delete(TagAttribute t) {
-		TagAttributeRepository.delete(t);		
+	public void delete(TagAttributeEntity t) {
+		tagAttributeRepository.delete(t);		
 	}
 
 	@Override
-	public Optional<TagAttribute> getTagAttribute(Long id, String locale) {
-		return TagAttributeRepository.findByLclCdAndTagTagId(locale, id);
+	public Optional<TagAttributeEntity> getTagAttribute(Long id, String locale) {
+		return tagAttributeRepository.findByLclCdAndTagTagId(locale, id);
 	}
 	
 	@Override
-	public Optional<TagAttribute> getTagAttributeEN(Long id) {
-		return TagAttributeRepository.findByLclCdAndTagTagId(Constants.localeENGB, id);
+	public Optional<TagAttributeEntity> getTagAttributeEN(Long id) {
+		return tagAttributeRepository.findByLclCdAndTagTagId(Constants.localeENGB, id);
 	}
 	
 	@Override
-	public Optional<TagAttribute> getTagAttributeHK(Long id) {
-		return TagAttributeRepository.findByLclCdAndTagTagId(Constants.localeZHHK, id);
+	public Optional<TagAttributeEntity> getTagAttributeHK(Long id) {
+		return tagAttributeRepository.findByLclCdAndTagTagId(Constants.localeZHHK, id);
 	}
 
 	@Override
@@ -100,30 +123,7 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 		return null;
 	}
 
+
 	
-	
-//	@Override
-//	public TagAttribute objectToEntity(Object[] o, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public TagAttribute objectToEntity(Tuple t, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public TagAttribute objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public TagAttribute objectToEntity(Tuple t, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
 	
 }

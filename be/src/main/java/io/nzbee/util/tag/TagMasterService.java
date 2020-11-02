@@ -21,7 +21,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
-import io.nzbee.entity.tag.attribute.TagAttribute;
+import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -88,14 +88,14 @@ public class TagMasterService {
 				? ot.get() 
 				: new TagEntity();
 				
-		TagAttribute ta = new TagAttribute();
+		TagAttributeEntity ta = new TagAttributeEntity();
 		
 		if(ot.isPresent()) {
-			Optional<TagAttribute> ota =
+			Optional<TagAttributeEntity> ota =
 			ot.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
 			ta = (ota.isPresent()) 
 			? ota.get()
-			: new TagAttribute();
+			: new TagAttributeEntity();
 		}		
 		
 		ta.setTagDesc(tagDesc);
@@ -113,7 +113,7 @@ public class TagMasterService {
 		logger.debug("called extractTagMaster() ");
 		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
 	    try {
-		    	List<TagEntity> tagList = new ArrayList<TagEntity>(tagService.findAll(Constants.localeENGB));
+		    	List<TagEntity> tagList = new ArrayList<TagEntity>(tagService.findAll());
 		    	
 		    	//create a map of categories (full list)
 		    	Map<String, TagMasterSchema> map = tagList.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
@@ -122,8 +122,7 @@ public class TagMasterService {
 		    		
 		    	TagMasterSchema tms = map.get(t.getTagCode());
 		    		
-			    Optional<TagEntity> tag = tagService.findByCode(t.getLocale(),
-												t.getTagCode()); 
+			    Optional<TagEntity> tag = tagService.findByCode(t.getTagCode()); 
 			    	
 			    tms.set_TAG_CODE(tag.get().getTagCode());
 			    tms.set_TAG_DESC_EN(tag.get().getTagDescENGB());

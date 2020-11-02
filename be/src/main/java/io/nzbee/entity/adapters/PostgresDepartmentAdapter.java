@@ -24,7 +24,7 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Department findByProductCode(String locale, String currency, String productCode) {
-		return (Department) departmentMapper.entityToDo(departmentService.findByProductCode(locale, productCode).get(), locale);		
+		return (Department) departmentMapper.DTOToDo(departmentService.findByProductCode(locale, productCode).get());		
 	}
 
 	@Override
@@ -42,7 +42,7 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Department findByCode(String locale, String code) {
-		return (Department) departmentMapper.entityToDo(departmentService.findByCode(locale, code).get(), locale);	
+		return (Department) departmentMapper.DTOToDo(departmentService.findByCode(locale, code).get());	
 	}
 
 	@Override

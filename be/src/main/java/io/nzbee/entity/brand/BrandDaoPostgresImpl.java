@@ -483,6 +483,24 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return null;
 	}
 
+	@Override
+	public Optional<BrandEntity> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<BrandEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<BrandEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 

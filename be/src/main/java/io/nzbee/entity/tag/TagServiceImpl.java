@@ -32,6 +32,18 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
+	public Set<TagEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<TagEntity> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public Set<TagDTO> findAll(String locale) {
 		return productTagDAO.findAll(locale);
@@ -110,5 +122,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		// TODO Auto-generated method stub
 		
 	}
+
 	
 }

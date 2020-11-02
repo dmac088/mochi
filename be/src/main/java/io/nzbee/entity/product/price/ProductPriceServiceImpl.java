@@ -97,4 +97,22 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 		return null;
 	}
 
+	@Override
+	public Set<ProductPriceEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductPriceEntity> findById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ProductPriceEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -26,6 +26,30 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 		return null;
 	}
 	
+	@Override
+	public Optional<CategoryBrandEntity> findById(long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryBrandEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<CategoryBrandEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<CategoryBrandEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
 //	@Override
 //	public List<CategoryBrand> findAllByBrandCode(String locale, String currency, String brandCode) {
 //		LOGGER.debug("call CategoryBrandDaoImpl.findAllByBrandCode parameters : {}, {}, {}", locale, currency, brandCode);
@@ -137,47 +161,5 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	
-
-//	@Override
-//	public CategoryBrand objectToEntity(Object[] o, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public CategoryBrand objectToEntity(Tuple t, String locale, String currency) {
-//		CategoryBrand cb = objectToEntity(t,locale);
-//		cb.setCurrency(currency);
-//		return cb; 
-//	}
-//
-//	@Override
-//	public CategoryBrand objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public CategoryBrand objectToEntity(Tuple t, String locale) {
-//		CategoryAttributeEntity ca = new CategoryAttributeEntity();
-//		ca.setCategoryDesc(t.get("categoryDesc").toString());
-//		ca.setLclCd(locale);
-//		
-//		CategoryType ct = new CategoryType();
-//		ct.setCategoryTypeCode(t.get("categoryTypeCode").toString());
-//		ct.setCategoryTypeDesc(t.get("categoryTypeDesc").toString());
-//		
-//		CategoryBrand cp = new CategoryBrand();
-//		cp.setCategoryId(Long.parseLong(t.get("categoryId").toString()));
-//		cp.setCategoryCode(t.get("categoryCode").toString());
-//		cp.setLocale(locale);
-//		
-//		cp.setCategoryAttribute(ca);
-//		cp.setCategoryType(ct);
-//		
-//		return cp; 
-//	}
 
 }

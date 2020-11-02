@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand.attribute;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
@@ -11,7 +12,7 @@ import io.nzbee.Constants;
 public class BrandAttributeServiceImpl implements IBrandAttributeService {
 
 	@Autowired
-	private IBrandAttributeRepository BrandAttributeRepository; 
+	private IBrandAttributeRepository brandAttributeRepository; 
 	
 	@Override
 	public Optional<BrandAttributeDTO> findById(String locale, Long id) {
@@ -44,32 +45,32 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 
 	@Override
 	public void save(BrandAttributeEntity t) {
-		BrandAttributeRepository.save(t);
+		brandAttributeRepository.save(t);
 	}
 
 	@Override
 	public void update(BrandAttributeEntity t, String[] params) {
-		BrandAttributeRepository.save(t);
+		brandAttributeRepository.save(t);
 	}
 
 	@Override
 	public void delete(BrandAttributeEntity t) {
-		BrandAttributeRepository.delete(t);		
+		brandAttributeRepository.delete(t);		
 	}
 
 	@Override
 	public Optional<BrandAttributeEntity> getBrandAttribute(Long id, String locale) {
-		return BrandAttributeRepository.findByLclCdAndBrandBrandId(locale, id);
+		return brandAttributeRepository.findByLclCdAndBrandBrandId(locale, id);
 	}
 	
 	@Override
 	public Optional<BrandAttributeEntity> getBrandAttributeEN(Long id) {
-		return BrandAttributeRepository.findByLclCdAndBrandBrandId(Constants.localeENGB, id);
+		return brandAttributeRepository.findByLclCdAndBrandBrandId(Constants.localeENGB, id);
 	}
 	
 	@Override
 	public Optional<BrandAttributeEntity> getBrandAttributeHK(Long id) {
-		return BrandAttributeRepository.findByLclCdAndBrandBrandId(Constants.localeZHHK, id);
+		return brandAttributeRepository.findByLclCdAndBrandBrandId(Constants.localeZHHK, id);
 	}
 
 	@Override
@@ -96,30 +97,27 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 		return null;
 	}
 
-	
-	
-//	@Override
-//	public BrandAttributeEntity objectToEntity(Object[] o, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public BrandAttributeEntity objectToEntity(Tuple t, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public BrandAttributeEntity objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//	@Override
-//	public BrandAttributeEntity objectToEntity(Tuple t, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	@Override
+	public Optional<BrandAttributeEntity> findById(long id) {
+		return brandAttributeRepository.findById(id);
+	}
+
+	@Override
+	public Optional<BrandAttributeEntity> findByCode(String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Set<BrandAttributeEntity> findAll() {
+		return brandAttributeRepository.findAll();
+	}
+
+	@Override
+	public Set<BrandAttributeEntity> findAll(List<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

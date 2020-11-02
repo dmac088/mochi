@@ -4,7 +4,7 @@ import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
 
-public interface ILocalizedDao<T, Z> {
+public interface ILocalizedDao<T, Z> extends IDao<Z> {
     
     Optional<T> findById(String locale, Long id);
     
@@ -16,12 +16,6 @@ public interface ILocalizedDao<T, Z> {
     
     Set<T> findAll(String locale, Set<String> codes);
      
-    void save(Z t);
-     
-    void update(Z t, String[] params);
-     
-    void delete(Z t);
-
 	T objectToDTO(Tuple t, String locale, String currency);
 
 	T objectToDTO(Object[] o, String locale);
@@ -29,7 +23,6 @@ public interface ILocalizedDao<T, Z> {
 	T objectToDTO(Tuple t, String locale);
 
 	T objectToDTO(Object[] o, String locale, String currency);
-
 
 	
 }
