@@ -6,14 +6,14 @@ import org.springframework.stereotype.Repository;
 import io.nzbee.entity.role.IRoleBaseRepository;
 
 @Repository("customerRepository")
-public interface ICustomerRepository extends IRoleBaseRepository<Customer> {
+public interface ICustomerRepository extends IRoleBaseRepository<CustomerEntity> {
 
-	List<Customer> findAll();
+	List<CustomerEntity> findAll();
 	
-	Optional<Customer> findByRoleId(Long CustomerId);
+	Optional<CustomerEntity> findByRoleId(Long CustomerId);
 	
-	Optional<Customer> findByRolePartyPartyUserUsername(String userName);
+	Optional<CustomerEntity> findByRolePartyPartyUserUsername(String userName);
 
-	Optional<Customer> findByCustomerNumber(String customerNumber);
+	Optional<CustomerEntity> findByCustomerNumber(String customerNumber);
 
 }

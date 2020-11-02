@@ -6,10 +6,12 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import io.nzbee.domain.bag.Bag; 
+import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.bag.item.IBagItemMapper;
+import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.CustomerDTO;
@@ -30,6 +32,8 @@ public class BagMapperImpl implements IBagMapper {
 	@Autowired
 	private IBagService bagService;
 	
+	@Autowired
+	private IBagItemService bagItemService;
 
 	@Override
 	public Bag DTOToDo(String locale, String currency, CustomerDTO pDto, BagDTO bDto) {
@@ -40,8 +44,13 @@ public class BagMapperImpl implements IBagMapper {
 		//create a new bag domain object
 		Bag b = new Bag(c);
 		
+		
+		bagItemService
+		
+		
+		
 		//map the entity bagItems to the domain bagItems
-		Set<io.nzbee.domain.bag.BagItem> sbi = e.getBagItems().stream()
+		Set<BagItem> sbi = 	 e.getBagItems().stream()
 							 .map(bi -> bagItemMapper.entityToDo(locale, currency, bi))
 							 .collect(Collectors.toSet());
 		

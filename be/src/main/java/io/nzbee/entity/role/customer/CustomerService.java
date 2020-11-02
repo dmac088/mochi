@@ -11,12 +11,12 @@ public class CustomerService implements ICustomerService {
 	private ICustomerRepository customerRepository;
 	
 	@Override
-	public Optional<Customer> findByUsername(String userName) {
+	public Optional<CustomerEntity> findByUsername(String userName) {
 		return customerRepository.findByRolePartyPartyUserUsername(userName);
 	}
 
 	@Override
-	public Optional<Customer> findByCustomerNumber(String customerNumber) {
+	public Optional<CustomerEntity> findByCustomerNumber(String customerNumber) {
 		return customerRepository.findByCustomerNumber(customerNumber);
 	}
 

@@ -9,7 +9,7 @@ import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
-import io.nzbee.entity.role.customer.Customer;
+import io.nzbee.entity.role.customer.CustomerEntity;
 
 @Service
 public class PostgresBagAdapter implements IBagPortService {
@@ -30,7 +30,7 @@ public class PostgresBagAdapter implements IBagPortService {
 		
 		PersonEntity p = (ob.isPresent())
 				   ? (PersonEntity) ob.get().getParty()
-				   : personService.findByUsernameAndRole(userName, Customer.class).get();
+				   : personService.findByUsernameAndRole(userName, CustomerEntity.class).get();
 		
 		//if there is no current bag, get a new one
 		io.nzbee.entity.bag.BagEntity b = (ob.isPresent())

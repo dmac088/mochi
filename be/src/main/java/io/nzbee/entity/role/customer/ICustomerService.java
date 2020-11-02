@@ -4,8 +4,8 @@ import java.util.Optional;
 
 public interface ICustomerService {
 
-	Optional<Customer> findByUsername(String userName);
+	Optional<CustomerEntity> findByUsername(String userName);
 	
-	Optional<Customer> findByCustomerNumber(String customerNumber);
+	Optional<CustomerEntity> findByCustomerNumber(String customerNumber);
 	
 }

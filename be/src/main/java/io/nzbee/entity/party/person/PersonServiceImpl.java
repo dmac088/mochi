@@ -13,7 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonServiceImpl implements IPersonService {
 
 	@Autowired
-	private PersonRepository personRepository; 
+	private IPersonRepository personRepository; 
 	
 	@Autowired
 	private IPersonDao personDao;

@@ -29,24 +29,25 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	
 	@Autowired
 	private IBagItemStatusService bagItemStatusService;
-	
-	@Override
-	public BagItem DTOToDo(String locale, String currency, BagItemDTO dto) {
-		Bag b = bagMapper.entityToDo(e.getBag());
-		Product p = productMapper.entityToDo(productService.findByCode(locale, currency, e.getProduct().getProductUPC()).get());
-		return new BagItem(b, p, e.getQuantity());
-	}
-
 
 
 	@Override
-	public io.nzbee.entity.bag.item.BagItemEntity doToEntity(BagItem d) {
+	public BagItemEntity doToEntity(BagItem d) {
 		Optional<io.nzbee.entity.product.ProductEntity> op = productService.findByCode(d.getProduct().getProductUPC());
 		Optional<BagItemStatus> obis = bagItemStatusService.findByCode(Constants.bagStatusCodeNew);
 		io.nzbee.entity.bag.item.BagItemEntity bi = new io.nzbee.entity.bag.item.BagItemEntity(op.get());
 		bi.setBagItemStatus(obis.get());
 		bi.setQuantity(d.getQuantity());	
 		return bi;
+	}
+
+
+
+	@Override
+	public BagItem DTOToDo(BagItemDTO dto) {
+		Bag b = bagMapper.entityToDo(e.getBag());
+		Product p = productMapper.entityToDo(productService.findByCode(locale, currency, e.getProduct().getProductUPC()).get());
+		return new BagItem(b, p, e.getQuantity());
 	}
 
 }

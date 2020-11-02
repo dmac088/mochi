@@ -18,16 +18,21 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
+import io.nzbee.entity.brand.BrandDTO;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
+import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
@@ -102,8 +107,7 @@ public class PostgresProductAdapter implements IProductPortService {
 					: new io.nzbee.entity.product.basic.ProductBasicEntity();
 
 			// find the department
-			io.nzbee.entity.product.department.DepartmentEntity d = departmentService.findByCode(domainObject.getLclCd(), 
-																						   domainObject.getDepartment().getDepartmentCode()).get();			
+			io.nzbee.entity.product.department.DepartmentEntity d = departmentService.findByCode(domainObject.getDepartment().getDepartmentCode()).get();			
 			// get all the categories
 			Set<io.nzbee.entity.category.product.CategoryProductEntity> lcp = 
 					categoryService.findAll( domainObject.getLclCd(), 
@@ -112,21 +116,19 @@ public class PostgresProductAdapter implements IProductPortService {
 					.stream().map(cd -> (CategoryProductEntity) Hibernate.unproxy(cd)).collect(Collectors.toSet());
 
 			io.nzbee.entity.category.product.CategoryProductEntity primaryCategory = (CategoryProductEntity) categoryService
-					.findByCode(domainObject.getLclCd(),
-							domainObject.getPrimaryCategory().getCategoryCode()).get();
+					.findByCode(domainObject.getPrimaryCategory().getCategoryCode()).get();
 
 			
 			//get all the tags
 			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
-			Set<TagEntity> tags = tagService.findAll(domainObject.getLclCd(), tagCodes);	
+			Set<TagEntity> tags = tagService.findAll(tagCodes);	
 			
 		
 			// find the brand
-			io.nzbee.entity.brand.BrandEntity b = brandService.findByCode(domainObject.getLclCd(),
-					domainObject.getBrand().getBrandCode()).get();
+			io.nzbee.entity.brand.BrandEntity b = brandService.findByCode(domainObject.getBrand().getBrandCode()).get();
 
 			Optional<io.nzbee.entity.product.attribute.ProductAttributeEntity> opa = productAttributeService
-					.findByCode(domainObject.getLclCd(), domainObject.getProductUPC());
+					.findByCode(domainObject.getProductUPC());
 
 			io.nzbee.entity.product.attribute.ProductAttributeEntity pa = (opa.isPresent()) ? opa.get()
 					: (new io.nzbee.entity.product.attribute.ProductAttributeEntity());
@@ -256,7 +258,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		
-		Page<io.nzbee.entity.product.ProductEntity> pp = productService.findAll(
+		Page<ProductEntity> pp = productService.findAll(
 															locale, 
 															currency,
 															categoryCode, 
@@ -275,10 +277,10 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 	
 	
-	private Product mapHelper(io.nzbee.entity.product.ProductEntity pe) {
-		io.nzbee.entity.brand.BrandEntity be = pe.getBrand();
-		io.nzbee.entity.product.department.DepartmentEntity de = pe.getDepartment();
-		io.nzbee.entity.category.CategoryEntity c = pe.getPrimaryCategory();
+	private Product mapHelper(ProductDTO dto) {
+		BrandDTO bDto = dto.getBrand();
+		DepartmentEntity de = pe.getDepartment();
+		CategoryEntity c = pe.getPrimaryCategory();
 
 		Brand bdo = brandMapper.DTOToDo(be, pe.getLocale(), pe.getCurrency());
 		Department ddo = departmentMapper.DTOToDo(de, pe.getLocale());

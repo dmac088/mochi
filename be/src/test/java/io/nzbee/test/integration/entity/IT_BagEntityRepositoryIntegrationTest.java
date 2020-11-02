@@ -26,7 +26,7 @@ import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
-import io.nzbee.entity.role.customer.Customer;
+import io.nzbee.entity.role.customer.CustomerEntity;
 import io.nzbee.test.integration.beans.BagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -71,7 +71,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
 	public BagEntity persistNewBag() {
 		
-		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", Customer.class);
+		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", CustomerEntity.class);
 		
 		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
