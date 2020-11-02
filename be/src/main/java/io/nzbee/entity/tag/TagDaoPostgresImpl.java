@@ -47,12 +47,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 
 	@Override
-	public Set<TagEntity> findAll(List<String> codes) {
+	public Set<TagEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
-	
 	@Override
 	public Optional<TagDTO> findById(String locale, Long id) {
 		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, id);
