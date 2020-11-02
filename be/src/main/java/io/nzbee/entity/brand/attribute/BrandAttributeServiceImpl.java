@@ -114,7 +114,7 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 	}
 
 	@Override
-	public Set<BrandAttributeEntity> findAll(List<String> codes) {
+	public Set<BrandAttributeEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -1,6 +1,5 @@
 package io.nzbee.entity.product.department;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -252,7 +251,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	}
 
 	@Override
-	public Set<DepartmentEntity> findAll(List<String> codes) {
+	public Set<DepartmentEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

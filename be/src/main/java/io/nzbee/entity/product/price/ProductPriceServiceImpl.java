@@ -115,4 +115,10 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 		return null;
 	}
 
+	@Override
+	public Set<ProductPriceEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -78,4 +78,10 @@ public class DepartmentServiceImpl implements IDepartmentService{
 		departmentDao.save(t);
 	}
 
+	@Override
+	public Set<DepartmentEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
