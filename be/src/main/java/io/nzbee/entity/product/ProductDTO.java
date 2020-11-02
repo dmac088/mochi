@@ -5,9 +5,7 @@ import java.util.Map;
 import java.util.Set;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
-import io.nzbee.entity.product.attribute.ProductAttributeDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
-import io.nzbee.entity.product.status.ProductStatusDTO;
 
 public class ProductDTO {
 	
@@ -15,15 +13,23 @@ public class ProductDTO {
 	
 	public static final String UPC_ALIAS = "upc_cd";
     
-    public static final String DESC_ALIAS = "prd_desc";
+    public static final String SHORT_DESC_ALIAS = "prd_desc";
+    
+    public static final String LONG_DESC_ALIAS = "prd_lng_desc";
     
     public static final String IN_STOCK_ALIAS = "prd_in_stock";
+    
+    public static final String IMAGE_ALIAS = "prd_img_pth";
+    
+    public static final String CODE_ALIAS = "prd_sts_cd";
     
     protected Long productId;
 
 	protected String productUPC;
 
-	protected ProductAttributeDTO productAttribute;
+	protected String productDesc;
+	
+	protected String productLongDesc;
 	
 	protected LocalDateTime productCreateDt;
 	
@@ -52,17 +58,24 @@ public class ProductDTO {
 	
 	
 	//stock and status
-	protected ProductStatusDTO productStatus;
+	protected String productStatus;
 	
 	protected boolean inStock;
+
+	protected String productImage;
+
+	protected String productStatusCode;
 	
 
 	public ProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.productId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
-        this.productUPC 	= tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
-        this.inStock 		= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
+		this.productId 				= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+        this.productUPC 			= tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
+        this.productDesc 			= tuple[aliasToIndexMap.get(SHORT_DESC_ALIAS)].toString();
+        this.productLongDesc 		= tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
+        this.inStock 				= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
+		this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
+		this.productStatusCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 	}
-	
 
 	public String getProductUPC() {
 		return productUPC;
@@ -79,11 +92,22 @@ public class ProductDTO {
 	public void setProductCreateDt(LocalDateTime productCreateDt) {
 		this.productCreateDt = productCreateDt;
 	}
-
-	public ProductAttributeDTO getProductAttribute() {
-		return productAttribute;
+	
+	public String getProductDesc() {
+		return productDesc;
 	}
 
+	public String getProductLongDesc() {
+		return productLongDesc;
+	}
+
+	public String getProductImage() {
+		return productImage;
+	}
+
+	public String getProductStatusCode() {
+		return productStatusCode;
+	}
 
 	public CategoryProductDTO getPrimaryCategory() {
 		return primaryCategory;
@@ -149,11 +173,11 @@ public class ProductDTO {
 		this.department = department;
 	}
 
-	public ProductStatusDTO getProductStatus() {
+	public String getProductStatus() {
 		return productStatus;
 	}
 
-	public void setProductStatus(ProductStatusDTO productStatus) {
+	public void setProductStatus(String productStatus) {
 		this.productStatus = productStatus;
 	}
 

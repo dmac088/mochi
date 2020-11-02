@@ -8,7 +8,6 @@ import org.hibernate.transform.ResultTransformer;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
-import io.nzbee.entity.product.status.ProductStatusDTO;
 
 public class ProductDTOResultTransformer implements ResultTransformer {
 
@@ -27,8 +26,6 @@ public class ProductDTOResultTransformer implements ResultTransformer {
             productId,
             id -> new ProductDTO(tuple, aliasToIndexMap)
         );
-        
-        productDTO.setProductStatus(new ProductStatusDTO(tuple, aliasToIndexMap));
         
         productDTO.setBrand(new BrandDTO(tuple, aliasToIndexMap));
         
