@@ -1,6 +1,5 @@
 package io.nzbee.entity;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -12,12 +11,13 @@ public interface IDao<T> {
     
     Set<T> findAll();
     
-    Set<T> findAll(List<String> codes);
+    Set<T> findAll(Set<String> codes);
      
     void save(T t);
      
     void update(T t, String[] params);
      
     void delete(T t);
+
 	
 }

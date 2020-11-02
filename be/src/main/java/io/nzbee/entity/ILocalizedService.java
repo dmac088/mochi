@@ -10,6 +10,8 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	
 	Set<T> findAll(String locale, Set<String> codes);
 	
+	Set<Z> findAll(Set<String> codes);
+	
 	Optional<T> findById(String locale, Long id);
 	
 	Optional<T> findByCode(String locale, String code);

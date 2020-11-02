@@ -1,7 +1,7 @@
 package io.nzbee.entity.bag.item;
 
-import io.nzbee.entity.ILocalizedDao;
+import io.nzbee.entity.IDao;
 
-public interface IBagItemDao extends ILocalizedDao<BagItemDTO, BagItemEntity> {
+public interface IBagItemDao extends IDao<BagItemEntity> {
 	
 }

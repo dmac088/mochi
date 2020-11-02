@@ -25,13 +25,16 @@ import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
+import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
@@ -100,7 +103,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	public void save(Product domainObject) {
 		if (domainObject instanceof BasicProduct) {
 
-			Optional<io.nzbee.entity.product.ProductEntity> op = productService.findByCode(domainObject.getProductUPC());
+			Optional<ProductEntity> op = productService.findByCode(domainObject.getProductUPC());
 
 			io.nzbee.entity.product.basic.ProductBasicEntity product = (op.isPresent()) 
 					? (io.nzbee.entity.product.basic.ProductBasicEntity) op.get()
@@ -201,24 +204,24 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Product findByCode(String locale, String currency, String code) {
-		io.nzbee.entity.product.ProductEntity pe = productService.findByCode(locale, currency, code)
+		ProductDTO dto = productService.findByCode(locale, currency, code)
 				.orElseThrow(() -> new ProductNotFoundException("Product for code " + code + " not found!"));
-		return mapHelper(pe);
+		return mapHelper(dto);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Product findByDesc(String locale, String currency, String desc) {
-		io.nzbee.entity.product.ProductEntity pe = productService.findByDesc(locale, currency, desc)
+		ProductDTO dto = productService.findByDesc(locale, currency, desc)
 				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));;
-		return mapHelper(pe);
+		return mapHelper(dto);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public Set<Product> findAll(String locale, String currency) {
-		List<io.nzbee.entity.product.ProductEntity> lp = productService.findAll(locale, currency);
-		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
+		Set<ProductDTO> sp = productService.findAll(locale, currency);
+		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -228,7 +231,7 @@ public class PostgresProductAdapter implements IProductPortService {
 		Class<?> clazz = cls.equals(BasicProduct.class) ? io.nzbee.entity.product.basic.ProductBasicEntity.class
 				: io.nzbee.entity.product.basic.ProductBasicEntity.class;
 
-		List<io.nzbee.entity.product.ProductEntity> lp = productService.findAllByType(locale, currency, clazz);
+		Set<ProductDTO> lp = productService.findAllByType(locale, currency, clazz);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 
@@ -238,10 +241,10 @@ public class PostgresProductAdapter implements IProductPortService {
 
 		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
 					size, sort, selectedFacets, returnFacets).map(p -> {
-					Brand b = brandMapper.DTOToDo(p.getBrand(), locale, currency);
-					Department d = departmentMapper.DTOToDo(p.getDepartment(), locale);
-					ProductCategory pc = (ProductCategory) categoryMapper.DTOToDo(p.getPrimaryCategory());
-					Product pDo = productMapper.DTOToDo(p, b, d, pc);
+//					Brand b = brandMapper.DTOToDo(p.getBrand());
+//					Department d = departmentMapper.DTOToDo(p.getDepartment());
+//					ProductCategory pc = (ProductCategory) categoryMapper.DTOToDo(p.getPrimaryCategory());
+					Product pDo = productMapper.DTOToDo(p);
 					return pDo;
 				});
 	}
@@ -249,7 +252,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
-		List<io.nzbee.entity.product.ProductEntity> lp =  productService.findAll(locale, currency, codes);
+		Set<ProductDTO> lp =  productService.findAll(locale, currency, codes);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 	
@@ -258,7 +261,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		
-		Page<ProductEntity> pp = productService.findAll(
+		Page<ProductDTO> pp = productService.findAll(
 															locale, 
 															currency,
 															categoryCode, 
@@ -278,14 +281,14 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	
 	private Product mapHelper(ProductDTO dto) {
-		BrandDTO bDto = dto.getBrand();
-		DepartmentEntity de = pe.getDepartment();
-		CategoryEntity c = pe.getPrimaryCategory();
-
-		Brand bdo = brandMapper.DTOToDo(be, pe.getLocale(), pe.getCurrency());
-		Department ddo = departmentMapper.DTOToDo(de, pe.getLocale());
-		ProductCategory cdo = (ProductCategory) categoryMapper.DTOToDo(c);
-		return productMapper.DTOToDo(pe, bdo, ddo, cdo);
+//		BrandDTO bDto = dto.getBrand();
+//		DepartmentDTO de = dto.getDepartment();
+//		CategoryProductDTO c = dto.getPrimaryCategory();
+//
+//		Brand bdo = brandMapper.DTOToDo(bDto);
+//		Department ddo = departmentMapper.DTOToDo(de);
+//		ProductCategory cdo = (ProductCategory) categoryMapper.DTOToDo(c);
+		return productMapper.DTOToDo(dto);
 	}
 
 	@Override
