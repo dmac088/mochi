@@ -90,16 +90,17 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		CriteriaQuery<DepartmentDTO> cq = cb.createQuery(DepartmentDTO.class);
 		
 		Root<DepartmentEntity> root = cq.from(DepartmentEntity.class);
 		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(DepartmentEntity_.attributes);
 		
-		cq.multiselect(	root.get(DepartmentEntity_.departmentId).alias("departmentId"),
-						root.get(DepartmentEntity_.departmentCode).alias("departmentCode"),
-						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
-						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
-		);
+		cq.select(cb.construct(		DepartmentDTO.class, 
+							   		root.get(DepartmentEntity_.departmentId),
+							   		root.get(DepartmentEntity_.departmentCode),
+							   		attribute.get(DepartmentAttribute_.departmentDesc),
+							   		attribute.get(DepartmentAttribute_.lclCd)
+		));
 		
 		cq.where(cb.and(
 				cb.equal(root.get(DepartmentEntity_.departmentCode), code),
@@ -107,13 +108,8 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 				)
 		);
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
 		try {
-			Tuple tuple = query.getSingleResult();
-			
-			DepartmentDTO department = this.objectToDTO(tuple, locale);
-			return Optional.ofNullable(department);
+			return Optional.ofNullable(em.createQuery(cq).getSingleResult());
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
@@ -127,16 +123,17 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
+		CriteriaQuery<DepartmentDTO> cq = cb.createQuery(DepartmentDTO.class);
 		
 		Root<DepartmentEntity> root = cq.from(DepartmentEntity.class);
 		Join<DepartmentEntity, DepartmentAttribute> attribute = root.join(DepartmentEntity_.attributes);
 		
-		cq.multiselect(	root.get(DepartmentEntity_.departmentId).alias("departmentId"),
-						root.get(DepartmentEntity_.departmentCode).alias("departmentCode"),
-						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
-						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
-		);
+		cq.select(cb.construct(		DepartmentDTO.class, 
+							   		root.get(DepartmentEntity_.departmentId),
+							   		root.get(DepartmentEntity_.departmentCode),
+							   		attribute.get(DepartmentAttribute_.departmentDesc),
+							   		attribute.get(DepartmentAttribute_.lclCd)
+		));
 		
 		cq.where(cb.and(
 				cb.equal(attribute.get(DepartmentAttribute_.departmentDesc), desc),
@@ -144,13 +141,8 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 				)
 		);
 		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
 		try {
-			Tuple tuple = query.getSingleResult();
-			
-			DepartmentDTO department = this.objectToDTO(tuple, locale);
-			return Optional.ofNullable(department);
+			return Optional.ofNullable(em.createQuery(cq).getSingleResult());
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();
