@@ -21,7 +21,7 @@ import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
-import io.nzbee.entity.party.person.IPersonMapper;
+import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.product.IProductService;
@@ -47,7 +47,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	private IPersonService personService;
 	
 	@Autowired
-	private IPersonMapper personMapper;
+	private ICustomerMapper personMapper;
 	
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
