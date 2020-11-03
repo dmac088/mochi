@@ -16,11 +16,15 @@ public class ProductDTOResultTransformer implements ResultTransformer {
 	
 	private Map<Long, ProductDTO> productDTOMap = new LinkedHashMap<>();
 	
+	private Map<String, Integer> aliasToIndexMap;
+	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		
-		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
-        
+		if (aliasToIndexMap == null) {
+            aliasToIndexMap = aliasToIndexMap(aliases);
+        }
+		
         Long productId = ((java.math.BigInteger) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
  
         ProductDTO productDTO = productDTOMap.computeIfAbsent(
