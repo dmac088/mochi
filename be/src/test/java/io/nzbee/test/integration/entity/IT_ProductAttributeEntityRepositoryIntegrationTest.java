@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.test.integration.beans.ProductEntityBeanFactory;
 
@@ -79,9 +82,9 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnProduct() {
 		 // when
-    	ProductEntity found = productService.findById(  Constants.localeENGB, 
-												  Constants.currencyHKD,  
-												  p.getProductId()).get();
+    	ProductDTO found = productService.findById(  Constants.localeENGB, 
+												  	 Constants.currencyHKD,  
+												  	 p.getProductId()).get();
      
         // then
     	assertFound(found);
@@ -91,7 +94,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
-    	ProductEntity found = productService.findByCode(Constants.localeENGB, 
+		ProductDTO found = productService.findByCode(Constants.localeENGB, 
 				  								  Constants.currencyHKD,  
 												  "123456789").get();
      
@@ -99,20 +102,27 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     	assertFound(found);
 	}
 	 
-    private void assertFound(final ProductEntity found) {
-    	assertThat(found.getUPC())
+    private void assertFound(final ProductDTO found) {
+    	assertNotNull(found);
+    	
+    	assertThat(found.getProductUPC())
         .isEqualTo("123456789");
+    	
+    	assertNotNull(found.getCategories());
+    	
     	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent())
     	.isTrue();
+    	
     	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findFirst().isPresent())
     	.isTrue();
+    	
     	assertThat(found.getDepartment().getDepartmentCode())
     	.isEqualTo("ACC01");
-    	assertThat(found.getProductStatus().getCode())
+    	assertThat(found.getProductStatusCode())
     	.isEqualTo("ACT01");
     	assertThat(found.getBrand().getBrandCode())
     	.isEqualTo("PLA01");
-    	assertThat(found.getProductAttribute().getProductDesc())
+    	assertThat(found.getProductDesc())
     	.isEqualTo("test product");
     }
     

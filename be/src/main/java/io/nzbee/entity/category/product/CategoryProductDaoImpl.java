@@ -19,13 +19,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import io.nzbee.entity.category.Category_;
+import io.nzbee.entity.category.CategoryEntity_;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity_;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.category.type.CategoryType_;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.Product_;
+import io.nzbee.entity.product.ProductEntity_;
 
 @Service
 public class CategoryProductDaoImpl implements ICategoryProductDao {
@@ -46,17 +46,17 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		
 		Root<CategoryProductEntity> root = cq.from(CategoryProductEntity.class);
 		
-		Join<CategoryProductEntity, CategoryAttributeEntity> attribute = root.join(Category_.attributes);
-		Join<CategoryProductEntity, ProductEntity> products = root.join(CategoryProduct_.products);
-		Join<CategoryProductEntity, CategoryType> type = root.join(Category_.categoryType);
+		Join<CategoryProductEntity, CategoryAttributeEntity> attribute = root.join(CategoryEntity_.attributes);
+		Join<CategoryProductEntity, ProductEntity> products = root.join(CategoryProductEntity_.products);
+		Join<CategoryProductEntity, CategoryType> type = root.join(CategoryEntity_.categoryType);
 		
-		cq.multiselect(	root.get(CategoryProduct_.categoryId).alias("categoryId"),
-						root.get(CategoryProduct_.categoryCode).alias("categoryCode"),
-						attribute.get(CategoryAttribute_.categoryAttributeId).alias("categoryAttributeId"),
-						attribute.get(CategoryAttribute_.categoryDesc).alias("categoryDesc"),
+		cq.multiselect(	root.get(CategoryProductEntity_.categoryId).alias("categoryId"),
+						root.get(CategoryProductEntity_.categoryCode).alias("categoryCode"),
+						attribute.get(CategoryAttributeEntity_.categoryAttributeId).alias("categoryAttributeId"),
+						attribute.get(CategoryAttributeEntity_.categoryDesc).alias("categoryDesc"),
 						type.get(CategoryType_.categoryTypeCode).alias("categoryTypeCode"),
 						type.get(CategoryType_.categoryTypeDesc).alias("categoryTypeDesc"),
-						root.get(Category_.categoryLevel).alias("categoryLevel")
+						root.get(CategoryEntity_.categoryLevel).alias("categoryLevel")
 		);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -64,12 +64,12 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		if(!(productCode == null)) {
 			
 			cq.where(cb.and(
-					cb.equal(products.get(Product_.productUPC), productCode),
-					cb.equal(attribute.get(CategoryAttribute_.lclCd), locale)
+					cb.equal(products.get(ProductEntity_.productUPC), productCode),
+					cb.equal(attribute.get(CategoryAttributeEntity_.lclCd), locale)
 					)
 			);
 			
-			conditions.add(cb.equal(products.get(Product_.productUPC), productCode));
+			conditions.add(cb.equal(products.get(ProductEntity_.productUPC), productCode));
 		}
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);
@@ -87,17 +87,17 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
 		
 		Root<ProductEntity> root = cq.from(ProductEntity.class);
-		Join<ProductEntity, CategoryProductEntity> primaryCategory = root.join(Product_.primaryCategoryIndex);
-		Join<CategoryProductEntity, CategoryAttributeEntity> attribute = primaryCategory.join(Category_.attributes);
-		Join<CategoryProductEntity, CategoryType> type = primaryCategory.join(Category_.categoryType);
+		Join<ProductEntity, CategoryProductEntity> primaryCategory = root.join(ProductEntity_.primaryCategoryIndex);
+		Join<CategoryProductEntity, CategoryAttributeEntity> attribute = primaryCategory.join(CategoryEntity_.attributes);
+		Join<CategoryProductEntity, CategoryType> type = primaryCategory.join(CategoryEntity_.categoryType);
 		
-		cq.multiselect(	primaryCategory.get(CategoryProduct_.categoryId).alias("categoryId"),
-						primaryCategory.get(CategoryProduct_.categoryCode).alias("categoryCode"),
-						attribute.get(CategoryAttribute_.categoryAttributeId).alias("categoryAttributeId"),
-						attribute.get(CategoryAttribute_.categoryDesc).alias("categoryDesc"),
+		cq.multiselect(	primaryCategory.get(CategoryProductEntity_.categoryId).alias("categoryId"),
+						primaryCategory.get(CategoryProductEntity_.categoryCode).alias("categoryCode"),
+						attribute.get(CategoryAttributeEntity_.categoryAttributeId).alias("categoryAttributeId"),
+						attribute.get(CategoryAttributeEntity_.categoryDesc).alias("categoryDesc"),
 						type.get(CategoryType_.categoryTypeCode).alias("categoryTypeCode"),
 						type.get(CategoryType_.categoryTypeDesc).alias("categoryTypeDesc"),
-						primaryCategory.get(Category_.categoryLevel).alias("categoryLevel")
+						primaryCategory.get(CategoryEntity_.categoryLevel).alias("categoryLevel")
 		);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
@@ -105,12 +105,12 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		if(!(productCode == null)) {
 			
 			cq.where(cb.and(
-					cb.equal(root.get(Product_.productUPC), productCode),
-					cb.equal(attribute.get(CategoryAttribute_.lclCd), locale)
+					cb.equal(root.get(ProductEntity_.productUPC), productCode),
+					cb.equal(attribute.get(CategoryAttributeEntity_.lclCd), locale)
 					)
 			);
 			
-			conditions.add(cb.equal(root.get(Product_.productUPC), productCode));
+			conditions.add(cb.equal(root.get(ProductEntity_.productUPC), productCode));
 		}
 		
 		TypedQuery<Tuple> query = em.createQuery(cq);

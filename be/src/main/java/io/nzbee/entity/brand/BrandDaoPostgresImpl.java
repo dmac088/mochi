@@ -25,7 +25,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.Brand_;
+import io.nzbee.entity.brand.BrandEntity_;
 
 @Component
 public class BrandDaoPostgresImpl  implements IBrandDao { 
@@ -89,7 +89,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
 		conditions.add(
-				cb.equal(root.get(Brand_.BRAND_CODE), brandCode)
+				cb.equal(root.get(BrandEntity_.BRAND_CODE), brandCode)
 		);
 		
 		TypedQuery<BrandEntity> query = em.createQuery(cq

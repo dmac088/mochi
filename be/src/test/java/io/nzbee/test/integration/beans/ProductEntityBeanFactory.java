@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
@@ -83,23 +82,19 @@ public class ProductEntityBeanFactory {
 		priceUSD.setProduct(product);
 		
 		//we need a brand
-		product.setBrand(brandService.findByCode(Constants.localeENGB, 
-												 "PLA01").get());
+		product.setBrand(brandService.findByCode("PLA01").get());
 				
 				
 		//we need a type
-		product.setDepartment(departmentService.findByCode(	Constants.localeENGB, 
-				 											"ACC01").get());
+		product.setDepartment(departmentService.findByCode("ACC01").get());
 				
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 				
 		//we need a category
-		CategoryProductEntity cpf = (CategoryProductEntity) categoryService.findByCode(Constants.localeENGB, 
-																		  "POM01").get();
+		CategoryProductEntity cpf = (CategoryProductEntity) categoryService.findByCode("POM01").get();
 				
-		CategoryProductEntity cpv = (CategoryProductEntity) categoryService.findByCode(Constants.localeENGB, 
-				  														  "CIT01").get();
+		CategoryProductEntity cpv = (CategoryProductEntity) categoryService.findByCode("CIT01").get();
 		
 		//add the category to the product
 		product.addProductCategory(cpf);
@@ -107,8 +102,7 @@ public class ProductEntityBeanFactory {
 		product.setPrimaryCategory(cpf);
 		
 		//we should add a tag
-		TagEntity t = tagService.findByCode(	Constants.localeENGB, 
-										"ORG01").get();
+		TagEntity t = tagService.findByCode("ORG01").get();
 		
 		product.addTag(t);
 		

@@ -101,7 +101,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 true,
 															 false,
 															 false,
-															 ""), "ProductMapping")
+															 ""))
 				
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
@@ -138,7 +138,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 ""), "ProductMapping")
+															 ""))
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productId", productId)
@@ -180,7 +180,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 ""), "ProductMapping")
+															 ""))
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
@@ -222,7 +222,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 ""), "ProductMapping")
+															 ""))
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productDesc", productDesc)
@@ -256,7 +256,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 ""), "ProductMapping")
+															 ""))
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -288,7 +288,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 ""), "ProductMapping")
+															 ""))
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -351,7 +351,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  false,
 													  false,
 													  true,
-													  ""), "ProductMapping")
+													  ""))
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -452,7 +452,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					   									false,
 					   									false,
 					   									true,
-					   									sort), "ProductMapping")
+					   									sort))
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("activeProductCode", 	Constants.activeSKUCode)
@@ -598,7 +598,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   cp.cat_lvl, " +
 						"	   cp.cat_prnt_id, " +	
 						"	   ca.cat_lcl_id, " +
-						"	   ca.cat_id, " +
 						"	   ca.cat_desc, " +
 						"	   ca.cat_img_pth, " +
 						"	   ct.cat_typ_id 		AS cat_typ_id, 	" +
@@ -615,8 +614,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   attr.prd_lcl_id, " +
 						"	   attr.prd_desc, " +
 						"	   attr.prd_lng_desc, " +	
-						"	   attr.prd_img_pth, " +	
-						"	   attr.lcl_cd, " +
+						"	   attr.prd_img_pth, " +
 						"	   dept.dept_id,   " + 
 						"	   dept.dept_cd,   " + 
 						"	   dept.dept_class,   " +

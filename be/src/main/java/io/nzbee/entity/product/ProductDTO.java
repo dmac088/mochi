@@ -1,6 +1,7 @@
 package io.nzbee.entity.product;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import io.nzbee.entity.brand.BrandDTO;
@@ -43,7 +44,7 @@ public class ProductDTO {
 	protected DepartmentDTO department;
 	
 	//these fields will contain all the categories related to the product 1->N relationship
-	protected Set<CategoryProductDTO> categories;
+	protected Set<CategoryProductDTO> categories = new HashSet<CategoryProductDTO>();
 	
 	//pricing objects
 	protected Double retailPrice;
@@ -71,7 +72,7 @@ public class ProductDTO {
 		this.productId 				= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
         this.productUPC 			= tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
         this.productDesc 			= tuple[aliasToIndexMap.get(SHORT_DESC_ALIAS)].toString();
-        this.productLongDesc 		= tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
+       // this.productLongDesc 		= tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
         this.inStock 				= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
 		this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
 		this.productStatusCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
