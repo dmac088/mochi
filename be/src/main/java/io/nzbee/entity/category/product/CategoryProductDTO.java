@@ -1,5 +1,6 @@
 package io.nzbee.entity.category.product;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 import io.nzbee.entity.category.CategoryDTO;
@@ -23,10 +24,10 @@ public class CategoryProductDTO extends CategoryDTO {
 	
 	public CategoryProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);
-		this.categoryLevel 			= ((Number) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
-		this.productCount    		= ((Number) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue();
+		this.categoryLevel 			= ((BigInteger) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
+		//this.productCount    		= ((Number) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue();
 		this.parentCategory 		= new CategoryProductDTO(tuple, aliasToIndexMap);
-		this.childCategoryCount    	= ((Number) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue();
+		this.childCategoryCount    	= ((BigInteger) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue();
 	}
 	
 

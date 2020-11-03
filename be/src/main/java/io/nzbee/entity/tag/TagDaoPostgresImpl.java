@@ -23,7 +23,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.entity.tag.Tag_;
 
 @Component 
 public class TagDaoPostgresImpl implements ITagDao {
@@ -124,7 +123,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
 		conditions.add(
-				cb.equal(root.get(Tag_.TAG_CODE), code)
+				cb.equal(root.get(TagEntity_.TAG_CODE), code)
 		);
 		
 		TypedQuery<TagEntity> query = em.createQuery(cq

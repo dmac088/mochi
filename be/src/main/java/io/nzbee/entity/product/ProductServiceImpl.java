@@ -1,6 +1,5 @@
 package io.nzbee.entity.product;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;

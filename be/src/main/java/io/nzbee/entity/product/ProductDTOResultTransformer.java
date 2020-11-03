@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
 import io.nzbee.entity.brand.BrandDTO;
+import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
 
@@ -20,7 +21,7 @@ public class ProductDTOResultTransformer implements ResultTransformer {
 		
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
         
-        Long productId = ((Number) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
+        Long productId = ((java.math.BigInteger) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
  
         ProductDTO productDTO = productDTOMap.computeIfAbsent(
             productId,

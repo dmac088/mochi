@@ -29,7 +29,7 @@ public class BrandDTO {
 		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
-		this.count 		= ((Number) tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)]).longValue();
+		//this.count 		= ((Number) tuple[aliasToIndexMap.get(COUNT_ALIAS)]).longValue();
 	}
 
 	public static String getIdAlias() {

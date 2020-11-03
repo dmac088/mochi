@@ -29,13 +29,12 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryEntity;
-import io.nzbee.entity.category.Category_;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.attribute.CategoryAttribute_;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity_;
 import io.nzbee.entity.category.product.CategoryProductEntity;
-import io.nzbee.entity.category.product.CategoryProduct_;
+import io.nzbee.entity.category.product.CategoryProductEntity_;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.Product_;
+import io.nzbee.entity.product.ProductEntity_;
 
 @Component(value="categoryEntityPostgresDao")
 public class CategoryDaoPostgresImpl implements ICategoryDao {
@@ -133,7 +132,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
 		conditions.add(
-				cb.equal(root.get(Category_.CATEGORY_CODE), categoryCode)
+				cb.equal(root.get(CategoryEntity_.CATEGORY_CODE), categoryCode)
 		);
 		
 		TypedQuery<CategoryEntity> query = em.createQuery(cq
@@ -419,16 +418,16 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
 		
-		Join<CategoryEntity, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
-		Join<CategoryEntity, CategoryEntity> parent = root.join(Category_.parent);
+		Join<CategoryEntity, CategoryAttributeEntity> categoryAttribute = root.join(CategoryEntity_.attributes);
+		Join<CategoryEntity, CategoryEntity> parent = root.join(CategoryEntity_.parent);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 	
 		if(!(parentCategoryCode == null)) {
-			conditions.add(cb.equal(parent.get(Category_.categoryCode), parentCategoryCode));
+			conditions.add(cb.equal(parent.get(CategoryEntity_.categoryCode), parentCategoryCode));
 		}
 		
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttributeEntity_.lclCd), locale));
 		
 		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
@@ -450,14 +449,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
 		
-		Join<CategoryEntity, CategoryAttributeEntity> categoryAttribute = root.join(Category_.attributes);
+		Join<CategoryEntity, CategoryAttributeEntity> categoryAttribute = root.join(CategoryEntity_.attributes);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
 		if(!(level == null)) {
-			conditions.add(cb.equal(root.get(Category_.categoryLevel), level));
+			conditions.add(cb.equal(root.get(CategoryEntity_.categoryLevel), level));
 		}
 	
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttributeEntity_.lclCd), locale));
 		
 		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
@@ -477,14 +476,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
 		
 		Root<CategoryProductEntity> root = cq.from(CategoryProductEntity.class);
-		Join<CategoryProductEntity, CategoryAttributeEntity> categoryAttribute = root.join(CategoryProduct_.attributes);
-		Join<CategoryProductEntity, ProductEntity> product = root.join(CategoryProduct_.products);
+		Join<CategoryProductEntity, CategoryAttributeEntity> categoryAttribute = root.join(CategoryProductEntity_.attributes);
+		Join<CategoryProductEntity, ProductEntity> product = root.join(CategoryProductEntity_.products);
 		
 		List<Predicate> conditions = new ArrayList<Predicate>();
-		conditions.add(cb.equal(product.get(Product_.productUPC), productCode));
+		conditions.add(cb.equal(product.get(ProductEntity_.productUPC), productCode));
 		
 	
-		conditions.add(cb.equal(categoryAttribute.get(CategoryAttribute_.lclCd), locale));
+		conditions.add(cb.equal(categoryAttribute.get(CategoryAttributeEntity_.lclCd), locale));
 		
 		TypedQuery<CategoryEntity> query = em.createQuery(cq
 				.select(root)
@@ -621,7 +620,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 								 "      MAX(retail_price.prc_val) 		AS max_retail_price " 
 							   : "") + 
 				"FROM descendants cc " +
-				"LEFT JOIN mochi.product_category pc " +
+				"LEFT JOIN mochi.ProductEntity_category pc " +
 				"ON cc.cat_id = pc.cat_id " +
 				
 				"LEFT JOIN 	( " +
@@ -630,7 +629,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			upc_cd " +
 				"		 FROM mochi.product prd " +
 				"		  " +
-				"		 INNER JOIN mochi.product_status ps " +
+				"		 INNER JOIN mochi.ProductEntity_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 								
@@ -644,7 +643,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				: "") +
 				
 				((hasTags) ?
-				"INNER JOIN mochi.product_tag pt" + 
+				"INNER JOIN mochi.ProductEntity_tag pt" + 
 				"		ON prd.prd_id = pt.prd_id " + 
 				
 				
@@ -684,7 +683,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 INNER JOIN mochi.price_type pt  " +
 				"		 ON prc.prc_typ_id = pt.prc_typ_id " +
 
-				"		 INNER JOIN mochi.product_status ps " +
+				"		 INNER JOIN mochi.ProductEntity_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 				"		 WHERE curr.ccy_cd = 	:currency " +
@@ -707,7 +706,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 INNER JOIN mochi.price_type pt  " +
 				"		 ON prc.prc_typ_id = pt.prc_typ_id " +
 
-				"		 INNER JOIN mochi.product_status ps " +
+				"		 INNER JOIN mochi.ProductEntity_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 				"		 WHERE curr.ccy_cd = 	:currency " +
