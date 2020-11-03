@@ -27,7 +27,7 @@ public class CategoryProductDTO extends CategoryDTO {
 		this.categoryLevel 			= ((BigInteger) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
 		//this.productCount    		= ((Number) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue();
 		this.parentCategory 		= new CategoryProductParentDTO(tuple, aliasToIndexMap);
-		this.childCategoryCount    	= ((BigInteger) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue();
+		//this.childCategoryCount    	= ((BigInteger) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue();
 	}
 	
 
