@@ -110,9 +110,9 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     	
     	assertNotNull(found.getCategories());
     	
-//    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent())
-//    	.isTrue();
-//    	
+    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent())
+    	.isTrue();
+    	
 //    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findFirst().isPresent())
 //    	.isTrue();
     	
