@@ -17,7 +17,7 @@ public class CategoryProductDTO extends CategoryDTO {
 	
 	private Long productCount;
 	
-	private CategoryProductDTO parentCategory;
+	private CategoryProductParentDTO parentCategory;
 	
 	private Long childCategoryCount;
 	
@@ -26,7 +26,7 @@ public class CategoryProductDTO extends CategoryDTO {
 		super(tuple, aliasToIndexMap);
 		this.categoryLevel 			= ((BigInteger) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
 		//this.productCount    		= ((Number) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue();
-		//this.parentCategory 		= new CategoryProductDTO(tuple, aliasToIndexMap);
+		this.parentCategory 		= new CategoryProductParentDTO(tuple, aliasToIndexMap);
 		this.childCategoryCount    	= ((BigInteger) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue();
 	}
 	
@@ -39,7 +39,7 @@ public class CategoryProductDTO extends CategoryDTO {
 		return productCount;
 	}
 
-	public CategoryProductDTO getParentCategory() {
+	public CategoryProductParentDTO getParentCategory() {
 		return parentCategory;
 	}
 
