@@ -1,8 +1,11 @@
 package io.nzbee.entity.tag;
 
+import java.math.BigInteger;
 import java.util.Map;
 
-public class TagDTO {
+import io.nzbee.search.ISearchDimension;
+
+public class TagDTO implements ISearchDimension  {
 
 	public static final String ID_ALIAS = "tag_id";
 	
@@ -11,6 +14,8 @@ public class TagDTO {
     public static final String DESC_ALIAS = "tag_desc";
     
     public static final String LOCALE_CODE_ALIAS = "lcl_cd";
+    
+    public static final String OBJECT_COUNT_ALIAS = "object_count";
 	
 	private Long tagId;
 	
@@ -19,12 +24,15 @@ public class TagDTO {
 	private String tagDesc;
 	
 	private String locale;
+	
+	private Long objectCount;
 
 	public TagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.tagId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
-		this.tagCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
-		this.tagDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
-		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
+		this.tagId 			= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.tagCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
+		this.tagDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
+		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
+		this.objectCount 	= ((BigInteger) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue();
 	}
 
 	public static String getIdAlias() {
@@ -57,6 +65,33 @@ public class TagDTO {
 
 	public String getLocale() {
 		return locale;
+	}
+
+	@Override
+	public String getCode() {
+		return tagCode;
+	}
+
+	@Override
+	public String getDesc() {
+		return tagDesc;
+	}
+
+	@Override
+	public String getCurrency() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Long getCount() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		return false;
 	}
 	
 	

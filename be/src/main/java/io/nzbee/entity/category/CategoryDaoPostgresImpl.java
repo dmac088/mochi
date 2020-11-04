@@ -2,6 +2,7 @@
 package io.nzbee.entity.category;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -167,7 +168,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false, 
-															 true), "CategoryMapping")
+															 true))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -197,7 +198,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
-															 false), "CategoryMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -226,7 +227,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 true,
-															 false), "CategoryMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -270,7 +271,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
-															 false), "CategoryMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -279,10 +280,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
 		
-		return results.stream().map(c -> this.objectToDTO(c, locale)).collect(Collectors.toSet());
+		@SuppressWarnings("unchecked")
+		Set<CategoryDTO> results = new HashSet<CategoryDTO>(query.getResultList());
+		
+		return results;
 	}
 	
 	
@@ -308,7 +312,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 true,
 															 false,
-															 false), "CategoryMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("categoryId", categoryId)
@@ -349,7 +353,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 true,
 															 false,
 															 false,
-															 false), "CategoryMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("categoryDesc", categoryDesc)
@@ -390,7 +394,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 true,
-															 false), "CategoryMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("parentCategoryCode", "-1")
@@ -620,7 +624,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 								 "      MAX(retail_price.prc_val) 		AS max_retail_price " 
 							   : "") + 
 				"FROM descendants cc " +
-				"LEFT JOIN mochi.ProductEntity_category pc " +
+				"LEFT JOIN mochi.product_category pc " +
 				"ON cc.cat_id = pc.cat_id " +
 				
 				"LEFT JOIN 	( " +
@@ -629,7 +633,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"			upc_cd " +
 				"		 FROM mochi.product prd " +
 				"		  " +
-				"		 INNER JOIN mochi.ProductEntity_status ps " +
+				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 								
@@ -643,7 +647,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				: "") +
 				
 				((hasTags) ?
-				"INNER JOIN mochi.ProductEntity_tag pt" + 
+				"INNER JOIN mochi.product_tag pt" + 
 				"		ON prd.prd_id = pt.prd_id " + 
 				
 				
@@ -683,7 +687,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 INNER JOIN mochi.price_type pt  " +
 				"		 ON prc.prc_typ_id = pt.prc_typ_id " +
 
-				"		 INNER JOIN mochi.ProductEntity_status ps " +
+				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 				"		 WHERE curr.ccy_cd = 	:currency " +
@@ -706,7 +710,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 INNER JOIN mochi.price_type pt  " +
 				"		 ON prc.prc_typ_id = pt.prc_typ_id " +
 
-				"		 INNER JOIN mochi.ProductEntity_status ps " +
+				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
 				"		  " +
 				"		 WHERE curr.ccy_cd = 	:currency " +
@@ -720,7 +724,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd 	<> :categoryCode " : "") +
 				((hasBrands)   						? " AND b.bnd_cd 	in :brandCodes " : "") +
 				((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
-				((hasTags) 							? " AND t.tag_cd 	in 	:tagCodes " : "") +
+				((hasTags) 							? " AND t.tag_cd 	in :tagCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
@@ -784,7 +788,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				" 		pa.cat_lcl_id 			AS cat_prnt_lcl_id, " +
 				"       pa.cat_desc 			AS cat_prnt_desc, " +
 				"       pa.lcl_cd 				AS cat_prnt_lcl_cd, " +
-				"		a.cat_lcl_id			AS cat_lcl_id, " +
 				"       a.cat_img_pth			AS cat_img_pth, " +
 				"       s.object_count			AS object_count, " +
 				"		coalesce(cs.child_cat_count,0)		AS child_cat_count ") +

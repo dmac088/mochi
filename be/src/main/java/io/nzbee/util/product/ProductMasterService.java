@@ -182,7 +182,7 @@ public class ProductMasterService {
 		
 		ProductAttributeEntity pa = (opa.isPresent()) 
 		? opa.get()
-		: (new io.nzbee.entity.product.attribute.ProductAttributeEntity());
+		: (new ProductAttributeEntity());
 		
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
