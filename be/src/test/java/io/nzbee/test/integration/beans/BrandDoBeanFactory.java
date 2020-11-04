@@ -14,7 +14,6 @@ public class BrandDoBeanFactory {
 		
 		Brand brand = new Brand( "TST03",
 								 "test brand",
-								 10,
 								 "en-GB");
 		
 		return brand;

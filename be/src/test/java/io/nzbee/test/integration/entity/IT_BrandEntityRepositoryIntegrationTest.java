@@ -24,6 +24,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
+import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.test.integration.beans.BrandEntityBeanFactory;
@@ -85,8 +86,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrand() {
     	
         // when
-    	BrandEntity found = brandService.findById(Constants.localeENGB, 
-				  							brand.getBrandId()).get();
+    	BrandDTO found = brandService.findById(Constants.localeENGB, 
+				  								brand.getBrandId()).get();
      
         // then
     	assertFound(found);
@@ -97,7 +98,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrand() {
     	
         // when
-    	BrandEntity found = brandService.findByCode("en-GB", 
+    	BrandDTO found = brandService.findByCode("en-GB", 
 											  "TST02").get();
      
         // then
@@ -109,7 +110,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrand() {
     	
         // when
-    	BrandEntity found = brandService.findByDesc(Constants.localeENGB, 
+    	BrandDTO found = brandService.findByDesc(Constants.localeENGB, 
 				 							  "test brand").get();
      
         //then
@@ -123,12 +124,12 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	Set<String> tagCodes 		= new HashSet<String>();
     	
         // when
-    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
-				  								Constants.currencyUSD, 
-				  								"FRT01", 
-				  								categoryCodes, 
-				  								tagCodes, 
-				  								null);
+    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+					  								Constants.currencyUSD, 
+					  								"FRT01", 
+					  								categoryCodes, 
+					  								tagCodes, 
+					  								null);
      
         //then
     	assertNotNull(lb);
@@ -144,12 +145,12 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	categoryCodes.add("POM01");
     	
         // when
-    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
-				  								Constants.currencyUSD, 
-				  								"FRT01", 
-				  								categoryCodes, 
-				  								tagCodes, 
-				  								null);
+    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+					  								Constants.currencyUSD, 
+					  								"FRT01", 
+					  								categoryCodes, 
+					  								tagCodes, 
+					  								null);
      
         //then
     	assertNotNull(lb);
@@ -165,13 +166,13 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("32.4");
 
 		// when
-    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
-				  								Constants.currencyHKD, 
-				  								"FRT01", 
-				  								categoryCodes, 
-				  								tagCodes, 
-				  								price
-				  								);
+    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+					  								Constants.currencyHKD, 
+					  								"FRT01", 
+					  								categoryCodes, 
+					  								tagCodes, 
+					  								price
+					  								);
      
         //then
     	assertNotNull(lb);
@@ -187,13 +188,12 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("4.15");
 
 		// when
-    	Set<BrandEntity> lb = brandService.findAll(	Constants.localeENGB, 
-				  								Constants.currencyUSD, 
-				  								"FRT01", 
-				  								categoryCodes, 
-				  								tagCodes, 
-				  								price
-				  								);
+    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+					  								Constants.currencyUSD, 
+					  								"FRT01", 
+					  								categoryCodes, 
+					  								tagCodes, 
+					  								price);
      
         //then
     	assertNotNull(lb);
@@ -201,11 +201,12 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 
 	}
     
-    private void assertFound(final BrandEntity found) {
+    private void assertFound(final BrandDTO found) {
     	
     	assertThat(found.getBrandCode())
         .isEqualTo("TST02");
-	    assertThat(found.getBrandAttribute().getBrandDesc())
+    	
+	    assertThat(found.getBrandDesc())
 	    .isEqualTo("test brand");
     }
     

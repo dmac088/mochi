@@ -24,8 +24,9 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
-import io.nzbee.entity.category.CategoryEntity;
+import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.brand.CategoryBrandDTO;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 
@@ -96,7 +97,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrandCategory() {
     	
         // when
-    	CategoryEntity found = categoryService.findById(Constants.localeENGB, 
+    	CategoryDTO found = categoryService.findById(Constants.localeENGB, 
 												  category.getCategoryId()).get();
      
         // then
@@ -108,7 +109,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrandCategory() {
     	
         // when
-    	CategoryEntity found = categoryService.findByCode(Constants.localeENGB, 
+    	CategoryDTO found = categoryService.findByCode(Constants.localeENGB, 
 				 									"TST02").get();
      
         // then
@@ -120,22 +121,27 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrandCategory() {
     	
         // when
-    	CategoryEntity found = categoryService.findByDesc(Constants.localeENGB, 
+    	CategoryDTO found = categoryService.findByDesc(Constants.localeENGB, 
 				 									"test brand category").get();
      
         //then
     	assertFound(found);
     }
     
-    private void assertFound(final CategoryEntity found) {
-    	assertThat(found.getCategoryCode())
+    private void assertFound(final CategoryDTO found) {
+    	
+    	CategoryBrandDTO cb = (CategoryBrandDTO) found;
+    	
+    	assertThat(cb.getCategoryCode())
         .isEqualTo("TST02");
-	    assertThat(found.getCategoryLevel())
+    	
+	    assertThat(cb.getBrandCount())
 	    .isEqualTo(new Long(2));
-	    assertThat(found.getCategoryType().getCategoryTypeCode())
-	    .isEqualTo("BND01");
-	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc())
+	    
+	    assertThat(cb.getCategoryDesc())
 	    .isEqualTo("test brand category");
+	    
+	  
     }
     
     @After

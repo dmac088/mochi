@@ -24,8 +24,9 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.category.CategoryEntity;
+import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -88,8 +89,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnProductCategory() {
     	
         // when
-    	CategoryEntity found = categoryService.findById(Constants.localeENGB, 
-												  category.getCategoryId()).get();
+    	CategoryDTO found = categoryService.findById(Constants.localeENGB, 
+    												 category.getCategoryId()).get();
      
         // then
     	assertFound(found);
@@ -99,8 +100,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnProductCategory() {
     	
         // when
-    	CategoryEntity found = categoryService.findByCode(Constants.localeENGB, 
-				 									"TST02").get();
+    	CategoryDTO found = categoryService.findByCode(	Constants.localeENGB, 
+    													"TST02").get();
      
         // then
     	assertFound(found);
@@ -110,16 +111,13 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByExistingCode_thenReturnProductCategory() {
     	
         // when
-    	CategoryEntity found = categoryService.findByCode(Constants.localeENGB, 
-				 									"FET01").get();
+    	CategoryDTO found = categoryService.findByCode(	Constants.localeENGB, 
+				 										"FET01").get();
      
     	assertThat(found.getCategoryCode())
         .isEqualTo("FET01");
-	    assertThat(found.getCategoryLevel())
-	    .isEqualTo(new Long(1));
-	    assertThat(found.getCategoryType().getCategoryTypeCode())
-	    .isEqualTo("PRD01");
-	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc())
+    	
+	    assertThat(found.getCategoryDesc())
 	    .isEqualTo("Featured");
     }
     
@@ -127,8 +125,8 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnProductCategory() {
     	
         // when
-    	CategoryEntity found = categoryService.findByDesc(Constants.localeENGB,
-				 									"test product category").get();
+    	CategoryDTO found = categoryService.findByDesc(	Constants.localeENGB,
+				 										"test product category").get();
      
         //then
     	assertFound(found);
@@ -142,18 +140,17 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	Set<CategoryEntity> lc = categoryService.findAll(Constants.localeENGB, 
-    												Constants.currencyUSD, 
-    												"FRT01",
-    												categories,
-    												brands, 
-    												tags, 
-    												null);
+    	Set<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
+		    											Constants.currencyUSD, 
+		    											"FRT01",
+		    											categories,
+		    											brands, 
+		    											tags, 
+		    											null);
      
         //then
     	assertNotNull(lc);
-    	assertThat(lc.size())
-        .isEqualTo(7);
+    	assertThat(lc.size()).isEqualTo(7);
     }
     
     @Test
@@ -165,18 +162,17 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	Set<CategoryEntity> lc = categoryService.findAll(Constants.localeENGB, 
-    												Constants.currencyUSD, 
-    												"FRT01", 
-    												categories,
-    												brands, 
-    												tags, 
-    												null);
+    	Set<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
+    													Constants.currencyUSD, 
+    													"FRT01", 
+    													categories,
+    													brands, 
+    													tags, 
+    													null);
      
         //then
     	assertNotNull(lc);
-    	assertThat(lc.size())
-        .isEqualTo(1);
+    	assertThat(lc.size()).isEqualTo(1);
     }
     
     @Test
@@ -188,30 +184,31 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	tags.add("GFR01");
     	
     	//when
-    	Set<CategoryEntity> lc = categoryService.findAll(Constants.localeENGB, 
-    												Constants.currencyUSD, 
-    												"FRT01", 
-    												categories,
-    												brands, 
-    												tags, 
-    												null);
+    	Set<CategoryDTO> lc = categoryService.findAll(		Constants.localeENGB, 
+		    												Constants.currencyUSD, 
+		    												"FRT01", 
+		    												categories,
+		    												brands, 
+		    												tags, 
+		    												null);
      
         //then
 		assertNotNull(lc);
-    	assertThat(lc.size())
-        .isEqualTo(1);
+    	assertThat(lc.size()).isEqualTo(1);
     }
     
   
-    private void assertFound(final CategoryEntity found) {
+    private void assertFound(final CategoryDTO found) {
     	
-    	assertThat(found.getCategoryCode())
+    	CategoryProductDTO cp = (CategoryProductDTO) found;
+    	
+    	assertThat(cp.getCategoryCode())
         .isEqualTo("TST02");
-	    assertThat(found.getCategoryLevel())
+    	
+	    assertThat(cp.getCategoryLevel())
 	    .isEqualTo(new Long(1));
-	    assertThat(found.getCategoryType().getCategoryTypeCode())
-	    .isEqualTo("PRD01");
-	    assertThat(found.getAttributes().stream().filter(a -> a.getLclCd().equals("en-GB")).findFirst().get().getCategoryDesc())
+	    
+	    assertThat(cp.getCategoryDesc())
 	    .isEqualTo("test product category");
     }
 
