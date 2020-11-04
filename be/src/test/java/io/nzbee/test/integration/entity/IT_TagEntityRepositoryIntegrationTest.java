@@ -27,6 +27,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.TagDTO;
 import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.test.integration.beans.TagEntityBeanFactory;
 
@@ -73,8 +74,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindById_thenReturnTag() {
 
 		// when
-		TagEntity found = tagService.findById(Constants.localeENGB, tag.getTagId())
-				.get();
+		TagDTO found = tagService.findById(Constants.localeENGB, tag.getTagId()).get();
 
 		// then
 		assertFound(found);
@@ -85,7 +85,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnTag() {
 
 		// when
-		TagEntity found = tagService.findByCode(Constants.localeENGB, "TST02").get();
+		TagDTO found = tagService.findByCode(Constants.localeENGB, "TST02").get();
 
 		// then
 		assertFound(found);
@@ -96,8 +96,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnTag() {
 
 		// when
-		TagEntity found = tagService.findByDesc(Constants.localeENGB, "test tag")
-				.get();
+		TagDTO found = tagService.findByDesc(Constants.localeENGB, "test tag").get();
 
 		// then
 		assertFound(found);
@@ -111,8 +110,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		tagCodes.add("TST02");
 
 		// when
-		Set<TagEntity> lb = tagService.findAll(Constants.localeENGB, 
-										 tagCodes);
+		Set<TagDTO> lb = tagService.findAll(Constants.localeENGB, tagCodes);
 
 		// then
 		assertNotNull(lb);
@@ -126,18 +124,16 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> brandCodes = new HashSet<String>();
 
 		// when
-		List<TagEntity> lb = tagService.findAll(Constants.localeENGB, 
-										  Constants.currencyUSD, 
-										  "FRT01",
-										  categoryCodes, 
-										  brandCodes,
-										  new Double(1000));
+		List<TagDTO> lb = tagService.findAll( Constants.localeENGB, 
+											  Constants.currencyUSD, 
+											  "FRT01",
+											  categoryCodes, 
+											  brandCodes,
+											  new Double(1000));
 
 		// then
 		assertNotNull(lb);
 		assertThat(lb.size()).isEqualTo(2);
-		assertThat(lb.stream().filter(t->t.getCode().equals("GFR01")).findFirst().get().getCount()).isEqualTo(1);
-		assertThat(lb.stream().filter(t->t.getCode().equals("ORG01")).findFirst().get().getCount()).isEqualTo(1);
 	}
 
 	@Test
@@ -149,18 +145,16 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		categoryCodes.add("POM01");
 
 		// when
-		List<TagEntity> lt = tagService.findAll(
-											Constants.localeENGB, 
-											Constants.currencyUSD, 
-											"FRT01",
-											categoryCodes, 
-											brandCodes,
-											new Double(1000));
+		List<TagDTO> lt = tagService.findAll(	Constants.localeENGB, 
+												Constants.currencyUSD, 
+												"FRT01",
+												categoryCodes, 
+												brandCodes,
+												new Double(1000));
 
 		// then
 		assertNotNull(lt);
 		assertThat(lt.size()).isEqualTo(1);
-		assertThat(lt.stream().findFirst().get().getCount()).isEqualTo(1);
 	}
 	
 	
@@ -173,13 +167,12 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("97.2");
 
 		// when
-		List<TagEntity> lb = tagService.findAll(
-				Constants.localeENGB, 
-				Constants.currencyHKD, 
-				"FRT01",
-				categoryCodes, 
-				brandCodes,
-				price);
+		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
+												Constants.currencyHKD, 
+												"FRT01",
+												categoryCodes, 
+												brandCodes,
+												price);
 
 		// then
 		assertNotNull(lb);
@@ -195,24 +188,23 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("12.4");
 
 		// when
-		List<TagEntity> lb = tagService.findAll(
-				Constants.localeENGB, 
-				Constants.currencyUSD, 
-				"FRT01",
-				categoryCodes, 
-				brandCodes,
-				price);
+		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
+												Constants.currencyUSD, 
+												"FRT01",
+												categoryCodes, 
+												brandCodes,
+												price);
 
 		// then
 		assertNotNull(lb);
 		assertThat(lb.size()).isEqualTo(2);
 	}
 
-	private void assertFound(final TagEntity found) {
+	private void assertFound(final TagDTO found) {
 
-		assertThat(found.getCode()).isEqualTo("TST02");
-		assertThat(found.getTagAttribute().getTagDesc()).isEqualTo("test tag");
-		assertNotNull(found.getCount());
+		assertThat(found.getTagCode()).isEqualTo("TST02");
+		assertThat(found.getTagDesc()).isEqualTo("test tag");
+		
 	}
 
 	@After

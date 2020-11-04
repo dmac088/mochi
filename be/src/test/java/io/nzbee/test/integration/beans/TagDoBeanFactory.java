@@ -13,7 +13,7 @@ public class TagDoBeanFactory {
 		
 		return new Tag(	"TST01",
 							"test tag",
-							20,
+							new Long(20),
 							"en-GB",
 							"HKD");
 		

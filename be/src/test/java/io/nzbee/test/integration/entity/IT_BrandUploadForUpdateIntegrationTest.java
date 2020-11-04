@@ -25,7 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.brand.BrandEntity;
+import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.util.brand.BrandMasterService;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +61,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
 		// when
-		Optional<BrandEntity> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
 
 		// then
 		assertFound_ENGB(found);
@@ -70,30 +70,30 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
 		// when
-		Optional<BrandEntity> found = brandService.findByCode(Constants.localeZHHK, "ENZ01");
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeZHHK, "ENZ01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<BrandEntity> found) {
+	private void assertFound_ENGB(Optional<BrandDTO> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getBrandAttribute().getBrandDesc())
+		assertThat(found.get().getBrandDesc())
 		.isEqualTo("Enza Update EN");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<BrandEntity> found) {
+	private void assertFound_ZHHK(Optional<BrandDTO> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getBrandAttribute().getBrandDesc())
+		assertThat(found.get().getBrandDesc())
 		.isEqualTo("Enza Update HK");
 	}
 
