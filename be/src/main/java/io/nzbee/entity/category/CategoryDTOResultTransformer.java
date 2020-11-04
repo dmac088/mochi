@@ -1,4 +1,4 @@
-package io.nzbee.entity.tag;
+package io.nzbee.entity.category;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -6,12 +6,10 @@ import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
 import org.hibernate.transform.ResultTransformer;
 
-import io.nzbee.entity.tag.TagDTO;
 
-public class TagDTOResultTransformer implements ResultTransformer {
+public class CategoryDTOResultTransformer implements ResultTransformer {
 
 
 	/**
@@ -19,7 +17,7 @@ public class TagDTOResultTransformer implements ResultTransformer {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Long, TagDTO> tagDTOMap = new LinkedHashMap<>();
+	private Map<Long, CategoryDTO> CategoryDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
@@ -27,19 +25,19 @@ public class TagDTOResultTransformer implements ResultTransformer {
 		
 		System.out.println(Arrays.toString(aliases));
 		
-        Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(TagDTO.ID_ALIAS)]).longValue();
+        Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(CategoryDTO.ID_ALIAS)]).longValue();
  
-        TagDTO tagDTO = tagDTOMap.computeIfAbsent(
+        CategoryDTO CategoryDTO = CategoryDTOMap.computeIfAbsent(
             tagId,
-            id -> new TagDTO(tuple, aliasToIndexMap)
+            id -> new CategoryDTO(tuple, aliasToIndexMap)
         );
         
-        return tagDTO;
+        return CategoryDTO;
 	}
 
 	@Override
 	public List transformList(List collection) {
-		return new ArrayList<>(tagDTOMap.values());
+		return new ArrayList<>(CategoryDTOMap.values());
 	}
 	
 	public  Map<String, Integer> aliasToIndexMap(

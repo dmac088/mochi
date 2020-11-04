@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -15,6 +14,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.Arrays;
+import java.util.HashSet;
 import org.hibernate.Session;
 import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
@@ -65,7 +65,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 false,
-															 true),"TagMapping")
+															 true))
 				 .setParameter("locale", locale)
 				 .setParameter("tagIDs", ltids)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -94,7 +94,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 true,
 															 false,
-															 false),"TagMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("tagCodes", ltc)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -157,7 +157,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 true,
-															 false),"TagMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("tagDescriptions", ltd)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -185,7 +185,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 !tagCodes.isEmpty(),
 															 false,
-															 false),"TagMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -198,7 +198,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 		@SuppressWarnings("unchecked")
-		Set<TagDTO> results = (Set<TagDTO>) query.getResultStream().collect(Collectors.toSet());
+		Set<TagDTO> results = new HashSet<TagDTO>(query.getResultList());
 		
 		return results;
 	}
@@ -232,7 +232,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 false,
-															 false),"TagMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				
@@ -240,7 +240,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 		@SuppressWarnings("unchecked")
-		Set<TagDTO> results = (Set<TagDTO>) query.getResultStream().collect(Collectors.toSet());
+		Set<TagDTO> results = new HashSet<TagDTO>(query.getResultList());
 		
 		return results;
 		
@@ -248,7 +248,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	
 	@Override
-	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
+	public Set<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, max price = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
@@ -259,7 +259,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 !(maxPrice == null),
 															 false,
 															 false,
-															 false),"TagMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -282,7 +282,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 		@SuppressWarnings("unchecked")
-		List<TagDTO> results = query.getResultList();
+		Set<TagDTO> results = new HashSet<TagDTO>(query.getResultList());
 		
 		return results;
 		
@@ -310,7 +310,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"                              || '/' AS text) node " + 
 				"          FROM      mochi.category            AS t " + 
 				"          WHERE     0=0 " + 
-				"          AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " + 
+				"          AND t.cat_lvl = 0 " +
+				//"          AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
 				"                 t.cat_cd, " + 
@@ -337,11 +338,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"          GROUP BY  coalesce(s2.cat_id,s1.cat_id), " +
 				"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
 				")" + 
-				"			select t.tag_id,  " + 
-				"				   t.tag_cd, " + 
-				"				   lcl.tag_lcl_id, " + 
-				"				   lcl.tag_desc, " + 
-				"				   lcl.lcl_cd, 		" + 
+				"			select t.tag_id					as tag_id,  " + 
+				"				   t.tag_cd 				as tag_cd, " + 
+				"				   lcl.tag_lcl_id 			as tag_lcl_id, " + 
+				"				   lcl.tag_desc 			as tag_desc, " + 
+				"				   lcl.lcl_cd 				as lcl_cd, 		" + 
 				"				   count(distinct p.upc_cd) as object_count  " + 
 				"			from categories c  " + 
 				"				inner join mochi.product_category pc " + 
@@ -384,10 +385,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 								: "") +
 				
 				"			where 0=0  " +
-				((hasBrands) ? 				" 	AND b.bnd_cd in 	:brandCodes " 			: "") +
-				((hasTagCodes) ? 			" 	AND t.tag_cd in 	:tagCodes " 			: "") +
-				((hasTagDescriptions) ? 	" 	AND lcl.tag_desc in 	:tagDescriptions " 	: "") +
-				((hasTagIds) ? 	" 				AND t.tag_id 	 in 	:tagIDs " 	: "") +
+				((hasBrands) ? 				" 	AND b.bnd_cd 		in 	:brandCodes " 			: "") +
+				((hasTagCodes) ? 			" 	AND t.tag_cd 		in 	:tagCodes " 			: "") +
+				((hasTagDescriptions) ? 	" 	AND lcl.tag_desc 	in 	:tagDescriptions " 		: "") +
+				((hasTagIds) ? 	" 				AND t.tag_id 	 	in 	:tagIDs " 				: "") +
 				"			group by t.tag_id,  " + 
 				"				   t.tag_cd, " + 
 				"				   lcl.tag_lcl_id, " + 

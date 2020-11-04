@@ -2,7 +2,9 @@ package io.nzbee.entity.category;
 
 import java.util.Map;
 
-public class CategoryDTO {
+import io.nzbee.search.ISearchDimension;
+
+public class CategoryDTO implements ISearchDimension {
 
 	public static final String ID_ALIAS = "cat_id";
 	
@@ -11,6 +13,8 @@ public class CategoryDTO {
     public static final String DESC_ALIAS = "cat_desc";
     
     public static final String LOCALE_CODE_ALIAS = "lcl_cd";
+    
+    public static final String OBJECT_COUNT_ALIAS = "object_count";
 	
 	private Long categoryId;
 	
@@ -20,11 +24,14 @@ public class CategoryDTO {
 	
 	private String locale;
 	
+	private Long objectCount;
+	
 	public CategoryDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.categoryId 	= ((java.math.BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.categoryCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.categoryDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
+		this.objectCount	= ((java.math.BigDecimal) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue();
 	}
 
 
@@ -45,6 +52,37 @@ public class CategoryDTO {
 
 	public String getLocale() {
 		return locale;
+	}
+
+
+	@Override
+	public String getCode() {
+		return this.categoryCode;
+	}
+
+
+	@Override
+	public String getDesc() {
+		return this.categoryDesc;
+	}
+
+
+	@Override
+	public String getCurrency() {
+		return null;
+	}
+
+
+	@Override
+	public Long getCount() {
+		return this.objectCount;
+	}
+
+
+	@Override
+	public boolean isHierarchical() {
+		// TODO Auto-generated method stub
+		return false;
 	}
 	
 }
