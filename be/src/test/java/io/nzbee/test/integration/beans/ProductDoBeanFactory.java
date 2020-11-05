@@ -53,7 +53,6 @@ public class ProductDoBeanFactory {
 								   true,
 								   brand,
 								   department,
-								   pc1,
 								   new HashSet<ProductCategory>(Arrays.asList(pc1,pc2)));
 	}
 }

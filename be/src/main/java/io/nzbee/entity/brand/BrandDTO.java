@@ -82,11 +82,6 @@ public class BrandDTO implements ISearchDimension {
 	}
 
 	@Override
-	public String getCurrency() {
-		return null;
-	}
-
-	@Override
 	public boolean isHierarchical() {
 		return false;
 	}

@@ -76,13 +76,7 @@ public class TagDTO implements ISearchDimension  {
 	public String getDesc() {
 		return tagDesc;
 	}
-
-	@Override
-	public String getCurrency() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	@Override
 	public Long getCount() {
 		// TODO Auto-generated method stub

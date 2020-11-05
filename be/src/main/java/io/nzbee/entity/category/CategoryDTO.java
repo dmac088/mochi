@@ -68,12 +68,6 @@ public class CategoryDTO implements ISearchDimension {
 
 
 	@Override
-	public String getCurrency() {
-		return null;
-	}
-
-
-	@Override
 	public Long getCount() {
 		return this.objectCount;
 	}

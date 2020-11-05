@@ -27,8 +27,6 @@ public interface ISearchDimension {
 	
 	String getLocale();
 	
-	String getCurrency();
-	
 	Long getCount();
 	
 	boolean isHierarchical();
