@@ -25,7 +25,6 @@ public class BasicProduct extends Product {
 					   	 boolean inStock,
 					   	 Brand brand,
 					   	 Department department,
-					   	 ProductCategory category,
 					   	 Set<ProductCategory> productCategories) {
 	
 		super(productUPC,
@@ -41,7 +40,6 @@ public class BasicProduct extends Product {
 			  inStock,
 			  brand,
 			  department,
-			  category,
 			  productCategories);
 		
 		this.productType = this.getClass().getSimpleName().toString().toLowerCase();

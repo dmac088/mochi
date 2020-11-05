@@ -13,9 +13,6 @@ public class ProductDTOLightMapperImpl implements IProductDTOLightMapper {
 		//brand
 		pdto.setBrandDesc(d.getBrand().getBrandDesc());
 		
-		//cateogry
-		pdto.setPrimaryCategoryDesc(d.getPrimaryCategory().getCategoryDesc());
-		
 		//product 
 		pdto.setProductUPC(d.getProductUPC());
 		pdto.setProductDesc(d.getProductDesc());

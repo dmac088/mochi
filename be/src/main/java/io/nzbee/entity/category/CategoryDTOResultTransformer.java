@@ -23,16 +23,14 @@ public class CategoryDTOResultTransformer implements ResultTransformer {
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
 		
-		System.out.println(Arrays.toString(aliases));
-		
         Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(CategoryDTO.ID_ALIAS)]).longValue();
  
-        CategoryDTO CategoryDTO = CategoryDTOMap.computeIfAbsent(
+        CategoryDTO categoryDTO = CategoryDTOMap.computeIfAbsent(
             tagId,
             id -> new CategoryDTO(tuple, aliasToIndexMap)
         );
         
-        return CategoryDTO;
+        return categoryDTO;
 	}
 
 	@Override

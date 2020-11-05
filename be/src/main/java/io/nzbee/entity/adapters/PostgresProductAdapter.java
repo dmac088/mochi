@@ -117,10 +117,6 @@ public class PostgresProductAdapter implements IProductPortService {
 											 domainObject.getCategories().stream().map(cc -> cc.getCategoryCode())
 									.collect(Collectors.toSet()))
 					.stream().map(cd -> (CategoryProductEntity) Hibernate.unproxy(cd)).collect(Collectors.toSet());
-
-			io.nzbee.entity.category.product.CategoryProductEntity primaryCategory = (CategoryProductEntity) categoryService
-					.findByCode(domainObject.getPrimaryCategory().getCategoryCode()).get();
-
 			
 			//get all the tags
 			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
@@ -184,8 +180,6 @@ public class PostgresProductAdapter implements IProductPortService {
 			lcp.forEach(c -> {
 				product.addCategory(c);
 			});
-			product.setPrimaryCategory(primaryCategory);
-			product.addCategory(primaryCategory);
 			product.setBrand(b);
 			tags.forEach(t -> {
 				product.addTag(t);

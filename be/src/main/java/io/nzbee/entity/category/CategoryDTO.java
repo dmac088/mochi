@@ -31,7 +31,7 @@ public class CategoryDTO implements ISearchDimension {
 		this.categoryCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.categoryDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
-		this.objectCount	= ((java.math.BigDecimal) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue();
+	//	this.objectCount	= ((java.math.BigDecimal) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue();
 	}
 
 

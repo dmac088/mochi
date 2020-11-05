@@ -36,8 +36,6 @@ public abstract class Product {
 	private Double productMarkdown;
 	
 	private String productImage;
-
-	private ProductCategory primaryCategory;
 	
 	private String lclCd;
 	
@@ -71,7 +69,6 @@ public abstract class Product {
 				   	boolean			inStock,
 				   	Brand 			brand,
 				   	Department 		department,
-				   	ProductCategory category,
 				   	Set<ProductCategory> productCategories) {
 		
 					this.productUPC = productUPC;
@@ -86,8 +83,6 @@ public abstract class Product {
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
 					this.categories = productCategories;
-					this.primaryCategory = category;
-					this.categories.add(category);
 					this.productStatus = productStatus;
 					this.productLongDesc = productLongDesc;
 					this.inStock = inStock;
@@ -139,10 +134,6 @@ public abstract class Product {
 
 	public String getProductImage() {
 		return productImage;
-	}
-	
-	public ProductCategory getPrimaryCategory() {
-		return primaryCategory;
 	}
 
 	public String getLclCd() {

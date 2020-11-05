@@ -14,10 +14,6 @@ public class ProductDTOFullMapperImpl implements IProductDTOFullMapper {
 		pdto.setBrandCode(d.getBrand().getBrandCode());
 		pdto.setBrandDesc(d.getBrand().getBrandDesc());
 		
-		//cateogry
-		pdto.setPrimaryCategoryCode(d.getPrimaryCategory().getCategoryCode());
-		pdto.setPrimaryCategoryDesc(d.getPrimaryCategory().getCategoryDesc());
-		
 		//product 
 		pdto.setProductUPC(d.getProductUPC());
 		pdto.setProductDesc(d.getProductDesc());

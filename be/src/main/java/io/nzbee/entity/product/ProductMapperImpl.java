@@ -39,7 +39,6 @@ public class ProductMapperImpl implements IProductMapper {
 				   	dto.isInStock(),
 				   	brandMapper.DTOToDo(dto.getBrand()),
 				   	departmentMapper.DTOToDo(dto.getDepartment()),
-				   	categoryProductMapper.DTOToDo(dto.getPrimaryCategory()),
 				   	dto.getCategories().stream().map(c -> categoryProductMapper.DTOToDo(c)).collect(Collectors.toSet()));
 				   
 			return pO;
