@@ -253,6 +253,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		Session session = em.unwrap(Session.class);
 		
+		categoryCodes.add(categoryCode);
+		
 		Query query = session.createNativeQuery(constructSQL(
 															 !categoryCodes.isEmpty(),
 															 !brandCodes.isEmpty(),
@@ -261,7 +263,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false))
 				 .setParameter("locale", locale)
-				 .setParameter("categoryCode", categoryCode)
+				// .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		if(!categoryCodes.isEmpty()) {
