@@ -70,12 +70,13 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		// persist a new transient test tag
 		tagService.save(tag);
-
 	}
 
 	@Test
 	public void whenFindById_thenReturnTag() {
 
+		System.out.println(tag.getTagId());
+		
 		// when
 		TagEntity found = tagService.findById(tag.getTagId()).get();
 

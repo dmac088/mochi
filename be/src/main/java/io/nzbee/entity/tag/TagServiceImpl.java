@@ -1,6 +1,5 @@
 package io.nzbee.entity.tag;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +17,9 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	@Autowired
 	private ITagDao productTagDAO;
+	
+	@Autowired 
+	private ITagRepository tagRepository;
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
@@ -39,8 +41,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	public Optional<TagEntity> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tagRepository.findById(id);
 	}
 	
 	@Override
