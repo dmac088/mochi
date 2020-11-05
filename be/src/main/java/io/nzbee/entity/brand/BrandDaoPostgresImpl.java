@@ -57,7 +57,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false,
-															 true), "BrandMapping")
+															 true))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandIds", lbid);
@@ -126,7 +126,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false,
-															 false), "BrandMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandCodes", lbc);
@@ -160,7 +160,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 true,
-															 false), "BrandMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandDescriptions", lbd);
@@ -182,17 +182,19 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<String> lbc = brandCodes.stream().collect(Collectors.toList());
 		
-		Query query = session.createNativeQuery(constructSQL(true,
+		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
 															 false,
 															 false,
+															 !brandCodes.isEmpty(),
 															 false,
-															 false,
-															 false), "BrandMapping")
+															 false))
 				 .setParameter("locale", locale)
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("brandCodes", lbc);
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
+		if(!brandCodes.isEmpty()) {
+			query.setParameter("brandCodes", lbc);
+		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new BrandDTOResultTransformer());
@@ -216,7 +218,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false,
-															 false), "BrandMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("categoryCodes", lc);
@@ -251,7 +253,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 true,
 															 false,
 															 false,
-															 false), "BrandMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("productCodes", lpc);
@@ -277,7 +279,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false,
-															 false), "BrandMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -302,7 +304,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false,
-															 false), "BrandMapping")
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -368,8 +370,9 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"                              || cast(t.cat_id AS text) " + 
 			"                              || '/' AS text) node " + 
 			"          FROM      mochi.category            AS t " + 
-			"          WHERE     0=0 " + 
-			"          AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " + 
+			"          WHERE     0=0 " +
+			"		   AND t.cat_lvl = 0 "	+
+			//"          AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " + 
 			"          UNION ALL " + 
 			"          SELECT t.cat_id, " + 
 			"                 t.cat_cd, " + 
@@ -392,15 +395,15 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"          ON        s1.node <> s2.node " + 
 			"          AND       LEFT(s2.node, length(s1.node)) = s1.node " +
 			"		   WHERE 0=0 " + 
-					   ((hasCategories) ? 	"AND  s1.cat_cd IN (:categoryCodes) " : "") +
+			((hasCategories) ? 	"AND  s1.cat_cd IN (:categoryCodes) " : "") +
 			"          GROUP BY  coalesce(s2.cat_id,s1.cat_id), " +
 			"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
 			")" + 
-			"select b.bnd_id, " + 
-			"	    b.bnd_cd," + 
-			"	    lcl.bnd_lcl_id," + 
-			"	    lcl.bnd_desc," + 
-			"	    lcl.lcl_cd, " +		
+			"select b.bnd_id, 		" + 
+			"	    b.bnd_cd,		" + 
+			"	    lcl.bnd_lcl_id,	" + 
+			"	    lcl.bnd_desc,	" + 
+			"	    lcl.lcl_cd, 	" +		
 			"	    count(distinct p.upc_cd) as object_count " + 
 			"from categories c " + 
 			"	inner join mochi.product_category pc" + 
@@ -450,11 +453,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			((hasBrandCodes) ? " 				AND b.bnd_cd in 	:brandCodes " 			: "") +
 			((hasBrandDescriptions) ? " 		AND lcl.bnd_desc in :brandDescriptions " 	: "") +
 			((hasBrandIds) ? " 					AND b.bnd_id in 	:brandIds " 			: "") +
-			"group by b.bnd_id, " + 
-			"	   b.bnd_cd," + 
-			"	   lcl.bnd_desc," + 
-			"	   lcl.bnd_lcl_id, " +
-			"	   lcl.lcl_cd"	;
+			"group by 	b.bnd_id, 		" + 
+			"	   		b.bnd_cd,		" + 
+			"	   		lcl.bnd_desc,	" + 
+			"	   		lcl.bnd_lcl_id, " +
+			"	   		lcl.lcl_cd		";
 		
 	return sql;
 	}

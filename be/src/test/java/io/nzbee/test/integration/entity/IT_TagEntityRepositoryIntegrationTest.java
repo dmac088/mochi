@@ -124,7 +124,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> brandCodes = new HashSet<String>();
 
 		// when
-		List<TagDTO> lb = tagService.findAll( Constants.localeENGB, 
+		Set<TagDTO> lb = tagService.findAll( Constants.localeENGB, 
 											  Constants.currencyUSD, 
 											  "FRT01",
 											  categoryCodes, 
@@ -145,7 +145,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		categoryCodes.add("POM01");
 
 		// when
-		List<TagDTO> lt = tagService.findAll(	Constants.localeENGB, 
+		Set<TagDTO> lt = tagService.findAll(	Constants.localeENGB, 
 												Constants.currencyUSD, 
 												"FRT01",
 												categoryCodes, 
@@ -167,7 +167,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("97.2");
 
 		// when
-		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
+		Set<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
 												Constants.currencyHKD, 
 												"FRT01",
 												categoryCodes, 
@@ -188,7 +188,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("12.4");
 
 		// when
-		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
+		Set<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
 												Constants.currencyUSD, 
 												"FRT01",
 												categoryCodes, 

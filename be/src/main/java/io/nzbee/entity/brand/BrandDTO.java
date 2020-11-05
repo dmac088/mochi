@@ -1,8 +1,11 @@
 package io.nzbee.entity.brand;
 
+import java.math.BigInteger;
 import java.util.Map;
 
-public class BrandDTO {
+import io.nzbee.search.ISearchDimension;
+
+public class BrandDTO implements ISearchDimension {
 
 	public static final String ID_ALIAS = "bnd_id";
 	
@@ -23,9 +26,9 @@ public class BrandDTO {
 	private String locale;
 	
 	private Long count; 
-
+	
 	public BrandDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.brandId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.brandId 	= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
@@ -66,6 +69,26 @@ public class BrandDTO {
 
 	public Long getCount() {
 		return count;
+	}
+
+	@Override
+	public String getCode() {
+		return this.brandCode;
+	}
+
+	@Override
+	public String getDesc() {
+		return this.brandDesc;
+	}
+
+	@Override
+	public String getCurrency() {
+		return null;
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		return false;
 	}
 	
 }
