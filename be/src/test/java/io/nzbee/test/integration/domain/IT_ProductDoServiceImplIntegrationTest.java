@@ -80,8 +80,6 @@ public class IT_ProductDoServiceImplIntegrationTest {
     	
     	assertThat(found.getProductMarkdown())
     	.isEqualTo(new Double(71));
-
-	    assertNotNull(found.getPrimaryCategory());
 	    
 	    assertNotNull(found.getBrand());
     	
