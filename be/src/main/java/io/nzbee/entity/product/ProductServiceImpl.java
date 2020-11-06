@@ -29,32 +29,27 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public Optional<ProductDTO> findByCode(String locale, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.findByCode(locale, code);
 	}
 
 	@Override
 	public Set<ProductDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.findAll(locale);
 	}
 
 	@Override
 	public Set<ProductDTO> findAll(String locale, Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.findAll(locale, codes);
 	}
 
 	@Override
 	public Optional<ProductDTO> findById(String locale, Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.findById(locale, id);
 	}
 
 	@Override
 	public Optional<ProductDTO> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.findByDesc(locale, desc);
 	}
 
 	@Override

@@ -18,13 +18,11 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Override
 	public Optional<ProductAttributeEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return productAttributeRepository.findByProductProductUPC(code);
 	}
 
 	@Override
 	public Set<ProductAttributeEntity> findAll() {
-		// TODO Auto-generated method stub
 		return productAttributeRepository.findAll();
 	}
 
