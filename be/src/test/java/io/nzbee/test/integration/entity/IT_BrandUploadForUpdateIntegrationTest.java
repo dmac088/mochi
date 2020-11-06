@@ -61,7 +61,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
+		Optional<BrandDTO> found = brandService.findDTOByCode(Constants.localeENGB, "ENZ01");
 
 		// then
 		assertFound_ENGB(found);
@@ -70,7 +70,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Test
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeZHHK, "ENZ01");
+		Optional<BrandDTO> found = brandService.findDTOByCode(Constants.localeZHHK, "ENZ01");
 
 		// then
 		assertFound_ZHHK(found);

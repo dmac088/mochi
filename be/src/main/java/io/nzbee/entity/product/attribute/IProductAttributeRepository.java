@@ -10,5 +10,5 @@ public interface IProductAttributeRepository extends CrudRepository<ProductAttri
 
 	Set<ProductAttributeEntity> findAll();
 
-	Optional<ProductAttributeEntity> findByProductProductUPC(String productUPC);
+	Optional<ProductAttributeEntity> findByLclCdAndProductProductUPC(String locale, String productUPC);
 }

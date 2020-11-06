@@ -47,8 +47,14 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	}
 
 	@Override
-	public Optional<DepartmentDTO> findByCode(String locale, String code) {
+	public Optional<DepartmentDTO> findDTOByCode(String locale, String code) {
 		return departmentDao.findByCode(locale, code);
+	}
+	
+	@Override
+	public Optional<DepartmentEntity> findEntityByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override

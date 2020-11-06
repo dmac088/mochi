@@ -178,7 +178,7 @@ public class ProductMasterService {
 		
 		Optional<ProductStatusEntity> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
 		
-		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(upcCode);
+		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
 		
 		ProductAttributeEntity pa = (opa.isPresent()) 
 		? opa.get()

@@ -45,8 +45,14 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandCode}")
-	public Optional<BrandDTO> findByCode(String locale, String brandCode) {
+	public Optional<BrandDTO> findDTOByCode(String locale, String brandCode) {
 		return brandDao.findByCode(locale, brandCode);
+	}
+	
+	@Override
+	public Optional<BrandEntity> findEntityByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@Override

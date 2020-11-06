@@ -86,8 +86,8 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
-		 	DepartmentDTO found = departmentService.findById(Constants.localeENGB,
-	    												  department.getId()).get();
+		 	DepartmentDTO found = departmentService.findById(	Constants.localeENGB,
+	    												  		department.getId()).get();
 	     
 	        // then
 	    	assertFound(found);
@@ -97,8 +97,8 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 public void whenFindByCode_thenReturnDepartment() {
 	    	
 	        // when
-		 DepartmentDTO found = departmentService.findByCode(Constants.localeENGB,
-															"TST01").get();
+		 	DepartmentDTO found = departmentService.findDTOByCode(	Constants.localeENGB,
+																	"TST01").get();
 	     
 	        // then
 	    	assertFound(found);

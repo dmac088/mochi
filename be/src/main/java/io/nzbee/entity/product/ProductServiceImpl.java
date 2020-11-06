@@ -28,9 +28,16 @@ public class ProductServiceImpl implements IProductService {
 	private ICategoryService categoryService;
 	
 	@Override
-	public Optional<ProductDTO> findByCode(String locale, String code) {
+	public Optional<ProductDTO> findDTOByCode(String locale, String code) {
 		return productDAO.findByCode(locale, code);
 	}
+	
+	@Override
+	public Optional<ProductEntity> findEntityByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	@Override
 	public Set<ProductDTO> findAll(String locale) {
@@ -158,6 +165,7 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 
 
