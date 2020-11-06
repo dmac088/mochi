@@ -23,6 +23,8 @@ public class ProductDTO {
     public static final String IMAGE_ALIAS = "prd_img_pth";
     
     public static final String CODE_ALIAS = "prd_sts_cd";
+
+    public static final String CURRENCY_ALIAS = "ccy_cd";
     
     protected Long productId;
 
@@ -74,8 +76,9 @@ public class ProductDTO {
         this.productDesc 			= tuple[aliasToIndexMap.get(SHORT_DESC_ALIAS)].toString();
        // this.productLongDesc 		= tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
         this.inStock 				= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
-		this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
+		//this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
 		this.productStatusCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
+		this.currency				= tuple[aliasToIndexMap.get(CURRENCY_ALIAS)].toString();
 	}
 
 	public String getProductUPC() {
