@@ -29,7 +29,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public Tag findByCode(String locale, String code) {
-		TagDTO t = tagService.findByCode(locale, code)
+		TagDTO t = tagService.findDTOByCode(locale, code)
 				.orElseThrow(() -> new TagNotFoundException("Tag with code " + code + " not found!"));
 		return tagMapper.DTOToDo(t);
 	}

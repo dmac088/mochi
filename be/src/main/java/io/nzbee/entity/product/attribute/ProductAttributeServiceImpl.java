@@ -18,7 +18,7 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 
 	@Override
 	public Optional<ProductAttributeEntity> findByCode(String code) {
-		return productAttributeRepository.findByProductProductUPC(code);
+		return null;
 	}
 
 	@Override
@@ -45,6 +45,11 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	@Override
 	public void delete(ProductAttributeEntity t) {
 		productAttributeRepository.delete(t);		
+	}
+
+	@Override
+	public Optional<ProductAttributeEntity> findByCode(String locale, String code) {
+		return productAttributeRepository.findByLclCdAndProductProductUPC(locale, code);
 	}
 
 }

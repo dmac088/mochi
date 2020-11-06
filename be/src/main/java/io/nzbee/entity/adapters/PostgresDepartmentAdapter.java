@@ -42,7 +42,7 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Department findByCode(String locale, String code) {
-		return (Department) departmentMapper.DTOToDo(departmentService.findByCode(locale, code).get());	
+		return (Department) departmentMapper.DTOToDo(departmentService.findDTOByCode(locale, code).get());	
 	}
 
 	@Override

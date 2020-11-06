@@ -2,7 +2,10 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -47,8 +50,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
     static class BrandEntityRepositoryIntegrationTest {
-   
-   
+
     }
 	
 	@MockBean
@@ -77,8 +79,6 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		
 	    //persist a new transient test brand
 	    entityManager.persist(brand);
-	    entityManager.flush();
-	    
 	}
    
     
@@ -86,20 +86,20 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrand() {
     	
         // when
-    	BrandDTO found = brandService.findById(Constants.localeENGB, 
-				  								brand.getBrandId()).get();
+    	Optional<BrandDTO> found = brandService.findById(Constants.localeENGB, 
+				  								brand.getBrandId());
      
         // then
     	assertFound(found);
     }
     
-    // write test cases here
+    
     @Test
     public void whenFindByCode_thenReturnBrand() {
     	
         // when
-    	BrandDTO found = brandService.findByCode("en-GB", 
-											  "TST02").get();
+    	Optional<BrandDTO> found = brandService.findDTOByCode(Constants.localeENGB, 
+											  		"TST02");
      
         // then
     	assertFound(found);
@@ -110,8 +110,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     public void whenFindByDesc_thenReturnBrand() {
     	
         // when
-    	BrandDTO found = brandService.findByDesc(Constants.localeENGB, 
-				 							  "test brand").get();
+    	Optional<BrandDTO> found = brandService.findByDesc(Constants.localeENGB, 
+				 							  	 "test brand");
      
         //then
     	assertFound(found);
@@ -201,12 +201,16 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 
 	}
     
-    private void assertFound(final BrandDTO found) {
+    private void assertFound(final Optional<BrandDTO> found) {
     	
-    	assertThat(found.getBrandCode())
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	assertThat(found.get().getBrandCode())
         .isEqualTo("TST02");
     	
-	    assertThat(found.getBrandDesc())
+	    assertThat(found.get().getBrandDesc())
 	    .isEqualTo("test brand");
     }
     

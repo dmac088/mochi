@@ -86,7 +86,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public Optional<ProductPriceDTO> findByCode(String locale, String code) {
+	public Optional<ProductPriceDTO> findDTOByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -117,6 +117,12 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 
 	@Override
 	public Set<ProductPriceEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@Override
+	public Optional<ProductPriceEntity> findEntityByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}

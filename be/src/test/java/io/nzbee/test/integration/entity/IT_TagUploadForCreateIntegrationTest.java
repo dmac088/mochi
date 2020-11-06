@@ -61,7 +61,7 @@ public class IT_TagUploadForCreateIntegrationTest {
 	@Test
 	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ENGB() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeENGB, "TST01");
+		Optional<TagDTO> found = tagService.findDTOByCode(Constants.localeENGB, "TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -70,7 +70,7 @@ public class IT_TagUploadForCreateIntegrationTest {
 	@Test
 	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ZHHK() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeZHHK, "TST01");
+		Optional<TagDTO> found = tagService.findDTOByCode(Constants.localeZHHK, "TST01");
 
 		// then
 		assertFound_ZHHK(found);

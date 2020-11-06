@@ -48,9 +48,14 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public Optional<CategoryProductDTO> findDTOByCode(String locale, String code) {
+		return productCategoryDao.findByCode(locale, code);
+	}
 
 	@Override
-	public Optional<CategoryProductDTO> findByCode(String locale, String code) {
+	public Optional<CategoryProductEntity> findEntityByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -108,5 +113,7 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 }
