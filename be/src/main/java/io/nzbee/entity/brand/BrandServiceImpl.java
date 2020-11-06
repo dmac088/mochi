@@ -27,8 +27,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	@Override
 	public Optional<BrandEntity> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return brandRepository.findById(id);
 	}	
 	
 	@Override
