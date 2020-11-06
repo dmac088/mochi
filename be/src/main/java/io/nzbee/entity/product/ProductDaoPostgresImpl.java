@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -329,7 +328,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 true,
 															 false,
-															 ""), "ProductMapping.count")
+															 ""))
 				 .setParameter("locale", 			locale)
 				 .setParameter("currency", 			currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -410,7 +409,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
   				 											 false,
   				 											 true,
   				 											 false,
-  				 											 ""), "ProductMapping.count")
+  				 											 ""))
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
@@ -492,45 +491,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return new PageImpl<ProductDTO>(results, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
 	}
 	
-	@Override
-	public ProductDTO objectToDTO(Object[] o, String locale, String currency) {
-		
-		return null;
-//		ProductEntity product = (ProductEntity) o[0];
-//		DepartmentEntity department = (DepartmentEntity) o[5];
-//		DepartmentAttribute departmentAttribute = (DepartmentAttribute) o[6];
-//		department.setAttribute(departmentAttribute);
-//		
-//		product.setProductStatus((ProductStatus) o[1]);
-//		product.setDepartment(department);
-//		product.setProductAttribute((ProductAttributeEntity) o[2]);
-//		
-//		BrandEntity brand = (BrandEntity) o[3];
-//		product.setBrand(brand);
-//		brand.setBrandAttribute((BrandAttributeEntity) o[4]);
-//		
-//		CategoryProduct category = (CategoryProduct) o[7];
-//		CategoryAttributeEntity categoryAttribute = (CategoryAttributeEntity) o[8];
-//		categoryAttribute.setCategory(category);
-//		category.setCategoryAttribute(categoryAttribute);
-//		
-//		product.setPrimaryCategory(category);
-//
-//		CategoryType categoryType = (CategoryType) o[9];
-//		category.setCategoryType(categoryType);
-//		
-//		CategoryProduct parent = (CategoryProduct) o[10];
-//		category.setParent(parent);
-//		
-//		product.setRetailPrice(((BigDecimal) o[11]).doubleValue());
-//		product.setMarkdownPrice(((BigDecimal) o[12]).doubleValue());
-//		product.setInStock((boolean) o[14]);
-//		
-//		product.setLocale(locale);
-//		product.setCurrency(currency);
-//		
-//		return product;
-	}
 	
 	private String constructSQL(boolean hasProductCodes,
 								boolean hasProductDesc,
@@ -775,34 +735,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		
 	}
-//
-//	@Override
-//	public ProductDTO objectToEntity(Tuple t, String locale, String currency) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//
-//	@Override
-//	public Optional<ProductDTO> findByCode(String locale, String code) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//
-//	@Override
-//	public ProductEntity objectToEntity(Object[] o, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-//
-//
-//	@Override
-//	public ProductEntity objectToEntity(Tuple t, String locale) {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
-
 
 	@Override
 	public Optional<ProductDTO> findById(String locale, Long id) {
@@ -863,6 +795,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 	@Override
 	public Set<ProductEntity> findAll() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ProductDTO objectToDTO(Object[] o, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}
