@@ -135,5 +135,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Optional<TagEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

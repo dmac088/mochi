@@ -90,4 +90,10 @@ public class DepartmentServiceImpl implements IDepartmentService{
 		return null;
 	}
 
+	@Override
+	public Optional<DepartmentEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -166,6 +166,12 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
+	@Override
+	public Optional<ProductEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 
 
