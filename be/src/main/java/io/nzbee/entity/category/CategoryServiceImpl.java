@@ -163,6 +163,12 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 		return null;
 	}
 
+	@Override
+	public Optional<CategoryEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 }

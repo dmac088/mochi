@@ -114,6 +114,10 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 		return null;
 	}
 
-
+	@Override
+	public Optional<CategoryProductEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

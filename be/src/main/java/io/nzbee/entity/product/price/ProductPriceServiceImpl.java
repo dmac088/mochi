@@ -127,4 +127,10 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 		return null;
 	}
 
+	@Override
+	public Optional<ProductPriceEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
