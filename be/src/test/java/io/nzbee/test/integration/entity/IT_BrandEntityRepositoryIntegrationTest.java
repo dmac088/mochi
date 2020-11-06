@@ -84,7 +84,6 @@ public class IT_BrandEntityRepositoryIntegrationTest {
    
     
     @Test
-    @Rollback(false)
     public void whenFindById_thenReturnBrand() {
     	
         // when
@@ -106,16 +105,16 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     }
     
     // write test cases here
-//    @Test
-//    public void whenFindByDesc_thenReturnBrand() {
-//    	
-//        // when
-//    	Optional<BrandDTO> found = brandService.findEntityByDesc(Constants.localeENGB, 
-//				 							  	 			"test brand");
-//     
-//        //then
-//    	assertFound(found);
-//    }
+    @Test
+    public void whenFindByDesc_thenReturnBrand() {
+    	
+        // when
+    	Optional<BrandEntity> found = brandService.findEntityByDesc(Constants.localeENGB, 
+				 							  	 				 "test brand");
+     
+        //then
+    	assertFound(found);
+    }
     
     @Test
     public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {

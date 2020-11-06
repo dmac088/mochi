@@ -61,6 +61,11 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
+	public Optional<BrandEntity> findEntityByDesc(String locale, String desc) {
+		return brandRepository.findByAttributesLclCdAndAttributesBrandDesc(locale, desc);
+	}
+	
+	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public Set<BrandDTO> findAll(String locale) {
 		return brandDao.findAll(locale);
@@ -140,5 +145,5 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }
