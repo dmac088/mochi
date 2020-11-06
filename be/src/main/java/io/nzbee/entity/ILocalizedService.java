@@ -20,4 +20,6 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	
 	Optional<T> findByDesc(String locale, String desc);
 	
+	Optional<Z> findEntityByDesc(String locale, String desc);
+	
 }

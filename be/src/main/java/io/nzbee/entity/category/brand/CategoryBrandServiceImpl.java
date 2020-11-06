@@ -95,4 +95,10 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 		return null;
 	}
 
+	@Override
+	public Optional<CategoryBrandEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
