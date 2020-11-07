@@ -75,7 +75,7 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 	@Test
 	public void whenCategoryUploadedForCreate_thenReturnCorrectlyCreatedCategory_ZHHK() {
 		// when
-		Optional<CategoryDTO> found = categoryService.findByCode(Constants.localeZHHK, "TST01");
+		Optional<CategoryEntity> found = categoryService.findByCode("TST01");
 
 		// then
 		assertFound_ZHHK(found);
