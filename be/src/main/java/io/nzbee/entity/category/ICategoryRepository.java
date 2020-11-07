@@ -8,4 +8,6 @@ public interface ICategoryRepository extends CrudRepository<CategoryEntity, Long
 
 	Optional<CategoryEntity> findByCategoryCode(String code);
 	
+	Optional<CategoryEntity> findByAttributesLclCdAndAttributesCategoryDesc(String locale, String desc);
+	
 }
