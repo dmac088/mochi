@@ -23,10 +23,9 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProductDTO;
-import io.nzbee.entity.category.CategoryDTO;
+import io.nzbee.entity.category.product.CategoryProductEntity;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.util.category.CategoryMasterService;
 
 @RunWith(SpringRunner.class)
@@ -62,7 +61,7 @@ public class IT_CategoryUploadForUpdateIntegrationTest {
 	@Test
 	public void whenCategoryUploadedForUpdate_thenReturnCorrectlyUpdatedCategory_ENGB() {
 		// when
-		Optional<CategoryDTO> found = categoryService.findByCode(Constants.localeENGB, "FET01");
+		Optional<CategoryEntity> found = categoryService.findByCode("FET01");
 
 		// then
 		assertFound_ENGB(found);
@@ -71,45 +70,45 @@ public class IT_CategoryUploadForUpdateIntegrationTest {
 	@Test
 	public void whenCategoryUploadedForUpdate_thenReturnCorrectlyUpdatedCategory_ZHHK() {
 		// when
-		Optional<CategoryDTO> found = categoryService.findByCode(Constants.localeZHHK, "FET01");
+		Optional<CategoryEntity> found = categoryService.findByCode( "FET01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<CategoryDTO> found) {
+	private void assertFound_ENGB(Optional<CategoryEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		CategoryProductDTO cp = (CategoryProductDTO) found.get();
+		CategoryProductEntity cp = (CategoryProductEntity) found.get();
 		
-		assertThat(cp.getCategoryDesc())
+		assertThat(cp.getCategoryDescENGB())
 		.isEqualTo("Featured Test");
 		
 		assertThat(cp.getCategoryLevel())
 		.isEqualTo(2);
 		
-		assertThat(cp.getParentCategory().getCategoryCode())
+		assertThat(cp.getCategoryParentCode())
 		.isEqualTo("PRM01");
 	}
 
-	private void assertFound_ZHHK(Optional<CategoryDTO> found) {
+	private void assertFound_ZHHK(Optional<CategoryEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		CategoryProductDTO cp = (CategoryProductDTO) found.get();
+		CategoryProductEntity cp = (CategoryProductEntity) found.get();
 		
-		assertThat(cp.getCategoryDesc())
+		assertThat(cp.getCategoryDescZHHK())
 		.isEqualTo("特色測試");
 		
 		assertThat(cp.getCategoryLevel())
 		.isEqualTo(2);
 		
-		assertThat(cp.getParentCategory().getCategoryCode())
+		assertThat(cp.getCategoryParentCode())
 		.isEqualTo("PRM01");
 	}
 
