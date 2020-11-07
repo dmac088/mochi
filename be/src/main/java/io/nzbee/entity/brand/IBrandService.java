@@ -16,6 +16,4 @@ public interface IBrandService extends ILocalizedService<BrandDTO, BrandEntity>,
 	Set<BrandDTO> findAll(String locale, String currency, String caetgoryCode, Set<String> categoryCodes,
 			Set<String> tagCodes, Double maxPrice);
 
-	Optional<BrandEntity> findByCode(String brandCode);
-
 }
