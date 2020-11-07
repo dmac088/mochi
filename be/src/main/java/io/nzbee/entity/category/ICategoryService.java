@@ -1,6 +1,5 @@
 package io.nzbee.entity.category;
 
-import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.ILocalizedService;
 import io.nzbee.entity.category.CategoryEntity;
@@ -22,9 +21,5 @@ public interface ICategoryService extends ILocalizedService<CategoryDTO, Categor
 
 	Set<CategoryEntity> findAll();
 	
-	Optional<CategoryEntity> findByCode(String categoryCode);
-
-	Optional<CategoryDTO> findByCode(String locale, String categoryCode);
-
 
 }
