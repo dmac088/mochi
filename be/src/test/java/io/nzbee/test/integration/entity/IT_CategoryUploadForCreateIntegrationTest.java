@@ -27,7 +27,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductDTO;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.category.CategoryDTO;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.util.category.CategoryMasterService;
 
 @RunWith(SpringRunner.class)
@@ -64,7 +66,7 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenCategoryUploadedForCreate_thenReturnCorrectlyCreatedCategory_ENGB() {
 		// when
-		Optional<CategoryDTO> found = categoryService.findByCode(Constants.localeENGB, "TST01");
+		Optional<CategoryEntity> found = categoryService.findByCode("TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -79,40 +81,40 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<CategoryDTO> found) {
+	private void assertFound_ENGB(Optional<CategoryEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		CategoryProductDTO cp = (CategoryProductDTO) found.get();
+		CategoryProductEntity cp = (CategoryProductEntity) found.get();
 		
-		assertThat(cp.getCategoryDesc())
+		assertThat(cp.getCategoryDescENGB())
 		.isEqualTo("Test Category");
 		
 		assertThat(cp.getCategoryLevel())
 		.isEqualTo(1);
 		
-		assertThat(cp.getParentCategory().getCategoryCode())
+		assertThat(cp.getCategoryParentCode())
 		.isEqualTo("PRM02");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<CategoryDTO> found) {
+	private void assertFound_ZHHK(Optional<CategoryEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		CategoryProductDTO cp = (CategoryProductDTO) found.get();
+		CategoryProductEntity cp = (CategoryProductEntity) found.get();
 		
-		assertThat(found.get().getCategoryDesc())
+		assertThat(cp.getCategoryDescZHHK())
 		.isEqualTo("測試類別");
 		
 		assertThat(cp.getCategoryLevel())
 		.isEqualTo(1);
 		
-		assertThat(cp.getParentCategory().getCategoryCode())
+		assertThat(cp.getCategoryParentCode())
 		.isEqualTo("PRM02");
 	}
 
