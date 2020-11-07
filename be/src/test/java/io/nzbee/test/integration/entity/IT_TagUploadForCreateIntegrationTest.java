@@ -26,6 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
+import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.util.tag.TagMasterService;
 
 @RunWith(SpringRunner.class)
@@ -61,7 +62,7 @@ public class IT_TagUploadForCreateIntegrationTest {
 	@Test
 	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ENGB() {
 		// when
-		Optional<TagDTO> found = tagService.findDTOByCode(Constants.localeENGB, "TST01");
+		Optional<TagEntity> found = tagService.findByCode("TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -70,30 +71,31 @@ public class IT_TagUploadForCreateIntegrationTest {
 	@Test
 	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ZHHK() {
 		// when
-		Optional<TagDTO> found = tagService.findDTOByCode(Constants.localeZHHK, "TST01");
+		Optional<TagEntity> found = tagService.findByCode("TST01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<TagDTO> found) {
+	
+	private void assertFound_ENGB(Optional<TagEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getTagDesc())
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getTagDesc())
 		.isEqualTo("test tag");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<TagDTO> found) {
+	private void assertFound_ZHHK(Optional<TagEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getTagDesc())
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeZHHK)).findAny().get().getTagDesc())
 		.isEqualTo("測試標籤");
 	}
 

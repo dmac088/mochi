@@ -63,14 +63,14 @@ public class TagMasterService {
 		logger.debug("called persistTagMaster() ");
 		
 		TagEntity tCN = mapToTag(	t.get_TAG_CODE(),
-				 			t.get_TAG_DESC_HK(),
-				 		    Constants.localeZHHK);
+						 			t.get_TAG_DESC_HK(),
+						 		    Constants.localeZHHK);
 		
 		tagService.save(tCN);
 		
 		TagEntity tEN = mapToTag(	 t.get_TAG_CODE(),
-				 t.get_TAG_DESC_EN(),
-				 Constants.localeENGB);
+									 t.get_TAG_DESC_EN(),
+									 Constants.localeENGB);
 	
 		tagService.save(tEN);
 	}
@@ -81,9 +81,9 @@ public class TagMasterService {
 			String locale
 			) {
 		
-		Optional<TagEntity> ot =tagService.findByCode(tagCode);
+		Optional<TagEntity> ot = tagService.findByCode(tagCode);
 		
-		io.nzbee.entity.tag.TagEntity t = 
+		TagEntity t = 
 				(ot.isPresent())
 				? ot.get() 
 				: new TagEntity();
