@@ -13,6 +13,7 @@ import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
@@ -65,7 +66,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Category findByCode(String locale, String code) {
-		io.nzbee.entity.category.CategoryDTO cp = categoryService.findByCode(locale, code)
+		CategoryDTO cp = categoryService.findDTOByCode(locale, code)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
 		return categoryMapper.DTOToDo(cp);
 	}	
@@ -73,7 +74,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Category findByDesc(String locale, String desc) {
-		io.nzbee.entity.category.CategoryDTO cp = categoryService.findByDesc(locale, desc)
+		CategoryDTO cp = categoryService.findByDesc(locale, desc)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
 		return categoryMapper.DTOToDo(cp);
 	}
