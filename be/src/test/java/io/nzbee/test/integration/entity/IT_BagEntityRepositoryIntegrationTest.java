@@ -71,7 +71,9 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
 	public BagEntity persistNewBag() {
 		
-		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", CustomerEntity.class);
+		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", "Customer");
+		
+		System.out.println(p.isPresent());
 		
 		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
@@ -88,7 +90,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBag() {
     	
     	//persist a bag and then make sure we can retrieve it by id
-    	BagEntity found = bagService.findById(bag.getBagId()).get();
+    	Optional<BagEntity> found = bagService.findById(bag.getBagId());
      
         // then
     	assertFound(found);
@@ -101,16 +103,18 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
     	Optional<BagEntity> found = bagService.findByCode("dmac088");
     	
-    	assertTrue(found.isPresent());
-    	assertFound(found.get());
+    	//then
+    	assertFound(found);
     }
  
     
-    private void assertFound(final BagEntity found) {
+    private void assertFound(Optional<BagEntity> bag) {
     	assertNotNull(bag);
     	
-    	assertNotNull(found.getBagCreatedDateTime());
-    	assertNotNull(found.getBagUpdatedDateTime());
+    	assertTrue(bag.isPresent());
+    	
+    	assertNotNull(bag.get().getBagCreatedDateTime());
+    	assertNotNull(bag.get().getBagUpdatedDateTime());
     }
     
     @After
