@@ -42,6 +42,7 @@ public class ProductDTOResultTransformer implements ResultTransformer {
         return productDTO;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List transformList(List collection) {
 		return new ArrayList<>(productDTOMap.values());

@@ -83,6 +83,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 	}
 	
+	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public <T> Set<ProductDTO> findAllByType(String locale, String currency, Class<T> cls) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAllByType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
@@ -117,6 +118,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 	
 	
+	@SuppressWarnings({"deprecation" })
 	@Override
 	@Caching(
 			put = {
@@ -156,6 +158,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 	}
 	
+	@SuppressWarnings({"deprecation" })
 	@Override
 	@Caching(
 			put = {
@@ -201,6 +204,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 	}
 	
+	@SuppressWarnings({"deprecation" })
 	@Override
 	@Caching(
 			put = {
@@ -240,6 +244,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 	}
 	
+	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
 	public Set<ProductDTO> findAll(String locale, String currency) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
@@ -268,7 +273,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return new HashSet<ProductDTO>(query.getResultList());
 		
 	}
-
+	
+	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
 	public Set<ProductDTO> findAll(	String locale, 
 										String currency, 
@@ -308,7 +314,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return new HashSet<ProductDTO>(query.getResultList());
 	}
 
-	
+	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
 	public Page<ProductDTO> findAll(	String locale, 
 										String currency, 
@@ -366,13 +372,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
 		List<ProductDTO> results = query.getResultList();
 		
 		return new PageImpl<ProductDTO>(results, pageable, total);
 	}
 	
-	
+	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
 	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 		   Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
@@ -485,7 +490,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
 		List<ProductDTO> results = query.getResultList();
 		
 		return new PageImpl<ProductDTO>(results, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);

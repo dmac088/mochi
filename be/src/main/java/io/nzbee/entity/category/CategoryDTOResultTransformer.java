@@ -2,7 +2,6 @@ package io.nzbee.entity.category;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +32,7 @@ public class CategoryDTOResultTransformer implements ResultTransformer {
         return categoryDTO;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List transformList(List collection) {
 		return new ArrayList<>(CategoryDTOMap.values());

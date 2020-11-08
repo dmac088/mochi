@@ -38,6 +38,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
@@ -108,6 +109,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
@@ -142,7 +144,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return Optional.ofNullable(result);
 	}
 
-	
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
@@ -177,6 +179,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return Optional.ofNullable(result);
 	}
 	
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public Set<BrandDTO> findAll(String locale, Set<String> brandCodes) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(brandCodes, ','));
@@ -208,6 +211,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return results.stream().collect(Collectors.toSet());
 	}
 	
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public Set<BrandDTO> findAllByCategory(String locale, String categoryCode) {
 		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}", locale, categoryCode);
@@ -237,7 +241,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return results.stream().collect(Collectors.toSet());
 	}
 	
-
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
@@ -271,6 +275,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return Optional.ofNullable(result);
 	}
 	
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public Set<BrandDTO> findAll(String locale) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}", locale);
@@ -296,6 +301,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return results.stream().collect(Collectors.toSet());
 	}
 	
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public Set<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);

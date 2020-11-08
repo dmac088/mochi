@@ -31,6 +31,7 @@ public class BrandDTOResultTransformer implements ResultTransformer {
         return brandDTO;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List transformList(List collection) {
 		return new ArrayList<>(brandDTOMap.values());

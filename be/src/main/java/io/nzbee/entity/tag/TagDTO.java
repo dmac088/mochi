@@ -79,8 +79,7 @@ public class TagDTO implements ISearchDimension  {
 	
 	@Override
 	public Long getCount() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.objectCount;
 	}
 
 	@Override

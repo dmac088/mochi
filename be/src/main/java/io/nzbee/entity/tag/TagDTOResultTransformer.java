@@ -37,6 +37,7 @@ public class TagDTOResultTransformer implements ResultTransformer {
         return tagDTO;
 	}
 
+	@SuppressWarnings("rawtypes")
 	@Override
 	public List transformList(List collection) {
 		return new ArrayList<>(tagDTOMap.values());
