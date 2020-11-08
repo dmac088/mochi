@@ -2,9 +2,11 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
@@ -78,7 +80,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		System.out.println(tag.getTagId());
 		
 		// when
-		TagEntity found = tagService.findById(tag.getTagId()).get();
+		Optional<TagEntity> found = tagService.findById(tag.getTagId());
 
 		// then
 		assertFound(found);
@@ -89,22 +91,22 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnTag() {
 
 		// when
-		TagEntity found = tagService.findByCode("TST02").get();
+		Optional<TagEntity> found = tagService.findByCode("TST02");
 
 		// then
 		assertFound(found);
 	}
 
 	// write test cases here
-//	@Test
-//	public void whenFindByDesc_thenReturnTag() {
-//
-//		// when
-//		TagDTO found = tagService.findByDesc(Constants.localeENGB, "test tag").get();
-//
-//		// then
-//		assertFound(found);
-//	}
+	@Test
+	public void whenFindByDesc_thenReturnTag() {
+
+		// when
+		Optional<TagEntity> found = tagService.findEntityByDesc(Constants.localeENGB, "test tag");
+
+		// then
+		assertFound(found);
+	}
 	
 	@Test
 	public void whenFindAllForTestTag_thenReturnTheTestTag() {
@@ -204,10 +206,14 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		assertThat(lb.size()).isEqualTo(2);
 	}
 
-	private void assertFound(final TagEntity found) {
+	private void assertFound(Optional<TagEntity> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
 
-		assertThat(found.getTagCode()).isEqualTo("TST02");
-		assertThat(found.getTagAttribute().getTagDesc()).isEqualTo("test tag");
+		assertThat(found.get().getTagCode()).isEqualTo("TST02");
+		assertThat(found.get().getAttributes().stream().filter(t -> t.getLclCd().equals(Constants.localeENGB)).findAny().get().getTagDesc()).isEqualTo("test tag");
 		
 	}
 
