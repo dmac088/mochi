@@ -71,8 +71,6 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 	@Test
 	public void whenFindById_thenReturnTag() {
-
-		System.out.println(tag.getTagId());
 		
 		// when
 		Optional<TagEntity> found = tagService.findById(tag.getTagId());
@@ -108,7 +106,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		Set<String> tagCodes = new HashSet<String>();
 		
-		tagCodes.add("TST02");
+		tagCodes.add("ORG01");
 
 		// when
 		Set<TagDTO> lb = tagService.findAll(Constants.localeENGB, tagCodes);
@@ -155,7 +153,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		// then
 		assertNotNull(lt);
-		assertThat(lt.size()).isEqualTo(1);
+		assertThat(lt.size()).isEqualTo(2);
 	}
 	
 	
