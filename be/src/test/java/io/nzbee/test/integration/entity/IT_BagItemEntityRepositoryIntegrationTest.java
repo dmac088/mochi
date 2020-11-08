@@ -77,7 +77,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     
 	public BagItemEntity persistNewBag() {
 		
-		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", CustomerEntity.class);
+		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", "Customer");
     	
 		BagEntity bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
