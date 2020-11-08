@@ -3,9 +3,7 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -29,10 +27,8 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
-import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.brand.CategoryBrandDTO;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.test.integration.beans.CategoryEntityBeanFactory;

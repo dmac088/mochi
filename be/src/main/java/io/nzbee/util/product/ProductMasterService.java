@@ -2,7 +2,6 @@ package io.nzbee.util.product;
 
 import java.io.File;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
@@ -76,8 +75,6 @@ public class ProductMasterService {
     
 	@Autowired
 	private IProductPriceService productPriceService;
-
-	private SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
 	@Transactional
 	public void writeProductMaster(String fileName) {

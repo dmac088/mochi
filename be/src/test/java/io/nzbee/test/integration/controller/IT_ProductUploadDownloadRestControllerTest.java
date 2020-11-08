@@ -68,7 +68,8 @@ public class IT_ProductUploadDownloadRestControllerTest {
     }
     
     
-    @Test
+    @SuppressWarnings("deprecation")
+	@Test
     public void testUploadFile() throws Exception {
         MockMultipartFile mockMultipartFile = new MockMultipartFile("file", "food_master.txt", "multipart/form-data", is);
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.fileUpload("/api/Product/Upload/").file(mockMultipartFile).contentType(MediaType.MULTIPART_FORM_DATA))

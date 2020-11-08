@@ -255,6 +255,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Set<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
 		

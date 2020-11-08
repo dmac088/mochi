@@ -223,7 +223,8 @@ public class UserService implements UserDetailsService, IUserService {
         return currentUser;
     }
 
-    private boolean emailExists(final String email) {
+    @SuppressWarnings("unused")
+	private boolean emailExists(final String email) {
         return userRepository.loadUserByUsername(email) != null;
     }
     
