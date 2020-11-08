@@ -66,8 +66,8 @@ public class PersonServiceImpl implements IPersonService {
 
 	@Override
 	@PreAuthorize("hasAuthority('PERSON_READ')")
-	public Optional<PersonEntity> findByUsernameAndRole(String userName, Class<?> roleType) {
-		return personDao.findByUsernameAndRole(userName, roleType.getSimpleName());
+	public Optional<PersonEntity> findByUsernameAndRole(String userName, String roleType) {
+		return personDao.findByUsernameAndRole(userName, roleType);
 	}
 	
 	@Override
