@@ -48,7 +48,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 
 	@Override
-	public Optional<CategoryEntity> findEntityByCode(String locale, String code) {
+	public Optional<CategoryEntity> findEntityByCode(String code) {
 		return categoryRepository.findByCategoryCode(code);
 	}
 	

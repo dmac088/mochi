@@ -49,7 +49,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	public Optional<BrandEntity> findEntityByCode(String locale, String code) {
+	public Optional<BrandEntity> findEntityByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}

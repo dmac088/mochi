@@ -122,7 +122,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 	
 	@Override
-	public Optional<ProductPriceEntity> findEntityByCode(String locale, String code) {
+	public Optional<ProductPriceEntity> findEntityByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
