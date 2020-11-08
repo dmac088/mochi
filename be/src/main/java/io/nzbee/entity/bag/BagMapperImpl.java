@@ -6,6 +6,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
@@ -62,7 +64,7 @@ public class BagMapperImpl implements IBagMapper {
 	public io.nzbee.entity.bag.BagEntity doToEntity(Bag d) {
 		//get the bag, status, and customer from the database
 		Optional<io.nzbee.entity.bag.BagEntity> obe 					= bagService.findByCode(d.getCustomer().getUserName());		
-		Optional<io.nzbee.entity.party.person.PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Customer.class);
+		Optional<io.nzbee.entity.party.person.PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Constants.partyRoleCustomer);
 					
 		io.nzbee.entity.bag.BagEntity nbe = new io.nzbee.entity.bag.BagEntity();
 		nbe.setBagCreatedDateTime(LocalDateTime.now());

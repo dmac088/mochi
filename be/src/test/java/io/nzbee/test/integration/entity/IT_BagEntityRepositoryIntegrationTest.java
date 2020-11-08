@@ -22,11 +22,11 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.Constants;
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
-import io.nzbee.entity.role.customer.CustomerEntity;
 import io.nzbee.test.integration.beans.BagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -71,7 +71,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
 	public BagEntity persistNewBag() {
 		
-		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", "Customer");
+		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", Constants.partyRoleCustomer);
 		
 		System.out.println(p.isPresent());
 		

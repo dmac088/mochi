@@ -13,7 +13,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
@@ -21,7 +20,6 @@ import io.nzbee.domain.ports.ICustomerPortService;
 import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
-import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.product.IProductService;
@@ -29,7 +27,6 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.role.IRoleTypeRepository;
 import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
-import io.nzbee.exceptions.customer.CustomerNotFoundException;
 import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
 import io.nzbee.exceptions.product.ProductException;
 import io.nzbee.security.authority.Authority;
@@ -45,9 +42,6 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Autowired
 	private IPersonService personService;
-	
-	@Autowired
-	private ICustomerMapper customerMapper;
 	
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
@@ -70,7 +64,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Customer findByUsername(String userName) {
-//		CustomerDTO c = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.CustomerEntity.class)
+//		CustomerDTO c = personService.findByUsernameAndRole(userName, Constants.partyRoleCustomer)
 //				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
 //		return customerMapper.DTOToDo(c);
 		return null;
@@ -79,7 +73,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional
 	public Customer registerNewCustomer(CustomerDTOIn customer) {
-		boolean exists = personService.userExists(customer.getUserName(), io.nzbee.entity.role.customer.CustomerEntity.class);
+		boolean exists = personService.userExists(customer.getUserName(), Constants.partyRoleCustomer);
 		if(exists) {
 			throw new CustomerAlreadyExistException("Customer with username " + customer.getUserName() + " already exists!");
 		}
@@ -117,7 +111,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		c.setCustomerNumber(domainObject.getCustomerID());
 		c.setRoleStart(new Date());
 		
-		io.nzbee.entity.role.RoleType roleType = roleTypeRepository.findByRoleTypeDesc(io.nzbee.entity.role.customer.CustomerEntity.class.getSimpleName()).get();
+		io.nzbee.entity.role.RoleType roleType = roleTypeRepository.findByRoleTypeDesc(Constants.partyRoleCustomer).get();
 		c.setRoleType(roleType);
 		
 		PersonEntity p = new PersonEntity();
@@ -138,7 +132,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Transactional
 	public void update(Customer domainObject) {
 		//in our domain world a customer is a person
-		PersonEntity p = personService.findByUsernameAndRole(domainObject.getUserName(), io.nzbee.entity.role.customer.CustomerEntity.class).get();
+		PersonEntity p = personService.findByUsernameAndRole(domainObject.getUserName(), Constants.partyRoleCustomer).get();
 		
 		p.setGivenName(domainObject.getGivenName());
 		p.setFamilyName(domainObject.getFamilyName());
@@ -150,7 +144,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional
 	public void delete(Customer object) {
-		PersonEntity t = personService.findByUsernameAndRole(object.getUserName(), io.nzbee.entity.role.customer.CustomerEntity.class)
+		PersonEntity t = personService.findByUsernameAndRole(object.getUserName(), Constants.partyRoleCustomer)
 				.orElseThrow(() -> new CustomerException("Customer with username " + object.getUserName() + " not found!"));
 		personService.delete(t);
 		
@@ -173,7 +167,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional
 	public void delete(String userName) {
-		PersonEntity t = personService.findByUsernameAndRole(userName, io.nzbee.entity.role.customer.CustomerEntity.class)
+		PersonEntity t = personService.findByUsernameAndRole(userName, Constants.partyRoleCustomer)
 				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
 		personService.delete(t);
 	}
@@ -213,7 +207,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 //		final VerificationToken token = tokenRepository.findByToken(verificationToken);
 //        if (token != null) {
 //            User u = token.getUser();
-//            Optional<PersonEntity> p = personService.findByUsernameAndRole(u.getUsername(), io.nzbee.entity.role.customer.CustomerEntity.class);
+//            Optional<PersonEntity> p = personService.findByUsernameAndRole(u.getUsername(), Constants.partyRoleCustomer);
 //            return customerMapper.DTOToDo(p.get());
 //        }
         return null;
@@ -241,7 +235,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	public void addItemToBag(Customer c, BagItem bagItem) {
 		
 		//get the party of the bag, which will be a person
-		PersonEntity t = personService.findByUsernameAndRole(c.getUserName(), io.nzbee.entity.role.customer.CustomerEntity.class)
+		PersonEntity t = personService.findByUsernameAndRole(c.getUserName(), Constants.partyRoleCustomer)
 					.orElseThrow(() -> new CustomerException("Customer with username " + c.getUserName() + " not found!"));
 		
 		

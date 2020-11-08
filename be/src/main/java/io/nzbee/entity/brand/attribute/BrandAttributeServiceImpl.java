@@ -1,6 +1,5 @@
 package io.nzbee.entity.brand.attribute;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
