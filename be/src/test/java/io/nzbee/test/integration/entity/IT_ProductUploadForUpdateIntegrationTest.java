@@ -129,17 +129,14 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 
 		assertThat(found.get().getProductDesc()).isEqualTo("有機黃瓜");
 
-		assertThat(found.get().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
+		//assertThat(found.get().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
 
 		assertThat(found.get().getDepartment().getDepartmentCode()).isEqualTo("ACC01");
 
 		assertThat(found.get().getProductStatusCode()).isEqualTo("ACT01");
 
 		assertThat(found.get().getBrand().getBrandCode()).isEqualTo("DRI01");
-
-		assertNotNull(found.get().getPrimaryCategory());
-		assertThat(found.get().getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
-
+		
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyHKD);
 
 		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));

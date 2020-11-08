@@ -93,7 +93,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
     public void whenFindByUsernameAndRole_thenReturnParty() {
 		
 		// when
-	    Optional<PersonEntity> found = personService.findByUsernameAndRole("mackdad", CustomerEntity.class);
+	    Optional<PersonEntity> found = personService.findByUsernameAndRole("mackdad", "Customer");
      
 	    // then
 	    assertFound(found);
