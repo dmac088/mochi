@@ -139,9 +139,9 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 		
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyHKD);
 
-		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));
-
-		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55));
+//		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));
+//
+//		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55));
 
 //
 //		assertNotNull(found.get().getTags());

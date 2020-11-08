@@ -1,6 +1,5 @@
 package io.nzbee.entity.adapters;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -12,20 +11,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.Constants;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
-import io.nzbee.entity.brand.BrandDTO;
-import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.CategoryEntity;
-import io.nzbee.entity.category.ICategoryMapper;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
@@ -34,9 +24,6 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
-import io.nzbee.entity.product.department.DepartmentDTO;
-import io.nzbee.entity.product.department.DepartmentEntity;
-import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
@@ -88,15 +75,6 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Autowired
 	private IProductMapper productMapper;
-
-	@Autowired
-	private IBrandMapper brandMapper;
-
-	@Autowired
-	private IDepartmentMapper departmentMapper;
-
-	@Autowired
-	private ICategoryMapper categoryMapper;
 
 	@Override
 	@Transactional

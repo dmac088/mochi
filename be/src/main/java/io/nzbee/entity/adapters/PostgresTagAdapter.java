@@ -7,13 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.tag.ITagMapper;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
-import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.exceptions.tag.TagNotFoundException;
 
 @Component
