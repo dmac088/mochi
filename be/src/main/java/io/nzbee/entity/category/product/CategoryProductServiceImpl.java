@@ -55,7 +55,7 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	}
 
 	@Override
-	public Optional<CategoryProductEntity> findEntityByCode(String locale, String code) {
+	public Optional<CategoryProductEntity> findEntityByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}

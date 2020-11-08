@@ -16,7 +16,7 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	
 	Optional<T> findDTOByCode(String locale, String code);
 	
-	Optional<Z> findEntityByCode(String locale, String code);
+	Optional<Z> findEntityByCode(String code);
 	
 	Optional<T> findByDesc(String locale, String desc);
 	

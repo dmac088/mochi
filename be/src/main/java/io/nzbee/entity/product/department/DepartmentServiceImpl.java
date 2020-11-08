@@ -52,7 +52,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	}
 	
 	@Override
-	public Optional<DepartmentEntity> findEntityByCode(String locale, String code) {
+	public Optional<DepartmentEntity> findEntityByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}

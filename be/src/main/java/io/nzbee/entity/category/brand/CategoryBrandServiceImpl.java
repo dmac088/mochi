@@ -43,7 +43,7 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	}
 
 	@Override
-	public Optional<CategoryBrandEntity> findEntityByCode(String locale, String code) {
+	public Optional<CategoryBrandEntity> findEntityByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
