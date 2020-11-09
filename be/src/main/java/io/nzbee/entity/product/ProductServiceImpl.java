@@ -70,6 +70,11 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
+	public Optional<ProductEntity> findByCode(String productUPC) {
+		return productDAO.findByCode(productUPC);
+	}
+	
+	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #id}")
 	public Optional<ProductDTO> findById(String locale, String currency, long id) {
 		return productDAO.findById(locale, currency, id);
@@ -81,15 +86,11 @@ public class ProductServiceImpl implements IProductService {
 		return productDAO.findByCode(locale, currency, productUPC);
 	}
 	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key="#productUPC")
-	public Optional<ProductEntity> findByCode(String productUPC) {
-		return productDAO.findByCode(productUPC);
-	}
 
 	@Override
-	public Optional<ProductDTO> findByDesc(String locale, String currency, String desc) {
-		return productDAO.findByDesc(locale, currency, desc);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #productDesc}")
+	public Optional<ProductDTO> findByDesc(String locale, String currency, String productDesc) {
+		return productDAO.findByDesc(locale, currency, productDesc);
 	}
 	
 	@Override
@@ -137,16 +138,22 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	@Caching(evict = {
-			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, key="#product.productUPC"),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productId}"),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.locale, #product.currency, #product.productUPC}")
+			@CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true),
+			@CacheEvict(cacheNames = CACHE_NAME, allEntries = true)
 	})
 	public void save(ProductEntity product) {
 		productDAO.save(product);
 	}
 
-	
+	@Override
+	@Caching(evict = {
+			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
+			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.productUPC, #locale, #currency}"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.productId, #locale, #currency}")
+	})
+	public void save(String locale, String currency, ProductEntity product) {
+		productDAO.save(product);
+	}
 	
 	@Override
 	public void update(ProductEntity t) {
@@ -171,6 +178,8 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+
 
 
 
