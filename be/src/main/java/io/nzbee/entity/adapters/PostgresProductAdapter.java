@@ -165,7 +165,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			product.setProductStatus(ps);
 			product.addProductAttribute(pa);
 
-			productService.save(product);
+			productService.save(domainObject.getLclCd(), domainObject.getCurrency(), product);
 
 		}
 
