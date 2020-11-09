@@ -144,131 +144,6 @@ filters = {
 @TokenFilterDef(factory = NGramFilterFactory.class, params = {
 @Parameter(name = "minGramSize", value = "1"),
 @Parameter(name = "maxGramSize", value = "5") })})
-
-
-//@SqlResultSetMappings({
-//		@SqlResultSetMapping(
-//	    name = "ProductMapping",
-//	    columns = {
-//	    		@ColumnResult(name = "retail_price"),
-//	    		@ColumnResult(name = "markdown_price"),
-//	    		@ColumnResult(name = "prd_img_pth"),
-//	    		@ColumnResult(name = "prd_in_stock")
-//	    },		
-//	    entities = {
-//	            @EntityResult(
-//	                    entityClass = ProductEntity.class,
-//	                    		discriminatorColumn="dept_id",
-//	                    fields = {
-//	                        @FieldResult(name = "productId", 			column = "prd_id"),
-//	                        @FieldResult(name = "productUPC", 			column = "upc_cd"),
-//	                        @FieldResult(name = "productCreateDt", 		column = "prd_crtd_dt"),
-//	                        @FieldResult(name = "brand", 				column = "bnd_id"),
-//	                        @FieldResult(name = "productStatus", 		column = "prd_sts_id"),
-//	                        @FieldResult(name = "department", 			column = "dept_id"),	      
-//	                        @FieldResult(name = "countryOfOrigin",  	column = "ctry_of_orig"),
-//	                        @FieldResult(name = "expiryDate",  			column = "exp_dt"),
-//	                        @FieldResult(name = "locale",  				column = "lcl_cd"),
-//	                        @FieldResult(name = "currency",  			column = "ccy_cd"),
-//	                        @FieldResult(name = "primaryCategory", 		column = "prm_cat_id"),
-//	                        @FieldResult(name = "primaryCategoryIndex", column = "prm_cat_id")
-//	                    }),
-//	            @EntityResult(
-//		                entityClass = ProductStatus.class,
-//		                fields = {
-//		                	@FieldResult(name = "productStatusId", 		column = "prd_sts_id"),
-//		                    @FieldResult(name = "productStatusCode", 	column = "prd_sts_cd"),
-//		                    @FieldResult(name = "productStatusDesc", 	column = "prd_sts_desc")
-//                }),
-//	            @EntityResult(
-//	            		entityClass = ProductAttribute.class,
-//		                fields = {
-//		                    @FieldResult(name = "Id", 				column = "prd_lcl_id"),
-//		                    @FieldResult(name = "productId", 		column = "prd_id"),
-//		                    @FieldResult(name = "productDesc", 		column = "prd_desc"),
-//		                    @FieldResult(name = "productLongDesc", 	column = "prd_lng_desc"),
-//		                    @FieldResult(name = "ProductImage", 	column = "prd_img_pth"),
-//		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
-//		                    @FieldResult(name = "product", 			column = "prd_id")
-//		        }),	            
-//	            @EntityResult(
-//	                    entityClass = Brand.class,
-//	                    fields = {
-//	                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
-//		                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
-//		                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id"),
-//		                    @FieldResult(name = "brandAttributes", 	column = "bnd_lcl_id"),
-//		                    @FieldResult(name = "products", 		column = "prd_id")
-//	                    }),
-//	            @EntityResult(
-//	                    entityClass = BrandAttribute.class,
-//	                    fields = {
-//	                    	@FieldResult(name = "brandAttributeId", column = "bnd_lcl_id"),
-//		                    @FieldResult(name = "brandId", 			column = "bnd_id"),
-//		                    @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
-//		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
-//		                    @FieldResult(name = "brand", 			column = "bnd_id")
-//	                    }),
-//	            @EntityResult(
-//	                    entityClass = Department.class,
-//	                    fields = {
-//	                    	@FieldResult(name = "departmentId", 	column = "dept_id"),
-//		                    @FieldResult(name = "departmentCode", 	column = "dept_cd"),
-//		                    @FieldResult(name = "departmentClass", 	column = "dept_class")
-//	                    }),
-//	            @EntityResult(
-//	                    entityClass = DepartmentAttribute.class,
-//	                    fields = {
-//	                    	@FieldResult(name = "Id", 				column = "dept_lcl_id"),
-//		                    @FieldResult(name = "departmentDesc", 	column = "dept_desc"),
-//		                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
-//		                    @FieldResult(name = "department", 		column = "dept_id")
-//	                    }),
-//	            @EntityResult(
-//	            		entityClass = CategoryProduct.class,
-//		                fields = {
-//		                    @FieldResult(name = "categoryId", 					column = "prm_cat_id"),
-//		                    @FieldResult(name = "categoryCode", 				column = "cat_cd"),
-//		                    @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
-//		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-//		                    @FieldResult(name = "parent", 						column = "cat_prnt_id"),
-//		                    @FieldResult(name = "categoryParentId",				column = "cat_prnt_id"),
-//	                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_cd"),
-//		                }),
-//	            @EntityResult(
-//	                    entityClass = CategoryAttribute.class,
-//	                    fields = {
-//	                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
-//	                        @FieldResult(name = "categoryId", 					column = "prm_cat_id"),
-//	                        @FieldResult(name = "lclCd", 						column = "lcl_cd"),
-//	                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
-//	                        @FieldResult(name = "category", 					column = "prm_cat_id")
-//	                    }),
-//	            @EntityResult(
-//	                    entityClass = CategoryType.class,
-//		                fields = {
-//		                    @FieldResult(name = "categoryTypeId",				column = "cat_typ_id"),
-//		                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
-//		                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
-//		                }),
-//	            @EntityResult(
-//	            		entityClass = CategoryProduct.class,
-//		                fields = {
-//		                    @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
-//		                    @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
-//		                    @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
-//		                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
-//		                    @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id"),
-//		                    @FieldResult(name = "categoryParentId",				column = "cat_prnt_prnt_id"),
-//	                        @FieldResult(name = "categoryParentCode", 			column = "cat_prnt_prnt_cd"),
-//		                }),
-//	    }),
-//		@SqlResultSetMapping(
-//			    name = "ProductMapping.count",
-//			    columns = {
-//			    	@ColumnResult(name = "product_count")
-//			    })
-//})
 @NormalizerDef(
 		name = "sortNormalizer",
 		filters = {
@@ -319,21 +194,7 @@ public abstract class ProductEntity {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	private Set<ProductAttributeEntity> attributes = new HashSet<ProductAttributeEntity>();
-	
-	@Transient
-	private ProductAttributeEntity productAttribute;
 
-	@Transient
-	private Double retailPrice;
-	
-	@Transient
-	private Double markdownPrice;
-	
-	@Transient 
-	private String locale;
-	
-	@Transient
-	private String currency;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="bnd_id")
@@ -562,14 +423,6 @@ public abstract class ProductEntity {
 	private Set<ProductAttributeEntity> getAttributes() {
 		return attributes;
 	}
-	
-	public ProductAttributeEntity getProductAttribute() {
-		return productAttribute;
-	}
-
-	public void setProductAttribute(ProductAttributeEntity productAttribute) {
-		this.productAttribute = productAttribute;
-	}
 
 	public void setProductId(Long productId) {
 		this.productId = productId;
@@ -623,22 +476,6 @@ public abstract class ProductEntity {
 		this.productStatus = productStatus;
 	}
 	
-	public Double getRetailPrice() {
-		return retailPrice;
-	}
-
-	public void setRetailPrice(Double retailPrice) {
-		this.retailPrice = retailPrice;
-	}
-
-	public Double getMarkdownPrice() {
-		return markdownPrice;
-	}
-
-	public void setMarkdownPrice(Double markdownPrice) {
-		this.markdownPrice = markdownPrice;
-	}
-	
 	public void addTag(TagEntity tag) {
 		this.getTags().add(tag);
 		tag.getProducts().add(this);
@@ -677,22 +514,6 @@ public abstract class ProductEntity {
 	public void removeProductPrice(ProductPriceEntity productPrice) {
 		this.getPrices().remove(productPrice);
 		productPrice.setProduct(null);
-	}
-	
-	public String getLocale() {
-		return locale;
-	}
-
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
 	}
 	
 	public void addCategory(CategoryProductEntity category) {
