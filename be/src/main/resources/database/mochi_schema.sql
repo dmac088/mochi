@@ -27,7 +27,6 @@ ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_sts_id_product_status_sts_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_prd_id_fkey;
-ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_prm_cat_id_category_cat_id;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_prd_id_fkey;
@@ -62,7 +61,6 @@ ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_lcl_cd_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
 DROP INDEX mochi.fki_product_attr_lcl_prd_id_fkey;
-DROP INDEX mochi.fki_category_cat_id_product_prm_cat_id;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
 ALTER TABLE ONLY mochi.tag DROP CONSTRAINT uc_tag_cd;
@@ -2294,8 +2292,7 @@ CREATE TABLE product (
     prd_crtd_dt timestamp(4) with time zone NOT NULL,
     bnd_id bigint NOT NULL,
     dept_id bigint NOT NULL,
-    prd_sts_id bigint NOT NULL,
-    prm_cat_id bigint NOT NULL
+    prd_sts_id bigint NOT NULL
 );
 
 
@@ -3402,13 +3399,6 @@ ALTER TABLE ONLY tag_attr_lcl
 
 
 --
--- Name: fki_category_cat_id_product_prm_cat_id; Type: INDEX; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE INDEX fki_category_cat_id_product_prm_cat_id ON product USING btree (prm_cat_id);
-
-
---
 -- Name: fki_product_attr_lcl_prd_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3679,14 +3669,6 @@ ALTER TABLE ONLY product_category
 
 
 --
--- Name: product product_prm_cat_id_category_cat_id; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY product
-    ADD CONSTRAINT product_prm_cat_id_category_cat_id FOREIGN KEY (prm_cat_id) REFERENCES category(cat_id);
-
-
---
 -- Name: product_shipping product_shipping_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3779,8 +3761,8 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
+GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
@@ -3955,8 +3937,8 @@ GRANT ALL ON SEQUENCE customer_cst_num_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE customer TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
+GRANT SELECT ON TABLE customer TO security_app;
 
 
 --
@@ -4075,16 +4057,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE organisation TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
+GRANT SELECT ON TABLE organisation TO security_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
+GRANT SELECT ON TABLE party TO security_app;
 
 
 --
@@ -4105,8 +4087,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE party_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
+GRANT SELECT ON TABLE party_type TO security_app;
 
 
 --
@@ -4120,8 +4102,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE person TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
+GRANT SELECT ON TABLE person TO security_app;
 
 
 --
@@ -4296,16 +4278,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
+GRANT SELECT ON TABLE role TO security_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT ON TABLE role_type TO security_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
+GRANT SELECT ON TABLE role_type TO security_app;
 
 
 --
