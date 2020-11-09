@@ -574,7 +574,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
 						"	   prd.prd_crtd_dt,   " +
-						"	   prd.prm_cat_id, 	" +
 						"	   attr.prd_lcl_id, " +
 						"	   attr.prd_desc, " +
 						"	   attr.prd_lng_desc, " +	
@@ -609,7 +608,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	ON prd.prd_id = attr.prd_id " + 
 
 		"	INNER JOIN mochi.category cp " + 
-		"	ON prd.prm_cat_id = cp.cat_id " +
+		"	ON pc.cat_id = cp.cat_id " +
 
 		"	INNER JOIN mochi.category_type ct  " + 
 		"	ON cc.cat_typ_id = ct.cat_typ_id " + 	

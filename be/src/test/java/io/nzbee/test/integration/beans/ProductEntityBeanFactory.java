@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
@@ -65,25 +67,42 @@ public class ProductEntityBeanFactory {
 		paCn.setProduct(product);
 		product.addProductAttribute(paCn);
 
-		ProductPriceType ppt = productPriceTypeService.findByCode("RET01").get();
-		Currency currHKD = currencyService.findByCode("HKD").get();
-		Currency currUSD = currencyService.findByCode("USD").get();
-		ProductPriceEntity priceHKD = new ProductPriceEntity();
-		ProductPriceEntity priceUSD = new ProductPriceEntity();
-		priceHKD.setType(ppt);
-		priceUSD.setType(ppt);
-		priceHKD.setCurrency(currHKD);
-		priceHKD.setPriceValue(new Double(78));
-		priceUSD.setCurrency(currUSD);
-		priceUSD.setPriceValue(new Double(7.8));
-		product.getPrices().add(priceHKD);
-		product.getPrices().add(priceUSD);
-		priceHKD.setProduct(product);
-		priceUSD.setProduct(product);
+		ProductPriceType pptRetail = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
+		ProductPriceType pptMarkdown = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
+		Currency currHKD = currencyService.findByCode(Constants.currencyHKD).get();
+		Currency currUSD = currencyService.findByCode(Constants.currencyUSD).get();
+		ProductPriceEntity retailPriceHKD = new ProductPriceEntity();
+		ProductPriceEntity retailPriceUSD = new ProductPriceEntity();
+		ProductPriceEntity markdownPriceHKD = new ProductPriceEntity();
+		ProductPriceEntity markdownPriceUSD = new ProductPriceEntity();
+		retailPriceHKD.setType(pptRetail);
+		retailPriceUSD.setType(pptRetail);
+		markdownPriceHKD.setType(pptMarkdown);
+		markdownPriceUSD.setType(pptMarkdown);
+		
+		retailPriceHKD.setCurrency(currHKD);
+		retailPriceHKD.setPriceValue(new Double(60.48));
+		retailPriceUSD.setCurrency(currUSD);
+		retailPriceUSD.setPriceValue(new Double(7.8));
+		
+		markdownPriceHKD.setCurrency(currHKD);
+		markdownPriceHKD.setPriceValue(new Double(50.00));
+		markdownPriceUSD.setCurrency(currUSD);
+		markdownPriceUSD.setPriceValue(new Double(6.45));
+		
+		product.getPrices().add(retailPriceHKD);
+		product.getPrices().add(retailPriceUSD);
+		product.getPrices().add(markdownPriceHKD);
+		product.getPrices().add(markdownPriceUSD);
+		
+		retailPriceHKD.setProduct(product);
+		retailPriceUSD.setProduct(product);
+		
+		markdownPriceHKD.setProduct(product);    
+		markdownPriceUSD.setProduct(product);
 		
 		//we need a brand
 		product.setBrand(brandService.findByCode("PLA01").get());
-				
 				
 		//we need a type
 		product.setDepartment(departmentService.findByCode("ACC01").get());
