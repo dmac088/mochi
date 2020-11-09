@@ -33,6 +33,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.domain.product.Product;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.search.IFacetService;
 import io.nzbee.search.facet.IFacet;
@@ -98,7 +99,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchFruit_thenReturnFruitProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
@@ -120,7 +121,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchFruit_thenReturnFruitProductsZHHK() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD",
@@ -145,7 +146,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenSearchVegetables_thenReturnVegetableProducts() {
 		
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
@@ -168,7 +169,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchApple_thenReturnAppleProduct() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -191,7 +192,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchCauliflower_thenReturnCauliflowerProduct() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -214,7 +215,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchAll_thenReturnAllProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -237,7 +238,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchNuts_thenReturnNuts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -260,7 +261,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchOrganic_thenReturnOrganicProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -283,7 +284,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchOrganic_thenReturnOrganicProductsZHHK() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
@@ -306,7 +307,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchOrganic_thenReturnOrganicGlutenFreeZHHK() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
@@ -329,7 +330,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchGlutenFree_thenReturnGlutenFreeProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -352,7 +353,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchGlorys_thenReturnGlorysProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -375,7 +376,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchEnza_thenReturnEnzaProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -398,7 +399,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchPlanters_thenReturnPlantersProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -421,7 +422,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Test
 	public void whenSearchPlanters_thenReturnDoleProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -442,9 +443,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
-	public void whenSearchPlanters_thenReturnDriscollsProducts() {
+	public void whenSearchDriscolls_thenReturnDriscollsProducts() {
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -469,7 +470,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenSearchCashews_thenReturnCashewsProducts() {
 		
 		// when
-		Page<io.nzbee.domain.product.Product> 
+		Page<Product> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -509,7 +510,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 
 		returnFacets.clear();
 		
-		Page<io.nzbee.domain.product.Product> pp = 
+		Page<Product> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
 								"Ignored",
@@ -532,7 +533,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenSearchForBrandGlorysAndPlantersFruit_thenReturnBrandGlorysAndPlantersFruitProducts() {
 
 		// when
-		Page<io.nzbee.domain.product.Product> pp = 
+		Page<Product> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
 								"Ignored",

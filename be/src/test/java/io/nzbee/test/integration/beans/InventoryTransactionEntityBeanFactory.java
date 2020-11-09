@@ -51,7 +51,7 @@ public class InventoryTransactionEntityBeanFactory {
 		Optional<InventoryType> iT 		= inventoryTypeService.findByCode("IN");
 		Optional<Currency> iC 			= currencyService.findByCode(Constants.currencyHKD);
 		Optional<Supplier> iS 			= supplierService.findByCode("1000000002");
-		Optional<ProductEntity> iP 			= productService.findByCode("30833030");
+		Optional<ProductEntity> iP 		= productService.findByCode("30833030");
 		
 		inventoryTransaction.setInventoryLocation(iL.get());
 		

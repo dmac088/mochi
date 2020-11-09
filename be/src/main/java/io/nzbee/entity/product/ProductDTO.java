@@ -78,7 +78,9 @@ public class ProductDTO {
 		this.productId 				= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
         this.productUPC 			= tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
         this.productDesc 			= tuple[aliasToIndexMap.get(SHORT_DESC_ALIAS)].toString();
-       // this.productLongDesc 		= tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
+        this.productLongDesc 		= aliasToIndexMap.containsKey(LONG_DESC_ALIAS)
+        							  ? ""
+        							  : tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
         this.inStock 				= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
 		//this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
 		this.productStatusCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
