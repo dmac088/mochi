@@ -102,8 +102,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
     	ProductDTO found = productService.findByCode(Constants.localeENGB, 
-				  								  Constants.currencyUSD,  
-												  "123456789").get();
+				  								  	 Constants.currencyUSD,  
+												     "123456789").get();
     	
         // then
     	assertFound(found);
@@ -113,8 +113,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnProduct() {
 		 // when
     	ProductDTO found = productService.findByDesc(Constants.localeENGB, 
-				  								  	Constants.currencyUSD,  
-												  	"test product").get();
+				  								  	 Constants.currencyUSD,  
+												  	 "test product").get();
      
         // then
     	assertFound(found);
@@ -125,7 +125,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	
         // when
     	List<CategoryProductDTO> found = productCategoryService.findAllByProductCode(Constants.localeENGB, 
-				 																  "123456789");
+				 																  	"123456789");
      
         //then
     	assertThat(found.size()).isEqualTo(2);
@@ -136,15 +136,15 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	
         // when
     	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-    														 Constants.currencyUSD, 
-    														 "FRT01", 
-    														 new HashSet<String>(), 
-    														 new HashSet<String>(), 
-    														 new HashSet<String>(), 
-    														 new Double(10000), 
-    														 "0", 
-    														 "50", 
-    														 "priceAsc");
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new HashSet<String>(), 
+	    														 new HashSet<String>(), 
+	    														 new HashSet<String>(), 
+	    														 new Double(10000), 
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
     
     	assertNotNull(found);
     	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
@@ -156,15 +156,15 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	
         // when
     	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-    														 Constants.currencyUSD, 
-    														 "FRT01", 
-    														 new HashSet<String>(), 
-    														 new HashSet<String>(), 
-    														 new HashSet<String>(), 
-    														 null, 
-    														 "0", 
-    														 "50", 
-    														 "priceAsc");
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new HashSet<String>(), 
+	    														 new HashSet<String>(), 
+	    														 new HashSet<String>(), 
+	    														 null, 
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
     
     	assertNotNull(found);
 	}
@@ -177,15 +177,15 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
         // when
     	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-    														 Constants.currencyUSD, 
-    														 "FRT01", 
-    														 categories, 
-    														 new HashSet<String>(), 
-    														 new HashSet<String>(), 
-    														 new Double(10000), 
-    														 "0", 
-    														 "50", 
-    														 "priceAsc");
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 categories, 
+	    														 new HashSet<String>(), 
+	    														 new HashSet<String>(), 
+	    														 new Double(10000), 
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
     
     	assertNotNull(found);
     	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
@@ -200,15 +200,15 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
         // when
     	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-    														 Constants.currencyUSD, 
-    														 "FRT01", 
-    														 new HashSet<String>(), 
-    														 new HashSet<String>(), 
-    														 tags, 
-    														 new Double(10000), 
-    														 "0", 
-    														 "50", 
-    														 "priceAsc");
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new HashSet<String>(), 
+	    														 new HashSet<String>(), 
+	    														 tags, 
+	    														 new Double(10000), 
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
     
         //then
     	assertNotNull(found);
@@ -223,15 +223,15 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
         // when
     	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-    														 Constants.currencyUSD, 
-    														 "FRT01", 
-    														 new HashSet<String>(), 
-    														 brands, 
-    														 new HashSet<String>(),
-    														 new Double(10000), 
-    														 "0", 
-    														 "50", 
-    														 "priceAsc");
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new HashSet<String>(), 
+	    														 brands, 
+	    														 new HashSet<String>(),
+	    														 new Double(10000), 
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
     
         //then
     	assertNotNull(found);
@@ -246,15 +246,15 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 		
         // when
     	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-    														 Constants.currencyUSD, 
-    														 "PRM01", 
-    														 new HashSet<String>(), 
-    														 brands, 
-    														 new HashSet<String>(),
-    														 new Double(10000), 
-    														 "0", 
-    														 "50", 
-    														 "priceAsc");
+	    														 Constants.currencyUSD, 
+	    														 "PRM01", 
+	    														 new HashSet<String>(), 
+	    														 brands, 
+	    														 new HashSet<String>(),
+	    														 new Double(10000), 
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
     
         //then
     	assertNotNull(found);
@@ -284,10 +284,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	assertThat(found.getRetailPrice())
     	.isEqualTo(new Double(7.8));
     	
-    	assertThat(found.getRetailPrice())
-    	.isEqualTo(new Double(78));
+    	assertThat(found.getMarkdownPrice())
+    	.isEqualTo(new Double(6.45));
     	
-//    	assertNotNull(found.);
 //    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }
     

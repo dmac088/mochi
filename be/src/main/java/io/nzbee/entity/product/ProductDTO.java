@@ -1,5 +1,7 @@
 package io.nzbee.entity.product;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
@@ -24,6 +26,10 @@ public class ProductDTO {
     
     public static final String CODE_ALIAS = "prd_sts_cd";
 
+    public static final String RETAIL_PRICE_ALIAS = "retail_price";
+    
+    public static final String MARKDOWN_PRICE_ALIAS = "markdown_price";
+    
     public static final String CURRENCY_ALIAS = "ccy_cd";
     
     protected Long productId;
@@ -36,8 +42,6 @@ public class ProductDTO {
 	
 	protected LocalDateTime productCreateDt;
 	
-	//primary category constructor
-	protected CategoryProductDTO primaryCategory;
 	
 	//brand object
 	protected BrandDTO brand;
@@ -71,7 +75,7 @@ public class ProductDTO {
 	
 
 	public ProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.productId 				= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.productId 				= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
         this.productUPC 			= tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
         this.productDesc 			= tuple[aliasToIndexMap.get(SHORT_DESC_ALIAS)].toString();
        // this.productLongDesc 		= tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
@@ -79,6 +83,8 @@ public class ProductDTO {
 		//this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
 		this.productStatusCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.currency				= tuple[aliasToIndexMap.get(CURRENCY_ALIAS)].toString();
+		this.retailPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(RETAIL_PRICE_ALIAS)]).doubleValue();
+		this.markdownPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(MARKDOWN_PRICE_ALIAS)]).doubleValue();
 	}
 
 	public String getProductUPC() {
@@ -111,14 +117,6 @@ public class ProductDTO {
 
 	public String getProductStatusCode() {
 		return productStatusCode;
-	}
-
-	public CategoryProductDTO getPrimaryCategory() {
-		return primaryCategory;
-	}
-
-	public void setPrimaryCategoryCode(CategoryProductDTO primaryCategory) {
-		this.primaryCategory = primaryCategory;
 	}
 
 	public Set<CategoryProductDTO> getCategories() {
