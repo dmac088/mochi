@@ -16,6 +16,9 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.CategoryEntity;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -70,6 +73,9 @@ public class ProductMasterService {
 	@Autowired
 	private IProductPriceService productPriceService;
 
+	@Autowired 
+	private ICategoryService categoryService;
+	
 	@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
@@ -169,6 +175,8 @@ public class ProductMasterService {
 		
 		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
 		
+		Optional<CategoryEntity> opc = categoryService.findByCode(categoryCode);
+		
 		ProductAttributeEntity pa = (opa.isPresent()) 
 		? opa.get()
 		: (new ProductAttributeEntity());
@@ -186,6 +194,8 @@ public class ProductMasterService {
 		pe.setProductUPC(upcCode);
 		pe.setProductCreateDt(createdDate);
 		pe.setProductStatus(ops.get());
+		
+		pe.addCategory((CategoryProductEntity) opc.get());
 
 		pa.setProductDesc(productDesc);
 		pa.setProductLongDesc(productLongDesc);

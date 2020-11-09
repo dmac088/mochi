@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -66,6 +67,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenProductUploadedForCreation_thenReturnCreatedProduct_ENGB_USD() {
 		 // when
     	Optional<ProductDTO> found = productService.findByCode( Constants.localeENGB, 
@@ -104,15 +106,11 @@ public class IT_ProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getBrand().getBrandCode()).isEqualTo("DRI01");
 
-//		assertNotNull(found.get().getPrimaryCategory());
-//		
-//		assertThat(found.get().getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
-
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyUSD);
 
-	//	assertThat(found.get().getRetailPrice()).isEqualTo(new Double(8));
+		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(8.0));
 
-	//	assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7));
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7.0));
 
 //		assertNotNull(found.get().getTags());
 //		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
@@ -136,15 +134,11 @@ public class IT_ProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getBrand().getBrandCode()).isEqualTo("DRI01");
 
-		//assertNotNull(found.get().getPrimaryCategory());
-		
-		//assertThat(found.get().getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
-
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyHKD);
 
-	//	assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));
+		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60.48));
 
-	//	assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55));
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55.00));
 
 //		assertNotNull(found.get().getTags());
 //		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
