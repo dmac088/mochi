@@ -214,6 +214,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes, Double maxPrice) {
+		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes), StringUtils.join(tagCodes));
 		
 		Session session = em.unwrap(Session.class);

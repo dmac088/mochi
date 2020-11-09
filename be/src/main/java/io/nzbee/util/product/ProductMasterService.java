@@ -195,16 +195,12 @@ public class ProductMasterService {
 		pe.setProductUPC(upcCode);
 		pe.setProductCreateDt(createdDate);
 		pe.setProductStatus(ops.get());
-		
-		pe.setLocale(locale);
-		pe.setCurrency(currency);
-		
+
 		pa.setProductDesc(productDesc);
 		pa.setProductLongDesc(productLongDesc);
 		pa.setLclCd(locale);
 		
 		pa.setProduct(pe);
-		pe.setProductAttribute(pa);
 		pe.addProductAttribute(pa);
 		
 		Currency curr = currencyService.findByCode(currency).get();

@@ -67,7 +67,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     private ICategoryService categoryService;
    
     
-    private io.nzbee.entity.category.CategoryEntity category = null;
+    private CategoryEntity category = null;
     
     @Before
     public void setUp() { 

@@ -152,8 +152,6 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			product.setProductUPC(domainObject.getProductUPC());
 			product.setProductCreateDt(domainObject.getProductCreateDt());
-			product.setLocale(domainObject.getLclCd());
-			product.setCurrency(domainObject.getCurrency());
 			product.setDepartment(d);
 			lcp.forEach(c -> {
 				product.addCategory(c);
