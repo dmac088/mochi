@@ -25,7 +25,6 @@ public abstract class ProductEntity_ {
 	public static volatile SetAttribute<ProductEntity, CategoryProductEntity> categories;
 	public static volatile SingularAttribute<ProductEntity, DepartmentEntity> department;
 	public static volatile SetAttribute<ProductEntity, ProductPriceEntity> prices;
-	public static volatile SingularAttribute<ProductEntity, CategoryProductEntity> primaryCategoryIndex;
 	public static volatile SingularAttribute<ProductEntity, BrandEntity> brand;
 	public static volatile SetAttribute<ProductEntity, TagEntity> tags;
 
@@ -37,7 +36,6 @@ public abstract class ProductEntity_ {
 	public static final String CATEGORIES = "categories";
 	public static final String DEPARTMENT = "department";
 	public static final String PRICES = "prices";
-	public static final String PRIMARY_CATEGORY_INDEX = "primaryCategoryIndex";
 	public static final String BRAND = "brand";
 	public static final String TAGS = "tags";
 

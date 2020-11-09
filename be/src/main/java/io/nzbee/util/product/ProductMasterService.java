@@ -16,9 +16,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.CategoryEntity;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -54,9 +51,6 @@ public class ProductMasterService {
 	
 	@Autowired
 	private ITagService tagService;
-	
-	@Autowired
-	private ICategoryService categoryService; 
 	
 	@Autowired
 	private IDepartmentService departmentService; 
@@ -169,8 +163,6 @@ public class ProductMasterService {
 		
 		Optional<BrandEntity> ob = brandService.findByCode(brandCode);
 		
-		Optional<CategoryEntity> oc = categoryService.findByCode(categoryCode);
-		
 		Optional<DepartmentEntity> od = departmentService.findByCode(templateCode);
 		
 		Optional<ProductStatusEntity> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
@@ -189,7 +181,6 @@ public class ProductMasterService {
 						 ? (ProductBasicEntity) op.get()
 						 : new ProductBasicEntity();			  
 					  
-		pe.setPrimaryCategory((CategoryProductEntity) oc.get());
 		pe.setBrand(ob.get());
 		pe.setDepartment(od.get());
 		pe.setProductUPC(upcCode);
@@ -258,66 +249,5 @@ public class ProductMasterService {
 			p.addTag(t);
 		}
 	}
-	
-//	public void extractProductMaster(Resource resource) {
-//		logger.debug("called extractProductMaster() ");
-//		List<ProductMasterSchema> lpms = new ArrayList<ProductMasterSchema>();
-//	    try {
-//	    
-//	    	List<ProductBasicEntity> productsList = productService.findAllByType(Constants.localeENGB,
-//	    														  		  Constants.currencyHKD,
-//	    														  		  ProductBasicEntity.class)
-//	    							  .stream()
-//	    							  .map(p -> (ProductBasicEntity) p)
-//	    							  .collect(Collectors.toList());
-//	    	
-//	    	//create a map of products (full list)
-//	    	Map<String, ProductMasterSchema> map = productsList.stream().collect(Collectors.toMap(p -> ((ProductEntity) p).getProductUPC(), p -> new ProductMasterSchema()));
-//	    	
-//	    	lpms.addAll(productsList.stream().map(p -> {
-//	    		
-//		    	ProductMasterSchema pms = map.get(p.getProductUPC());
-//		    	
-//		    	pms.set_PRODUCT_UPC_CODE(p.getProductUPC());
-//		    	pms.set_PRODUCT_CREATED_DATE(format.format(p.getProductCreateDt()));
-//		    	pms.set_PRODUCT_STATUS_CODE(p.getProductStatus().getCode());
-//		    	pms.set_PRODUCT_DESCRIPTION_EN(p.getProductDescENGB());
-//        		pms.set_PRODUCT_DESCRIPTION_HK(p.getProductDescZHHK()); 		
-//		        pms.set_PRODUCT_RETAIL_PRICE_HKD(p.getCurrentRetailPriceHKD());
-//		        pms.set_PRODUCT_MARKDOWN_PRICE_HKD(p.getCurrentMarkdownPriceHKD());	
-//		        pms.set_PRODUCT_RETAIL_PRICE_USD(p.getCurrentRetailPriceUSD()); 
-//				pms.set_PRODUCT_MARKDOWN_PRICE_USD(p.getCurrentMarkdownPriceUSD());
-//		    	pms.set_BRAND_CODE(p.getBrand().getBrandCode());
-//		    	pms.set_BRAND_DESCRIPTION_EN(p.getBrand().getBrandDescENGB());
-//		    	pms.set_BRAND_DESCRIPTION_HK(p.getBrand().getBrandDescZHHK());
-//		    	pms.set_PRIMARY_CATEGORY_CODE(p.getPrimaryCategory().getCategoryCode());
-//		    	pms.set_PRIMARY_CATEGORY_DESC_EN(p.getPrimaryCategory().getCategoryDescENGB());
-//		    	pms.set_PRODUCT_IMAGE_EN(p.getProductImageENGB());
-//		    	pms.set_PRIMARY_CATEGORY_DESC_HK(p.getPrimaryCategory().getCategoryDescZHHK());
-//		    	pms.set_PRODUCT_IMAGE_HK(p.getProductImageZHHK());
-//		    	pms.set_PRODUCT_TEMPLATE_CODE(p.getDepartment().getDepartmentCode());
-//		    	pms.set_PRODUCT_TEMPLATE_DESC_EN(p.getDepartment().getDepartmentDescENGB());
-//		    	pms.set_PRODUCT_TEMPLATE_DESC_HK(p.getDepartment().getDepartmentDescZHHK());
-//		    	
-//		    	return pms;
-//	    	}).collect(Collectors.toSet()));
-//	    	
-//	    	CsvMapper mapper = new CsvMapper(); 
-//	        CsvSchema schema = mapper.schemaFor(ProductMasterSchema.class)
-//	        		.withHeader()
-//	        		.withColumnSeparator('\t')
-//	        		.withQuoteChar('"');
-//	        
-//	        ObjectWriter myObjectWriter = mapper.writer(schema);
-//	        String ow = myObjectWriter.writeValueAsString(lpms);
-//	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
-//	        out.write(ow);
-//	        out.flush();
-//	        out.close();
-//	        
-//	    } catch (Exception e) {
-//	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
-//	    }
-//	}
 	
 }
