@@ -26,4 +26,5 @@ public interface IProductService extends ILocalizedService<ProductDTO, ProductEn
 
 	<T> Set<ProductEntity> findAllByType(Class<T> cls);
  
+	void save(String locale, String currency, ProductEntity product);
 }

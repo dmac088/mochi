@@ -4,7 +4,6 @@ import java.util.Optional;
 import java.util.Set;
 
 public interface ILocalizedService<T, Z> extends IService<Z> {
-
 	
 	Set<T> findAll(String locale);
 	
