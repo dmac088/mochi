@@ -121,7 +121,7 @@ public class ProductMasterService {
 				 p.get_TAG_CODE_D(),
 				 p.get_TAG_CODE_E()	
 		);
-		productService.save(pe);
+		productService.save(Constants.localeENGB, Constants.currencyUSD, pe);
 		
 		pe = mapToAccessory(
 				 Constants.localeZHHK, 
@@ -141,7 +141,7 @@ public class ProductMasterService {
 				 p.get_TAG_CODE_D(),
 				 p.get_TAG_CODE_E()	
 		);
-		productService.save(pe);
+		productService.save(Constants.localeZHHK, Constants.currencyHKD, pe);
 		
 	}
 	
