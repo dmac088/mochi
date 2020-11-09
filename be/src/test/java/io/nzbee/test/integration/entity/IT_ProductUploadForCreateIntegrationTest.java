@@ -67,7 +67,6 @@ public class IT_ProductUploadForCreateIntegrationTest {
 	}
 	
 	@Test
-	@Rollback(false)
 	public void whenProductUploadedForCreation_thenReturnCreatedProduct_ENGB_USD() {
 		 // when
     	Optional<ProductDTO> found = productService.findByCode( Constants.localeENGB, 
