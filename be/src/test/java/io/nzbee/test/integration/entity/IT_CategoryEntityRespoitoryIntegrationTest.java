@@ -58,6 +58,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// when
 		Set<CategoryDTO> found = categoryService.findAll(Constants.localeENGB);
 
+		System.out.println("size = " + found.size());
+		
 		// then
 		assertAllCategoriesFound(found);
 	}
@@ -260,13 +262,13 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	private void assertAllCategoriesFound(final Set<CategoryDTO> found) {
 
 		assertThat(found).isNotNull();
-		assertThat(found).size().isEqualTo(88);
+		assertThat(found.size()).isEqualTo(88);
 	}
 
 	private void assertAllBrandCategoriesFound(final Set<CategoryDTO> found) {
 
 		assertThat(found).isNotNull();
-		assertThat(found).size().isEqualTo(1);
+		assertThat(found.size()).isEqualTo(1);
 	}
 
 	private void assertAllProductCategoriesFound(final Set<CategoryDTO> found) {

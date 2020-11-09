@@ -155,7 +155,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public <T> Set<CategoryDTO> findAllByType(String locale, Class<T> cls) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, cls.getSimpleName());
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}", locale, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -183,9 +183,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	public Set<CategoryDTO> findAll(String locale) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}", locale);
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}", locale);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -203,10 +204,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
 		
-		return results.stream().map(c -> this.objectToDTO(c, locale)).collect(Collectors.toSet());
+		@SuppressWarnings("unchecked")
+		Set<CategoryDTO> results = new HashSet<CategoryDTO>(query.getResultList());
+		
+		return results;
 	}
 	
 
