@@ -99,7 +99,6 @@ public class ProductEntityBeanFactory {
 		//add the category to the product
 		product.addProductCategory(cpf);
 		product.addProductCategory(cpv);
-		product.setPrimaryCategory(cpf);
 		
 		//we should add a tag
 		TagEntity t = tagService.findByCode("ORG01").get();

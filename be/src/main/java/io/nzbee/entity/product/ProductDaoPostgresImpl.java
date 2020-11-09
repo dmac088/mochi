@@ -599,8 +599,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	FROM categories cc    " + 
 		
+		"	INNER JOIN mochi.product_category pc	" + 
+		"	ON cc.cat_id = pc.cat_id   " + 
+		
 		"	INNER JOIN mochi.product prd    " + 
-		"	ON cc.cat_id = prd.prm_cat_id   " + 
+		"	ON pc.prd_id = prd.prd_id   " + 
 		
 		"	INNER JOIN mochi.product_attr_lcl attr " +
 		"	ON prd.prd_id = attr.prd_id " + 

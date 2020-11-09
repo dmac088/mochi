@@ -218,11 +218,7 @@ public abstract class ProductEntity {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	Set<ProductPriceEntity> prices = new HashSet<ProductPriceEntity>();
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prm_cat_id")
-	@IndexedEmbedded(prefix="product.primarycategory.")
-	private CategoryProductEntity primaryCategoryIndex; 
+
 
 	@Transient
 	private CategoryProductEntity primaryCategory;
@@ -236,16 +232,6 @@ public abstract class ProductEntity {
 	public CategoryProductEntity getPrimaryCategory() {
 		return primaryCategory;
 	}
-	
-	public CategoryProductEntity getPrimaryCategoryIndex() {
-		return primaryCategoryIndex;
-	}
-
-	public void setPrimaryCategory(CategoryProductEntity primaryCategoryIndex) {
-		this.primaryCategoryIndex = primaryCategoryIndex; 
-		this.primaryCategory = primaryCategoryIndex;
-	}
-
 
 	@Field(store=Store.YES)
 	@SortableField
