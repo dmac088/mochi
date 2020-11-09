@@ -98,7 +98,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getProductDesc()).isEqualTo("organic cucumber");
 
-		//assertThat(found.get().getProductLongDesc()).isEqualTo("newly fresh organic cucumber");
+		assertThat(found.get().getProductLongDesc()).isEqualTo("newly fresh organic cucumber");
 
 		assertThat(found.get().getDepartment().getDepartmentCode()).isEqualTo("ACC01");
 
@@ -126,7 +126,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getProductDesc()).isEqualTo("有機黃瓜");
 
-		//assertThat(found.get().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
+		assertThat(found.get().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
 
 		assertThat(found.get().getDepartment().getDepartmentCode()).isEqualTo("ACC01");
 

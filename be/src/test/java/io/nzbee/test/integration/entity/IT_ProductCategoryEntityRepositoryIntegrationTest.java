@@ -136,6 +136,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 		    											tags, 
 		    											null);
      
+    	System.out.println(lc.size());
         //then
     	assertNotNull(lc);
     	assertThat(lc.size()).isEqualTo(7);
