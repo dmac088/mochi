@@ -215,6 +215,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes, Double maxPrice) {
@@ -253,10 +254,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		}
 		
-		@SuppressWarnings("unchecked")
-		List<Object[]> results = query.getResultList();
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
 		
-		return results.stream().map(c -> this.objectToDTO(c, locale, currency)).collect(Collectors.toSet());
+		@SuppressWarnings("unchecked")
+		Set<CategoryDTO> results = new HashSet<CategoryDTO>(query.getResultList());
+		
+		return results;
 	}
 
 
