@@ -406,7 +406,7 @@ public abstract class ProductEntity {
 		this.tags = tags;
 	}
 	
-	private Set<ProductAttributeEntity> getAttributes() {
+	public Set<ProductAttributeEntity> getAttributes() {
 		return attributes;
 	}
 

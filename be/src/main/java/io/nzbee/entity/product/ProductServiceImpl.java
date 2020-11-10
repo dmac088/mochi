@@ -34,8 +34,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public Optional<ProductEntity> findEntityByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.findByCode(code);
 	}
 
 
