@@ -18,6 +18,7 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
 import org.mockito.internal.util.StringUtil;
@@ -115,6 +116,31 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		);
 		
 		return query.getResultStream().collect(Collectors.toSet());
+	}
+	
+	@Override
+	public Set<CategoryEntity> findAll(Set<String> codes) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll with parameter {} ", ArrayUtils.toString(codes));
+		
+		CriteriaBuilder cb = em.getCriteriaBuilder();
+		
+		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
+		
+		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
+		
+		List<Predicate> conditions = new ArrayList<Predicate>();
+
+		conditions.add(
+				root.get(CategoryEntity_.CATEGORY_CODE).in(codes)
+		);
+		
+		TypedQuery<CategoryEntity> query = em.createQuery(cq
+				.select(root)
+				.where(conditions.toArray(new Predicate[] {}))
+				.distinct(false)
+		);
+	
+		return new HashSet<CategoryEntity>(query.getResultList());
 	}
 	
 	@Override
@@ -850,10 +876,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return null;
 	}
 
-	@Override
-	public Set<CategoryEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

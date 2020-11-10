@@ -12,6 +12,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
@@ -57,6 +58,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	}
 	
 	@Test
+	//@Rollback(false)
     public void whenValidCode_thenProductShouldBeFound() {
         Product found = productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "3254354673");
       
@@ -70,8 +72,10 @@ public class IT_ProductDoServiceImplIntegrationTest {
         assertFound(found);
     }
     
-    private void assertFound(final Product found) {
+    private void assertFound(Product found) {
 
+    	assertNotNull(found);
+    	
     	assertThat(found.getProductUPC())
         .isEqualTo("3254354673");
     	
