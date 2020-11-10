@@ -167,9 +167,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new TagDTOResultTransformer());
 		
-		TagDTO result = (TagDTO) query.getSingleResult();
-		
-		return Optional.ofNullable(result);
+		try {
+			TagDTO result = (TagDTO) query.getSingleResult();
+			return Optional.ofNullable(result);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+
 	}
 
 

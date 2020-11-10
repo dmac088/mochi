@@ -1,6 +1,7 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -64,13 +65,15 @@ public class IT_TagDoServiceImplIntegrationTest {
     
 	@Test
     public void whenValidDesc_thenTagShouldBeFound() {
-        Tag found = tagService.findByDesc(Constants.localeENGB, "Organic");
+        Tag found = tagService.findByDesc(Constants.localeENGB, "ORGANIC");
       
         assertFound(found);
     }
 	
 	private void assertFound(final Tag found) {
 
+		assertNotNull(found);
+		
 		assertThat(found.getTagCode())
 	       .isEqualTo("ORG01");
 		
