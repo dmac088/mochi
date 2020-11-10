@@ -70,7 +70,7 @@ public class IT_TagDoServiceImplIntegrationTest {
         assertFound(found);
     }
 	
-	private void assertFound(final Tag found) {
+	private void assertFound(Tag found) {
 
 		assertNotNull(found);
 		
@@ -78,7 +78,7 @@ public class IT_TagDoServiceImplIntegrationTest {
 	       .isEqualTo("ORG01");
 		
 		assertThat(found.getTagDesc())
-	       .isEqualTo("Organic");
+	       .isEqualTo("ORGANIC");
 	    	
 	}
 }

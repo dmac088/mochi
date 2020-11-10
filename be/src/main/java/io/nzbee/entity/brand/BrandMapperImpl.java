@@ -9,18 +9,17 @@ public class BrandMapperImpl implements IBrandMapper {
 
 	@Override
 	public Brand DTOToDo(BrandDTO dto) {
-		io.nzbee.domain.brand.Brand bo = 
-				new io.nzbee.domain.brand.Brand(
-						dto.getBrandCode(),
-						dto.getBrandDesc(),
-						dto.getCount(),
-						dto.getLocale());
+		Brand bo = 
+				new Brand(	dto.getBrandCode(),
+							dto.getBrandDesc(),
+							dto.getCount(),
+							dto.getLocale());
 	
 		return bo;
 	}
 
 	@Override
-	public BrandEntity doToEntity(io.nzbee.domain.brand.Brand d) {
+	public BrandEntity doToEntity(Brand d) {
 		// TODO Auto-generated method stub
 		return null;
 	}

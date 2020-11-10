@@ -8,8 +8,13 @@ public class TagMapperImpl implements ITagMapper {
 
 	@Override
 	public Tag DTOToDo(TagDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		Tag to = 
+				new Tag(
+						dto.getTagCode(),
+						dto.getTagDesc(),
+						dto.getLocale()
+						);
+		return to;
 	}
 
 	@Override
