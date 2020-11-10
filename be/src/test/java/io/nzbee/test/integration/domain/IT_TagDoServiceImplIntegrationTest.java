@@ -57,14 +57,14 @@ public class IT_TagDoServiceImplIntegrationTest {
 	
 	@Test
     public void whenValidCode_thenTagShouldBeFound() {
-        Tag found = tagService.findByCode(Constants.localeENGB, "TST01");
+        Tag found = tagService.findByCode(Constants.localeENGB, "ORG01");
       
         assertFound(found);
     }
     
 	@Test
     public void whenValidDesc_thenTagShouldBeFound() {
-        Tag found = tagService.findByDesc(Constants.localeENGB, "test tag");
+        Tag found = tagService.findByDesc(Constants.localeENGB, "Organic");
       
         assertFound(found);
     }
@@ -72,10 +72,10 @@ public class IT_TagDoServiceImplIntegrationTest {
 	private void assertFound(final Tag found) {
 
 		assertThat(found.getTagCode())
-	       .isEqualTo("TST01");
+	       .isEqualTo("ORG01");
 		
 		assertThat(found.getTagDesc())
-	       .isEqualTo("test tag");
+	       .isEqualTo("Organic");
 	    	
 	}
 }
