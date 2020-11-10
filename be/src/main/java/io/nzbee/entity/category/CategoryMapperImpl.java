@@ -25,8 +25,6 @@ public class CategoryMapperImpl implements ICategoryMapper {
 
 	@Override
 	public Category DTOToDo(CategoryDTO dto) {
-		System.out.println(dto.getCategoryDesc());
-		System.out.println(dto.getClass());
 		if(dto instanceof CategoryProductDTO) {
 			return categoryProductMapper.DTOToDo((CategoryProductDTO) dto);
 		}
