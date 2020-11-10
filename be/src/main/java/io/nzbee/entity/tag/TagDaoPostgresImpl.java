@@ -33,6 +33,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
+	
+	@Autowired
+	private ITagRepository tagRepository;
+	
 	@Override
 	public Optional<TagEntity> findById(long id) {
 		// TODO Auto-generated method stub
@@ -47,8 +51,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	@Override
 	public Set<TagEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
+		return tagRepository.findByTagCodeIn(codes);
 	}
 
 	@SuppressWarnings("deprecation")

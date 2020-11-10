@@ -10,5 +10,7 @@ public interface ITagRepository extends CrudRepository<TagEntity, Long> {
 	
 	Optional<TagEntity> findByTagCode(String code);
 	
+	Set<TagEntity> findByTagCodeIn(Set<String> codes);
+	
 	Optional<TagEntity> findByAttributesLclCdAndAttributesTagDesc(String locale, String desc);
 }
