@@ -84,7 +84,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<TagDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}, {}", locale, code);
+		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}", locale, code);
 		
 		Session session = em.unwrap(Session.class);
 		

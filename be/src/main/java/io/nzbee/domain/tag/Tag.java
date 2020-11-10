@@ -26,8 +26,7 @@ public class Tag implements ILocalizedDomainObject {
 	public Tag(	String tagCode,
 				String tagDesc,
 				Long objectCount,
-				String locale,
-				String currency) {
+				String locale) {
 		this.tagCode = tagCode;
 		this.tagDesc = tagDesc;
 		this.objectCount = objectCount;
