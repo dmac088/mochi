@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -59,25 +61,27 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
  
     @Test
     public void whenValidCode_thenBrandCategoryShouldBeFound() {
-        Category found = categoryService.findByCode(Constants.localeENGB, "TST02");
+        Category found = categoryService.findByCode(Constants.localeENGB, "FBR01");
       
         assertFound(found);
     }
     
     @Test
     public void whenValidDesc_thenBrandCategoryShouldBeFound() {
-        Category found = categoryService.findByDesc(Constants.localeENGB, "test brand category");
+        Category found = categoryService.findByDesc(Constants.localeENGB, "Featured Brands");
       
         assertFound(found);
      }
     
     private void assertFound(final Category found) {
 
+    	assertNotNull(found);
+    	
     	assertThat(found.getCategoryCode())
-        .isEqualTo("TST02");
+        .isEqualTo("FBR01");
     	
 	    assertThat(found.getCategoryDesc())
-	    .isEqualTo("test brand category");
+	    .isEqualTo("Featured Brands");
     }
     
 }

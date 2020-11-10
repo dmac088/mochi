@@ -4,7 +4,7 @@ import java.util.Map;
 
 import io.nzbee.search.ISearchDimension;
 
-public class CategoryDTO implements ISearchDimension {
+public abstract class CategoryDTO implements ISearchDimension {
 
 	public static final String ID_ALIAS = "cat_id";
 	
@@ -15,6 +15,8 @@ public class CategoryDTO implements ISearchDimension {
     public static final String LOCALE_CODE_ALIAS = "lcl_cd";
     
     public static final String OBJECT_COUNT_ALIAS = "object_count";
+    
+	public static final String CATEGORY_TYPE_ALIAS = "cat_typ_cd";
 	
 	private Long categoryId;
 	
