@@ -309,6 +309,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
@@ -350,6 +351,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		}
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
@@ -392,6 +394,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {

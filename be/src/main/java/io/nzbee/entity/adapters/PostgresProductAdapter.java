@@ -14,6 +14,7 @@ import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
@@ -22,8 +23,11 @@ import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
+import io.nzbee.entity.product.attribute.ProductAttributeEntity;
+import io.nzbee.entity.product.basic.ProductBasicEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
+import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
@@ -83,14 +87,14 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			Optional<ProductEntity> op = productService.findByCode(domainObject.getProductUPC());
 
-			io.nzbee.entity.product.basic.ProductBasicEntity product = (op.isPresent()) 
-					? (io.nzbee.entity.product.basic.ProductBasicEntity) op.get()
-					: new io.nzbee.entity.product.basic.ProductBasicEntity();
+			ProductBasicEntity product = (op.isPresent()) 
+					? (ProductBasicEntity) op.get()
+					: new ProductBasicEntity();
 
 			// find the department
-			io.nzbee.entity.product.department.DepartmentEntity d = departmentService.findByCode(domainObject.getDepartment().getDepartmentCode()).get();			
+			DepartmentEntity d = departmentService.findByCode(domainObject.getDepartment().getDepartmentCode()).get();			
 			// get all the categories
-			Set<io.nzbee.entity.category.product.CategoryProductEntity> lcp = 
+			Set<CategoryProductEntity> lcp = 
 					categoryService.findAll( domainObject.getLclCd(), 
 											 domainObject.getCategories().stream().map(cc -> cc.getCategoryCode())
 									.collect(Collectors.toSet()))
@@ -102,13 +106,13 @@ public class PostgresProductAdapter implements IProductPortService {
 			
 		
 			// find the brand
-			io.nzbee.entity.brand.BrandEntity b = brandService.findByCode(domainObject.getBrand().getBrandCode()).get();
+			BrandEntity b = brandService.findByCode(domainObject.getBrand().getBrandCode()).get();
 
-			Optional<io.nzbee.entity.product.attribute.ProductAttributeEntity> opa = productAttributeService
+			Optional<ProductAttributeEntity> opa = productAttributeService
 					.findByCode(domainObject.getProductUPC());
 
-			io.nzbee.entity.product.attribute.ProductAttributeEntity pa = (opa.isPresent()) ? opa.get()
-					: (new io.nzbee.entity.product.attribute.ProductAttributeEntity());
+			ProductAttributeEntity pa = (opa.isPresent()) ? opa.get()
+					: (new ProductAttributeEntity());
 
 			pa.setProductDesc(domainObject.getProductDesc());
 			pa.setProductLongDesc(domainObject.getProductLongDesc());

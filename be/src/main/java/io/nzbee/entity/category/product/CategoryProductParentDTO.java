@@ -1,6 +1,7 @@
 package io.nzbee.entity.category.product;
 
 import java.util.Map;
+import java.math.BigInteger;
 
 public class CategoryProductParentDTO  {
 
@@ -24,12 +25,14 @@ public class CategoryProductParentDTO  {
 	
 	private String locale;
 	
+	
+	
 	public CategoryProductParentDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.categoryId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.categoryId 	= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.categoryCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		//this.categoryDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
-		this.categoryLevel 	= ((Number) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
+		this.categoryLevel 	= ((BigInteger) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
 	}
 
 	public Long getCategoryId() {
