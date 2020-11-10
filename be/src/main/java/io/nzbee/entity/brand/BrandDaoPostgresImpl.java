@@ -68,9 +68,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		BrandDTO result = (BrandDTO) query.getSingleResult();
-		
-		return Optional.ofNullable(result);
+		try {
+			BrandDTO result = (BrandDTO) query.getSingleResult();
+			return Optional.ofNullable(result);
+		} catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -103,8 +106,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		try {
 			BrandEntity brand = query.getSingleResult();
 			return Optional.ofNullable(brand);
-		} 
-		catch(NoResultException nre) {
+		} catch(NoResultException nre) {
 			return Optional.empty();
 		}
 	}
@@ -139,9 +141,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		BrandDTO result = (BrandDTO) query.getSingleResult();
-		
-		return Optional.ofNullable(result);
+		try {
+			BrandDTO result = (BrandDTO) query.getSingleResult();
+			return Optional.ofNullable(result);
+		} catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 
 	@SuppressWarnings("deprecation")
@@ -174,9 +179,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new BrandDTOResultTransformer());
 		
-		BrandDTO result = (BrandDTO) query.getSingleResult();
-		
-		return Optional.ofNullable(result);
+		try {
+			BrandDTO result = (BrandDTO) query.getSingleResult();
+			return Optional.ofNullable(result);
+		} catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })

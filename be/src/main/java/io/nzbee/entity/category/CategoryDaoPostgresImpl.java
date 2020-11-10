@@ -51,6 +51,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes) {
+		
 		LOGGER.debug("call CategoryDaoPostgresImpl.getMaxPrice parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}", locale, currency, categoryCode, StringUtils.join(categoryCodes), StringUtils.join(brandCodes), StringUtils.join(tagCodes));
 		
 		Session session = em.unwrap(Session.class);
@@ -96,6 +97,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@Override
 	public Set<CategoryEntity> findAll() {
+		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll ");
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -122,6 +124,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			}
 	)
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
+		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -156,6 +159,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public <T> Set<CategoryDTO> findAllByType(String locale, Class<T> cls) {
+		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}", locale, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
@@ -190,6 +194,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public Set<CategoryDTO> findAll(String locale) {
+		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}", locale);
 		
 		Session session = em.unwrap(Session.class);
@@ -333,10 +338,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
+		
 		try {
-			Object[] c = (Object[])query.getSingleResult();
-			
-			CategoryDTO category = this.objectToDTO(c, locale);
+			CategoryDTO category = (CategoryDTO) query.getSingleResult();
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -373,10 +379,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("categoryDesc", categoryDesc)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
+		
 		try {
-			Object[] c = (Object[])query.getSingleResult();
-			
-			CategoryDTO category = this.objectToDTO(c, locale);
+			CategoryDTO category = (CategoryDTO) query.getSingleResult();
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -393,7 +400,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		)
 	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, categoryCode);
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}", locale, categoryCode);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -414,10 +421,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
+		
 		try {
-			Object[] c = (Object[])query.getSingleResult();
-			
-			CategoryDTO category = this.objectToDTO(c, locale);
+			CategoryDTO category = (CategoryDTO) query.getSingleResult();
 			return Optional.ofNullable(category);
 		} 
 		catch(NoResultException nre) {
@@ -512,58 +520,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return query.getResultStream().collect(Collectors.toSet());
 	}
 
-//	@Override
-//	public Category objectToEntity(Tuple t, String locale, String currency) {
-//		Category c = objectToEntity(t, locale);
-//		c.setCurrency(currency);
-//		return c;
-//	}
-//	
-//	@Override
-//	public Category objectToEntity(Object[] o, String locale, String currency) {
-//		Category c = objectToEntity(o, locale);
-//		c.setCurrency(currency);
-//		return c;
-//	}
-//	
-//	@Override
-//	public Category objectToEntity(Object[] o, String locale) {
-//		Category category = (Category) o[0];
-//		category.setCategoryAttribute(((CategoryAttributeEntity) o[1]));
-//		category.setCategoryType((CategoryType) o[2]);
-//		if(category instanceof CategoryProduct) {
-//			((CategoryProduct) category).setHasParent(o[3] != null);
-//			if(((CategoryProduct) category).hasParent()) {
-//				//we have a parent
-//				Category parentCategory = (Category) o[3];
-//				parentCategory.setCategoryAttribute(((CategoryAttributeEntity) o[4]));
-//				parentCategory.setCategoryType((CategoryType) o[5]);
-//				category.setParent(parentCategory);
-//			}
-//		}
-//		category.setObjectCount(((BigDecimal)o[6]).intValue());
-//		category.setChildCount(((BigInteger)o[7]).longValue());
-//		category.setLocale(locale);
-//		
-//		return category;
-//	}
-//
-//	@Override
-//	public Category objectToEntity(Tuple t, String locale) {
-//		Category c =  t.get("categoryType").toString().equals("PRD01") 
-//				? new CategoryProduct()
-//				: new CategoryBrand();
-//	
-//		c.setCategoryCode(t.get("categoryCode").toString());
-//		CategoryAttributeEntity ca = new CategoryAttributeEntity();
-//		ca.setCategoryDesc(t.get("categoryDesc").toString());
-//		c.setCategoryAttribute(ca);
-//		
-//		c.setLocale(locale);
-//		
-//		return c;
-//	}
-	
 	@Override
 	public void save(CategoryEntity t) {
 		em.persist(t);
@@ -896,9 +852,5 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-
-
-	
 
 }
