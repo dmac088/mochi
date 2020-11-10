@@ -92,13 +92,10 @@ public class PostgresProductAdapter implements IProductPortService {
 					: new ProductBasicEntity();
 
 			// find the department
-			DepartmentEntity d = departmentService.findByCode(domainObject.getDepartment().getDepartmentCode()).get();			
+			DepartmentEntity d = departmentService.findByCode(domainObject.getDepartment().getDepartmentCode()).get();
+			
 			// get all the categories
-			Set<CategoryProductEntity> lcp = 
-					categoryService.findAll( domainObject.getLclCd(), 
-											 domainObject.getCategories().stream().map(cc -> cc.getCategoryCode())
-									.collect(Collectors.toSet()))
-					.stream().map(cd -> (CategoryProductEntity) Hibernate.unproxy(cd)).collect(Collectors.toSet());
+			Set<CategoryProductEntity> lcp = product.getCategories().stream().map(cd -> (CategoryProductEntity) Hibernate.unproxy(cd)).collect(Collectors.toSet());
 			
 			//get all the tags
 			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
@@ -108,8 +105,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			// find the brand
 			BrandEntity b = brandService.findByCode(domainObject.getBrand().getBrandCode()).get();
 
-			Optional<ProductAttributeEntity> opa = productAttributeService
-					.findByCode(domainObject.getProductUPC());
+			Optional<ProductAttributeEntity> opa = product.getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLclCd())).findAny();
 
 			ProductAttributeEntity pa = (opa.isPresent()) ? opa.get()
 					: (new ProductAttributeEntity());
@@ -161,9 +157,11 @@ public class PostgresProductAdapter implements IProductPortService {
 				product.addCategory(c);
 			});
 			product.setBrand(b);
-			tags.forEach(t -> {
-				product.addTag(t);
-			});
+			if(!tags.isEmpty()) {
+				tags.forEach(t -> {
+					product.addTag(t);
+				});
+			}
 			product.addProductPrice(prcr);
 			product.addProductPrice(prcm);
 			product.setProductStatus(ps);

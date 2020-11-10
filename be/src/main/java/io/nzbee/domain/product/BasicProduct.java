@@ -12,7 +12,7 @@ import io.nzbee.domain.department.Department;
 @JsonTypeName("product")
 public class BasicProduct extends Product {
 
-	public BasicProduct(	 String productUPC,
+	public BasicProduct( String productUPC,
 						 LocalDateTime   productCreateDt,
 					   	 String productStatus,
 					   	 String productDesc,
