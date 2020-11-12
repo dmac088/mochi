@@ -1,6 +1,9 @@
 package io.nzbee.entity.party.person;
 
+import io.nzbee.Constants;
 import io.nzbee.domain.customer.Customer;
+import io.nzbee.entity.role.customer.CustomerEntity;
+
 import org.springframework.stereotype.Component;
 
 @Component(value="customerMapper")
@@ -25,4 +28,17 @@ public class CustomerMapper implements ICustomerMapper {
 		return null;
 	}
 	
+	
+	
+	@Override
+	public Customer EntityToDo(PersonEntity person) {
+		Customer co = new Customer(
+						person.getGivenName(),
+						person.getFamilyName(),
+						person.getUser().getUsername(),
+						((CustomerEntity) person.getPartyRoles().stream().filter(r -> r.getRoleType().getRoleTypeDesc().equals(Constants.partyRoleCustomer)).findAny().get()).getCustomerNumber(),
+						person.getUser().isEnabled()
+					);
+		return co;
+	}
 }

@@ -42,10 +42,6 @@ public class BagMapperImpl implements IBagMapper {
 		Bag b = new Bag(c);
 		
 		
-		//bagItemService
-		
-		
-		
 		//map the entity bagItems to the domain bagItems
 		Set<BagItem> sbi = 	 bDto.getBagItems().stream()
 							 .map(bi -> bagItemMapper.DTOToDo(bi))
@@ -61,17 +57,17 @@ public class BagMapperImpl implements IBagMapper {
 	}
 
 	@Override
-	public io.nzbee.entity.bag.BagEntity doToEntity(Bag d) {
+	public BagEntity doToEntity(Bag d) {
 		//get the bag, status, and customer from the database
-		Optional<io.nzbee.entity.bag.BagEntity> obe 					= bagService.findByCode(d.getCustomer().getUserName());		
+		Optional<BagEntity> obe 										= bagService.findByCode(d.getCustomer().getUserName());		
 		Optional<io.nzbee.entity.party.person.PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Constants.partyRoleCustomer);
 					
-		io.nzbee.entity.bag.BagEntity nbe = new io.nzbee.entity.bag.BagEntity();
+		BagEntity nbe = new BagEntity();
 		nbe.setBagCreatedDateTime(LocalDateTime.now());
 		nbe.setBagUpdatedDateTime(LocalDateTime.now());
 				
 		//use the existing bag if it exists otherwise use newly created
-		io.nzbee.entity.bag.BagEntity b = (obe.isPresent())
+		BagEntity b = (obe.isPresent())
 									? obe.get()
 									: nbe;		
 									

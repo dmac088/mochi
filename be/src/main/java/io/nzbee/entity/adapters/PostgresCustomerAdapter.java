@@ -27,6 +27,7 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.role.IRoleTypeRepository;
 import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
+import io.nzbee.exceptions.customer.CustomerNotFoundException;
 import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
 import io.nzbee.exceptions.product.ProductException;
 import io.nzbee.security.authority.Authority;
@@ -36,12 +37,16 @@ import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 import io.nzbee.security.user.verificationtoken.VerificationToken;
 import io.nzbee.security.user.verificationtoken.VerificationTokenRepository;
+import io.nzbee.entity.party.person.ICustomerMapper;
 
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
 
 	@Autowired
 	private IPersonService personService;
+	
+	@Autowired
+	private ICustomerMapper customerMapper;
 	
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
@@ -64,10 +69,9 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Customer findByUsername(String userName) {
-//		CustomerDTO c = personService.findByUsernameAndRole(userName, Constants.partyRoleCustomer)
-//				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
-//		return customerMapper.DTOToDo(c);
-		return null;
+		PersonEntity c = personService.findByUsernameAndRole(userName, Constants.partyRoleCustomer)
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
+		return customerMapper.EntityToDo(c);
 	}
 
 	@Override
