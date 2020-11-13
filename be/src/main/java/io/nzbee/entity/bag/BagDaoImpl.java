@@ -1,21 +1,45 @@
 package io.nzbee.entity.bag;
 
+import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.persistence.Tuple;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import io.nzbee.Constants;
+import io.nzbee.entity.product.ProductDTO;
+import io.nzbee.entity.product.ProductDTOResultTransformer;
 
 public class BagDaoImpl implements IBagDao {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+	@Autowired
+	@Qualifier("mochiEntityManagerFactory")
+	private EntityManager em;
+	
 	@Override
 	public Optional<BagDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}, {}", locale, locale, code);
+			    
+		Query query = em.createQuery("SELECT c FROM Customer c WHERE c.name LIKE :custName")
+		.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BagDTOResultTransformer());
+			   
+		return Optional.ofNullable((BagDTO) query.getSingleResult());
 	}
 
 	@Override
