@@ -17,7 +17,6 @@ public interface IPersonRepository extends CrudRepository<PersonEntity, Long> {
 			+ "														u.enabled) "
 			+ " FROM PersonEntity p "
 			+ " JOIN p.partyUser u "
-		//	+ " JOIN p.partyRoles c "
 			+ " WHERE p.partyId = :id ")
 	Optional<CustomerDTO> findDTOByPartyId(Long id);
 	
