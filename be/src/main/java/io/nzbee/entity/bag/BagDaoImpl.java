@@ -1,20 +1,14 @@
 package io.nzbee.entity.bag;
 
-import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import io.nzbee.Constants;
-import io.nzbee.entity.product.ProductDTO;
-import io.nzbee.entity.product.ProductDTOResultTransformer;
 
 public class BagDaoImpl implements IBagDao {
 
