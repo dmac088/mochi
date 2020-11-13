@@ -27,7 +27,7 @@ public class BagDaoImpl implements IBagDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}, {}", locale, locale, code);
+		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}", locale, code);
 			    
 		Query query = em.createQuery("SELECT c FROM Customer c WHERE c.name LIKE :custName")
 		.unwrap(org.hibernate.query.Query.class)
