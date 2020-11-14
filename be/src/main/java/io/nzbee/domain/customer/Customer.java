@@ -10,23 +10,14 @@ public class Customer {
     
 	private Bag bag;
 
-	//@NotNull
     private String customerId;
 	
-	//@NotNull
-    //@Size(min = 1, message = "{Size.userDto.firstName}")
     private String givenName;
 
-	//@NotNull
-    //@Size(min = 1, message = "{Size.userDto.lastName}")
     private String familyName;
 
-	//@ValidEmail
-    //@NotNull
-    //@Size(min = 1, message = "{Size.userDto.email}")
     private String userName;
     
-    //@ValidPassword
     private String password;
     
 	private String partyType;
