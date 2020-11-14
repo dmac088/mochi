@@ -39,7 +39,8 @@ public class BagDaoImpl implements IBagDao {
 		Query query = em.createQuery("SELECT u.username as userName," +
 									 "		 treat(p AS Person).givenName, " +
 									 "		 treat(p AS Person).familyName, " +
-									 "		 pt.partyTypeDesc" +
+									 "		 pt.partyTypeDesc, " +
+									 "		 u.enabled " + 
 									 "FROM BagEntity b " +
 									 "JOIN b.party p " +
 									 "JOIN p.user u " + 
