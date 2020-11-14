@@ -8,7 +8,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "party_type", schema = "mochi")
-public class PartyType {
+public class PartyTypeEntity {
 
 	@Id
 	@Column(name="pty_typ_id")
@@ -17,10 +17,10 @@ public class PartyType {
 	@Column(name="pty_typ_desc")
 	private String partyTypeDesc;
 
-	public PartyType() {
+	public PartyTypeEntity() {
 	}
 	
-	public PartyType(Long partyTypeId) {
+	public PartyTypeEntity(Long partyTypeId) {
 		this.PartyTypeId = partyTypeId;
 	}
 

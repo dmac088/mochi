@@ -45,7 +45,7 @@ public abstract class Party {
 				nullable=false, 
 				updatable = false, 
 				insertable = false)
-	private PartyType partyType;
+	private PartyTypeEntity partyType;
 
 	@OneToMany(	
 				fetch = FetchType.LAZY, 
@@ -95,11 +95,11 @@ public abstract class Party {
 		
 	}
 	
-	public PartyType getPartyType() {
+	public PartyTypeEntity getPartyType() {
 		return partyType;
 	}
 
-	public void setPartyType(PartyType partyType) {
+	public void setPartyType(PartyTypeEntity partyType) {
 		this.partyType = partyType;
 	}
 	
