@@ -34,14 +34,20 @@ public class BagDaoImpl implements IBagDao {
 									 "		 treat(p AS PersonEntity).familyName, " +
 									 "		 pt.partyTypeDesc, " +
 									 "		 u.enabled, " + 
+									 "		 rt.roleTypeDesc, " +
 									 "		 treat(pr AS CustomerEntity).customerNumber " +
 									 "FROM BagEntity b " +
 									 "JOIN b.party p " +
 									 "JOIN p.user u " + 
 									 "JOIN p.partyType pt " + 
 									 "JOIN p.partyRoles pr " + 
-									 "WHERE u.username = :userName ")
+									 "JOIN pr.roleType rt " +
+									 "WHERE u.username = :userName " +
+									 "AND pt.partyTypeDesc = :partyType" +
+									 "AND rt.roleTypeDesc = :roleType")
 		.setParameter("userName", code)
+		.setParameter("partyType", "Person")
+		.setParameter("roleType", "Customer")
 		.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new BagDTOResultTransformer());
 			   
