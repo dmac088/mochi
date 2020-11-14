@@ -42,12 +42,18 @@ public class BagDaoImpl implements IBagDao {
 									 "		 u.enabled, " + 
 									 "		 rt.roleTypeDesc, " +
 									 "		 treat(pr AS CustomerEntity).customerNumber " +
+									 "		 bi.bagItemStatus, " +
+									 "		 bi.quantity, " + 
+									 "		 prd.productUPC, " +
+									 "		 prd.productCreateDt " +
 									 "FROM BagEntity b " +
 									 "JOIN b.party p " +
 									 "JOIN p.user u " + 
 									 "JOIN p.partyType pt " + 
 									 "JOIN p.partyRoles pr " + 
 									 "JOIN pr.roleType rt " +
+									 "JOIN b.bagItems bi " + 
+									 "JOIN b.product prd " +
 									 "WHERE u.username = :userName " +
 									 "AND pt.partyTypeDesc = :partyType" +
 									 "AND rt.roleTypeDesc = :roleType")
