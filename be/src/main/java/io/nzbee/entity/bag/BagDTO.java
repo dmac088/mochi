@@ -15,7 +15,7 @@ public class BagDTO {
 	private CustomerDTO customer;
 
 	public BagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.customer = new CustomerDTO(tuple, aliasToIndexMap)
+		this.customer = new CustomerDTO(tuple, aliasToIndexMap);
 	}
 
 	public Set<BagItemDTO> getBagItems() {
