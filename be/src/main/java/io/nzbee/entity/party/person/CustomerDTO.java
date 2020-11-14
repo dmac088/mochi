@@ -1,5 +1,7 @@
 package io.nzbee.entity.party.person;
 
+import java.util.Map;
+
 public class CustomerDTO {
 	
 	private Long personId;
@@ -27,6 +29,10 @@ public class CustomerDTO {
 		this.userName		= userName;
 		this.customerNumber	= customerNumber;
 		this.enabled		= enabled;
+	}
+
+	public CustomerDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+		// TODO Auto-generated constructor stub
 	}
 
 	public Long getPersonId() {

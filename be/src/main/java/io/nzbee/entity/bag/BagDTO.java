@@ -15,7 +15,7 @@ public class BagDTO {
 	private CustomerDTO customer;
 
 	public BagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		// TODO Auto-generated constructor stub
+		this.customer = new CustomerDTO(tuple, aliasToIndexMap)
 	}
 
 	public Set<BagItemDTO> getBagItems() {
