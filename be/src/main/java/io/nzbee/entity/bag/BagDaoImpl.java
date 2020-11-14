@@ -45,7 +45,8 @@ public class BagDaoImpl implements IBagDao {
 									 "		 bi.bagItemStatus, " +
 									 "		 bi.quantity, " + 
 									 "		 prd.productUPC, " +
-									 "		 prd.productCreateDt " +
+									 "		 prd.productCreateDt, " +
+									 "		 pa.productDesc " +
 									 "FROM BagEntity b " +
 									 "JOIN b.party p " +
 									 "JOIN p.user u " + 
@@ -54,9 +55,11 @@ public class BagDaoImpl implements IBagDao {
 									 "JOIN pr.roleType rt " +
 									 "JOIN b.bagItems bi " + 
 									 "JOIN b.product prd " +
-									 "WHERE u.username = :userName " +
+									 "JOIN prd.attributes pa " +
+ 									 "WHERE u.username = :userName " +
 									 "AND pt.partyTypeDesc = :partyType" +
-									 "AND rt.roleTypeDesc = :roleType")
+									 "AND rt.roleTypeDesc = :roleType" +
+									 "AND pa.lclCd = :locale")
 		.setParameter("userName", userName)
 		.setParameter("partyType", "Person")
 		.setParameter("roleType", "Customer")
