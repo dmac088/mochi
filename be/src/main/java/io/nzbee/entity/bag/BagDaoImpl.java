@@ -28,23 +28,18 @@ public class BagDaoImpl implements IBagDao {
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String code) {
 		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}", locale, code);
-			    
-//		this.userName = userName;
-//    	this.customerId = customerId;
-//    	this.givenName = givenName;
-//    	this.familyName = familyName;
-//    	this.partyType = "Person";
-//    	this.enabled = isEnabled;
 		
 		Query query = em.createQuery("SELECT u.username as userName," +
-									 "		 treat(p AS Person).givenName, " +
-									 "		 treat(p AS Person).familyName, " +
+									 "		 treat(p AS PersonEntity).givenName, " +
+									 "		 treat(p AS PersonEntity).familyName, " +
 									 "		 pt.partyTypeDesc, " +
-									 "		 u.enabled " + 
+									 "		 u.enabled, " + 
+									 "		 treat(pr AS CustomerEntity).customerNumber " +
 									 "FROM BagEntity b " +
 									 "JOIN b.party p " +
 									 "JOIN p.user u " + 
 									 "JOIN p.partyType pt " + 
+									 "JOIN p.partyRoles pr " + 
 									 "WHERE u.username = :userName ")
 		.setParameter("userName", code)
 		.unwrap(org.hibernate.query.Query.class)
