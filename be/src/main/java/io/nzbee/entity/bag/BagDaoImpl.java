@@ -29,12 +29,12 @@ public class BagDaoImpl implements IBagDao {
 	public Optional<BagDTO> findByCode(String locale, String code) {
 		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}", locale, code);
 			    
-		this.userName = userName;
-    	this.customerId = customerId;
-    	this.givenName = givenName;
-    	this.familyName = familyName;
-    	this.partyType = "Person";
-    	this.enabled = isEnabled;
+//		this.userName = userName;
+//    	this.customerId = customerId;
+//    	this.givenName = givenName;
+//    	this.familyName = familyName;
+//    	this.partyType = "Person";
+//    	this.enabled = isEnabled;
 		
 		Query query = em.createQuery("SELECT u.username as userName," +
 									 "		 treat(p AS Person).givenName, " +
