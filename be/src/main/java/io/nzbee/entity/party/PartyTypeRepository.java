@@ -3,8 +3,8 @@ package io.nzbee.entity.party;
 import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PartyTypeRepository extends CrudRepository<PartyType, Long> {
+public interface PartyTypeRepository extends CrudRepository<PartyTypeEntity, Long> {
 
-	List<PartyType> findAll();
+	List<PartyTypeEntity> findAll();
 
 }

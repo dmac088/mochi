@@ -14,7 +14,7 @@ public abstract class Party_ {
 
 	public static volatile SingularAttribute<Party, BagEntity> bag;
 	public static volatile SingularAttribute<Party, Long> partyId;
-	public static volatile SingularAttribute<Party, PartyType> partyType;
+	public static volatile SingularAttribute<Party, PartyTypeEntity> partyType;
 	public static volatile SetAttribute<Party, Role> partyRoles;
 	public static volatile SingularAttribute<Party, User> partyUser;
 

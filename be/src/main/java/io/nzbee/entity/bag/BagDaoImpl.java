@@ -38,11 +38,13 @@ public class BagDaoImpl implements IBagDao {
 		
 		Query query = em.createQuery("SELECT u.username as userName," +
 									 "		 treat(p AS Person).givenName, " +
-									 "		 treat(p AS Person).familyName " +
+									 "		 treat(p AS Person).familyName, " +
+									 "		 pt.partyTypeDesc" +
 									 "FROM BagEntity b " +
 									 "JOIN b.party p " +
 									 "JOIN p.user u " + 
-									 "WHERE u.username = :userName")
+									 "JOIN p.partyType pt " + 
+									 "WHERE u.username = :userName ")
 		.setParameter("userName", code)
 		.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new BagDTOResultTransformer());
