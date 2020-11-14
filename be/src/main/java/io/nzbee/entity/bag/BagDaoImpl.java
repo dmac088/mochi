@@ -24,10 +24,16 @@ public class BagDaoImpl implements IBagDao {
 		return null;
 	}
 
-	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}", locale, code);
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
+		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}", locale, userName);
 		
 		Query query = em.createQuery("SELECT u.username as userName," +
 									 "		 treat(p AS PersonEntity).givenName, " +
@@ -45,7 +51,7 @@ public class BagDaoImpl implements IBagDao {
 									 "WHERE u.username = :userName " +
 									 "AND pt.partyTypeDesc = :partyType" +
 									 "AND rt.roleTypeDesc = :roleType")
-		.setParameter("userName", code)
+		.setParameter("userName", userName)
 		.setParameter("partyType", "Person")
 		.setParameter("roleType", "Customer")
 		.unwrap(org.hibernate.query.Query.class)
@@ -137,5 +143,7 @@ public class BagDaoImpl implements IBagDao {
 		// TODO Auto-generated method stub
 		
 	}
+
+
 
 }
