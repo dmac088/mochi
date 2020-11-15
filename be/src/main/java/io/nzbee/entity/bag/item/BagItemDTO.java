@@ -10,6 +10,10 @@ public class BagItemDTO {
 	public static final String ID_ALIAS = "bag_item_id";
 	
     public static final String QUANTITY_ALIAS = "qty";
+    
+    public static final String BAG_ITEM_STATUS_CODE_ALIAS = "bag_item_sts_cd";
+    
+    public static final String BAG_ITEM_STATUS_DESC_ALIAS = "bag_item_sts_desc";
 
 	private Long bagItemId;
 	
@@ -17,15 +21,17 @@ public class BagItemDTO {
 	
 	private ProductDTO product;
 	
-	private BagItemStatusDTO bagItemStatus;
+	private String bagItemStatusCode;
+	
+	private String bagItemStatusDesc; 
 	
 	private int quantity;
 
 	public BagItemDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.bagItemId 		= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
-		this.product 		= new ProductDTO(tuple, aliasToIndexMap);
-		this.bagItemStatus 	= new BagItemStatusDTO(tuple, aliasToIndexMap);
-		this.quantity		= ((BigInteger) tuple[aliasToIndexMap.get(QUANTITY_ALIAS)]).intValue();
+		this.bagItemId 			= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.bagItemStatusCode 	= tuple[aliasToIndexMap.get(BAG_ITEM_STATUS_CODE_ALIAS)].toString();
+		this.bagItemStatusDesc 	= tuple[aliasToIndexMap.get(BAG_ITEM_STATUS_DESC_ALIAS)].toString();
+		this.quantity			= ((BigInteger) tuple[aliasToIndexMap.get(QUANTITY_ALIAS)]).intValue();
 	}
 
 	public Long getBagItemId() {
@@ -48,9 +54,12 @@ public class BagItemDTO {
 		return quantity;
 	}
 
-	public BagItemStatusDTO getBagItemStatus() {
-		return bagItemStatus;
+	public String getBagItemStatusCode() {
+		return bagItemStatusCode;
 	}
-	
-	
+
+	public String getBagItemStatusDesc() {
+		return bagItemStatusDesc;
+	}
+
 }
