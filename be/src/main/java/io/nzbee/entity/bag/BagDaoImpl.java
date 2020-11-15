@@ -233,6 +233,11 @@ public class BagDaoImpl implements IBagDao {
 			"	   ps.prd_sts_id,   " + 
 			"	   ps.prd_sts_cd,   " + 
 			"	   ps.prd_sts_desc,  " + 
+			"	   bag.bag_id, " +
+			"	   bi.bag_item_id, " + 
+			"	   bi.qty, " +
+			"	   bis.bag_item_sts_cd, " +
+			"	   bis.bag_item_sts_desc, " +
 			"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 			"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 			"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
@@ -249,6 +254,9 @@ public class BagDaoImpl implements IBagDao {
 		
 		"	INNER JOIN mochi.bag_item bi						" +
 		"	ON bi.prd_id = prd.prd_id							" +
+		
+		"	INNER JOIN mochi.bag_item_status bis				" +
+		"	ON bi.bag_item_sts_id = bis.bag_item_sts_id			" +
 		
 		"	INNER JOIN mochi.bag bag							" + 
 		"	ON bi.bag_id = bag.bag_id							" + 
