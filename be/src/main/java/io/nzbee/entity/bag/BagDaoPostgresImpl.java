@@ -221,8 +221,11 @@ public class BagDaoPostgresImpl implements IBagDao {
 			"	   rt.rle_typ_id, " + 
 			"	   rt.rle_typ_desc, " + 
 			"      cust.cust_num, " + 
+			"	   pty.pty_id, " + 
 			"	   psn.psn_gnv_nm, " +
-			"	   psn.psn_gfml_nm, " +
+			"	   psn.psn_fml_nm, " +
+			"	   user.user_name, " +
+			"	   user.enabled, " + 
 			"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 			"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 			"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +

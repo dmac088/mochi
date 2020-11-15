@@ -1,8 +1,21 @@
 package io.nzbee.entity.party.person;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 public class CustomerDTO {
+	
+	public static final String ID_ALIAS = "pty_id";
+	
+	public static final String GIVEN_NAME_ALIAS = "psn_gnv_nm";
+	
+	public static final String FAMILY_NAME_ALIAS = "psn_fml_nm";
+	
+	public static final String USERNAME_NAME_ALIAS = "user_name";
+	
+	public static final String CUSTOMER_NUMBER_ALIAS = "cust_num";
+	
+	public static final String ENABLED_ALIAS = "enabled";
 	
 	private Long personId;
 	
@@ -32,7 +45,12 @@ public class CustomerDTO {
 	}
 
 	public CustomerDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		// TODO Auto-generated constructor stub
+		this.personId 			= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.givenName 			= tuple[aliasToIndexMap.get(GIVEN_NAME_ALIAS)].toString();
+		this.familyName 		= tuple[aliasToIndexMap.get(FAMILY_NAME_ALIAS)].toString();
+		this.userName			= tuple[aliasToIndexMap.get(FAMILY_NAME_ALIAS)].toString();
+		this.customerNumber		= tuple[aliasToIndexMap.get(CUSTOMER_NUMBER_ALIAS)].toString();
+		this.enabled			= (Boolean) tuple[aliasToIndexMap.get(ENABLED_ALIAS)];
 	}
 
 	public Long getPersonId() {
