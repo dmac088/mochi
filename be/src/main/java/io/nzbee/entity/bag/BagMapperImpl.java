@@ -6,7 +6,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
@@ -97,14 +96,15 @@ public class BagMapperImpl implements IBagMapper {
 		//set the customer of the bag
 		b.setParty(op.get());
 				
-		//persist the bag
+		//persist the bags
 		return b;
 	}
 
 	@Override
 	public Bag DTOToDo(BagDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Bag(
+				personMapper.DTOToDo(dto.getCustomer()),
+				dto.getBagItems().stream().map(bi -> bagItemMapper.DTOToDo(bi)).collect(Collectors.toSet()));
 	}
 
 	
