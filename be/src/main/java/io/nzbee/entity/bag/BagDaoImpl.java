@@ -321,6 +321,7 @@ public class BagDaoImpl implements IBagDao {
 		"		INNER JOIN mochi.currency mcurr 				" + 
 		"		ON         mprc.ccy_id = mcurr.ccy_id  			" + 
 		"		AND        mcurr.ccy_cd = :currency  			" +
+		
 		"		INNER JOIN mochi.price_type mpt 				" +
 		"		ON         mprc.prc_typ_id = mpt.prc_typ_id 	" + 
 		"		AND        mpt.prc_typ_cd = :markdownPriceCode 	" + 
