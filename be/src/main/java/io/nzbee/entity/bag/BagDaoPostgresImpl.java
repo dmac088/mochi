@@ -41,6 +41,11 @@ public class BagDaoPostgresImpl implements IBagDao {
 		.setParameter("userName", userName)
 		.setParameter("partyType", "Person")
 		.setParameter("roleType", "Customer")
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new BagDTOResultTransformer());
 			   
