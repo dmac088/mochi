@@ -198,7 +198,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 			"	   attr.prd_img_pth, " +
 			"	   dept.dept_id,   " + 
 			"	   dept.dept_cd,   " + 
-			"	   dept.dept_class,   " +
+			"	   dept.dept_class,   " + 
 			"	   dattr.dept_lcl_id, " +	
 			"	   dattr.dept_desc,   " +
 			"	   bnd.bnd_id,   " + 
