@@ -19,5 +19,6 @@ public class Constants {
 	public static final String bagStatusCodeNew = "NEW01";
 	public static final String bagStatusDescNew = "New";
 	public static final String partyRoleCustomer = "Customer";
+	public static final String categoryTypeProductCode = "PRD01";
 	
 }

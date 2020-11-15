@@ -549,7 +549,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"          ON        s1.node <> s2.node " + 
 				"          AND       LEFT(s2.node, length(s1.node)) = s1.node " +				
 				"		   WHERE 0=0 " + 
-						   ((hasCategories) ? "AND  s1.cat_cd IN (:categoryCodes) " : "") +
+				((hasCategories) 
+				? " AND  s1.cat_cd IN (:categoryCodes) " 
+				: "") +
+						   
 				"          GROUP BY  coalesce(s2.cat_typ_id,s1.cat_typ_id), " +
 				"					 coalesce(s2.cat_id,s1.cat_id), " +
 				"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
@@ -612,7 +615,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 		"	INNER JOIN mochi.category_type ct  " + 
 		"	ON cc.cat_typ_id = ct.cat_typ_id " + 	
-		"	AND ct.cat_typ_cd = 'PRD01' " +
+		"	AND ct.cat_typ_cd = '"+
+				Constants.categoryTypeProductCode + "'" +
 
 		"	INNER JOIN mochi.category_attr_lcl ca    " + 
 		"	ON cp.cat_id = ca.cat_id    " + 
@@ -689,11 +693,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					? "AND bnd.bnd_cd in 		:brandCodes " 
 					: "") +
 		((hasTags) 
-				? " AND tag.tag_cd in 		:tagCodes " 
-				: "") +
+					? " AND tag.tag_cd in 		:tagCodes " 
+					: "") +
 		((hasPrice) 
-				? " AND coalesce(mprc.prc_val, rprc.prc_val,0) <= :maxPrice " 
-				: "") +
+					? " AND coalesce(mprc.prc_val, rprc.prc_val,0) <= :maxPrice " 
+					: "") +
 		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
 		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
 		((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 		: "") +
@@ -703,8 +707,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		: 	" ORDER BY " + getOrderby(sort) + 
 						" LIMIT 	:limit " +
 						" OFFSET 	:offset ");
-		
-		LOGGER.debug(sql);
 		
 		return sql;
 	}
