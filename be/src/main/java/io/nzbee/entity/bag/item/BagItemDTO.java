@@ -23,8 +23,10 @@ public class BagItemDTO {
 	private int quantity;
 
 	public BagItemDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.bagItemId 	= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
-		this.product 	= new ProductDTO(tuple, aliasToIndexMap);
+		this.bagItemId 		= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.product 		= new ProductDTO(tuple, aliasToIndexMap);
+		this.bagItemStatus 	= new BagItemStatusDTO(tuple, aliasToIndexMap);
+		this.quantity		= ((BigInteger) tuple[aliasToIndexMap.get(QUANTITY_ALIAS)]).intValue();
 	}
 
 	public Long getBagItemId() {
