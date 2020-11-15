@@ -1,5 +1,6 @@
 package io.nzbee.entity.bag.item;
 
+import java.math.BigInteger;
 import java.util.Map;
 
 import io.nzbee.entity.bag.BagDTO;
@@ -22,7 +23,8 @@ public class BagItemDTO {
 	private int quantity;
 
 	public BagItemDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		// TODO Auto-generated constructor stub
+		this.bagItemId 	= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.product 	= new ProductDTO(tuple, aliasToIndexMap);
 	}
 
 	public Long getBagItemId() {
