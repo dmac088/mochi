@@ -35,7 +35,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
-		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}", locale, userName);
+		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}, {}", locale, currency, userName);
 		
 		Query query = em.createNativeQuery(this.getSQL())
 		.setParameter("userName", userName)
