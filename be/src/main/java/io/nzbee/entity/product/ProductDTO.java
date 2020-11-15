@@ -83,7 +83,7 @@ public class ProductDTO {
         							  ? ""
         							  : tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
         this.inStock 				= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
-		//this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
+		this.productImage			= tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
 		this.productStatusCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.currency				= tuple[aliasToIndexMap.get(CURRENCY_ALIAS)].toString();
 		this.retailPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(RETAIL_PRICE_ALIAS)]).doubleValue();
