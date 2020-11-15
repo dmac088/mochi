@@ -216,7 +216,8 @@ public class BagDaoPostgresImpl implements IBagDao {
 			"	   rt.rle_typ_id, " + 
 			"	   rt.rle_typ_desc, " + 
 			"      cust.cust_num, " + 
-			
+			"	   psn.psn_gnv_nm, " +
+			"	   psn.psn_gfml_nm, " +
 			"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 			"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 			"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
@@ -242,6 +243,9 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		"	INNER JOIN mochi.party pty							" + 
 		"	ON bag.pty_id = pty.pty_id							" +
+		
+		"	INNER JOIN mochi.person psn							" + 
+		"	ON pty.pty_id = psn.pty_id							" +
 		
 		"	INNER JOIN mochi.role rle							" + 
 		"	ON pty.pty_id = rle.pty_id							" +
