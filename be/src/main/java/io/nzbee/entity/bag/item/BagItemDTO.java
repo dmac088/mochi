@@ -31,7 +31,7 @@ public class BagItemDTO {
 		this.bagItemId 			= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.bagItemStatusCode 	= tuple[aliasToIndexMap.get(BAG_ITEM_STATUS_CODE_ALIAS)].toString();
 		this.bagItemStatusDesc 	= tuple[aliasToIndexMap.get(BAG_ITEM_STATUS_DESC_ALIAS)].toString();
-		this.quantity			= ((BigInteger) tuple[aliasToIndexMap.get(QUANTITY_ALIAS)]).intValue();
+		this.quantity			= ((Short) tuple[aliasToIndexMap.get(QUANTITY_ALIAS)]).intValue();
 	}
 
 	public Long getBagItemId() {

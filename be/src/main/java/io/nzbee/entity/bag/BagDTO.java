@@ -1,6 +1,7 @@
 package io.nzbee.entity.bag;
 
 import java.math.BigInteger;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import io.nzbee.entity.bag.item.BagItemDTO;
@@ -12,7 +13,7 @@ public class BagDTO {
 	
 	private Long bagId;
 	
-	private Set<BagItemDTO> bagItems;
+	private Set<BagItemDTO> bagItems = new HashSet<BagItemDTO>();
 	
 	private CustomerDTO customer;
 
