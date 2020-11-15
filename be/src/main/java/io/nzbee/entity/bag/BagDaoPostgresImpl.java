@@ -332,10 +332,10 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"		) mprc  										" +
 		"		ON prd.prd_id = mprc.prd_id  					" +
 		
-		"	INNER JOIN mochi.product_basic acc 					" + 
+		"	LEFT JOIN mochi.product_basic acc 					" + 
 		"	ON prd.prd_id = acc.prd_id    						" +
 		
-		"	INNER JOIN mochi.stock_on_hand soh 					" +
+		"	LEFT JOIN mochi.stock_on_hand soh 					" +
 		"	ON prd.prd_id = soh.soh_prd_id 						" +
 		
 		"WHERE 0=0 " +
