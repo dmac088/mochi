@@ -41,11 +41,11 @@ public class BagItemMapperImpl implements IBagItemMapper {
 		return bi;
 	}
 
-	@Override
+	@Override 
 	public BagItem DTOToDo(BagItemDTO dto) {
 		Bag b = bagMapper.DTOToDo(dto.getBag());
 		Product p = productMapper.DTOToDo(dto.getProduct());
 		return new BagItem(b, p, dto.getQuantity());
-	}
+	} 
 
 }
