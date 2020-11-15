@@ -172,7 +172,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"					 coalesce(s2.cat_id,s1.cat_id) as cat_id, " +
 		"		   			 coalesce(s2.cat_cd,s1.cat_cd) as cat_cd " +
 		"          FROM      descendants s1 " + 
-		"          LEFT JOIN descendants s2 " + 
+		"          INNER JOIN descendants s2 " + 
 		"          ON        s1.node <> s2.node " + 
 		"          AND       LEFT(s2.node, length(s1.node)) = s1.node " +				
 		"		   WHERE 0=0 " + 
@@ -232,28 +232,10 @@ public class BagDaoPostgresImpl implements IBagDao {
 			"      :currency as ccy_cd, " +
 			"	   :locale as lcl_cd " + 
 		
-		"	FROM categories cc    								" + 
+		"	FROM mochi.party pty    							" +
 		
-		"	INNER JOIN mochi.product_category pc				" + 
-		"	ON cc.cat_id = pc.cat_id   							" + 
-		
-		"	INNER JOIN mochi.product prd    					" + 
-		"	ON pc.prd_id = prd.prd_id   						" + 
-		
-		"	INNER JOIN mochi.bag_item bi						" +
-		"	ON bi.prd_id = prd.prd_id							" +
-		
-		"	INNER JOIN mochi.bag_item_status bis				" +
-		"	ON bi.bag_item_sts_id = bis.bag_item_sts_id			" +
-		
-		"	INNER JOIN mochi.bag bag							" + 
-		"	ON bi.bag_id = bag.bag_id							" + 
-		
-		"	INNER JOIN mochi.party pty							" + 
-		"	ON bag.pty_id = pty.pty_id							" +
-		
-		"	INNER JOIN mochi.person psn							" + 
-		"	ON pty.pty_id = psn.psn_id							" +
+		"	INNER JOIN mochi.person psn    						" +  
+		"	ON pty.pty_id = psn.psn_id    						" +  
 		
 		"	INNER JOIN mochi.role rle							" + 
 		"	ON pty.pty_id = rle.pty_id							" +
@@ -261,14 +243,37 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	INNER JOIN mochi.role_type rt						" + 
 		"	ON rle.rle_typ_id = rt.rle_typ_id					" +
 		
-		"	INNER JOIN security.user_ usr 							" + 
+		"	INNER JOIN security.user_ usr 						" + 
 		"	ON pty.pty_id = usr.pty_id							" +
 		
 		"	INNER JOIN mochi.customer cust 						" + 
 		"	ON rle.rle_id = cust.rle_id							" + 	
 		
+		"	INNER JOIN mochi.bag bag							" + 
+		"	ON pty.pty_id = bag.pty_id							" + 
+		
+		"	INNER JOIN mochi.bag_item bi						" +
+		"	ON bag.bag_id = bi.bag_id							" +
+		
+		"	INNER JOIN mochi.bag_item_status bis				" +
+		"	ON bi.bag_item_sts_id = bis.bag_item_sts_id			" +
+		
+		"	INNER JOIN mochi.product prd    						" + 
+		"	ON bi.prd_id = prd.prd_id   						" + 
+		
+		"	INNER JOIN mochi.product_status ps					" +
+		"	ON prd.prd_sts_id = ps.prd_sts_id 					" +
+		"	AND ps.prd_sts_cd = :activeProductCode 				" +
+		
+		"	INNER JOIN  mochi.product_category pc 				" + 
+		"	ON prd.prd_id = pc.prd_id 							" +
+
+		"	INNER JOIN  categories cc  							" +
+		"	ON pc.cat_id = cc.cat_id 							" +
+		
 		"	INNER JOIN mochi.product_attr_lcl attr 				" +
 		"	ON prd.prd_id = attr.prd_id 						" + 
+		"	AND attr.lcl_cd = :locale 							" +
 		
 		"	INNER JOIN mochi.category cp 						" + 
 		"	ON pc.cat_id = cp.cat_id 							" +
@@ -282,7 +287,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	ON cp.cat_id = ca.cat_id    						" + 
 		"	AND ca.lcl_cd = :locale 							" +		
 		
-		"	LEFT JOIN mochi.category parent 					" +
+		"	INNER JOIN mochi.category parent 					" +
 		"	ON cp.cat_prnt_id = parent.cat_id  					" +
 		
 		"	INNER JOIN mochi.department dept   					" + 
@@ -297,8 +302,9 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		"	INNER JOIN mochi.brand_attr_lcl bal   				" + 
 		"	ON bnd.bnd_id = bal.bnd_id   						" + 
+		"	AND bal.lcl_cd = :locale 							" +
 		
-		"	LEFT JOIN  ( 										" + 
+		"	INNER JOIN  ( 										" + 
 		"		SELECT prd_id, 									" +  
 		"			   prc_val  								" +  
 		"		FROM mochi.price rprc 							" +  
@@ -312,7 +318,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	) rprc 												" + 
 		"	ON prd.prd_id = rprc.prd_id 						" +  
 		
-		"	LEFT JOIN  ( 										" +
+		"	INNER JOIN  ( 										" +
 		"		SELECT prd_id, 									" +  
 		"		   prc_val 										" + 
 		"		FROM mochi.price mprc 							" + 
@@ -326,19 +332,14 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"		) mprc  										" +
 		"		ON prd.prd_id = mprc.prd_id  					" +
 		
-		"	LEFT JOIN mochi.product_basic acc 					" + 
+		"	INNER JOIN mochi.product_basic acc 					" + 
 		"	ON prd.prd_id = acc.prd_id    						" +
 		
-		"	INNER JOIN mochi.product_status ps    				" + 
-		"	ON prd.prd_sts_id = ps.prd_sts_id   				" + 
-		
-		"	LEFT JOIN mochi.stock_on_hand soh 					" +
+		"	INNER JOIN mochi.stock_on_hand soh 					" +
 		"	ON prd.prd_id = soh.soh_prd_id 						" +
 		
 		"WHERE 0=0 " +
-		"AND prd_sts_cd = 			:activeProductCode  		" + 
-		"AND bal.lcl_cd = 			:locale 					" +
-		"AND attr.lcl_cd = 			:locale 					" +
+	//	"AND prd_sts_cd = 			:activeProductCode  		" + 
 		"AND usr.user_name = 		:userName 					";
 		
 		LOGGER.debug(sql);
