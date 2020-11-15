@@ -67,8 +67,8 @@ public class BagMapperImpl implements IBagMapper {
 				
 		//use the existing bag if it exists otherwise use newly created
 		BagEntity b = (obe.isPresent())
-									? obe.get()
-									: nbe;		
+					   ? obe.get()
+					   : nbe;		
 									
 		b.setBagUpdatedDateTime(LocalDateTime.now());							
 									
@@ -102,6 +102,7 @@ public class BagMapperImpl implements IBagMapper {
 
 	@Override
 	public Bag DTOToDo(BagDTO dto) {
+		System.out.println(dto);
 		return new Bag(
 				personMapper.DTOToDo(dto.getCustomer()),
 				dto.getBagItems().stream().map(bi -> bagItemMapper.DTOToDo(bi)).collect(Collectors.toSet()));

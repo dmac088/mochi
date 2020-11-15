@@ -14,6 +14,7 @@ import io.nzbee.entity.bag.status.BagItemStatus;
 import io.nzbee.entity.bag.status.IBagItemStatusService;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductEntity;
 
 @Component
 public class BagItemMapperImpl implements IBagItemMapper {
@@ -33,9 +34,9 @@ public class BagItemMapperImpl implements IBagItemMapper {
 
 	@Override
 	public BagItemEntity doToEntity(BagItem d) {
-		Optional<io.nzbee.entity.product.ProductEntity> op = productService.findByCode(d.getProduct().getProductUPC());
+		Optional<ProductEntity> op = productService.findByCode(d.getProduct().getProductUPC());
 		Optional<BagItemStatus> obis = bagItemStatusService.findByCode(Constants.bagStatusCodeNew);
-		io.nzbee.entity.bag.item.BagItemEntity bi = new io.nzbee.entity.bag.item.BagItemEntity(op.get());
+		BagItemEntity bi = new BagItemEntity(op.get());
 		bi.setBagItemStatus(obis.get());
 		bi.setQuantity(d.getQuantity());	
 		return bi;
