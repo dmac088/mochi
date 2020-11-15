@@ -15,7 +15,6 @@ public class BagDTO {
 
 	public BagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.bagId = ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
-		
 	}
 
 	public Set<BagItemDTO> getBagItems() {
