@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
 import io.nzbee.entity.bag.BagDTO;
-
+import io.nzbee.entity.bag.item.BagItemDTO;
+import io.nzbee.entity.product.ProductDTO;
 
 public class BagDTOResultTransformer implements ResultTransformer {
 
@@ -24,6 +25,12 @@ public class BagDTOResultTransformer implements ResultTransformer {
             bagId,
             id -> new BagDTO(tuple, aliasToIndexMap)
         );
+        
+        BagItemDTO bi = new BagItemDTO(tuple, aliasToIndexMap);
+        
+        bi.setProduct(new ProductDTO(tuple, aliasToIndexMap));
+        
+        bagDTO.getBagItems().add(bi);
         
         return bagDTO;
 	}
