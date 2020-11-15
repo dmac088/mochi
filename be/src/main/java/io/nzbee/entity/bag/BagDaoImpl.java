@@ -247,6 +247,18 @@ public class BagDaoImpl implements IBagDao {
 		"	INNER JOIN mochi.product prd    					" + 
 		"	ON pc.prd_id = prd.prd_id   						" + 
 		
+		"	INNER JOIN mochi.bag_item bi						" +
+		"	ON bi.prd_id = prd.prd_id							" +
+		
+		"	INNER JOIN mochi.bag bag							" + 
+		"	ON bi.bag_id = bag.bag_id							" + 
+		
+		"	INNER JOIN mochi.person psn							" + 
+		"	ON bag.pty_id = psn.psn_id							" +
+		
+		"	INNER JOIN mochi.user_ user 						" + 
+		"	ON psn.psn_id = user.pty_id							" +
+		
 		"	INNER JOIN mochi.product_attr_lcl attr 				" +
 		"	ON prd.prd_id = attr.prd_id 						" + 
 		
@@ -268,8 +280,7 @@ public class BagDaoImpl implements IBagDao {
 		"	INNER JOIN mochi.department dept   					" + 
 		"	ON prd.dept_id = dept.dept_id   					" + 
 		((hasType) 
-		? "	AND dept.dept_id = :typeDiscriminator "  
-		: " ") +
+		? "	AND dept.dept_id = :typeDiscriminator " : " 		") +
 		
 		"	INNER JOIN mochi.department_attr_lcl dattr   		" + 
 		"	ON dept.dept_id = dattr.dept_id   					" + 
@@ -321,7 +332,8 @@ public class BagDaoImpl implements IBagDao {
 		"AND prd_sts_cd = 			:activeProductCode  		" + 
 		"AND bal.lcl_cd = 			:locale 					" +
 		"AND attr.lcl_cd = 			:locale 					" +
-		"ORDER BY " + getOrderby(sort);
+		"AND user.user_name = 		:userName 					" +
+ 		"ORDER BY " + getOrderby(sort);
 		
 		return sql;
 	}
