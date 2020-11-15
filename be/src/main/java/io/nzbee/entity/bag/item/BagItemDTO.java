@@ -2,7 +2,6 @@ package io.nzbee.entity.bag.item;
 
 import java.math.BigInteger;
 import java.util.Map;
-
 import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.product.ProductDTO;
 
