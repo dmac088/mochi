@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 
 import io.nzbee.Constants;
 
-public class BagDaoImpl implements IBagDao {
+public class BagDaoPostgresImpl implements IBagDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
@@ -37,31 +37,7 @@ public class BagDaoImpl implements IBagDao {
 	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
 		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}", locale, userName);
 		
-		Query query = em.createQuery("SELECT u.username as userName," +
-									 "		 treat(p AS PersonEntity).givenName, " +
-									 "		 treat(p AS PersonEntity).familyName, " +
-									 "		 pt.partyTypeDesc, " +
-									 "		 u.enabled, " + 
-									 "		 rt.roleTypeDesc, " +
-									 "		 treat(pr AS CustomerEntity).customerNumber " +
-									 "		 bi.bagItemStatus, " +
-									 "		 bi.quantity, " + 
-									 "		 prd.productUPC, " +
-									 "		 prd.productCreateDt, " +
-									 "		 pa.productDesc " +
-									 "FROM BagEntity b " +
-									 "JOIN b.party p " +
-									 "JOIN p.user u " + 
-									 "JOIN p.partyType pt " + 
-									 "JOIN p.partyRoles pr " + 
-									 "JOIN pr.roleType rt " +
-									 "JOIN b.bagItems bi " + 
-									 "JOIN b.product prd " +
-									 "JOIN prd.attributes pa " +
- 									 "WHERE u.username = :userName " +
-									 "AND pt.partyTypeDesc = :partyType" +
-									 "AND rt.roleTypeDesc = :roleType" +
-									 "AND pa.lclCd = :locale")
+		Query query = em.createNativeQuery(this.getSQL())
 		.setParameter("userName", userName)
 		.setParameter("partyType", "Person")
 		.setParameter("roleType", "Customer")
@@ -155,8 +131,7 @@ public class BagDaoImpl implements IBagDao {
 		
 	}
 	
-	private String constructSQL(boolean hasType,
-								String sort) {
+	private String getSQL() {
 
 		String sql = "WITH recursive descendants AS " + 
 		"( " + 
@@ -238,6 +213,10 @@ public class BagDaoImpl implements IBagDao {
 			"	   bi.qty, " +
 			"	   bis.bag_item_sts_cd, " +
 			"	   bis.bag_item_sts_desc, " +
+			"	   rt.rle_typ_id, " + 
+			"	   rt.rle_typ_desc, " + 
+			"      cust.cust_num, " + 
+			
 			"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 			"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 			"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
@@ -261,11 +240,20 @@ public class BagDaoImpl implements IBagDao {
 		"	INNER JOIN mochi.bag bag							" + 
 		"	ON bi.bag_id = bag.bag_id							" + 
 		
-		"	INNER JOIN mochi.person psn							" + 
-		"	ON bag.pty_id = psn.psn_id							" +
+		"	INNER JOIN mochi.party pty							" + 
+		"	ON bag.pty_id = pty.pty_id							" +
+		
+		"	INNER JOIN mochi.role rle							" + 
+		"	ON pty.pty_id = rle.pty_id							" +
+		
+		"	INNER JOIN mochi.role_type rt						" + 
+		"	ON rle.rle_typ_id = rt.rle_typ_id					" +
 		
 		"	INNER JOIN mochi.user_ user 						" + 
-		"	ON psn.psn_id = user.pty_id							" +
+		"	ON pty.pty_id = user.pty_id							" +
+		
+		"	INNER JOIN mochi.customer cust 						" + 
+		"	ON rle.rle_id = cust.rle_id							" + 	
 		
 		"	INNER JOIN mochi.product_attr_lcl attr 				" +
 		"	ON prd.prd_id = attr.prd_id 						" + 
@@ -287,8 +275,6 @@ public class BagDaoImpl implements IBagDao {
 		
 		"	INNER JOIN mochi.department dept   					" + 
 		"	ON prd.dept_id = dept.dept_id   					" + 
-		((hasType) 
-		? "	AND dept.dept_id = :typeDiscriminator " : " 		") +
 		
 		"	INNER JOIN mochi.department_attr_lcl dattr   		" + 
 		"	ON dept.dept_id = dattr.dept_id   					" + 
@@ -341,25 +327,9 @@ public class BagDaoImpl implements IBagDao {
 		"AND prd_sts_cd = 			:activeProductCode  		" + 
 		"AND bal.lcl_cd = 			:locale 					" +
 		"AND attr.lcl_cd = 			:locale 					" +
-		"AND user.user_name = 		:userName 					" +
- 		"ORDER BY " + getOrderby(sort);
+		"AND user.user_name = 		:userName 					";
 		
 		return sql;
-	}
-
-	private String getOrderby(String param) {
-		switch (param) {
-			case "nameAsc":
-				return "lower(attr.prd_desc) asc";
-			case "nameDesc":
-				return "lower(attr.prd_desc) desc";
-			case "priceAsc":
-				return "mprc.prc_val asc";
-			case "priceDesc":
-			  	return "mprc.prc_val desc";
-			default:
-				return "lower(prd_desc) asc";
-			}
 	}
 
 }
