@@ -155,17 +155,7 @@ public class BagDaoImpl implements IBagDao {
 		
 	}
 	
-	private String constructSQL(boolean hasProductCodes,
-								boolean hasProductDesc,
-								boolean hasProductId,
-								boolean hasCategory,
-								boolean hasCategories,
-								boolean hasBrands,
-								boolean hasTags,
-								boolean hasPrice,
-								boolean hasType,
-								boolean countOnly,
-								boolean offset,
+	private String constructSQL(boolean hasType,
 								String sort) {
 
 		String sql = "WITH recursive descendants AS " + 
