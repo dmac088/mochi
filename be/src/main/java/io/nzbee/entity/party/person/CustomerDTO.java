@@ -7,13 +7,13 @@ public class CustomerDTO {
 	
 	public static final String ID_ALIAS = "pty_id";
 	
-	public static final String GIVEN_NAME_ALIAS = "psn_gnv_nm";
+	public static final String GIVEN_NAME_ALIAS = "psn_gvn_nm";
 	
 	public static final String FAMILY_NAME_ALIAS = "psn_fml_nm";
 	
 	public static final String USERNAME_NAME_ALIAS = "user_name";
 	
-	public static final String CUSTOMER_NUMBER_ALIAS = "cust_num";
+	public static final String CUSTOMER_NUMBER_ALIAS = "cst_num";
 	
 	public static final String ENABLED_ALIAS = "enabled";
 	

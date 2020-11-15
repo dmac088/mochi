@@ -41,7 +41,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		Query query = em.createNativeQuery(this.getSQL())
 		.setParameter("userName", userName)
-		.setParameter("roleType", "Customer")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
@@ -221,12 +220,12 @@ public class BagDaoPostgresImpl implements IBagDao {
 			"	   bis.bag_item_sts_desc, " +
 			"	   rt.rle_typ_id, " + 
 			"	   rt.rle_typ_desc, " + 
-			"      cust.cust_num, " + 
+			"      cust.cst_num, " + 
 			"	   pty.pty_id, " + 
-			"	   psn.psn_gnv_nm, " +
+			"	   psn.psn_gvn_nm, " +
 			"	   psn.psn_fml_nm, " +
-			"	   user.user_name, " +
-			"	   user.enabled, " + 
+			"	   usr.user_name, " +
+			"	   usr.enabled, " + 
 			"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 			"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 			"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
@@ -254,7 +253,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	ON bag.pty_id = pty.pty_id							" +
 		
 		"	INNER JOIN mochi.person psn							" + 
-		"	ON pty.pty_id = psn.pty_id							" +
+		"	ON pty.pty_id = psn.psn_id							" +
 		
 		"	INNER JOIN mochi.role rle							" + 
 		"	ON pty.pty_id = rle.pty_id							" +
@@ -262,8 +261,8 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	INNER JOIN mochi.role_type rt						" + 
 		"	ON rle.rle_typ_id = rt.rle_typ_id					" +
 		
-		"	INNER JOIN mochi.user_ user 						" + 
-		"	ON pty.pty_id = user.pty_id							" +
+		"	INNER JOIN security.user_ usr 							" + 
+		"	ON pty.pty_id = usr.pty_id							" +
 		
 		"	INNER JOIN mochi.customer cust 						" + 
 		"	ON rle.rle_id = cust.rle_id							" + 	
@@ -340,7 +339,9 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"AND prd_sts_cd = 			:activeProductCode  		" + 
 		"AND bal.lcl_cd = 			:locale 					" +
 		"AND attr.lcl_cd = 			:locale 					" +
-		"AND user.user_name = 		:userName 					";
+		"AND usr.user_name = 		:userName 					";
+		
+		LOGGER.debug(sql);
 		
 		return sql;
 	}
