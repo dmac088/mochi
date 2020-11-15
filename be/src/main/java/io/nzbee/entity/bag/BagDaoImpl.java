@@ -301,16 +301,16 @@ public class BagDaoImpl implements IBagDao {
 		"	ON bnd.bnd_id = bal.bnd_id   						" + 
 		
 		"	LEFT JOIN  ( 										" + 
-		"	SELECT prd_id, 										" +  
-		"		   prc_val  									" +  
-		"	FROM mochi.price rprc 								" +  
-		"	INNER JOIN mochi.currency rcurr 					" +  
-		"	ON         rprc.ccy_id = rcurr.ccy_id 				" +  
-		"	AND        rcurr.ccy_cd = :currency 				" + 
+		"		SELECT prd_id, 									" +  
+		"			   prc_val  								" +  
+		"		FROM mochi.price rprc 							" +  
+		"		INNER JOIN mochi.currency rcurr 				" +  
+		"		ON         rprc.ccy_id = rcurr.ccy_id 			" +  
+		"		AND        rcurr.ccy_cd = :currency 			" + 
 		
-		"	INNER JOIN mochi.price_type rpt 					" + 
-		"	ON         rprc.prc_typ_id = rpt.prc_typ_id 		" +  
-		"	AND        rpt.prc_typ_cd = :retailPriceCode 		" +  
+		"		INNER JOIN mochi.price_type rpt 				" + 
+		"		ON         rprc.prc_typ_id = rpt.prc_typ_id 	" +  
+		"		AND        rpt.prc_typ_cd = :retailPriceCode 	" +  
 		"	) rprc 												" + 
 		"	ON prd.prd_id = rprc.prd_id 						" +  
 		
