@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import io.nzbee.Constants;
 
+@Component
 public class BagDaoPostgresImpl implements IBagDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
@@ -39,7 +41,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		Query query = em.createNativeQuery(this.getSQL())
 		.setParameter("userName", userName)
-		.setParameter("partyType", "Person")
 		.setParameter("roleType", "Customer")
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)

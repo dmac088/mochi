@@ -11,6 +11,9 @@ public class BagServiceImpl implements IBagService {
 	@Autowired
 	private IBagRepository bagRepository;
 	
+	@Autowired
+	private IBagDao bagDao;
+	
 	@Override
 	public Set<BagEntity> findAll() {
 		// TODO Auto-generated method stub
@@ -77,8 +80,7 @@ public class BagServiceImpl implements IBagService {
 
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
-		// TODO Auto-generated method stub
-		return null;
+		return bagDao.findByCode(locale, currency, userName);
 	}
 
 	@Override

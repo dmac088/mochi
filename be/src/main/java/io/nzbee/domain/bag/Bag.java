@@ -14,9 +14,14 @@ public class Bag {
 	
 	private BagIssues bagIssues = new BagIssues();
 
-	public Bag(	Customer customer) {
+	public Bag(Customer customer) {
 		this.customer 		= customer;
 		this.bagItems 		= new HashSet<BagItem>();
+	}
+	
+	public Bag(Customer customer, Set<BagItem> items) {
+		this.customer 		= customer;
+		this.bagItems 		= items;
 	}
 	
 	public Customer getCustomer() {
