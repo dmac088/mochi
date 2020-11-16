@@ -13,13 +13,12 @@ public class BagDTO {
 	
 	private Long bagId;
 	
-	private Set<BagItemDTO> bagItems = new HashSet<BagItemDTO>();
+	private Set<BagItemDTO> bagItems  = new HashSet<BagItemDTO>();
 	
 	private CustomerDTO customer;
 
 	public BagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.bagId = ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
-		this.customer	= new CustomerDTO(tuple, aliasToIndexMap);
 	}
 
 	public Set<BagItemDTO> getBagItems() {
@@ -32,6 +31,10 @@ public class BagDTO {
 
 	public CustomerDTO getCustomer() {
 		return customer;
+	}
+
+	public void setCustomer(CustomerDTO customer) {
+		this.customer = customer;
 	}
 	
 }

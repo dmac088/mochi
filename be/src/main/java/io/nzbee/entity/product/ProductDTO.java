@@ -83,7 +83,7 @@ public class ProductDTO {
         							  ? ""
         							  : tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
         this.inStock 				= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
-        this.productImage 		= !aliasToIndexMap.containsKey(LONG_DESC_ALIAS)
+        this.productImage 			= !aliasToIndexMap.containsKey(LONG_DESC_ALIAS)
 				|| ((tuple[aliasToIndexMap.get(IMAGE_ALIAS)] == null))
 			  ? ""
 			  : tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
@@ -91,6 +91,7 @@ public class ProductDTO {
 		this.currency				= tuple[aliasToIndexMap.get(CURRENCY_ALIAS)].toString();
 		this.retailPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(RETAIL_PRICE_ALIAS)]).doubleValue();
 		this.markdownPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(MARKDOWN_PRICE_ALIAS)]).doubleValue();
+
 	}
 
 	public String getProductUPC() {

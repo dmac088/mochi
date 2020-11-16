@@ -42,6 +42,10 @@ public class BagItemDTO {
 		return bag;
 	}
 
+	public void setBag(BagDTO bag) {
+		this.bag = bag;
+	}
+
 	public ProductDTO getProduct() {
 		return product;
 	}

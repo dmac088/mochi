@@ -1,5 +1,6 @@
 package io.nzbee.domain.bag;
 
+import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
 
 public class BagItem {
@@ -24,12 +25,14 @@ public class BagItem {
 	public BagItem(Bag bag, 
 			  	   Product p, 
 			  	   int quantity) {
-		this.bag = bag;
-		this.product = p;
-		this.quantity = quantity;
-		this.locale = p.getLclCd();
-		this.currency = p.getCurrency();
-		this.bagItemStatus 		= "NEW01";
+		this.bag 				= bag;
+		this.product 			= p;
+		this.quantity 			= quantity;
+		this.locale 			= p.getLclCd();
+		this.currency 			= p.getCurrency();
+		this.bagItemStatus 		= Constants.bagStatusCodeNew;
+		
+		bag.getBagItems().add(this);
 	}
 
 	public Bag getBag() {

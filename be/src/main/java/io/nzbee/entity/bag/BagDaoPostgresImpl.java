@@ -37,7 +37,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
-		LOGGER.debug("call BagDaoImpl.findByCode parameters : {}, {}, {}", locale, currency, userName);
+		LOGGER.debug("call BagDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, currency, userName);
 		
 		Query query = em.createNativeQuery(this.getSQL())
 		.setParameter("userName", userName)
@@ -258,7 +258,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	INNER JOIN mochi.bag_item_status bis				" +
 		"	ON bi.bag_item_sts_id = bis.bag_item_sts_id			" +
 		
-		"	INNER JOIN mochi.product prd    						" + 
+		"	INNER JOIN mochi.product prd    					" + 
 		"	ON bi.prd_id = prd.prd_id   						" + 
 		
 		"	INNER JOIN mochi.product_status ps					" +

@@ -1,10 +1,8 @@
 package io.nzbee.entity.bag.item;
 
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
@@ -46,7 +44,8 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	public BagItem DTOToDo(BagItemDTO dto) {
 		Bag b = bagMapper.DTOToDo(dto.getBag());
 		Product p = productMapper.DTOToDo(dto.getProduct());
-		return new BagItem(b, p, dto.getQuantity());
+		BagItem bi = new BagItem(b, p, dto.getQuantity());
+		return bi;
 	} 
 
 }
