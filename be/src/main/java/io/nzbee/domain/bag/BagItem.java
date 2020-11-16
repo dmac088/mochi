@@ -32,7 +32,7 @@ public class BagItem {
 		this.currency 			= p.getCurrency();
 		this.bagItemStatus 		= Constants.bagStatusCodeNew;
 		
-		bag.addItem(this);
+		bag.getBagItems().add(this);
 	}
 
 	public Bag getBag() {

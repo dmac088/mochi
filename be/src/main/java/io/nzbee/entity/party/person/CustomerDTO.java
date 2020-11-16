@@ -48,7 +48,7 @@ public class CustomerDTO {
 		this.personId 			= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.givenName 			= tuple[aliasToIndexMap.get(GIVEN_NAME_ALIAS)].toString();
 		this.familyName 		= tuple[aliasToIndexMap.get(FAMILY_NAME_ALIAS)].toString();
-		this.userName			= tuple[aliasToIndexMap.get(FAMILY_NAME_ALIAS)].toString();
+		this.userName			= tuple[aliasToIndexMap.get(USERNAME_NAME_ALIAS)].toString();
 		this.customerNumber		= tuple[aliasToIndexMap.get(CUSTOMER_NUMBER_ALIAS)].toString();
 		this.enabled			= (Boolean) tuple[aliasToIndexMap.get(ENABLED_ALIAS)];
 	}
