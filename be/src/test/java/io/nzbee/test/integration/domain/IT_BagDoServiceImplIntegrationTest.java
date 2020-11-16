@@ -14,7 +14,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
@@ -68,7 +67,6 @@ public class IT_BagDoServiceImplIntegrationTest {
 	}
 
 	@Test
-	@Rollback(false)
 	@WithUserDetails(value = "admin")
 	public void whenValidCode_thenBagShouldBeFound() {
 		Bag found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "dmac088");
