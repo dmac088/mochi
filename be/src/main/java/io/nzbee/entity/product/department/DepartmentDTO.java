@@ -21,7 +21,7 @@ public class DepartmentDTO {
 	private String locale;
 
 	public DepartmentDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.departmentId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.departmentId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.departmentCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.departmentDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 	}
