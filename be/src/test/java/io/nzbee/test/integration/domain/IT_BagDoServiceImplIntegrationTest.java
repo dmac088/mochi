@@ -71,6 +71,10 @@ public class IT_BagDoServiceImplIntegrationTest {
 	public void whenValidCode_thenBagShouldBeFound() {
 		Bag found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "dmac088");
 
+		found.getBagItems().forEach(f -> {
+			System.out.println(f.getProduct().getProductUPC());
+		});
+		
 		assertFound(found);
 	}
 

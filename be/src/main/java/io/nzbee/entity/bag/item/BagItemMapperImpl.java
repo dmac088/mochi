@@ -7,7 +7,6 @@ import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.product.Product;
-import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.status.BagItemStatus;
 import io.nzbee.entity.bag.status.IBagItemStatusService;
 import io.nzbee.entity.product.IProductMapper;
@@ -16,9 +15,6 @@ import io.nzbee.entity.product.ProductEntity;
 
 @Component
 public class BagItemMapperImpl implements IBagItemMapper {
-
-	@Autowired 
-	private IBagMapper bagMapper;
 	
 	@Autowired
 	private IProductMapper productMapper;
@@ -42,9 +38,14 @@ public class BagItemMapperImpl implements IBagItemMapper {
 
 	@Override 
 	public BagItem DTOToDo(BagItemDTO dto) {
-		Bag b = bagMapper.DTOToDo(dto.getBag());
+		return null;
+	}
+
+	@Override
+	public BagItem DTOToDo(Bag bDo, BagItemDTO dto) {
 		Product p = productMapper.DTOToDo(dto.getProduct());
-		BagItem bi = new BagItem(b, p, dto.getQuantity());
+		BagItem bi = new BagItem(bDo, p, dto.getQuantity());
+		bDo.addItem(bi);
 		return bi;
 	} 
 

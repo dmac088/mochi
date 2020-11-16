@@ -16,17 +16,17 @@ public class BagDTOResultTransformer implements ResultTransformer {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Long, BagDTO> bagDTOMap = new LinkedHashMap<>();
+	private Map<Long, BagDTO> bagDTOMap 				= new LinkedHashMap<>();
 	
-	private Map<Long, BagItemDTO> bagItemDTOMap = new LinkedHashMap<>();
+	private Map<Long, BagItemDTO> bagItemDTOMap 		= new LinkedHashMap<>();
 	
-	private Map<Long, ProductDTO> productDTOMap = new LinkedHashMap<>();
+	private Map<Long, ProductDTO> productDTOMap 		= new LinkedHashMap<>();
 	
-	private Map<Long, BrandDTO> brandDTOMap = new LinkedHashMap<>();
+	private Map<Long, BrandDTO> brandDTOMap 			= new LinkedHashMap<>();
 	
-	private Map<Long, DepartmentDTO> departmentDTOMap = new LinkedHashMap<>();
+	private Map<Long, DepartmentDTO> departmentDTOMap 	= new LinkedHashMap<>();
 	
-	private Map<Long, CustomerDTO> customerDTOMap = new LinkedHashMap<>();
+	private Map<Long, CustomerDTO> customerDTOMap 		= new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
@@ -35,56 +35,68 @@ public class BagDTOResultTransformer implements ResultTransformer {
         Long bagId = ((Number) tuple[aliasToIndexMap.get(BagDTO.ID_ALIAS)]).longValue();
  
         BagDTO bagDTO = bagDTOMap.computeIfAbsent(
-            bagId,
-            id -> new BagDTO(tuple, aliasToIndexMap)
+             bagId,
+             id -> {
+                	BagDTO b = new BagDTO(tuple, aliasToIndexMap);
+                	return b;
+             }
         );
         
         Long bagItemId = ((Number) tuple[aliasToIndexMap.get(BagItemDTO.ID_ALIAS)]).longValue();
         
         BagItemDTO bagItemDTO = bagItemDTOMap.computeIfAbsent(
             bagItemId,
-            id -> new BagItemDTO(tuple, aliasToIndexMap)
+            id -> {
+            	BagItemDTO bi = new BagItemDTO(tuple, aliasToIndexMap);
+            	bagDTO.getBagItems().add(bi);
+            	bi.setBag(bagDTO);
+            	return bi;
+            }
         );
         
         Long productId = ((Number) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
         
         ProductDTO productDTO = productDTOMap.computeIfAbsent(
         	productId,
-        	id -> new ProductDTO(tuple, aliasToIndexMap)
+        	id -> {
+        		ProductDTO p = new ProductDTO(tuple, aliasToIndexMap);
+        		bagItemDTO.setProduct(p);
+        		return p;
+        	}
         );
         
         Long brandId = ((Number) tuple[aliasToIndexMap.get(BrandDTO.ID_ALIAS)]).longValue();
         
-        BrandDTO brandDTO = brandDTOMap.computeIfAbsent(
-            brandId,
-            id -> new BrandDTO(tuple, aliasToIndexMap)
+        brandDTOMap.computeIfAbsent(
+        	brandId,
+            id -> {
+            	BrandDTO b = new BrandDTO(tuple, aliasToIndexMap);
+            	productDTO.setBrand(b);
+            	return b;
+            }
         );
         
         Long departmentId = ((Number) tuple[aliasToIndexMap.get(DepartmentDTO.ID_ALIAS)]).longValue();
         
-        DepartmentDTO departmentDTO = departmentDTOMap.computeIfAbsent(
-            departmentId,
-            id -> new DepartmentDTO(tuple, aliasToIndexMap)
+        departmentDTOMap.computeIfAbsent(
+        	departmentId,
+            id -> {
+            	DepartmentDTO d = new DepartmentDTO(tuple, aliasToIndexMap);
+            	productDTO.setDepartment(d);
+            	return d;
+            }
         );        
         
         Long customerId = ((Number) tuple[aliasToIndexMap.get(CustomerDTO.ID_ALIAS)]).longValue();
         
-        CustomerDTO customerDTO = customerDTOMap.computeIfAbsent(
+        customerDTOMap.computeIfAbsent(
             customerId,
-            id -> new CustomerDTO(tuple, aliasToIndexMap)
+            id -> {
+            	CustomerDTO c = new CustomerDTO(tuple, aliasToIndexMap);
+            	bagDTO.setCustomer(c);
+            	return c;
+            }
         );    
-        
-        bagItemDTO.setBag(bagDTO);
-        
-        bagDTO.setCustomer(customerDTO);
-        
-        productDTO.setBrand(brandDTO);
-        
-        productDTO.setDepartment(departmentDTO);
-        
-        bagItemDTO.setProduct(productDTO);
-        
-        bagDTO.getBagItems().add(bagItemDTO);
         
         return bagDTO;
 	}

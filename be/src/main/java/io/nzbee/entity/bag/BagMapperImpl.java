@@ -103,6 +103,7 @@ public class BagMapperImpl implements IBagMapper {
 	@Override
 	public Bag DTOToDo(BagDTO dto) {
 		Bag b = new Bag(personMapper.DTOToDo(dto.getCustomer()));
+		b.getBagItems().addAll(dto.getBagItems().stream().map(bi -> bagItemMapper.DTOToDo(b, bi)).collect(Collectors.toSet()));
 		return b;
 	}
 
