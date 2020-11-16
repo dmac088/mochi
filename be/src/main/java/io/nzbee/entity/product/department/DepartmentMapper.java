@@ -11,7 +11,7 @@ public class DepartmentMapper implements IDepartmentMapper {
 	
 	@Override
 	public Department DTOToDo(DepartmentDTO dto) {
-		io.nzbee.domain.department.Department dO = 
+		Department dO = 
 				new io.nzbee.domain.department.Department(
 						dto.getDepartmentCode(),
 						dto.getDepartmentDesc(),
