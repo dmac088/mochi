@@ -1,7 +1,6 @@
 package io.nzbee.entity.bag;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -35,89 +34,93 @@ public class BagDTOResultTransformer implements ResultTransformer {
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
+		
+		
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
-        
-		System.out.println(Arrays.toString(tuple));
 		
         Long bagId = ((Number) tuple[aliasToIndexMap.get(BagDTO.ID_ALIAS)]).longValue();
  
         BagDTO bagDTO = bagDTOMap.computeIfAbsent(
             bagId,
-            id -> {
+            bId -> {
             	BagDTO b = new BagDTO(tuple, aliasToIndexMap);
+            	
+            	Long customerId = ((Number) tuple[aliasToIndexMap.get(CustomerDTO.ID_ALIAS)]).longValue();
+                
+                CustomerDTO customerDTO = customerDTOMap.computeIfAbsent(
+                    customerId,
+                    cId -> {
+                    	CustomerDTO c = new CustomerDTO(tuple, aliasToIndexMap);
+                    	return c;
+                    }
+                );   
+                
+                b.setCustomer(customerDTO);
+            	
+            	Long bagItemId = ((Number) tuple[aliasToIndexMap.get(BagItemDTO.ID_ALIAS)]).longValue();
+                
+                BagItemDTO bagItemDTO = bagItemDTOMap.computeIfAbsent(
+                    bagItemId,
+                    biId -> {
+                    	BagItemDTO bi = new BagItemDTO(tuple, aliasToIndexMap);
+                    	
+                    	Long productId = ((Number) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
+                        
+                        ProductDTO productDTO = productDTOMap.computeIfAbsent(
+                        	productId,
+                        	pId -> {
+                        		ProductDTO p = new ProductDTO(tuple, aliasToIndexMap);
+                        		
+                                Long brandId = ((Number) tuple[aliasToIndexMap.get(BrandDTO.ID_ALIAS)]).longValue();
+                                
+                                BrandDTO brandDTO = brandDTOMap.computeIfAbsent(
+                                    brandId,
+                                    id -> {
+                                    	BrandDTO bnd = new BrandDTO(tuple, aliasToIndexMap);
+                                    	return bnd;
+                                    }
+                                );
+                                
+                                Long departmentId = ((Number) tuple[aliasToIndexMap.get(DepartmentDTO.ID_ALIAS)]).longValue();
+                                
+                                DepartmentDTO departmentDTO = departmentDTOMap.computeIfAbsent(
+                                    departmentId,
+                                    dId -> {
+                                    	DepartmentDTO d = new DepartmentDTO(tuple, aliasToIndexMap);
+                                    	return d;
+                                    }
+                                );  
+                        		
+                                p.setBrand(brandDTO);
+                                p.setDepartment(departmentDTO);
+                                
+                                Long categoryId = ((Number) tuple[aliasToIndexMap.get(CategoryDTO.ID_ALIAS)]).longValue();
+                                
+                                CategoryProductDTO categoryDTO = categoryDTOMap.computeIfAbsent(
+                                	categoryId,
+                                    cId -> {
+                                        CategoryProductDTO c = new CategoryProductDTO(tuple, aliasToIndexMap);
+                                        return c;
+                                    }
+                                );
+                                
+                                p.getCategories().add(categoryDTO);
+                                
+                        		return p;
+                        	}
+                        );
+                        
+                        bi.setProduct(productDTO);
+                    	
+                    	return bi;
+                    }                    
+                );
+               
+                b.getBagItems().add(bagItemDTO);
+                
             	return b;
             }
         );
-        
-        Long bagItemId = ((Number) tuple[aliasToIndexMap.get(BagItemDTO.ID_ALIAS)]).longValue();
-        
-        BagItemDTO bagItemDTO = bagItemDTOMap.computeIfAbsent(
-            bagItemId,
-            id -> {
-            	BagItemDTO bi = new BagItemDTO(tuple, aliasToIndexMap);
-            	return bi;
-            }
-        );
-        
-        Long productId = ((Number) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
-        
-        ProductDTO productDTO = productDTOMap.computeIfAbsent(
-        	productId,
-        	id -> {
-        		ProductDTO p = new ProductDTO(tuple, aliasToIndexMap);
-        		return p;
-        	}
-        );
-        
-        Long brandId = ((Number) tuple[aliasToIndexMap.get(BrandDTO.ID_ALIAS)]).longValue();
-        
-        BrandDTO brandDTO = brandDTOMap.computeIfAbsent(
-            brandId,
-            id -> {
-            	BrandDTO b = new BrandDTO(tuple, aliasToIndexMap);
-            	return b;
-            }
-        );
-        
-        Long departmentId = ((Number) tuple[aliasToIndexMap.get(DepartmentDTO.ID_ALIAS)]).longValue();
-        
-        DepartmentDTO departmentDTO = departmentDTOMap.computeIfAbsent(
-            departmentId,
-            id -> {
-            	DepartmentDTO d = new DepartmentDTO(tuple, aliasToIndexMap);
-            	return d;
-            }
-        );        
-        
-        
-        
-        Long customerId = ((Number) tuple[aliasToIndexMap.get(CustomerDTO.ID_ALIAS)]).longValue();
-        
-        CustomerDTO customerDTO = customerDTOMap.computeIfAbsent(
-            customerId,
-            id -> {
-            	CustomerDTO c = new CustomerDTO(tuple, aliasToIndexMap);
-            	return c;
-            }
-        );    
-        
-        Long categoryId = ((Number) tuple[aliasToIndexMap.get(CategoryDTO.ID_ALIAS)]).longValue();
-        
-        CategoryProductDTO categoryDTO = categoryDTOMap.computeIfAbsent(
-        	categoryId,
-            id -> {
-                CategoryProductDTO c = new CategoryProductDTO(tuple, aliasToIndexMap);
-                return c;
-            }
-        ); 
-        
-        
-        productDTO.setDepartment(departmentDTO);
-        productDTO.setBrand(brandDTO);
-        productDTO.getCategories().add(categoryDTO);
-        bagItemDTO.setProduct(productDTO);
-        bagDTO.getBagItems().add(bagItemDTO);
-        bagDTO.setCustomer(customerDTO);
         
         return bagDTO;
 	}

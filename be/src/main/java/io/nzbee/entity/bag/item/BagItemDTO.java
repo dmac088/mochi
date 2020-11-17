@@ -2,6 +2,7 @@ package io.nzbee.entity.bag.item;
 
 import java.math.BigInteger;
 import java.util.Map;
+import java.util.Objects;
 import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.product.ProductDTO;
 
@@ -64,6 +65,19 @@ public class BagItemDTO {
 
 	public String getBagItemStatusDesc() {
 		return bagItemStatusDesc;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     BagItemDTO that = (BagItemDTO) o;
+	     return this.getBagItemId() == that.getBagItemId();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.getBagItemId());
 	}
 
 }

@@ -73,6 +73,10 @@ public class IT_BagDoServiceImplIntegrationTest {
 
 		found.getBagItems().forEach(f -> {
 			System.out.println(f.getProduct().getProductUPC());
+			System.out.println(f.getBagItemStatus());
+			System.out.println(f.getQuantity());
+			System.out.println(f.getLocale());
+			System.out.println(f.getCurrency());
 		});
 		
 		assertFound(found);
