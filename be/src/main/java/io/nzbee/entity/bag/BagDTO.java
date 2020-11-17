@@ -1,6 +1,5 @@
 package io.nzbee.entity.bag;
 
-import java.math.BigInteger;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -18,7 +17,7 @@ public class BagDTO {
 	private CustomerDTO customer;
 
 	public BagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.bagId = ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.bagId = ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 	}
 
 	public Set<BagItemDTO> getBagItems() {

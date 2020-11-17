@@ -1,7 +1,6 @@
 package io.nzbee.entity.product;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
@@ -75,7 +74,7 @@ public class ProductDTO {
 	
 
 	public ProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.productId 				= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.productId 				= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
         this.productUPC 			= tuple[aliasToIndexMap.get(UPC_ALIAS)].toString();
         this.productDesc 			= tuple[aliasToIndexMap.get(SHORT_DESC_ALIAS)].toString();
         this.productLongDesc 		= !aliasToIndexMap.containsKey(LONG_DESC_ALIAS)

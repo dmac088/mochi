@@ -1,6 +1,5 @@
 package io.nzbee.entity.party.person;
 
-import java.math.BigInteger;
 import java.util.Map;
 
 public class CustomerDTO {
@@ -45,7 +44,7 @@ public class CustomerDTO {
 	}
 
 	public CustomerDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.personId 			= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.personId 			= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.givenName 			= tuple[aliasToIndexMap.get(GIVEN_NAME_ALIAS)].toString();
 		this.familyName 		= tuple[aliasToIndexMap.get(FAMILY_NAME_ALIAS)].toString();
 		this.userName			= tuple[aliasToIndexMap.get(USERNAME_NAME_ALIAS)].toString();
