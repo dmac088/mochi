@@ -24,7 +24,7 @@ public class ProductDTOResultTransformer implements ResultTransformer {
             aliasToIndexMap = aliasToIndexMap(aliases);
         }
 		
-        Long productId = ((java.math.BigInteger) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
+        Long productId = ((Number) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
  
         ProductDTO productDTO = productDTOMap.computeIfAbsent(
             productId,

@@ -1,12 +1,10 @@
 package io.nzbee.entity.category;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
-
 import io.nzbee.entity.category.brand.CategoryBrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 
@@ -25,7 +23,7 @@ public class CategoryDTOResultTransformer implements ResultTransformer {
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
 		
-        Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(CategoryDTO.ID_ALIAS)]).longValue();
+        Long tagId = ((Number) tuple[aliasToIndexMap.get(CategoryDTO.ID_ALIAS)]).longValue();
         
         String type = tuple[aliasToIndexMap.get(CategoryDTO.CATEGORY_TYPE_ALIAS)].toString();
  

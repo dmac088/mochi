@@ -1,6 +1,5 @@
 package io.nzbee.entity.product;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -342,7 +341,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		Object result = query.getSingleResult();
-		long total = ((BigInteger) result).longValue();
+		long total = ((Number) result).longValue();
 		
 		query = em.createNativeQuery(this.constructSQL(
 													  false,
@@ -443,7 +442,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 		
 		Object result = query.getSingleResult();
-		long total = ((BigInteger) result).longValue();
+		long total = ((Number) result).longValue();
 		
 		query = em.createNativeQuery(this.constructSQL(	false,
 														false,

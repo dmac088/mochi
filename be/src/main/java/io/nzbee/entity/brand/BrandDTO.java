@@ -1,6 +1,5 @@
 package io.nzbee.entity.brand;
 
-import java.math.BigInteger;
 import java.util.Map;
 
 import io.nzbee.search.ISearchDimension;
@@ -28,7 +27,7 @@ public class BrandDTO implements ISearchDimension {
 	private Long count; 
 	
 	public BrandDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.brandId 	= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.brandId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
