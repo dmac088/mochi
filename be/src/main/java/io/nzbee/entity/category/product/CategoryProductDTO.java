@@ -26,11 +26,15 @@ public class CategoryProductDTO extends CategoryDTO {
 	public CategoryProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);
 		this.categoryLevel 			= ((BigInteger) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
-		//this.productCount    		= ((Number) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue();
 		this.parentCategory 		= Optional.ofNullable(!(tuple[aliasToIndexMap.get(CategoryProductParentDTO.ID_ALIAS)] == null)  
 									  ? new CategoryProductParentDTO(tuple, aliasToIndexMap)
 									  : null);
-		//this.childCategoryCount    	= ((BigInteger) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue();
+		this.productCount			= !(aliasToIndexMap.get(PRODUCT_COUNT_ALIAS) == null)
+									  ? ((BigInteger) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue()
+									  : new Long(0);
+		this.childCategoryCount    	= !(aliasToIndexMap.get(CHILD_COUNT_ALIAS) == null)
+									  ? ((BigInteger) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue()
+									  : new Long(0);
 	}
 	
 
