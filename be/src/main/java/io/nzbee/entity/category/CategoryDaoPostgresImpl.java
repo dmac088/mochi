@@ -186,7 +186,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public <T> Set<CategoryDTO> findAllByType(String locale, Class<T> cls) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}", locale, cls.getSimpleName());
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, cls.getSimpleName(), cls.getAnnotation(DiscriminatorValue.class).value());
 		
 		Session session = em.unwrap(Session.class);
 		

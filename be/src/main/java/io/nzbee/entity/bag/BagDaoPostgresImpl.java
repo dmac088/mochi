@@ -233,7 +233,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"           usr.enabled, " + 
 		"           p.retail_price, " + 
 		"           p.markdown_price, " + 
-		"           COALESCE(soh.soh_qty, 0) > 0 AS prd_in_stock " +
+		"           COALESCE(soh.soh_qty, 0) > 0 AS prd_in_stock, " +
 		"      		:currency as ccy_cd, " +
 		"	   		:locale as lcl_cd " + 
 		
@@ -364,7 +364,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	ON bag.bag_id = p.bag_id 										" + 
 		
 		"	LEFT JOIN mochi.stock_on_hand soh 								" +
-		"	ON prd.prd_id = soh.soh_prd_id 									" +
+		"	ON p.prd_id = soh.soh_prd_id 									" +
 		
 		"WHERE 0=0 															" +
 	//	"AND prd_sts_cd = 			:activeProductCode  					" + 
