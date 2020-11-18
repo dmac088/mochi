@@ -12,6 +12,7 @@ public class TagMapperImpl implements ITagMapper {
 				new Tag(
 						dto.getTagCode(),
 						dto.getTagDesc(),
+						dto.getCount(),
 						dto.getLocale()
 						);
 		return to;
