@@ -13,8 +13,8 @@ public class CategoryBrandDTO extends CategoryDTO {
 	public CategoryBrandDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);
 		this.brandCount    		= !(aliasToIndexMap.get(BRAND_COUNT_ALIAS) == null)
-		  ? ((Number) tuple[aliasToIndexMap.get(BRAND_COUNT_ALIAS)]).longValue()
-		  : new Long(0);
+								  ? ((Number) tuple[aliasToIndexMap.get(BRAND_COUNT_ALIAS)]).longValue()
+								  : new Long(0);
 	}
 
 	public Long getBrandCount() {
