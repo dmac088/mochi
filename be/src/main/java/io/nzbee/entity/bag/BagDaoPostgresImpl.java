@@ -3,6 +3,7 @@ package io.nzbee.entity.bag;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import javax.persistence.Tuple;
 import org.slf4j.Logger;
@@ -48,8 +49,12 @@ public class BagDaoPostgresImpl implements IBagDao {
 						.setParameter("activeProductCode", Constants.activeSKUCode)
 						.unwrap(org.hibernate.query.Query.class)
 						.setResultTransformer(new BagDTOResultTransformer());
-			   
-		return Optional.ofNullable((BagDTO) query.getSingleResult());
+		try {
+			return Optional.ofNullable((BagDTO) query.getSingleResult());
+		} catch(NoResultException nre) {
+			return Optional.empty();
+		}
+		
 	}
 
 	@Override
@@ -180,57 +185,57 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"					 coalesce(s2.cat_id,s1.cat_id), " +
 		"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
 		")" + 
-		"select    cp.cat_id, " + 
-			"	   cp.cat_cd, " +	
-			"	   cp.cat_lvl, " +
-			"	   cp.cat_prnt_id, " +	
-			"	   ca.cat_lcl_id, " +
-			"	   ca.cat_desc, " +
-			"	   ca.cat_img_pth, " +
-			"	   ct.cat_typ_id 		AS cat_typ_id, 	" +
-			"      ct.cat_typ_cd		AS cat_typ_cd, " +
-			"      ct.cat_typ_desc 		AS cat_typ_desc, " + 
-			"	   parent.cat_cd 		AS cat_prnt_cd, " + 
-			"	   parent.cat_lvl 		AS cat_prnt_lvl, " + 
-			"	   parent.cat_prnt_id	AS cat_prnt_prnt_id, " +
-			"	   parent.cat_prnt_cd	AS cat_prnt_prnt_cd, " + 
-			"	   prd.prd_id,   " + 
-			"	   prd.upc_cd,   " + 
-			"	   prd.prd_crtd_dt,   " +
-			"	   attr.prd_lcl_id, " +
-			"	   attr.prd_desc, " +
-			"	   attr.prd_lng_desc, " +	
-			"	   attr.prd_img_pth, " +
-			"	   dept.dept_id,   " + 
-			"	   dept.dept_cd,   " + 
-			"	   dept.dept_class,   " + 
-			"	   dattr.dept_lcl_id, " +	
-			"	   dattr.dept_desc,   " +
-			"	   bnd.bnd_id,   " + 
-			"	   bnd.bnd_cd,   " + 
-			"	   bal.bnd_lcl_id,  " + 
-			"	   bal.bnd_desc,   " + 
-			"	   ps.prd_sts_id,   " + 
-			"	   ps.prd_sts_cd,   " + 
-			"	   ps.prd_sts_desc,  " + 
-			"	   bag.bag_id, " +
-			"	   bi.bag_item_id, " + 
-			"	   bi.qty, " +
-			"	   bis.bag_item_sts_cd, " +
-			"	   bis.bag_item_sts_desc, " +
-			"	   rt.rle_typ_id, " + 
-			"	   rt.rle_typ_desc, " + 
-			"      cust.cst_num, " + 
-			"	   pty.pty_id, " + 
-			"	   psn.psn_gvn_nm, " +
-			"	   psn.psn_fml_nm, " +
-			"	   usr.user_name, " +
-			"	   usr.enabled, " + 
-			"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
-			"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
-			"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
-			"      :currency as ccy_cd, " +
-			"	   :locale as lcl_cd " + 
+		"select    p.cat_id, " + 
+		"           p.cat_cd, " + 
+		"           p.cat_lvl, " + 
+		"           p.cat_prnt_id, " + 
+		"           p.cat_lcl_id, " + 
+		"           p.cat_desc, " + 
+		"           p.cat_img_pth, " + 
+		"           p.cat_typ_id, " + 
+		"           p.cat_typ_cd, " + 
+		"           p.cat_typ_desc, " + 
+		"           p.cat_prnt_cd, " + 
+		"           p.cat_prnt_lvl, " + 
+		"           p.cat_prnt_prnt_id, " + 
+		"           p.cat_prnt_prnt_cd, " + 
+		"           p.prd_id, " + 
+		"           p.upc_cd, " + 
+		"           p.prd_crtd_dt, " + 
+		"           p.prd_lcl_id, " + 
+		"           p.prd_desc, " + 
+		"           p.prd_lng_desc, " + 
+		"           p.prd_img_pth, " + 
+		"           p.dept_id, " + 
+		"           p.dept_cd, " + 
+		"           p.dept_class, " + 
+		"           p.dept_lcl_id, " + 
+		"           p.dept_desc, " + 
+		"           p.bnd_id, " + 
+		"           p.bnd_cd, " + 
+		"           p.bnd_lcl_id, " + 
+		"           p.bnd_desc, " + 
+		"           p.prd_sts_id, " + 
+		"           p.prd_sts_cd, " + 
+		"           p.prd_sts_desc, " + 
+		"           p.bag_id, " + 
+		"           p.bag_item_id, " + 
+		"           p.qty, " + 
+		"           p.bag_item_sts_cd, " + 
+		"           p.bag_item_sts_desc, " + 
+		"           rt.rle_typ_id, " + 
+		"           rt.rle_typ_desc, " + 
+		"           cust.cst_num, " + 
+		"           pty.pty_id, " + 
+		"           psn.psn_gvn_nm, " + 
+		"           psn.psn_fml_nm, " + 
+		"           usr.user_name, " + 
+		"           usr.enabled, " + 
+		"           p.retail_price, " + 
+		"           p.markdown_price, " + 
+		"           COALESCE(soh.soh_qty, 0) > 0 AS prd_in_stock " +
+		"      		:currency as ccy_cd, " +
+		"	   		:locale as lcl_cd " + 
 		
 		"	FROM mochi.party pty    							" +
 		
@@ -252,95 +257,118 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	INNER JOIN mochi.bag bag							" + 
 		"	ON pty.pty_id = bag.pty_id							" + 
 		
-		"	INNER JOIN mochi.bag_item bi						" +
-		"	ON bag.bag_id = bi.bag_id							" +
+		"	LEFT JOIN 											" +
+		"	(						   							" +
+		"	SELECT cp.cat_id, " +
+		"	       cp.cat_cd, " +
+		"	       cp.cat_lvl, " +
+		"	       cp.cat_prnt_id, " +
+		"	       ca.cat_lcl_id, " +
+		"	       ca.cat_desc, " +
+		"	       ca.cat_img_pth, " +
+		"	       ct.cat_typ_id      AS cat_typ_id, " +
+		"	       ct.cat_typ_cd      AS cat_typ_cd, " +
+		"	       ct.cat_typ_desc    AS cat_typ_desc, " +
+		"	       parent.cat_cd      AS cat_prnt_cd, " +
+		"	       parent.cat_lvl     AS cat_prnt_lvl, " +
+		"	       parent.cat_prnt_id AS cat_prnt_prnt_id, " +
+		"	       parent.cat_prnt_cd AS cat_prnt_prnt_cd, " +
+		"	       prd.prd_id, " +
+		"	       prd.upc_cd, " +
+		"	       prd.prd_crtd_dt, " +
+		"	       attr.prd_lcl_id, " +
+		"	       attr.prd_desc, " +
+		"	       attr.prd_lng_desc, " +
+		"	       attr.prd_img_pth, " +
+		"	       dept.dept_id, " +
+		"	       dept.dept_cd, " +
+		"	       dept.dept_class, " +
+		"	       dattr.dept_lcl_id, " +
+		"	       dattr.dept_desc, " +
+		"	       bnd.bnd_id, " +
+		"	       bnd.bnd_cd, " +
+		"	       bal.bnd_lcl_id, " +
+		"	       bal.bnd_desc, " +
+		"	       ps.prd_sts_id, " +
+		"	       ps.prd_sts_cd, " +
+		"	       ps.prd_sts_desc, " +
+		"	       bi.bag_id, " +
+		"	       bi.bag_item_id, " +
+		"	       bi.qty, " +
+		"	       bis.bag_item_sts_cd, " +
+		"	       bis.bag_item_sts_desc," +
+		"		   COALESCE(rprc.prc_val,0)     AS retail_price, " +
+		"	       COALESCE(mprc.prc_val,0)     AS markdown_price " +
+		"	FROM mochi.bag_item bi " +
+		"	LEFT JOIN mochi.bag_item_status bis " +
+		"	ON         bi.bag_item_sts_id = bis.bag_item_sts_id " +
+		"	LEFT JOIN mochi.product prd " +
+		"	ON         bi.prd_id = prd.prd_id " +
+		"	LEFT JOIN mochi.product_status ps " +
+		"	ON         prd.prd_sts_id = ps.prd_sts_id " +
+		"	AND        ps.prd_sts_cd = :activeProductCode " +
+		"	LEFT JOIN mochi.product_category pc " +
+		"	ON         prd.prd_id = pc.prd_id " +
+		"	LEFT JOIN categories cc " +
+		"	ON         pc.cat_id = cc.cat_id " +
+		"	LEFT JOIN mochi.product_attr_lcl attr " +
+		"	ON         prd.prd_id = attr.prd_id " +
+		"	AND        attr.lcl_cd = :locale" +
+		"	LEFT JOIN mochi.category cp " +
+		"	ON         pc.cat_id = cp.cat_id " +
+		"	LEFT JOIN mochi.category_type ct " +
+		"	ON         cc.cat_typ_id = ct.cat_typ_id " +
+		"	AND        ct.cat_typ_cd = 'PRD01' " +
+		"	LEFT JOIN mochi.category_attr_lcl ca " +
+		"	ON         cp.cat_id = ca.cat_id " +
+		"	AND        ca.lcl_cd = :locale" +
+		"	LEFT JOIN mochi.category parent " +
+		"	ON         cp.cat_prnt_id = parent.cat_id " +
+		"	LEFT JOIN mochi.department dept " +
+		"	ON         prd.dept_id = dept.dept_id " +
+		"	LEFT JOIN mochi.department_attr_lcl dattr " +
+		"	ON         dept.dept_id = dattr.dept_id " +
+		"	AND        dattr.lcl_cd = :locale" +
+		"	LEFT JOIN mochi.brand bnd " +
+		"	ON         prd.bnd_id = bnd.bnd_id " +
+		"	LEFT JOIN mochi.brand_attr_lcl bal " +
+		"	ON         bnd.bnd_id = bal.bnd_id " +
+		"	AND        bal.lcl_cd = :locale" +
+		"	LEFT JOIN " +
+		"	        ( " +
+		"	                    SELECT     prd_id, " +
+		"	                                prc_val " +
+		"	                    FROM       mochi.price rprc " +
+		"	                    INNER JOIN mochi.currency rcurr " +
+		"	                    ON         rprc.ccy_id = rcurr.ccy_id " +
+		"	                    AND        rcurr.ccy_cd = :currency" +
+		"	                    INNER JOIN mochi.price_type rpt " +
+		"	                    ON         rprc.prc_typ_id = rpt.prc_typ_id " +
+		"	                    AND        rpt.prc_typ_cd = :retailPriceCode ) rprc " +
+		"	ON         prd.prd_id = rprc.prd_id " +
+		"	LEFT JOIN " +
+		"	        ( " +
+		"	                    SELECT     prd_id, 							" +
+		"	                                prc_val 						" +
+		"	                    FROM       mochi.price mprc 				" +
+		"	                    INNER JOIN mochi.currency mcurr 			" +
+		"	                    ON         mprc.ccy_id = mcurr.ccy_id 		" +
+		"	                    AND        mcurr.ccy_cd = :currency				" +
+		"	                    INNER JOIN mochi.price_type mpt 			" +
+		"	                    ON         mprc.prc_typ_id = mpt.prc_typ_id " +
+		"	                    AND        mpt.prc_typ_cd = :markdownPriceCode ) mprc 	" + 
+		"	ON         prd.prd_id = mprc.prd_id								" +
+		"	LEFT JOIN  mochi.product_basic acc 								" +
+		"	ON         prd.prd_id = acc.prd_id 								" +
+		"	) p 															" +
+		"	ON bag.bag_id = p.bag_id 										" + 
 		
-		"	INNER JOIN mochi.bag_item_status bis				" +
-		"	ON bi.bag_item_sts_id = bis.bag_item_sts_id			" +
+		"	LEFT JOIN mochi.stock_on_hand soh 								" +
+		"	ON prd.prd_id = soh.soh_prd_id 									" +
 		
-		"	INNER JOIN mochi.product prd    					" + 
-		"	ON bi.prd_id = prd.prd_id   						" + 
-		
-		"	INNER JOIN mochi.product_status ps					" +
-		"	ON prd.prd_sts_id = ps.prd_sts_id 					" +
-		"	AND ps.prd_sts_cd = :activeProductCode 				" +
-		
-		"	INNER JOIN  mochi.product_category pc 				" + 
-		"	ON prd.prd_id = pc.prd_id 							" +
-
-		"	INNER JOIN  categories cc  							" +
-		"	ON pc.cat_id = cc.cat_id 							" +
-		
-		"	INNER JOIN mochi.product_attr_lcl attr 				" +
-		"	ON prd.prd_id = attr.prd_id 						" + 
-		"	AND attr.lcl_cd = :locale 							" +
-		
-		"	INNER JOIN mochi.category cp 						" + 
-		"	ON pc.cat_id = cp.cat_id 							" +
-		
-		"	INNER JOIN mochi.category_type ct  					" + 
-		"	ON cc.cat_typ_id = ct.cat_typ_id 					" + 	
-		"	AND ct.cat_typ_cd = '"+
-		Constants.categoryTypeProductCode + "'					" +
-		
-		"	INNER JOIN mochi.category_attr_lcl ca    			" + 
-		"	ON cp.cat_id = ca.cat_id    						" + 
-		"	AND ca.lcl_cd = :locale 							" +		
-		
-		"	INNER JOIN mochi.category parent 					" +
-		"	ON cp.cat_prnt_id = parent.cat_id  					" +
-		
-		"	INNER JOIN mochi.department dept   					" + 
-		"	ON prd.dept_id = dept.dept_id   					" + 
-		
-		"	INNER JOIN mochi.department_attr_lcl dattr   		" + 
-		"	ON dept.dept_id = dattr.dept_id   					" + 
-		"	AND dattr.lcl_cd = :locale 							" +
-		
-		"	INNER JOIN mochi.brand bnd   						" + 
-		"	ON prd.bnd_id = bnd.bnd_id   						" + 
-		
-		"	INNER JOIN mochi.brand_attr_lcl bal   				" + 
-		"	ON bnd.bnd_id = bal.bnd_id   						" + 
-		"	AND bal.lcl_cd = :locale 							" +
-		
-		"	INNER JOIN  ( 										" + 
-		"		SELECT prd_id, 									" +  
-		"			   prc_val  								" +  
-		"		FROM mochi.price rprc 							" +  
-		"		INNER JOIN mochi.currency rcurr 				" +  
-		"		ON         rprc.ccy_id = rcurr.ccy_id 			" +  
-		"		AND        rcurr.ccy_cd = :currency 			" + 
-		
-		"		INNER JOIN mochi.price_type rpt 				" + 
-		"		ON         rprc.prc_typ_id = rpt.prc_typ_id 	" +  
-		"		AND        rpt.prc_typ_cd = :retailPriceCode 	" +  
-		"	) rprc 												" + 
-		"	ON prd.prd_id = rprc.prd_id 						" +  
-		
-		"	INNER JOIN  ( 										" +
-		"		SELECT prd_id, 									" +  
-		"		   prc_val 										" + 
-		"		FROM mochi.price mprc 							" + 
-		"		INNER JOIN mochi.currency mcurr 				" + 
-		"		ON         mprc.ccy_id = mcurr.ccy_id  			" + 
-		"		AND        mcurr.ccy_cd = :currency  			" +
-		
-		"		INNER JOIN mochi.price_type mpt 				" +
-		"		ON         mprc.prc_typ_id = mpt.prc_typ_id 	" + 
-		"		AND        mpt.prc_typ_cd = :markdownPriceCode 	" + 
-		"		) mprc  										" +
-		"		ON prd.prd_id = mprc.prd_id  					" +
-		
-		"	LEFT JOIN mochi.product_basic acc 					" + 
-		"	ON prd.prd_id = acc.prd_id    						" +
-		
-		"	LEFT JOIN mochi.stock_on_hand soh 					" +
-		"	ON prd.prd_id = soh.soh_prd_id 						" +
-		
-		"WHERE 0=0 " +
-	//	"AND prd_sts_cd = 			:activeProductCode  		" + 
-		"AND usr.user_name = 		:userName 					";
+		"WHERE 0=0 															" +
+	//	"AND prd_sts_cd = 			:activeProductCode  					" + 
+		"AND usr.user_name = 		:userName 								";
 		
 		LOGGER.debug(sql);
 		
