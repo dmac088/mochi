@@ -1,8 +1,6 @@
 package io.nzbee.entity.tag;
 
-import java.math.BigInteger;
 import java.util.Map;
-
 import io.nzbee.search.ISearchDimension;
 
 public class TagDTO implements ISearchDimension  {
@@ -28,11 +26,13 @@ public class TagDTO implements ISearchDimension  {
 	private Long objectCount;
 
 	public TagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.tagId 			= ((BigInteger) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.tagId 			= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.tagCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.tagDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
-		this.objectCount 	= ((BigInteger) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue();
+		this.objectCount 	= !(aliasToIndexMap.get(OBJECT_COUNT_ALIAS) == null)
+							  ? ((Number) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue()
+							  : new Long(0);
 	}
 
 	public static String getIdAlias() {

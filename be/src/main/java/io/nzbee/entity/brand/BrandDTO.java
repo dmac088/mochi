@@ -31,7 +31,9 @@ public class BrandDTO implements ISearchDimension {
 		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
-		//this.count 		= ((Number) tuple[aliasToIndexMap.get(COUNT_ALIAS)]).longValue();
+		this.count 		= !(aliasToIndexMap.get(COUNT_ALIAS) == null)
+						  ? ((Number) tuple[aliasToIndexMap.get(COUNT_ALIAS)]).longValue()
+						  : new Long(0);
 	}
 
 	public static String getIdAlias() {
