@@ -113,6 +113,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		return	new Brand(
 					 dto.getBrandCode(),
 					 dto.getBrandDesc(),
+					 dto.getCount(),
 					 dto.getLocale()
 					);
 	}
