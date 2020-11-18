@@ -40,14 +40,14 @@ public class BagDaoPostgresImpl implements IBagDao {
 		LOGGER.debug("call BagDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, currency, userName);
 		
 		Query query = em.createNativeQuery(this.getSQL())
-		.setParameter("userName", userName)
-		.setParameter("locale", locale)
-		.setParameter("currency", currency)
-		.setParameter("retailPriceCode", Constants.retailPriceCode)
-		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
-		.setParameter("activeProductCode", Constants.activeSKUCode)
-		.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BagDTOResultTransformer());
+						.setParameter("userName", userName)
+						.setParameter("locale", locale)
+						.setParameter("currency", currency)
+						.setParameter("retailPriceCode", Constants.retailPriceCode)
+						.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+						.setParameter("activeProductCode", Constants.activeSKUCode)
+						.unwrap(org.hibernate.query.Query.class)
+						.setResultTransformer(new BagDTOResultTransformer());
 			   
 		return Optional.ofNullable((BagDTO) query.getSingleResult());
 	}

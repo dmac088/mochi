@@ -13,16 +13,23 @@ import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
 public class BrandEntityBeanFactory {
 	
 	@Bean
-	public final BrandEntity getBrandEntityBean() {
-		final BrandEntity brand = new BrandEntity();
+	public BrandEntity getBrandEntityBean() {
+		BrandEntity brand = new BrandEntity();
 		brand.setBrandCode("TST02");
 
-		final BrandAttributeEntity brandAttribute = new BrandAttributeEntity();
-		brandAttribute.setBrand(brand);
-		brandAttribute.setBrandDesc("test brand");
-		brandAttribute.setLclCd(Constants.localeENGB);
-		brandAttribute.setBrand(brand);
-		brand.addAttribute(brandAttribute);
+		BrandAttributeEntity brandAttributeEN = new BrandAttributeEntity();
+		brandAttributeEN.setBrand(brand);
+		brandAttributeEN.setBrandDesc("test brand");
+		brandAttributeEN.setLclCd(Constants.localeENGB);
+		brandAttributeEN.setBrand(brand);
+		brand.addAttribute(brandAttributeEN);
+		
+		final BrandAttributeEntity brandAttributeZH = new BrandAttributeEntity();
+		brandAttributeZH.setBrand(brand);
+		brandAttributeZH.setBrandDesc("測試品牌");
+		brandAttributeZH.setLclCd(Constants.localeZHHK);
+		brandAttributeZH.setBrand(brand);
+		brand.addAttribute(brandAttributeZH);
 		
 		return brand;
 	}

@@ -207,8 +207,12 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	assertThat(found.get().getBrandCode())
         .isEqualTo("TST02");
     	
-//	    assertThat(found.get().get.getBrandDesc())
-//	    .isEqualTo("test brand");
+	    assertThat(found.get().getBrandDescENGB())
+	    .isEqualTo("test brand");
+	    
+	    assertThat(found.get().getBrandDescZHHK())
+	    .isEqualTo("測試品牌");
+	    
     }
     
     

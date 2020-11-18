@@ -14,10 +14,14 @@ import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.bag.item.IBagItemMapper;
 import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
+import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.party.person.CustomerDTO;
 
 @Component
 public class BagMapperImpl implements IBagMapper {
+	
+	@Autowired
+	private IBagService bagService;
 	
 	@Autowired
 	private ICustomerMapper personMapper;
@@ -27,9 +31,6 @@ public class BagMapperImpl implements IBagMapper {
 	
 	@Autowired
 	private IPersonService personService;
-	
-	@Autowired
-	private IBagService bagService;
 	
 	@Override
 	public Bag DTOToDo(String locale, String currency, CustomerDTO pDto, BagDTO bDto) {
@@ -58,9 +59,13 @@ public class BagMapperImpl implements IBagMapper {
 	@Override
 	public BagEntity doToEntity(Bag d) {
 		//get the bag, status, and customer from the database
-		Optional<BagEntity> obe 										= bagService.findByCode(d.getCustomer().getUserName());		
-		Optional<io.nzbee.entity.party.person.PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Constants.partyRoleCustomer);
-					
+		Optional<BagEntity> obe 			= bagService.findByCode(d.getCustomer().getUserName());	
+		Optional<PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Constants.partyRoleCustomer);
+		
+		System.out.println("username = " + d.getCustomer().getUserName());
+		System.out.println("bag is present = " + obe.isPresent());
+		System.out.println("person is present = " + op.isPresent());
+		
 		BagEntity nbe = new BagEntity();
 		nbe.setBagCreatedDateTime(LocalDateTime.now());
 		nbe.setBagUpdatedDateTime(LocalDateTime.now());
