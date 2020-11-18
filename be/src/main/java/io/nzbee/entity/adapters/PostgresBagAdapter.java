@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.entity.bag.BagDTO;
+import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagMapper;
 import io.nzbee.entity.bag.IBagService;
 
@@ -45,7 +46,7 @@ public class PostgresBagAdapter implements IBagPortService {
 
 	@Override
 	public void save(Bag domainObject) {
-		io.nzbee.entity.bag.BagEntity b = bagMapper.doToEntity(domainObject);
+		BagEntity b = bagMapper.doToEntity(domainObject);
 		bagService.save(b);
 	}
 

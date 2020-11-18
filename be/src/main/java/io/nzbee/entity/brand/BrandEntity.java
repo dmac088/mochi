@@ -17,7 +17,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
@@ -26,12 +25,10 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "brand", schema = "mochi")
@@ -56,7 +53,7 @@ import io.nzbee.search.ISearchDimension;
 	                        @FieldResult(name = "brand", 			column = "bnd_id")
 	                    })
 		    })
-public class BrandEntity implements ISearchDimension {
+public class BrandEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -82,17 +79,8 @@ public class BrandEntity implements ISearchDimension {
 	private Set<BrandAttributeEntity> attributes = new HashSet<BrandAttributeEntity>();
 	
 	@Transient
-	private BrandAttributeEntity brandAttribute;
-	
-	@Transient
 	private String locale;
 	
-	@Transient
-	private String currency;
-	
-	@Transient
-	private Long objectCount;
-
 	public String getLocale() {
 		return locale;
 	}
@@ -148,14 +136,6 @@ public class BrandEntity implements ISearchDimension {
 		this.products = products;
 	}
 	
-	public BrandAttributeEntity getBrandAttribute() {
-		return brandAttribute;
-	}
-
-	public void setBrandAttribute(BrandAttributeEntity brandAttribute) {
-		this.brandAttribute = brandAttribute;
-	}
-	
 	public Set<BrandAttributeEntity> getAttributes() {
 		return attributes;
 	}
@@ -186,42 +166,6 @@ public class BrandEntity implements ISearchDimension {
 	
 	public void setLocale(String locale) {
 		this.locale = locale;
-	}
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
-	}
-	
-	public Long getObjectCount() {
-		return objectCount;
-	}
-
-	public void setObjectCount(Long objectCount) {
-		this.objectCount = objectCount;
-	}
-
-	@Override
-	public String getCode() {
-		return this.getBrandCode();
-	}
-
-	@Override
-	public String getDesc() {
-		return this.getBrandAttribute().getBrandDesc();
-	}
-
-	@Override
-	public Long getCount() {
-		return this.getObjectCount();
-	}
-
-	@Override
-	public boolean isHierarchical() {
-		return false;
 	}
 	
 	@Override

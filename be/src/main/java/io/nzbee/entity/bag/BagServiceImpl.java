@@ -2,12 +2,17 @@ package io.nzbee.entity.bag;
 
 import java.util.Optional;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service(value="bagEntityService")
 public class BagServiceImpl implements IBagService {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private IBagRepository bagRepository;
 	
@@ -27,6 +32,7 @@ public class BagServiceImpl implements IBagService {
 
 	@Override
 	public Optional<BagEntity> findByCode(String userName) {
+		LOGGER.debug("call BagServiceImpl.findByCode() with parameter {}", userName);
 		return bagRepository.findByPartyPartyUserUsername(userName);
 	}
 
