@@ -33,8 +33,6 @@ public class PostgresBagAdapter implements IBagPortService {
 		
 		//if there is no current bag, get a new one
 		BagDTO b = 	ob.get();
-		
-		System.out.println(b.getBagItems().size());
 	
 		//map the bag to a domain object
 		return bagMapper.DTOToDo(b);

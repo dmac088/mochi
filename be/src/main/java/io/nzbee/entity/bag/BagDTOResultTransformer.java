@@ -61,8 +61,6 @@ public class BagDTOResultTransformer implements ResultTransformer {
         bagDTO.setCustomer(customerDTO);
     	
     	Long bagItemId = ((Number) tuple[aliasToIndexMap.get(BagItemDTO.ID_ALIAS)]).longValue();
-        
-    	System.out.println("bag item id = " + bagItemId);
     	
         BagItemDTO bagItemDTO = bagItemDTOMap.computeIfAbsent(
             bagItemId,
