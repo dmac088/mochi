@@ -31,13 +31,10 @@ public class Bag {
 		.filter(bi -> bi.getProduct().getProductUPC().equals(p.getProductUPC()))
 		.findAny();
 		
-		BagItem bi = new BagItem(this, p, qty);
-		
 		if(obi.isPresent()) {
-			bi = obi.get();
-			bi.addToQuantity(qty);
+			obi.get().addToQuantity(qty);
 		} else {
-			this.getBagItems().add(bi);
+			this.getBagItems().add(new BagItem(this, p, qty));
 		}
 	}
 	
@@ -46,11 +43,8 @@ public class Bag {
 		.filter(bi -> bi.getProduct().getProductUPC().equals(bagItem.getProduct().getProductUPC()))
 		.findAny();
 		
-		BagItem bi = new BagItem(this, bagItem.getProduct(), bagItem.getQuantity());
-		
 		if(obi.isPresent()) {
-			bi = obi.get();
-			bi.addToQuantity(bagItem.getQuantity());
+			obi.get().addToQuantity(bagItem.getQuantity());
 		} else {
 			this.getBagItems().add(bagItem);
 		}

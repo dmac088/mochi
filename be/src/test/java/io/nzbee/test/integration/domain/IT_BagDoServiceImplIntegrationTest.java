@@ -13,6 +13,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
@@ -50,10 +51,16 @@ public class IT_BagDoServiceImplIntegrationTest {
 		Customer c = customerService.findByUsername("bob@bob");
 
 		Bag bag = bagDoBeanFactory.getBagDoBean(c);
-
+		
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "23464789"), 2);
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
-		//bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
+		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
+		
+		System.out.println("bag has " + bag.getBagItems().size() + " items");
+		
+		bag.getBagItems().stream().forEach(bi -> {
+			System.out.println(bi.getProduct().getProductUPC());
+		});
 		
 		bagService.save(bag);
 
@@ -66,6 +73,7 @@ public class IT_BagDoServiceImplIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	@WithUserDetails(value = "admin")
 	public void whenValidCode_thenBagShouldBeFound() {
 		Bag found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
