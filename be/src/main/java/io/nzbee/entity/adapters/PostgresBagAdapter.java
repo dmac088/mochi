@@ -1,6 +1,9 @@
 package io.nzbee.entity.adapters;
 
 import java.util.Optional;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.bag.Bag;
@@ -13,6 +16,8 @@ import io.nzbee.entity.bag.IBagService;
 @Service
 public class PostgresBagAdapter implements IBagPortService {
 	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
 	@Autowired
 	private IBagService bagService;
 	
@@ -22,11 +27,14 @@ public class PostgresBagAdapter implements IBagPortService {
 	
 	@Override
 	public Bag findByCode(String locale, String currency, String userName) {
-		Optional<BagDTO> ob = bagService.findByCode(locale, currency, userName);
+		LOGGER.debug("call PostgresBagAdapter.findByCode with parameter {}, {}, {}", locale, currency, userName);
 		
+		Optional<BagDTO> ob = bagService.findByCode(locale, currency, userName);
 		
 		//if there is no current bag, get a new one
 		BagDTO b = 	ob.get();
+		
+		System.out.println(b.getBagItems().size());
 	
 		//map the bag to a domain object
 		return bagMapper.DTOToDo(b);

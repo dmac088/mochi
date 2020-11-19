@@ -47,6 +47,8 @@ public class BagMapperImpl implements IBagMapper {
 							 .map(bi -> bagItemMapper.DTOToDo(bi))
 							 .collect(Collectors.toSet());
 		
+		System.out.println("size = " + sbi.size());
+		
 		//use the add item method on the domain object to 
 		//ensure business rules are fired against each added bagItem
 		sbi.forEach(bi -> {
