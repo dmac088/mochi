@@ -86,6 +86,7 @@ public class BagServiceImpl implements IBagService {
 
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
+		LOGGER.debug("call BagServiceImpl.findByCode with parameter {}, {}, {}", locale, currency, userName);
 		return bagDao.findByCode(locale, currency, userName);
 	}
 
