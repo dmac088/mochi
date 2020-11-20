@@ -81,7 +81,7 @@ public class ProductDTO {
         								|| ((tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)] == null))
         							  ? ""
         							  : tuple[aliasToIndexMap.get(LONG_DESC_ALIAS)].toString();
-        this.inStock 				= tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)].toString().equals("Y");
+        this.inStock 				= ((Boolean) tuple[aliasToIndexMap.get(IN_STOCK_ALIAS)]);
         this.productImage 			= !aliasToIndexMap.containsKey(LONG_DESC_ALIAS)
 				|| ((tuple[aliasToIndexMap.get(IMAGE_ALIAS)] == null))
 			  ? ""
