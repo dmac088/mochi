@@ -5,10 +5,8 @@ import io.nzbee.domain.department.Department;
 
 
 @Component(value="departmentMapper")
-public class DepartmentMapper implements IDepartmentMapper {
+public class DepartmentMapperImpl implements IDepartmentMapper {
 
-	
-	
 	@Override
 	public Department DTOToDo(DepartmentDTO dto) {
 		Department dO = 
