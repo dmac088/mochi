@@ -17,7 +17,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
-import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.ports.IBagPortService;

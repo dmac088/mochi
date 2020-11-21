@@ -43,19 +43,9 @@ public class Bag {
 		
 	}
 	
-//	public void addItem(BagItem bagItem) {
-//		System.out.println("adding B) " + bagItem.getQuantity() + " " + bagItem.getProduct().getProductUPC());
-//		
-//		Optional<BagItem> obi = this.getBagItems().stream()
-//		.filter(bi -> bi.getProduct().getProductUPC().equals(bagItem.getProduct().getProductUPC()))
-//		.findAny();
-//		
-//		if(!obi.isPresent()) {
-//			this.getBagItems().add(bagItem);
-//		} else {
-//			obi.get().addToQuantity(bagItem.getQuantity());
-//		}
-//	}
+	public void addItem(BagItem bi) {
+		this.addItem(bi.getProduct(), bi.getQuantity());
+	}
 	
 	public void removeItem(BagItem bi) {
 		this.getBagItems().remove(bi);
