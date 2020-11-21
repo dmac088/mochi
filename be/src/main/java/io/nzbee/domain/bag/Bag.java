@@ -29,15 +29,19 @@ public class Bag {
 	}
 	
 	public void addItem(Product p, int qty) {
-		System.out.println("adding A) " + qty + " " + p.getProductUPC());
+		System.out.println("adding quantity " + qty + " for product " + p.getProductUPC());
 		
 		Optional<BagItem> obi = this.getBagItems().stream()
 		.filter(bi -> bi.getProduct().getProductUPC().equals(p.getProductUPC()))
 		.findAny();
 		
+		System.out.println("bagItem found = " + obi.isPresent());
+		
 		if(obi.isPresent()) {
+			System.out.println("addToQuantity");
 			obi.get().addToQuantity(qty);
 		} else {
+			System.out.println("adding bag item");
 			this.getBagItems().add(new BagItem(this, p, qty));
 		}
 		
@@ -65,7 +69,6 @@ public class Bag {
 	
 	public void logItemError(String key, BagItem bagItem) {
 		bagIssues.logItemError(key, bagItem);
-		bagItems.add(bagItem);
 		bagItem.setBagItemStatus("PND01");
 	}
 	
