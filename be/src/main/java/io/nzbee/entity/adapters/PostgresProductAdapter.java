@@ -84,8 +84,6 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional
 	public void save(Product domainObject) {
 		if (domainObject instanceof BasicProduct) {
-			
-			System.out.println(categoryService.findAll(domainObject.getCategories().stream().map(cc -> cc.getCategoryCode()).collect(Collectors.toSet())).size());
 
 			Optional<ProductEntity> op = productService.findByCode(domainObject.getProductUPC());
 
