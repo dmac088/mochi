@@ -8,6 +8,8 @@ import io.nzbee.domain.product.Product;
 
 public class Bag {
 	
+	
+	
 	private Set<BagItem> bagItems = new HashSet<>();
 	
 	private Customer customer;
@@ -27,6 +29,7 @@ public class Bag {
 	}
 	
 	public void addItem(Product p, int qty) {
+		System.out.println("adding " + qty + " " + p.getProductUPC());
 		Optional<BagItem> obi = this.getBagItems().stream()
 		.filter(bi -> bi.getProduct().getProductUPC().equals(p.getProductUPC()))
 		.findAny();
@@ -39,6 +42,7 @@ public class Bag {
 	}
 	
 	public void addItem(BagItem bagItem) {
+		System.out.println("adding " + bagItem.getQuantity() + " " + bagItem.getProduct().getProductUPC());
 		Optional<BagItem> obi = this.getBagItems().stream()
 		.filter(bi -> bi.getProduct().getProductUPC().equals(bagItem.getProduct().getProductUPC()))
 		.findAny();
