@@ -55,12 +55,6 @@ public class IT_BagDoServiceImplIntegrationTest {
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
 		
-		System.out.println("bag has " + bag.getBagItems().size() + " items");
-		
-		bag.getBagItems().stream().forEach(bi -> {
-			System.out.println(bi.getProduct().getProductUPC());
-		});
-		
 		bagService.save(bag);
 
 		return bag;
@@ -86,6 +80,9 @@ public class IT_BagDoServiceImplIntegrationTest {
 		assertTrue(!found.getBagItems().isEmpty());
 
 		assertThat(found.getBagItems().size()).isEqualTo(2);
+		
+		
+		assertThat(found.getTotalQuantity()).isEqualTo(8);
 
 	}
 }
