@@ -44,7 +44,7 @@ public class BagItemMapperImpl implements IBagItemMapper {
 		Product p = productMapper.DTOToDo(dto.getProduct());
 		Bag b  = bagMapper.DTOToDo(dto.getBag());
 		BagItem bi = new BagItem(b, p, dto.getQuantity());
-		b.addItem(bi);
+		b.getBagItems().add(bi);
 		return bi;
 	}
 
@@ -52,7 +52,7 @@ public class BagItemMapperImpl implements IBagItemMapper {
 	public BagItem DTOToDo(Bag bDo, BagItemDTO dto) {
 		Product p = productMapper.DTOToDo(dto.getProduct());
 		BagItem bi = new BagItem(bDo, p, dto.getQuantity());
-		bDo.addItem(bi);
+		bDo.getBagItems().add(bi);
 		return bi;
 	} 
 
