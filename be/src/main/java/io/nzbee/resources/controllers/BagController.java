@@ -111,7 +111,7 @@ public class BagController {
     		return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));
     	}
     	
-		b.addItem(bagItem);
+		b.addItem(bagItem.getProduct(), bagItem.getQuantity());
     	bagService.save(b);
     	
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));

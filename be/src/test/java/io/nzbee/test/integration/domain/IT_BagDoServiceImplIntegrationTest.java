@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.ports.IBagPortService;
@@ -45,7 +46,7 @@ public class IT_BagDoServiceImplIntegrationTest {
 	private IProductService productService;
 
 	
-	public Bag persistNewBag() {
+	public void persistNewBag() {
 
 		Customer c = customerService.findByUsername("bob@bob");
 
@@ -55,9 +56,9 @@ public class IT_BagDoServiceImplIntegrationTest {
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
 		
+		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "17235347"),1);
+		
 		bagService.save(bag);
-
-		return bag;
 	}
 
 	@Before
@@ -79,10 +80,9 @@ public class IT_BagDoServiceImplIntegrationTest {
 		
 		assertTrue(!found.getBagItems().isEmpty());
 
-		assertThat(found.getBagItems().size()).isEqualTo(2);
+		assertThat(found.getBagItems().size()).isEqualTo(3);
 		
-		
-		assertThat(found.getTotalQuantity()).isEqualTo(8);
+		assertThat(found.getTotalQuantity()).isEqualTo(9);
 
 	}
 }

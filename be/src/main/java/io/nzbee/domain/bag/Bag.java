@@ -29,7 +29,8 @@ public class Bag {
 	}
 	
 	public void addItem(Product p, int qty) {
-		System.out.println("adding " + qty + " " + p.getProductUPC());
+		System.out.println("adding A) " + qty + " " + p.getProductUPC());
+		
 		Optional<BagItem> obi = this.getBagItems().stream()
 		.filter(bi -> bi.getProduct().getProductUPC().equals(p.getProductUPC()))
 		.findAny();
@@ -39,20 +40,22 @@ public class Bag {
 		} else {
 			this.getBagItems().add(new BagItem(this, p, qty));
 		}
+		
 	}
 	
-	public void addItem(BagItem bagItem) {
-		System.out.println("adding " + bagItem.getQuantity() + " " + bagItem.getProduct().getProductUPC());
-		Optional<BagItem> obi = this.getBagItems().stream()
-		.filter(bi -> bi.getProduct().getProductUPC().equals(bagItem.getProduct().getProductUPC()))
-		.findAny();
-		
-		if(obi.isPresent()) {
-			obi.get().addToQuantity(bagItem.getQuantity());
-		} else {
-			this.getBagItems().add(bagItem);
-		}
-	}
+//	public void addItem(BagItem bagItem) {
+//		System.out.println("adding B) " + bagItem.getQuantity() + " " + bagItem.getProduct().getProductUPC());
+//		
+//		Optional<BagItem> obi = this.getBagItems().stream()
+//		.filter(bi -> bi.getProduct().getProductUPC().equals(bagItem.getProduct().getProductUPC()))
+//		.findAny();
+//		
+//		if(!obi.isPresent()) {
+//			this.getBagItems().add(bagItem);
+//		} else {
+//			obi.get().addToQuantity(bagItem.getQuantity());
+//		}
+//	}
 	
 	public void removeItem(BagItem bi) {
 		this.getBagItems().remove(bi);
