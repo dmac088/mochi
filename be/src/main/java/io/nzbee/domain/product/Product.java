@@ -47,6 +47,9 @@ public abstract class Product {
 
 	@JsonIgnore
 	private Set<ProductCategory> categories;
+	
+	@JsonIgnore
+	private Set<ProductCategory> promotions;
 
 	@JsonIgnore
 	private Department department;

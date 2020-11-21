@@ -7,7 +7,6 @@ public class Promotion {
 	private String promotionDesc;
 
 	public Promotion(String promotionCode, String promotionDesc) {
-		super();
 		this.promotionCode = promotionCode;
 		this.promotionDesc = promotionDesc;
 	}

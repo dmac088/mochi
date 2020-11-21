@@ -11,7 +11,6 @@ public class DepartmentMapper implements IDepartmentMapper {
 	
 	@Override
 	public Department DTOToDo(DepartmentDTO dto) {
-		System.out.println("DTOToDo.department = " + dto.getDepartmentDesc());
 		Department dO = 
 				new Department(
 						dto.getDepartmentCode(),

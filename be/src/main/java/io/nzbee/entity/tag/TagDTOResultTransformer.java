@@ -25,8 +25,6 @@ public class TagDTOResultTransformer implements ResultTransformer {
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
 		
-		System.out.println(Arrays.toString(aliases));
-		
         Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(TagDTO.ID_ALIAS)]).longValue();
  
         TagDTO tagDTO = tagDTOMap.computeIfAbsent(
