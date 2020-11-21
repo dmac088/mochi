@@ -87,4 +87,5 @@ public class BagItem {
 		return bagItemStatus;
 	}
 	
+	
 }
