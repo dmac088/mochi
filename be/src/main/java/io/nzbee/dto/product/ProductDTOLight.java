@@ -19,7 +19,7 @@ public class ProductDTOLight {
 	
 	private String productType;
 
-	private String primaryCategoryDesc;
+	private String categoriesList;
 	
 	private String brandDesc;
 	
@@ -77,14 +77,6 @@ public class ProductDTOLight {
 		this.productType = productType;
 	}
 	
-	public String getPrimaryCategoryDesc() {
-		return primaryCategoryDesc;
-	}
-
-	public void setPrimaryCategoryDesc(String primaryCategoryDesc) {
-		this.primaryCategoryDesc = primaryCategoryDesc;
-	}
-
 	public String getBrandDesc() {
 		return brandDesc;
 	}
@@ -116,5 +108,14 @@ public class ProductDTOLight {
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
 	}
+
+	public String getCategoriesList() {
+		return categoriesList;
+	}
+
+	public void setCategoriesList(String categoriesList) {
+		this.categoriesList = categoriesList;
+	}
+	
 	
 }

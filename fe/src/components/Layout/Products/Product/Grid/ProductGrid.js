@@ -4,8 +4,11 @@ import { getCategoryProductPath } from '../../../Helpers/Route/Route';
 
 const images = require.context('../../../../../assets/images/products', true);
 
+
+
 function ProductGrid(props) {
   const { match, toggleQuickView, addToBag, product } = props;
+
   return (
     <div className="col-xl-4 col-lg-4 col-md-6 col-sm-6 col-12">
       <div className="gf-product shop-grid-view-product">
@@ -33,8 +36,8 @@ function ProductGrid(props) {
         </div>
         <div className="product-content">
           <div className="product-categories">
-            <a href="shop-left-sidebar.html">{product.data.primaryCategoryDesc}</a>,<span> </span>
-            <a href="shop-left-sidebar.html">{product.data.brandDesc}</a>
+            <a href="#">{product.data.categoriesList}</a>,<span> </span>
+            <a href="#">{product.data.brandDesc}</a>
           </div>
           <h3 className="product-title"><a href="#">{product.data.productDesc}</a></h3>
           <div className="price-box">

@@ -1,5 +1,7 @@
 package io.nzbee.dto.product;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.product.Product;
 
@@ -23,6 +25,8 @@ public class ProductDTOLightMapperImpl implements IProductDTOLightMapper {
 		pdto.setCurrency(d.getCurrency());
 		pdto.setProductType(d.getProductType());
 		pdto.setInStock(d.isInStock());
+		String categories = String.join(",", d.getCategories().stream().map(c -> c.getCategoryDesc()).collect(Collectors.toList()));
+		pdto.setCategoriesList(categories);
 		
 		return pdto;
 	}
