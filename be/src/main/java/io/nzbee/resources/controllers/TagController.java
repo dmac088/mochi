@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.domain.ports.ITagPortService;
+import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.resources.tag.TagFacetResource;
 import io.nzbee.resources.tag.TagFacetResourceAssembler;
@@ -31,7 +31,7 @@ public class TagController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private ITagPortService tagService;
+    private ITagService tagService;
     
 	@Autowired
 	private IFacetMapper<Tag> facetMapper;
