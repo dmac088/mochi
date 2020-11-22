@@ -2434,6 +2434,18 @@ CREATE TABLE promotion_mechanic (
 ALTER TABLE promotion_mechanic OWNER TO mochidb_owner;
 
 --
+-- Name: promotion_pctmkd; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE promotion_pctmkd (
+    prm_id bigint NOT NULL,
+    mkd_pct smallint NOT NULL
+);
+
+
+ALTER TABLE promotion_pctmkd OWNER TO mochidb_owner;
+
+--
 -- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -5558,6 +5570,14 @@ COPY promotion_mechanic (prm_mec_id, prm_mec_cd, prm_mec_desc) FROM stdin;
 
 
 --
+-- Data for Name: promotion_pctmkd; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY promotion_pctmkd (prm_id, mkd_pct) FROM stdin;
+\.
+
+
+--
 -- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6591,6 +6611,14 @@ ALTER TABLE ONLY promotion_mechanic
 
 
 --
+-- Name: promotion_pctmkd promotion_pctmkd_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_pctmkd
+    ADD CONSTRAINT promotion_pctmkd_pkey PRIMARY KEY (prm_id);
+
+
+--
 -- Name: promotion promotion_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -7305,6 +7333,14 @@ ALTER TABLE ONLY promotion_bngnf
 
 
 --
+-- Name: promotion_pctmkd promotion_pctmkd_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_pctmkd
+    ADD CONSTRAINT promotion_pctmkd_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
 -- Name: role role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -7937,6 +7973,13 @@ GRANT ALL ON SEQUENCE promotion_category_prm_cat_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_mechanic TO mochi_app;
+
+
+--
+-- Name: promotion_pctmkd; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_pctmkd TO mochi_app;
 
 
 --
