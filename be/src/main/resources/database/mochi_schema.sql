@@ -22,6 +22,7 @@ ALTER TABLE ONLY mochi.supplier DROP CONSTRAINT supplier_role_id_fkey;
 ALTER TABLE ONLY mochi.stock_on_hand DROP CONSTRAINT stock_on_hand_prd_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_role_typ_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_party_id_fkey;
+ALTER TABLE ONLY mochi.promotion_bngnf DROP CONSTRAINT promotion_bngnf_prm_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_typ_id_product_type_typ_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
@@ -96,6 +97,7 @@ ALTER TABLE ONLY mochi.rating DROP CONSTRAINT rating_pkey;
 ALTER TABLE ONLY mochi.promotion_type DROP CONSTRAINT promotion_type_pkey;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT promotion_pkey;
 ALTER TABLE ONLY mochi.promotion_mechanic DROP CONSTRAINT promotion_mechanic_pkey;
+ALTER TABLE ONLY mochi.promotion_bngnf DROP CONSTRAINT promotion_bngnf_pkey;
 ALTER TABLE ONLY mochi.department DROP CONSTRAINT product_type_pkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_pkey;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT product_status_pkey;
@@ -162,6 +164,7 @@ DROP TABLE mochi.rating;
 DROP TABLE mochi.promotion_type;
 DROP TABLE mochi.promotion_mechanic;
 DROP SEQUENCE mochi.promotion_category_prm_cat_id_seq;
+DROP TABLE mochi.promotion_bngnf;
 DROP TABLE mochi.promotion;
 DROP SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq;
 DROP TABLE mochi.product_tag;
@@ -2501,6 +2504,19 @@ CREATE TABLE promotion (
 ALTER TABLE promotion OWNER TO mochidb_owner;
 
 --
+-- Name: promotion_bngnf; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE promotion_bngnf (
+    prm_id bigint NOT NULL,
+    buy_qty smallint NOT NULL,
+    free_qty smallint NOT NULL
+);
+
+
+ALTER TABLE promotion_bngnf OWNER TO mochidb_owner;
+
+--
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3119,6 +3135,14 @@ ALTER TABLE ONLY department
 
 
 --
+-- Name: promotion_bngnf promotion_bngnf_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_bngnf
+    ADD CONSTRAINT promotion_bngnf_pkey PRIMARY KEY (prm_id);
+
+
+--
 -- Name: promotion_mechanic promotion_mechanic_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3709,6 +3733,14 @@ ALTER TABLE ONLY product
 
 
 --
+-- Name: promotion_bngnf promotion_bngnf_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_bngnf
+    ADD CONSTRAINT promotion_bngnf_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
 -- Name: role role_party_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3761,8 +3793,8 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT USAGE ON SCHEMA mochi TO security_app;
+GRANT USAGE ON SCHEMA mochi TO mochi_app;
 
 
 --
@@ -3937,8 +3969,8 @@ GRANT ALL ON SEQUENCE customer_cst_num_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 GRANT SELECT ON TABLE customer TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 
 
 --
@@ -4057,16 +4089,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 GRANT SELECT ON TABLE organisation TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 GRANT SELECT ON TABLE party TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 
 
 --
@@ -4087,8 +4119,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 GRANT SELECT ON TABLE party_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 
 
 --
@@ -4102,8 +4134,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 GRANT SELECT ON TABLE person TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 
 
 --
@@ -4240,6 +4272,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion TO mochi_app;
 
 
 --
+-- Name: promotion_bngnf; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_bngnf TO mochi_app;
+
+
+--
 -- Name: promotion_category_prm_cat_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4278,16 +4317,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 GRANT SELECT ON TABLE role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 GRANT SELECT ON TABLE role_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 
 
 --
