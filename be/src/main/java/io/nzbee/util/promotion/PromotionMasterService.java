@@ -15,6 +15,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.promotion.Promotion;
+import io.nzbee.entity.promotion.PromotionBNGNF;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 import io.nzbee.entity.promotion.IPromotionService;
@@ -90,7 +91,7 @@ public class PromotionMasterService {
 		
 		Promotion p = (op.isPresent()) 
 					  ? (Promotion) Hibernate.unproxy(op.get())
-					  : new Promotion();
+					  : new PromotionBNGNF();
 					  
 		LocalDateTime psd = LocalDateTime.parse(promotionStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(promotionEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
