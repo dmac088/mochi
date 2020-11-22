@@ -612,8 +612,8 @@ GRANT USAGE ON SCHEMA security TO mochi_app;
 -- Name: permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE permission TO mochi_app;
 
 
 --
@@ -628,16 +628,16 @@ GRANT ALL ON SEQUENCE authority_id_seq TO security_app;
 -- Name: clientdetails; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE clientdetails TO mochi_app;
 
 
 --
 -- Name: device_metadata; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device_metadata TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device_metadata TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE device_metadata TO mochi_app;
 
 
 --
@@ -652,64 +652,64 @@ GRANT ALL ON SEQUENCE hibernate_sequence TO security_app;
 -- Name: new_location_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE new_location_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE new_location_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE new_location_token TO mochi_app;
 
 
 --
 -- Name: oauth_access_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_access_token TO mochi_app;
 
 
 --
 -- Name: oauth_approvals; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_approvals TO mochi_app;
 
 
 --
 -- Name: oauth_client_details; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_details TO mochi_app;
 
 
 --
 -- Name: oauth_client_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_client_token TO mochi_app;
 
 
 --
 -- Name: oauth_code; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_code TO mochi_app;
 
 
 --
 -- Name: oauth_refresh_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE oauth_refresh_token TO mochi_app;
 
 
 --
 -- Name: password_reset_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE password_reset_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE password_reset_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE password_reset_token TO mochi_app;
 
 
 --
@@ -724,8 +724,8 @@ GRANT ALL ON SEQUENCE role_id_seq TO security_app;
 -- Name: role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 
 
 --
@@ -740,24 +740,24 @@ GRANT ALL ON SEQUENCE role_permission_id_seq TO security_app;
 -- Name: role_permission; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_permission TO mochi_app;
 
 
 --
 -- Name: user_; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_ TO mochi_app;
 
 
 --
 -- Name: user_location; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_location TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_location TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_location TO mochi_app;
 
 
 --
@@ -772,16 +772,16 @@ GRANT ALL ON SEQUENCE user_role_id_seq TO security_app;
 -- Name: user_role; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE user_role TO mochi_app;
 
 
 --
 -- Name: verification_token; Type: ACL; Schema: security; Owner: security_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE verification_token TO mochi_app;
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE verification_token TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE verification_token TO mochi_app;
 
 
 --
