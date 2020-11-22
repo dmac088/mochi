@@ -15,9 +15,7 @@ public class PromotionBuyNGetNFree extends Promotion {
 									PromotionType promotionType,
 									int buyQuantity,
 									int freeQuantity) {
-		
-		super(promotionCode, promotionDesc, promotionStartDt, promotionEndDt, promotionType);
-		
+		super(promotionCode, "Buy " + buyQuantity + " get " + freeQuantity + " free", promotionStartDt, promotionEndDt, promotionType);
 		this.buyQuantity = buyQuantity;
 		this.freeQuantity = freeQuantity;
 	}
