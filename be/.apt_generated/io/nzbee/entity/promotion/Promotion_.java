@@ -1,7 +1,6 @@
 package io.nzbee.entity.promotion;
 
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
-import io.nzbee.entity.promotion.type.PromotionType;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
@@ -13,7 +12,7 @@ public abstract class Promotion_ {
 
 	public static volatile SingularAttribute<Promotion, String> promotionShortDesc;
 	public static volatile SingularAttribute<Promotion, String> promotionLongDesc;
-	public static volatile SingularAttribute<Promotion, PromotionType> promotionType;
+	public static volatile SingularAttribute<Promotion, PromotionMechanic> promotionType;
 	public static volatile SingularAttribute<Promotion, LocalDateTime> promotionEndDate;
 	public static volatile SingularAttribute<Promotion, String> promotionCode;
 	public static volatile SingularAttribute<Promotion, LocalDateTime> promotionStartDate;

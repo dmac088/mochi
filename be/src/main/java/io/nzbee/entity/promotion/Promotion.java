@@ -12,9 +12,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
-
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
-import io.nzbee.entity.promotion.type.PromotionType;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
@@ -43,7 +41,7 @@ public class Promotion {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_typ_id", updatable = false, insertable = false)
-	private PromotionType promotionType;
+	private PromotionMechanic promotionType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_typ_id")
@@ -97,11 +95,11 @@ public class Promotion {
 		this.promotionEndDate = promotionEndDate;
 	}
 
-	public PromotionType getPromotionType() {
+	public PromotionMechanic getPromotionType() {
 		return promotionType;
 	}
 
-	public void setPromotionType(PromotionType promotionType) {
+	public void setPromotionType(PromotionMechanic promotionType) {
 		this.promotionType = promotionType;
 	}
 

@@ -31,7 +31,7 @@ public class PromotionMasterService {
 	private IPromotionService promotionService;
 	
 	@Autowired
-	private IPromotionTypeService promotionTypeService;
+	private IPromotionMechanicService promotionTypeService;
 	
 	@Autowired
 	private IPromotionMechanicService promotionMechanicService;
@@ -97,7 +97,7 @@ public class PromotionMasterService {
 		LocalDateTime psd = LocalDateTime.parse(promotionStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(promotionEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 					  
-		Optional<PromotionType> pt = promotionTypeService.findByCode(promotionTypeCode);
+		Optional<PromotionMechanic> pt = promotionTypeService.findByCode(promotionTypeCode);
 		Optional<PromotionMechanic> pm = promotionMechanicService.findByCode(promotionMechanicCode);
 		
 		p.setPromotionCode(promotionCode);
