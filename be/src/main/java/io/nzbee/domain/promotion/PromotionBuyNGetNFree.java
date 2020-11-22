@@ -1,7 +1,5 @@
 package io.nzbee.domain.promotion;
-
 import java.util.Date;
-
 
 
 public class PromotionBuyNGetNFree extends Promotion {
@@ -16,8 +14,8 @@ public class PromotionBuyNGetNFree extends Promotion {
 									Date promotionEndDt,
 									PromotionType promotionType,
 									int buyQuantity,
-									int freeQuantity
-									) {
+									int freeQuantity) {
+		
 		super(promotionCode, promotionDesc, promotionStartDt, promotionEndDt, promotionType);
 		
 		this.buyQuantity = buyQuantity;
