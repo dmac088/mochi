@@ -2557,6 +2557,12 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 
 
 --
+-- Data for Name: promotion_pctmkd; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 

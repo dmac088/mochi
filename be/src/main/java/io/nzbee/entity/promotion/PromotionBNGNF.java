@@ -12,7 +12,6 @@ import javax.persistence.Table;
 @DiscriminatorValue("1")
 public class PromotionBNGNF extends Promotion {
 
-
 	@Column(name="buy_qty")
 	private int buyQty;
 	
