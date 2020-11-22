@@ -35,6 +35,4 @@ public class PromotionBNGNF extends Promotion {
 		this.freeQty = freeQty;
 	}
 
-	
-	
 }
