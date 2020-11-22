@@ -17,8 +17,6 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.promotion.Promotion;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
-import io.nzbee.entity.promotion.type.IPromotionTypeService;
-import io.nzbee.entity.promotion.type.PromotionType;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
 
