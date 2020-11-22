@@ -275,7 +275,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
-	public Set<ProductDTO> findAll(	String locale, 
+	public Set<ProductDTO> findAll(		String locale, 
 										String currency, 
 										Set<String> codes) {
 		
