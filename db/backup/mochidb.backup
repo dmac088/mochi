@@ -2386,7 +2386,6 @@ CREATE TABLE promotion (
     prm_lng_desc character varying,
     prm_st_dt timestamp(4) with time zone NOT NULL,
     prm_en_dt timestamp(4) with time zone NOT NULL,
-    prm_typ_id bigint NOT NULL,
     prm_mec_id bigint
 );
 
@@ -2444,18 +2443,6 @@ CREATE TABLE promotion_pctmkd (
 
 
 ALTER TABLE promotion_pctmkd OWNER TO mochidb_owner;
-
---
--- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE promotion_type (
-    prm_typ_id bigint NOT NULL,
-    prm_typ_desc character varying
-);
-
-
-ALTER TABLE promotion_type OWNER TO mochidb_owner;
 
 --
 -- Name: rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -5542,7 +5529,7 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 -- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt, prm_typ_id, prm_mec_id) FROM stdin;
+COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt, prm_mec_id) FROM stdin;
 \.
 
 
@@ -5574,18 +5561,6 @@ COPY promotion_mechanic (prm_mec_id, prm_mec_cd, prm_mec_desc) FROM stdin;
 --
 
 COPY promotion_pctmkd (prm_id, mkd_pct) FROM stdin;
-\.
-
-
---
--- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-COPY promotion_type (prm_typ_id, prm_typ_desc) FROM stdin;
-1	product
-2	order
-3	category
-4	brand
 \.
 
 
@@ -6624,14 +6599,6 @@ ALTER TABLE ONLY promotion_pctmkd
 
 ALTER TABLE ONLY promotion
     ADD CONSTRAINT promotion_pkey PRIMARY KEY (prm_id);
-
-
---
--- Name: promotion_type promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY promotion_type
-    ADD CONSTRAINT promotion_type_pkey PRIMARY KEY (prm_typ_id);
 
 
 --
@@ -7980,13 +7947,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_mechanic TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_pctmkd TO mochi_app;
-
-
---
--- Name: promotion_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_type TO mochi_app;
 
 
 --
