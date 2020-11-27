@@ -23,7 +23,7 @@ ALTER TABLE ONLY mochi.stock_on_hand DROP CONSTRAINT stock_on_hand_prd_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_role_typ_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_party_id_fkey;
 ALTER TABLE ONLY mochi.promotion_pctmkd DROP CONSTRAINT promotion_pctmkd_prm_id_fkey;
-ALTER TABLE ONLY mochi.promotion_bngnf DROP CONSTRAINT promotion_bngnf_prm_id_fkey;
+ALTER TABLE ONLY mochi.promotion_bngnpct DROP CONSTRAINT promotion_bngnf_prm_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_typ_id_product_type_typ_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
@@ -99,7 +99,7 @@ ALTER TABLE ONLY mochi.promotion_type DROP CONSTRAINT promotion_type_pkey;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT promotion_pkey;
 ALTER TABLE ONLY mochi.promotion_pctmkd DROP CONSTRAINT promotion_pctmkd_pkey;
 ALTER TABLE ONLY mochi.promotion_mechanic DROP CONSTRAINT promotion_mechanic_pkey;
-ALTER TABLE ONLY mochi.promotion_bngnf DROP CONSTRAINT promotion_bngnf_pkey;
+ALTER TABLE ONLY mochi.promotion_bngnpct DROP CONSTRAINT promotion_bngnf_pkey;
 ALTER TABLE ONLY mochi.department DROP CONSTRAINT product_type_pkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_pkey;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT product_status_pkey;
@@ -167,7 +167,7 @@ DROP TABLE mochi.promotion_type;
 DROP TABLE mochi.promotion_pctmkd;
 DROP TABLE mochi.promotion_mechanic;
 DROP SEQUENCE mochi.promotion_category_prm_cat_id_seq;
-DROP TABLE mochi.promotion_bngnf;
+DROP TABLE mochi.promotion_bngnpct;
 DROP TABLE mochi.promotion;
 DROP SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq;
 DROP TABLE mochi.product_tag;
@@ -2507,17 +2507,17 @@ CREATE TABLE promotion (
 ALTER TABLE promotion OWNER TO mochidb_owner;
 
 --
--- Name: promotion_bngnf; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE promotion_bngnf (
+CREATE TABLE promotion_bngnpct (
     prm_id bigint NOT NULL,
     buy_qty smallint NOT NULL,
-    free_qty smallint NOT NULL
+    pct_disc numeric(8,0) NOT NULL
 );
 
 
-ALTER TABLE promotion_bngnf OWNER TO mochidb_owner;
+ALTER TABLE promotion_bngnpct OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -3150,10 +3150,10 @@ ALTER TABLE ONLY department
 
 
 --
--- Name: promotion_bngnf promotion_bngnf_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct promotion_bngnf_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_bngnf
+ALTER TABLE ONLY promotion_bngnpct
     ADD CONSTRAINT promotion_bngnf_pkey PRIMARY KEY (prm_id);
 
 
@@ -3756,10 +3756,10 @@ ALTER TABLE ONLY product
 
 
 --
--- Name: promotion_bngnf promotion_bngnf_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct promotion_bngnf_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_bngnf
+ALTER TABLE ONLY promotion_bngnpct
     ADD CONSTRAINT promotion_bngnf_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
@@ -4303,10 +4303,10 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion TO mochi_app;
 
 
 --
--- Name: promotion_bngnf; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_bngnf TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_bngnpct TO mochi_app;
 
 
 --
