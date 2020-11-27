@@ -2538,7 +2538,7 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 
 
 --
--- Data for Name: promotion_bngnf; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+-- Data for Name: promotion_bngnpct; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 

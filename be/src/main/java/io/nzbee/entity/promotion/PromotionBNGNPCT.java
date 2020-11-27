@@ -10,13 +10,13 @@ import javax.persistence.Table;
 @Table(name = "promotion_bngnf", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prm_id")
 @DiscriminatorValue("1")
-public class PromotionBNGNF extends Promotion {
+public class PromotionBNGNPCT extends Promotion {
 
 	@Column(name="buy_qty")
 	private int buyQty;
 	
-	@Column(name="free_qty")
-	private int freeQty;
+	@Column(name="pct_disc")
+	private int pctDisc;
 
 	public int getBuyQty() {
 		return buyQty;
@@ -26,12 +26,14 @@ public class PromotionBNGNF extends Promotion {
 		this.buyQty = buyQty;
 	}
 
-	public int getFreeQty() {
-		return freeQty;
+	public int getPctDisc() {
+		return pctDisc;
 	}
 
-	public void setFreeQty(int freeQty) {
-		this.freeQty = freeQty;
+	public void setPctDisc(int pctDisc) {
+		this.pctDisc = pctDisc;
 	}
 
+	
+	
 }

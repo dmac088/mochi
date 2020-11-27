@@ -2394,17 +2394,17 @@ CREATE TABLE promotion (
 ALTER TABLE promotion OWNER TO mochidb_owner;
 
 --
--- Name: promotion_bngnf; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
-CREATE TABLE promotion_bngnf (
+CREATE TABLE promotion_bngnpct (
     prm_id bigint NOT NULL,
     buy_qty smallint NOT NULL,
-    free_qty smallint NOT NULL
+    pct_disc numeric(8,0) NOT NULL
 );
 
 
-ALTER TABLE promotion_bngnf OWNER TO mochidb_owner;
+ALTER TABLE promotion_bngnpct OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
@@ -5547,10 +5547,10 @@ COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt
 
 
 --
--- Data for Name: promotion_bngnf; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+-- Data for Name: promotion_bngnpct; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion_bngnf (prm_id, buy_qty, free_qty) FROM stdin;
+COPY promotion_bngnpct (prm_id, buy_qty, pct_disc) FROM stdin;
 \.
 
 
@@ -6595,10 +6595,10 @@ ALTER TABLE ONLY department
 
 
 --
--- Name: promotion_bngnf promotion_bngnf_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct promotion_bngnf_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_bngnf
+ALTER TABLE ONLY promotion_bngnpct
     ADD CONSTRAINT promotion_bngnf_pkey PRIMARY KEY (prm_id);
 
 
@@ -7325,10 +7325,10 @@ ALTER TABLE ONLY product
 
 
 --
--- Name: promotion_bngnf promotion_bngnf_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct promotion_bngnf_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
-ALTER TABLE ONLY promotion_bngnf
+ALTER TABLE ONLY promotion_bngnpct
     ADD CONSTRAINT promotion_bngnf_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
@@ -7955,10 +7955,10 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion TO mochi_app;
 
 
 --
--- Name: promotion_bngnf; Type: ACL; Schema: mochi; Owner: mochidb_owner
+-- Name: promotion_bngnpct; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_bngnf TO mochi_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_bngnpct TO mochi_app;
 
 
 --
