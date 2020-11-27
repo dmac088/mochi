@@ -95,7 +95,6 @@ ALTER TABLE ONLY mochi.role_type DROP CONSTRAINT role_type_pkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_pty_id_key;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_pkey;
 ALTER TABLE ONLY mochi.rating DROP CONSTRAINT rating_pkey;
-ALTER TABLE ONLY mochi.promotion_type DROP CONSTRAINT promotion_type_pkey;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT promotion_pkey;
 ALTER TABLE ONLY mochi.promotion_pctmkd DROP CONSTRAINT promotion_pctmkd_pkey;
 ALTER TABLE ONLY mochi.promotion_mechanic DROP CONSTRAINT promotion_mechanic_pkey;
@@ -163,7 +162,6 @@ DROP TABLE mochi.role_type;
 DROP TABLE mochi.role;
 DROP SEQUENCE mochi.role_rle_id_seq;
 DROP TABLE mochi.rating;
-DROP TABLE mochi.promotion_type;
 DROP TABLE mochi.promotion_pctmkd;
 DROP TABLE mochi.promotion_mechanic;
 DROP SEQUENCE mochi.promotion_category_prm_cat_id_seq;
@@ -2499,7 +2497,6 @@ CREATE TABLE promotion (
     prm_lng_desc character varying,
     prm_st_dt timestamp(4) with time zone NOT NULL,
     prm_en_dt timestamp(4) with time zone NOT NULL,
-    prm_typ_id bigint NOT NULL,
     prm_mec_id bigint
 );
 
@@ -2557,18 +2554,6 @@ CREATE TABLE promotion_pctmkd (
 
 
 ALTER TABLE promotion_pctmkd OWNER TO mochidb_owner;
-
---
--- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE promotion_type (
-    prm_typ_id bigint NOT NULL,
-    prm_typ_desc character varying
-);
-
-
-ALTER TABLE promotion_type OWNER TO mochidb_owner;
 
 --
 -- Name: rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -3179,14 +3164,6 @@ ALTER TABLE ONLY promotion_pctmkd
 
 ALTER TABLE ONLY promotion
     ADD CONSTRAINT promotion_pkey PRIMARY KEY (prm_id);
-
-
---
--- Name: promotion_type promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY promotion_type
-    ADD CONSTRAINT promotion_type_pkey PRIMARY KEY (prm_typ_id);
 
 
 --
@@ -4328,13 +4305,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_mechanic TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_pctmkd TO mochi_app;
-
-
---
--- Name: promotion_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_type TO mochi_app;
 
 
 --

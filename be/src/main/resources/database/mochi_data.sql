@@ -2563,16 +2563,6 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 
 
 --
--- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO promotion_type VALUES (1, 'product');
-INSERT INTO promotion_type VALUES (2, 'order');
-INSERT INTO promotion_type VALUES (3, 'category');
-INSERT INTO promotion_type VALUES (4, 'brand');
-
-
---
 -- Data for Name: rating; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
