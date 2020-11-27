@@ -52,11 +52,7 @@ public abstract class Promotion {
 	private LocalDateTime promotionEndDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prm_typ_id", updatable = false, insertable = false)
-	private PromotionMechanic promotionType;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prm_typ_id")
+	@JoinColumn(name="prm_mec_id", updatable = false, insertable = false)
 	private PromotionMechanic promotionMechanic;
 
 	public Long getPromotionId() {
@@ -105,14 +101,6 @@ public abstract class Promotion {
 
 	public void setPromotionEndDate(LocalDateTime promotionEndDate) {
 		this.promotionEndDate = promotionEndDate;
-	}
-
-	public PromotionMechanic getPromotionType() {
-		return promotionType;
-	}
-
-	public void setPromotionType(PromotionMechanic promotionType) {
-		this.promotionType = promotionType;
 	}
 
 	public PromotionMechanic getPromotionMechanic() {
