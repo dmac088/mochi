@@ -34,6 +34,4 @@ public class PromotionBNGNPCT extends Promotion {
 		this.pctDisc = pctDisc;
 	}
 
-	
-	
 }
