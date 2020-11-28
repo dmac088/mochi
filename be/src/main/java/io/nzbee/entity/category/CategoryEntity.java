@@ -30,13 +30,9 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.google.common.collect.Lists;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
-import io.nzbee.entity.category.brand.CategoryBrandEntity;
-import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.search.ISearchDimension;
 
@@ -44,12 +40,6 @@ import io.nzbee.search.ISearchDimension;
 @Table(name = "category", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="cat_typ_id")
-@JsonTypeInfo(
-	    use = JsonTypeInfo.Id.NAME,
-	    include = JsonTypeInfo.As.PROPERTY,
-	    property="type")
-@JsonSubTypes( {@JsonSubTypes.Type(value = CategoryProductEntity.class, 	name = "categoryproduct"),
-			    @JsonSubTypes.Type(value = CategoryBrandEntity.class, 	name = "categorybrand")})
 public abstract class CategoryEntity implements ISearchDimension {
 
 	@Id

@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import io.nzbee.entity.promotion.PromotionEntity;
 
 @Entity
@@ -67,25 +65,5 @@ public class PromotionAttributeEntity {
 	public void setLocale(String lclCd) {
 		this.locale = lclCd;
 	}
-
-	@Override
-    public int hashCode() {
-        HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.getLocale());
-        return hcb.toHashCode();
-    }
- 
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) {
-	        return true;
-        }
-	    if (!(obj instanceof PromotionAttributeEntity)) {
-	            return false;
-	    }
-	    PromotionAttributeEntity that = (PromotionAttributeEntity) obj;
-	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.getLocale(), that.getLocale());
-	      return eb.isEquals();
-	}
+	
 }
