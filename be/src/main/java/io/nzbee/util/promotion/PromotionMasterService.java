@@ -23,6 +23,7 @@ import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
+@Transactional
 public class PromotionMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(PromotionMasterService.class);
@@ -36,7 +37,6 @@ public class PromotionMasterService {
 	@Autowired
 	private FileStorageServiceUpload fileStorageServiceUpload;
 
-	@Transactional
 	public void writePromotionMaster(String fileName) {
 		logger.debug("called writePromotionMaster with parameter {} ", fileName);
 		try {

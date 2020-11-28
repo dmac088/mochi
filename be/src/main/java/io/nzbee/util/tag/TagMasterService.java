@@ -61,54 +61,37 @@ public class TagMasterService {
 		}
 	}
 	
-	public void persistTagMaster(TagMasterSchema t) {
+	public void persistTagMaster(TagMasterSchema tms) {
 		logger.debug("called persistTagMaster() ");
 		
-		TagEntity tCN = mapToTag(	t.get_TAG_CODE(),
-						 			t.get_TAG_DESC_HK(),
-						 		    Constants.localeZHHK);
+		Optional<TagEntity> ot = tagService.findByCode(tms.get_TAG_CODE());
 		
-		tagService.save(tCN);
+		TagEntity t = (ot.isPresent()) ? ot.get() : new TagEntity();
 		
-		TagEntity tEN = mapToTag(	 t.get_TAG_CODE(),
-									 t.get_TAG_DESC_EN(),
-									 Constants.localeENGB);
+		t.setTagCode(tms.get_TAG_CODE());
+		t.addTagAttribute(mapAttribute(ot, tms.get_TAG_DESC_EN(), Constants.localeENGB));
+		t.addTagAttribute(mapAttribute(ot, tms.get_TAG_DESC_HK(), Constants.localeZHHK));
 	
-		tagService.save(tEN);
+		tagService.save(t);
 	}
 	
-	private TagEntity mapToTag(
-			String tagCode,
-			String tagDesc,
-			String locale
-			) {
-		
-		Optional<TagEntity> ot = tagService.findByCode(tagCode);
-		
-		TagEntity t = 
-				(ot.isPresent())
-				? ot.get() 
-				: new TagEntity();
-				
+	
+	private TagAttributeEntity mapAttribute(Optional<TagEntity> op, String tagDesc, String locale) {
+		logger.debug("called mapAttribute() ");
+
 		TagAttributeEntity ta = new TagAttributeEntity();
-		
-		if(ot.isPresent()) {
-			Optional<TagAttributeEntity> ota =
-			ot.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
-			ta = (ota.isPresent()) 
-			? ota.get()
-			: new TagAttributeEntity();
-		}		
-		
-		ta.setTagDesc(tagDesc);
+		if (op.isPresent()) {
+			Optional<TagAttributeEntity> opa = op.get().getAttributes().stream()
+					.filter(a -> a.getLclCd().equals(locale)).findFirst();
+
+			ta = (opa.isPresent()) ? opa.get() : new TagAttributeEntity();
+			ta.setTag(op.get());
+		}
+
 		ta.setLclCd(locale);
-		ta.setTag(t);
+		ta.setTagDesc(tagDesc);
 		
-		t.setTagCode(tagCode.toUpperCase());
-		t.setLocale(locale);
-		t.addTagAttribute(ta);
-		
-		return t;
+		return ta;
 	}
 	
 	public void extractTagMaster(Resource resource) {
