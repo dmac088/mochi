@@ -92,7 +92,6 @@ public class BrandMasterService {
 		}
 							
 		b.setBrandCode(brandCode);
-		
 		ba.setBrandDesc(brandDesc);
 		ba.setLclCd(locale);
 		b.addAttribute(ba);

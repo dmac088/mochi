@@ -61,29 +61,27 @@ public class PromotionMasterService {
 	public void persistPromotionMaster(PromotionMasterSchema pms) {
 		logger.debug("called persistPromotionMaster() ");
 
-		PromotionEntity p;
-
-		p = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_HK(), pms.get_PROMOTION_START_DATE(),
+		PromotionEntity pCn = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_HK(), pms.get_PROMOTION_START_DATE(),
 				pms.get_PROMOTION_END_DATE(), pms.get_PROMOTION_ACTIVE(), pms.get_PROMOTION_MECHANIC_CODE(),
 				pms.get_PROMOTION_TYPE_CODE(), Constants.localeZHHK);
 
-		promotionService.save(p);
+		promotionService.save(pCn);
 
-		p = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_EN(), pms.get_PROMOTION_START_DATE(),
+		PromotionEntity pEn = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_EN(), pms.get_PROMOTION_START_DATE(),
 				pms.get_PROMOTION_END_DATE(), pms.get_PROMOTION_ACTIVE(), pms.get_PROMOTION_MECHANIC_CODE(),
 				pms.get_PROMOTION_TYPE_CODE(), Constants.localeENGB);
 
-		promotionService.save(p);
+		promotionService.save(pEn);
 	}
 
 	private PromotionEntity mapToPromotion(String promotionCode, String promotionDesc, String promotionStartDate,
-			String promotionEndDate, String promotionActive, String promotionMechanicCode, String promotionTypeCode,
+			String promotionEndDate, Boolean promotionActive, String promotionMechanicCode, String promotionTypeCode,
 			String locale) {
 		logger.debug("called mapToPromotion() ");
 
 		Optional<PromotionEntity> op = promotionService.findByCode(promotionCode);
 
-		PromotionEntity p = (op.isPresent()) ? (PromotionEntity) Hibernate.unproxy(op.get()) : new PromotionBNGNPCT();
+		PromotionEntity p = (op.isPresent()) ? op.get() : new PromotionBNGNPCT();
 
 		PromotionAttributeEntity pa = new PromotionAttributeEntity();
 		if (op.isPresent()) {
@@ -92,6 +90,10 @@ public class PromotionMasterService {
 
 			pa = (opa.isPresent()) ? opa.get() : new PromotionAttributeEntity();
 		}
+		
+		pa.setLocale(locale);
+		pa.setPromotionDesc(promotionDesc);
+		pa.setPromotion(p);
 
 		LocalDateTime psd = LocalDateTime.parse(promotionStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(promotionEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -103,6 +105,7 @@ public class PromotionMasterService {
 		p.setPromotionStartDate(psd);
 		p.setPromotionEndDate(ped);
 		p.setPromotionMechanic(pm.get());
+		p.setPromotionActive(promotionActive);
 
 		return p;
 	}

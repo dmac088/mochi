@@ -55,8 +55,8 @@ public abstract class PromotionEntity {
 	private PromotionMechanic promotionMechanic;
 	
 	@OneToMany(	mappedBy="promotion",  
-			cascade = CascadeType.ALL,
-			orphanRemoval = true)
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	private Set<PromotionAttributeEntity> attributes = new HashSet<PromotionAttributeEntity>();
 
 	public Long getPromotionId() {
