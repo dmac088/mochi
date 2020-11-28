@@ -20,7 +20,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 
@@ -29,10 +28,6 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 @PrimaryKeyJoinColumn(name = "prm_id")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="prm_mec_id")
-@JsonTypeInfo(
-	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
-	    include = JsonTypeInfo.As.PROPERTY,
-	    property = "@class")
 public abstract class PromotionEntity {
 
 	@Id
