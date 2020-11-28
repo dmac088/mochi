@@ -23,8 +23,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.promotion.IPromotionService;
-import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 import io.nzbee.util.promotion.PromotionMasterService;
@@ -62,7 +60,7 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
 		// when
-		Optional<PromotionMechanic> found = promotionMechanicService.findByCode("B1G1F");
+		Optional<PromotionMechanic> found = promotionMechanicService.findByCode("BNGNPCT");
 
 		// then
 		assertFound_ENGB(found);
@@ -71,7 +69,7 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
 		// when
-		Optional<PromotionMechanic> found = promotionMechanicService.findByCode("B1G1F");
+		Optional<PromotionMechanic> found = promotionMechanicService.findByCode("BNGNPCT");
 
 		// then
 		assertFound_ZHHK(found);
@@ -85,8 +83,8 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 		
 		PromotionMechanic cp = (PromotionMechanic) found.get();
 		
-		assertThat(cp.getPromotionCode())
-		.isEqualTo("B1G1F");
+		assertThat(cp.getPromotionMechanicCode())
+		.isEqualTo("BNGNPCT");
 		
 //		assertThat(cp.getPromotionDescENGB())
 //		.isEqualTo("Test Promotion");
@@ -107,8 +105,8 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 		
 		PromotionMechanic cp = (PromotionMechanic) found.get();
 		
-		assertThat(cp.getPromotionCode())
-		.isEqualTo("B1G1F");
+		assertThat(cp.getPromotionMechanicCode())
+		.isEqualTo("BNGNPCT");
 		
 //		assertThat(cp.getPromotionDescZHHK())
 //		.isEqualTo("測試類別");
