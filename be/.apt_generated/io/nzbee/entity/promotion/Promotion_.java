@@ -10,8 +10,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(Promotion.class)
 public abstract class Promotion_ {
 
-	public static volatile SingularAttribute<Promotion, String> promotionShortDesc;
-	public static volatile SingularAttribute<Promotion, String> promotionLongDesc;
 	public static volatile SingularAttribute<Promotion, LocalDateTime> promotionEndDate;
 	public static volatile SingularAttribute<Promotion, Boolean> promotionActive;
 	public static volatile SingularAttribute<Promotion, String> promotionCode;
@@ -19,8 +17,6 @@ public abstract class Promotion_ {
 	public static volatile SingularAttribute<Promotion, PromotionMechanic> promotionMechanic;
 	public static volatile SingularAttribute<Promotion, Long> promotionId;
 
-	public static final String PROMOTION_SHORT_DESC = "promotionShortDesc";
-	public static final String PROMOTION_LONG_DESC = "promotionLongDesc";
 	public static final String PROMOTION_END_DATE = "promotionEndDate";
 	public static final String PROMOTION_ACTIVE = "promotionActive";
 	public static final String PROMOTION_CODE = "promotionCode";

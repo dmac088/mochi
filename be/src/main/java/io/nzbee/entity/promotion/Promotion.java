@@ -39,12 +39,6 @@ public abstract class Promotion {
 	@Column(name="prm_cd", unique = true, updatable = false)
 	private String promotionCode;
 	
-	@Column(name="prm_sht_desc")
-	private String promotionShortDesc;
-	
-	@Column(name="prm_lng_desc")
-	private String promotionLongDesc;
-	
 	@Column(name="prm_st_dt")
 	private LocalDateTime promotionStartDate;
 	
@@ -72,22 +66,6 @@ public abstract class Promotion {
 
 	public void setPromotionCode(String promotionCode) {
 		this.promotionCode = promotionCode;
-	}
-
-	public String getPromotionShortDesc() {
-		return promotionShortDesc;
-	}
-
-	public void setPromotionShortDesc(String promotionShortDesc) {
-		this.promotionShortDesc = promotionShortDesc;
-	}
-
-	public String getPromotionLongDesc() {
-		return promotionLongDesc;
-	}
-
-	public void setPromotionLongDesc(String promotionLongDesc) {
-		this.promotionLongDesc = promotionLongDesc;
 	}
 
 	public LocalDateTime getPromotionStartDate() {
