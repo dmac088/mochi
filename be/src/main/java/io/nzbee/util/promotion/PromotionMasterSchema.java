@@ -5,7 +5,9 @@ public class PromotionMasterSchema {
 	
 	private String PROMOTION_CODE;
 	
-	private String PROMOTION_DESC;
+	private String PROMOTION_DESC_HK;
+	
+	private String PROMOTION_DESC_EN;
 	
 	private String PROMOTION_START_DATE;
 	
@@ -26,12 +28,20 @@ public class PromotionMasterSchema {
 		this.PROMOTION_CODE = PROMOTION_CODE;
 	}
 	
-	public String get_PROMOTION_DESC() {
-		return PROMOTION_DESC;
+	public String get_PROMOTION_DESC_HK() {
+		return PROMOTION_DESC_HK;
 	}
 
-	public void set_PROMOTION_DESC(String PROMOTION_DESC) {
-		 this.PROMOTION_DESC = PROMOTION_DESC;
+	public void set_PROMOTION_DESC_HK(String PROMOTION_DESC) {
+		 this.PROMOTION_DESC_HK = PROMOTION_DESC;
+	}
+
+	public String get_PROMOTION_DESC_EN() {
+		return PROMOTION_DESC_EN;
+	}
+
+	public void set_PROMOTION_DESC_EN(String pROMOTION_DESC_EN) {
+		PROMOTION_DESC_EN = pROMOTION_DESC_EN;
 	}
 
 	public String get_PROMOTION_START_DATE() {

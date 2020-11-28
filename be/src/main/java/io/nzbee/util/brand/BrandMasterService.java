@@ -14,6 +14,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -75,19 +76,19 @@ public class BrandMasterService {
 		
 		Optional<BrandEntity> ob = brandService.findByCode(brandCode);
 						
-		io.nzbee.entity.brand.BrandEntity b = 
+		BrandEntity b = 
 		(ob.isPresent())
 		? ob.get() 
-		: new io.nzbee.entity.brand.BrandEntity();
+		: new BrandEntity();
 		
-		io.nzbee.entity.brand.attribute.BrandAttributeEntity ba = new io.nzbee.entity.brand.attribute.BrandAttributeEntity();
+		BrandAttributeEntity ba = new BrandAttributeEntity();
 		if(ob.isPresent()) {
-			Optional<io.nzbee.entity.brand.attribute.BrandAttributeEntity> oba =
+			Optional<BrandAttributeEntity> oba =
 					ob.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findFirst();
 			
 			ba = (oba.isPresent()) 
 			? oba.get()
-			: new io.nzbee.entity.brand.attribute.BrandAttributeEntity();
+			: new BrandAttributeEntity();
 		}
 							
 		b.setBrandCode(brandCode);
