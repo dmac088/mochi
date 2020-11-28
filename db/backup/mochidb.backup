@@ -2382,15 +2382,28 @@ ALTER TABLE product_tag_attr_lcl_tag_id_seq OWNER TO mochidb_owner;
 CREATE TABLE promotion (
     prm_id bigint NOT NULL,
     prm_cd character(5) NOT NULL,
-    prm_sht_desc character varying,
-    prm_lng_desc character varying,
     prm_st_dt timestamp(4) with time zone NOT NULL,
     prm_en_dt timestamp(4) with time zone NOT NULL,
-    prm_mec_id bigint
+    prm_mec_id bigint NOT NULL,
+    prm_act boolean NOT NULL
 );
 
 
 ALTER TABLE promotion OWNER TO mochidb_owner;
+
+--
+-- Name: promotion_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE promotion_attr_lcl (
+    prm_lcl_id bigint NOT NULL,
+    prm_id bigint NOT NULL,
+    prm_desc character varying(100),
+    lcl_cd character varying(5) NOT NULL
+);
+
+
+ALTER TABLE promotion_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_bngnpct; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -3754,7 +3767,7 @@ COPY discount_type (dis_typ_id, dis_typ_desc) FROM stdin;
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234453, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234454, true);
 
 
 --
@@ -5529,7 +5542,15 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 -- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY promotion (prm_id, prm_cd, prm_sht_desc, prm_lng_desc, prm_st_dt, prm_en_dt, prm_mec_id) FROM stdin;
+COPY promotion (prm_id, prm_cd, prm_st_dt, prm_en_dt, prm_mec_id, prm_act) FROM stdin;
+\.
+
+
+--
+-- Data for Name: promotion_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY promotion_attr_lcl (prm_lcl_id, prm_id, prm_desc, lcl_cd) FROM stdin;
 \.
 
 
@@ -5553,6 +5574,7 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 --
 
 COPY promotion_mechanic (prm_mec_id, prm_mec_cd, prm_mec_desc) FROM stdin;
+234454	BNGNPCT	Buy N Get X Percent Off
 \.
 
 
@@ -6570,6 +6592,14 @@ ALTER TABLE ONLY department
 
 
 --
+-- Name: promotion_attr_lcl promotion_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT promotion_attr_lcl_pkey PRIMARY KEY (prm_lcl_id);
+
+
+--
 -- Name: promotion_bngnpct promotion_bngnf_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6802,6 +6832,14 @@ ALTER TABLE ONLY promotion
 
 
 --
+-- Name: promotion_attr_lcl uc_prm_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT uc_prm_lcl_1 UNIQUE (prm_id, lcl_cd);
+
+
+--
 -- Name: promotion_mechanic uc_prm_mec_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -6986,6 +7024,13 @@ SET search_path = mochi, pg_catalog;
 --
 
 CREATE INDEX fki_product_attr_lcl_prd_id_fkey ON product_attr_lcl USING btree (prd_id);
+
+
+--
+-- Name: fki_promotion_attr_lcl_prm_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE INDEX fki_promotion_attr_lcl_prm_id_fkey ON promotion_attr_lcl USING btree (prm_id);
 
 
 --
@@ -7289,6 +7334,22 @@ ALTER TABLE ONLY product_tag
 
 ALTER TABLE ONLY product
     ADD CONSTRAINT product_typ_id_product_type_typ_id_fkey FOREIGN KEY (dept_id) REFERENCES department(dept_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: promotion_attr_lcl promotion_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT promotion_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
+-- Name: promotion_attr_lcl promotion_attr_lcl_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT promotion_attr_lcl_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id);
 
 
 --
@@ -7919,6 +7980,13 @@ GRANT ALL ON SEQUENCE product_tag_attr_lcl_tag_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion TO mochi_app;
+
+
+--
+-- Name: promotion_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_attr_lcl TO mochi_app;
 
 
 --
