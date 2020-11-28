@@ -2,13 +2,20 @@ package io.nzbee.entity.promotion;
 
 import java.util.Optional;
 import java.util.Set;
+import javax.persistence.EntityManager;
 import javax.persistence.Tuple;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
 
 @Component(value = "promotionEntityDao")
 public class PromotionDaoImpl implements IPromotionDao {
-
+	
+	@Autowired
+	@Qualifier("mochiEntityManagerFactory")
+	private EntityManager em;
+	
 	@Override
 	public Optional<PromotionDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
@@ -77,8 +84,7 @@ public class PromotionDaoImpl implements IPromotionDao {
 
 	@Override
 	public void save(PromotionEntity t) {
-		// TODO Auto-generated method stub
-		
+		em.persist(t);
 	}
 
 	@Override

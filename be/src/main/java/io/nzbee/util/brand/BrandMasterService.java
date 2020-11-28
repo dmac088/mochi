@@ -56,15 +56,15 @@ public class BrandMasterService {
 	public void persistBrandMaster(BrandMasterSchema b) {
 		logger.debug("called persistBrandMaster() ");
 		
-		BrandEntity bEN = mapToBrand( b.get_BRAND_CODE(),
-								b.get_BRAND_DESC_EN(),
-								Constants.localeENGB);
+		BrandEntity bEN = mapToBrand( 	b.get_BRAND_CODE(),
+										b.get_BRAND_DESC_EN(),
+										Constants.localeENGB);
 				
 		brandService.save(bEN);
 		
-		BrandEntity bCN = mapToBrand(	 b.get_BRAND_CODE(),
-				 				 b.get_BRAND_DESC_HK(),
-				 				 Constants.localeZHHK);
+		BrandEntity bCN = mapToBrand(	b.get_BRAND_CODE(),
+				 				 		b.get_BRAND_DESC_HK(),
+				 				 		Constants.localeZHHK);
 		
 		brandService.save(bCN);
 	}
