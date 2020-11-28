@@ -10,15 +10,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
 import io.nzbee.util.brand.BrandMasterService;
 import io.nzbee.util.category.CategoryMasterService;
 import io.nzbee.util.inventory.InventoryLocationMasterService;
 import io.nzbee.util.inventory.InventoryMasterService;
 import io.nzbee.util.product.ProductMasterService;
+import io.nzbee.util.promotion.PromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
 import io.nzbee.util.tag.TagMasterService;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -47,6 +46,9 @@ public class FileController {
     
     @Autowired
     private TagMasterService tagMasterService;
+
+    @Autowired
+    private PromotionMasterService promotionMasterService;
     
     @Autowired
     private PromotionMechanicMasterService promotionMechanicMasterService;
@@ -263,6 +265,24 @@ public class FileController {
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
         promotionMechanicMasterService.writePromotionMechanicMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
+    @PostMapping("/Promotion/Upload/")
+    public UploadFileResponse uploadPromotionFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadCategoryFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        promotionMasterService.writePromotionMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
