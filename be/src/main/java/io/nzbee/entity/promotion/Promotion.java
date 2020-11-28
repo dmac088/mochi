@@ -51,6 +51,9 @@ public abstract class Promotion {
 	@Column(name="prm_en_dt")
 	private LocalDateTime promotionEndDate;
 	
+	@Column(name="prm_act")
+	private Boolean promotionActive;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_mec_id", updatable = false, insertable = false)
 	private PromotionMechanic promotionMechanic;
@@ -101,6 +104,14 @@ public abstract class Promotion {
 
 	public void setPromotionEndDate(LocalDateTime promotionEndDate) {
 		this.promotionEndDate = promotionEndDate;
+	}
+
+	public Boolean getPromotionActive() {
+		return promotionActive;
+	}
+
+	public void setPromotionActive(Boolean promotionActive) {
+		this.promotionActive = promotionActive;
 	}
 
 	public PromotionMechanic getPromotionMechanic() {

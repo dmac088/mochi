@@ -24,6 +24,8 @@ ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_role_typ_id_fkey;
 ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_party_id_fkey;
 ALTER TABLE ONLY mochi.promotion_pctmkd DROP CONSTRAINT promotion_pctmkd_prm_id_fkey;
 ALTER TABLE ONLY mochi.promotion_bngnpct DROP CONSTRAINT promotion_bngnf_prm_id_fkey;
+ALTER TABLE ONLY mochi.promotion_attr_lcl DROP CONSTRAINT promotion_attr_lcl_prm_id_fkey;
+ALTER TABLE ONLY mochi.promotion_attr_lcl DROP CONSTRAINT promotion_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_typ_id_product_type_typ_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id_fkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
@@ -62,6 +64,7 @@ ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_bag_id_bag_bag_id_fkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_lcl_cd_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
+DROP INDEX mochi.fki_promotion_attr_lcl_prm_id_fkey;
 DROP INDEX mochi.fki_product_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
@@ -70,6 +73,7 @@ ALTER TABLE ONLY mochi.product DROP CONSTRAINT uc_product_upc_cd;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT uc_product_tag;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT uc_product_category;
 ALTER TABLE ONLY mochi.promotion_mechanic DROP CONSTRAINT uc_prm_mec_cd;
+ALTER TABLE ONLY mochi.promotion_attr_lcl DROP CONSTRAINT uc_prm_lcl_1;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT uc_prm_cd;
 ALTER TABLE ONLY mochi.department DROP CONSTRAINT uc_prd_typ_cd;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT uc_prd_sts_cd;
@@ -99,6 +103,7 @@ ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT promotion_pkey;
 ALTER TABLE ONLY mochi.promotion_pctmkd DROP CONSTRAINT promotion_pctmkd_pkey;
 ALTER TABLE ONLY mochi.promotion_mechanic DROP CONSTRAINT promotion_mechanic_pkey;
 ALTER TABLE ONLY mochi.promotion_bngnpct DROP CONSTRAINT promotion_bngnf_pkey;
+ALTER TABLE ONLY mochi.promotion_attr_lcl DROP CONSTRAINT promotion_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.department DROP CONSTRAINT product_type_pkey;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_pkey;
 ALTER TABLE ONLY mochi.product_status DROP CONSTRAINT product_status_pkey;
@@ -166,6 +171,7 @@ DROP TABLE mochi.promotion_pctmkd;
 DROP TABLE mochi.promotion_mechanic;
 DROP SEQUENCE mochi.promotion_category_prm_cat_id_seq;
 DROP TABLE mochi.promotion_bngnpct;
+DROP TABLE mochi.promotion_attr_lcl;
 DROP TABLE mochi.promotion;
 DROP SEQUENCE mochi.product_tag_attr_lcl_tag_id_seq;
 DROP TABLE mochi.product_tag;
@@ -2493,15 +2499,28 @@ ALTER TABLE product_tag_attr_lcl_tag_id_seq OWNER TO mochidb_owner;
 CREATE TABLE promotion (
     prm_id bigint NOT NULL,
     prm_cd character(5) NOT NULL,
-    prm_sht_desc character varying,
-    prm_lng_desc character varying,
     prm_st_dt timestamp(4) with time zone NOT NULL,
     prm_en_dt timestamp(4) with time zone NOT NULL,
-    prm_mec_id bigint
+    prm_mec_id bigint NOT NULL,
+    prm_act boolean NOT NULL
 );
 
 
 ALTER TABLE promotion OWNER TO mochidb_owner;
+
+--
+-- Name: promotion_attr_lcl; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE promotion_attr_lcl (
+    prm_lcl_id bigint NOT NULL,
+    prm_id bigint NOT NULL,
+    prm_desc character varying(100),
+    lcl_cd character varying(5) NOT NULL
+);
+
+
+ALTER TABLE promotion_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: promotion_bngnpct; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -3135,6 +3154,14 @@ ALTER TABLE ONLY department
 
 
 --
+-- Name: promotion_attr_lcl promotion_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT promotion_attr_lcl_pkey PRIMARY KEY (prm_lcl_id);
+
+
+--
 -- Name: promotion_bngnpct promotion_bngnf_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3367,6 +3394,14 @@ ALTER TABLE ONLY promotion
 
 
 --
+-- Name: promotion_attr_lcl uc_prm_lcl_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT uc_prm_lcl_1 UNIQUE (prm_id, lcl_cd);
+
+
+--
 -- Name: promotion_mechanic uc_prm_mec_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3427,6 +3462,13 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 CREATE INDEX fki_product_attr_lcl_prd_id_fkey ON product_attr_lcl USING btree (prd_id);
+
+
+--
+-- Name: fki_promotion_attr_lcl_prm_id_fkey; Type: INDEX; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE INDEX fki_promotion_attr_lcl_prm_id_fkey ON promotion_attr_lcl USING btree (prm_id);
 
 
 --
@@ -3730,6 +3772,22 @@ ALTER TABLE ONLY product_tag
 
 ALTER TABLE ONLY product
     ADD CONSTRAINT product_typ_id_product_type_typ_id_fkey FOREIGN KEY (dept_id) REFERENCES department(dept_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: promotion_attr_lcl promotion_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT promotion_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
+-- Name: promotion_attr_lcl promotion_attr_lcl_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_attr_lcl
+    ADD CONSTRAINT promotion_attr_lcl_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion(prm_id);
 
 
 --
@@ -4277,6 +4335,13 @@ GRANT ALL ON SEQUENCE product_tag_attr_lcl_tag_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion TO mochi_app;
+
+
+--
+-- Name: promotion_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_attr_lcl TO mochi_app;
 
 
 --
