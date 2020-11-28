@@ -96,7 +96,6 @@ public class PromotionMasterService {
 		LocalDateTime psd = LocalDateTime.parse(promotionStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(promotionEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 					  
-		Optional<PromotionMechanic> pt = promotionTypeService.findByCode(promotionTypeCode);
 		Optional<PromotionMechanic> pm = promotionMechanicService.findByCode(promotionMechanicCode);
 		
 		p.setPromotionCode(promotionCode);
