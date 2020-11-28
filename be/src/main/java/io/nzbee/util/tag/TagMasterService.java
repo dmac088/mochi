@@ -8,6 +8,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
+
 import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,6 +37,7 @@ public class TagMasterService {
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
+    @Transactional
 	public void writeTagMaster(String fileName) {
 		logger.debug("called writeTagMaster with parameter {} ", fileName);
 		try {

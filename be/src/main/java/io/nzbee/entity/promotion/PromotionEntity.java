@@ -2,6 +2,7 @@ package io.nzbee.entity.promotion;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,6 +17,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
@@ -24,6 +26,7 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
+@PrimaryKeyJoinColumn(name = "prm_id")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="prm_mec_id")
 @JsonTypeInfo(
@@ -124,4 +127,16 @@ public abstract class PromotionEntity {
 		this.getAttributes().remove(promotionAttribute);
 		promotionAttribute.setPromotion(null);
 	}
+	
+	@Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof PromotionEntity)) return false;
+        return promotionCode != null && promotionCode.equals(((PromotionEntity) o).getPromotionCode());
+    }
+ 
+    @Override
+    public int hashCode() {
+    	return Objects.hash(this.getPromotionCode());
+    }
 }
