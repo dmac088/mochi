@@ -60,27 +60,28 @@ public class PromotionMasterService {
 	public void persistPromotionMaster(PromotionMasterSchema pms) {
 		logger.debug("called persistPromotionMaster() ");
 
-		PromotionEntity pCn = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_HK(), pms.get_PROMOTION_START_DATE(),
-				pms.get_PROMOTION_END_DATE(), pms.get_PROMOTION_ACTIVE(), pms.get_PROMOTION_MECHANIC_CODE(),
-				pms.get_PROMOTION_TYPE_CODE(), Constants.localeZHHK);
-		
-		promotionService.save(pCn);
+		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionEntity pEn = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_EN(), pms.get_PROMOTION_START_DATE(),
-				pms.get_PROMOTION_END_DATE(), pms.get_PROMOTION_ACTIVE(), pms.get_PROMOTION_MECHANIC_CODE(),
-				pms.get_PROMOTION_TYPE_CODE(), Constants.localeENGB);
+		PromotionEntity p = (op.isPresent()) ? (PromotionBNGNPCT) op.get() : new PromotionBNGNPCT();
+	
+		LocalDateTime psd = LocalDateTime.parse(pms.get_PROMOTION_START_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-		promotionService.save(pEn);
+		Optional<PromotionMechanic> pm = promotionMechanicService.findByCode(pms.get_PROMOTION_MECHANIC_CODE());
+
+		p.setPromotionCode(pms.get_PROMOTION_CODE());
+		p.addAttribute(mapAttribute(op, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB));
+		p.addAttribute(mapAttribute(op, pms.get_PROMOTION_DESC_HK(), Constants.localeZHHK));
+		p.setPromotionStartDate(psd);
+		p.setPromotionEndDate(ped);
+		p.setPromotionMechanic(pm.get());
+		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
+
+		promotionService.save(p);
 	}
 
-	private PromotionEntity mapToPromotion(String promotionCode, String promotionDesc, String promotionStartDate,
-			String promotionEndDate, Boolean promotionActive, String promotionMechanicCode, String promotionTypeCode,
-			String locale) {
-		logger.debug("called mapToPromotion() ");
-
-		Optional<PromotionEntity> op = promotionService.findByCode(promotionCode);
-
-		PromotionEntity p = (op.isPresent()) ? op.get() : new PromotionBNGNPCT();
+	private PromotionAttributeEntity mapAttribute(Optional<PromotionEntity> op, String promotionDesc, String locale) {
+		logger.debug("called mapAttribute() ");
 
 		PromotionAttributeEntity pa = new PromotionAttributeEntity();
 		if (op.isPresent()) {
@@ -88,25 +89,13 @@ public class PromotionMasterService {
 					.filter(a -> a.getLocale().equals(locale)).findFirst();
 
 			pa = (opa.isPresent()) ? opa.get() : new PromotionAttributeEntity();
+			pa.setPromotion(op.get());
 		}
-		
+
 		pa.setLocale(locale);
 		pa.setPromotionDesc(promotionDesc);
-		pa.setPromotion(p);
-
-		LocalDateTime psd = LocalDateTime.parse(promotionStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		LocalDateTime ped = LocalDateTime.parse(promotionEndDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-
-		Optional<PromotionMechanic> pm = promotionMechanicService.findByCode(promotionMechanicCode);
-
-		p.setPromotionCode(promotionCode);
-		p.addAttribute(pa);
-		p.setPromotionStartDate(psd);
-		p.setPromotionEndDate(ped);
-		p.setPromotionMechanic(pm.get());
-		p.setPromotionActive(promotionActive);
-
-		return p;
+		
+		return pa;
 	}
 
 }
