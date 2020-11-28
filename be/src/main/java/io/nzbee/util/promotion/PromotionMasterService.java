@@ -62,7 +62,7 @@ public class PromotionMasterService {
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionEntity p = (op.isPresent()) ? op.get() : new PromotionBNGNPCT();
+		PromotionBNGNPCT p = (op.isPresent()) ? (PromotionBNGNPCT) op.get() : new PromotionBNGNPCT();
 	
 		LocalDateTime psd = LocalDateTime.parse(pms.get_PROMOTION_START_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
