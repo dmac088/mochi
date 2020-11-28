@@ -54,7 +54,7 @@ public abstract class PromotionEntity {
 	@JoinColumn(name="prm_mec_id", updatable = false, insertable = false)
 	private PromotionMechanic promotionMechanic;
 	
-	@OneToMany(	mappedBy="product",  
+	@OneToMany(	mappedBy="promotion",  
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
 	private Set<PromotionAttributeEntity> attributes = new HashSet<PromotionAttributeEntity>();

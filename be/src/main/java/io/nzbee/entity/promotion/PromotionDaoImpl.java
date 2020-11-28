@@ -4,6 +4,9 @@ import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
 
+import org.springframework.stereotype.Component;
+
+@Component(value = "promotionEntityDao")
 public class PromotionDaoImpl implements IPromotionDao {
 
 	@Override
