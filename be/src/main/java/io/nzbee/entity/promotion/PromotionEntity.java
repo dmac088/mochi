@@ -115,4 +115,13 @@ public abstract class PromotionEntity {
 		this.attributes = attributes;
 	}
 	
+	public void addAttribute(PromotionAttributeEntity promotionAttribute) {
+		this.getAttributes().add(promotionAttribute);
+		promotionAttribute.setPromotion(this);		
+	}
+	
+	public void removeAttribute(PromotionAttributeEntity promotionAttribute) {
+		this.getAttributes().remove(promotionAttribute);
+		promotionAttribute.setPromotion(null);
+	}
 }
