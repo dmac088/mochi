@@ -5,12 +5,12 @@ import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface IPromotionRepository extends CrudRepository<Promotion, Long> {
+public interface IPromotionRepository extends CrudRepository<PromotionEntity, Long> {
 		
-	Optional<Promotion> findByPromotionCode(String promotionMechanicCode);
+	Optional<PromotionEntity> findByPromotionCode(String promotionMechanicCode);
 	
-	Optional<Promotion> findByPromotionShortDesc(String promotionMechanicDesc);
+	Optional<PromotionEntity> findByAttributesLocaleAndAttributesPromotionDesc(String locale, String promotionMechanicDesc);
 	
-	Set<Promotion> findAll();
+	Set<PromotionEntity> findAll();
 }
 

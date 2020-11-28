@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.entity.promotion.Promotion;
+import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.promotion.PromotionBNGNPCT;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
@@ -64,7 +64,7 @@ public class PromotionMasterService {
 	public void persistPromotionMaster(PromotionMasterSchema pms) {
 		logger.debug("called persistPromotionMaster() ");
 		
-		Promotion p = mapToPromotion(pms.get_PROMOTION_CODE(),
+		PromotionEntity p = mapToPromotion(pms.get_PROMOTION_CODE(),
 									 pms.get_PROMOTION_DESC(),
 									 pms.get_PROMOTION_START_DATE(),
 									 pms.get_PROMOTION_END_DATE(),
@@ -75,7 +75,7 @@ public class PromotionMasterService {
 		promotionService.save(p);
 	}
 	
-	private Promotion mapToPromotion(String 		promotionCode,
+	private PromotionEntity mapToPromotion(String 		promotionCode,
 									 String 		promotionDesc,
 									 String 		promotionStartDate,
 									 String 		promotionEndDate,
@@ -84,10 +84,10 @@ public class PromotionMasterService {
 									 String 		promotionTypeCode) {
 		logger.debug("called mapToPromotion() ");
 		
-		Optional<Promotion> op = promotionService.findByCode(promotionCode);
+		Optional<PromotionEntity> op = promotionService.findByCode(promotionCode);
 		
-		Promotion p = (op.isPresent()) 
-					  ? (Promotion) Hibernate.unproxy(op.get())
+		PromotionEntity p = (op.isPresent()) 
+					  ? (PromotionEntity) Hibernate.unproxy(op.get())
 					  : new PromotionBNGNPCT();
 					  
 		LocalDateTime psd = LocalDateTime.parse(promotionStartDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
