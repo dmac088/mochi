@@ -13,7 +13,7 @@ public class PromotionMasterSchema {
 	
 	private String PROMOTION_END_DATE;
 	
-	private String PROMOTION_ACTIVE;
+	private Boolean PROMOTION_ACTIVE;
 	
 	private String PROMOTION_MECHANIC_CODE;
 	
@@ -76,12 +76,12 @@ public class PromotionMasterSchema {
 		this.PROMOTION_TYPE_CODE = PROMOTION_TYPE_CODE;
 	}
 	
-	public String get_PROMOTION_ACTIVE() {
+	public Boolean get_PROMOTION_ACTIVE() {
 		return PROMOTION_ACTIVE;
 	}
 
 	public void set_PROMOTION_ACTIVE(String PROMOTION_ACTIVE) {
-		this.PROMOTION_ACTIVE = PROMOTION_ACTIVE;
+		this.PROMOTION_ACTIVE = PROMOTION_ACTIVE.toLowerCase().equals("true");
 	}
 
 	@Override
