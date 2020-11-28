@@ -23,7 +23,6 @@ import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-@Transactional
 public class PromotionMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(PromotionMasterService.class);
@@ -37,6 +36,7 @@ public class PromotionMasterService {
 	@Autowired
 	private FileStorageServiceUpload fileStorageServiceUpload;
 
+	@Transactional
 	public void writePromotionMaster(String fileName) {
 		logger.debug("called writePromotionMaster with parameter {} ", fileName);
 		try {
@@ -62,7 +62,7 @@ public class PromotionMasterService {
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionEntity p = (op.isPresent()) ? (PromotionBNGNPCT) op.get() : new PromotionBNGNPCT();
+		PromotionEntity p = (op.isPresent()) ? op.get() : new PromotionBNGNPCT();
 	
 		LocalDateTime psd = LocalDateTime.parse(pms.get_PROMOTION_START_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -70,8 +70,10 @@ public class PromotionMasterService {
 		Optional<PromotionMechanic> pm = promotionMechanicService.findByCode(pms.get_PROMOTION_MECHANIC_CODE());
 
 		p.setPromotionCode(pms.get_PROMOTION_CODE());
-		p.addAttribute(mapAttribute(op, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB));
-		p.addAttribute(mapAttribute(op, pms.get_PROMOTION_DESC_HK(), Constants.localeZHHK));
+		PromotionAttributeEntity paEN = mapAttribute(p, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB);
+		PromotionAttributeEntity paCN = mapAttribute(p, pms.get_PROMOTION_DESC_HK(), Constants.localeZHHK);
+		p.addAttribute(paEN);
+		p.addAttribute(paCN);
 		p.setPromotionStartDate(psd);
 		p.setPromotionEndDate(ped);
 		p.setPromotionMechanic(pm.get());
@@ -80,18 +82,14 @@ public class PromotionMasterService {
 		promotionService.save(p);
 	}
 
-	private PromotionAttributeEntity mapAttribute(Optional<PromotionEntity> op, String promotionDesc, String locale) {
+	private PromotionAttributeEntity mapAttribute(PromotionEntity p, String promotionDesc, String locale) {
 		logger.debug("called mapAttribute() ");
 
-		PromotionAttributeEntity pa = new PromotionAttributeEntity();
-		if (op.isPresent()) {
-			Optional<PromotionAttributeEntity> opa = op.get().getAttributes().stream()
+		Optional<PromotionAttributeEntity> opa = p.getAttributes().stream()
 					.filter(a -> a.getLocale().equals(locale)).findFirst();
 
-			pa = (opa.isPresent()) ? opa.get() : new PromotionAttributeEntity();
-			pa.setPromotion(op.get());
-		}
-
+		PromotionAttributeEntity pa = (opa.isPresent()) ? opa.get() : new PromotionAttributeEntity();
+		pa.setPromotion(p);
 		pa.setLocale(locale);
 		pa.setPromotionDesc(promotionDesc);
 		
