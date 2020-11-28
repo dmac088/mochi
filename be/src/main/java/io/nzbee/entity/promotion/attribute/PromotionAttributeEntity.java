@@ -26,7 +26,7 @@ public class PromotionAttributeEntity {
 	private String promotionDesc;
 	
 	@Column(name="lcl_cd")
-	private String lclCd;
+	private String locale;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_id")
@@ -61,11 +61,11 @@ public class PromotionAttributeEntity {
 	}
 
 	public String getLocale() {
-		return lclCd;
+		return locale;
 	}
 
 	public void setLocale(String lclCd) {
-		this.lclCd = lclCd;
+		this.locale = lclCd;
 	}
 
 	@Override
