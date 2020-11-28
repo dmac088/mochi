@@ -69,26 +69,4 @@ public class TagAttributeEntity {
 		this.lclCd = lclCd;
 	}
 	
-	@Override
-    public int hashCode() {
-		HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.getTag().getCode());
-        hcb.append(this.getLclCd());
-        return hcb.toHashCode();
-    }
- 
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) {
-	        return true;
-        }
-	    if (!(obj instanceof TagAttributeEntity)) {
-	            return false;
-	    }
-	    TagAttributeEntity that = (TagAttributeEntity) obj;
-	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.getTag().getCode(), that.getTag().getCode());
-	      eb.append(this.getLclCd(), that.getLclCd());
-	      return eb.isEquals();
-	}
 }
