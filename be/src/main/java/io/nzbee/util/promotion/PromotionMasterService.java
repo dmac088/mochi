@@ -30,9 +30,6 @@ public class PromotionMasterService {
 	private IPromotionService promotionService;
 	
 	@Autowired
-	private IPromotionMechanicService promotionTypeService;
-	
-	@Autowired
 	private IPromotionMechanicService promotionMechanicService;
 	
     @Autowired

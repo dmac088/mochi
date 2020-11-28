@@ -2536,7 +2536,7 @@ ALTER TABLE promotion_category_prm_cat_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE promotion_mechanic (
     prm_mec_id bigint NOT NULL,
-    prm_mec_cd character(5) NOT NULL,
+    prm_mec_cd character varying(10) NOT NULL,
     prm_mec_desc character varying
 );
 

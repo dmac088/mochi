@@ -27,8 +27,8 @@ public class PromotionMechanicMasterService {
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
     @Transactional
-	public void writeCategoryMaster(String fileName) {
-		logger.debug("called writeCategoryMaster with parameter {} ", fileName);
+	public void writePromotionMechanicMaster(String fileName) {
+		logger.debug("called writePromotionMechanicMaster with parameter {} ", fileName);
 		try {
 			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
 	    	CsvSchema bootstrapSchema = 
