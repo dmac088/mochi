@@ -60,7 +60,7 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("TST01");
+		Optional<PromotionEntity> found = promotionService.findByCode("B1G1F");
 
 		// then
 		assertFound_ENGB(found);
@@ -69,7 +69,7 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("TST01");
+		Optional<PromotionEntity> found = promotionService.findByCode("B1G1F");
 
 		// then
 		assertFound_ZHHK(found);
@@ -82,6 +82,9 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		PromotionEntity cp = (PromotionEntity) found.get();
+		
+		assertThat(cp.getPromotionCode())
+		.isEqualTo("B1G1F");
 		
 //		assertThat(cp.getPromotionDescENGB())
 //		.isEqualTo("Test Promotion");
@@ -102,14 +105,16 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
+		assertThat(cp.getPromotionCode())
+		.isEqualTo("B1G1F");
+		
 //		assertThat(cp.getPromotionDescZHHK())
 //		.isEqualTo("測試類別");
 //		
 //		assertThat(cp.getPromotionLevel())
 //		.isEqualTo(1);
 //		
-//		assertThat(cp.getPromotionParentCode())
-//		.isEqualTo("PRM02");
+
 	}
 
 	@After
