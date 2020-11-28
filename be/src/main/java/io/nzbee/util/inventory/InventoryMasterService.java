@@ -35,7 +35,6 @@ import io.nzbee.util.FileStorageServiceUpload;
 import io.nzbee.entity.party.organization.Organization;
 
 @Service
-@Transactional
 public class InventoryMasterService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(InventoryMasterService.class);

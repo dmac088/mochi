@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import javax.transaction.Transactional;
 import org.springframework.core.io.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,7 +24,6 @@ import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-@Transactional
 public class TagMasterService {
 
 	private static final Logger logger = LoggerFactory.getLogger(TagMasterService.class);

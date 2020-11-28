@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import javax.transaction.Transactional;
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +63,7 @@ public class PromotionMasterService {
 		PromotionEntity pCn = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_HK(), pms.get_PROMOTION_START_DATE(),
 				pms.get_PROMOTION_END_DATE(), pms.get_PROMOTION_ACTIVE(), pms.get_PROMOTION_MECHANIC_CODE(),
 				pms.get_PROMOTION_TYPE_CODE(), Constants.localeZHHK);
-
+		
 		promotionService.save(pCn);
 
 		PromotionEntity pEn = mapToPromotion(pms.get_PROMOTION_CODE(), pms.get_PROMOTION_DESC_EN(), pms.get_PROMOTION_START_DATE(),

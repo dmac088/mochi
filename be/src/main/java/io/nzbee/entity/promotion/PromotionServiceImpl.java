@@ -44,7 +44,7 @@ public class PromotionServiceImpl implements IPromotionService {
 	
 	@Override
 	public void save(PromotionEntity promotion) {
-		promotionRepository.save(promotion);
+		promotionDao.save(promotion);
 	}
 
 	@Override
