@@ -1,7 +1,9 @@
 package io.nzbee.entity.promotion;
 
 import java.time.LocalDateTime;
-
+import java.util.HashSet;
+import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
@@ -13,11 +15,11 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
-
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-
+import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 
 @Entity
@@ -28,7 +30,7 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
-public abstract class Promotion {
+public abstract class PromotionEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -51,6 +53,11 @@ public abstract class Promotion {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_mec_id", updatable = false, insertable = false)
 	private PromotionMechanic promotionMechanic;
+	
+	@OneToMany(	mappedBy="product",  
+			cascade = CascadeType.ALL,
+			orphanRemoval = true)
+	private Set<PromotionAttributeEntity> attributes = new HashSet<PromotionAttributeEntity>();
 
 	public Long getPromotionId() {
 		return promotionId;
@@ -100,4 +107,12 @@ public abstract class Promotion {
 		this.promotionMechanic = promotionMechanic;
 	}
 
+	public Set<PromotionAttributeEntity> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Set<PromotionAttributeEntity> attributes) {
+		this.attributes = attributes;
+	}
+	
 }
