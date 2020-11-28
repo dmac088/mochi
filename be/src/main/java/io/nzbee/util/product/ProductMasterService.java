@@ -184,7 +184,6 @@ public class ProductMasterService {
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
-		//this is the upload template for food, another will be created for Jewellery and other product types
 		ProductBasicEntity pe = (op.isPresent()) 
 						 ? (ProductBasicEntity) op.get()
 						 : new ProductBasicEntity();			  
@@ -216,9 +215,9 @@ public class ProductMasterService {
 											currency);
 
 		//retail price
-		ProductPriceEntity prcr = (oprcr.isPresent()) 
-							? oprcr.get()
-							: new ProductPriceEntity();
+		ProductPriceEntity prcr = (	oprcr.isPresent()) 
+									? oprcr.get()
+									: new ProductPriceEntity();
 
 		prcr.setType(ptr);
 		prcr.setCurrency(curr);

@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import io.nzbee.entity.product.ProductEntity;
 
 @Entity
@@ -91,24 +89,4 @@ public class ProductAttributeEntity {
 		ProductImage = productImage;
 	}
 	
-	@Override
-    public int hashCode() {
-        HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.getLclCd());
-        return hcb.toHashCode();
-    }
- 
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) {
-	        return true;
-        }
-	    if (!(obj instanceof ProductAttributeEntity)) {
-	            return false;
-	    }
-	    ProductAttributeEntity that = (ProductAttributeEntity) obj;
-	      EqualsBuilder eb = new EqualsBuilder();
-	      eb.append(this.getLclCd(), that.getLclCd());
-	      return eb.isEquals();
-	}
 }
