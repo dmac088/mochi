@@ -62,7 +62,9 @@ public class PromotionMasterService {
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionBNGNPCT p = (op.isPresent()) ? (PromotionBNGNPCT) op.get() : new PromotionBNGNPCT();
+		PromotionBNGNPCT p = 	(op.isPresent()) 
+								? (PromotionBNGNPCT) op.get() 
+								: new PromotionBNGNPCT();
 	
 		LocalDateTime psd = LocalDateTime.parse(pms.get_PROMOTION_START_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -72,6 +74,8 @@ public class PromotionMasterService {
 		p.setPromotionCode(pms.get_PROMOTION_CODE());
 		PromotionAttributeEntity paEN = mapAttribute(p, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB);
 		PromotionAttributeEntity paCN = mapAttribute(p, pms.get_PROMOTION_DESC_HK(), Constants.localeZHHK);
+		paEN.setPromotion(p);
+		paCN.setPromotion(p);
 		p.addAttribute(paEN);
 		p.addAttribute(paCN);
 		p.setPromotionStartDate(psd);
@@ -81,7 +85,7 @@ public class PromotionMasterService {
 
 		promotionService.save(p);
 	}
-
+	
 	private PromotionAttributeEntity mapAttribute(PromotionEntity p, String promotionDesc, String locale) {
 		logger.debug("called mapAttribute() ");
 
@@ -89,7 +93,6 @@ public class PromotionMasterService {
 					.filter(a -> a.getLocale().equals(locale)).findFirst();
 
 		PromotionAttributeEntity pa = (opa.isPresent()) ? opa.get() : new PromotionAttributeEntity();
-		pa.setPromotion(p);
 		pa.setLocale(locale);
 		pa.setPromotionDesc(promotionDesc);
 		
