@@ -63,7 +63,7 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B1G1F");
+		Optional<PromotionEntity> found = promotionService.findByCode("B3G1F");
 
 		// then
 		assertFound_ENGB(found);
@@ -72,7 +72,7 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B1G1F");
+		Optional<PromotionEntity> found = promotionService.findByCode("B3G1F");
 
 		// then
 		assertFound_ZHHK(found);
@@ -87,16 +87,16 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("B1G1F");
+		.isEqualTo("B3G1F");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeENGB)).findAny().get().getPromotionDesc())
-		.isEqualTo("Buy 1 get 1 free");
+		.isEqualTo("Buy 3 get 1 free");
 		
-		assertThat(((PromotionBNGNPCT) cp).getBuyQty()).isEqualTo(2);
+		assertThat(((PromotionBNGNPCT) cp).getBuyQty()).isEqualTo(4);
 		
-		assertThat(((PromotionBNGNPCT) cp).getPctDisc()).isEqualTo(0.5);
+		assertThat(((PromotionBNGNPCT) cp).getPctDisc()).isEqualTo(0.25);
 		
 	}
 
@@ -109,16 +109,16 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("B1G1F");
+		.isEqualTo("B3G1F");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
-		.isEqualTo("買1送1");
+		.isEqualTo("买三送一");
 		
-		assertThat(((PromotionBNGNPCT) cp).getBuyQty()).isEqualTo(2);
+		assertThat(((PromotionBNGNPCT) cp).getBuyQty()).isEqualTo(4);
 		
-		assertThat(((PromotionBNGNPCT) cp).getPctDisc()).isEqualTo(0.5);
+		assertThat(((PromotionBNGNPCT) cp).getPctDisc()).isEqualTo(0.25);
 		
 	}
 

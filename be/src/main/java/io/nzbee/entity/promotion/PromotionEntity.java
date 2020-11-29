@@ -15,13 +15,16 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.NaturalId;
+import io.nzbee.entity.category.CategoryEntity;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
 
@@ -58,6 +61,30 @@ public abstract class PromotionEntity {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true)
 	private Set<PromotionAttributeEntity> attributes = new HashSet<PromotionAttributeEntity>();
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY, 
+				cascade = {
+						CascadeType.PERSIST,
+			            CascadeType.MERGE
+			    })
+	@JoinTable(		name 				= "category_promotion", 
+					schema				= "mochi", 
+		   			joinColumns 		= @JoinColumn(name = "prm_id"), 
+		   			inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
+	private Set<CategoryEntity> categories = new HashSet<CategoryEntity>();
+	
+	
+	@ManyToMany(fetch = FetchType.LAZY, 
+			cascade = {
+					CascadeType.PERSIST,
+		            CascadeType.MERGE
+		    })
+	@JoinTable(		name 				= "product_promotion", 
+					schema				= "mochi", 
+		   			joinColumns 		= @JoinColumn(name = "prm_id"), 
+		   			inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
+	private Set<ProductEntity> products = new HashSet<ProductEntity>();
 
 	@Transient
 	private String locale;
@@ -134,6 +161,42 @@ public abstract class PromotionEntity {
 
 	public void setLocale(String locale) {
 		this.locale = locale;
+	}
+
+	public Set<CategoryEntity> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Set<CategoryEntity> categories) {
+		this.categories = categories;
+	}
+	
+	public void addCategory(CategoryEntity category) {
+		this.getCategories().add(category);
+		category.getPromotions().add(this);
+	}
+	
+	public void removeCategory(CategoryEntity category) {
+		this.getCategories().remove(category);
+		category.removePromotion(this);
+	}
+	
+	public Set<ProductEntity> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<ProductEntity> products) {
+		this.products = products;
+	}
+	
+	public void addProduct(ProductEntity product) {
+		this.getProducts().add(product);
+		product.getPromotions().add(this);
+	}
+	
+	public void removeProduct(ProductEntity product) {
+		this.getProducts().remove(product);
+		product.removePromotion(this);
 	}
 
 	@Override

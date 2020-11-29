@@ -51,6 +51,9 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.category.product.CategoryProductEntity;
@@ -58,6 +61,7 @@ import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.status.ProductStatusEntity;
+import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.tag.TagEntity;
 
 @Entity
@@ -219,7 +223,10 @@ public abstract class ProductEntity {
 				orphanRemoval = true)
 	Set<ProductPriceEntity> prices = new HashSet<ProductPriceEntity>();
 
-
+	@ManyToMany(mappedBy = "products")
+    @JsonIgnore
+    private Set<PromotionEntity> promotions = new HashSet<PromotionEntity>();
+	
 	@Transient
 	private CategoryProductEntity primaryCategory;
 	
@@ -524,6 +531,24 @@ public abstract class ProductEntity {
 		this.inStock = inStock;
 	}
 	
+	public Set<PromotionEntity> getPromotions() {
+		return promotions;
+	}
+
+	public void setPromotions(Set<PromotionEntity> promotions) {
+		this.promotions = promotions;
+	}
+	
+	public void addPromotion(PromotionEntity promotion) {
+		this.getPromotions().add(promotion);
+		promotion.getProducts().add(this);
+	}
+	
+	public void removePromotion(PromotionEntity promotion) {
+		this.getPromotions().remove(promotion);
+		promotion.removeProduct(this);
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
