@@ -58,24 +58,15 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 	}
 
 	@Test
-	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
+	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion() {
 		// when
 		Optional<PromotionMechanic> found = promotionMechanicService.findByCode("BNGNPCT");
 
 		// then
-		assertFound_ENGB(found);
+		assertFound(found);
 	}
 
-	@Test
-	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
-		// when
-		Optional<PromotionMechanic> found = promotionMechanicService.findByCode("BNGNPCT");
-
-		// then
-		assertFound_ZHHK(found);
-	}
-
-	private void assertFound_ENGB(Optional<PromotionMechanic> found) {
+	private void assertFound(Optional<PromotionMechanic> found) {
 		
 		assertNotNull(found);
 		
@@ -83,39 +74,12 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 		
 		PromotionMechanic cp = (PromotionMechanic) found.get();
 		
-		assertThat(cp.getPromotionMechanicCode())
-		.isEqualTo("BNGNPCT");
-		
-//		assertThat(cp.getPromotionDescENGB())
-//		.isEqualTo("Test Promotion");
-//		
-//		assertThat(cp.getPromotionLevel())
-//		.isEqualTo(1);
-//		
-//		assertThat(cp.getPromotionParentCode())
-//		.isEqualTo("PRM02");
+		assertThat(cp.getPromotionMechanicDesc())
+		.isEqualTo("Buy N Get X Percent Off");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<PromotionMechanic> found) {
-		
-		assertNotNull(found);
-		
-		assertTrue(found.isPresent());
-		
-		PromotionMechanic cp = (PromotionMechanic) found.get();
-		
-		assertThat(cp.getPromotionMechanicCode())
-		.isEqualTo("BNGNPCT");
-		
-//		assertThat(cp.getPromotionDescZHHK())
-//		.isEqualTo("測試類別");
-//		
-//		assertThat(cp.getPromotionLevel())
-//		.isEqualTo(1);
-//		
 
-	}
 
 	@After
 	public void closeConnection() {
