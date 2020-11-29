@@ -193,7 +193,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Set<Product> findAll(String locale, String currency) {
-		Set<ProductDTO> sp = productService.findAll(locale, currency);
+		List<ProductDTO> sp = productService.findAll(locale, currency);
 		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 
@@ -225,7 +225,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
-		Set<ProductDTO> lp =  productService.findAll(locale, currency, codes);
+		List<ProductDTO> lp =  productService.findAll(locale, currency, codes);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
 	}
 	
