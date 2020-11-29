@@ -555,7 +555,64 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"          GROUP BY  coalesce(s2.cat_typ_id,s1.cat_typ_id), " +
 				"					 coalesce(s2.cat_id,s1.cat_id), " +
 				"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
-				")" + 
+				"), promotions AS " + 
+				"( " +
+				" select pc.prd_id, " +
+				"   	cp.prm_id, " +
+				"		prm.prm_cd, " +
+				"		pat.prm_desc " +
+				" from categories c " +
+				"	inner join mochi.category_promotion cp  " +
+				"		on c.cat_id = cp.cat_id  " +
+					
+				"	inner join mochi.promotion prm  " +
+				"		on cp.prm_id = prm.prm_id " +
+					
+				"	inner join mochi.promotion_attr_lcl pat " +
+				"		on prm.prm_id = pat.prm_id " +
+	
+				"	inner join mochi.product_category pc " +
+				"		on c.cat_id = pc.cat_id " +
+				
+				"   inner join mochi.product prd " +
+				"		on pc.prd_id = prd.prd_id " +
+				
+				"	inner join mochi.product_attr_lcl attr " + 
+				"		on prd.prd_id = attr.prd_id " +
+											 
+				" where pat.lcl_cd 	= :locale " +
+				" and attr.lcl_cd 	= :locale " +
+				((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
+				((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
+				((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 	: "") +
+				 
+				" UNION  " +
+											 
+				" select pp.prd_id,  " +
+				"	   pp.prm_id, " +
+				"	   prm.prm_cd,  " +
+				"	   pat.prm_desc  " +
+				" from mochi.product prd  " + 
+			
+				"	inner join mochi.product_promotion pp  " +
+				"		on prd.prd_id = pp.prd_id  " +
+				
+				"	inner join mochi.promotion prm  " +
+				"		on pp.prm_id = prm.prm_id  " +
+						
+				"	inner join mochi.promotion_attr_lcl pat " +
+				"		on prm.prm_id = pat.prm_id " +
+				
+				"	inner join mochi.product_attr_lcl attr " + 
+				"		on prd.prd_id = attr.prd_id " +
+	
+				" where pat.lcl_cd 	= :locale " +
+				" and attr.lcl_cd 	= :locale " +
+				((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
+				((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
+				((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 	: "") + ")"  +
+						
+		
 		"select 	    " + 
 		((countOnly) 
 					? 	"	   count(distinct prd.prd_id) as product_count  "
