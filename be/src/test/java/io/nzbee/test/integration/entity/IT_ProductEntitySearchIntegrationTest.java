@@ -599,10 +599,10 @@ public class IT_ProductEntitySearchIntegrationTest {
 		
 		// then
 		assertThat(pp.getTotalPages())
-		 .isEqualTo(1);
+		 .isEqualTo(7);
 		
 		assertThat(pp.getTotalElements())
-		.isEqualTo(new Long(1));
+		.isEqualTo(new Long(7));
 		
 		assertThat(pp.stream().findFirst().get().getProductUPC()).isEqualTo("30833047");
 		
