@@ -358,8 +358,12 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	                    ON         mprc.prc_typ_id = mpt.prc_typ_id " +
 		"	                    AND        mpt.prc_typ_cd = :markdownPriceCode ) mprc 	" + 
 		"	ON         prd.prd_id = mprc.prd_id								" +
+		
 		"	LEFT JOIN  mochi.product_basic acc 								" +
 		"	ON         prd.prd_id = acc.prd_id 								" +
+		
+		
+		
 		"	) p 															" +
 		"	ON bag.bag_id = p.bag_id 										" + 
 		
