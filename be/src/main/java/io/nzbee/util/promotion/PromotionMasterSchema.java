@@ -19,6 +19,10 @@ public class PromotionMasterSchema {
 	
 	private String PROMOTION_TYPE_CODE;
 	
+	private String BUY_QUANTITY;
+	
+	private String PERCENT_DISCOUNT;
+	
 	
 	public String get_PROMOTION_CODE() {
 		return PROMOTION_CODE;
@@ -82,6 +86,22 @@ public class PromotionMasterSchema {
 
 	public void set_PROMOTION_ACTIVE(String PROMOTION_ACTIVE) {
 		this.PROMOTION_ACTIVE = PROMOTION_ACTIVE.toLowerCase().equals("true");
+	}
+
+	public String get_BUY_QUANTITY() {
+		return BUY_QUANTITY;
+	}
+
+	public void set_BUY_QUANTITY(String bUY_QUANTITY) {
+		BUY_QUANTITY = bUY_QUANTITY;
+	}
+
+	public String get_PERCENT_DISCOUNT() {
+		return PERCENT_DISCOUNT;
+	}
+
+	public void set_PERCENT_DISCOUNT(String pERCENT_DISCOUNT) {
+		PERCENT_DISCOUNT = pERCENT_DISCOUNT;
 	}
 
 	@Override
