@@ -16,7 +16,7 @@ public class PromotionBNGNPCT extends PromotionEntity {
 	private int buyQty;
 	
 	@Column(name="pct_disc")
-	private int pctDisc;
+	private Double pctDisc;
 
 	public int getBuyQty() {
 		return buyQty;
@@ -26,11 +26,11 @@ public class PromotionBNGNPCT extends PromotionEntity {
 		this.buyQty = buyQty;
 	}
 
-	public int getPctDisc() {
+	public Double getPctDisc() {
 		return pctDisc;
 	}
 
-	public void setPctDisc(int pctDisc) {
+	public void setPctDisc(Double pctDisc) {
 		this.pctDisc = pctDisc;
 	}
 
