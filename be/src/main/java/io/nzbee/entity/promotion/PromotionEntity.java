@@ -19,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
 import org.hibernate.annotations.NaturalId;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
@@ -57,6 +59,9 @@ public abstract class PromotionEntity {
 				orphanRemoval = true)
 	private Set<PromotionAttributeEntity> attributes = new HashSet<PromotionAttributeEntity>();
 
+	@Transient
+	private String locale;
+	
 	public Long getPromotionId() {
 		return promotionId;
 	}
@@ -123,6 +128,14 @@ public abstract class PromotionEntity {
 		promotionAttribute.setPromotion(null);
 	}
 	
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
