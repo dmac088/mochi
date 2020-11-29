@@ -78,6 +78,10 @@ public class IT_ProductPromotionMappingUploadForCreateIntegrationTest {
 		assertThat(cp.getProducts().size())
 		.isEqualTo(2);
 		
+		assertTrue(cp.getProducts().stream().filter(p -> p.getProductUPC().equals("15483827")).findAny().isPresent());
+		
+		assertTrue(cp.getProducts().stream().filter(p -> p.getProductUPC().equals("10688155")).findAny().isPresent());
+		
 	}
 
 
