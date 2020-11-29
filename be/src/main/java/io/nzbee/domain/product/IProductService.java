@@ -1,5 +1,6 @@
 package io.nzbee.domain.product;
 
+import java.util.List;
 import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.domain.ILocalizedService;
@@ -18,9 +19,9 @@ public interface IProductService extends ILocalizedService<Product> {
 
 	Product findByDesc(String locale, String currency, String desc);
 
-	Set<Product> findAll(String locale, String currency);
+	List<Product> findAll(String locale, String currency);
 
-	Set<Product> findAll(String locale, String currency, Set<String> codes);
+	List<Product> findAll(String locale, String currency, Set<String> codes);
 
 
 }
