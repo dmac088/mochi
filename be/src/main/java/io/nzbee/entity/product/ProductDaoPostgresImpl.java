@@ -648,7 +648,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   bal.bnd_desc,   " + 
 						"	   ps.prd_sts_id,   " + 
 						"	   ps.prd_sts_cd,   " + 
-						"	   ps.prd_sts_desc,  " + 
+						"	   ps.prd_sts_desc,  " +
+						"	   promo.prm_id, " +
+						"	   promo.prm_cd, " +
+						"      promo.prm_desc, " + 
 						"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 						"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
@@ -769,6 +772,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	LEFT JOIN mochi.stock_on_hand soh " +
 		"	ON prd.prd_id = soh.soh_prd_id " +
+		
+		"	LEFT JOIN promotions promo " +
+		"	ON prd.prd_id = promo.prd_id " +
 		
 		"WHERE 0=0 " +
 		"AND prd_sts_cd = 			:activeProductCode  " + 
