@@ -2,6 +2,7 @@ package io.nzbee.util.category;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.transaction.Transactional;
@@ -52,7 +53,7 @@ public class CategoryMasterService {
 	        });
 	        
 	        
-	        Set<CategoryEntity> lc = categoryService.findAll();
+	        List<CategoryEntity> lc = categoryService.findAll();
 	        lc.stream().forEach(c -> {
 	        	if(!(c.getCategoryParentCode() == null)) {
 	        		Optional<io.nzbee.entity.category.CategoryEntity> opc = categoryService.findByCode(c.getCategoryParentCode());
