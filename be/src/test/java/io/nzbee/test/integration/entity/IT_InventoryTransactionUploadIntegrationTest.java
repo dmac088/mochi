@@ -3,10 +3,9 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -68,7 +67,7 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 	public void whenInventoryTransactionUploaded_thenReturnCorrectInventoryTransactionCount() {
 		
 		// when
-		Set<InventoryTransaction> found = inventoryService.findByProductCode("3577789");
+		List<InventoryTransaction> found = inventoryService.findByProductCode("3577789");
 
 		//then
 		assertFound(found);
@@ -84,7 +83,7 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 		assertFound(found);
 	}	
 	
-	private void assertFound(Set<InventoryTransaction> found) {
+	private void assertFound(List<InventoryTransaction> found) {
 		
 		assertNotNull(found);
 		

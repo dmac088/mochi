@@ -164,7 +164,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("32.4");
 
 		// when
-    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+		List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyHKD, 
 					  								"FRT01", 
 					  								categoryCodes, 
@@ -186,7 +186,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("4.15");
 
 		// when
-    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+		List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
 					  								categoryCodes, 

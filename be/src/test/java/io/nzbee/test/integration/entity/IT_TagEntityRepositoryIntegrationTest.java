@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -109,7 +110,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		tagCodes.add("ORG01");
 
 		// when
-		Set<TagDTO> lb = tagService.findAll(Constants.localeENGB, tagCodes);
+		List<TagDTO> lb = tagService.findAll(Constants.localeENGB, tagCodes);
 
 		// then
 		assertNotNull(lb);

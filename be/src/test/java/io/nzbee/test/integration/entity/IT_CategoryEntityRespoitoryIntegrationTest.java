@@ -3,6 +3,7 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -22,8 +23,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import antlr.collections.List;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.ICategoryService;
