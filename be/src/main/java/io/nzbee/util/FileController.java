@@ -16,7 +16,9 @@ import io.nzbee.util.inventory.InventoryLocationMasterService;
 import io.nzbee.util.inventory.InventoryMasterService;
 import io.nzbee.util.product.ProductMasterService;
 import io.nzbee.util.promotion.PromotionMasterService;
+import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
+import io.nzbee.util.promotion.product.ProductPromotionMasterService;
 import io.nzbee.util.tag.TagMasterService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,6 +51,12 @@ public class FileController {
 
     @Autowired
     private PromotionMasterService promotionMasterService;
+    
+    @Autowired
+    private CategoryPromotionMasterService categoryPromotionMasterService;
+    
+    @Autowired
+    private ProductPromotionMasterService productPromotionMasterService;
     
     @Autowired
     private PromotionMechanicMasterService promotionMechanicMasterService;
@@ -293,9 +301,44 @@ public class FileController {
         		uploadFile.getContentType(), uploadFile.getSize());
     }
     
+    @PostMapping("/CategoryPromotionMapping/Upload/")
+    public UploadFileResponse uploadCategoryPromotionMappingFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadCategoryPromotionMappingFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        categoryPromotionMasterService.writeCategoryPromotionMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
+    @PostMapping("/ProductPromotionMapping/Upload/")
+    public UploadFileResponse uploadProductPromotionMappingFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadCategoryPromotionMappingFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        productPromotionMasterService.writeProductPromotionMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
     @GetMapping("/Tag/Download/{fileName:.+}")
     public ResponseEntity<Resource> downloadTagFile(@PathVariable String fileName, HttpServletRequest request, HttpServletResponse response) {
-    	System.out.println(fileStorageProperties.getDownloadDir());
     	
     	logger.debug("called downloadTagFile with parameters {} ", fileStorageProperties.getDownloadDir() + fileName );
     	
