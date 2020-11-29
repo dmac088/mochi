@@ -83,7 +83,7 @@ public class PromotionMasterService {
 		p.setPromotionMechanic(pm.get());
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
 		p.setBuyQty(Integer.parseInt(pms.get_BUY_QUANTITY()));
-		p.setPctDisc(Double.parseDouble(pms.get_BUY_QUANTITY()));
+		p.setPctDisc(Double.parseDouble(pms.get_PERCENT_DISCOUNT()));
 
 		promotionService.save(p);
 	}
