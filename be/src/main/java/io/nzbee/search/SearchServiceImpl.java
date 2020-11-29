@@ -3,6 +3,8 @@ package io.nzbee.search;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -433,8 +435,17 @@ public class SearchServiceImpl implements ISearchService {
 
 		setProductProjection(jpaQuery);
 		List<Object[]> result = jpaQuery.getResultList();
-		Set<ProductDTO> lp = productService.findAll(lcl, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
-		return new PageImpl<ProductDTO>(new ArrayList<ProductDTO>(lp), pageable, jpaQuery.getResultSize());
+		List<String> orderedIds = result.stream().map(o -> o[0].toString()).collect(Collectors.toList());
+		Set<ProductDTO> lp = productService.findAll( lcl, 
+													 currency, 
+													 result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		
+		List<ProductDTO> finalResult = new ArrayList<>(lp);
+		
+		Collections.sort(finalResult, Comparator.comparing(item -> orderedIds.indexOf(((ProductDTO) item).getProductUPC())));		
+											  
+				 
+		return new PageImpl<ProductDTO>(finalResult, pageable, jpaQuery.getResultSize());
 
 	}
 
@@ -468,7 +479,7 @@ public class SearchServiceImpl implements ISearchService {
 
 
 	private Sort getSortField(String field, String currency, String locale) {
-		LOGGER.debug("call getSortField with parameters {} {} {} ", field, currency, locale);
+		LOGGER.debug("call getSortField with parameters \"{}\" \"{}\" \"{}\" ", field, currency, locale);
 		switch (field) {
 			case "nameAsc": 	return new Sort(new SortField(				"productDescSort" 			+ locale, 		SortField.Type.STRING, false));
 			case "nameDesc": 	return new Sort(new SortField(				"productDescSort" 			+ locale, 		SortField.Type.STRING, true));
