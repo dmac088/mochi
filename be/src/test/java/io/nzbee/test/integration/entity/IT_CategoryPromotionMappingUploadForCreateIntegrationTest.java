@@ -77,6 +77,10 @@ public class IT_CategoryPromotionMappingUploadForCreateIntegrationTest {
 		assertThat(cp.getCategories().size())
 		.isEqualTo(2);
 		
+		assertTrue(cp.getCategories().stream().filter(p -> p.getCategoryCode().equals("CIT01")).findAny().isPresent());
+		
+		assertTrue(cp.getCategories().stream().filter(p -> p.getCategoryCode().equals("TRO01")).findAny().isPresent());
+		
 	}
 
 
