@@ -62,7 +62,7 @@ public class PromotionMasterService {
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionBNGNPCT p = 	(op.isPresent()) 
+		PromotionEntity p = 	(op.isPresent()) 
 								? (PromotionBNGNPCT) op.get() 
 								: new PromotionBNGNPCT();
 	

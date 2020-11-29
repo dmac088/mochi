@@ -3,13 +3,11 @@ package io.nzbee.entity.promotion;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service(value="promotionEntityService")
 public class PromotionServiceImpl implements IPromotionService {
 
-	private static final String CACHE_NAME = "promotionCache";
 	
 	@Autowired
 	private IPromotionRepository promotionRepository; 
@@ -18,26 +16,22 @@ public class PromotionServiceImpl implements IPromotionService {
 	private IPromotionDao promotionDao;
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionId")
 	public Optional<PromotionEntity> findById(Long promotionId) {
 		return promotionRepository.findById(promotionId);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionCode")
 	public Optional<PromotionEntity> findByCode(String promotionCode) {
 		return promotionRepository.findByPromotionCode(promotionCode);
 	}
 
 	@Override
-	//@Cacheable(cacheNames = CACHE_NAME, key = "#promotionDesc")
 	public Optional<PromotionEntity> findByDesc(String promotionDesc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public Set<PromotionEntity> findAll() {
 		return promotionRepository.findAll();
 	}
