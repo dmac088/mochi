@@ -1,5 +1,6 @@
 package io.nzbee.entity.promotion;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -35,7 +36,7 @@ public class PromotionDaoImpl implements IPromotionDao {
 	}
 
 	@Override
-	public Set<PromotionDTO> findAll(String locale) {
+	public List<PromotionDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -71,13 +72,13 @@ public class PromotionDaoImpl implements IPromotionDao {
 	}
 
 	@Override
-	public Set<PromotionEntity> findAll() {
+	public List<PromotionEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<PromotionEntity> findAll(Set<String> codes) {
+	public List<PromotionEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -100,7 +101,7 @@ public class PromotionDaoImpl implements IPromotionDao {
 	}
 
 	@Override
-	public Set<PromotionDTO> findAll(String locale, Set<String> PromotionCodes) {
+	public List<PromotionDTO> findAll(String locale, Set<String> PromotionCodes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -112,14 +113,14 @@ public class PromotionDaoImpl implements IPromotionDao {
 	}
 
 	@Override
-	public Set<PromotionDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	public List<PromotionDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> tagCodes, Double maxPrice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<PromotionDTO> findAllByCategory(String locale, String categoryCode) {
+	public List<PromotionDTO> findAllByCategory(String locale, String categoryCode) {
 		// TODO Auto-generated method stub
 		return null;
 	}

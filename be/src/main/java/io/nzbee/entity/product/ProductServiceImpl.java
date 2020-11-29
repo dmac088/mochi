@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,12 +40,12 @@ public class ProductServiceImpl implements IProductService {
 
 
 	@Override
-	public Set<ProductDTO> findAll(String locale) {
+	public List<ProductDTO> findAll(String locale) {
 		return productDAO.findAll(locale);
 	}
 
 	@Override
-	public Set<ProductDTO> findAll(String locale, Set<String> codes) {
+	public List<ProductDTO> findAll(String locale, Set<String> codes) {
 		return productDAO.findAll(locale, codes);
 	}
 
@@ -59,7 +60,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Set<ProductEntity> findAll() {
+	public List<ProductEntity> findAll() {
 		return productRepository.findAll();
 	}
 
@@ -167,7 +168,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public Set<ProductEntity> findAll(Set<String> codes) {
+	public List<ProductEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

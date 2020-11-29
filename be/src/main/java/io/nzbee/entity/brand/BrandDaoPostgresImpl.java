@@ -189,7 +189,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public Set<BrandDTO> findAll(String locale, Set<String> brandCodes) {
+	public List<BrandDTO> findAll(String locale, Set<String> brandCodes) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(brandCodes, ','));
 		
 		Session session = em.unwrap(Session.class);
@@ -216,12 +216,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<BrandDTO> results = query.getResultList();
 		
-		return results.stream().collect(Collectors.toSet());
+		return results;
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public Set<BrandDTO> findAllByCategory(String locale, String categoryCode) {
+	public List<BrandDTO> findAllByCategory(String locale, String categoryCode) {
 		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}", locale, categoryCode);
 		
 		Session session = em.unwrap(Session.class);
@@ -246,7 +246,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<BrandDTO> results = query.getResultList();
 		
-		return results.stream().collect(Collectors.toSet());
+		return results;
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -285,7 +285,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public Set<BrandDTO> findAll(String locale) {
+	public List<BrandDTO> findAll(String locale) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}", locale);
 				
 		Session session = em.unwrap(Session.class);
@@ -306,12 +306,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<BrandDTO> results = query.getResultList();
 		
-		return results.stream().collect(Collectors.toSet());
+		return results;
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public Set<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
@@ -348,7 +348,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<BrandDTO> results = query.getResultList();
 		
-		return results.stream().collect(Collectors.toSet());
+		return results;
 		
 	}
 	
@@ -515,13 +515,13 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 
 	@Override
-	public Set<BrandEntity> findAll() {
+	public List<BrandEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<BrandEntity> findAll(Set<String> codes) {
+	public List<BrandEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

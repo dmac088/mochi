@@ -39,7 +39,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public Set<CategoryBrandEntity> findAll() {
+	public List<CategoryBrandEntity> findAll() {
 		return categoryBrandRepository.findAll();
 	}
 
@@ -62,13 +62,13 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public Set<CategoryBrandDTO> findAll(String locale) {
+	public List<CategoryBrandDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<CategoryBrandDTO> findAll(String locale, Set<String> codes) {
+	public List<CategoryBrandDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -115,7 +115,7 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public Set<CategoryBrandEntity> findAll(Set<String> codes) {
+	public List<CategoryBrandEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

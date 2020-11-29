@@ -1,5 +1,6 @@
 package io.nzbee.entity;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
@@ -12,9 +13,9 @@ public interface ILocalizedDao<T, Z> extends IDao<Z> {
     
     Optional<T> findByDesc(String locale, String desc);
     
-    Set<T> findAll(String locale);
+    List<T> findAll(String locale);
     
-    Set<T> findAll(String locale, Set<String> codes);
+    List<T> findAll(String locale, Set<String> codes);
      
 	T objectToDTO(Tuple t, String locale, String currency);
 

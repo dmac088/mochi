@@ -1,7 +1,7 @@
 package io.nzbee.entity.inventory;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class InventoryTransactionServiceImpl implements IInventoryTransactionSer
 	private IInventoryTransactionRepository inventoryTransactionRepository;
 	
 	@Override
-	public Set<InventoryTransaction> findAll() {
+	public List<InventoryTransaction> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -29,7 +29,7 @@ public class InventoryTransactionServiceImpl implements IInventoryTransactionSer
 	}
 	
 	@Override
-	public Set<InventoryTransaction> findByProductCode(String productCode) {
+	public List<InventoryTransaction> findByProductCode(String productCode) {
 		return inventoryTransactionRepository.findByProductProductUPC(productCode);
 	}
 

@@ -1,7 +1,7 @@
 package io.nzbee.entity.role.supplier;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class SupplierServiceImpl implements ISupplierService {
 	private ISupplierRepository supplierRespository;
 	
 	@Override
-	public Set<Supplier> findAll() {
+	public List<Supplier> findAll() {
 		return supplierRespository.findAll();
 	}
 

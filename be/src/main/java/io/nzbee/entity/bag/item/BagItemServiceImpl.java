@@ -1,7 +1,7 @@
 package io.nzbee.entity.bag.item;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class BagItemServiceImpl implements IBagItemService {
 	private IBagItemRepository bagItemRepository;
 	
 	@Override
-	public Set<BagItemEntity> findAll() {
+	public List<BagItemEntity> findAll() {
 		return bagItemRepository.findAll();
 	}
 

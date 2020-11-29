@@ -1,12 +1,11 @@
 package io.nzbee.entity.inventory;
 
-import java.util.Set;
-
+import java.util.List;
 import io.nzbee.entity.IService;
 
 public interface IInventoryTransactionService extends IService<InventoryTransaction> {
 
-	Set<InventoryTransaction> findByProductCode(String productCode);
+	List<InventoryTransaction> findByProductCode(String productCode);
 
 	
 

@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	private IBrandRepository brandRepository;
 
 	@Override
-	public Set<BrandEntity> findAll() {
+	public List<BrandEntity> findAll() {
 		return brandRepository.findAll();
 	}
 
@@ -67,25 +68,25 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<BrandDTO> findAll(String locale) {
+	public List<BrandDTO> findAll(String locale) {
 		return brandDao.findAll(locale);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<BrandDTO> findAll(String locale, String currency, String categoryCode,  Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	public List<BrandDTO> findAll(String locale, String currency, String categoryCode,  Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		return brandDao.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<BrandDTO> findAll(String locale, Set<String> codes) {
+	public List<BrandDTO> findAll(String locale, Set<String> codes) {
 		return brandDao.findAll(locale, codes);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<BrandDTO> findAll(String locale, String categoryCode) {
+	public List<BrandDTO> findAll(String locale, String categoryCode) {
 		return brandDao.findAllByCategory(locale, categoryCode);
 	}
 	
@@ -96,7 +97,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	public Set<BrandDTO> findAll(String locale, String currency, Set<String> brandCodes) {
+	public List<BrandDTO> findAll(String locale, String currency, Set<String> brandCodes) {
 		return brandDao.findAll(locale, brandCodes);
 	}
 
@@ -141,7 +142,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 
 	@Override
-	public Set<BrandEntity> findAll(Set<String> codes) {
+	public List<BrandEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

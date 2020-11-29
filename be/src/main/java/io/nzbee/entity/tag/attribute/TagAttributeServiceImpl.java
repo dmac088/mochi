@@ -1,5 +1,6 @@
 package io.nzbee.entity.tag.attribute;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
@@ -25,13 +26,13 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	}
 
 	@Override
-	public Set<TagAttributeEntity> findAll() {
+	public List<TagAttributeEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<TagAttributeEntity> findAll(Set<String> codes) {
+	public List<TagAttributeEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -44,7 +45,7 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	}
 	
 	@Override
-	public Set<TagAttributeDTO> findAll(String locale) {
+	public List<TagAttributeDTO> findAll(String locale) {
 		return null;//TagAttributeRepository.findAll();
 	}
 
@@ -62,7 +63,7 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	}
 	
 	@Override
-	public Set<TagAttributeDTO> findAll(String locale, Set<String> codes) {
+	public List<TagAttributeDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -68,13 +68,13 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public Set<ProductPriceDTO> findAll(String locale) {
+	public List<ProductPriceDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<ProductPriceDTO> findAll(String locale, Set<String> codes) {
+	public List<ProductPriceDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -98,7 +98,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public Set<ProductPriceEntity> findAll() {
+	public List<ProductPriceEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -116,7 +116,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public Set<ProductPriceEntity> findAll(Set<String> codes) {
+	public List<ProductPriceEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

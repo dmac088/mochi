@@ -1,5 +1,6 @@
 package io.nzbee.entity.bag;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -20,7 +21,7 @@ public class BagServiceImpl implements IBagService {
 	private IBagDao bagDao;
 	
 	@Override
-	public Set<BagEntity> findAll() {
+	public List<BagEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -37,7 +38,7 @@ public class BagServiceImpl implements IBagService {
 	}
 
 	@Override
-	public Set<BagEntity> findAll(Set<String> userNames) {
+	public List<BagEntity> findAll(Set<String> userNames) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -60,13 +61,13 @@ public class BagServiceImpl implements IBagService {
 	}
 
 	@Override
-	public Set<BagDTO> findAll(String locale) {
+	public List<BagDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<BagDTO> findAll(String locale, Set<String> codes) {
+	public List<BagDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
