@@ -62,7 +62,7 @@ public class PromotionMasterService {
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionEntity p = 	(op.isPresent()) 
+		PromotionBNGNPCT p = 	(op.isPresent()) 
 								? (PromotionBNGNPCT) op.get() 
 								: new PromotionBNGNPCT();
 	
@@ -82,6 +82,8 @@ public class PromotionMasterService {
 		p.setPromotionEndDate(ped);
 		p.setPromotionMechanic(pm.get());
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
+		p.setBuyQty(Integer.parseInt(pms.get_BUY_QUANTITY()));
+		p.setPctDisc(Double.parseDouble(pms.get_BUY_QUANTITY()));
 
 		promotionService.save(p);
 	}
