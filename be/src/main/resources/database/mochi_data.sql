@@ -1110,6 +1110,8 @@ INSERT INTO category_product VALUES (233188);
 -- Data for Name: category_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO category_promotion VALUES (10, 234464);
+INSERT INTO category_promotion VALUES (14, 234467);
 
 
 --
@@ -2216,6 +2218,8 @@ SELECT pg_catalog.setval('product_category_prd_cat_id_seq', 190, true);
 -- Data for Name: product_promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO product_promotion VALUES (13, 234464);
+INSERT INTO product_promotion VALUES (25, 234467);
 
 
 --
