@@ -4004,6 +4004,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_product TO mochi_app;
 
 
 --
+-- Name: category_promotion; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE category_promotion TO mochi_app;
+
+
+--
 -- Name: category_type_cat_typ_id_seq; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4265,6 +4272,13 @@ GRANT ALL ON SEQUENCE product_category_prd_cat_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_category TO mochi_app;
+
+
+--
+-- Name: product_promotion; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE product_promotion TO mochi_app;
 
 
 --
