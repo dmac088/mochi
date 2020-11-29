@@ -8,12 +8,15 @@ import org.hibernate.transform.ResultTransformer;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
+import io.nzbee.entity.promotion.PromotionDTO;
 
 public class ProductDTOResultTransformer implements ResultTransformer {
 
 	private static final long serialVersionUID = 1L;
 	
 	private Map<Long, ProductDTO> productDTOMap = new LinkedHashMap<>();
+	
+	private Map<Long, PromotionDTO> promotionDTOMap = new LinkedHashMap<>();
 	
 	private Map<String, Integer> aliasToIndexMap;
 	
@@ -38,6 +41,21 @@ public class ProductDTOResultTransformer implements ResultTransformer {
         productDTO.getCategories().add(
             new CategoryProductDTO(tuple, aliasToIndexMap)
         );
+        
+        if(!( tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)] == null)) {
+        	
+        	Long promotionId = ((Number) tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)]).longValue();
+        	
+        	PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
+        			promotionId,
+    	            pId -> {
+    	            	PromotionDTO pDto = new PromotionDTO(tuple, aliasToIndexMap);
+    	            	return pDto;
+    	            }
+        	);
+        	
+        	productDTO.getPromotions().add(promotionDTO);
+        }
  
         return productDTO;
 	}

@@ -8,6 +8,7 @@ import java.util.Set;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
+import io.nzbee.entity.promotion.PromotionDTO;
 
 public class ProductDTO {
 	
@@ -50,6 +51,8 @@ public class ProductDTO {
 	
 	//these fields will contain all the categories related to the product 1->N relationship
 	protected Set<CategoryProductDTO> categories = new HashSet<CategoryProductDTO>();
+	
+	protected Set<PromotionDTO> promotions = new HashSet<PromotionDTO>();
 	
 	//pricing objects
 	protected Double retailPrice;
@@ -131,6 +134,14 @@ public class ProductDTO {
 
 	public void setCategories(Set<CategoryProductDTO> categories) {
 		this.categories = categories;
+	}
+	
+	public Set<PromotionDTO> getPromotions() {
+		return promotions;
+	}
+
+	public void setPromotions(Set<PromotionDTO> promotions) {
+		this.promotions = promotions;
 	}
 
 	public BrandDTO getBrand() {
