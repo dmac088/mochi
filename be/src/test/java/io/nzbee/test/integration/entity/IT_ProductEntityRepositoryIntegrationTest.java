@@ -287,6 +287,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	assertThat(found.getMarkdownPrice())
     	.isEqualTo(new Double(6.45));
     	
+    	assertThat(found.getPromotions().size()).isEqualTo(1);
+    	
 //    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }
     
