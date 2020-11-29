@@ -3,11 +3,15 @@ package io.nzbee.entity.promotion;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 @Service(value="promotionEntityService")
 public class PromotionServiceImpl implements IPromotionService {
 
+	private static final String CACHE_NAME = "promotionCache";
 	
 	@Autowired
 	private IPromotionRepository promotionRepository; 
@@ -21,6 +25,7 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionCode")
 	public Optional<PromotionEntity> findByCode(String promotionCode) {
 		return promotionRepository.findByPromotionCode(promotionCode);
 	}
@@ -37,6 +42,12 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 	
 	@Override
+	@Caching(evict = {
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.promotionCode"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#promotion.locale, #promotion.promotionId}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#promotion.locale, #promotion.promotionCode}"),
+			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
+			})
 	public void save(PromotionEntity promotion) {
 		promotionDao.save(promotion);
 	}
