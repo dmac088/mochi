@@ -715,6 +715,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	INNER JOIN mochi.product_attr_lcl attr " + 
 		"	ON prd.prd_id = attr.prd_id " +
+		"	AND attr.lcl_cd = :locale " +	
 		
 		"	WHERE 0=0 " +
 		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		IN :productCodes" 	: "") +
@@ -739,6 +740,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	INNER JOIN mochi.product prd " + 
 		"	ON mprc.prd_id = prd.prd_id " +
+		
+		"	INNER JOIN mochi.product_attr_lcl attr " + 
+		"	ON prd.prd_id = attr.prd_id " +
+		"	AND attr.lcl_cd = :locale " +	
 		
 		"	WHERE 0=0 " +
 		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		IN :productCodes" 	: "") +
