@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.data.domain.Page;
@@ -18,13 +19,13 @@ public interface IProductService extends ILocalizedService<ProductDTO, ProductEn
 
 	Optional<ProductDTO> findByDesc(String locale, String currency, String desc);
 
-	Set<ProductDTO> findAll(String locale, String currency);
+	List<ProductDTO> findAll(String locale, String currency);
 
-	Set<ProductDTO> findAll(String locale, String currency, Set<String> productCodes);
+	List<ProductDTO> findAll(String locale, String currency, Set<String> productCodes);
 
 	Optional<ProductEntity> findByCode(String productUPC);
 
-	<T> Set<ProductEntity> findAllByType(Class<T> cls);
+	<T> List<ProductEntity> findAllByType(Class<T> cls);
  
 	void save(String locale, String currency, ProductEntity product);
 }
