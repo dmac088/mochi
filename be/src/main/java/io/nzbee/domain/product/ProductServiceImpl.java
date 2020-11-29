@@ -1,5 +1,6 @@
 package io.nzbee.domain.product;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,13 +29,13 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	@Transactional(readOnly=true)
-	public Set<Product> findAll(String locale, String currency) {
+	public List<Product> findAll(String locale, String currency) {
 		return productService.findAll(locale, currency);
 	}
 	
 	@Override
 	@Transactional(readOnly=true)
-	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
+	public List<Product> findAll(String locale, String currency, Set<String> codes) {
 		return productService.findAll(locale, currency, codes);	
 	}
 

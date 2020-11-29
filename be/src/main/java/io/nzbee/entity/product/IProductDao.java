@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.data.domain.Page;
@@ -13,7 +14,7 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 							Pageable pageable,
 							String orderby);
 
-	<T> Set<ProductDTO> findAllByType(String locale, String currency, Class<T> cls);
+	<T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls);
 
 
 	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
@@ -23,9 +24,9 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 
 	Optional<ProductDTO> findByDesc(String locale, String currency, String desc);
 
-	Set<ProductDTO> findAll(String locale, String currency);
+	List<ProductDTO> findAll(String locale, String currency);
 
-	Set<ProductDTO> findAll(String locale, String currency, Set<String> codes);
+	List<ProductDTO> findAll(String locale, String currency, Set<String> codes);
 
 	Optional<ProductEntity> findByCode(String productUPC);
 

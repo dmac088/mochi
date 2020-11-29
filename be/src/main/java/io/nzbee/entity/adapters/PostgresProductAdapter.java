@@ -192,20 +192,20 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Product> findAll(String locale, String currency) {
+	public List<Product> findAll(String locale, String currency) {
 		List<ProductDTO> sp = productService.findAll(locale, currency);
-		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
+		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public <T> Set<Product> findAllByType(String locale, String currency, Class<T> cls) {
+	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
 		Class<?> clazz = cls.equals(BasicProduct.class) ? io.nzbee.entity.product.basic.ProductBasicEntity.class
 				: io.nzbee.entity.product.basic.ProductBasicEntity.class;
 
-		Set<ProductDTO> lp = productService.findAllByType(locale, currency, clazz);
-		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
+		List<ProductDTO> lp = productService.findAllByType(locale, currency, clazz);
+		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -224,9 +224,9 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Product> findAll(String locale, String currency, Set<String> codes) {
+	public List<Product> findAll(String locale, String currency, Set<String> codes) {
 		List<ProductDTO> lp =  productService.findAll(locale, currency, codes);
-		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toSet());
+		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 	
 	@Override

@@ -8,7 +8,7 @@ import io.nzbee.entity.ILocalizedService;
 
 public interface IProductService extends ILocalizedService<ProductDTO, ProductEntity> {
 	
-	<T> Set<ProductDTO> findAllByType(String locale, String currency, Class<T> cls);
+	<T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls);
 
 	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
