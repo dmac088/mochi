@@ -23,6 +23,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.util.promotion.PromotionMasterService;
@@ -86,14 +88,10 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		assertThat(cp.getPromotionCode())
 		.isEqualTo("B1G1F");
 		
-//		assertThat(cp.getPromotionDescENGB())
-//		.isEqualTo("Test Promotion");
-//		
-//		assertThat(cp.getPromotionLevel())
-//		.isEqualTo(1);
-//		
-//		assertThat(cp.getPromotionParentCode())
-//		.isEqualTo("PRM02");
+		assertThat(cp.getAttributes().size()).isEqualTo(2);
+		
+		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeENGB)).findAny().get().getPromotionDesc())
+		.isEqualTo("Buy 1 get 1 free");
 		
 	}
 
@@ -108,12 +106,10 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		assertThat(cp.getPromotionCode())
 		.isEqualTo("B1G1F");
 		
-//		assertThat(cp.getPromotionDescZHHK())
-//		.isEqualTo("測試類別");
-//		
-//		assertThat(cp.getPromotionLevel())
-//		.isEqualTo(1);
-//		
+		assertThat(cp.getAttributes().size()).isEqualTo(2);
+		
+		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
+		.isEqualTo("買1送1");
 
 	}
 
