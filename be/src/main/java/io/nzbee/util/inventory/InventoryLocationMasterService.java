@@ -16,7 +16,6 @@ import io.nzbee.entity.inventory.location.InventoryLocation;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-@Transactional
 public class InventoryLocationMasterService {
 	
 	private static final Logger logger = LoggerFactory.getLogger(InventoryLocationMasterService.class);
