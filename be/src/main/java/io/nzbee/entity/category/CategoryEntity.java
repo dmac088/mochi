@@ -18,6 +18,7 @@ import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -34,6 +35,7 @@ import com.google.common.collect.Lists;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.type.CategoryType;
+import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.search.ISearchDimension;
 
 @Entity
@@ -86,6 +88,10 @@ public abstract class CategoryEntity implements ISearchDimension {
 				orphanRemoval = true)
 	private Set<CategoryAttributeEntity> attributes = new HashSet<CategoryAttributeEntity>();
 
+	@ManyToMany(mappedBy = "categories")
+    @JsonIgnore
+    private Set<PromotionEntity> promotions = new HashSet<PromotionEntity>();
+	
 	@Transient 
 	private CategoryAttributeEntity categoryAttribute;
 
@@ -271,6 +277,24 @@ public abstract class CategoryEntity implements ISearchDimension {
 
 	public String getCurrency() {
 		return currency;
+	}
+	
+	public Set<PromotionEntity> getPromotions() {
+		return promotions;
+	}
+
+	public void setPromotions(Set<PromotionEntity> promotions) {
+		this.promotions = promotions;
+	}
+
+	public void addPromotion(PromotionEntity promotion) {
+		this.getPromotions().add(promotion);
+		promotion.getCategories().add(this);
+	}
+	
+	public void removePromotion(PromotionEntity promotion) {
+		this.getPromotions().remove(promotion);
+		promotion.removeCategory(this);
 	}
 	
 	@JsonIgnore
