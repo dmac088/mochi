@@ -19,6 +19,7 @@ import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
 
@@ -43,6 +44,9 @@ public class ProductEntityBeanFactory {
 	    
 	@Autowired
 	private ICategoryService categoryService;
+	
+	@Autowired
+	private IPromotionService promotionService;
 	
 	@Autowired
 	private ITagService tagService;
@@ -123,6 +127,9 @@ public class ProductEntityBeanFactory {
 		TagEntity t = tagService.findByCode("ORG01").get();
 		
 		product.addTag(t);
+		
+		//we should add a promotion 
+		product.addPromotion(promotionService.findByCode("B1G1F").get());
 		
 		return product;
 	}
