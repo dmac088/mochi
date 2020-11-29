@@ -25,7 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.PromotionMasterService;
+import io.nzbee.util.promotion.product.ProductPromotionMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -44,7 +44,7 @@ public class IT_ProductPromotionMappingUploadForCreateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private PromotionMasterService pms;
+	private ProductPromotionMasterService pms;
 
 	@Autowired
 	private IPromotionService promotionService;
@@ -54,7 +54,7 @@ public class IT_ProductPromotionMappingUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writePromotionMaster(file.getAbsolutePath() + "/data/promotion/mapping/product_promotion_mapping.tsv");
+		pms.writeProductPromotionMaster(file.getAbsolutePath() + "/data/promotion/mapping/product/product_promotion_mapping.tsv");
 	}
 
 	@Test
