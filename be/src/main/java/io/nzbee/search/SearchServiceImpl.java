@@ -443,8 +443,7 @@ public class SearchServiceImpl implements ISearchService {
 		List<ProductDTO> finalResult = new ArrayList<>(lp);
 		
 		Collections.sort(finalResult, Comparator.comparing(item -> orderedIds.indexOf(((ProductDTO) item).getProductUPC())));		
-											  
-				 
+	 
 		return new PageImpl<ProductDTO>(finalResult, pageable, jpaQuery.getResultSize());
 
 	}
