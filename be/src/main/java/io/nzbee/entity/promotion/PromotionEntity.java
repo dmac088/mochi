@@ -83,7 +83,7 @@ public abstract class PromotionEntity {
 	@JoinTable(		name 				= "product_promotion", 
 					schema				= "mochi", 
 		   			joinColumns 		= @JoinColumn(name = "prm_id"), 
-		   			inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
+		   			inverseJoinColumns 	= @JoinColumn(name = "prd_id"))
 	private Set<ProductEntity> products = new HashSet<ProductEntity>();
 
 	@Transient
