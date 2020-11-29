@@ -367,7 +367,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	ON p.prd_id = soh.soh_prd_id 									" +
 		
 		"WHERE 0=0 															" +
-	//	"AND prd_sts_cd = 			:activeProductCode  					" + 
 		"AND usr.user_name = 		:userName 								";
 		
 		LOGGER.debug(sql);
