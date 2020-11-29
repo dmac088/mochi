@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -128,7 +129,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	Set<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
+    	List<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
 		    											Constants.currencyUSD, 
 		    											"FRT01",
 		    											categories,
@@ -151,7 +152,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	Set<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
+    	List<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
     													Constants.currencyUSD, 
     													"FRT01", 
     													categories,
@@ -173,7 +174,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	tags.add("GFR01");
     	
     	//when
-    	Set<CategoryDTO> lc = categoryService.findAll(		Constants.localeENGB, 
+    	List<CategoryDTO> lc = categoryService.findAll(		Constants.localeENGB, 
 		    												Constants.currencyUSD, 
 		    												"FRT01", 
 		    												categories,
