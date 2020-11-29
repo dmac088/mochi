@@ -562,22 +562,22 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"		prm.prm_cd, " +
 				"		pat.prm_desc " +
 				" from categories c " +
-				"	inner join mochi.category_promotion cp  " +
+				"	INNER JOIN mochi.category_promotion cp  " +
 				"		on c.cat_id = cp.cat_id  " +
 					
-				"	inner join mochi.promotion prm  " +
+				"	INNER JOIN mochi.promotion prm  " +
 				"		on cp.prm_id = prm.prm_id " +
 					
-				"	inner join mochi.promotion_attr_lcl pat " +
+				"	INNER JOIN mochi.promotion_attr_lcl pat " +
 				"		on prm.prm_id = pat.prm_id " +
 	
-				"	inner join mochi.product_category pc " +
+				"	INNER JOIN mochi.product_category pc " +
 				"		on c.cat_id = pc.cat_id " +
 				
-				"   inner join mochi.product prd " +
+				"   INNER JOIN mochi.product prd " +
 				"		on pc.prd_id = prd.prd_id " +
 				
-				"	inner join mochi.product_attr_lcl attr " + 
+				"	INNER JOIN mochi.product_attr_lcl attr " + 
 				"		on prd.prd_id = attr.prd_id " +
 											 
 				" where pat.lcl_cd 	= :locale " +
@@ -594,16 +594,16 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"	   pat.prm_desc  " +
 				" from mochi.product prd  " + 
 			
-				"	inner join mochi.product_promotion pp  " +
+				"	INNER JOIN mochi.product_promotion pp  " +
 				"		on prd.prd_id = pp.prd_id  " +
 				
-				"	inner join mochi.promotion prm  " +
+				"	INNER JOIN mochi.promotion prm  " +
 				"		on pp.prm_id = prm.prm_id  " +
 						
-				"	inner join mochi.promotion_attr_lcl pat " +
+				"	INNER JOIN mochi.promotion_attr_lcl pat " +
 				"		on prm.prm_id = pat.prm_id " +
 				
-				"	inner join mochi.product_attr_lcl attr " + 
+				"	INNER JOIN mochi.product_attr_lcl attr " + 
 				"		on prd.prd_id = attr.prd_id " +
 	
 				" where pat.lcl_cd 	= :locale " +
@@ -698,31 +698,55 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	ON bnd.bnd_id = bal.bnd_id   " + 
 		
 		"	LEFT JOIN  ( " + 
-		"	SELECT prd_id, " +  
+		"	SELECT prd.prd_id, " +  
 		"		   prc_val  " +  
 		"	FROM mochi.price rprc " +  
+		
 		"	INNER JOIN mochi.currency rcurr " +  
 		"	ON         rprc.ccy_id = rcurr.ccy_id " +  
 		"	AND        rcurr.ccy_cd = :currency " + 
 		
 		"	INNER JOIN mochi.price_type rpt " + 
 		"	ON         rprc.prc_typ_id = rpt.prc_typ_id " +  
-		"	AND        rpt.prc_typ_cd = :retailPriceCode " +  
+		"	AND        rpt.prc_typ_cd = :retailPriceCode " +
+		
+		"	INNER JOIN mochi.product prd " + 
+		"	ON rprc.prd_id = prd.prd_id " +
+		
+		"	INNER JOIN mochi.product_attr_lcl attr " + 
+		"	ON prd.prd_id = attr.prd_id " +
+		
+		"	WHERE 0=0 " +
+		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		IN :productCodes" 	: "") +
+		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
+		((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 	: "") +
+		
 		"	) rprc " + 
 		"	ON prd.prd_id = rprc.prd_id " +  
 		
 		"	LEFT JOIN  ( " +
-		"	SELECT prd_id, " +  
-		"		   prc_val " + 
-		"		FROM mochi.price mprc " + 
-		"		INNER JOIN mochi.currency mcurr " + 
-	    "		ON         mprc.ccy_id = mcurr.ccy_id  " + 
-		"		AND        mcurr.ccy_cd = :currency  " +
-		"		INNER JOIN mochi.price_type mpt " +
-		"		ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
-		"		AND        mpt.prc_typ_cd = :markdownPriceCode " + 
+		"	SELECT prd.prd_id, " +  
+		"		   mprc.prc_val " + 
+		"	FROM mochi.price mprc " + 
+		
+		"	INNER JOIN mochi.currency mcurr " + 
+	    "	ON         mprc.ccy_id = mcurr.ccy_id  " + 
+		"	AND        mcurr.ccy_cd = :currency  " +
+	    
+		"	INNER JOIN mochi.price_type mpt " +
+		"	ON         mprc.prc_typ_id = mpt.prc_typ_id " + 
+		"	AND        mpt.prc_typ_cd = :markdownPriceCode " + 
+		
+		"	INNER JOIN mochi.product prd " + 
+		"	ON mprc.prd_id = prd.prd_id " +
+		
+		"	WHERE 0=0 " +
+		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		IN :productCodes" 	: "") +
+		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
+		((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 	: "") +
+		
 		"		) mprc  " +
-		"		ON prd.prd_id = mprc.prd_id  " +
+		"	ON prd.prd_id = mprc.prd_id  " +
 	
 		"	LEFT JOIN mochi.product_basic acc " + 
 		"	ON prd.prd_id = acc.prd_id    " +
