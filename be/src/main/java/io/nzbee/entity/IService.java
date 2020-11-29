@@ -1,11 +1,11 @@
 package io.nzbee.entity;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 public interface IService<T> {
 
-	public Set<T> findAll();
+	public List<T> findAll();
 	
 	public Optional<T> findById(Long id);
 	

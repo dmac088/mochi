@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -101,7 +102,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			
 			//get all the tags
 			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
-			Set<TagEntity> tags = tagService.findAll(tagCodes);	
+			List<TagEntity> tags = tagService.findAll(tagCodes);	
 			
 		
 			// find the brand

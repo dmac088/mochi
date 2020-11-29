@@ -1,5 +1,6 @@
 package io.nzbee.entity.category;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
+	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
 			Set<String> tags, Double maxPrice) {
 		return categoryDAO.findAll(locale, currency, categoryCode, categoryCodes, brands, tags, maxPrice);
 	}
@@ -78,42 +79,42 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<CategoryDTO> findAll(String locale) {
+	public List<CategoryDTO> findAll(String locale) {
 		return categoryDAO.findAll(locale);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
+	public List<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
 		return categoryDAO.findAll(locale, categoryCodes);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public <T> Set<CategoryDTO> findAll(String locale, Class<T> classType) {
+	public <T> List<CategoryDTO> findAll(String locale, Class<T> classType) {
 		return categoryDAO.findAllByType(locale, classType);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<CategoryEntity> findByParent(String locale, String parentCategoryCode) {
+	public List<CategoryEntity> findByParent(String locale, String parentCategoryCode) {
 		return categoryDAO.findByParent(locale, parentCategoryCode);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<CategoryEntity> findAllForLevel(String locale, Long level) {
+	public List<CategoryEntity> findAllForLevel(String locale, Long level) {
 		return categoryDAO.findByLevel(locale, level);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<CategoryEntity> findAll() {
+	public List<CategoryEntity> findAll() {
 		return categoryDAO.findAll();
 	}
 	
 	@Override
-	public Set<CategoryDTO> findAll(String locale, String currency, Set<String> categoryCodes) {
+	public List<CategoryDTO> findAll(String locale, String currency, Set<String> categoryCodes) {
 		return categoryDAO.findAll(locale, categoryCodes);
 	}
 
@@ -157,7 +158,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	public Set<CategoryEntity> findAll(Set<String> codes) {
+	public List<CategoryEntity> findAll(Set<String> codes) {
 		return categoryDAO.findAll(codes);
 	}
 

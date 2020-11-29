@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -121,7 +122,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	Set<String> tagCodes 		= new HashSet<String>();
     	
         // when
-    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+    	List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
 					  								categoryCodes, 
@@ -142,7 +143,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	categoryCodes.add("POM01");
     	
         // when
-    	Set<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+    	List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
 					  								categoryCodes, 

@@ -1,7 +1,7 @@
 package io.nzbee.entity.stock;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class StockOnHandServiceImpl implements IStockOnHandService {
 	private IStockOnHandRepository stockOnHandRepository;
 	
 	@Override
-	public Set<StockOnHand> findAll() {
+	public List<StockOnHand> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

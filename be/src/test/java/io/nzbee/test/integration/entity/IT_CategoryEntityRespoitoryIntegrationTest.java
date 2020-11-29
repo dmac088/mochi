@@ -22,6 +22,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import antlr.collections.List;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.ICategoryService;
@@ -56,7 +58,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
-		Set<CategoryDTO> found = categoryService.findAll(Constants.localeENGB);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB);
 
 		System.out.println("size = " + found.size());
 		
@@ -72,7 +74,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		Set<CategoryDTO> found = categoryService.findAll(Constants.localeENGB,
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB,
 													  Constants.currencyHKD, 
 													  ls);
 
@@ -89,7 +91,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		Set<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, ls);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, ls);
 
 		// then
 		assertNotNull(found);
@@ -104,7 +106,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		Set<CategoryDTO> found = categoryService.findAll( Constants.localeENGB, 
+		List<CategoryDTO> found = categoryService.findAll( Constants.localeENGB, 
 														  Constants.currencyHKD, 
 														  "FRT01", 
 														  ls, 
@@ -121,7 +123,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategories_thenReturnAllCategories() {
 		
 		//when
-		Set<CategoryDTO> found = categoryService.findAll(   Constants.localeENGB, 
+		List<CategoryDTO> found = categoryService.findAll(   Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
@@ -138,7 +140,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategoriesWithNullPrice_thenReturnAllCategories() {
 		
 		//when
-		Set<CategoryDTO> found = categoryService.findAll(   Constants.localeENGB, 
+		List<CategoryDTO> found = categoryService.findAll(   Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
@@ -155,7 +157,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
 
 		// when
-		Set<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryBrandEntity.class);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryBrandEntity.class);
 
 		// then
 		assertAllBrandCategoriesFound(found);
@@ -165,7 +167,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
 
 		// when
-		Set<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryProductEntity.class);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryProductEntity.class);
 
 		// then
 		assertAllProductCategoriesFound(found);
@@ -259,19 +261,19 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertThat(found).isEqualTo(new Double("11.0"));
 	}
 
-	private void assertAllCategoriesFound(final Set<CategoryDTO> found) {
+	private void assertAllCategoriesFound(final List<CategoryDTO> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found.size()).isEqualTo(88);
 	}
 
-	private void assertAllBrandCategoriesFound(final Set<CategoryDTO> found) {
+	private void assertAllBrandCategoriesFound(final List<CategoryDTO> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found.size()).isEqualTo(1);
 	}
 
-	private void assertAllProductCategoriesFound(final Set<CategoryDTO> found) {
+	private void assertAllProductCategoriesFound(final List<CategoryDTO> found) {
 
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(87);

@@ -1,30 +1,31 @@
 package io.nzbee.entity.category;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.ILocalizedDao;
 
 public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity> {
 	
-	Set<CategoryEntity> findByParent(String locale, String parentCategoryCode);
+	List<CategoryEntity> findByParent(String locale, String parentCategoryCode);
 	
-	Set<CategoryEntity> findByLevel(String locale, Long level);
+	List<CategoryEntity> findByLevel(String locale, Long level);
 
-	Set<CategoryDTO> findAll(String locale);
+	List<CategoryDTO> findAll(String locale);
 	
-	Set<CategoryDTO> findAll(String locale, Set<String> categoryCodes);
+	List<CategoryDTO> findAll(String locale, Set<String> categoryCodes);
 	
-	Set<CategoryEntity> findAllByProductCode(String locale, String productCode);
+	List<CategoryEntity> findAllByProductCode(String locale, String productCode);
 
-	<T> Set<CategoryDTO> findAllByType(String locale, Class<T> cls);
+	<T> List<CategoryDTO> findAllByType(String locale, Class<T> cls);
 
-	Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);
 
 	Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes);
 
-	Set<CategoryEntity> findAll();
+	List<CategoryEntity> findAll();
 
 	Optional<CategoryEntity> findByCode(String categoryCode);
 	

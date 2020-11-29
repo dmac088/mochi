@@ -1,7 +1,7 @@
 package io.nzbee.entity.promotion.mechanic;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,6 +11,6 @@ public interface IPromotionMechanicRepository extends CrudRepository<PromotionMe
 	
 	Optional<PromotionMechanic> findByPromotionMechanicDesc(String promotionMechanicDesc);
 	
-	Set<PromotionMechanic> findAll();
+	List<PromotionMechanic> findAll();
 }
 

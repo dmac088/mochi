@@ -1,5 +1,6 @@
 package io.nzbee.entity.promotion;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 	
 	@Override
-	public Set<PromotionEntity> findAll() {
+	public List<PromotionEntity> findAll() {
 		return promotionRepository.findAll();
 	}
 	
@@ -65,19 +66,19 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 
 	@Override
-	public Set<PromotionDTO> findAll(String locale) {
+	public List<PromotionDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<PromotionDTO> findAll(String locale, Set<String> codes) {
+	public List<PromotionDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<PromotionEntity> findAll(Set<String> codes) {
+	public List<PromotionEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

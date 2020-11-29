@@ -1,5 +1,6 @@
 package io.nzbee.entity.tag;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
-	public Set<TagEntity> findAll() {
+	public List<TagEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -46,18 +47,18 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<TagDTO> findAll(String locale) {
+	public List<TagDTO> findAll(String locale) {
 		return productTagDAO.findAll(locale);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<TagDTO> findAll(String locale, Set<String> codes) {
+	public List<TagDTO> findAll(String locale, Set<String> codes) {
 		return productTagDAO.findAll(locale, codes);
 	}
 	
 	@Override
-	public Set<TagEntity> findAll(Set<String> codes) {
+	public List<TagEntity> findAll(Set<String> codes) {
 		return productTagDAO.findAll(codes);
 	}
 
@@ -97,7 +98,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<TagDTO> findAll(String lcl, String currency, Set<String> codes) {
+	public List<TagDTO> findAll(String lcl, String currency, Set<String> codes) {
 		return productTagDAO.findAll(lcl, codes);
 	}
 	

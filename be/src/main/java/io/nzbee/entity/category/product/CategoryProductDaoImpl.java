@@ -145,13 +145,13 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	}
 
 	@Override
-	public Set<CategoryProductDTO> findAll(String locale) {
+	public List<CategoryProductDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<CategoryProductDTO> findAll(String locale, Set<String> codes) {
+	public List<CategoryProductDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -210,13 +210,13 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	}
 
 	@Override
-	public Set<CategoryProductEntity> findAll() {
+	public List<CategoryProductEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<CategoryProductEntity> findAll(Set<String> codes) {
+	public List<CategoryProductEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

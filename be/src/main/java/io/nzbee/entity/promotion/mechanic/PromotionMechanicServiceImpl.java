@@ -1,7 +1,7 @@
 package io.nzbee.entity.promotion.mechanic;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -34,7 +34,7 @@ public class PromotionMechanicServiceImpl implements IPromotionMechanicService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Set<PromotionMechanic> findAll() {
+	public List<PromotionMechanic> findAll() {
 		return promotionMechanicRepository.findAll();
 	}
 	

@@ -41,7 +41,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	private EntityManager em;
 
 	@Override
-	public Set<ProductEntity> findAll(Set<String> codes) {
+	public List<ProductEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -850,14 +850,14 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 
 	@Override
-	public Set<ProductDTO> findAll(String locale) {
+	public List<ProductDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 
 	@Override
-	public Set<ProductDTO> findAll(String locale, Set<String> codes) {
+	public List<ProductDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -893,7 +893,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 
 	@Override
-	public Set<ProductEntity> findAll() {
+	public List<ProductEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

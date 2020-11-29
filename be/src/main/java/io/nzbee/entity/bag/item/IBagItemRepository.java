@@ -1,11 +1,11 @@
 package io.nzbee.entity.bag.item;
 
-import java.util.Set;
+import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IBagItemRepository extends CrudRepository<BagItemEntity, Long> {
 	
-	Set<BagItemEntity> findAll();
+	List<BagItemEntity> findAll();
 	
 	
 	//@Query()

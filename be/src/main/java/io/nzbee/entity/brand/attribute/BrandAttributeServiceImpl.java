@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand.attribute;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.Tuple;
@@ -19,11 +20,11 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 	}
 	
 	@Override
-	public Set<BrandAttributeDTO> findAll(String locale) {
-		return null;//BrandAttributeRepository.findAll();
+	public List<BrandAttributeDTO> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
-
 	@Override
 	public Optional<BrandAttributeDTO> findByCode(String locale, String code) {
 		return null;//BrandAttributeRepository.findByLclCdAndBrandBrandCode(locale, code);
@@ -36,7 +37,7 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 	}
 	
 	@Override
-	public Set<BrandAttributeDTO> findAll(String locale, Set<String> codes) {
+	public List<BrandAttributeDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -108,12 +109,12 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 	}
 
 	@Override
-	public Set<BrandAttributeEntity> findAll() {
+	public List<BrandAttributeEntity> findAll() {
 		return brandAttributeRepository.findAll();
 	}
 
 	@Override
-	public Set<BrandAttributeEntity> findAll(Set<String> codes) {
+	public List<BrandAttributeEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

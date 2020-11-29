@@ -97,7 +97,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	
 	@Override
-	public Set<CategoryEntity> findAll() {
+	public List<CategoryEntity> findAll() {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll ");
 		
@@ -115,11 +115,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				.distinct(false)
 		);
 		
-		return query.getResultStream().collect(Collectors.toSet());
+		return query.getResultList();
 	}
 	
 	@Override
-	public Set<CategoryEntity> findAll(Set<String> codes) {
+	public List<CategoryEntity> findAll(Set<String> codes) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll with parameter {} ", ArrayUtils.toString(codes));
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -140,7 +140,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				.distinct(false)
 		);
 	
-		return new HashSet<CategoryEntity>(query.getResultList());
+		return query.getResultList();
 	}
 	
 	@Override
@@ -184,7 +184,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public <T> Set<CategoryDTO> findAllByType(String locale, Class<T> cls) {
+	public <T> List<CategoryDTO> findAllByType(String locale, Class<T> cls) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, cls.getSimpleName(), cls.getAnnotation(DiscriminatorValue.class).value());
 		
@@ -210,16 +210,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new CategoryDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
-		Set<CategoryDTO> results = new HashSet<CategoryDTO>(query.getResultList());
-		
-		return results;
+		return query.getResultList();
 	}
 	
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public Set<CategoryDTO> findAll(String locale) {
+	public List<CategoryDTO> findAll(String locale) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}", locale);
 		
@@ -242,17 +239,14 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new CategoryDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
-		Set<CategoryDTO> results = new HashSet<CategoryDTO>(query.getResultList());
-		
-		return results;
+		return query.getResultList();
 	}
 	
 
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public Set<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
+	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes, Double maxPrice) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes), StringUtils.join(tagCodes));
@@ -292,16 +286,13 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new CategoryDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
-		Set<CategoryDTO> results = new HashSet<CategoryDTO>(query.getResultList());
-		
-		return results;
+		return query.getResultList();
 	}
 
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public Set<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
+	public List<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(categoryCodes, ','));
 		
@@ -328,10 +319,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new CategoryDTOResultTransformer());
 		
-		@SuppressWarnings("unchecked")
-		Set<CategoryDTO> results = new HashSet<CategoryDTO>(query.getResultList());
-		
-		return results;
+		return query.getResultList();
 	}
 	
 	
@@ -464,7 +452,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 
 	@Override
-	public Set<CategoryEntity> findByParent(String parentCategoryCode, String locale) {
+	public List<CategoryEntity> findByParent(String parentCategoryCode, String locale) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByParent parameters : {}, {}", parentCategoryCode, locale);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -490,12 +478,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				.distinct(true)
 		);
 		
-		return query.getResultStream().collect(Collectors.toSet());
+		return query.getResultList();
 	}
 	
 	
 	@Override
-	public Set<CategoryEntity> findByLevel(String locale, Long level) {
+	public List<CategoryEntity> findByLevel(String locale, Long level) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByLevel parameters : {}, {}", locale, level);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -519,11 +507,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				.distinct(true)
 		);
 		
-		return query.getResultStream().collect(Collectors.toSet());
+		return query.getResultList();
 	}
 	
 	@Override
-	public Set<CategoryEntity> findAllByProductCode(String locale, String productCode) {
+	public List<CategoryEntity> findAllByProductCode(String locale, String productCode) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByProductCode parameters : {}, {}, {}", locale, productCode);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -546,7 +534,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				.distinct(true)
 		);
 		
-		return query.getResultStream().collect(Collectors.toSet());
+		return query.getResultList();
 	}
 
 	@Override

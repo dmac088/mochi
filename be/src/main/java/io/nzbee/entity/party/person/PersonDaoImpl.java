@@ -106,7 +106,7 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 
 	@Override
-	public Set<PersonEntity> findAll() {
+	public List<PersonEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -129,7 +129,7 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 
 	@Override
-	public Set<PersonEntity> findAll(Set<String> codes) {
+	public List<PersonEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

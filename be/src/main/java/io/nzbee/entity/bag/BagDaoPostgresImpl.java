@@ -1,5 +1,6 @@
 package io.nzbee.entity.bag;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
@@ -64,13 +65,13 @@ public class BagDaoPostgresImpl implements IBagDao {
 	}
 
 	@Override
-	public Set<BagDTO> findAll(String locale) {
+	public List<BagDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<BagDTO> findAll(String locale, Set<String> codes) {
+	public List<BagDTO> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -112,13 +113,13 @@ public class BagDaoPostgresImpl implements IBagDao {
 	}
 
 	@Override
-	public Set<BagEntity> findAll() {
+	public List<BagEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<BagEntity> findAll(Set<String> codes) {
+	public List<BagEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

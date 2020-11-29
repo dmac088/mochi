@@ -1,7 +1,7 @@
 package io.nzbee.entity.promotion;
 
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,6 +11,6 @@ public interface IPromotionRepository extends CrudRepository<PromotionEntity, Lo
 	
 	Optional<PromotionEntity> findByAttributesLocaleAndAttributesPromotionDesc(String locale, String promotionDesc);
 	
-	Set<PromotionEntity> findAll();
+	List<PromotionEntity> findAll();
 }
 
