@@ -16,6 +16,8 @@ public class ProductDTOResultTransformer implements ResultTransformer {
 	
 	private Map<Long, ProductDTO> productDTOMap = new LinkedHashMap<>();
 	
+	private Map<Long, CategoryProductDTO> categoryProductDTOMap = new LinkedHashMap<>();
+	
 	private Map<Long, PromotionDTO> promotionDTOMap = new LinkedHashMap<>();
 	
 	private Map<String, Integer> aliasToIndexMap;
@@ -31,31 +33,44 @@ public class ProductDTOResultTransformer implements ResultTransformer {
  
         ProductDTO productDTO = productDTOMap.computeIfAbsent(
             productId,
-            id -> new ProductDTO(tuple, aliasToIndexMap)
+            id -> {
+            	ProductDTO pDto = new ProductDTO(tuple, aliasToIndexMap);
+            	
+            	if(!( tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)] == null)) {
+                	
+                	Long promotionId = ((Number) tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)]).longValue();
+                	
+                	PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
+                			promotionId,
+            	            pId -> {
+            	            	PromotionDTO promoDto = new PromotionDTO(tuple, aliasToIndexMap);
+            	            	return promoDto;
+            	            }
+                	);
+                	
+                	pDto.getPromotions().add(promotionDTO);
+                }
+            	
+            	pDto.setBrand(new BrandDTO(tuple, aliasToIndexMap));
+                
+            	pDto.setDepartment(new DepartmentDTO(tuple, aliasToIndexMap));
+                 
+            	return pDto;
+            }
         );
         
-        productDTO.setBrand(new BrandDTO(tuple, aliasToIndexMap));
+        Long categoryId = ((Number) tuple[aliasToIndexMap.get(CategoryProductDTO.ID_ALIAS)]).longValue();
         
-        productDTO.setDepartment(new DepartmentDTO(tuple, aliasToIndexMap));
-         
-        productDTO.getCategories().add(
-            new CategoryProductDTO(tuple, aliasToIndexMap)
+        categoryProductDTOMap.computeIfAbsent(
+                categoryId,
+                id -> {
+                	CategoryProductDTO cDto = new CategoryProductDTO(tuple, aliasToIndexMap);
+                	productDTO.getCategories().add(
+                            new CategoryProductDTO(tuple, aliasToIndexMap)
+                    );
+                	return cDto;
+                }
         );
-        
-        if(!( tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)] == null)) {
-        	
-        	Long promotionId = ((Number) tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)]).longValue();
-        	
-        	PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
-        			promotionId,
-    	            pId -> {
-    	            	PromotionDTO pDto = new PromotionDTO(tuple, aliasToIndexMap);
-    	            	return pDto;
-    	            }
-        	);
-        	
-        	productDTO.getPromotions().add(promotionDTO);
-        }
  
         return productDTO;
 	}
