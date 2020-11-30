@@ -195,7 +195,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"		   FROM mochi.bag bag							" +
 		
 		"		   INNER JOIN mochi.party pty 					" +
-		"		   ON bi.bag_id = bag.pty_id					" +
+		"		   ON bag.pty_id = bag.pty_id					" +
 		
 		"		   INNER JOIN mochi.bag_item bi 				" +
 		"   	   ON bi.bag_id = bag.bag_id 					" +
@@ -375,8 +375,8 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		"	LEFT JOIN " +
 		"	        ( " +
-		"	                    SELECT     prd_id, " +
-		"	                                prc_val " +
+		"	                    SELECT     rprc.prd_id, " +
+		"	                               prc_val " +
 		"	                    FROM       mochi.price rprc " +
 		
 		"	                    INNER JOIN mochi.currency rcurr " +
@@ -384,7 +384,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	                    AND        rcurr.ccy_cd = :currency" +
 		
 		"						INNER JOIN bag_items bi 					" +
-		"						ON mprc.prd_id = bi.prd_id 					" +
+		"						ON rprc.prd_id = bi.prd_id 					" +
 		
 		"	                    INNER JOIN mochi.price_type rpt " +
 		"	                    ON         rprc.prc_typ_id = rpt.prc_typ_id " +
@@ -393,7 +393,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		"	LEFT JOIN " +
 		"	        ( " +
-		"	                    SELECT     prd_id, 							" +
+		"	                    SELECT     mprc.prd_id,  					" +
 		"	                               prc_val 							" +
 		"	                    FROM       mochi.price mprc 				" +
 		
