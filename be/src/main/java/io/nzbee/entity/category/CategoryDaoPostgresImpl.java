@@ -180,7 +180,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public <T> List<CategoryDTO> findAllByType(String locale, Class<T> cls) {
 		
@@ -212,7 +212,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public List<CategoryDTO> findAll(String locale) {
 		
@@ -242,7 +242,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
 			Set<String> tagCodes, Double maxPrice) {
@@ -288,7 +288,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public List<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
 		

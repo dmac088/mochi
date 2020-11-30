@@ -181,7 +181,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public List<TagDTO> findAll(String locale, Set<String> tagCodes) {
 		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(tagCodes));
@@ -226,7 +226,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 	}
 	
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public List<TagDTO> findAll(String locale) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale);
