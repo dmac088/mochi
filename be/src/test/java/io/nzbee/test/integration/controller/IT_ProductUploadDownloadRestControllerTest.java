@@ -3,6 +3,7 @@ package io.nzbee.test.integration.controller;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashSet;
 import org.junit.Assert;
 import org.junit.Before;
@@ -84,7 +85,7 @@ public class IT_ProductUploadDownloadRestControllerTest {
     @Test
     public void testDownloadFile() throws Exception {
         Mockito.when(productService.findAll("en-GB", "HKD"))
-        						   .thenReturn(new HashSet<>());
+        						   .thenReturn(new ArrayList<>());
         
         
         MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/Product/Download/food_master.txt")
