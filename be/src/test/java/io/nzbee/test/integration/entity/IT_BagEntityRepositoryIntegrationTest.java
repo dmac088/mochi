@@ -17,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -111,6 +112,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
     @Test
 	@WithUserDetails(value = "admin")
+    @Rollback(false)
     public void whenFindByUsername_thenReturnBagDTO() {
     	
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
@@ -135,7 +137,17 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	
     	assertTrue(bag.isPresent());
     	
-    	assertThat(bag.get().getBagItems().size()).isEqualTo(0);
+    	BagDTO bDto = bag.get();
+    	
+    	assertThat(bDto.getCustomer().getCustomerNumber()).isEqualTo("1000000070");
+    	
+    	assertThat(bDto.getCustomer().getGivenName()).isEqualTo("Daniel");
+    			
+    	assertThat(bDto.getCustomer().getFamilyName()).isEqualTo("Mackie");
+    			
+    	assertThat(bDto.getCustomer().getUserName()).isEqualTo("dmac088");
+    	
+    	assertThat(bDto.getBagItems().size()).isEqualTo(0);
     }
     
     @After
