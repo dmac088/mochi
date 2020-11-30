@@ -23,6 +23,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
+import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
@@ -66,10 +67,10 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
     @Before
     public void setUp() { 
-    	this.persistNewBag();
+    	this.persistNewBagEntity();
     }
     
-	public BagEntity persistNewBag() {
+	public BagEntity persistNewBagEntity() {
 		
 		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", Constants.partyRoleCustomer);
 		
@@ -87,34 +88,51 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
     @Test
 	@WithUserDetails(value = "admin")
-    public void whenFindById_thenReturnBag() {
+    public void whenFindById_thenReturnBagEntity() {
     	
     	//persist a bag and then make sure we can retrieve it by id
     	Optional<BagEntity> found = bagService.findById(bag.getBagId());
      
         // then
-    	assertFound(found);
+    	assertEntityFound(found);
     }
     
     @Test
 	@WithUserDetails(value = "admin")
-    public void thenFindByUsername_thenReturnBag() {
+    public void whenFindByUsername_thenReturnBagEntity() {
     	
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
     	Optional<BagEntity> found = bagService.findByCode("dmac088");
     	
     	//then
-    	assertFound(found);
+    	assertEntityFound(found);
+    }
+    
+    @Test
+	@WithUserDetails(value = "admin")
+    public void whenFindByUsername_thenReturnBagDTO() {
+    	
+    	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
+    	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "dmac088");
+    	
+    	//then
+    	assertDTOFound(found);
     }
  
     
-    private void assertFound(Optional<BagEntity> bag) {
+    private void assertEntityFound(Optional<BagEntity> bag) {
     	assertNotNull(bag);
     	
     	assertTrue(bag.isPresent());
     	
     	assertNotNull(bag.get().getBagCreatedDateTime());
     	assertNotNull(bag.get().getBagUpdatedDateTime());
+    }
+    
+    private void assertDTOFound(Optional<BagDTO> bag) {
+    	assertNotNull(bag);
+    	
+    	assertTrue(bag.isPresent());
     }
     
     @After
