@@ -1,5 +1,6 @@
 package io.nzbee.test.integration.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.Optional;
@@ -133,6 +134,8 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	assertNotNull(bag);
     	
     	assertTrue(bag.isPresent());
+    	
+    	assertThat(bag.get().getBagItems().size()).isEqualTo(0);
     }
     
     @After
