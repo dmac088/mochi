@@ -78,23 +78,22 @@ public class IT_BagEntityRepositoryIntegrationTest {
 		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
 	    //persist a new transient test category
-	    //entityManager.persist(bag);
+	    entityManager.persist(bag);
 	    
 	    return bag;
 	    
 	}
-   
-    
-//    @Test
-//	@WithUserDetails(value = "admin")
-//    public void whenFindById_thenReturnBagEntity() {
-//    	
-//    	//persist a bag and then make sure we can retrieve it by id
-//    	Optional<BagEntity> found = bagService.findById(bag.getBagId());
-//     
-//        // then
-//    	assertEntityFound(found);
-//    }
+     
+    @Test
+	@WithUserDetails(value = "admin")
+    public void whenFindById_thenReturnBagEntity() {
+    	
+    	//persist a bag and then make sure we can retrieve it by id
+    	Optional<BagEntity> found = bagService.findById(bag.getBagId());
+     
+        // then
+    	assertEntityFound(found);
+    }
     
     @Test
 	@WithUserDetails(value = "admin")
@@ -143,15 +142,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     			
     	assertThat(bDto.getCustomer().getUserName()).isEqualTo("bob@bob");
     	
-    	assertThat(bDto.getBagItems().size()).isEqualTo(2);
-    	
-    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("12345678")).findAny().isPresent());
-    	
-    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("10688155")).findAny().isPresent());
-    	
-    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("12345678")).findAny().get().getQuantity()).isEqualTo(2);
-    	
-    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("10688155")).findAny().get().getQuantity()).isEqualTo(3);
+    	assertThat(bDto.getBagItems().size()).isEqualTo(0);
     }
     
     @After
