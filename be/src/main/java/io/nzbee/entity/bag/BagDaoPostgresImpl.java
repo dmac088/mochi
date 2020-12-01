@@ -350,7 +350,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		"	INNER JOIN mochi.category_type ct " +
 		"	ON         cc.cat_typ_id = ct.cat_typ_id " +
-		"	AND        ct.cat_typ_cd = '" + Constants.primaryRootCategoryCode + "'" +
+		"	AND        ct.cat_typ_cd = '" + Constants.categoryTypeProductCode + "'" +
 		
 		"	INNER JOIN mochi.category_attr_lcl ca " +
 		"	ON         cp.cat_id = ca.cat_id " +
