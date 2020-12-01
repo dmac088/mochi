@@ -147,7 +147,15 @@ public class IT_BagEntityRepositoryIntegrationTest {
     			
     	assertThat(bDto.getCustomer().getUserName()).isEqualTo("bob@bob");
     	
-    	assertThat(bDto.getBagItems().size()).isEqualTo(0);
+    	assertThat(bDto.getBagItems().size()).isEqualTo(2);
+    	
+    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("12345678")).findAny().isPresent());
+    	
+    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("10688155")).findAny().isPresent());
+    	
+    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("12345678")).findAny().get().getQuantity()).isEqualTo(1);
+    	
+    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("10688155")).findAny().get().getQuantity()).isEqualTo(1);
     }
     
     @After
