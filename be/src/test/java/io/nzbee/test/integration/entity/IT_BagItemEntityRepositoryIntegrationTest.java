@@ -2,6 +2,8 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -23,7 +25,10 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.bag.item.BagItemEntity;
+import io.nzbee.Constants;
+import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.bag.BagEntity;
+import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.bag.item.IBagItemService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
@@ -54,7 +59,10 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	
 	@Autowired
 	private BagEntityBeanFactory bagEntityBeanFactory;
- 
+
+    @Autowired
+    private IBagService bagService;
+	
     @Autowired
     private IBagItemService bagItemService;
     
@@ -105,6 +113,16 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
  
+    @Test
+ 	@WithUserDetails(value = "admin")
+     public void whenFindByUsername_thenReturnBagDTO() {
+     	
+     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
+     	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
+     	
+     	//then
+     	assertDTOFound(found);
+     }
     
     private void assertFound(final BagItemEntity found) {
     	assertNotNull(found);
@@ -113,6 +131,21 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	    .isEqualTo(2);
     }
     
+    private void assertDTOFound(Optional<BagDTO> bag) {
+    	assertNotNull(bag);
+    	
+    	assertTrue(bag.isPresent());
+    	
+    	BagDTO bDto = bag.get();
+    	
+    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("23464789")).findAny().isPresent());
+    	
+    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("23464789")).findAny().get().getQuantity()).isEqualTo(2);
+    	
+    	
+    }
+
+	
     @After
     public void closeConnection() {
     	entityManager.close();
