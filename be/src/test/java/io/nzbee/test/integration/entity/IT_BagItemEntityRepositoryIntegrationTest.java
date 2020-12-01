@@ -123,7 +123,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
  
     @Test
  	@WithUserDetails(value = "admin")
-     public void whenFindByUsername_thenReturnBagDTOWithCorrctItems() {
+     public void whenFindByUsername_thenReturnBagDTOWithCorrectItems() {
      	
      	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
      	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
