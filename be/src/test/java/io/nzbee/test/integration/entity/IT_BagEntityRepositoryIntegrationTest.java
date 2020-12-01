@@ -104,7 +104,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     public void whenFindByUsername_thenReturnBagEntity() {
     	
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<BagEntity> found = bagService.findByCode("dmac088");
+    	Optional<BagEntity> found = bagService.findByCode("bob@bob");
     	
     	//then
     	assertEntityFound(found);
@@ -116,7 +116,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     public void whenFindByUsername_thenReturnBagDTO() {
     	
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "dmac088");
+    	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
     	
     	//then
     	assertDTOFound(found);
@@ -139,13 +139,13 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	
     	BagDTO bDto = bag.get();
     	
-    	assertThat(bDto.getCustomer().getCustomerNumber()).isEqualTo("1000000070");
+    	assertThat(bDto.getCustomer().getCustomerNumber()).isEqualTo("1000000268");
     	
-    	assertThat(bDto.getCustomer().getGivenName()).isEqualTo("Daniel");
+    	assertThat(bDto.getCustomer().getGivenName()).isEqualTo("bob");
     			
-    	assertThat(bDto.getCustomer().getFamilyName()).isEqualTo("Mackie");
+    	assertThat(bDto.getCustomer().getFamilyName()).isEqualTo("bob");
     			
-    	assertThat(bDto.getCustomer().getUserName()).isEqualTo("dmac088");
+    	assertThat(bDto.getCustomer().getUserName()).isEqualTo("bob@bob");
     	
     	assertThat(bDto.getBagItems().size()).isEqualTo(0);
     }
