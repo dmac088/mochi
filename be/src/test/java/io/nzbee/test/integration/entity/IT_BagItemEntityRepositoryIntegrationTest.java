@@ -30,6 +30,8 @@ import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.bag.item.IBagItemService;
+import io.nzbee.entity.bag.status.BagItemStatus;
+import io.nzbee.entity.bag.status.IBagItemStatusService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.product.IProductService;
@@ -67,6 +69,9 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     private IBagItemService bagItemService;
     
     @Autowired
+    private IBagItemStatusService bagItemStatus;
+    
+    @Autowired
     private IProductService productService;
     
 	@Autowired
@@ -84,14 +89,17 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     
 	public BagItemEntity persistNewBag() {
 		
-		Optional<PersonEntity> p = personService.findByUsernameAndRole("dmac088", "Customer");
+		Optional<PersonEntity> p = personService.findByUsernameAndRole("bob@bob", "Customer");
     	
 		BagEntity bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
 	    ProductEntity product = productService.findByCode("23464789").get();
 	        
+	    Optional<BagItemStatus> bis = bagItemStatus.findByCode(Constants.bagStatusCodeNew);
+	    
 	    bagItem = new BagItemEntity(product);
 	    bagItem.setQuantity(2);
+	    bagItem.setBagItemStatus(bis.get());
 	    bag.addItem(bagItem);
 	    
 	    entityManager.persist(bag);
@@ -115,7 +123,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
  
     @Test
  	@WithUserDetails(value = "admin")
-     public void whenFindByUsername_thenReturnBagDTO() {
+     public void whenFindByUsername_thenReturnBagDTOWithCorrctItems() {
      	
      	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
      	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
