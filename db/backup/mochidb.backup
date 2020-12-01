@@ -3097,7 +3097,6 @@ COPY address_type  FROM stdin;
 COPY bag (bag_id, pty_id, bag_crd_dt, bag_upd_dt) FROM stdin;
 234473	232304	2020-12-01 21:33:14.43+08	2020-12-01 21:33:14.431+08
 234476	232304	2020-12-01 21:40:31.98+08	2020-12-01 21:40:31.98+08
-233760	233024	2020-09-19 11:20:11.58+08	2020-12-01 21:41:06.879+08
 \.
 
 
@@ -3113,8 +3112,6 @@ SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
 --
 
 COPY bag_item (bag_item_id, bag_id, prd_id, qty, bag_item_sts_id) FROM stdin;
-234475	233760	1	2	1
-234474	233760	20	3	1
 \.
 
 
