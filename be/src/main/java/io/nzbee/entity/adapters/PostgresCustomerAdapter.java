@@ -136,6 +136,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		b.setBagCreatedDateTime(LocalDateTime.now());
 		b.setBagUpdatedDateTime(LocalDateTime.now());
 		p.setBag(b);
+		b.setParty(p);
 		
 		personService.save(p);
 	}

@@ -572,6 +572,8 @@ INSERT INTO party VALUES (233022, 1);
 INSERT INTO party VALUES (233024, 1);
 INSERT INTO party VALUES (233054, 1);
 INSERT INTO party VALUES (233055, 2);
+INSERT INTO party VALUES (234477, 1);
+INSERT INTO party VALUES (234482, 1);
 
 
 --
@@ -580,6 +582,7 @@ INSERT INTO party VALUES (233055, 2);
 
 INSERT INTO bag VALUES (234473, 232304, '2020-12-01 21:33:14.43+08', '2020-12-01 21:33:14.431+08');
 INSERT INTO bag VALUES (234476, 232304, '2020-12-01 21:40:31.98+08', '2020-12-01 21:40:31.98+08');
+INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2020-12-02 12:55:35.131+08');
 
 
 --
@@ -602,6 +605,8 @@ INSERT INTO bag_item_status VALUES (3, 'PND01', 'Pending');
 -- Data for Name: bag_item; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO bag_item VALUES (234485, 234484, 1, 1, 1);
+INSERT INTO bag_item VALUES (234486, 234484, 21, 1, 1);
 
 
 --
@@ -1182,6 +1187,8 @@ INSERT INTO role VALUES (233023, 1, '2020-06-11 00:00:00+08', 233022);
 INSERT INTO role VALUES (233025, 1, '2020-06-11 00:00:00+08', 233024);
 INSERT INTO role VALUES (233055, 1, '2020-08-20 00:00:00+08', 233054);
 INSERT INTO role VALUES (233056, 2, '2020-09-28 11:04:23.6741+08', 233055);
+INSERT INTO role VALUES (234478, 1, '2020-12-02 12:06:31.046+08', 234477);
+INSERT INTO role VALUES (234483, 1, '2020-12-02 12:54:34.679+08', 234482);
 
 
 --
@@ -1217,13 +1224,15 @@ INSERT INTO customer VALUES (233021, '1000000266');
 INSERT INTO customer VALUES (233023, '1000000267');
 INSERT INTO customer VALUES (233025, '1000000268');
 INSERT INTO customer VALUES (233055, '1000000269');
+INSERT INTO customer VALUES (234478, '1         ');
+INSERT INTO customer VALUES (234483, '3         ');
 
 
 --
 -- Name: customer_cst_num_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('customer_cst_num_seq', 1, false);
+SELECT pg_catalog.setval('customer_cst_num_seq', 3, true);
 
 
 --
@@ -1252,7 +1261,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234476, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234486, true);
 
 
 --
@@ -1473,6 +1482,8 @@ INSERT INTO person VALUES (233020, 'will', 'parkhouse', false);
 INSERT INTO person VALUES (233022, 'john', 'wayne', false);
 INSERT INTO person VALUES (233024, 'bob', 'bob', false);
 INSERT INTO person VALUES (233054, 'Daniel', 'Mackie', false);
+INSERT INTO person VALUES (234477, 'rob', 'rob', false);
+INSERT INTO person VALUES (234482, 'nob', 'nob', false);
 
 
 --
