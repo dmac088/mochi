@@ -131,7 +131,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		p.addRole(c);
 		c.setRoleParty(p);
 		
-		//by default we create a new bag for the customer on signup
+		//by default we create a new bag for the customer on sign-up
 		BagEntity b = new BagEntity();
 		b.setBagCreatedDateTime(LocalDateTime.now());
 		b.setBagUpdatedDateTime(LocalDateTime.now());
