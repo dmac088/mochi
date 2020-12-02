@@ -11,7 +11,7 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "promotion_mechanic", schema = "mochi")
-public class PromotionMechanic {
+public class PromotionMechanicEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

@@ -4,14 +4,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
+import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.tag.Tag;
 
 @JsonTypeInfo(
@@ -46,10 +45,10 @@ public abstract class Product {
 	protected String productType;
 
 	@JsonIgnore
-	private Set<ProductCategory> categories;
+	private List<ProductCategory> categories;
 	
 	@JsonIgnore
-	private Set<ProductCategory> promotions;
+	private List<Promotion> promotions;
 
 	@JsonIgnore
 	private Department department;
@@ -72,7 +71,8 @@ public abstract class Product {
 				   	boolean			inStock,
 				   	Brand 			brand,
 				   	Department 		department,
-				   	Set<ProductCategory> productCategories) {
+				   	List<ProductCategory> productCategories,
+				   	List<Promotion> productPromotions) {
 		
 					this.productUPC = productUPC;
 					this.productCreateDt = productCreateDt;
@@ -86,6 +86,7 @@ public abstract class Product {
 					this.department = department;
 					this.tags = new ArrayList<Tag>();
 					this.categories = productCategories;
+					this.promotions	= productPromotions;
 					this.productStatus = productStatus;
 					this.productLongDesc = productLongDesc;
 					this.inStock = inStock;
@@ -99,7 +100,7 @@ public abstract class Product {
 		return productStatus;
 	}
 	
-	public Set<ProductCategory> getCategories() {
+	public List<ProductCategory> getCategories() {
 		return categories;
 	}
 

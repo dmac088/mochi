@@ -17,7 +17,7 @@ import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.PromotionBNGNPCT;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
-import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -69,7 +69,7 @@ public class PromotionMasterService {
 		LocalDateTime psd = LocalDateTime.parse(pms.get_PROMOTION_START_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
-		Optional<PromotionMechanic> pm = promotionMechanicService.findByCode(pms.get_PROMOTION_MECHANIC_CODE());
+		Optional<PromotionMechanicEntity> pm = promotionMechanicService.findByCode(pms.get_PROMOTION_MECHANIC_CODE());
 
 		p.setPromotionCode(pms.get_PROMOTION_CODE());
 		PromotionAttributeEntity paEN = mapAttribute(p, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB);

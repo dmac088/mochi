@@ -16,41 +16,41 @@ public class PromotionMechanicServiceImpl implements IPromotionMechanicService {
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionMechanicId")
-	public Optional<PromotionMechanic> findById(Long promotionMechanicId) {
+	public Optional<PromotionMechanicEntity> findById(Long promotionMechanicId) {
 		return promotionMechanicRepository.findById(promotionMechanicId);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionMechanicCode")
-	public Optional<PromotionMechanic> findByCode(String promotionMechanicCode) {
+	public Optional<PromotionMechanicEntity> findByCode(String promotionMechanicCode) {
 		return promotionMechanicRepository.findByPromotionMechanicCode(promotionMechanicCode);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionMechanicDesc")
-	public Optional<PromotionMechanic> findByDesc(String promotionMechanicDesc) {
+	public Optional<PromotionMechanicEntity> findByDesc(String promotionMechanicDesc) {
 		return promotionMechanicRepository.findByPromotionMechanicDesc(promotionMechanicDesc);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<PromotionMechanic> findAll() {
+	public List<PromotionMechanicEntity> findAll() {
 		return promotionMechanicRepository.findAll();
 	}
 	
 	@Override
-	public void save(PromotionMechanic promotionMechanic) {
+	public void save(PromotionMechanicEntity promotionMechanic) {
 		promotionMechanicRepository.save(promotionMechanic);
 	}
 
 	@Override
-	public void update(PromotionMechanic t) {
+	public void update(PromotionMechanicEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(PromotionMechanic t) {
+	public void delete(PromotionMechanicEntity t) {
 		// TODO Auto-generated method stub
 		
 	}

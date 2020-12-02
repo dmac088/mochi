@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import io.nzbee.entity.IService;
 
-public interface IPromotionMechanicService extends IService<PromotionMechanic> {
+public interface IPromotionMechanicService extends IService<PromotionMechanicEntity> {
 
-	Optional<PromotionMechanic> findByDesc(String promotionMechanicDesc);
+	Optional<PromotionMechanicEntity> findByDesc(String promotionMechanicDesc);
 	
 }
