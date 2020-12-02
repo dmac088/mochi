@@ -12,7 +12,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
-import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -54,22 +54,22 @@ public class PromotionMechanicMasterService {
 	public void persistPromotionMechanicMaster(PromotionMechanicMasterSchema pms) {
 		logger.debug("called persistPromotionMechanicMaster() ");
 		
-		PromotionMechanic pm = mapToPromotionMechanic(pms.get_PROMOTION_MECHANIC_CODE(),
+		PromotionMechanicEntity pm = mapToPromotionMechanic(pms.get_PROMOTION_MECHANIC_CODE(),
 													  pms.get_PROMOTION_MECHANIC_DESC());
 
 		pmService.save(pm);
 	}
 	
-	private PromotionMechanic mapToPromotionMechanic(	 String promotionMechanicCode,
+	private PromotionMechanicEntity mapToPromotionMechanic(	 String promotionMechanicCode,
 													 String promotionMechanicDesc
 												 ) {
 		logger.debug("called mapToPromotionMechanic() ");
 		
-		Optional<PromotionMechanic> oPm = pmService.findByCode(promotionMechanicCode);
+		Optional<PromotionMechanicEntity> oPm = pmService.findByCode(promotionMechanicCode);
 		
-		PromotionMechanic pm = oPm.isPresent()
+		PromotionMechanicEntity pm = oPm.isPresent()
 							   ? oPm.get()
-							   : new PromotionMechanic();
+							   : new PromotionMechanicEntity();
 		
 		pm.setPromotionMechanicCode(promotionMechanicCode);
 		pm.setPromotionMechanicDesc(promotionMechanicDesc);

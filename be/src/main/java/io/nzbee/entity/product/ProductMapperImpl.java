@@ -8,6 +8,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.product.department.IDepartmentMapper;
+import io.nzbee.entity.promotion.IPromotionMapper;
 
 @Component(value="productMapper")
 public class ProductMapperImpl implements IProductMapper {
@@ -20,6 +21,9 @@ public class ProductMapperImpl implements IProductMapper {
 	
 	@Autowired
 	private ICategoryProductMapper categoryProductMapper;
+	
+	@Autowired
+	private IPromotionMapper promotionMapper;
 	
 	@Override
 	public Product DTOToDo(ProductDTO dto) {
@@ -39,7 +43,8 @@ public class ProductMapperImpl implements IProductMapper {
 				   	dto.isInStock(),
 				   	brandMapper.DTOToDo(dto.getBrand()),
 				   	departmentMapper.DTOToDo(dto.getDepartment()),
-				   	dto.getCategories().stream().map(c -> categoryProductMapper.DTOToDo(c)).collect(Collectors.toSet()));
+				   	dto.getCategories().stream().map(c -> categoryProductMapper.DTOToDo(c)).collect(Collectors.toList()),
+				   	dto.getPromotions().stream().map(promo -> promotionMapper.DTOToDo(promo)).collect(Collectors.toList()));
 				   
 			return pO;
 		}

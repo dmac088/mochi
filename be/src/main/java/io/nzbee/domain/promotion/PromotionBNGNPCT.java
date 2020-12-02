@@ -1,17 +1,17 @@
 package io.nzbee.domain.promotion;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
-public class PromotionBuyNGetNFree extends Promotion {
+public class PromotionBNGNPCT extends Promotion {
 	
 	private int buyQuantity;
 	
 	private int freeQuantity;
 
-	public PromotionBuyNGetNFree(	String promotionCode, 
+	public PromotionBNGNPCT(		String promotionCode, 
 									String promotionDesc, 
-									Date promotionStartDt, 
-									Date promotionEndDt,
+									LocalDateTime promotionStartDt, 
+									LocalDateTime promotionEndDt,
 									PromotionType promotionType,
 									int buyQuantity,
 									int freeQuantity) {

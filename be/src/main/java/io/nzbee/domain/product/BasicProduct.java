@@ -1,12 +1,12 @@
 package io.nzbee.domain.product;
 
 import java.time.LocalDateTime;
-import java.util.Set;
-
+import java.util.List;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
+import io.nzbee.domain.promotion.Promotion;
 
 
 @JsonTypeName("product")
@@ -25,7 +25,8 @@ public class BasicProduct extends Product {
 					   	 boolean inStock,
 					   	 Brand brand,
 					   	 Department department,
-					   	 Set<ProductCategory> productCategories) {
+					   	 List<ProductCategory> productCategories,
+					   	 List<Promotion> productPromotions) {
 	
 		super(productUPC,
 			  productCreateDt,
@@ -40,7 +41,8 @@ public class BasicProduct extends Product {
 			  inStock,
 			  brand,
 			  department,
-			  productCategories);
+			  productCategories,
+			  productPromotions);
 		
 		this.productType = this.getClass().getSimpleName().toString().toLowerCase();
 	}

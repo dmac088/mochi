@@ -3,7 +3,7 @@ package io.nzbee.entity.promotion;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
-import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
@@ -20,7 +20,7 @@ public abstract class PromotionEntity_ {
 	public static volatile SetAttribute<PromotionEntity, PromotionAttributeEntity> attributes;
 	public static volatile SetAttribute<PromotionEntity, CategoryEntity> categories;
 	public static volatile SingularAttribute<PromotionEntity, LocalDateTime> promotionStartDate;
-	public static volatile SingularAttribute<PromotionEntity, PromotionMechanic> promotionMechanic;
+	public static volatile SingularAttribute<PromotionEntity, PromotionMechanicEntity> promotionMechanic;
 	public static volatile SingularAttribute<PromotionEntity, Long> promotionId;
 	public static volatile SetAttribute<PromotionEntity, ProductEntity> products;
 

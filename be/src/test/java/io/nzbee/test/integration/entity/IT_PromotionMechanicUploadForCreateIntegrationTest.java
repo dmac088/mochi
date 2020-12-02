@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
-import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.util.promotion.PromotionMasterService;
 
 @RunWith(SpringRunner.class)
@@ -60,19 +60,19 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion() {
 		// when
-		Optional<PromotionMechanic> found = promotionMechanicService.findByCode("BNGNPCT");
+		Optional<PromotionMechanicEntity> found = promotionMechanicService.findByCode("BNGNPCT");
 
 		// then
 		assertFound(found);
 	}
 
-	private void assertFound(Optional<PromotionMechanic> found) {
+	private void assertFound(Optional<PromotionMechanicEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		PromotionMechanic cp = (PromotionMechanic) found.get();
+		PromotionMechanicEntity cp = (PromotionMechanicEntity) found.get();
 		
 		assertThat(cp.getPromotionMechanicDesc())
 		.isEqualTo("Buy N Get X Percent Off");

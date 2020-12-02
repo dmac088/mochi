@@ -1,5 +1,6 @@
 package io.nzbee.domain.promotion;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public abstract class Promotion {
@@ -8,16 +9,16 @@ public abstract class Promotion {
 	
 	private String promotionDesc;
 	
-	private Date promotionStartDt;
+	private LocalDateTime promotionStartDt;
 	
-	private Date promotionEndDt;
+	private LocalDateTime promotionEndDt;
 	
 	private PromotionType promotionType;
 
 	public Promotion(String promotionCode, 
 					 String promotionDesc,
-					 Date promotionStartDt,
-					 Date promotionEndDt,
+					 LocalDateTime promotionStartDt,
+					 LocalDateTime promotionEndDt,
 					 PromotionType promotionType) {
 		this.promotionCode = promotionCode;
 		this.promotionDesc = promotionDesc;
@@ -35,11 +36,11 @@ public abstract class Promotion {
 		return promotionDesc;
 	}
 
-	public Date getPromotionStartDt() {
+	public LocalDateTime getPromotionStartDt() {
 		return promotionStartDt;
 	}
 
-	public Date getPromotionEndDt() {
+	public LocalDateTime getPromotionEndDt() {
 		return promotionEndDt;
 	}
 

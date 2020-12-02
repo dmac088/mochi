@@ -5,12 +5,12 @@ import java.util.Optional;
 
 import org.springframework.data.repository.CrudRepository;
 
-public interface IPromotionMechanicRepository extends CrudRepository<PromotionMechanic, Long> {
+public interface IPromotionMechanicRepository extends CrudRepository<PromotionMechanicEntity, Long> {
 		
-	Optional<PromotionMechanic> findByPromotionMechanicCode(String promotionMechanicCode);
+	Optional<PromotionMechanicEntity> findByPromotionMechanicCode(String promotionMechanicCode);
 	
-	Optional<PromotionMechanic> findByPromotionMechanicDesc(String promotionMechanicDesc);
+	Optional<PromotionMechanicEntity> findByPromotionMechanicDesc(String promotionMechanicDesc);
 	
-	List<PromotionMechanic> findAll();
+	List<PromotionMechanicEntity> findAll();
 }
 

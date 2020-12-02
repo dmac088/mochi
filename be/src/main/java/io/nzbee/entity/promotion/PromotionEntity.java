@@ -26,7 +26,7 @@ import org.hibernate.annotations.NaturalId;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
-import io.nzbee.entity.promotion.mechanic.PromotionMechanic;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
@@ -55,7 +55,7 @@ public abstract class PromotionEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_mec_id", updatable = false, insertable = false)
-	private PromotionMechanic promotionMechanic;
+	private PromotionMechanicEntity promotionMechanic;
 	
 	@OneToMany(	mappedBy="promotion",  
 				cascade = CascadeType.ALL,
@@ -129,11 +129,11 @@ public abstract class PromotionEntity {
 		this.promotionActive = promotionActive;
 	}
 
-	public PromotionMechanic getPromotionMechanic() {
+	public PromotionMechanicEntity getPromotionMechanic() {
 		return promotionMechanic;
 	}
 
-	public void setPromotionMechanic(PromotionMechanic promotionMechanic) {
+	public void setPromotionMechanic(PromotionMechanicEntity promotionMechanic) {
 		this.promotionMechanic = promotionMechanic;
 	}
 
