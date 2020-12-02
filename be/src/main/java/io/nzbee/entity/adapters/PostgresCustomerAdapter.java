@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.time.LocalDateTime;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
@@ -25,6 +26,8 @@ import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.role.IRoleTypeRepository;
+import io.nzbee.entity.role.RoleType;
+import io.nzbee.entity.role.customer.CustomerEntity;
 import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
 import io.nzbee.exceptions.customer.CustomerException;
 import io.nzbee.exceptions.customer.CustomerNotFoundException;
@@ -111,11 +114,11 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		u.setEnabled(false);
 		u.setUsing2FA(false);
 		
-		io.nzbee.entity.role.customer.CustomerEntity c = new io.nzbee.entity.role.customer.CustomerEntity();
+		CustomerEntity c = new CustomerEntity();
 		c.setCustomerNumber(domainObject.getCustomerID());
 		c.setRoleStart(new Date());
 		
-		io.nzbee.entity.role.RoleType roleType = roleTypeRepository.findByRoleTypeDesc(Constants.partyRoleCustomer).get();
+		RoleType roleType = roleTypeRepository.findByRoleTypeDesc(Constants.partyRoleCustomer).get();
 		c.setRoleType(roleType);
 		
 		PersonEntity p = new PersonEntity();
@@ -127,6 +130,12 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		u.setParty(p);
 		p.addRole(c);
 		c.setRoleParty(p);
+		
+		//by default we create a new bag for the customer on signup
+		BagEntity b = new BagEntity();
+		b.setBagCreatedDateTime(LocalDateTime.now());
+		b.setBagUpdatedDateTime(LocalDateTime.now());
+		p.setBag(b);
 		
 		personService.save(p);
 	}
