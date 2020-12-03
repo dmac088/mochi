@@ -1,7 +1,10 @@
 package io.nzbee.entity.promotion.mechanic;
 
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.promotion.PromotionType;
 
+@Component(value="promotionMechanicMapper")
 public class PromotionMechanicMapperImpl implements IPromotionMechanicMapper {
 
 	@Override
