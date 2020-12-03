@@ -10,6 +10,7 @@ import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.promotion.PromotionBNGNPCTDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
 public class ProductDTOResultTransformer implements ResultTransformer {
 
@@ -20,6 +21,8 @@ public class ProductDTOResultTransformer implements ResultTransformer {
 	private Map<Long, CategoryProductDTO> categoryProductDTOMap = new LinkedHashMap<>();
 	
 	private Map<Long, PromotionDTO> promotionDTOMap = new LinkedHashMap<>();
+	
+	private Map<Long, PromotionMechanicDTO> promotionMechanicDTOMap = new LinkedHashMap<>();
 	
 	private Map<String, Integer> aliasToIndexMap;
 	
@@ -42,14 +45,29 @@ public class ProductDTOResultTransformer implements ResultTransformer {
                 	Long promotionId = ((Number) tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)]).longValue();
                 	
                 	PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
-                			promotionId,
-            	            pId -> {
-            	            	PromotionDTO promoDto = new PromotionBNGNPCTDTO(tuple, aliasToIndexMap);
-            	            	return promoDto;
-            	            }
+                		promotionId,
+            	        pId -> {
+            	            PromotionDTO promoDto = new PromotionBNGNPCTDTO(tuple, aliasToIndexMap);
+            	            
+            	            Long promotionMechanicId = ((Number) tuple[aliasToIndexMap.get(PromotionMechanicDTO.ID_ALIAS)]).longValue();
+                        	
+                        	PromotionMechanicDTO promotionMechanic = promotionMechanicDTOMap.computeIfAbsent(
+                        		promotionMechanicId,
+                        		pMechanicId -> {
+                        			PromotionMechanicDTO promoMechDto = new PromotionMechanicDTO(tuple, aliasToIndexMap);
+                        			return promoMechDto;
+                        		}		
+                        	);
+                        	
+                        	promoDto.setMechanicDTO(promotionMechanic);
+            	            
+            	            return promoDto;
+            	        }
                 	);
                 	
                 	pDto.getPromotions().add(promotionDTO);
+                	
+
                 }
             	
             	pDto.setBrand(new BrandDTO(tuple, aliasToIndexMap));

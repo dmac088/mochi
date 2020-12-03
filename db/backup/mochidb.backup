@@ -5596,7 +5596,7 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 --
 
 COPY promotion_mechanic (prm_mec_id, prm_mec_cd, prm_mec_desc) FROM stdin;
-234454	BNGNPCT	Buy N Get X Percent Off
+1	BNGNPCT	Buy N Get X Percent Off
 \.
 
 
