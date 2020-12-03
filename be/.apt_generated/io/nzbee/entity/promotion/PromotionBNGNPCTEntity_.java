@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(PromotionBNGNPCTEntity.class)
-public abstract class PromotionBNGNPCT_ extends io.nzbee.entity.promotion.PromotionEntity_ {
+public abstract class PromotionBNGNPCTEntity_ extends io.nzbee.entity.promotion.PromotionEntity_ {
 
 	public static volatile SingularAttribute<PromotionBNGNPCTEntity, Integer> buyQty;
 	public static volatile SingularAttribute<PromotionBNGNPCTEntity, Double> pctDisc;

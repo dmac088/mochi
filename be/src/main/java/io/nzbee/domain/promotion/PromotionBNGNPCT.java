@@ -6,7 +6,7 @@ public class PromotionBNGNPCT extends Promotion {
 	
 	private int buyQuantity;
 	
-	private int freeQuantity;
+	private Double discountPercentage;
 
 	public PromotionBNGNPCT(		String promotionCode, 
 									String promotionDesc, 
@@ -14,18 +14,18 @@ public class PromotionBNGNPCT extends Promotion {
 									LocalDateTime promotionEndDt,
 									PromotionType promotionType,
 									int buyQuantity,
-									int freeQuantity) {
-		super(promotionCode, "Buy " + buyQuantity + " get " + freeQuantity + " free", promotionStartDt, promotionEndDt, promotionType);
+									Double discountPercentage) {
+		super(promotionCode, "Buy " + buyQuantity + " get " + discountPercentage + " off", promotionStartDt, promotionEndDt, promotionType);
 		this.buyQuantity = buyQuantity;
-		this.freeQuantity = freeQuantity;
+		this.discountPercentage = discountPercentage;
 	}
 
 	public int getBuyQuantity() {
 		return buyQuantity;
 	}
 
-	public int getFreeQuantity() {
-		return freeQuantity;
+	public Double getFreeQuantity() {
+		return discountPercentage;
 	}
 
 	

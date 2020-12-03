@@ -15,7 +15,7 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
-import io.nzbee.entity.promotion.PromotionBNGNPCT;
+import io.nzbee.entity.promotion.PromotionBNGNPCTEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.Constants;
@@ -62,9 +62,9 @@ public class PromotionMasterService {
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionBNGNPCT p = 	(op.isPresent()) 
-								? (PromotionBNGNPCT) op.get() 
-								: new PromotionBNGNPCT();
+		PromotionBNGNPCTEntity p = 	(op.isPresent()) 
+								? (PromotionBNGNPCTEntity) op.get() 
+								: new PromotionBNGNPCTEntity();
 	
 		LocalDateTime psd = LocalDateTime.parse(pms.get_PROMOTION_START_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));

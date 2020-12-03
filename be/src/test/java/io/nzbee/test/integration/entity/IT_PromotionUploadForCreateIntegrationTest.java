@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
-import io.nzbee.entity.promotion.PromotionBNGNPCT;
+import io.nzbee.entity.promotion.PromotionBNGNPCTEntity;
 import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.util.promotion.PromotionMasterService;
 
@@ -94,9 +94,9 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeENGB)).findAny().get().getPromotionDesc())
 		.isEqualTo("Buy 3 get 1 free");
 		
-		assertThat(((PromotionBNGNPCT) cp).getBuyQty()).isEqualTo(4);
+		assertThat(((PromotionBNGNPCTEntity) cp).getBuyQty()).isEqualTo(4);
 		
-		assertThat(((PromotionBNGNPCT) cp).getPctDisc()).isEqualTo(0.25);
+		assertThat(((PromotionBNGNPCTEntity) cp).getPctDisc()).isEqualTo(0.25);
 		
 	}
 
@@ -116,9 +116,9 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
 		.isEqualTo("买三送一");
 		
-		assertThat(((PromotionBNGNPCT) cp).getBuyQty()).isEqualTo(4);
+		assertThat(((PromotionBNGNPCTEntity) cp).getBuyQty()).isEqualTo(4);
 		
-		assertThat(((PromotionBNGNPCT) cp).getPctDisc()).isEqualTo(0.25);
+		assertThat(((PromotionBNGNPCTEntity) cp).getPctDisc()).isEqualTo(0.25);
 		
 	}
 

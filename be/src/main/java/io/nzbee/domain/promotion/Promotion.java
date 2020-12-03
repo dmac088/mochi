@@ -1,7 +1,6 @@
 package io.nzbee.domain.promotion;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 public abstract class Promotion {
 	

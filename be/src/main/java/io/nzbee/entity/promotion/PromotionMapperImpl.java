@@ -12,15 +12,20 @@ public class PromotionMapperImpl implements IPromotionMapper {
 	
 	@Override
 	public Promotion DTOToDo(PromotionDTO dto) {
-		return new PromotionBNGNPCT(
-				 dto.getPromotionCode(), 
-				 dto.getPromotionDesc(),
-				 dto.getPromotionStartDate(),
-				 dto.getPromotionEndDate(),
-				 mechanicMapper.DTOToDo(dto.getMechanicDTO()),
-				 1,
-				 1
-				);
+		if(dto instanceof PromotionBNGNPCTDTO) {
+			PromotionBNGNPCTDTO bngnpctDTO = (PromotionBNGNPCTDTO) dto;
+			
+			return new PromotionBNGNPCT(
+					bngnpctDTO.getPromotionCode(), 
+					 bngnpctDTO.getPromotionDesc(),
+					 bngnpctDTO.getPromotionStartDate(),
+					 bngnpctDTO.getPromotionEndDate(),
+					 mechanicMapper.DTOToDo(bngnpctDTO.getMechanicDTO()),
+					 bngnpctDTO.getBuyQty(),
+					 bngnpctDTO.getDiscountPct()
+					);	
+		}
+		return null;
 	}
 
 	@Override
