@@ -37,8 +37,8 @@ public abstract class PromotionDTO {
 		this.promotionId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.promotionCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.promotionDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
-		this.promotionStartDate = LocalDateTime.parse(tuple[aliasToIndexMap.get(START_DATE_ALIAS)].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-		this.promotionEndDate	= LocalDateTime.parse(tuple[aliasToIndexMap.get(END_DATE_ALIAS)].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+		this.promotionStartDate = LocalDateTime.parse(tuple[aliasToIndexMap.get(START_DATE_ALIAS)].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
+		this.promotionEndDate	= LocalDateTime.parse(tuple[aliasToIndexMap.get(END_DATE_ALIAS)].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
 		this.locale 			= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 	}
 
