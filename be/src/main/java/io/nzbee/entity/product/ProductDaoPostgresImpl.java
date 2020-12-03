@@ -656,7 +656,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"      promo.prm_en_dt, " +
 						"	   bngnpct.buy_qty, " + 
 						" 	   bngnpct.pct_disc, " + 
-						"	   promomec.prm_mec_id, " +
+						"	   promo.prm_mec_id, " +
 						"	   promomec.prm_mec_cd, " +
 						"	   promomec.prm_mec_desc, " +
 						"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
