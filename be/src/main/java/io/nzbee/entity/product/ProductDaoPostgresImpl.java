@@ -777,7 +777,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	LEFT JOIN mochi.stock_on_hand soh " +
 		"	ON prd.prd_id = soh.soh_prd_id " +
 		
-		"	LEFT JOIN promotions promo " +
+		"	LEFT JOIN mochi.promotion promo " +
 		"	ON prd.prd_id = promo.prd_id " +
 		
 		"	LEFT JOIN promotion_bngnpct bngnpct " +
