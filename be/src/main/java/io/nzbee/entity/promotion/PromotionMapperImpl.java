@@ -1,10 +1,13 @@
 package io.nzbee.entity.promotion;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionBNGNPCT;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicMapper;
 
+@Component(value="promotionMapper")
 public class PromotionMapperImpl implements IPromotionMapper {
 
 	@Autowired
