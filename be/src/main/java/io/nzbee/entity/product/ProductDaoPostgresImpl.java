@@ -651,7 +651,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   ps.prd_sts_desc,  " +
 						"	   promo.prm_id, " +
 						"	   promo.prm_cd, " +
-						"      promo.prm_desc, " +
+						"      prmlcl.prm_desc, " +
 						"      promo.prm_st_dt, " +
 						"      promo.prm_en_dt, " +
 						"	   bngnpct.buy_qty, " + 
@@ -777,8 +777,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		"	LEFT JOIN mochi.stock_on_hand soh " +
 		"	ON prd.prd_id = soh.soh_prd_id " +
 		
+		"	LEFT JOIN mochi.product_promotion prdpromo " + 
+		"	ON prd.prd_id = prdpromo.prd_id " +
+		
 		"	LEFT JOIN mochi.promotion promo " +
-		"	ON prd.prd_id = promo.prd_id " +
+		"	ON prdpromo.prm_id = promo.prm_id " +
+		
+		"	LEFT JOIN mochi.promotion_attr_lcl prmlcl " +
+		"	ON promo.prm_id = prmlcl.prm_id " +
+		"	AND prmlcl.lcl_cd = :locale " +
 		
 		"	LEFT JOIN promotion_bngnpct bngnpct " +
 		"	ON promo.prm_id = bngnpct.prm_id " +
