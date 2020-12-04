@@ -3,6 +3,8 @@ package io.nzbee.test.integration.beans;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,7 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.Promotion;
 
 @Service
@@ -30,6 +33,9 @@ public class ProductDoBeanFactory {
 	@Autowired
 	private IDepartmentService ds;
 	
+	@Autowired
+	private IPromotionService ps;
+	
 	
 	public final Product getProductDoBean() {
 		
@@ -40,6 +46,12 @@ public class ProductDoBeanFactory {
 		Brand brand = bs.findByCode(Constants.localeENGB, "ENZ01");
 		
 		Department department = ds.findByCode(Constants.localeENGB, "ACC01");
+		
+		Promotion promotion = ps.findByCode(Constants.localeENGB, "B1G1F");
+		
+		List<Promotion> promos = new ArrayList<Promotion>();
+		
+		promos.add(promotion);
 		
 		return new BasicProduct(   "3254354673",
 								   LocalDateTime.now(),
@@ -55,6 +67,6 @@ public class ProductDoBeanFactory {
 								   brand,
 								   department,
 								   new ArrayList<ProductCategory>(Arrays.asList(pc1,pc2)),
-								   new ArrayList<Promotion>());
+								   promos);
 	}
 }

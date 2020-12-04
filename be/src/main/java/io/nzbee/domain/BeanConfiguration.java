@@ -16,6 +16,8 @@ import io.nzbee.domain.department.DepartmentServiceImpl;
 import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.ProductServiceImpl;
+import io.nzbee.domain.promotion.IPromotionService;
+import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.dto.bag.item.BagItemDTOMapperImpl;
@@ -43,6 +45,11 @@ public class BeanConfiguration {
     @Bean
     public ITagService tagService() {
         return new TagServiceImpl();
+    }
+    
+    @Bean
+    public IPromotionService promotionService() {
+        return new PromotionServiceImpl();
     }
     
     @Bean(name="customerDomainService")
