@@ -15,12 +15,15 @@ import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.promotion.IPromotionService;
+import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -68,6 +71,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private ITagService tagService;
+	
+	@Autowired
+	private IPromotionService promotionService;
 
 	@Autowired
 	private ICurrencyService currencyService;
@@ -167,6 +173,14 @@ public class PostgresProductAdapter implements IProductPortService {
 			product.addProductPrice(prcm);
 			product.setProductStatus(ps);
 			product.addProductAttribute(pa);
+			
+			List<Promotion> lp = domainObject.getPromotions();
+			System.out.println(lp.size());
+			lp.forEach(p -> {
+				System.out.println(p.getPromotionCode());
+				Optional<PromotionEntity> promoe = promotionService.findByCode(p.getPromotionCode());
+				product.addPromotion(promoe.get());
+			});
 
 			productService.save(domainObject.getLclCd(), domainObject.getCurrency(), product);
 
@@ -214,9 +228,6 @@ public class PostgresProductAdapter implements IProductPortService {
 
 		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
 					size, sort, selectedFacets, returnFacets).map(p -> {
-//					Brand b = brandMapper.DTOToDo(p.getBrand());
-//					Department d = departmentMapper.DTOToDo(p.getDepartment());
-//					ProductCategory pc = (ProductCategory) categoryMapper.DTOToDo(p.getPrimaryCategory());
 					Product pDo = productMapper.DTOToDo(p);
 					return pDo;
 				});
@@ -254,13 +265,6 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	
 	private Product mapHelper(ProductDTO dto) {
-//		BrandDTO bDto = dto.getBrand();
-//		DepartmentDTO de = dto.getDepartment();
-//		CategoryProductDTO c = dto.getPrimaryCategory();
-//
-//		Brand bdo = brandMapper.DTOToDo(bDto);
-//		Department ddo = departmentMapper.DTOToDo(de);
-//		ProductCategory cdo = (ProductCategory) categoryMapper.DTOToDo(c);
 		return productMapper.DTOToDo(dto);
 	}
 

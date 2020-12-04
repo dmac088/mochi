@@ -90,6 +90,11 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	    
 	    assertNotNull(found.getCategories());
 	    
+	    assertNotNull(found.getPromotions());
+	    
+	    assertThat(found.getPromotions().size())
+	    .isEqualTo(1);
+	    
 	    assertThat(found.getCategories().size())
 	    .isEqualTo(2);
 	    

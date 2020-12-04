@@ -160,6 +160,10 @@ public abstract class Product {
 		return tags;
 	}
 
+	public List<Promotion> getPromotions() {
+		return promotions;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
