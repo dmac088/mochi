@@ -4,14 +4,21 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.Tuple;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 
 @Component(value = "promotionEntityDao")
-public class PromotionDaoImpl implements IPromotionDao {
+public class PromotionDaoPostgresImpl implements IPromotionDao {
+	
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -23,10 +30,26 @@ public class PromotionDaoImpl implements IPromotionDao {
 		return null;
 	}
 
+	@SuppressWarnings("deprecation")
 	@Override
 	public Optional<PromotionDTO> findByCode(String locale, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		LOGGER.debug("call PromotionDaoPostgresImpl.findByCode parameters : {}, {}", locale, code);
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL())
+				 .setParameter("locale", locale)
+				 .setParameter("promoCode", code);
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new PromotionDTOResultTransformer());
+		
+		try {
+			PromotionDTO result = (PromotionDTO) query.getSingleResult();
+			return Optional.ofNullable(result);
+		} catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 
 	@Override
@@ -131,4 +154,33 @@ public class PromotionDaoImpl implements IPromotionDao {
 		return null;
 	}
 
+	private String constructSQL() {
+		return 
+		"SELECT " +
+		"	   promo.prm_id, " +
+		"	   promo.prm_cd, " +
+		"      prmlcl.prm_desc, " +
+		"      promo.prm_st_dt, " +
+		"      promo.prm_en_dt, " +
+		"	   bngnpct.buy_qty, " + 
+		" 	   bngnpct.pct_disc, " + 
+		"	   promo.prm_mec_id, " +
+		"	   promomec.prm_mec_cd, " +
+		"	   promomec.prm_mec_desc, " +
+		"      :locale as lcl_cd " +
+		
+		"FROM mochi.promotion promo " +
+		
+		"	INNER JOIN mochi.promotion_attr_lcl prmlcl " +
+		"	ON promo.prm_id = prmlcl.prm_id " +
+		"	AND prmlcl.lcl_cd = :locale " +
+		
+		"	LEFT JOIN mochi.promotion_bngnpct bngnpct " +
+		"	ON promo.prm_id = bngnpct.prm_id " +
+		
+		"	INNER JOIN mochi.promotion_mechanic promomec " +
+		"	ON promo.prm_mec_id =  promomec.prm_mec_id " +
+		"	" +
+		"WHERE promo.prm_cd = :promoCode "; 
+	}
 }
