@@ -1,8 +1,8 @@
 package io.nzbee.test.integration.beans;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashSet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -15,6 +15,7 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.BasicProduct;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.promotion.Promotion;
 
 @Service
 @Profile(value = "tst")
@@ -53,6 +54,7 @@ public class ProductDoBeanFactory {
 								   true,
 								   brand,
 								   department,
-								   new HashSet<ProductCategory>(Arrays.asList(pc1,pc2)));
+								   new ArrayList<ProductCategory>(Arrays.asList(pc1,pc2)),
+								   new ArrayList<Promotion>());
 	}
 }
