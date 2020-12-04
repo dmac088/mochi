@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.ports.IPromotionPortService;
 import io.nzbee.domain.promotion.Promotion;
@@ -11,8 +12,10 @@ import io.nzbee.exceptions.promotion.PromotionNotFoundException;
 @Component
 public class PostgresPromotionAdapter implements IPromotionPortService {
 
+	@Autowired
 	private IPromotionService promotionService;
 	
+	@Autowired
 	private IPromotionMapper promotionMapper;
 	
 	@Override
