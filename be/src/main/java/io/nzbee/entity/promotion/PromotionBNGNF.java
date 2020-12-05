@@ -7,7 +7,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "promotion_bngnpct", schema = "mochi")
+@Table(name = "promotion_bngnf", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prm_id")
 @DiscriminatorValue("2")
 public class PromotionBNGNF extends PromotionEntity {
