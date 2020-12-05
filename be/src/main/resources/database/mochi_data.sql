@@ -2590,6 +2590,7 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 --
 
 INSERT INTO promotion_mechanic VALUES (1, 'BNGNPCT', 'Buy N Get X Percent Off');
+INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
 
 
 --
