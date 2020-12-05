@@ -2529,7 +2529,7 @@ ALTER TABLE promotion_attr_lcl OWNER TO mochidb_owner;
 CREATE TABLE promotion_bngnpct (
     prm_id bigint NOT NULL,
     buy_qty smallint NOT NULL,
-    pct_disc numeric(8,0) NOT NULL
+    pct_disc numeric(8,6) NOT NULL
 );
 
 
