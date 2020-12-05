@@ -582,7 +582,7 @@ INSERT INTO party VALUES (234482, 1);
 
 INSERT INTO bag VALUES (234473, 232304, '2020-12-01 21:33:14.43+08', '2020-12-01 21:33:14.431+08');
 INSERT INTO bag VALUES (234476, 232304, '2020-12-01 21:40:31.98+08', '2020-12-01 21:40:31.98+08');
-INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2020-12-05 13:46:14.137+08');
+INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2020-12-05 14:12:18.815+08');
 
 
 --
@@ -605,9 +605,7 @@ INSERT INTO bag_item_status VALUES (3, 'PND01', 'Pending');
 -- Data for Name: bag_item; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag_item VALUES (234487, 234484, 20, 1, 1);
-INSERT INTO bag_item VALUES (234488, 234484, 13, 1, 1);
-INSERT INTO bag_item VALUES (234489, 234484, 25, 1, 1);
+INSERT INTO bag_item VALUES (234492, 234484, 233583, 1, 1);
 
 
 --
@@ -1262,7 +1260,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234489, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234492, true);
 
 
 --
@@ -2564,6 +2562,12 @@ INSERT INTO promotion_attr_lcl VALUES (234465, 234464, 'Buy 1 get 1 free', 'en-G
 INSERT INTO promotion_attr_lcl VALUES (234466, 234464, '買1送1', 'zh-HK');
 INSERT INTO promotion_attr_lcl VALUES (234468, 234467, '買二送一', 'zh-HK');
 INSERT INTO promotion_attr_lcl VALUES (234469, 234467, 'Buy 2 get 1 free', 'en-GB');
+
+
+--
+-- Data for Name: promotion_bngnf; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
 
 
 --
