@@ -252,7 +252,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
-		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, max price = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
+		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, categoryCodes = {}, brandCodes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
 		
