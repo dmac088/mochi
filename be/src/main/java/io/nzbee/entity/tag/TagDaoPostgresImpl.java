@@ -252,7 +252,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	@SuppressWarnings("deprecation")
 	@Override
-	public Set<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
+	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, max price = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
@@ -286,11 +286,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new TagDTOResultTransformer());
-		
-		@SuppressWarnings("unchecked")
-		Set<TagDTO> results = new HashSet<TagDTO>(query.getResultList());
-		
-		return results;
+	
+		return query.getResultList();
 		
 	}
 	
