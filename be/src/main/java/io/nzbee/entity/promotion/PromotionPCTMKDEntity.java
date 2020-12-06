@@ -9,7 +9,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "promotion_pctmkd", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prm_id")
-@DiscriminatorValue("2")
+@DiscriminatorValue("3")
 public class PromotionPCTMKDEntity extends PromotionEntity {
 
 	@Column(name="mkd_pct")
