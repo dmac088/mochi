@@ -1,30 +1,28 @@
 package io.nzbee.domain.bag;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
 
 public class Bag {
 	
-	
-	
-	private Set<BagItem> bagItems = new HashSet<>();
+	private List<BagItem> bagItems = new ArrayList<>();
 	
 	private Customer customer;
 	
 	private BagIssues bagIssues = new BagIssues();
 
 	public Bag(Customer customer) {
-		this.customer 		= customer;
+		this.customer = customer;
 	}
 	
 	public Customer getCustomer() {
 		return customer;
 	}
 	
-	public Set<BagItem> getBagItems() {
+	public List<BagItem> getBagItems() {
 		return bagItems;
 	}
 	

@@ -1,6 +1,7 @@
 package io.nzbee.resources.controllers;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -76,9 +77,9 @@ public class BagController {
 													  					   @PathVariable String currency, 
 													  					   Principal principal) {
     	LOGGER.debug("call BagController.getBagContents");
-    	Set<BagItem> sbi =  bagService.findByCode(locale,
-												  currency,
-												  principal.getName()).getBagItems();
+    	List<BagItem> sbi =  bagService.findByCode(locale,
+												   currency,
+												   principal.getName()).getBagItems();
     	
     	return ResponseEntity.ok(bagItemResourceAssembler.toCollectionModel(sbi.stream()
     													 					   .map(bi -> bagItemDTOMapper.doToDto(bi))
@@ -103,6 +104,7 @@ public class BagController {
 												currency, 
 												dto.getItemUPC());
     	
+    	//find the existing bagitem first 
     	BagItem bagItem = new BagItem(b, p, dto.getItemQty());
     	
     	System.out.println(String.join(",",  (p.getPromotions().stream().map(promo -> promo.getPromotionDesc()).collect(Collectors.toList()))));
@@ -121,9 +123,9 @@ public class BagController {
     
     @GetMapping("/Bag/{locale}/{currency}/Items/Remove/{itemCode}")
 	public ResponseEntity<Void> removeItemFromBag(	@PathVariable String locale, 
-															@PathVariable String currency,
-															@PathVariable String itemCode, 
-															Principal principal) {
+													@PathVariable String currency,
+													@PathVariable String itemCode, 
+													Principal principal) {
     	
     	LOGGER.debug("call BagController.removeItemFromBag for product code {} ", itemCode);
     	//here we get the bag and bagItems but the products are null

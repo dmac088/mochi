@@ -21,3 +21,13 @@ $bagItem.setErrors(true);
 $bagItem.setError(error);
 $bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
 end
+
+rule "Buy 4 get 33% off"
+when 
+$bagItem : BagItem(product.isInStock())
+then  
+System.out.println("current quantity = " + $bagItem.getQuantity());
+System.out.println("\nBuy 4 get 33% off");
+System.out.println("************************************");
+$bagItem.addBagItemDiscount(new Double($bagItem.getQuantity() * $bagItem.getProduct().getProductMarkdown()));
+end
