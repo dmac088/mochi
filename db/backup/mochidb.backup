@@ -5569,8 +5569,8 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 --
 
 COPY promotion (prm_id, prm_cd, prm_st_dt, prm_en_dt, prm_mec_id, prm_act) FROM stdin;
-234464	B1G1F	2020-03-07 00:00:00+08	2021-01-31 00:00:00+08	2	t
-234467	B2G1F	2020-03-08 00:00:00+08	2021-02-01 00:00:00+08	2	t
+234464	B2G50	2020-03-07 00:00:00+08	2021-01-31 00:00:00+08	1	t
+234467	B3G33	2020-03-08 00:00:00+08	2021-02-01 00:00:00+08	1	t
 \.
 
 
