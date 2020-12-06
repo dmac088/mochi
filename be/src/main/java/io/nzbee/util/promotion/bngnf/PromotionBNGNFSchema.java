@@ -12,16 +12,16 @@ public class PromotionBNGNFSchema extends PromotionSchema  {
 		return BUY_QUANTITY;
 	}
 
-	public void set_BUY_QUANTITY(String bUY_QUANTITY) {
-		BUY_QUANTITY = bUY_QUANTITY;
+	public void set_BUY_QUANTITY(String BUY_QUANTITY) {
+		this.BUY_QUANTITY = BUY_QUANTITY;
 	}
 
 	public String get_FREE_QUANTITY() {
 		return FREE_QUANTITY;
 	}
 
-	public void set_FREE_QUANTITY(String fREE_QUANTITY) {
-		FREE_QUANTITY = fREE_QUANTITY;
+	public void set_FREE_QUANTITY(String FREE_QUANTITY) {
+		this.FREE_QUANTITY = FREE_QUANTITY;
 	}
 
 	@Override

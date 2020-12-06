@@ -115,7 +115,7 @@ public class IT_PromotionUploadBNGNFForCreateIntegrationTest {
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
 		.isEqualTo("買二送一");
 		
-		assertThat(((PromotionBNGNFEntity) cp).getBuyQty()).isEqualTo(3);
+		assertThat(((PromotionBNGNFEntity) cp).getBuyQty()).isEqualTo(2);
 		
 		assertThat(((PromotionBNGNFEntity) cp).getFreeQty()).isEqualTo(1);
 		
