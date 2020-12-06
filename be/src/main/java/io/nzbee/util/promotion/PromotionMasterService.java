@@ -45,7 +45,7 @@ public class PromotionMasterService {
 					.withQuoteChar('"');
 
 			CsvMapper mapper = new CsvMapper();
-			MappingIterator<PromotionMasterSchema> readValues = mapper.readerFor(PromotionMasterSchema.class)
+			MappingIterator<PromotionBNGNPCTSchema> readValues = mapper.readerFor(PromotionBNGNPCTSchema.class)
 					.with(bootstrapSchema).readValues(file);
 
 			readValues.readAll().stream().forEach(c -> {
@@ -57,7 +57,7 @@ public class PromotionMasterService {
 		}
 	}
 
-	public void persistPromotionMaster(PromotionMasterSchema pms) {
+	public void persistPromotionMaster(PromotionBNGNPCTSchema pms) {
 		logger.debug("called persistPromotionMaster() ");
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
