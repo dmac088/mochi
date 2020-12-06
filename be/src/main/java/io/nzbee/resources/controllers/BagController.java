@@ -77,7 +77,7 @@ public class BagController {
 													  					   @PathVariable String currency, 
 													  					   Principal principal) {
     	LOGGER.debug("call BagController.getBagContents");
-    	List<BagItem> sbi =  bagService.findByCode(locale,
+    	Set<BagItem> sbi =  bagService.findByCode(locale,
 												   currency,
 												   principal.getName()).getBagItems();
     	
@@ -104,10 +104,12 @@ public class BagController {
 												currency, 
 												dto.getItemUPC());
     	
-    	//find the existing bagitem first 
-    	BagItem bagItem = new BagItem(b, p, dto.getItemQty());
+    	boolean exists = b.bagItemExists(dto.getItemUPC());
     	
-    	System.out.println(String.join(",",  (p.getPromotions().stream().map(promo -> promo.getPromotionDesc()).collect(Collectors.toList()))));
+    	//find the existing bagitem first
+    	BagItem bagItem = exists ? b.getBagItem(dto.getItemUPC()) : new BagItem(b, p, 0);
+    		
+    	bagItem.addToQuantity(dto.getItemQty());      					  
     	
     	bagItemService.checkAllBagItemRules(bagItem);
 		
@@ -115,7 +117,10 @@ public class BagController {
     		return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));
     	}
     	
-		b.addItem(bagItem);
+    	if(!exists) {
+    		b.addItem(bagItem);
+    	}
+    	
     	bagService.save(b);
     	
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));

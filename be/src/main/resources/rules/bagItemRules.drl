@@ -24,7 +24,7 @@ end
 
 rule "Buy 4 get 33% off"
 when 
-$bagItem : BagItem(product.isInStock())
+$bagItem : BagItem(product.isInStock() && quantity >= 4)
 then  
 System.out.println("current quantity = " + $bagItem.getQuantity());
 System.out.println("\nBuy 4 get 33% off");

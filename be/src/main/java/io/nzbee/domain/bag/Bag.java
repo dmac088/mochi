@@ -1,14 +1,15 @@
 package io.nzbee.domain.bag;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
 
 public class Bag {
 	
-	private List<BagItem> bagItems = new ArrayList<>();
+	private Set<BagItem> bagItems = new HashSet<>();
 	
 	private Customer customer;
 	
@@ -22,7 +23,7 @@ public class Bag {
 		return customer;
 	}
 	
-	public List<BagItem> getBagItems() {
+	public Set<BagItem> getBagItems() {
 		return bagItems;
 	}
 	
@@ -43,6 +44,14 @@ public class Bag {
 			this.getBagItems().add(new BagItem(this, p, qty));
 		}
 		
+	}
+	
+	public boolean bagItemExists(String productUPC) {
+		return this.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(productUPC)).findAny().isPresent();
+	}
+	
+	public BagItem getBagItem(String productUPC) {
+		return this.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals(productUPC)).findAny().get();
 	}
 	
 	public void addItem(BagItem bi) {
