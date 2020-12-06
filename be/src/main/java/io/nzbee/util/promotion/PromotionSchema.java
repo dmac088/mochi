@@ -1,27 +1,23 @@
 package io.nzbee.util.promotion;
 
 
-public class PromotionMasterSchema {
+public abstract class PromotionSchema {
 	
-	private String PROMOTION_CODE;
+	protected String PROMOTION_CODE;
 	
-	private String PROMOTION_DESC_HK;
+	protected String PROMOTION_DESC_HK;
 	
-	private String PROMOTION_DESC_EN;
+	protected String PROMOTION_DESC_EN;
 	
-	private String PROMOTION_START_DATE;
+	protected String PROMOTION_START_DATE;
 	
-	private String PROMOTION_END_DATE;
+	protected String PROMOTION_END_DATE;
 	
-	private Boolean PROMOTION_ACTIVE;
+	protected Boolean PROMOTION_ACTIVE;
 	
-	private String PROMOTION_MECHANIC_CODE;
+	protected String PROMOTION_MECHANIC_CODE;
 	
-	private String PROMOTION_TYPE_CODE;
-	
-	private String BUY_QUANTITY;
-	
-	private String PERCENT_DISCOUNT;
+	protected String PROMOTION_TYPE_CODE;
 	
 	
 	public String get_PROMOTION_CODE() {
@@ -86,22 +82,6 @@ public class PromotionMasterSchema {
 
 	public void set_PROMOTION_ACTIVE(String PROMOTION_ACTIVE) {
 		this.PROMOTION_ACTIVE = PROMOTION_ACTIVE.toLowerCase().equals("true");
-	}
-
-	public String get_BUY_QUANTITY() {
-		return BUY_QUANTITY;
-	}
-
-	public void set_BUY_QUANTITY(String bUY_QUANTITY) {
-		BUY_QUANTITY = bUY_QUANTITY;
-	}
-
-	public String get_PERCENT_DISCOUNT() {
-		return PERCENT_DISCOUNT;
-	}
-
-	public void set_PERCENT_DISCOUNT(String pERCENT_DISCOUNT) {
-		PERCENT_DISCOUNT = pERCENT_DISCOUNT;
 	}
 
 	@Override
