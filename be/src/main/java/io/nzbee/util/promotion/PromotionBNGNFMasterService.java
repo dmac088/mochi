@@ -23,9 +23,9 @@ import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-public class PromotionMasterService {
+public class PromotionBNGNFMasterService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PromotionMasterService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PromotionBNGNFMasterService.class);
 
 	@Autowired
 	private IPromotionService promotionService;
