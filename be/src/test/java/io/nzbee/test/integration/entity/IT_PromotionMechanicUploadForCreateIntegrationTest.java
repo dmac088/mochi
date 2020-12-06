@@ -25,7 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
-import io.nzbee.util.promotion.PromotionMasterService;
+import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -44,7 +44,7 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private PromotionMasterService pms;
+	private PromotionMechanicMasterService pms;
 
 	@Autowired
 	private IPromotionMechanicService promotionMechanicService;
@@ -54,7 +54,7 @@ public class IT_PromotionMechanicUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writePromotionMaster(file.getAbsolutePath() + "/data/promotion/mechanic/create/promotion_mechanics.tsv");
+		pms.writePromotionMechanicMaster(file.getAbsolutePath() + "/data/promotion/mechanic/create/promotion_mechanics.tsv");
 	}
 
 	@Test

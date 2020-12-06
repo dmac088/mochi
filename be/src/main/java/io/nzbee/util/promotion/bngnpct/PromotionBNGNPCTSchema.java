@@ -1,5 +1,6 @@
-package io.nzbee.util.promotion;
+package io.nzbee.util.promotion.bngnpct;
 
+import io.nzbee.util.promotion.PromotionSchema;
 
 public class PromotionBNGNPCTSchema extends PromotionSchema  {
 	

@@ -23,12 +23,11 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionBNGNPCTEntity;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.PromotionMasterService;
+import io.nzbee.util.promotion.bngnpct.PromotionBNGNPCTMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -47,7 +46,7 @@ public class IT_PromotionUploadBNGNPCTForCreateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private PromotionMasterService pms;
+	private PromotionBNGNPCTMasterService pms;
 
 	@Autowired
 	private IPromotionService promotionService;

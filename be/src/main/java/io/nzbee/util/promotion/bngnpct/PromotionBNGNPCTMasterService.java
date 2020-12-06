@@ -1,4 +1,4 @@
-package io.nzbee.util.promotion;
+package io.nzbee.util.promotion.bngnpct;
 
 import java.io.File;
 import java.io.IOException;
@@ -21,11 +21,12 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
+import io.nzbee.util.promotion.bngnpct.PromotionBNGNPCTSchema;
 
 @Service
-public class PromotionBNGNFMasterService {
+public class PromotionBNGNPCTMasterService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PromotionBNGNFMasterService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PromotionBNGNPCTMasterService.class);
 
 	@Autowired
 	private IPromotionService promotionService;
