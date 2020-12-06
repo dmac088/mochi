@@ -129,7 +129,7 @@ public class ProductEntityBeanFactory {
 		product.addTag(t);
 		
 		//we should add a promotion 
-		product.addPromotion(promotionService.findByCode("B1G1F").get());
+		product.addPromotion(promotionService.findByCode("B2G50").get());
 		
 		return product;
 	}

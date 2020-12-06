@@ -113,15 +113,15 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent())
     	.isTrue();
     	
-//    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findFirst().isPresent())
-//    	.isTrue();
-    	
     	assertThat(found.getDepartment().getDepartmentCode())
     	.isEqualTo("ACC01");
+    	
     	assertThat(found.getProductStatusCode())
     	.isEqualTo("ACT01");
+    	
     	assertThat(found.getBrand().getBrandCode())
     	.isEqualTo("PLA01");
+    	
     	assertThat(found.getProductDesc())
     	.isEqualTo("test product");
     }
