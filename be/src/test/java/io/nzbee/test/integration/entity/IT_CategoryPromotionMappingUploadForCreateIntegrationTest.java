@@ -60,7 +60,7 @@ public class IT_CategoryPromotionMappingUploadForCreateIntegrationTest {
 	@Test
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B2G1F");
+		Optional<PromotionEntity> found = promotionService.findByCode("B3G33");
 
 		// then
 		assertFound(found);
