@@ -13,6 +13,9 @@ import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.party.person.CustomerDTO;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
+import io.nzbee.entity.promotion.PromotionBNGNPCTDTO;
+import io.nzbee.entity.promotion.PromotionDTO;
+import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
 public class BagDTOResultTransformer implements ResultTransformer {
 
@@ -31,6 +34,10 @@ public class BagDTOResultTransformer implements ResultTransformer {
 	private Map<Long, CustomerDTO> customerDTOMap = new LinkedHashMap<>();
 	
 	private Map<Long, CategoryProductDTO> categoryDTOMap = new LinkedHashMap<>();
+	
+	private Map<Long, PromotionDTO> promotionDTOMap = new LinkedHashMap<>();
+	
+	private Map<Long, PromotionMechanicDTO> promotionMechanicDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
@@ -109,6 +116,33 @@ public class BagDTOResultTransformer implements ResultTransformer {
 	                        );
 	                        
 	                        p.getCategories().add(categoryDTO);
+	                        
+	                        if(!( tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)] == null)) {
+	                			Long promotionId = ((Number) tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)]).longValue();
+	                			
+	                			PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
+	                            		promotionId,
+	                        	        promoId -> {
+	                        	            PromotionDTO promoDto = new PromotionBNGNPCTDTO(tuple, aliasToIndexMap);
+	                        	            
+	                        	            Long promotionMechanicId = ((Number) tuple[aliasToIndexMap.get(PromotionMechanicDTO.ID_ALIAS)]).longValue();
+	                                    	
+	                                    	PromotionMechanicDTO promotionMechanic = promotionMechanicDTOMap.computeIfAbsent(
+	                                    		promotionMechanicId,
+	                                    		pMechanicId -> {
+	                                    			PromotionMechanicDTO promoMechDto = new PromotionMechanicDTO(tuple, aliasToIndexMap);
+	                                    			return promoMechDto;
+	                                    		}		
+	                                    	);
+	                                    	
+	                                    	promoDto.setMechanicDTO(promotionMechanic);
+	                        	            
+	                        	            return promoDto;
+	                        	        }
+	                            	);
+	                            	
+	                            	p.getPromotions().add(promotionDTO);
+	                		}
 	                        
 	                		return p;
 	                	}

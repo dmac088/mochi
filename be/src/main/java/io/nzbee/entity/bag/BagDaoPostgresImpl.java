@@ -321,8 +321,18 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	       bi.qty, " +
 		"	       bis.bag_item_sts_cd, " +
 		"	       bis.bag_item_sts_desc," +
+		"	       promo.prm_cd, " +
+		"          prmlcl.prm_desc, " +
+		"          promo.prm_st_dt, " +
+		"          promo.prm_en_dt, " +
+		"	   	   bngnpct.buy_qty, " + 
+		" 	   	   bngnpct.pct_disc, " + 
+		"	   	   promo.prm_mec_id, " +
+		"	   	   promomec.prm_mec_cd, " +
+		"	  	   promomec.prm_mec_desc, " +
 		"		   COALESCE(rprc.prc_val,0)     AS retail_price, " +
 		"	       COALESCE(mprc.prc_val,0)     AS markdown_price " +
+		
 		"	FROM bag_items bi " +
 		
 		"	INNER JOIN mochi.bag_item_status bis " +
@@ -411,6 +421,22 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		"	LEFT JOIN  mochi.product_basic acc 								" +
 		"	ON         prd.prd_id = acc.prd_id 								" +
+		
+		"	LEFT JOIN mochi.product_promotion prdpromo 						" + 
+		"	ON prd.prd_id = prdpromo.prd_id 								" +
+	
+		"	LEFT JOIN mochi.promotion promo 								" +
+		"	ON prdpromo.prm_id = promo.prm_id 								" +
+	
+		"	LEFT JOIN mochi.promotion_attr_lcl prmlcl 						" +
+		"	ON promo.prm_id = prmlcl.prm_id 								" +
+		"	AND prmlcl.lcl_cd = :locale 									" +
+	
+		"	LEFT JOIN mochi.promotion_bngnpct bngnpct 						" +
+		"	ON promo.prm_id = bngnpct.prm_id 								" +
+	
+		"	LEFT JOIN mochi.promotion_mechanic promomec 					" +
+		"	ON promo.prm_mec_id =  promomec.prm_mec_id 						" +
 		
 		"	) p 															" +
 		"	ON bag.bag_id = p.bag_id 										" + 
