@@ -1,7 +1,6 @@
 package io.nzbee.resources.controllers;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -122,6 +121,7 @@ public class BagController {
     	}
     	
     	bagService.save(b);
+    	
     	
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.doToDto(b)));
 	}
