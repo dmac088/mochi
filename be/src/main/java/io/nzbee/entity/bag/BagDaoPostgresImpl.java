@@ -258,6 +258,16 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"           p.retail_price, " + 
 		"           p.markdown_price, " + 
 		"           COALESCE(soh.soh_qty, 0) > 0 AS prd_in_stock, " +
+		"	        p.prm_id," +
+		"	        p.prm_cd, " +
+		"           p.prm_desc, " +
+		"           p.prm_st_dt, " +
+		"           p.prm_en_dt, " +
+		"	   	    p.buy_qty, " + 
+		" 	   	    p.pct_disc, " + 
+		"	   	    p.prm_mec_id, " +
+		"	   	    p.prm_mec_cd, " +
+		"	  	    p.prm_mec_desc, " +
 		"      		:currency as ccy_cd, " +
 		"	   		:locale as lcl_cd " + 
 		
@@ -321,6 +331,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	       bi.qty, " +
 		"	       bis.bag_item_sts_cd, " +
 		"	       bis.bag_item_sts_desc," +
+		"	       promo.prm_id," +
 		"	       promo.prm_cd, " +
 		"          prmlcl.prm_desc, " +
 		"          promo.prm_st_dt, " +
