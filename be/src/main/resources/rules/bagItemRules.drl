@@ -24,6 +24,20 @@ $bagItem.setError(error);
 $bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
 end
 
+rule "Buy 2 get 50% off"
+when 
+$bagItem : BagItem(product.isInStock() && quantity >= 2)
+$promotions : DroolsPromotionWrapper(promotionCodes.contains("B2G50"))
+then  
+System.out.println("promotion codes = " + StringUtils.join($promotions.getPromotionCodes()));
+System.out.println("current quantity = " + $bagItem.getQuantity());
+System.out.println("promotion = \"Buy 2 get 50% off\"");
+System.out.println("total line amount = " + $bagItem.quantity * $bagItem.getProduct().getProductMarkdown());
+Double discount = new Double((Math.floor($bagItem.quantity / 2) * $bagItem.getProduct().getProductMarkdown()));
+System.out.println("discount amount is = " + discount);
+$bagItem.addBagItemDiscount(discount * -1);
+end
+
 rule "Buy 3 get 33% off"
 when 
 $bagItem : BagItem(product.isInStock() && quantity >= 2)
