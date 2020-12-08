@@ -49,7 +49,7 @@ public class PromotionEntity {
 	private Boolean promotionActive;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prm_mec_id", updatable = false, insertable = false)
+	@JoinColumn(name="prm_mec_id")
 	private PromotionMechanicEntity promotionMechanic;
 	
 	@OneToMany(	mappedBy="promotion",  
