@@ -336,8 +336,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"          prmlcl.prm_desc, " +
 		"          promo.prm_st_dt, " +
 		"          promo.prm_en_dt, " +
-		"	   	   bngnpct.buy_qty, " + 
-		" 	   	   bngnpct.pct_disc, " + 
 		"	   	   promo.prm_mec_id, " +
 		"	   	   promomec.prm_mec_cd, " +
 		"	  	   promomec.prm_mec_desc, " +
@@ -442,9 +440,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	LEFT JOIN mochi.promotion_attr_lcl prmlcl 						" +
 		"	ON promo.prm_id = prmlcl.prm_id 								" +
 		"	AND prmlcl.lcl_cd = :locale 									" +
-	
-		"	LEFT JOIN mochi.promotion_bngnpct bngnpct 						" +
-		"	ON promo.prm_id = bngnpct.prm_id 								" +
 	
 		"	LEFT JOIN mochi.promotion_mechanic promomec 					" +
 		"	ON promo.prm_mec_id =  promomec.prm_mec_id 						" +
