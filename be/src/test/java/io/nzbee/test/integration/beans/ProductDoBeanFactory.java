@@ -47,7 +47,7 @@ public class ProductDoBeanFactory {
 		
 		Department department = ds.findByCode(Constants.localeENGB, "ACC01");
 		
-		Promotion promotion = ps.findByCode(Constants.localeENGB, "B1G1F");
+		Promotion promotion = ps.findByCode(Constants.localeENGB, "B2G50");
 		
 		List<Promotion> promos = new ArrayList<Promotion>();
 		
