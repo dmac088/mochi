@@ -1260,7 +1260,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234492, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234495, true);
 
 
 --
@@ -2565,20 +2565,6 @@ INSERT INTO promotion_attr_lcl VALUES (234469, 234467, 'Buy 2 get 1 free', 'en-G
 
 
 --
--- Data for Name: promotion_bngnf; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
--- Data for Name: promotion_bngnpct; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO promotion_bngnpct VALUES (234467, 3, 0.330000);
-INSERT INTO promotion_bngnpct VALUES (234464, 2, 0.500000);
-
-
---
 -- Name: promotion_category_prm_cat_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2591,12 +2577,6 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 
 INSERT INTO promotion_mechanic VALUES (1, 'BNGNPCT', 'Buy N Get X Percent Off');
 INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
-
-
---
--- Data for Name: promotion_pctmkd; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
 
 
 --

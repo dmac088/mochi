@@ -55,7 +55,7 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writePromotionMaster(file.getAbsolutePath() + "/data/promotion/create/promotion_bngnf.tsv");
+		pms.writePromotionMaster(file.getAbsolutePath() + "/data/promotion/create/promotion.tsv");
 	}
 
 	@Test
