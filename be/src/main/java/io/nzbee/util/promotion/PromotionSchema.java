@@ -1,7 +1,7 @@
 package io.nzbee.util.promotion;
 
 
-public abstract class PromotionSchema {
+public class PromotionSchema {
 	
 	protected String PROMOTION_CODE;
 	

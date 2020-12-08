@@ -27,7 +27,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionBNGNFEntity;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.bngnf.PromotionBNGNFMasterService;
+import io.nzbee.util.promotion.PromotionMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -36,7 +36,7 @@ import io.nzbee.util.promotion.bngnf.PromotionBNGNFMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_PromotionUploadBNGNFForCreateIntegrationTest {
+public class IT_PromotionUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -46,7 +46,7 @@ public class IT_PromotionUploadBNGNFForCreateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private PromotionBNGNFMasterService pms;
+	private PromotionMasterService pms;
 
 	@Autowired
 	private IPromotionService promotionService;
