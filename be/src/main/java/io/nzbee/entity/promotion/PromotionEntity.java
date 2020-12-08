@@ -6,14 +6,11 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -31,9 +28,7 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 @Entity
 @Table(name = "promotion", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prm_id")
-@Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="prm_mec_id")
-public abstract class PromotionEntity {
+public class PromotionEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

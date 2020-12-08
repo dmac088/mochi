@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
-public abstract class PromotionDTO {
+public class PromotionDTO {
 
 	public static final String ID_ALIAS = "prm_id";
 	

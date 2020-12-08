@@ -8,7 +8,6 @@ import org.hibernate.transform.ResultTransformer;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
-import io.nzbee.entity.promotion.PromotionBNGNPCTDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
@@ -47,7 +46,7 @@ public class ProductDTOResultTransformer implements ResultTransformer {
                 	PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
                 		promotionId,
             	        pId -> {
-            	            PromotionDTO promoDto = new PromotionBNGNPCTDTO(tuple, aliasToIndexMap);
+            	            PromotionDTO promoDto = new PromotionDTO(tuple, aliasToIndexMap);
             	            
             	            Long promotionMechanicId = ((Number) tuple[aliasToIndexMap.get(PromotionMechanicDTO.ID_ALIAS)]).longValue();
                         	
