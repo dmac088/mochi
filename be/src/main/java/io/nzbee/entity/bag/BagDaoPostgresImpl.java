@@ -263,8 +263,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"           p.prm_desc, " +
 		"           p.prm_st_dt, " +
 		"           p.prm_en_dt, " +
-		"	   	    p.buy_qty, " + 
-		" 	   	    p.pct_disc, " + 
 		"	   	    p.prm_mec_id, " +
 		"	   	    p.prm_mec_cd, " +
 		"	  	    p.prm_mec_desc, " +
