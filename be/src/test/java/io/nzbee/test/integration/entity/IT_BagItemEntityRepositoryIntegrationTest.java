@@ -93,7 +93,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     	
 		BagEntity bag = bagEntityBeanFactory.getBagEntityBean(p.get());
 	    
-	    ProductEntity product = productService.findByCode("23464789").get();
+	    ProductEntity product = productService.findByCode("76477789").get();
 	        
 	    Optional<BagItemStatus> bis = bagItemStatus.findByCode(Constants.bagStatusCodeNew);
 	    
@@ -146,10 +146,17 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     	
     	BagDTO bDto = bag.get();
     	
-    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("23464789")).findAny().isPresent());
+    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("76477789")).findAny().isPresent());
     	
-    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("23464789")).findAny().get().getQuantity()).isEqualTo(2);
+    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("76477789")).findAny().get().getQuantity()).isEqualTo(2);
     	
+    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("76477789"))
+				.findAny().get()
+				.getProduct().getPromotions()
+				.stream().filter(promo -> promo.getPromotionCode().equals("B2G50")).findAny().isPresent()).isTrue();
+    	
+    	
+				
     	
     }
 
