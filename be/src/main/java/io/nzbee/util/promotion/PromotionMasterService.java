@@ -1,4 +1,4 @@
-package io.nzbee.util.promotion.bngnpct;
+package io.nzbee.util.promotion;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,18 +15,17 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
-import io.nzbee.entity.promotion.PromotionBNGNPCTEntity;
+import io.nzbee.entity.promotion.PromotionBNGNFEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
-import io.nzbee.util.promotion.bngnpct.PromotionBNGNPCTSchema;
 
 @Service
-public class PromotionBNGNPCTMasterService {
+public class PromotionMasterService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PromotionBNGNPCTMasterService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PromotionMasterService.class);
 
 	@Autowired
 	private IPromotionService promotionService;
@@ -46,7 +45,7 @@ public class PromotionBNGNPCTMasterService {
 					.withQuoteChar('"');
 
 			CsvMapper mapper = new CsvMapper();
-			MappingIterator<PromotionBNGNPCTSchema> readValues = mapper.readerFor(PromotionBNGNPCTSchema.class)
+			MappingIterator<PromotionSchema> readValues = mapper.readerFor(PromotionSchema.class)
 					.with(bootstrapSchema).readValues(file);
 
 			readValues.readAll().stream().forEach(c -> {
@@ -58,14 +57,14 @@ public class PromotionBNGNPCTMasterService {
 		}
 	}
 
-	public void persistPromotionMaster(PromotionBNGNPCTSchema pms) {
+	public void persistPromotionMaster(PromotionSchema pms) {
 		logger.debug("called persistPromotionMaster() ");
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 
-		PromotionBNGNPCTEntity p = 	(op.isPresent()) 
-								? (PromotionBNGNPCTEntity) op.get() 
-								: new PromotionBNGNPCTEntity();
+		PromotionBNGNFEntity p = 	(op.isPresent()) 
+								? (PromotionBNGNFEntity) op.get() 
+								: new PromotionBNGNFEntity();
 	
 		LocalDateTime psd = LocalDateTime.parse(pms.get_PROMOTION_START_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
@@ -83,8 +82,6 @@ public class PromotionBNGNPCTMasterService {
 		p.setPromotionEndDate(ped);
 		p.setPromotionMechanic(pm.get());
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
-		p.setBuyQty(Integer.parseInt(pms.get_BUY_QUANTITY()));
-		p.setPctDisc(Double.parseDouble(pms.get_PERCENT_DISCOUNT()));
 
 		promotionService.save(p);
 	}

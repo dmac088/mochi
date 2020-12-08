@@ -15,8 +15,7 @@ import io.nzbee.util.category.CategoryMasterService;
 import io.nzbee.util.inventory.InventoryLocationMasterService;
 import io.nzbee.util.inventory.InventoryMasterService;
 import io.nzbee.util.product.ProductMasterService;
-import io.nzbee.util.promotion.bngnf.PromotionBNGNFMasterService;
-import io.nzbee.util.promotion.bngnpct.PromotionBNGNPCTMasterService;
+import io.nzbee.util.promotion.PromotionMasterService;
 import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
 import io.nzbee.util.promotion.product.ProductPromotionMasterService;
@@ -51,10 +50,7 @@ public class FileController {
     private TagMasterService tagMasterService;
 
     @Autowired
-    private PromotionBNGNFMasterService promotionBNGNFMasterService;
-    
-    @Autowired
-    private PromotionBNGNPCTMasterService promotionBNGNPCTMasterService;
+    private PromotionMasterService promotionMasterService;
     
     @Autowired
     private CategoryPromotionMasterService categoryPromotionMasterService;
@@ -286,32 +282,14 @@ public class FileController {
         		uploadFile.getContentType(), uploadFile.getSize());
     }
     
-    @PostMapping("/Promotion/BNGNPCT/Upload/")
+    @PostMapping("/Promotion/Upload/")
     public UploadFileResponse uploadBNGNPCTPromotionFile(@RequestParam("file") MultipartFile uploadFile) {
     	
     	logger.debug("called uploadBNGNPCTPromotionFile with parameters {} ", uploadFile );
 
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        promotionBNGNPCTMasterService.writePromotionMaster(fileName);
-      
-        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
-                .path(fileStorageProperties.getUploadDir())	
-                .path(fileName)
-                .toUriString();
-
-        return new UploadFileResponse(fileName, fileDownloadUri,
-        		uploadFile.getContentType(), uploadFile.getSize());
-    }
-    
-    @PostMapping("/Promotion/BNGNF/Upload/")
-    public UploadFileResponse uploadBNGNFPromotionFile(@RequestParam("file") MultipartFile uploadFile) {
-    	
-    	logger.debug("called uploadBNGNFPromotionFile with parameters {} ", uploadFile );
-
-        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
-
-        promotionBNGNFMasterService.writePromotionMaster(fileName);
+        promotionMasterService.writePromotionMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
