@@ -13,7 +13,6 @@ import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.party.person.CustomerDTO;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
-import io.nzbee.entity.promotion.PromotionBNGNPCTDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
@@ -123,7 +122,7 @@ public class BagDTOResultTransformer implements ResultTransformer {
 	                			PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
 	                            		promotionId,
 	                        	        promoId -> {
-	                        	            PromotionDTO promoDto = new PromotionBNGNPCTDTO(tuple, aliasToIndexMap);
+	                        	            PromotionDTO promoDto = new PromotionDTO(tuple, aliasToIndexMap);
 	                        	            
 	                        	            Long promotionMechanicId = ((Number) tuple[aliasToIndexMap.get(PromotionMechanicDTO.ID_ALIAS)]).longValue();
 	                                    	

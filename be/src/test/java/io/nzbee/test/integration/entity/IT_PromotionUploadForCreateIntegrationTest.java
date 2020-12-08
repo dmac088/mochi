@@ -25,7 +25,6 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
-import io.nzbee.entity.promotion.PromotionBNGNFEntity;
 import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.util.promotion.PromotionMasterService;
 
@@ -93,10 +92,6 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeENGB)).findAny().get().getPromotionDesc())
 		.isEqualTo("Buy 1 get 1 free");
 		
-		assertThat(((PromotionBNGNFEntity) cp).getBuyQty()).isEqualTo(1);
-		
-		assertThat(((PromotionBNGNFEntity) cp).getFreeQty()).isEqualTo(1);
-		
 	}
 
 	private void assertFound_ZHHK(Optional<PromotionEntity> found) {
@@ -114,10 +109,6 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
 		.isEqualTo("買二送一");
-		
-		assertThat(((PromotionBNGNFEntity) cp).getBuyQty()).isEqualTo(2);
-		
-		assertThat(((PromotionBNGNFEntity) cp).getFreeQty()).isEqualTo(1);
 		
 	}
 

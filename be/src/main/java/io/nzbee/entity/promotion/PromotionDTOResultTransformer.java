@@ -31,7 +31,7 @@ public class PromotionDTOResultTransformer implements ResultTransformer {
  
         PromotionDTO promotionDTO = promotionDTOMap.computeIfAbsent(
             promotionId,
-            id -> new PromotionBNGNPCTDTO(tuple, aliasToIndexMap)
+            id -> new PromotionDTO(tuple, aliasToIndexMap)
         );
         
         PromotionMechanicDTO promotionMechanicDTO = promotionMechanicDTOMap.computeIfAbsent(
