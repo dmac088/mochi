@@ -55,7 +55,6 @@ end
 rule "Item quantity exceeds limit"
 when 
 $bagItem : BagItem(!bagItemStatus.equals("PRO01")
-					&& product.isInStock() 
 					&& quantity > 6)
 then 
 String error = "Can't process " +  $bagItem.getProduct().getProductDesc() + ", quantity " + $bagItem.getQuantity() + " is more than the maximum allowed" ;
@@ -65,6 +64,16 @@ $bagItem.setError(error);
 $bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
 end
 
-
+rule "Item quantity below minumum"
+when 
+$bagItem : BagItem(!bagItemStatus.equals("PRO01")
+					&& quantity < 1)
+then 
+String error = "Can't process " +  $bagItem.getProduct().getProductDesc() + ", quantity " + $bagItem.getQuantity() + " is below minimum allowed" ;
+System.out.println(error);
+$bagItem.setErrors(true);
+$bagItem.setError(error);
+$bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
+end
 
 
