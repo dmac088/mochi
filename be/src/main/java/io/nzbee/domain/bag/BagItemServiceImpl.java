@@ -29,7 +29,6 @@ public class BagItemServiceImpl implements IBagItemService{
 	@Override
 	public void update(BagItem object) {
 		// TODO Auto-generated method stub
-		
 	}
 
 	@Override
