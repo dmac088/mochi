@@ -19,4 +19,8 @@ public class DroolsBagItemWrapper {
 	public String getProductDesc() {
 		return bagItem.getProduct().getProductDesc();
 	}
+	
+	public String getBagItemStatus() {
+		return bagItem.getBagItemStatus();
+	}
 }
