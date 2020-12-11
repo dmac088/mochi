@@ -5,8 +5,6 @@ import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.ports.IBagItemPortService;
-import io.nzbee.domain.promotion.DroolsPromotionWrapper;
-
 
 public class BagItemServiceImpl implements IBagItemService{
 
@@ -35,7 +33,7 @@ public class BagItemServiceImpl implements IBagItemService{
 	public void checkAllBagItemRules(BagItem object) {
 		KieSession kieSession = kieContainer.newKieSession();
     	kieSession.insert(object);
-    	DroolsPromotionWrapper dpw = new DroolsPromotionWrapper(object.getProduct().getPromotions());
+    	DroolsBagItemWrapper dpw = new DroolsBagItemWrapper(object);
     	kieSession.insert(dpw);
     	System.out.println(StringUtils.join(dpw.getPromotionCodes()));
     	System.out.println("************* Fire Rules **************");
