@@ -7,7 +7,7 @@ import org.apache.tomcat.util.buf.StringUtils;
 
 dialect "mvel"
 
-function String pendingItemKey(BagItem bagItem) { 
+function String pendingItemKey(DroolsBagItemWrapper bagItem) { 
 	return bagItem.getCustomerId() + "-"+ bagItem.getProductDesc();
 }
 //Is it out of stock?
