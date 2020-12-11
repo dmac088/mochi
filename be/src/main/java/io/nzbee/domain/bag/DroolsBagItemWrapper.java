@@ -20,12 +20,12 @@ public class DroolsBagItemWrapper {
 	private List<String> promotionCodes;
 	
 	public DroolsBagItemWrapper(BagItem bagItem) {
-		this.bagItemQuantity = bagItem.getQuantity();
-		this.bagQuantity = bagItem.getBag().getTotalQuantity();
-		this.productDesc = bagItem.getProduct().getProductDesc();
-		this.markdownPrice = bagItem.getProduct().getProductMarkdown();
-		this.bagItemStatus = bagItem.getBagItemStatus();
-		this.promotionCodes = this.bagItem.getProduct().getPromotions().stream().map(p -> p.getPromotionCode()).collect(Collectors.toList());
+		this.bagItemQuantity 	= bagItem.getQuantity();
+		this.bagQuantity 		= bagItem.getBag().getTotalQuantity();
+		this.productDesc 		= bagItem.getProduct().getProductDesc();
+		this.markdownPrice 		= bagItem.getProduct().getProductMarkdown();
+		this.bagItemStatus 		= bagItem.getBagItemStatus();
+		this.promotionCodes 	= bagItem.getProduct().getPromotions().stream().map(p -> p.getPromotionCode()).collect(Collectors.toList());
 	}
 	
 	public int getBagItemQuantity() {
