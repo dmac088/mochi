@@ -89,4 +89,7 @@ public class DroolsBagItemWrapper {
 		return this.customerId;
 	}
 	
+	public void addBagItemDiscount(Double amount) {
+		this.bagItem.addBagItemDiscount(amount);
+	}
 }
