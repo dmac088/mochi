@@ -21,21 +21,21 @@ String error = "Can't process " +  $bagItem.getProductDesc() + " is Out-Of-Stock
 System.out.println(error);
 $bagItem.setErrors(true);
 $bagItem.setError(error);
-$bagItem.logItemError(pendingItemKey($bagItem), $bagItem);
+//$bagItem.logItemError(pendingItemKey($bagItem), $bagItem);
 end
 
-//rule "Buy 2 get 1 free"
-//when 
-//$bagItem : DroolsBagItemWrapper(inStock && bagItemQuantity >= 2 && promotionCodes.contains("B2G50"))
-//then  
-//System.out.println("promotion codes = " + StringUtils.join($bagItem.getPromotionCodes()));
-//System.out.println("current quantity = " + $bagItem.getQuantity());
-//System.out.println("promotion = \"Buy 2 get 50% off\"");
-//System.out.println("total line amount = " + $bagItem.getQuantity() * $bagItem.getProductMarkdown());
-//Double discount = new Double((Math.floor($bagItem.getQuantity() / 2) * $bagItem.getProductMarkdown()));
-//System.out.println("discount amount is = " + discount);
-//$bagItem.addBagItemDiscount(discount * -1);
-//end
+rule "Buy 2 get 1 free"
+when 
+$bagItem : DroolsBagItemWrapper(isInStock() && bagItemQuantity >= 2 && promotionCodes.contains("B2G50"))
+then  
+System.out.println("promotion codes = " + StringUtils.join($bagItem.getPromotionCodes()));
+System.out.println("current quantity = " + $bagItem.getBagItemQuantity());
+System.out.println("promotion = \"Buy 2 get 50% off\"");
+System.out.println("total line amount = " + $bagItem.getBagItemQuantity() * $bagItem.getMarkdownPrice());
+Double discount = new Double((Math.floor($bagItem.getBagItemQuantity() / 2) * $bagItem.getMarkdownPrice()));
+System.out.println("discount amount is = " + discount);
+$bagItem.addBagItemDiscount(discount * -1);
+end
 
 /*
 rule "Buy 3 get 1 free"
