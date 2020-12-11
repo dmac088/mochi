@@ -4,8 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class DroolsBagItemWrapper {
-
-	private BagItem bagItem;
 	
 	private int bagItemQuantity;
 	
