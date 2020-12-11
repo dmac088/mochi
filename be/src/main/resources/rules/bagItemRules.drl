@@ -76,4 +76,13 @@ $bagItem.setError(error);
 $bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
 end
 
+rule "Bag quantity exceeds limit"
+when  
+$bagItem : BagItem(bag.getTotalQuantity() > 50)
+then 
+//String error = "Can't process " +  $bagItem.getProduct().getProductDesc() + ", bag quantity " + $bagItem.getBag().getQuantity() + " is more than the maximum allowed" ;
+$bagItem.setErrors(true);
+$bagItem.setError(error);
+$bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
+end
 
