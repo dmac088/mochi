@@ -11,9 +11,12 @@ public class DroolsBagItemWrapper {
 	
 	private int bagQuantity;
 	
+	private String productDesc;
+	
 	public DroolsBagItemWrapper(BagItem bagItem) {
 		this.bagItemQuantity = bagItem.getQuantity();
 		this.bagQuantity = bagItem.getBag().getTotalQuantity();
+		this.productDesc = bagItem.getProduct().getProductDesc();
 	}
 	
 	public int getBagItemQuantity() {
@@ -25,7 +28,7 @@ public class DroolsBagItemWrapper {
 	}
 	
 	public String getProductDesc() {
-		return bagItem.getProduct().getProductDesc();
+		return productDesc;
 	}
 	
 	public Double getMarkdownPrice() {
