@@ -1,7 +1,7 @@
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.product.Product;
-import io.nzbee.domain.promotion.DroolsPromotionWrapper;
+import io.nzbee.domain.BagItem.DroolsBagItemWrapper;
 import java.util.List;
 import org.apache.tomcat.util.buf.StringUtils;
 
@@ -13,7 +13,7 @@ function String pendingItemKey(BagItem bagItem) {
 //Is it out of stock?
 rule "Is Out-Of Stock"
 when
-$bagItem : BagItem(!bagItemStatus.equals("PRO01") && !product.isInStock())
+$bagItem : DroolsBagItemWrapper(!bagItemStatus.equals("PRO01") && !product.isInStock())
 then
 System.out.println("\nIs Out-Of Stock Rule");
 System.out.println("************************************");
