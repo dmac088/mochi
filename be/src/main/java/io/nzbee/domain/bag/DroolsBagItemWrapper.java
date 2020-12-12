@@ -66,4 +66,9 @@ public class DroolsBagItemWrapper {
 	public void logItemError(String key, BagItem bagItem) {
 		bagItem.getBag().logItemError(key, bagItem);
 	}
+
+	public BagItem getBagItem() {
+		return bagItem;
+	}
+	
 }

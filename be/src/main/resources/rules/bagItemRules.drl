@@ -21,7 +21,7 @@ String error = "Can't process " +  $bagItem.getProductDesc() + " is Out-Of-Stock
 System.out.println(error);
 $bagItem.setErrors(true);
 $bagItem.setError(error);
-//$bagItem.logItemError(pendingItemKey($bagItem), $bagItem);
+$bagItem.logItemError(pendingItemKey($bagItem), $bagItem.getBagItem());
 end
 
 rule "Buy 2 get 1 free"
