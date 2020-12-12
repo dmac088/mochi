@@ -7,78 +7,48 @@ public class DroolsBagItemWrapper {
 	
 	private BagItem bagItem;
 	
-	private int bagItemQuantity;
-	
-	private String bagItemStatus;
-	
-	private int bagQuantity;
-	
-	private String productDesc;
-	
-	private double markdownPrice;
-	
-	private List<String> promotionCodes;
-	
-	private Boolean inStock;
-	
-	private Boolean errors;
-	
-	private String error;
-	
-	private String customerId;
-	
 	public DroolsBagItemWrapper(BagItem bagItem) {
-		this.bagItem 			= bagItem;
-		this.bagItemQuantity 	= bagItem.getQuantity();
-		this.bagQuantity 		= bagItem.getBag().getTotalQuantity();
-		this.productDesc 		= bagItem.getProduct().getProductDesc();
-		this.markdownPrice 		= bagItem.getProduct().getProductMarkdown();
-		this.bagItemStatus 		= bagItem.getBagItemStatus();
-		this.promotionCodes 	= bagItem.getProduct().getPromotions().stream().map(p -> p.getPromotionCode()).collect(Collectors.toList());
-		this.inStock 			= bagItem.getProduct().isInStock();
-		this.customerId			= bagItem.getBag().getCustomer().getCustomerID();
-		this.errors				= bagItem.isErrors();
-		this.error 				= bagItem.getError();
+		this.bagItem = bagItem;
 	}
 	
 	public int getBagItemQuantity() {
-		return this.bagItemQuantity;
+		return this.bagItem.getQuantity();
 	}
 	
 	public int getBagQuantity() {
-		return this.bagQuantity;
+		return this.bagItem.getBag().getTotalQuantity();
 	}
 	
 	public String getProductDesc() {
-		return this.productDesc;
+		return this.bagItem.getProduct().getProductDesc();
 	}
 	
 	public Double getMarkdownPrice() {
-		return this.markdownPrice;
+		return this.bagItem.getProduct().getProductMarkdown();
 	}
 	
 	public String getBagItemStatus() {
-		return this.bagItemStatus;
+		return this.bagItem.getBagItemStatus();
 	}
 	
 	public List<String> getPromotionCodes() {
-		return this.promotionCodes;
+		return this.bagItem.getProduct().getPromotions().stream().map(p -> p.getPromotionCode()).collect(Collectors.toList());
 	}
 	
 	public Boolean isInStock() {
-		return this.inStock;
+		return this.bagItem.getProduct().isInStock();
 	}
 	
 	public Boolean isErrors() {
-		return this.errors;
+		return this.bagItem.isErrors();
 	}
 	
 	public void setErrors(Boolean errors) {
-		this.errors = errors;
+		this.bagItem.setErrors(errors);
 	}
 
 	public String getError() {
-		return error;
+		return this.bagItem.getError();
 	}
 
 	public void setError(String error) {
@@ -86,10 +56,14 @@ public class DroolsBagItemWrapper {
 	}
 	
 	public String getCustomerId() {
-		return this.customerId;
+		return bagItem.getBag().getCustomer().getCustomerID();
 	}
 	
 	public void addBagItemDiscount(Double amount) {
 		this.bagItem.addBagItemDiscount(amount);
+	}
+	
+	public void logItemError(String key, BagItem bagItem) {
+		bagItem.getBag().logItemError(key, bagItem);
 	}
 }
