@@ -71,4 +71,8 @@ public class DroolsBagItemWrapper {
 		return bagItem;
 	}
 	
+	public Bag getBag() {
+		return bagItem.getBag();
+	}
+	
 }
