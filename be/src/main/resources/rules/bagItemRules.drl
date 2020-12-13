@@ -80,14 +80,14 @@ $bagItem.logItemError(pendingItemKey($bagItem), $bagItem.getBagItem());
 end
 
 
-/*
+
 rule "Bag quantity exceeds limit"
 when  
-$bagItem : DroolsBagItemWrapper(bag.getTotalQuantity() > 50)
+$bagItem : DroolsBagItemWrapper(getBag().getTotalQuantity() > 50)
 then 
-//String error = "Can't process " +  $bagItem.getProductDesc() + ", bag quantity " + $bagItem.getBagItemQuantity() + " is more than the maximum allowed" ;
+String error = "Can't process " +  $bagItem.getProductDesc() + ", bag quantity " + $bagItem.getBagItemQuantity() + " is more than the maximum allowed" ;
 $bagItem.setErrors(true);
 $bagItem.setError(error);
-$bagItem.logItemError(pendingItemKey($bagItem), $bagItem);
+$bagItem.logItemError(pendingItemKey($bagItem), $bagItem.getBagItem());
 end
-*/
+
