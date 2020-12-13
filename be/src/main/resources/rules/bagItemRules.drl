@@ -52,38 +52,42 @@ $bagItem.addBagItemDiscount(discount * -1);
 end
 
 
-/*
+
 rule "Item quantity exceeds limit"
 when 
-$bagItem : BagItem(!bagItemStatus.equals("PRO01")
-					&& quantity > 6)
+$bagItem : DroolsBagItemWrapper(	!bagItemStatus.equals("PRO01")
+									&& bagItemQuantity > 6)
 then 
-String error = "Can't process " +  $bagItem.getProduct().getProductDesc() + ", quantity " + $bagItem.getQuantity() + " is more than the maximum allowed" ;
+String error = "Can't process " +  $bagItem.getProductDesc() + ", quantity " + $bagItem.getBagItemQuantity() + " is more than the maximum allowed" ;
 System.out.println(error);
 $bagItem.setErrors(true);
 $bagItem.setError(error);
-$bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
+$bagItem.logItemError(pendingItemKey($bagItem), $bagItem.getBagItem());
 end
+
+
 
 rule "Item quantity below minumum"
 when 
-$bagItem : BagItem(!bagItemStatus.equals("PRO01")
-					&& quantity < 1)
+$bagItem : DroolsBagItemWrapper(!bagItemStatus.equals("PRO01")
+								&& bagItemQuantity < 1)
 then 
-String error = "Can't process " +  $bagItem.getProduct().getProductDesc() + ", quantity " + $bagItem.getQuantity() + " is below minimum allowed" ;
+String error = "Can't process " +  $bagItem.getProductDesc() + ", quantity " + $bagItem.getBagItemQuantity() + " is below minimum allowed" ;
 System.out.println(error);
 $bagItem.setErrors(true);
 $bagItem.setError(error);
-$bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
+$bagItem.logItemError(pendingItemKey($bagItem), $bagItem.getBagItem());
 end
 
+
+/*
 rule "Bag quantity exceeds limit"
 when  
-$bagItem : BagItem(bag.getTotalQuantity() > 50)
+$bagItem : DroolsBagItemWrapper(bag.getTotalQuantity() > 50)
 then 
-//String error = "Can't process " +  $bagItem.getProduct().getProductDesc() + ", bag quantity " + $bagItem.getBag().getQuantity() + " is more than the maximum allowed" ;
+//String error = "Can't process " +  $bagItem.getProductDesc() + ", bag quantity " + $bagItem.getBagItemQuantity() + " is more than the maximum allowed" ;
 $bagItem.setErrors(true);
 $bagItem.setError(error);
-$bagItem.getBag().logItemError(pendingItemKey($bagItem), $bagItem);
+$bagItem.logItemError(pendingItemKey($bagItem), $bagItem);
 end
 */
