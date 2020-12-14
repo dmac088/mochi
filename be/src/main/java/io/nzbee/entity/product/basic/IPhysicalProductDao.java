@@ -1,5 +1,5 @@
 package io.nzbee.entity.product.basic;
 
-public class ProductBasicServiceImpl {
+public interface IPhysicalProductDao {
 
 }

@@ -4,9 +4,9 @@ import java.util.Map;
 
 import io.nzbee.entity.product.ProductDTO;
 
-public class ProductBasicDTO extends ProductDTO {
+public class PhysicalProductDTO extends ProductDTO {
 
-	public ProductBasicDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public PhysicalProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);
 		// TODO Auto-generated constructor stub
 	}

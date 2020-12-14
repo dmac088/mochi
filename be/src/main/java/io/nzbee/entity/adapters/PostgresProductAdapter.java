@@ -28,7 +28,7 @@ import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
-import io.nzbee.entity.product.basic.ProductBasicEntity;
+import io.nzbee.entity.product.basic.PhysicalProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
@@ -94,9 +94,9 @@ public class PostgresProductAdapter implements IProductPortService {
 
 			Optional<ProductEntity> op = productService.findByCode(domainObject.getProductUPC());
 
-			ProductBasicEntity product = (op.isPresent()) 
-					? (ProductBasicEntity) op.get()
-					: new ProductBasicEntity();
+			PhysicalProductEntity product = (op.isPresent()) 
+					? (PhysicalProductEntity) op.get()
+					: new PhysicalProductEntity();
 
 			// find the department
 			DepartmentEntity d = departmentService.findByCode(domainObject.getDepartment().getDepartmentCode()).get();
@@ -215,8 +215,8 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional(readOnly = true)
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
-		Class<?> clazz = cls.equals(BasicProduct.class) ? io.nzbee.entity.product.basic.ProductBasicEntity.class
-				: io.nzbee.entity.product.basic.ProductBasicEntity.class;
+		Class<?> clazz = cls.equals(BasicProduct.class) ? io.nzbee.entity.product.basic.PhysicalProductEntity.class
+				: io.nzbee.entity.product.basic.PhysicalProductEntity.class;
 
 		List<ProductDTO> lp = productService.findAllByType(locale, currency, clazz);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());

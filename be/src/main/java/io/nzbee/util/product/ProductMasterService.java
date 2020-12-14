@@ -23,7 +23,7 @@ import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
-import io.nzbee.entity.product.basic.ProductBasicEntity;
+import io.nzbee.entity.product.basic.PhysicalProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
@@ -103,7 +103,7 @@ public class ProductMasterService {
 	public void persistProductMaster(ProductMasterSchema p) {
 		
 		//english with USD
-		ProductBasicEntity pe = mapToAccessory(
+		PhysicalProductEntity pe = mapToAccessory(
 				 Constants.localeENGB, 
 				 Constants.currencyUSD,
 				 p.get_PRODUCT_UPC_CODE(),
@@ -146,7 +146,7 @@ public class ProductMasterService {
 	}
 	
 	
-	private ProductBasicEntity mapToAccessory(String locale, 
+	private PhysicalProductEntity mapToAccessory(String locale, 
 						 String currency,
 						 String upcCode,
 						 String brandCode,
@@ -184,9 +184,9 @@ public class ProductMasterService {
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
-		ProductBasicEntity pe = (op.isPresent()) 
-						 ? (ProductBasicEntity) op.get()
-						 : new ProductBasicEntity();			  
+		PhysicalProductEntity pe = (op.isPresent()) 
+						 ? (PhysicalProductEntity) op.get()
+						 : new PhysicalProductEntity();			  
 					  
 		pe.setBrand(ob.get());
 		pe.setDepartment(od.get());
