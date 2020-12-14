@@ -5,8 +5,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import org.hibernate.search.annotations.Indexed;
+
 import io.nzbee.entity.product.ProductEntity;
 
+@Indexed
 @Entity
 @Table(name = "product_shipping", schema = "mochi")
 @PrimaryKeyJoinColumn(name = "prd_id")

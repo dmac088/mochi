@@ -1,61 +1,61 @@
 package io.nzbee.util.product;
 
 
-public class ProductMasterSchema {
+public abstract class ProductMasterSchema {
 
-	private String PRODUCT_UPC_CODE;
+	protected String PRODUCT_UPC_CODE;
 	
-	private String PRODUCT_STATUS_CODE;
+	protected String PRODUCT_STATUS_CODE;
 	
-	private String PRODUCT_CREATED_DATE;
+	protected String PRODUCT_CREATED_DATE;
 
-	private String PRODUCT_DESCRIPTION_EN;
+	protected String PRODUCT_DESCRIPTION_EN;
 	
-	private String PRODUCT_DESCRIPTION_HK;
+	protected String PRODUCT_DESCRIPTION_HK;
 	
-	private String PRODUCT_LONG_DESCRIPTION_EN;
+	protected String PRODUCT_LONG_DESCRIPTION_EN;
 	
-	private String PRODUCT_LONG_DESCRIPTION_HK;
+	protected String PRODUCT_LONG_DESCRIPTION_HK;
 	
-	private String BRAND_CODE;
+	protected String BRAND_CODE;
 	
-	private String BRAND_DESCRIPTION_EN;
+	protected String BRAND_DESCRIPTION_EN;
 	
-	private String BRAND_DESCRIPTION_HK;
+	protected String BRAND_DESCRIPTION_HK;
 	
-	private double PRODUCT_RETAIL_PRICE_USD;
+	protected double PRODUCT_RETAIL_PRICE_USD;
 	
-	private double PRODUCT_MARKDOWN_PRICE_USD;
+	protected double PRODUCT_MARKDOWN_PRICE_USD;
 	
-	private double PRODUCT_RETAIL_PRICE_HKD;
+	protected double PRODUCT_RETAIL_PRICE_HKD;
 	
-	private double PRODUCT_MARKDOWN_PRICE_HKD;
+	protected double PRODUCT_MARKDOWN_PRICE_HKD;
 	
-	private String PRODUCT_IMAGE_EN;
+	protected String PRODUCT_IMAGE_EN;
 	
-	private String PRODUCT_IMAGE_HK;
+	protected String PRODUCT_IMAGE_HK;
 	
-	private String PRIMARY_CATEGORY_CODE;
+	protected String PRIMARY_CATEGORY_CODE;
 	
-	private String PRIMARY_CATEGORY_DESC_EN;
+	protected String PRIMARY_CATEGORY_DESC_EN;
 	
-	private String PRIMARY_CATEGORY_DESC_HK;
+	protected String PRIMARY_CATEGORY_DESC_HK;
 	
-	private String PRODUCT_TEMPLATE_CODE;
+	protected String PRODUCT_TEMPLATE_CODE;
 	
-	private String PRODUCT_TEMPLATE_DESC_EN;
+	protected String PRODUCT_TEMPLATE_DESC_EN;
 	
-	private String PRODUCT_TEMPLATE_DESC_HK;
+	protected String PRODUCT_TEMPLATE_DESC_HK;
 	
-	private String TAG_CODE_A;
+	protected String TAG_CODE_A;
 	
-	private String TAG_CODE_B;
+	protected String TAG_CODE_B;
 	
-	private String TAG_CODE_C;
+	protected String TAG_CODE_C;
 	
-	private String TAG_CODE_D;
+	protected String TAG_CODE_D;
 	
-	private String TAG_CODE_E;
+	protected String TAG_CODE_E;
 	
 
 	public String get_PRODUCT_TEMPLATE_CODE() {

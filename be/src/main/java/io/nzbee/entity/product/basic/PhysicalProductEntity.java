@@ -33,7 +33,7 @@ public class PhysicalProductEntity extends ProductEntity  {
 		return widthDimension;
 	}
 
-	public void setWidthDimension(int widthDimension) {
+	public void setWidthDimension(Integer widthDimension) {
 		this.widthDimension = widthDimension;
 	}
 
@@ -41,7 +41,7 @@ public class PhysicalProductEntity extends ProductEntity  {
 		return lengthDimension;
 	}
 
-	public void setLengthDimension(int lengthDimension) {
+	public void setLengthDimension(Integer lengthDimension) {
 		this.lengthDimension = lengthDimension;
 	}
 
@@ -49,7 +49,7 @@ public class PhysicalProductEntity extends ProductEntity  {
 		return heightDimension;
 	}
 
-	public void setHeightDimension(int heightDimension) {
+	public void setHeightDimension(Integer heightDimension) {
 		this.heightDimension = heightDimension;
 	}
 
@@ -57,7 +57,7 @@ public class PhysicalProductEntity extends ProductEntity  {
 		return weightDimension;
 	}
 
-	public void setWeightDimension(int weightDimension) {
+	public void setWeightDimension(Integer weightDimension) {
 		this.weightDimension = weightDimension;
 	}
 	
