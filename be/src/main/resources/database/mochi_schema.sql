@@ -2404,7 +2404,9 @@ ALTER TABLE product_rating OWNER TO mochidb_owner;
 CREATE TABLE product_shipping (
     prd_id bigint NOT NULL,
     country_name character varying(50) NOT NULL,
-    city_name character varying(50) NOT NULL
+    city_name character varying(50) NOT NULL,
+    country_cd character(2),
+    post_cd character varying(10) NOT NULL
 );
 
 
