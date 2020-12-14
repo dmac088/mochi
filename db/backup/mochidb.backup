@@ -2212,7 +2212,11 @@ ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
 --
 
 CREATE TABLE product_basic (
-    prd_id bigint NOT NULL
+    prd_id bigint NOT NULL,
+    width bigint,
+    height bigint,
+    length bigint,
+    weight bigint
 );
 
 
@@ -4984,103 +4988,103 @@ COPY product_attr_lcl (prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd, prd_ln
 -- Data for Name: product_basic; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_basic (prd_id) FROM stdin;
-5
-7
-9
-13
-21
-23
-25
-26
-28
-30
-2
-8
-17
-3
-4
-6
-12
-16
-10
-11
-14
-15
-19
-20
-22
-24
-27
-29
-1
-18
-233275
-233282
-233289
-233296
-233303
-233310
-233317
-233324
-233331
-233338
-233345
-233352
-233359
-233366
-233373
-233380
-233387
-233394
-233401
-233408
-233415
-233422
-233429
-233436
-233443
-233450
-233457
-233464
-233471
-233478
-233485
-233492
-233499
-233506
-233513
-233520
-233527
-233534
-233541
-233548
-233555
-233562
-233569
-233576
-233583
-233590
-233597
-233604
-233611
-233618
-233625
-233632
-233639
-233646
-233653
-233660
-233667
-233674
-233681
-233688
-233695
-233702
-233709
-233716
-233723
-233730
+COPY product_basic (prd_id, width, height, length, weight) FROM stdin;
+5	\N	\N	\N	\N
+7	\N	\N	\N	\N
+9	\N	\N	\N	\N
+13	\N	\N	\N	\N
+21	\N	\N	\N	\N
+23	\N	\N	\N	\N
+25	\N	\N	\N	\N
+26	\N	\N	\N	\N
+28	\N	\N	\N	\N
+30	\N	\N	\N	\N
+2	\N	\N	\N	\N
+8	\N	\N	\N	\N
+17	\N	\N	\N	\N
+3	\N	\N	\N	\N
+4	\N	\N	\N	\N
+6	\N	\N	\N	\N
+12	\N	\N	\N	\N
+16	\N	\N	\N	\N
+10	\N	\N	\N	\N
+11	\N	\N	\N	\N
+14	\N	\N	\N	\N
+15	\N	\N	\N	\N
+19	\N	\N	\N	\N
+20	\N	\N	\N	\N
+22	\N	\N	\N	\N
+24	\N	\N	\N	\N
+27	\N	\N	\N	\N
+29	\N	\N	\N	\N
+1	\N	\N	\N	\N
+18	\N	\N	\N	\N
+233275	\N	\N	\N	\N
+233282	\N	\N	\N	\N
+233289	\N	\N	\N	\N
+233296	\N	\N	\N	\N
+233303	\N	\N	\N	\N
+233310	\N	\N	\N	\N
+233317	\N	\N	\N	\N
+233324	\N	\N	\N	\N
+233331	\N	\N	\N	\N
+233338	\N	\N	\N	\N
+233345	\N	\N	\N	\N
+233352	\N	\N	\N	\N
+233359	\N	\N	\N	\N
+233366	\N	\N	\N	\N
+233373	\N	\N	\N	\N
+233380	\N	\N	\N	\N
+233387	\N	\N	\N	\N
+233394	\N	\N	\N	\N
+233401	\N	\N	\N	\N
+233408	\N	\N	\N	\N
+233415	\N	\N	\N	\N
+233422	\N	\N	\N	\N
+233429	\N	\N	\N	\N
+233436	\N	\N	\N	\N
+233443	\N	\N	\N	\N
+233450	\N	\N	\N	\N
+233457	\N	\N	\N	\N
+233464	\N	\N	\N	\N
+233471	\N	\N	\N	\N
+233478	\N	\N	\N	\N
+233485	\N	\N	\N	\N
+233492	\N	\N	\N	\N
+233499	\N	\N	\N	\N
+233506	\N	\N	\N	\N
+233513	\N	\N	\N	\N
+233520	\N	\N	\N	\N
+233527	\N	\N	\N	\N
+233534	\N	\N	\N	\N
+233541	\N	\N	\N	\N
+233548	\N	\N	\N	\N
+233555	\N	\N	\N	\N
+233562	\N	\N	\N	\N
+233569	\N	\N	\N	\N
+233576	\N	\N	\N	\N
+233583	\N	\N	\N	\N
+233590	\N	\N	\N	\N
+233597	\N	\N	\N	\N
+233604	\N	\N	\N	\N
+233611	\N	\N	\N	\N
+233618	\N	\N	\N	\N
+233625	\N	\N	\N	\N
+233632	\N	\N	\N	\N
+233639	\N	\N	\N	\N
+233646	\N	\N	\N	\N
+233653	\N	\N	\N	\N
+233660	\N	\N	\N	\N
+233667	\N	\N	\N	\N
+233674	\N	\N	\N	\N
+233681	\N	\N	\N	\N
+233688	\N	\N	\N	\N
+233695	\N	\N	\N	\N
+233702	\N	\N	\N	\N
+233709	\N	\N	\N	\N
+233716	\N	\N	\N	\N
+233723	\N	\N	\N	\N
+233730	\N	\N	\N	\N
 \.
 
 

@@ -2323,7 +2323,11 @@ ALTER TABLE product_attr_lcl OWNER TO mochidb_owner;
 --
 
 CREATE TABLE product_basic (
-    prd_id bigint NOT NULL
+    prd_id bigint NOT NULL,
+    width bigint,
+    height bigint,
+    length bigint,
+    weight bigint
 );
 
 
