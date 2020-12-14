@@ -31,9 +31,9 @@ ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_sts_id_product_status_sts
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_cat_id_category_cat_id_fkey;
+ALTER TABLE ONLY mochi.product_basic DROP CONSTRAINT product_basic_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_lcl_cd_fkey;
-ALTER TABLE ONLY mochi.product_basic DROP CONSTRAINT product_accessories_prd_id_fkey;
 ALTER TABLE ONLY mochi.person DROP CONSTRAINT person_person_id_fkey;
 ALTER TABLE ONLY mochi.party DROP CONSTRAINT party_pty_typ_id_fkey;
 ALTER TABLE ONLY mochi.organisation DROP CONSTRAINT organisation_org_id_fkey;
@@ -59,7 +59,6 @@ ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_bnd_id_fkey
 ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pty_id_party_pty_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_sts_id_bag_item_sts_bag_item_sts_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_bag_id_bag_bag_id_fkey;
-ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_lcl_cd_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
 DROP INDEX mochi.fki_promotion_attr_lcl_prm_id_fkey;
@@ -108,8 +107,8 @@ ALTER TABLE ONLY mochi.product_rating DROP CONSTRAINT product_rating_pkey;
 ALTER TABLE ONLY mochi.product_promotion DROP CONSTRAINT product_promotion_pkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_pkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_pkey;
+ALTER TABLE ONLY mochi.product_basic DROP CONSTRAINT product_basic_pkey;
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_pkey;
-ALTER TABLE ONLY mochi.product_basic DROP CONSTRAINT product_accessories_pkey;
 ALTER TABLE ONLY mochi.price_type DROP CONSTRAINT price_type_pkey;
 ALTER TABLE ONLY mochi.price DROP CONSTRAINT price_pkey;
 ALTER TABLE ONLY mochi.department_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_3;
@@ -3051,19 +3050,19 @@ ALTER TABLE ONLY price_type
 
 
 --
--- Name: product_basic product_accessories_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY product_basic
-    ADD CONSTRAINT product_accessories_pkey PRIMARY KEY (prd_id);
-
-
---
 -- Name: product_attr_lcl product_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT product_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
+-- Name: product_basic product_basic_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_basic
+    ADD CONSTRAINT product_basic_pkey PRIMARY KEY (prd_id);
 
 
 --
@@ -3448,14 +3447,6 @@ ALTER TABLE ONLY accessories_attr_lcl
 
 
 --
--- Name: accessories_attr_lcl accessories_attr_lcl_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY accessories_attr_lcl
-    ADD CONSTRAINT accessories_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product_basic(prd_id);
-
-
---
 -- Name: bag_item bag_item_bag_id_bag_bag_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3656,14 +3647,6 @@ ALTER TABLE ONLY person
 
 
 --
--- Name: product_basic product_accessories_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY product_basic
-    ADD CONSTRAINT product_accessories_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
-
-
---
 -- Name: product_attr_lcl product_attr_lcl_lcl_cd_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3677,6 +3660,14 @@ ALTER TABLE ONLY product_attr_lcl
 
 ALTER TABLE ONLY product_attr_lcl
     ADD CONSTRAINT product_attr_lcl_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
+
+
+--
+-- Name: product_basic product_basic_prd_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_basic
+    ADD CONSTRAINT product_basic_prd_id_fkey FOREIGN KEY (prd_id) REFERENCES product(prd_id);
 
 
 --
