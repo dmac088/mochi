@@ -2293,7 +2293,9 @@ ALTER TABLE product_rating OWNER TO mochidb_owner;
 CREATE TABLE product_shipping (
     prd_id bigint NOT NULL,
     country_name character varying(50) NOT NULL,
-    city_name character varying(50) NOT NULL
+    city_name character varying(50) NOT NULL,
+    country_cd character(2),
+    post_cd character varying(10) NOT NULL
 );
 
 
@@ -5363,7 +5365,7 @@ SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
 -- Data for Name: product_shipping; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY product_shipping (prd_id, country_name, city_name) FROM stdin;
+COPY product_shipping (prd_id, country_name, city_name, country_cd, post_cd) FROM stdin;
 \.
 
 
