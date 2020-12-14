@@ -56,6 +56,7 @@ public class ProductMasterSchema {
 	private String TAG_CODE_D;
 	
 	private String TAG_CODE_E;
+	
 
 	public String get_PRODUCT_TEMPLATE_CODE() {
 		return PRODUCT_TEMPLATE_CODE;
