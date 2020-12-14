@@ -10,10 +10,12 @@ public abstract class ShippingEntity_ extends io.nzbee.entity.product.ProductEnt
 
 	public static volatile SingularAttribute<ShippingEntity, String> cityName;
 	public static volatile SingularAttribute<ShippingEntity, String> countryCode;
+	public static volatile SingularAttribute<ShippingEntity, String> postCode;
 	public static volatile SingularAttribute<ShippingEntity, String> countryName;
 
 	public static final String CITY_NAME = "cityName";
 	public static final String COUNTRY_CODE = "countryCode";
+	public static final String POST_CODE = "postCode";
 	public static final String COUNTRY_NAME = "countryName";
 
 }
