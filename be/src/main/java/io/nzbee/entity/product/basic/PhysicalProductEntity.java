@@ -16,15 +16,20 @@ import io.nzbee.entity.product.ProductEntity;
 @DiscriminatorValue("2")
 public class PhysicalProductEntity extends ProductEntity  {
 
-	@Column(name="")
+	@Column(name="width")
 	private int widthDimension;
 	
+	@Column(name="length")
 	private int lengthDimension;
 	
+	@Column(name="height")
 	private int heightDimension;
 	
+	@Column(name="weight")
 	private int weightDimension;
 
+	
+	
 	public int getWidthDimension() {
 		return widthDimension;
 	}
