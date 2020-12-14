@@ -1,5 +1,6 @@
 package io.nzbee.entity.product.basic;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
@@ -15,6 +16,7 @@ import io.nzbee.entity.product.ProductEntity;
 @DiscriminatorValue("2")
 public class PhysicalProductEntity extends ProductEntity  {
 
+	@Column(name="")
 	private int widthDimension;
 	
 	private int lengthDimension;
@@ -23,8 +25,6 @@ public class PhysicalProductEntity extends ProductEntity  {
 	
 	private int weightDimension;
 
-	
-	
 	public int getWidthDimension() {
 		return widthDimension;
 	}
