@@ -28,8 +28,7 @@ public class PhysicalProductEntity extends ProductEntity  {
 	@Column(name="weight")
 	private int weightDimension;
 
-	
-	
+
 	public int getWidthDimension() {
 		return widthDimension;
 	}
