@@ -5,14 +5,12 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import io.nzbee.entity.role.Role;
 
 @Entity
-@Table(name = "supplier", schema = "mochi") 
-@PrimaryKeyJoinColumn(name = "rle_id")
+@Table(name = "supplier", schema = "mochi")
 @DiscriminatorValue("2")
 public class Supplier extends Role {
 	

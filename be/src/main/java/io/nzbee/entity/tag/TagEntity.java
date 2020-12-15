@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
@@ -16,7 +15,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -34,7 +32,6 @@ import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "tag", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "tag_id")
 @SqlResultSetMapping(
 	    name = "TagMapping",
 	    columns = {

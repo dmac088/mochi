@@ -6,13 +6,11 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import io.nzbee.entity.party.Party;
 
 @Entity
 @Table(name = "person", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "psn_id")
 @DiscriminatorValue("1")
 public class PersonEntity extends Party  implements Serializable {
 	

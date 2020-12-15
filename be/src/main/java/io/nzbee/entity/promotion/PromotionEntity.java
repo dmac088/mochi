@@ -16,7 +16,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.hibernate.annotations.NaturalId;
@@ -27,7 +26,6 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "prm_id")
 public class PromotionEntity {
 
 	@Id
