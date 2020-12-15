@@ -1,4 +1,4 @@
-package io.nzbee.entity.product.basic;
+package io.nzbee.entity.product.physical;
 
 public interface IPhysicalProductService {
 

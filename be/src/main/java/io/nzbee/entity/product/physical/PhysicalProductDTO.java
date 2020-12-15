@@ -1,4 +1,4 @@
-package io.nzbee.entity.product.basic;
+package io.nzbee.entity.product.physical;
 
 import java.util.Map;
 

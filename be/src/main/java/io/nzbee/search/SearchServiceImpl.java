@@ -464,6 +464,9 @@ public class SearchServiceImpl implements ISearchService {
 		setProductProjection(jpaQuery);
 		@SuppressWarnings("unchecked")
 		List<Object[]> result = jpaQuery.getResultList();
+		LOGGER.debug("***********Searching for the following UPC*****************");
+		LOGGER.debug((StringUtils.join(",", result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))));
+		LOGGER.debug("***********************************************************");
 		List<ProductDTO> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
 		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
