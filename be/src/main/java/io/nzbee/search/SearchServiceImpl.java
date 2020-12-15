@@ -40,6 +40,7 @@ import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
+import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.PageableUtil;
 
@@ -304,7 +305,7 @@ public class SearchServiceImpl implements ISearchService {
 
 		QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory()
 														 .buildQueryBuilder()
-														 .forEntity(ProductEntity.class)
+														 .forEntity(PhysicalProductEntity.class)
 														 .overridesForField("productDesc", lcl)
 														 .overridesForField("productLongDesc", lcl)
 														 .overridesForField("product.brand.brandDesc", lcl)
@@ -328,7 +329,7 @@ public class SearchServiceImpl implements ISearchService {
 				
 				.createQuery();
 
-		final FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, ProductEntity.class);
+		final FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(searchQuery, PhysicalProductEntity.class);
 
 		//initialize the facets
 		Set<Facet> facets = new HashSet<Facet>();
@@ -451,14 +452,14 @@ public class SearchServiceImpl implements ISearchService {
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
-		QueryBuilder titleQB = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(ProductEntity.class)
+		QueryBuilder titleQB = fullTextEntityManager.getSearchFactory().buildQueryBuilder().forEntity(PhysicalProductEntity.class)
 				.get();
 
 		Query query = titleQB.phrase().withSlop(2).onField(TITLE_NGRAM_INDEX + cleanLocale(locale))
 				.andField(TITLE_EDGE_NGRAM_INDEX + cleanLocale(locale)).boostedTo(5).sentence(searchTerm.toLowerCase())
 				.createQuery();
 
-		FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(query, ProductEntity.class);
+		FullTextQuery jpaQuery = fullTextEntityManager.createFullTextQuery(query, PhysicalProductEntity.class);
 		jpaQuery.setMaxResults(20);
 
 		setProductProjection(jpaQuery);
