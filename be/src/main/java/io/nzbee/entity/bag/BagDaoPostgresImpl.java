@@ -272,7 +272,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	FROM mochi.party pty    							" +
 		
 		"	INNER JOIN mochi.person psn    						" +  
-		"	ON pty.pty_id = psn.psn_id    						" +  
+		"	ON pty.pty_id = psn.pty_id    						" +  
 		
 		"	INNER JOIN mochi.role rle							" + 
 		"	ON pty.pty_id = rle.pty_id							" +

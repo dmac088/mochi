@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -16,7 +15,6 @@ import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "category_product", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "cat_id")
 @DiscriminatorValue("1")
 @JsonTypeName("categoryproduct")
 public class CategoryProductEntity extends CategoryEntity  {

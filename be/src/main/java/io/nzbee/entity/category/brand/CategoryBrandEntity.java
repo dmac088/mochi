@@ -8,7 +8,6 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
@@ -20,7 +19,6 @@ import io.nzbee.entity.category.product.CategoryProductEntity;
 
 @Entity
 @Table(name = "category_brand", schema = "mochi")
-@PrimaryKeyJoinColumn(name = "cat_id")
 @DiscriminatorValue("2")
 @JsonTypeName("categorybrand")
 public class CategoryBrandEntity extends CategoryEntity {
