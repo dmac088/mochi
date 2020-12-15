@@ -28,11 +28,11 @@ import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
-import io.nzbee.entity.product.basic.PhysicalProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
@@ -215,8 +215,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional(readOnly = true)
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		// we need a type mapper here
-		Class<?> clazz = cls.equals(BasicProduct.class) ? io.nzbee.entity.product.basic.PhysicalProductEntity.class
-				: io.nzbee.entity.product.basic.PhysicalProductEntity.class;
+		Class<?> clazz = PhysicalProductEntity.class;
 
 		List<ProductDTO> lp = productService.findAllByType(locale, currency, clazz);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());

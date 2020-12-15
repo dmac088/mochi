@@ -1,10 +1,8 @@
-package io.nzbee.entity.product.basic;
+package io.nzbee.entity.product.physical;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
-
-import io.nzbee.entity.product.physical.PhysicalProductEntity;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(PhysicalProductEntity.class)

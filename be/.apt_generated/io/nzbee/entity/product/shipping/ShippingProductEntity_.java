@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(ShippingProductEntity.class)
-public abstract class ShippingEntity_ extends io.nzbee.entity.product.ProductEntity_ {
+public abstract class ShippingProductEntity_ extends io.nzbee.entity.product.ProductEntity_ {
 
 	public static volatile SingularAttribute<ShippingProductEntity, String> cityName;
 	public static volatile SingularAttribute<ShippingProductEntity, String> countryCode;
