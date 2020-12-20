@@ -7069,11 +7069,11 @@ ALTER TABLE ONLY bag_item
 
 
 --
--- Name: bag_item_disc bag_item_discount_bag_item_id_bag_item_bag_item_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: bag_item_disc bag_item_disc_bag_item_id_bag_item_bag_item_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY bag_item_disc
-    ADD CONSTRAINT bag_item_discount_bag_item_id_bag_item_bag_item_id_fkey FOREIGN KEY (bag_item_id) REFERENCES bag_item(bag_item_id);
+    ADD CONSTRAINT bag_item_disc_bag_item_id_bag_item_bag_item_id_fkey FOREIGN KEY (bag_item_id) REFERENCES bag_item(bag_item_id);
 
 
 --
