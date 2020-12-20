@@ -1512,6 +1512,19 @@ CREATE TABLE bag_item (
 ALTER TABLE bag_item OWNER TO mochidb_owner;
 
 --
+-- Name: bag_item_disc; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE bag_item_disc (
+    bag_item_disc_id bigint NOT NULL,
+    bag_item_id bigint NOT NULL,
+    disc_amt numeric NOT NULL
+);
+
+
+ALTER TABLE bag_item_disc OWNER TO mochidb_owner;
+
+--
 -- Name: bag_status_bag_sts_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3097,6 +3110,14 @@ SELECT pg_catalog.setval('bag_bag_id_seq', 1, false);
 
 COPY bag_item (bag_item_id, bag_id, prd_id, qty, bag_item_sts_id) FROM stdin;
 234502	234484	233590	2	1
+\.
+
+
+--
+-- Data for Name: bag_item_disc; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+COPY bag_item_disc (bag_item_disc_id, bag_item_id, disc_amt) FROM stdin;
 \.
 
 
@@ -6198,7 +6219,7 @@ COPY user_role (id, pty_id, role_id) FROM stdin;
 -- Name: user_role_id_seq; Type: SEQUENCE SET; Schema: security; Owner: security_owner
 --
 
-SELECT pg_catalog.setval('user_role_id_seq', 233, true);
+SELECT pg_catalog.setval('user_role_id_seq', 234, true);
 
 
 --
@@ -6220,6 +6241,14 @@ SET search_path = mochi, pg_catalog;
 
 ALTER TABLE ONLY accessories_attr_lcl
     ADD CONSTRAINT accessories_attr_lcl_pkey PRIMARY KEY (prd_lcl_id);
+
+
+--
+-- Name: bag_item_disc bag_item_disc_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag_item_disc
+    ADD CONSTRAINT bag_item_disc_pkey PRIMARY KEY (bag_item_disc_id);
 
 
 --
@@ -7040,6 +7069,14 @@ ALTER TABLE ONLY bag_item
 
 
 --
+-- Name: bag_item_disc bag_item_discount_bag_item_id_bag_item_bag_item_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag_item_disc
+    ADD CONSTRAINT bag_item_discount_bag_item_id_bag_item_bag_item_id_fkey FOREIGN KEY (bag_item_id) REFERENCES bag_item(bag_item_id);
+
+
+--
 -- Name: bag_item bag_item_sts_id_bag_item_sts_bag_item_sts_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -7507,6 +7544,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE bag TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE bag_item TO mochi_app;
+
+
+--
+-- Name: bag_item_disc; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE bag_item_disc TO mochi_app;
 
 
 --

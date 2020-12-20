@@ -389,6 +389,12 @@ INSERT INTO bag_item VALUES (234502, 234484, 233590, 2, 1);
 
 
 --
+-- Data for Name: bag_item_disc; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Name: bag_status_bag_sts_id_seq; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
