@@ -1453,6 +1453,13 @@ ALTER TABLE accessories_attr_lcl OWNER TO mochidb_owner;
 --
 
 CREATE TABLE address (
+    addr_id bigint NOT NULL,
+    addr_ln_1 character varying(100),
+    addr_ln_2 character varying(100),
+    addr_ln_3 character varying(100),
+    addr_cnty character varying(100) NOT NULL,
+    addr_pst_cd character varying(10),
+    addr_typ_id bigint NOT NULL
 );
 
 
@@ -1463,6 +1470,9 @@ ALTER TABLE address OWNER TO mochidb_owner;
 --
 
 CREATE TABLE address_type (
+    addr_typ_id bigint NOT NULL,
+    addr_typ_cd character varying(10) NOT NULL,
+    addr_typ_desc character varying(20) NOT NULL
 );
 
 
@@ -3074,7 +3084,7 @@ COPY accessories_attr_lcl (prd_lcl_id, prd_id, primary_metal_type, primary_stone
 -- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY address  FROM stdin;
+COPY address (addr_id, addr_ln_1, addr_ln_2, addr_ln_3, addr_cnty, addr_pst_cd, addr_typ_id) FROM stdin;
 \.
 
 
@@ -3082,7 +3092,7 @@ COPY address  FROM stdin;
 -- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY address_type  FROM stdin;
+COPY address_type (addr_typ_id, addr_typ_cd, addr_typ_desc) FROM stdin;
 \.
 
 
@@ -6244,6 +6254,22 @@ ALTER TABLE ONLY accessories_attr_lcl
 
 
 --
+-- Name: address address_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_pkey PRIMARY KEY (addr_id);
+
+
+--
+-- Name: address_type address_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address_type
+    ADD CONSTRAINT address_type_pkey PRIMARY KEY (addr_typ_id);
+
+
+--
 -- Name: bag_item_disc bag_item_disc_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -7058,6 +7084,14 @@ CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON role USING 
 
 ALTER TABLE ONLY accessories_attr_lcl
     ADD CONSTRAINT accessories_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
+-- Name: address address_addr_typ_id_address_type_addr_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_addr_typ_id_address_type_addr_typ_id_fkey FOREIGN KEY (addr_typ_id) REFERENCES address_type(addr_typ_id);
 
 
 --
