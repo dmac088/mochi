@@ -1459,7 +1459,8 @@ CREATE TABLE address (
     addr_ln_3 character varying(100),
     addr_cnty character varying(100) NOT NULL,
     addr_pst_cd character varying(10),
-    addr_typ_id bigint NOT NULL
+    addr_typ_id bigint NOT NULL,
+    pty_id bigint
 );
 
 
@@ -3084,7 +3085,7 @@ COPY accessories_attr_lcl (prd_lcl_id, prd_id, primary_metal_type, primary_stone
 -- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY address (addr_id, addr_ln_1, addr_ln_2, addr_ln_3, addr_cnty, addr_pst_cd, addr_typ_id) FROM stdin;
+COPY address (addr_id, addr_ln_1, addr_ln_2, addr_ln_3, addr_cnty, addr_pst_cd, addr_typ_id, pty_id) FROM stdin;
 \.
 
 
@@ -3093,6 +3094,8 @@ COPY address (addr_id, addr_ln_1, addr_ln_2, addr_ln_3, addr_cnty, addr_pst_cd, 
 --
 
 COPY address_type (addr_typ_id, addr_typ_cd, addr_typ_desc) FROM stdin;
+1	MAI01	Mailing Address
+2	BIL01	Billing Address
 \.
 
 
@@ -7092,6 +7095,14 @@ ALTER TABLE ONLY accessories_attr_lcl
 
 ALTER TABLE ONLY address
     ADD CONSTRAINT address_addr_typ_id_address_type_addr_typ_id_fkey FOREIGN KEY (addr_typ_id) REFERENCES address_type(addr_typ_id);
+
+
+--
+-- Name: address address_pty_id_party_pty_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_pty_id_party_pty_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id);
 
 
 --

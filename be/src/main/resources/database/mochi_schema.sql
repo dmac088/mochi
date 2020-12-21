@@ -60,6 +60,7 @@ ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pty_id_party_pty_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_sts_id_bag_item_sts_bag_item_sts_id_fkey;
 ALTER TABLE ONLY mochi.bag_item_disc DROP CONSTRAINT bag_item_disc_bag_item_id_bag_item_bag_item_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_bag_id_bag_bag_id_fkey;
+ALTER TABLE ONLY mochi.address DROP CONSTRAINT address_pty_id_party_pty_id_fkey;
 ALTER TABLE ONLY mochi.address DROP CONSTRAINT address_addr_typ_id_address_type_addr_typ_id_fkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_lcl_cd_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
@@ -1575,7 +1576,8 @@ CREATE TABLE address (
     addr_ln_3 character varying(100),
     addr_cnty character varying(100) NOT NULL,
     addr_pst_cd character varying(10),
-    addr_typ_id bigint NOT NULL
+    addr_typ_id bigint NOT NULL,
+    pty_id bigint
 );
 
 
@@ -3505,6 +3507,14 @@ ALTER TABLE ONLY accessories_attr_lcl
 
 ALTER TABLE ONLY address
     ADD CONSTRAINT address_addr_typ_id_address_type_addr_typ_id_fkey FOREIGN KEY (addr_typ_id) REFERENCES address_type(addr_typ_id);
+
+
+--
+-- Name: address address_pty_id_party_pty_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_pty_id_party_pty_id_fkey FOREIGN KEY (pty_id) REFERENCES party(pty_id);
 
 
 --
