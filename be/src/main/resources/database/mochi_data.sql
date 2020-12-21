@@ -302,12 +302,8 @@ INSERT INTO accessories_attr_lcl VALUES (58, 18, NULL, NULL, 'zh-HK');
 -- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-
-
---
--- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
+INSERT INTO address_type VALUES (1, 'MAI01', 'Mailing Address');
+INSERT INTO address_type VALUES (2, 'BIL01', 'Billing Address');
 
 
 --
@@ -354,6 +350,12 @@ INSERT INTO party VALUES (233054, 1);
 INSERT INTO party VALUES (233055, 2);
 INSERT INTO party VALUES (234477, 1);
 INSERT INTO party VALUES (234482, 1);
+
+
+--
+-- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
 
 
 --
