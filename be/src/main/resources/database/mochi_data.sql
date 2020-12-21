@@ -299,13 +299,13 @@ INSERT INTO accessories_attr_lcl VALUES (58, 18, NULL, NULL, 'zh-HK');
 
 
 --
--- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
 -- Data for Name: address_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 

@@ -60,6 +60,7 @@ ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pty_id_party_pty_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_sts_id_bag_item_sts_bag_item_sts_id_fkey;
 ALTER TABLE ONLY mochi.bag_item_disc DROP CONSTRAINT bag_item_disc_bag_item_id_bag_item_bag_item_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_bag_id_bag_bag_id_fkey;
+ALTER TABLE ONLY mochi.address DROP CONSTRAINT address_addr_typ_id_address_type_addr_typ_id_fkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_lcl_cd_fkey;
 DROP INDEX mochi.role_role_typ_id_role_start_dttm_party_id_key;
 DROP INDEX mochi.fki_promotion_attr_lcl_prm_id_fkey;
@@ -147,6 +148,8 @@ ALTER TABLE ONLY mochi.bag_item_status DROP CONSTRAINT bag_status_pkey;
 ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_pkey;
 ALTER TABLE ONLY mochi.bag_item_disc DROP CONSTRAINT bag_item_disc_pkey;
+ALTER TABLE ONLY mochi.address_type DROP CONSTRAINT address_type_pkey;
+ALTER TABLE ONLY mochi.address DROP CONSTRAINT address_pkey;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl_pkey;
 ALTER TABLE mochi.role_type ALTER COLUMN rle_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party_type ALTER COLUMN pty_typ_id DROP DEFAULT;
@@ -1566,6 +1569,13 @@ ALTER TABLE accessories_attr_lcl OWNER TO mochidb_owner;
 --
 
 CREATE TABLE address (
+    addr_id bigint NOT NULL,
+    addr_ln_1 character varying(100),
+    addr_ln_2 character varying(100),
+    addr_ln_3 character varying(100),
+    addr_cnty character varying(100) NOT NULL,
+    addr_pst_cd character varying(10),
+    addr_typ_id bigint NOT NULL
 );
 
 
@@ -1576,6 +1586,9 @@ ALTER TABLE address OWNER TO mochidb_owner;
 --
 
 CREATE TABLE address_type (
+    addr_typ_id bigint NOT NULL,
+    addr_typ_cd character varying(10) NOT NULL,
+    addr_typ_desc character varying(20) NOT NULL
 );
 
 
@@ -2778,6 +2791,22 @@ ALTER TABLE ONLY accessories_attr_lcl
 
 
 --
+-- Name: address address_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_pkey PRIMARY KEY (addr_id);
+
+
+--
+-- Name: address_type address_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address_type
+    ADD CONSTRAINT address_type_pkey PRIMARY KEY (addr_typ_id);
+
+
+--
 -- Name: bag_item_disc bag_item_disc_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3468,6 +3497,14 @@ CREATE UNIQUE INDEX role_role_typ_id_role_start_dttm_party_id_key ON role USING 
 
 ALTER TABLE ONLY accessories_attr_lcl
     ADD CONSTRAINT accessories_attr_lcl_lcl_cd_fkey FOREIGN KEY (lcl_cd) REFERENCES locale(lcl_cd);
+
+
+--
+-- Name: address address_addr_typ_id_address_type_addr_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY address
+    ADD CONSTRAINT address_addr_typ_id_address_type_addr_typ_id_fkey FOREIGN KEY (addr_typ_id) REFERENCES address_type(addr_typ_id);
 
 
 --
