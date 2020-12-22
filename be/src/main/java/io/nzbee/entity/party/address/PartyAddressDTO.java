@@ -4,10 +4,7 @@ import java.util.Map;
 
 public class PartyAddressDTO {
 
-	
 	public PartyAddressDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		
-		
 		
 	}
 	
