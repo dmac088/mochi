@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
-import io.nzbee.util.product.ProductMasterService;
+import io.nzbee.util.product.physical.PhysicalProductMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -36,7 +36,7 @@ import io.nzbee.util.product.ProductMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_ProductUploadForUpdateIntegrationTest {
+public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 
 	@TestConfiguration
 	static class ProductUploadRepositoryIntegrationTest {
@@ -51,7 +51,7 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private ProductMasterService pms;
+	private PhysicalProductMasterService pms;
 
 	@Autowired
 	private IProductService productService;
@@ -92,7 +92,7 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 
 		assertThat(found.get().getProductDesc()).isEqualTo("organic cucumber");
 
-		//assertThat(found.get().getProductLongDesc()).isEqualTo("newly fresh organic cucumber");
+		assertThat(found.get().getProductLongDesc()).isEqualTo("newly fresh organic cucumber");
 
 		assertThat(found.get().getDepartment().getDepartmentCode()).isEqualTo("ACC01");
 
@@ -100,23 +100,12 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 
 		assertThat(found.get().getBrand().getBrandCode()).isEqualTo("DRI01");
 
-//		assertNotNull(found.get().getPrimaryCategory());
-//		assertThat(found.get().getPrimaryCategory().getCategoryCode().equals("SVG01")).isTrue();
-
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyUSD);
 
-//		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(8));
-//
-//		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7));
-//
-//
-//		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(8));
-//
-//		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7));
-//
-//		assertNotNull(found.get().getTags());
-//		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
-//				.isTrue();
+		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(8));
+
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7));
+
 	}
 
 	private void assertFound_ZHHK_HKD(Optional<ProductDTO> found) {
@@ -129,7 +118,7 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 
 		assertThat(found.get().getProductDesc()).isEqualTo("有機黃瓜");
 
-		//assertThat(found.get().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
+		assertThat(found.get().getProductLongDesc()).isEqualTo("新近新鮮的有機黃瓜");
 
 		assertThat(found.get().getDepartment().getDepartmentCode()).isEqualTo("ACC01");
 
@@ -139,14 +128,17 @@ public class IT_ProductUploadForUpdateIntegrationTest {
 		
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyHKD);
 
-//		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));
-//
-//		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55));
+		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));
 
-//
-//		assertNotNull(found.get().getTags());
-//		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
-//				.isTrue();
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55));
+		
+		assertThat(found.get().getHeight()).isEqualTo(new Integer(1));
+		
+		assertThat(found.get().getWidth()).isEqualTo(new Integer(1));
+		
+		assertThat(found.get().getLength()).isEqualTo(new Integer(1));
+		
+		assertThat(found.get().getWeight()).isEqualTo(new Integer(1));
 	}
 
 	@After

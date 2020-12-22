@@ -110,9 +110,13 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7.0));
 
-//		assertNotNull(found.get().getTags());
-//		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
-//				.isTrue();
+		assertThat(found.get().getHeight()).isEqualTo(new Integer(0));
+		
+		assertThat(found.get().getWidth()).isEqualTo(new Integer(0));
+		
+		assertThat(found.get().getLength()).isEqualTo(new Integer(0));
+		
+		assertThat(found.get().getWeight()).isEqualTo(new Integer(0));
 	}
 
 	private void assertFound_ZHHK_HKD(Optional<ProductDTO> found) {
@@ -138,17 +142,13 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55.00));
 		
-		assertThat(found.get().getHeight()).isEqualTo(new Double(0.0));
+		assertThat(found.get().getHeight()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getWidth()).isEqualTo(new Double(0.0));
+		assertThat(found.get().getWidth()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getLength()).isEqualTo(new Double(0.0));
+		assertThat(found.get().getLength()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getWeight()).isEqualTo(new Double(0.0));
-
-//		assertNotNull(found.get().getTags());
-//		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
-//				.isTrue();
+		assertThat(found.get().getWeight()).isEqualTo(new Integer(0));
 	}
 	
     @After
