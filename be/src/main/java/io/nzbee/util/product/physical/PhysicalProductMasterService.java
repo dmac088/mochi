@@ -119,7 +119,11 @@ public class PhysicalProductMasterService {
 				 p.get_TAG_CODE_B(),
 				 p.get_TAG_CODE_C(),
 				 p.get_TAG_CODE_D(),
-				 p.get_TAG_CODE_E()	
+				 p.get_TAG_CODE_E(),
+				 p.get_WIDTH(),
+				 p.get_HEIGHT(),
+				 p.get_LENGTH(),
+				 p.get_WEIGHT()
 		);
 		productService.save(Constants.localeENGB, Constants.currencyUSD, pe);
 		
@@ -139,7 +143,11 @@ public class PhysicalProductMasterService {
 				 p.get_TAG_CODE_B(),
 				 p.get_TAG_CODE_C(),
 				 p.get_TAG_CODE_D(),
-				 p.get_TAG_CODE_E()	
+				 p.get_TAG_CODE_E(),
+				 p.get_WIDTH(),
+				 p.get_HEIGHT(),
+				 p.get_LENGTH(),
+				 p.get_WEIGHT()
 		);
 		productService.save(Constants.localeZHHK, Constants.currencyHKD, pe);
 		
@@ -161,7 +169,11 @@ public class PhysicalProductMasterService {
 						 String tagCodeB,
 						 String tagCodeC,
 						 String tagCodeD,
-						 String tagCodeE
+						 String tagCodeE,
+						 String width,
+						 String height,
+						 String length,
+						 String weight
 						 ) {
 		logger.debug("called mapToAccessory() ");
 		
@@ -193,8 +205,12 @@ public class PhysicalProductMasterService {
 		pe.setProductUPC(upcCode);
 		pe.setProductCreateDt(createdDate);
 		pe.setProductStatus(ops.get());
-		
 		pe.addCategory((CategoryProductEntity) opc.get());
+		
+		pe.setWidthDimension(Integer.parseInt(width));
+		pe.setHeightDimension(Integer.parseInt(height));
+		pe.setLengthDimension(Integer.parseInt(length));
+		pe.setWeightDimension(Integer.parseInt(weight));
 
 		pa.setProductDesc(productDesc);
 		pa.setProductLongDesc(productLongDesc);

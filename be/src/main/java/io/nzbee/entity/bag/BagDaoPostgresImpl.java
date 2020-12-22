@@ -242,6 +242,10 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"           p.prd_sts_id, " + 
 		"           p.prd_sts_cd, " + 
 		"           p.prd_sts_desc, " + 
+		"	   		p.width, 	 " +
+		"	   		p.height, 	 " +
+		"	   		p.length, 	 " +
+		"	   		p.weight, 	 " +
 		"           bag.bag_id, " + 
 		"           p.bag_item_id, " + 
 		"           p.qty, " + 
@@ -308,6 +312,10 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	       prd.prd_id, " +
 		"	       prd.upc_cd, " +
 		"	       prd.prd_crtd_dt, " +
+		"	   	   coalesce(acc.width, 0) as width, 	 " +
+		"	   	   coalesce(acc.height, 0) as height, 	 " +
+		"	   	   coalesce(acc.length, 0) as length, 	 " +
+		"	   	   coalesce(acc.weight, 0) as weight, 	 " +
 		"	       attr.prd_lcl_id, " +
 		"	       attr.prd_desc, " +
 		"	       attr.prd_lng_desc, " +
