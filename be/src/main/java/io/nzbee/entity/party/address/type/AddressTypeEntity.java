@@ -9,7 +9,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "address_type", schema = "mochi")
-public class AddressType {
+public class AddressTypeEntity {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

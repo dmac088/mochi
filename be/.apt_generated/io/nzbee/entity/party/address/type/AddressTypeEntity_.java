@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(AddressTypeEntity.class)
-public abstract class AddressType_ {
+public abstract class AddressTypeEntity_ {
 
 	public static volatile SingularAttribute<AddressTypeEntity, String> addressTypeCode;
 	public static volatile SingularAttribute<AddressTypeEntity, Long> addressTypeId;

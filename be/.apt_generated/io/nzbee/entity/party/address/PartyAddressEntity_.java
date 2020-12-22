@@ -1,20 +1,21 @@
 package io.nzbee.entity.party.address;
 
 import io.nzbee.entity.party.Party;
+import io.nzbee.entity.party.address.type.AddressTypeEntity;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(PartyAddressEntity.class)
-public abstract class Address_ {
+public abstract class PartyAddressEntity_ {
 
 	public static volatile SingularAttribute<PartyAddressEntity, String> addressCountry;
 	public static volatile SingularAttribute<PartyAddressEntity, String> addressLine1;
 	public static volatile SingularAttribute<PartyAddressEntity, String> addressPostCode;
 	public static volatile SingularAttribute<PartyAddressEntity, String> addressLine2;
 	public static volatile SingularAttribute<PartyAddressEntity, String> addressLine3;
-	public static volatile SingularAttribute<PartyAddressEntity, Party> type;
+	public static volatile SingularAttribute<PartyAddressEntity, AddressTypeEntity> type;
 	public static volatile SingularAttribute<PartyAddressEntity, Party> party;
 	public static volatile SingularAttribute<PartyAddressEntity, Long> addressId;
 
