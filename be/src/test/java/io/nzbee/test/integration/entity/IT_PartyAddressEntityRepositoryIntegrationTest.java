@@ -24,8 +24,10 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.party.IPartyService;
+import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.address.IPartyAddressService;
 import io.nzbee.entity.party.address.PartyAddressEntity;
+import io.nzbee.entity.party.address.type.AddressTypeEntity;
 import io.nzbee.entity.party.address.type.IAddressTypeService;
 import io.nzbee.test.integration.beans.PartyAddressEntityBeanFactory;
 
@@ -73,9 +75,12 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     
 	public PartyAddressEntity persistNewPartyAddress() {
     	
+		AddressTypeEntity ate = addressTypeService.findByCode("BIL01").get();
+		Party party = partyServie.findByCode("nob@nob").get();
+		
 		p = partyAddressEntityBeanFactory.getPartyAddressEntityBean(
-														partyServie.findByCode("nob@nob").get(), 
-														addressTypeService.findByCode("BIL01").get());
+														party, 
+														ate);
 	    
 	    entityManager.persist(p);
 	    entityManager.flush();

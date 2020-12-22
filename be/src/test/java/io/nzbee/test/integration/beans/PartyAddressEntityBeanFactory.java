@@ -1,6 +1,5 @@
 package io.nzbee.test.integration.beans;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.party.Party;
@@ -11,7 +10,6 @@ import io.nzbee.entity.party.address.type.AddressTypeEntity;
 @Profile(value = "tst")
 public class PartyAddressEntityBeanFactory {
 
-	@Bean
 	public PartyAddressEntity getPartyAddressEntityBean(Party customer, AddressTypeEntity addressType) {
 		final PartyAddressEntity address = new PartyAddressEntity();
 		
