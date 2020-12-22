@@ -1,5 +1,6 @@
 package io.nzbee.domain.customer;
 
+import java.util.List;
 import java.util.Objects;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.customer.address.Address;
@@ -25,7 +26,7 @@ public class Customer {
     
     private boolean enabled;
     
-    private Address billingAddress;
+    private List<Address> addresses;
 
     public Customer(String givenName,
 			String familyName,
@@ -46,7 +47,7 @@ public class Customer {
     				String familyName,
     				String userName,
     				String customerId,
-    				Address billingAddress,
+    				List<Address> addresses,
     				boolean isEnabled) {
     	
     	this.userName = userName;
@@ -54,7 +55,7 @@ public class Customer {
     	this.givenName = givenName;
     	this.familyName = familyName;
     	this.partyType = "Person";
-    	this.billingAddress = billingAddress;
+    	this.addresses = addresses;
     	this.enabled = isEnabled;
     	this.bag = new Bag(this);
     }
@@ -97,8 +98,8 @@ public class Customer {
 		return bag;
 	}
     
-	public Address getBillingAddress() {
-		return billingAddress;
+	public List<Address> getAddresses() {
+		return addresses;
 	}
 
 	@Override
