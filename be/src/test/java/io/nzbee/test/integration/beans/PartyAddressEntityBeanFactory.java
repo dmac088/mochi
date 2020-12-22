@@ -14,8 +14,8 @@ public class PartyAddressEntityBeanFactory {
 		final PartyAddressEntity address = new PartyAddressEntity();
 		
 		address.setAddressLine1("Test address line 1");
-		address.setAddressLine2("Test address Line 2");
-		address.setAddressLine3("Test address Line 3");
+		address.setAddressLine2("Test address line 2");
+		address.setAddressLine3("Test address line 3");
 		address.setAddressCountry("Test Country");
 		address.setAddressPostCode("Test PC");
 		address.setType(addressType);
