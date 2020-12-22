@@ -2,7 +2,8 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
+import static org.junit.Assert.assertTrue;
+import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -22,11 +23,10 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
 import io.nzbee.entity.party.IPartyService;
 import io.nzbee.entity.party.address.IPartyAddressService;
-import io.nzbee.entity.party.address.PartyAddressDTO;
 import io.nzbee.entity.party.address.PartyAddressEntity;
+import io.nzbee.entity.party.address.type.IAddressTypeService;
 import io.nzbee.test.integration.beans.PartyAddressEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -66,11 +66,16 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     @Autowired
     private PartyAddressEntityBeanFactory partyAddressEntityBeanFactory;
     
+    @Autowired 
+    private IAddressTypeService addressTypeService;
+    
     private PartyAddressEntity p = null;
     
 	public PartyAddressEntity persistNewPartyAddress() {
     	
-		p = partyAddressEntityBeanFactory.getPartyAddressEntityBean(partyServie.findByCode("dmac088").get());
+		p = partyAddressEntityBeanFactory.getPartyAddressEntityBean(
+														partyServie.findByCode("nob@nob").get(), 
+														addressTypeService.findByCode("BIL01").get());
 	    
 	    entityManager.persist(p);
 	    entityManager.flush();
@@ -86,35 +91,35 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnPartyAddress() {
 		 // when
-    	PartyAddressEntity found = partyAddressService.findById(p.getAddressId()).get();
+    	Optional<PartyAddressEntity> found = partyAddressService.findById(p.getAddressId());
      
         // then
     	assertFound(found);
 	}
 	
 		 
-    private void assertFound(final PartyAddressEntity found) {
+    private void assertFound(final Optional<PartyAddressEntity> found) {
     	assertNotNull(found);
     	
-    	assertThat(found.getPartyAddressUPC())
-        .isEqualTo("123456789");
+    	assertTrue(found.isPresent());
     	
-    	assertNotNull(found.getCategories());
+    	assertThat(found.get().getAddressLine1()).isEqualTo("Test address line 1");
     	
-    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findFirst().isPresent())
-    	.isTrue();
+    	assertThat(found.get().getAddressLine2()).isEqualTo("Test address line 2");
     	
-    	assertThat(found.getDepartment().getDepartmentCode())
-    	.isEqualTo("ACC01");
+    	assertThat(found.get().getAddressLine3()).isEqualTo("Test address line 3");
     	
-    	assertThat(found.getPartyAddressStatusCode())
-    	.isEqualTo("ACT01");
+    	assertThat(found.get().getAddressCountry()).isEqualTo("Test Country");
     	
-    	assertThat(found.getBrand().getBrandCode())
-    	.isEqualTo("PLA01");
+    	assertThat(found.get().getAddressPostCode()).isEqualTo("Test PC");
     	
-    	assertThat(found.getPartyAddressDesc())
-    	.isEqualTo("test product");
+    	assertThat(found.get().getType()).isNotNull();
+    	
+    	assertThat(found.get().getType().getAddressTypeCode()).isEqualTo("BIL01");
+    	
+    	assertThat(found.get().getParty()).isNotNull();
+    	
+    	assertThat(found.get().getParty().getUser().getUsername()).isEqualTo("nob@nob");
     }
     
     @After
