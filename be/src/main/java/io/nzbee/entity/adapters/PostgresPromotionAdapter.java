@@ -38,7 +38,7 @@ public class PostgresPromotionAdapter implements IPromotionPortService {
 
 	@Override
 	public Promotion findByCode(String locale, String code) {
-		PromotionDTO dto = promotionService.findDTOByCode(locale, code)
+		PromotionDTO dto = promotionService.findByCode(locale, code)
 				.orElseThrow(() -> new PromotionNotFoundException("Promotion for code " + code + " not found!"));
 		return promotionMapper.DTOToDo(dto);
 	}

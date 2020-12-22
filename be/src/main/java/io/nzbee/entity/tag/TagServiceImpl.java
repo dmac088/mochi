@@ -63,7 +63,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #tagCode}")
-	public Optional<TagDTO> findDTOByCode(String locale, String tagCode) {
+	public Optional<TagDTO> findByCode(String locale, String tagCode) {
 		return productTagDAO.findByCode(locale, tagCode);
 	}
 	
@@ -131,6 +131,12 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public void delete(TagEntity t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Optional<TagEntity> findEntityById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
