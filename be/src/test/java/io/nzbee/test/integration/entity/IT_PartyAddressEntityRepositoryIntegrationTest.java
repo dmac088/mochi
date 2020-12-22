@@ -17,18 +17,22 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.party.IPartyService;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.address.IPartyAddressService;
 import io.nzbee.entity.party.address.PartyAddressEntity;
 import io.nzbee.entity.party.address.type.AddressTypeEntity;
 import io.nzbee.entity.party.address.type.IAddressTypeService;
+import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.test.integration.beans.PartyAddressEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -63,7 +67,7 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     private IPartyAddressService partyAddressService;
     
     @Autowired 
-    private IPartyService partyServie;
+    private IPersonService personService;
     
     @Autowired
     private PartyAddressEntityBeanFactory partyAddressEntityBeanFactory;
@@ -76,14 +80,11 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	public PartyAddressEntity persistNewPartyAddress() {
     	
 		AddressTypeEntity ate = addressTypeService.findByCode("BIL01").get();
-		Party party = partyServie.findByCode("nob@nob").get();
+		Party party = personService.findByUsernameAndRole("bob@bob", Constants.partyRoleCustomer).get();
 		
-		p = partyAddressEntityBeanFactory.getPartyAddressEntityBean(
-														party, 
-														ate);
+		p = partyAddressEntityBeanFactory.getPartyAddressEntityBean(party, ate);
 	    
 	    entityManager.persist(p);
-	    entityManager.flush();
 	    	
 	    return p;
 	}
@@ -94,6 +95,8 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
+	@WithUserDetails(value = "admin")
 	public void whenFindById_thenReturnPartyAddress() {
 		 // when
     	Optional<PartyAddressEntity> found = partyAddressService.findById(p.getAddressId());
@@ -124,7 +127,7 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     	
     	assertThat(found.get().getParty()).isNotNull();
     	
-    	assertThat(found.get().getParty().getUser().getUsername()).isEqualTo("nob@nob");
+    	assertThat(found.get().getParty().getUser().getUsername()).isEqualTo("bob@bob");
     }
     
     @After
