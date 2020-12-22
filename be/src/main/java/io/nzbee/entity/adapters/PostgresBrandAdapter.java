@@ -28,7 +28,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByCode(String locale, String code) {
-		BrandDTO b = brandService.findDTOByCode(locale, code)
+		BrandDTO b = brandService.findByCode(locale, code)
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
 		return DTOToDo(b);
 	}

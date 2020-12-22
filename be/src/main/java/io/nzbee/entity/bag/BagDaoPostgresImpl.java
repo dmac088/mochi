@@ -449,7 +449,8 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	ON p.prd_id = soh.soh_prd_id 									" +
 		
 		"WHERE 0=0 															" +
-		"AND usr.user_name = 		:userName 								";
+		"AND usr.user_name = 		:userName 								" + 
+		"ORDER BY p.bag_item_id ";
 		
 		
 		return sql;

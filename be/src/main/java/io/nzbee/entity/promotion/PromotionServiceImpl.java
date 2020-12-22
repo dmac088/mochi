@@ -90,7 +90,7 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 
 	@Override
-	public Optional<PromotionDTO> findDTOByCode(String locale, String code) {
+	public Optional<PromotionDTO> findByCode(String locale, String code) {
 		return promotionDao.findByCode(locale, code);
 	}
 
@@ -108,6 +108,12 @@ public class PromotionServiceImpl implements IPromotionService {
 	@Override
 	public Optional<PromotionEntity> findEntityByDesc(String locale, String desc) {
 		return promotionRepository.findByAttributesLocaleAndAttributesPromotionDesc(locale, desc);
+	}
+
+	@Override
+	public Optional<PromotionEntity> findEntityById(Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

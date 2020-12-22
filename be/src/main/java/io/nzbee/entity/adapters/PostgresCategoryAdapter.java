@@ -66,7 +66,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Category findByCode(String locale, String code) {
-		CategoryDTO cp = categoryService.findDTOByCode(locale, code)
+		CategoryDTO cp = categoryService.findByCode(locale, code)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for code " + code + " not found!"));
 		return categoryMapper.DTOToDo(cp);
 	}	

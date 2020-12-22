@@ -92,7 +92,7 @@ public class BagServiceImpl implements IBagService {
 	}
 
 	@Override
-	public Optional<BagDTO> findDTOByCode(String locale, String code) {
+	public Optional<BagDTO> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -105,6 +105,12 @@ public class BagServiceImpl implements IBagService {
 
 	@Override
 	public Optional<BagEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BagEntity> findEntityById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

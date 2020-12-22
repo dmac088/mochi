@@ -50,7 +50,7 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	}
 	
 	@Override
-	public Optional<CategoryProductDTO> findDTOByCode(String locale, String code) {
+	public Optional<CategoryProductDTO> findByCode(String locale, String code) {
 		return productCategoryDao.findByCode(locale, code);
 	}
 
@@ -116,6 +116,12 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 
 	@Override
 	public Optional<CategoryProductEntity> findEntityByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<CategoryProductEntity> findEntityById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

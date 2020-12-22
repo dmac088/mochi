@@ -14,11 +14,13 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	
 	Optional<T> findById(String locale, Long id);
 	
-	Optional<T> findDTOByCode(String locale, String code);
+	Optional<T> findByDesc(String locale, String desc);
+	
+	Optional<T> findByCode(String locale, String code);
+	
+	Optional<Z> findEntityById(Long id);
 	
 	Optional<Z> findEntityByCode(String code);
-	
-	Optional<T> findByDesc(String locale, String desc);
 	
 	Optional<Z> findEntityByDesc(String locale, String desc);
 	
