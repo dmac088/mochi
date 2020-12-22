@@ -2,6 +2,7 @@ package io.nzbee.domain.customer;
 
 import java.util.Objects;
 import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.customer.address.Address;
 
 //we don't bother about dealing with party, even though our data model and persistence layer cater
 //for both persons and organizations in the "Role" of customers, we're only interested in running a 
@@ -24,10 +25,28 @@ public class Customer {
     
     private boolean enabled;
     
+    private Address billingAddress;
+
+    public Customer(String givenName,
+			String familyName,
+			String userName,
+			String customerId,
+			boolean isEnabled) {
+
+		this.userName = userName;
+		this.customerId = customerId;
+		this.givenName = givenName;
+		this.familyName = familyName;
+		this.partyType = "Person";
+		this.enabled = isEnabled;
+		this.bag = new Bag(this);
+	}
+    
     public Customer(String givenName,
     				String familyName,
     				String userName,
     				String customerId,
+    				Address billingAddress,
     				boolean isEnabled) {
     	
     	this.userName = userName;
@@ -35,6 +54,7 @@ public class Customer {
     	this.givenName = givenName;
     	this.familyName = familyName;
     	this.partyType = "Person";
+    	this.billingAddress = billingAddress;
     	this.enabled = isEnabled;
     	this.bag = new Bag(this);
     }
@@ -76,7 +96,11 @@ public class Customer {
     public Bag getBag() {
 		return bag;
 	}
- 	
+    
+	public Address getBillingAddress() {
+		return billingAddress;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;
