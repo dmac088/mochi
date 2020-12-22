@@ -15,8 +15,7 @@ public class PartyAddressServiceImpl implements IPartyAddressService {
 	
 	@Override
 	public Optional<PartyAddressEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return partyAddressRepository.findById(id);
 	}
 
 	@Override
