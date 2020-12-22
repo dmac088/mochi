@@ -632,6 +632,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   parent.cat_prnt_cd	AS cat_prnt_prnt_cd, " + 
 						"	   prd.prd_id,   " + 
 						"	   prd.upc_cd,   " + 
+						"	   coalesce(acc.width, 0) as width, 	 " +
+						"	   coalesce(acc.height, 0) as height, 	 " +
+						"	   coalesce(acc.length, 0) as length, 	 " +
+						"	   coalesce(acc.weight, 0) as weight, 	 " +
 						"	   prd.prd_crtd_dt,   " +
 						"	   attr.prd_lcl_id, " +
 						"	   attr.prd_desc, " +

@@ -1,6 +1,7 @@
 package io.nzbee.entity.product;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
@@ -32,6 +33,14 @@ public class ProductDTO {
     
     public static final String CURRENCY_ALIAS = "ccy_cd";
     
+    public static final String HEIGHT_ALIAS = "height";
+    
+    public static final String WIDTH_ALIAS = "width";
+    
+    public static final String LENGTH_ALIAS = "length";
+    
+    public static final String WEIGHT_ALIAS = "weight";
+    
     protected Long productId;
 
 	protected String productUPC;
@@ -58,6 +67,15 @@ public class ProductDTO {
 	protected Double retailPrice;
 	
 	protected Double markdownPrice;
+	
+	//physical dimensions
+	protected Integer height;
+	
+	protected Integer width;
+	
+	protected Integer length;
+	
+	protected Integer weight;
 	
 	
 	//localization
@@ -93,6 +111,12 @@ public class ProductDTO {
 		this.currency				= tuple[aliasToIndexMap.get(CURRENCY_ALIAS)].toString();
 		this.retailPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(RETAIL_PRICE_ALIAS)]).doubleValue();
 		this.markdownPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(MARKDOWN_PRICE_ALIAS)]).doubleValue();
+		
+		this.height					= ((BigInteger) tuple[aliasToIndexMap.get(HEIGHT_ALIAS)]).intValue();
+		this.width					= ((BigInteger) tuple[aliasToIndexMap.get(WIDTH_ALIAS)]).intValue();
+		this.length					= ((BigInteger) tuple[aliasToIndexMap.get(LENGTH_ALIAS)]).intValue();
+		this.weight					= ((BigInteger) tuple[aliasToIndexMap.get(WEIGHT_ALIAS)]).intValue();
+		
 
 	}
 
@@ -206,6 +230,38 @@ public class ProductDTO {
 
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
+	}
+
+	public Double getHeight() {
+		return height;
+	}
+
+	public void setHeight(Double height) {
+		this.height = height;
+	}
+
+	public Double getWidth() {
+		return width;
+	}
+
+	public void setWidth(Double width) {
+		this.width = width;
+	}
+
+	public Double getLength() {
+		return length;
+	}
+
+	public void setLength(Double length) {
+		this.length = length;
+	}
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
 	}
 
 }

@@ -26,7 +26,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
-import io.nzbee.util.product.ProductMasterService;
+import io.nzbee.util.product.physical.PhysicalProductMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -42,7 +42,7 @@ import io.nzbee.util.product.ProductMasterService;
 			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
-public class IT_ProductUploadForCreateIntegrationTest {
+public class IT_PhysicalProductUploadForCreateIntegrationTest {
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -52,7 +52,7 @@ public class IT_ProductUploadForCreateIntegrationTest {
 	private EntityManager entityManager;
 	
     @Autowired
-    private ProductMasterService pms;
+    private PhysicalProductMasterService pms;
     
     @Autowired
     private IProductService productService;
@@ -137,6 +137,14 @@ public class IT_ProductUploadForCreateIntegrationTest {
 		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60.00));
 
 		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55.00));
+		
+		assertThat(found.get().getHeight()).isEqualTo(new Double(0.0));
+		
+		assertThat(found.get().getWidth()).isEqualTo(new Double(0.0));
+		
+		assertThat(found.get().getLength()).isEqualTo(new Double(0.0));
+		
+		assertThat(found.get().getWeight()).isEqualTo(new Double(0.0));
 
 //		assertNotNull(found.get().getTags());
 //		assertThat(found.get().getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent())
