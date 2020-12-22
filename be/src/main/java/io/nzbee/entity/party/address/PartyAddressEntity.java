@@ -10,10 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import io.nzbee.entity.party.Party;
+import io.nzbee.entity.party.address.type.AddressTypeEntity;
 
 @Entity
 @Table(name = "address", schema = "mochi")
-public class Address {
+public class PartyAddressEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -41,7 +42,7 @@ public class Address {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="addr_typ_id")
-	private Party type;
+	private AddressTypeEntity type;
 
 	public Long getAddressId() {
 		return addressId;
@@ -99,12 +100,12 @@ public class Address {
 		this.party = party;
 	}
 
-	public Party getType() {
+	public AddressTypeEntity getType() {
 		return type;
 	}
 
-	public void setType(Party type) {
-		this.type = type;
+	public void setType(AddressTypeEntity addressType) {
+		this.type = addressType;
 	}
 
 }
