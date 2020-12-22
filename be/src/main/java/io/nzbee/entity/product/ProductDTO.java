@@ -232,35 +232,35 @@ public class ProductDTO {
 		this.inStock = inStock;
 	}
 
-	public Double getHeight() {
+	public Integer getHeight() {
 		return height;
 	}
 
-	public void setHeight(Double height) {
+	public void setHeight(Integer height) {
 		this.height = height;
 	}
 
-	public Double getWidth() {
+	public Integer getWidth() {
 		return width;
 	}
 
-	public void setWidth(Double width) {
+	public void setWidth(Integer width) {
 		this.width = width;
 	}
 
-	public Double getLength() {
+	public Integer getLength() {
 		return length;
 	}
 
-	public void setLength(Double length) {
+	public void setLength(Integer length) {
 		this.length = length;
 	}
 
-	public Double getWeight() {
+	public Integer getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Double weight) {
+	public void setWeight(Integer weight) {
 		this.weight = weight;
 	}
 
