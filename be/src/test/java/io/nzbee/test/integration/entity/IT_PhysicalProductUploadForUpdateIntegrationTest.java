@@ -106,6 +106,14 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 
 		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7));
 
+		assertThat(found.get().getHeight()).isEqualTo(new Integer(1));
+		
+		assertThat(found.get().getWidth()).isEqualTo(new Integer(1));
+		
+		assertThat(found.get().getLength()).isEqualTo(new Integer(1));
+		
+		assertThat(found.get().getWeight()).isEqualTo(new Integer(1));
+		
 	}
 
 	private void assertFound_ZHHK_HKD(Optional<ProductDTO> found) {
