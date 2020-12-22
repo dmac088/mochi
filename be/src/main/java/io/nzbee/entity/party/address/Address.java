@@ -37,11 +37,11 @@ public class Address {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pty_id")
-	private Party addressParty;
+	private Party party;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="addr_typ_id")
-	private Party addressType;
+	private Party type;
 
 	public Long getAddressId() {
 		return addressId;
@@ -91,20 +91,20 @@ public class Address {
 		this.addressPostCode = addressPostCode;
 	}
 
-	public Party getAddressParty() {
-		return addressParty;
+	public Party getParty() {
+		return party;
 	}
 
-	public void setAddressParty(Party addressParty) {
-		this.addressParty = addressParty;
+	public void setParty(Party party) {
+		this.party = party;
 	}
 
-	public Party getAddressType() {
-		return addressType;
+	public Party getType() {
+		return type;
 	}
 
-	public void setAddressType(Party addressType) {
-		this.addressType = addressType;
+	public void setType(Party type) {
+		this.type = type;
 	}
-	
+
 }
