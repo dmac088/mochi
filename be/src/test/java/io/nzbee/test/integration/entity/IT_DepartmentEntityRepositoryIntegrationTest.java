@@ -2,9 +2,7 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
 import javax.persistence.EntityManager;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +22,6 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.department.IDepartmentService;
-import io.nzbee.test.integration.entity.beans.DepartmentEntityBeanFactory;
 import io.nzbee.test.integration.entity.beans.department.IDepartmentEntityBeanFactory;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.department.DepartmentDTO;
