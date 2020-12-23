@@ -2,7 +2,7 @@ package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import java.util.Set;
+import java.util.List;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,13 +54,13 @@ public class IT_CategoryDoServiceImplIntegrationTest {
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
-		Set<Category> found = categoryService.findAll(	Constants.localeENGB);
+		List<Category> found = categoryService.findAll(	Constants.localeENGB);
 
 		// then
 		assertFound(found);
 	}
 
-	private void assertFound(final Set<Category> found) {
+	private void assertFound(final List<Category> found) {
 
 		assertThat(found).isNotNull();
 		
