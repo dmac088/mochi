@@ -13,18 +13,24 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import io.nzbee.Constants;
 import io.nzbee.domain.category.Category;
+import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "tst")
-public class UT_BrandCategoryTest {
+public class UT_BagItemTest {
 
 	@TestConfiguration
 	static class BrandCategoryDomainServiceImplUnitTest {
 		// the beans that we need to run this unit test
+		@Bean
+		public ICategoryService categoryDomainService() {
+			return new CategoryServiceImpl();
+		}
 		
 		@Bean
 		public CategoryDoBeanFactory categoryDoBeanFactory() {
@@ -55,7 +61,7 @@ public class UT_BrandCategoryTest {
 	}
 
 	@Test
-	public void whenFindByCode_thenBrandCategoryIsFound() {
+	public void whenEligable_thenB3G33PromotionDiscountIsApplied() {
 		String code = "TST02";
 
 		Category found = categoryDoService.findByCode(Constants.localeENGB,
