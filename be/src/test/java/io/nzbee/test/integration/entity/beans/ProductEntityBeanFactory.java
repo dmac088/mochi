@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.beans.entity;
+package io.nzbee.test.integration.entity.beans;
 
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;

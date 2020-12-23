@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.beans.entity;
+package io.nzbee.test.integration.entity.beans;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

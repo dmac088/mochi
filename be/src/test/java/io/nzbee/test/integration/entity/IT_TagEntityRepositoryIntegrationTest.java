@@ -30,7 +30,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
 import io.nzbee.entity.tag.TagEntity;
-import io.nzbee.test.integration.beans.entity.TagEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.TagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

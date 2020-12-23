@@ -19,9 +19,9 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
-import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
-import io.nzbee.test.integration.beans.CustomerDoBeanFactory;
-import io.nzbee.test.integration.beans.ProductDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.ProductDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "tst")

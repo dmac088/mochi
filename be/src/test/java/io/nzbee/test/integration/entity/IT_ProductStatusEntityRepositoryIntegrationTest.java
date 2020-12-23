@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatusEntity;
-import io.nzbee.test.integration.beans.entity.ProductStatusEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.ProductStatusEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

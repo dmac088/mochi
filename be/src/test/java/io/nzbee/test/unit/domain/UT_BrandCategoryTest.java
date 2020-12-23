@@ -16,7 +16,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
-import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "tst")

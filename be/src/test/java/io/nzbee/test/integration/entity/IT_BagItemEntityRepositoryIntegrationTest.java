@@ -36,7 +36,7 @@ import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.test.integration.beans.entity.BagEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.BagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
