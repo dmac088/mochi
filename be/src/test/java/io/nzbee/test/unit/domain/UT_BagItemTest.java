@@ -27,12 +27,12 @@ import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionType;
-import io.nzbee.test.unit.domain.beans.ProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.BrandDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.DepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.PromotionDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "tst")
