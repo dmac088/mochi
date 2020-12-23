@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -20,9 +21,9 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Brand> findAll(String locale) {
+	public List<Brand> findAll(String locale) {
 		return brandService.findAll(locale)
-				.stream().map(b -> this.DTOToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> this.DTOToDo(b)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -51,7 +52,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	public List<Brand> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		
 		return brandService.findAll(locale, 
 									currency, 
@@ -59,21 +60,21 @@ public class PostgresBrandAdapter implements IBrandPortService {
 									categoryCodes,
 									tagCodes,
 				 					maxPrice)
-				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Brand> findAll(String locale, String category) {
+	public List<Brand> findAll(String locale, String category) {
 		return brandService.findAll(locale, category)
-				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toList());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Brand> findAll(String locale, Set<String> codes) {
+	public List<Brand> findAll(String locale, Set<String> codes) {
 		return brandService.findAll(locale, codes)
-				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toList());
 	}
 	
 	@Override

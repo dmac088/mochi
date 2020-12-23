@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,13 +29,13 @@ public class PostgresDepartmentAdapter implements IDepartmentPortService {
 	}
 
 	@Override
-	public Set<Department> findAll(String locale) {
+	public List<Department> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Department> findAll(String locale, Set<String> codes) {
+	public List<Department> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

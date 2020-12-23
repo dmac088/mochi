@@ -752,7 +752,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				") " +
 				"SELECT " +
 				((maxPriceOnly) 
-				? "MAX(s.max_markdown_price) as max_markdown_price " 
+				? "		MAX(s.max_markdown_price) as max_markdown_price " 
 				: "		s.cat_id 				AS cat_id, " +
 				"       s.cat_cd 				AS cat_cd, " +
 				"       s.cat_lvl 				AS cat_lvl, " +	
@@ -824,10 +824,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  when :parentCategoryCode = '-1' " +
 				"  then '0' " +
 				"  else :parentCategoryCode" +
-				"  end" +
+				"  end " +
 				((!maxPriceOnly && !childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
 				((!maxPriceOnly && !childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
-				((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : ""));
+				((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : "") + 
+				((!maxPriceOnly)  ? "ORDER BY a.cat_desc ASC " : ""));
 			
 		return sql;
 	}

@@ -1,5 +1,6 @@
 package io.nzbee.resources.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public class TagController {
     		maxPrice = new Double(oMaxPrice.get());
     	}
     	
-    	final Set<Tag> collection =
+    	final List<Tag> collection =
     			tagService.findAll(	 locale, 
     								 currency, 
     								 categoryCode,

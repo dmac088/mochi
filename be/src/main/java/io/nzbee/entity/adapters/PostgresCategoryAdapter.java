@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -50,17 +51,17 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Category> findAll(String locale, Set<String> codes) {
+	public List<Category> findAll(String locale, Set<String> codes) {
 		return categoryService.findAll(locale, codes)
-				.stream().map(c -> (Category) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (Category) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
+	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = ", locale, currency, categoryCode, brandCodes, tagCodes, maxPrice);
 		return categoryService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice)
-				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 
 	@Override
@@ -81,9 +82,9 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Set<ProductCategory> findAllByProductCode(String locale, String productCode) {
+	public List<ProductCategory> findAllByProductCode(String locale, String productCode) {
 		return categoryProductService.findAllByProductCode(locale, productCode)
-				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	
 	@Override
@@ -95,36 +96,36 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	}
 
 	@Override
-	public Set<Category> findAllForLevel(String locale, Long level) {
+	public List<Category> findAllForLevel(String locale, Long level) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Category> findByParent(String parentCategoryCode, String locale) {
+	public List<Category> findByParent(String parentCategoryCode, String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Set<Category> findAll(String locale) {
+	public List<Category> findAll(String locale) {
 		return categoryService.findAll(locale)
-				.stream().map(c -> categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Set<ProductCategory> findAllProductCategories(String locale) {
+	public List<ProductCategory> findAllProductCategories(String locale) {
 		return categoryService.findAll(locale, CategoryProductEntity.class)
-				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
-	public Set<BrandCategory> findAllBrandCategories(String locale) {
+	public List<BrandCategory> findAllBrandCategories(String locale) {
 		return categoryService.findAll(locale, CategoryBrandEntity.class)
-				.stream().map(c -> (BrandCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toSet());
+				.stream().map(c -> (BrandCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	
 	@Override

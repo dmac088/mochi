@@ -1,5 +1,6 @@
 package io.nzbee.resources.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -60,7 +61,7 @@ public class BrandController {
     		maxPrice = new Double(oMaxPrice.get());
     	}
     	
-    	final Set<Brand> collection =
+    	final List<Brand> collection =
     			brandService.findAll(locale, 
     								 currency, 
     								 categoryCode,
@@ -76,7 +77,7 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}")
     public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale) {
     	LOGGER.debug("call BrandController.getBrands with parameters: {}, {}", locale);
-    	final Set<Brand> collection = 
+    	final List<Brand> collection = 
     			 brandService.findAll(locale);
     	
     	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));

@@ -1,5 +1,6 @@
 package io.nzbee.entity.adapters;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -44,26 +45,26 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Override
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
-	public Set<Tag> findAll(String locale) {
+	public List<Tag> findAll(String locale) {
 		return tagService.findAll(locale)
-				.stream().map(t -> tagMapper.DTOToDo(t)).collect(Collectors.toSet());
+				.stream().map(t -> tagMapper.DTOToDo(t)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
-	public Set<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Double maxPrice) {
 		return tagService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice)
-				.stream().map(b -> (Tag) tagMapper.DTOToDo(b)).collect(Collectors.toSet());
+				.stream().map(b -> (Tag) tagMapper.DTOToDo(b)).collect(Collectors.toList());
 	}
 
 	@Override
 	@Cacheable("tags")
 	@Transactional(readOnly = true)
-	public Set<Tag> findAll(String locale, Set<String> codes) {
+	public List<Tag> findAll(String locale, Set<String> codes) {
 		return tagService.findAll(locale, codes)
-				.stream().map(t -> tagMapper.DTOToDo(t)).collect(Collectors.toSet());
+				.stream().map(t -> tagMapper.DTOToDo(t)).collect(Collectors.toList());
 	}
 	
 	@Override
