@@ -38,7 +38,7 @@ import io.nzbee.test.integration.entity.beans.PartyAddressEntityBeanFactory;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 @SqlGroup({
 	@Sql(scripts = "/database/mochi_schema.sql",
 			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 

@@ -19,7 +19,7 @@ import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "ut")
 public class UT_BrandCategoryTest {
 
 	@TestConfiguration
