@@ -184,5 +184,7 @@ public class UT_BagItemTest {
     	assertThat(bag.bagItemExists(product.getProductUPC()))
     	.isFalse();
 	}
+	
+	
 
 }
