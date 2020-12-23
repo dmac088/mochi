@@ -8,7 +8,7 @@ import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.party.Party;
 
 @Service
-@Profile(value = "tst")
+@Profile(value = "it")
 public class BagEntityBeanFactory implements IBagEntityBeanFactory {
 
 	@Override

@@ -6,7 +6,7 @@ import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.customer.Customer;
 
 @Service
-@Profile(value = "tst")
+@Profile(value = "it")
 public class BagDoBeanFactory implements IBagDoBeanFactory {
 	
 	@Override

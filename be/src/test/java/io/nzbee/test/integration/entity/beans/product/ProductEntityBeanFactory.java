@@ -24,7 +24,7 @@ import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
 
 @Service(value = "productEntityBeanFactory")
-@Profile(value = "tst")
+@Profile(value = "it")
 public class ProductEntityBeanFactory implements IProductEntityBeanFactory {
 	
 	@Autowired
