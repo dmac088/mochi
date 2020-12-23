@@ -1,4 +1,7 @@
 spring:
+  main:
+    allow-bean-definition-overriding: true
+    
   mail:
     host: smtp.gmail.com
     password: ${SMTPPassword}
@@ -74,5 +77,4 @@ app:
 support:
     email: admin@littlebagshop.com
 
-  
     
