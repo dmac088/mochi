@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.BasicProduct;
+import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.entity.brand.BrandEntity;
@@ -90,7 +90,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional
 	public void save(Product domainObject) {
-		if (domainObject instanceof BasicProduct) {
+		if (domainObject instanceof PhysicalProduct) {
 
 			Optional<ProductEntity> op = productService.findByCode(domainObject.getProductUPC());
 

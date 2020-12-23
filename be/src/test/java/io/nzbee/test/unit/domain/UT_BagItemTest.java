@@ -1,7 +1,6 @@
 package io.nzbee.test.unit.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -13,12 +12,16 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
+import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.domain.customer.Customer;
+import io.nzbee.domain.product.Product;
 import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
+import io.nzbee.test.integration.beans.CustomerDoBeanFactory;
+import io.nzbee.test.integration.beans.ProductDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "tst")
@@ -27,30 +30,43 @@ public class UT_BagItemTest {
 	@TestConfiguration
 	static class BrandCategoryDomainServiceImplUnitTest {
 		// the beans that we need to run this unit test
+		
 		@Bean
-		public ICategoryService categoryDomainService() {
-			return new CategoryServiceImpl();
+		public CustomerDoBeanFactory customerDoBeanFactory() {
+			return new CustomerDoBeanFactory();
 		}
 		
 		@Bean
-		public CategoryDoBeanFactory categoryDoBeanFactory() {
-			return new CategoryDoBeanFactory();
+		public ProductDoBeanFactory productDoBeanFactory() {
+			return new ProductDoBeanFactory();
 		}
 		
 	}
 
 	@MockBean
 	private ICategoryService categoryDoService;
+	
+	@MockBean
+	private ICategoryService productDoService;
 
 	@Autowired
-	private CategoryDoBeanFactory categoryDoBeanFactory;
+	private CustomerDoBeanFactory customerDoBeanFactory;
+	
+	@Autowired
+	private ProductDoBeanFactory productDoBeanFactory;
 	
 	@Before
 	public void setUp() {
 		// we setup a mock so that when
 		MockitoAnnotations.initMocks(this);
-
-		Category category = categoryDoBeanFactory.getBrandCategoryDoBean();
+		
+		Customer c = customerDoBeanFactory.getCustomerDoBean();
+		
+		Bag bag = new Bag(c);
+		
+		Product product = productDoBeanFactory.getProductDoBean();
+		
+		BagItem bagItem = new BagItem(bag, product, 1);
 
 		// need to fill more of the properties here
 		Mockito.when(categoryDoService.findByCode(Constants.localeENGB,
@@ -60,6 +76,7 @@ public class UT_BagItemTest {
 												  category.getCategoryDesc())).thenReturn(category);
 	}
 
+	
 	@Test
 	public void whenEligable_thenB3G33PromotionDiscountIsApplied() {
 		String code = "TST02";
