@@ -155,7 +155,10 @@ public class UT_BagItemTest {
     private void assertDiscountsApplied(BagItem found) {
 
     	assertThat(found.getDiscounts().size())
-        .isGreaterThan(0);
+        .isEqualTo(1);
+    	
+    	assertThat(found.getBagItemDiscount())
+    	.isEqualTo(new Double(71.0));
     	
     }
 
