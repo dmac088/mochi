@@ -7,11 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.kie.api.KieServices;
-import org.kie.api.builder.KieBuilder;
-import org.kie.api.builder.KieFileSystem;
-import org.kie.api.builder.KieModule;
 import org.kie.api.runtime.KieContainer;
-import org.kie.internal.io.ResourceFactory;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -21,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
+import io.nzbee.domain.bag.BagItemConfiguration;
 import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.customer.Customer;
@@ -89,21 +86,16 @@ public class UT_BagItemTest {
 		}
 		
 		@Bean 
-		public KieContainer bagItemConfiguration() {
-			KieServices kieServices = KieServices.Factory.get();
-			 
-	        KieFileSystem kieFileSystem = kieServices.newKieFileSystem();
-	        kieFileSystem.write(ResourceFactory.newClassPathResource(drlFile));
-	        KieBuilder kieBuilder = kieServices.newKieBuilder(kieFileSystem);
-	        kieBuilder.buildAll();
-	        KieModule kieModule = kieBuilder.getKieModule();
-	 
-	        return kieServices.newKieContainer(kieModule.getReleaseId());
+		public BagItemConfiguration bagItemConfiguration() {
+			return new BagItemConfiguration();
+		}
+		
+		@Bean 
+		public KieContainer kieConfiguration() {
+			return bagItemConfiguration().kieContainer();
 		}
 		
 	}
-
-	private static final String drlFile = "rules/bagItemRules.drl";
 	
 	@Autowired
 	private CustomerDoBeanFactory customerDoBeanFactory;
