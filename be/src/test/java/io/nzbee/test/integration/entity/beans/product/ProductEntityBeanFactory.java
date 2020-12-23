@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.integration.entity.beans.product;
 
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import io.nzbee.entity.tag.TagEntity;
 
 @Service(value = "productEntityBeanFactory")
 @Profile(value = "tst")
-public class ProductEntityBeanFactory {
+public class ProductEntityBeanFactory implements IProductEntityBeanFactory {
 	
 	@Autowired
 	private ICurrencyService currencyService;
@@ -50,9 +50,9 @@ public class ProductEntityBeanFactory {
 	
 	@Autowired
 	private ITagService tagService;
-	
-	public final ProductEntity getProductEntityBean() {
-	
+
+	@Override
+	public ProductEntity getBean() {
 		PhysicalProductEntity product = new PhysicalProductEntity();
 		product.setProductCreateDt(LocalDateTime.now());
 		product.setUPC("123456789");

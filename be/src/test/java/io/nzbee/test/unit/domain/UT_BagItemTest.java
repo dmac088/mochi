@@ -10,7 +10,6 @@ import org.kie.api.KieServices;
 import org.kie.api.runtime.KieContainer;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +22,6 @@ import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.IBagItemPortService;
-import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionType;
@@ -49,7 +47,6 @@ public class UT_BagItemTest {
 		}
 		
 		@Bean
-		@Qualifier("ut")
 		public ProductDoBeanFactory productDoBeanFactory() {
 			return new ProductDoBeanFactory();
 		}

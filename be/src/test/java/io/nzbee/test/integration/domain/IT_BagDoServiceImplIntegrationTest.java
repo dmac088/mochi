@@ -24,6 +24,7 @@ import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.test.integration.domain.beans.bag.BagDoBeanFactory;
+import io.nzbee.test.integration.entity.beans.bag.IBagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -41,8 +42,7 @@ public class IT_BagDoServiceImplIntegrationTest {
 	private ICustomerService customerService;
 
 	@Autowired
-	@Qualifier("it")
-	private BagDoBeanFactory bagDoBeanFactory;
+	private IBagEntityBeanFactory bagEntityBeanFactory;
 
 	@Autowired
 	private IProductService productService;
@@ -52,7 +52,7 @@ public class IT_BagDoServiceImplIntegrationTest {
 
 		Customer c = customerService.findByUsername("bob@bob");
 
-		Bag bag = bagDoBeanFactory.getBagDoBean(c);
+		Bag bag = bagEntityBeanFactory.getBagDoBean();
 		
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "23464789"), 2);
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
