@@ -46,15 +46,15 @@ public class UT_BagItemTest {
 			return new CustomerDoBeanFactory();
 		}
 		
-//		@Bean
-//		public IProductDoBeanFactory productDoBeanFactory() {
-//			return new ProductDoBeanFactory();
-//		}
+		@Bean
+		public IProductDoBeanFactory productDoBeanFactory() {
+			return new ProductDoBeanFactory();
+		}
 		
-//		@Bean
-//		public IBagItemService bagItemService() {
-//			return new BagItemServiceImpl();
-//		}
+		@Bean
+		public IBagItemService bagItemService() {
+			return new BagItemServiceImpl();
+		}
 		
 		@Bean
 		public BrandDoBeanFactory brandDoBeanFactory() {
@@ -86,15 +86,15 @@ public class UT_BagItemTest {
 			return KieServices.Factory.get();
 		}
 		
-//		@Bean 
-//		public BagItemConfiguration bagItemConfiguration() {
-//			return new BagItemConfiguration();
-//		}
+		@Bean 
+		public BagItemConfiguration bagItemConfiguration() {
+			return new BagItemConfiguration();
+		}
 		
-//		@Bean 
-//		public KieContainer kieConfiguration() {
-//			return bagItemConfiguration().kieContainer();
-//		}
+		@Bean 
+		public KieContainer kieConfiguration() {
+			return bagItemConfiguration().kieContainer();
+		}
 		
 	}
 	
