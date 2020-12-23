@@ -33,7 +33,8 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 	@Autowired 
 	private PromotionDoBeanFactory promotionDoBeanFactory;
 	
-	public final PhysicalProduct getInStockPhysicalProductDoBean() {
+	@Override
+	public Product getInStockPhysicalProductDoBean() {
 				
 		return new PhysicalProduct("3254354673",
 								   LocalDateTime.now(),
@@ -52,7 +53,8 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getPromotionDoBean())));
 	}
 	
-	public final PhysicalProduct getOutOfStockPhysicalProductDoBean() {
+	@Override
+	public Product getOutOfStockPhysicalProductDoBean() {
 		
 		return new PhysicalProduct("3254354673",
 								   LocalDateTime.now(),

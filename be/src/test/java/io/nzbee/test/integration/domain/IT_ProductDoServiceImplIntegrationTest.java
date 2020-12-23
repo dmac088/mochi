@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.test.integration.domain.beans.ProductDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.product.ProductDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

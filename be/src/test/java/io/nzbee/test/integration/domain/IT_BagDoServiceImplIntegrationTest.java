@@ -23,7 +23,7 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.domain.product.IProductService;
-import io.nzbee.test.integration.domain.beans.BagDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.bag.BagDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

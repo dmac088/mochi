@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.domain.beans;
+package io.nzbee.test.integration.domain.beans.product;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
