@@ -24,7 +24,7 @@ public class ProductDoBeanFactory {
 	@Autowired 
 	private PromotionDoBeanFactory promotionDoBeanFactory;
 	
-	public final Product getProductDoBean() {
+	public final PhysicalProduct getInStockPhysicalProductDoBean() {
 				
 		return new PhysicalProduct("3254354673",
 								   LocalDateTime.now(),
@@ -37,6 +37,25 @@ public class ProductDoBeanFactory {
 								   Constants.localeENGB,
 								   Constants.currencyHKD,
 								   true,
+								   brandDoBeanFactory.getBrandDoBean(),
+								   departmentDoBeanFactory.getDepartmentDoBean(),
+								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
+								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getPromotionDoBean())));
+	}
+	
+	public final PhysicalProduct getOutOfStockPhysicalProductDoBean() {
+		
+		return new PhysicalProduct("3254354673",
+								   LocalDateTime.now(),
+								   "ACT01",
+								   "Test Product Description",
+								   "Test Product Long Description",
+								   new Double(78),
+								   new Double(71),
+								   "test_image.jpg",
+								   Constants.localeENGB,
+								   Constants.currencyHKD,
+								   false,
 								   brandDoBeanFactory.getBrandDoBean(),
 								   departmentDoBeanFactory.getDepartmentDoBean(),
 								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),

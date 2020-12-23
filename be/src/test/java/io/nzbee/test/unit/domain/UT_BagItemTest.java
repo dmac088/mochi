@@ -22,6 +22,7 @@ import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.IBagItemPortService;
+import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionType;
@@ -124,7 +125,7 @@ public class UT_BagItemTest {
 		
 		bag = new Bag(c);
 		
-		product = productDoBeanFactory.getProductDoBean();
+		product = productDoBeanFactory.getInStockPhysicalProductDoBean();
 		
 	}
 
@@ -188,11 +189,13 @@ public class UT_BagItemTest {
 	@Test
 	public void whenItemIsOutOfStock_thenBagItemIsNotAdded() {
 		
-		bagItem = new BagItem(bag, product, 7);
+		PhysicalProduct oosp = productDoBeanFactory.getOutOfStockPhysicalProductDoBean();
+		
+		bagItem = new BagItem(bag, oosp, 1);
 		
 		bagItemService.checkAllBagItemRules(bagItem);
     	
-    	assertThat(bag.bagItemExists(product.getProductUPC()))
+    	assertThat(bag.bagItemExists(oosp.getProductUPC()))
     	.isFalse();
 	}
 
