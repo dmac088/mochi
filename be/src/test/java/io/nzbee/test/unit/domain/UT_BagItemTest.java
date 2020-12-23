@@ -184,8 +184,7 @@ public class UT_BagItemTest {
 		
 		bagItemService.checkAllBagItemRules(bagItem);
     	
-    	assertThat(bag.bagItemExists(product.getProductUPC()))
-    	.isFalse();
+    	assertThat(bag.bagItemExists(product.getProductUPC())).isFalse();
 	}
 	
 	@Test
@@ -197,8 +196,7 @@ public class UT_BagItemTest {
 		
 		bagItemService.checkAllBagItemRules(bagItem);
     	
-    	assertThat(bag.bagItemExists(oosp.getProductUPC()))
-    	.isFalse();
+    	assertThat(bag.bagItemExists(oosp.getProductUPC())).isFalse();
 	}
 
 }
