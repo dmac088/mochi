@@ -26,6 +26,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
+import io.nzbee.test.integration.entity.beans.product.IProductEntityBeanFactory;
 import io.nzbee.test.integration.entity.beans.product.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -57,7 +58,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private ProductEntityBeanFactory productEntityBeanFactory;
+	private IProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
     private IProductService productService;
@@ -66,7 +67,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     
 	public ProductEntity persistNewProduct() {
     	
-		p = productEntityBeanFactory.getProductEntityBean();
+		p = productEntityBeanFactory.getBean();
 	    
 	    entityManager.persist(p);
 	    entityManager.flush();

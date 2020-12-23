@@ -31,7 +31,7 @@ import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.test.integration.entity.beans.product.ProductEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.product.IProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -62,7 +62,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private ProductEntityBeanFactory productEntityBeanFactory;
+	private IProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
     private IProductService productService;
@@ -74,7 +74,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
 	public ProductEntity persistNewProduct() {
     	
-		product = productEntityBeanFactory.getProductEntityBean();
+		product = productEntityBeanFactory.getBean();
 	    
 	    entityManager.persist(product);
 	    	
