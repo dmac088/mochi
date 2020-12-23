@@ -3,7 +3,6 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -36,7 +35,7 @@ import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.test.integration.entity.beans.bag.BagEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.bag.IBagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -60,7 +59,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private BagEntityBeanFactory bagEntityBeanFactory;
+	private IBagEntityBeanFactory bagEntityBeanFactory;
 
     @Autowired
     private IBagService bagService;
@@ -91,7 +90,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 		
 		Optional<PersonEntity> p = personService.findByUsernameAndRole("bob@bob", "Customer");
     	
-		BagEntity bag = bagEntityBeanFactory.getBagEntityBean(p.get());
+		BagEntity bag = bagEntityBeanFactory.getBean(p.get());
 	    
 	    ProductEntity product = productService.findByCode("76477789").get();
 	        

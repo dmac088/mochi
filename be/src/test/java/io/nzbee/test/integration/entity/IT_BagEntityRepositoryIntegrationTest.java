@@ -29,7 +29,7 @@ import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
-import io.nzbee.test.integration.entity.beans.bag.BagEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.bag.IBagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -53,7 +53,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private BagEntityBeanFactory bagEntityBeanFactory;
+	private IBagEntityBeanFactory bagEntityBeanFactory;
  
     @Autowired
     private IBagService bagService;
@@ -75,7 +75,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 		
 		Optional<PersonEntity> p = personService.findByUsernameAndRole("bob@bob", Constants.partyRoleCustomer);
 		
-		bag = bagEntityBeanFactory.getBagEntityBean(p.get());
+		bag = bagEntityBeanFactory.getBean(p.get());
 	    
 	    //persist a new transient test category
 	    entityManager.persist(bag);

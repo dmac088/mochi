@@ -7,14 +7,21 @@ import io.nzbee.domain.customer.Customer;
 
 @Service("it")
 @Profile(value = "tst")
-public class BagDoBeanFactory {
+public class BagDoBeanFactory implements IBagDoBeanFactory {
 	
-	public final Bag getBagDoBean(Customer c) {
+	@Override
+	public Bag getBean(Customer c) {
 	
 		Bag bag = new Bag(c);
 		
 		return bag;
 		
+	}
+
+	@Override
+	public Bag getBean() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

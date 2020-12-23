@@ -7,7 +7,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -23,8 +22,7 @@ import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.domain.product.IProductService;
-import io.nzbee.test.integration.domain.beans.bag.BagDoBeanFactory;
-import io.nzbee.test.integration.entity.beans.bag.IBagEntityBeanFactory;
+import io.nzbee.test.integration.domain.beans.bag.IBagDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -42,7 +40,7 @@ public class IT_BagDoServiceImplIntegrationTest {
 	private ICustomerService customerService;
 
 	@Autowired
-	private IBagEntityBeanFactory bagEntityBeanFactory;
+	private IBagDoBeanFactory bagDoBeanFactory;
 
 	@Autowired
 	private IProductService productService;
@@ -52,7 +50,7 @@ public class IT_BagDoServiceImplIntegrationTest {
 
 		Customer c = customerService.findByUsername("bob@bob");
 
-		Bag bag = bagEntityBeanFactory.getBagDoBean();
+		Bag bag = bagDoBeanFactory.getBean(c);
 		
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "23464789"), 2);
 		bag.addItem(productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "12345678"), 3);
