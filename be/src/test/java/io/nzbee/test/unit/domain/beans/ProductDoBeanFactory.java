@@ -4,11 +4,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+
 import io.nzbee.Constants;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.promotion.Promotion;
 
+@Service("ut")
+@Profile(value = "tst")
 public class ProductDoBeanFactory {
 
 	@Autowired

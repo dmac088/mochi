@@ -22,7 +22,7 @@ import io.nzbee.domain.promotion.Promotion;
 
 
 
-@Service
+@Service("it")
 @Profile(value = "tst")
 public class ProductDoBeanFactory {
 	

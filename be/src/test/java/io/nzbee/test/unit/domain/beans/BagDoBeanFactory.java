@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.bag.Bag;
 
-@Service
+@Service("ut")
 @Profile(value = "tst")
 public class BagDoBeanFactory {
 	
