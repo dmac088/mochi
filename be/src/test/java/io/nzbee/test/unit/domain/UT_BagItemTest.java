@@ -191,7 +191,7 @@ public class UT_BagItemTest {
 	@Test
 	public void whenItemIsOutOfStock_thenBagItemIsNotAdded() {
 		
-		PhysicalProduct oosp = productDoBeanFactory.getOutOfStockPhysicalProductDoBean();
+		Product oosp = productDoBeanFactory.getOutOfStockPhysicalProductDoBean();
 		
 		bagItem = new BagItem(bag, oosp, 1);
 		

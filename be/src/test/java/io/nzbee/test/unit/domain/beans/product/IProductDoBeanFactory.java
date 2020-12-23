@@ -5,4 +5,8 @@ import io.nzbee.test.unit.domain.beans.IDoBeanFactory;
 
 public interface IProductDoBeanFactory extends IDoBeanFactory<Product> {
 
+	Product getInStockPhysicalProductDoBean();
+
+	Product getOutOfStockPhysicalProductDoBean();
+
 }
