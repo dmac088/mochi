@@ -19,7 +19,7 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
-import io.nzbee.test.integration.domain.beans.ProductDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.ProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 
@@ -68,7 +68,9 @@ public class UT_BagItemTest {
 		
 		BagItem bagItem = new BagItem(bag, product, 1);
 
-		// need to fill more of the properties here
+		
+		
+		// implement the mocks here 
 		Mockito.when(categoryDoService.findByCode(Constants.localeENGB,
 												  category.getCategoryCode())).thenReturn(category);
 		
