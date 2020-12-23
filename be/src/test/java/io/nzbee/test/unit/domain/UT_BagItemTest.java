@@ -1,9 +1,13 @@
 package io.nzbee.test.unit.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import java.time.LocalDateTime;
+import java.time.Month;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.kie.api.KieServices;
+import org.kie.api.runtime.KieContainer;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,15 +16,21 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
-import io.nzbee.domain.category.Category;
-import io.nzbee.domain.category.ICategoryService;
+import io.nzbee.domain.bag.BagItemServiceImpl;
+import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.customer.Customer;
+import io.nzbee.domain.ports.IBagItemPortService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.promotion.Promotion;
+import io.nzbee.domain.promotion.PromotionType;
 import io.nzbee.test.unit.domain.beans.ProductDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.BrandDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.DepartmentDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.PromotionDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "tst")
@@ -40,19 +50,62 @@ public class UT_BagItemTest {
 			return new ProductDoBeanFactory();
 		}
 		
+		@Bean
+		public IBagItemService bagItemService() {
+			return new BagItemServiceImpl();
+		}
+		
+		@Bean
+		public BrandDoBeanFactory brandDoBeanFactory() {
+			return new BrandDoBeanFactory();
+		}
+		
+		@Bean
+		public DepartmentDoBeanFactory departmentDoBeanFactory() {
+			return new DepartmentDoBeanFactory();
+		}
+		
+		@Bean
+		public CategoryDoBeanFactory CategoryDoBeanFactory() {
+			return new CategoryDoBeanFactory();
+		}
+		
+		@Bean
+		public PromotionDoBeanFactory PromotionDoBeanFactory() {
+			return new PromotionDoBeanFactory();
+		}
+		
+		@Bean
+		public IBagItemService BagItemService() {
+			return new BagItemServiceImpl();
+		}
+		
+		@Bean 
+		public KieServices kieServices() {
+			return KieServices.Factory.get();
+		}
+		
+		@Bean 
+		public KieContainer kieContainer() {
+			return kieServices().newKieContainer(kieServices().getRepository().getDefaultReleaseId());
+		}
+		
 	}
 
-	@MockBean
-	private ICategoryService categoryDoService;
-	
-	@MockBean
-	private ICategoryService productDoService;
 
 	@Autowired
 	private CustomerDoBeanFactory customerDoBeanFactory;
 	
 	@Autowired
 	private ProductDoBeanFactory productDoBeanFactory;
+	
+	@Autowired
+    private IBagItemService bagItemService;
+    
+	@MockBean
+	private IBagItemPortService bagItemPortService;
+	
+    private BagItem bagItem = null;
 	
 	@Before
 	public void setUp() {
@@ -65,37 +118,35 @@ public class UT_BagItemTest {
 		
 		Product product = productDoBeanFactory.getProductDoBean();
 		
-		BagItem bagItem = new BagItem(bag, product, 1);
-
+		bagItem = new BagItem(bag, product, 1);
 		
+		Promotion b3g33 = new Promotion("B3G33", 
+				 						"Buy 3 Get 33% off",
+										LocalDateTime.of(2020, Month.JANUARY, 8, 0,0,0),
+										LocalDateTime.of(2021, Month.JANUARY, 8, 0,0,0),
+										new PromotionType("BNGNPCT", "Buy N Get X Percent Off"));
 		
-//		// implement the mocks here 
-//		Mockito.when(categoryDoService.findByCode(Constants.localeENGB,
-//												  category.getCategoryCode())).thenReturn(category);
-//		
-//		Mockito.when(categoryDoService.findByDesc(Constants.localeENGB,
-//												  category.getCategoryDesc())).thenReturn(category);
+		bagItem.getProduct().addPromotion(b3g33);
+		
+//      Mockito.when(bagItemPortService.save(bagItem))
+//      .thenReturn(Optional.ofNullable(testCategory));
+	
 	}
 
 	
 	@Test
 	public void whenEligable_thenB3G33PromotionDiscountIsApplied() {
-		String code = "TST02";
+		bagItemService.checkAllBagItemRules(bagItem);
 
-		Category found = categoryDoService.findByCode(Constants.localeENGB,
-													  code);
-
-		assertFound(found);
+		assertDiscountsApplied(bagItem);
 	}
 	
 	
-    private void assertFound(final io.nzbee.domain.category.Category found) {
+    private void assertDiscountsApplied(BagItem found) {
 
-    	assertThat(found.getCategoryCode())
-        .isEqualTo("TST02");
+    	assertThat(found.getDiscounts().size())
+        .isGreaterThan(0);
     	
-	    assertThat(found.getCategoryDesc())
-	    .isEqualTo("test brand category");
     }
 
 
