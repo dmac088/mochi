@@ -24,7 +24,7 @@ import io.nzbee.domain.promotion.Promotion;
 
 @Service
 @Profile(value = "tst")
-public class ProductDoFactory {
+public class ProductDoBeanFactory {
 	
 	@Autowired
 	private ICategoryService cs;
