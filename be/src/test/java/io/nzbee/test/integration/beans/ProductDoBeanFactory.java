@@ -15,7 +15,7 @@ import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.department.IDepartmentService;
-import io.nzbee.domain.product.BasicProduct;
+import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.Promotion;
@@ -53,7 +53,7 @@ public class ProductDoBeanFactory {
 		
 		promos.add(promotion);
 		
-		return new BasicProduct(   "3254354673",
+		return new PhysicalProduct(   "3254354673",
 								   LocalDateTime.now(),
 								   "ACT01",
 								   "Test Product Description",

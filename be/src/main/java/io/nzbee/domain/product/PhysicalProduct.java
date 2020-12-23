@@ -10,9 +10,9 @@ import io.nzbee.domain.promotion.Promotion;
 
 
 @JsonTypeName("product")
-public class BasicProduct extends Product {
+public class PhysicalProduct extends Product {
 
-	public BasicProduct( String productUPC,
+	public PhysicalProduct( String productUPC,
 						 LocalDateTime   productCreateDt,
 					   	 String productStatus,
 					   	 String productDesc,

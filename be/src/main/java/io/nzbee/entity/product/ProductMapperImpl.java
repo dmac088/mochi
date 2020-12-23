@@ -3,7 +3,7 @@ package io.nzbee.entity.product;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import io.nzbee.domain.product.BasicProduct;
+import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
@@ -29,7 +29,7 @@ public class ProductMapperImpl implements IProductMapper {
 	public Product DTOToDo(ProductDTO dto) {
 		
 		if(dto instanceof ProductDTO) {
-			Product pO = new BasicProduct(
+			Product pO = new PhysicalProduct(
 					dto.getProductUPC(),
 				   	dto.getProductCreateDt(),
 				   	dto.getProductStatusCode(),
