@@ -479,7 +479,8 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"	   		b.bnd_cd,		" + 
 			"	   		lcl.bnd_desc,	" + 
 			"	   		lcl.bnd_lcl_id, " +
-			"	   		lcl.lcl_cd		";
+			"	   		lcl.lcl_cd		" + 
+			"order by lcl.bnd_desc ASC ";
 		
 	return sql;
 	}

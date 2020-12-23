@@ -1,5 +1,6 @@
 package io.nzbee.resources.controllers;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -59,28 +60,28 @@ public class CategoryController {
 	@GetMapping("/Category/{locale}/{currency}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching all categories for parameters : {}, {}", locale);
-		final Set<Category> collection = categoryService.findAll(locale);
+		final List<Category> collection = categoryService.findAll(locale);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 	@GetMapping("/ProductCategory/{locale}/{currency}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale);
-		final Set<ProductCategory> collection = categoryService.findAllProductCategories(locale);
+		final List<ProductCategory> collection = categoryService.findAllProductCategories(locale);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 	@GetMapping("/BrandCategory/{locale}/{currency}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getBrandCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching brand categories for parameters : {}, {}", locale);
-		final Set<BrandCategory> collection = categoryService.findAllBrandCategories(locale);
+		final List<BrandCategory> collection = categoryService.findAllBrandCategories(locale);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 	@GetMapping("/Category/{locale}/{currency}/product/{productCode}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getCategories(@PathVariable String locale, @PathVariable String productCode) {
 		LOGGER.debug("Fetching categories for parameters : {}, {}, {}", locale, productCode);
-		final Set<ProductCategory> collection = categoryService.findAllByProductCode(locale, productCode);
+		final List<ProductCategory> collection = categoryService.findAllByProductCode(locale, productCode);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
@@ -106,7 +107,7 @@ public class CategoryController {
     	}
  
 		
-		final Set<Category> collection = categoryService.findAll(locale, currency, categoryCode,
+		final List<Category> collection = categoryService.findAll(locale, currency, categoryCode,
 																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
 																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
 																 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),

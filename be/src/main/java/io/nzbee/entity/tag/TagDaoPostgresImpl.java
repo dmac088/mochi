@@ -395,7 +395,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"				   t.tag_cd, " + 
 				"				   lcl.tag_lcl_id, " + 
 				"				   lcl.tag_desc, " + 
-				"				   lcl.lcl_cd"	;
+				"				   lcl.lcl_cd " +
+				"			order by lcl.tag_desc ";
 		
 	return sql;
 	}

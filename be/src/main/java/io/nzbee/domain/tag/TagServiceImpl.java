@@ -1,5 +1,6 @@
 package io.nzbee.domain.tag;
 
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.ports.ITagPortService;
@@ -20,7 +21,7 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public Set<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categories,
+	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categories,
 			Set<String> brands, Double maxPrice) {
 		return tagService.findAll(	 locale, 
 				 currency, 
@@ -32,12 +33,12 @@ public class TagServiceImpl implements ITagService {
 	}
 	
 	@Override
-	public Set<Tag> findAll(String locale) {
+	public List<Tag> findAll(String locale) {
 		return tagService.findAll(locale);
 	}
 
 	@Override
-	public Set<Tag> findAll(String locale, Set<String> codes) {
+	public List<Tag> findAll(String locale, Set<String> codes) {
 		return tagService.findAll(locale, codes);
 	}
 

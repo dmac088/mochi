@@ -1,5 +1,6 @@
 package io.nzbee.domain.department;
 
+import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.ports.IDepartmentPortService;
@@ -26,12 +27,12 @@ public class DepartmentServiceImpl implements IDepartmentService {
 	}
 	
 	@Override
-	public Set<Department> findAll(String locale) {
+	public List<Department> findAll(String locale) {
 		return departmentService.findAll(locale);
 	}
 
 	@Override
-	public Set<Department> findAll(String locale, Set<String> codes) {
+	public List<Department> findAll(String locale, Set<String> codes) {
 		return departmentService.findAll(locale, codes);
 	}
 

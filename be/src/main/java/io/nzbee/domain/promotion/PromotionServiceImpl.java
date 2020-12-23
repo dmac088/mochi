@@ -1,5 +1,6 @@
 package io.nzbee.domain.promotion;
 
+import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,13 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 
 	@Override
-	public Set<Promotion> findAll(String locale) {
+	public List<Promotion> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Set<Promotion> findAll(String locale, Set<String> codes) {
+	public List<Promotion> findAll(String locale, Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
