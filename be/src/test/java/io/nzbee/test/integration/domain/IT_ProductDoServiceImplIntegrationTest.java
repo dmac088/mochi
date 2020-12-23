@@ -39,8 +39,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
     private IProductPortService productService;
 	
 	@Autowired
-	@Qualifier("it")
-	private ProductDoBeanFactory productDoFactory;
+	private IProductDoBeanFactory productDoFactory;
 	
 	private Product product = null;
 	
