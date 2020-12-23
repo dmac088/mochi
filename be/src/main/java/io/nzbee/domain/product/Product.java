@@ -163,6 +163,10 @@ public abstract class Product {
 	public List<Promotion> getPromotions() {
 		return promotions;
 	}
+	
+	public void addPromotion(Promotion promotion) {
+		this.promotions.add(promotion);
+	}
 
 	@Override
 	public boolean equals(Object o) {

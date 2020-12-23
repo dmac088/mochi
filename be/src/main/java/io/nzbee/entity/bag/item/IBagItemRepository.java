@@ -7,8 +7,5 @@ public interface IBagItemRepository extends CrudRepository<BagItemEntity, Long> 
 	
 	List<BagItemEntity> findAll();
 	
-	
-	//@Query()
-//	Set<BagItemDTO> findAllByBagId(Long bagId);
 }
 
