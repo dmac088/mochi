@@ -33,7 +33,7 @@ import io.nzbee.entity.party.address.PartyAddressEntity;
 import io.nzbee.entity.party.address.type.AddressTypeEntity;
 import io.nzbee.entity.party.address.type.IAddressTypeService;
 import io.nzbee.entity.party.person.IPersonService;
-import io.nzbee.test.integration.beans.PartyAddressEntityBeanFactory;
+import io.nzbee.test.integration.beans.entity.PartyAddressEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

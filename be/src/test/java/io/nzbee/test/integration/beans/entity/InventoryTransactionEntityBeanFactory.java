@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.beans;
+package io.nzbee.test.integration.beans.entity;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

@@ -24,10 +24,10 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.test.integration.beans.entity.DepartmentEntityBeanFactory;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.product.department.DepartmentEntity;
-import io.nzbee.test.integration.beans.DepartmentEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
