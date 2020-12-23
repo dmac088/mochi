@@ -130,7 +130,7 @@ public class UT_BagItemTest {
 
 	
 	@Test
-	public void whenEligable_thenB3G33PromotionDiscountIsApplied() {
+	public void when3EligableItemsAdded_thenB3G33PromotionDiscountIsApplied() {
 		
 		bagItem = new BagItem(bag, product, 3);
 
@@ -152,6 +152,37 @@ public class UT_BagItemTest {
 	}
 	
 	
+	@Test
+	public void when6EligableItemsAdded_thenB3G33PromotionDiscountIsApplied() {
+		
+		bagItem = new BagItem(bag, product, 6);
 
+		Promotion b3g33 = new Promotion("B3G33", 
+				 						"Buy 3 Get 33% off",
+										LocalDateTime.of(2020, Month.JANUARY, 8, 0,0,0),
+										LocalDateTime.of(2021, Month.JANUARY, 8, 0,0,0),
+										new PromotionType("BNGNPCT", "Buy N Get X Percent Off"));
+		
+		bagItem.getProduct().addPromotion(b3g33);
+		
+		bagItemService.checkAllBagItemRules(bagItem);
+		
+		assertThat(bagItem.getDiscounts().size())
+        .isEqualTo(1);
+    	
+    	assertThat(bagItem.getBagItemDiscount())
+    	.isEqualTo(new Double(142.0));
+	}
+	
+	@Test
+	public void whenItemQuantityExceedsMaximum_thenRestrictionIsApplied() {
+		
+		bagItem = new BagItem(bag, product, 7);
+		
+		bagItemService.checkAllBagItemRules(bagItem);
+    	
+    	assertThat(bag.bagItemExists(product.getProductUPC()))
+    	.isFalse();
+	}
 
 }
