@@ -131,10 +131,9 @@ public class UT_BagItemTest {
 	
 	@Test
 	public void whenEligable_thenB3G33PromotionDiscountIsApplied() {
-		bagItemService.checkAllBagItemRules(bagItem);
-
-		bagItem = new BagItem(bag, product, 3);
 		
+		bagItem = new BagItem(bag, product, 3);
+
 		Promotion b3g33 = new Promotion("B3G33", 
 				 						"Buy 3 Get 33% off",
 										LocalDateTime.of(2020, Month.JANUARY, 8, 0,0,0),
@@ -142,6 +141,8 @@ public class UT_BagItemTest {
 										new PromotionType("BNGNPCT", "Buy N Get X Percent Off"));
 		
 		bagItem.getProduct().addPromotion(b3g33);
+		
+		bagItemService.checkAllBagItemRules(bagItem);
 		
 		assertThat(bagItem.getDiscounts().size())
         .isEqualTo(1);
