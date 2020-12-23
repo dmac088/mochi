@@ -101,6 +101,10 @@ public class BagItem {
 	public void addBagItemDiscount(Double amount) {
 		this.bagItemDiscount += amount;
 	}
+	
+	public void addDiscount(Discount discount) {
+		this.discounts.add(discount);
+	}
 
 	public List<Discount> getDiscounts() {
 		return discounts;
