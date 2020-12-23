@@ -12,7 +12,6 @@ import org.kie.api.builder.KieFileSystem;
 import org.kie.api.builder.KieModule;
 import org.kie.api.runtime.KieContainer;
 import org.kie.internal.io.ResourceFactory;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
@@ -22,16 +21,13 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
-import io.nzbee.domain.bag.BagItemConfiguration;
 import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
-import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.IBagItemPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionType;
-import io.nzbee.entity.bag.item.IBagItemRepository;
 import io.nzbee.test.unit.domain.beans.ProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.BrandDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
@@ -134,7 +130,7 @@ public class UT_BagItemTest {
 		
 		Product product = productDoBeanFactory.getProductDoBean();
 		
-		bagItem = new BagItem(bag, product, 1);
+		bagItem = new BagItem(bag, product, 3);
 		
 		Promotion b3g33 = new Promotion("B3G33", 
 				 						"Buy 3 Get 33% off",
@@ -144,8 +140,6 @@ public class UT_BagItemTest {
 		
 		bagItem.getProduct().addPromotion(b3g33);
 		
-//      Mockito.when(bagItemPortService.save(bagItem))
-//      .thenReturn(Optional.ofNullable(testCategory));
 	
 	}
 
