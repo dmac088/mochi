@@ -20,7 +20,6 @@ import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
 import io.nzbee.test.unit.domain.beans.ProductDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 
 @RunWith(SpringRunner.class)
