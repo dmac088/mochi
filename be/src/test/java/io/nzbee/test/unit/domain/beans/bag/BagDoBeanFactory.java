@@ -7,7 +7,7 @@ import io.nzbee.domain.bag.Bag;
 import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 
 @Service
-@Profile(value = "tst")
+@Profile(value = "ut")
 public class BagDoBeanFactory implements IBagDoBeanFactory {
 	
 	@Autowired

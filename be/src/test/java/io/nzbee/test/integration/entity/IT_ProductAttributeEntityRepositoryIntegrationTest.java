@@ -2,7 +2,6 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -27,7 +26,6 @@ import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.test.integration.entity.beans.product.IProductEntityBeanFactory;
-import io.nzbee.test.integration.entity.beans.product.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

@@ -18,7 +18,7 @@ import io.nzbee.test.unit.domain.beans.DepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.PromotionDoBeanFactory;
 
 @Service
-@Profile(value = "tst")
+@Profile(value = "ut")
 public class ProductDoBeanFactory implements IProductDoBeanFactory {
 
 	@Autowired
