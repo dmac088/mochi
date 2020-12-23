@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.PhysicalProduct;
-import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 
 public class ProductDoBeanFactory {
