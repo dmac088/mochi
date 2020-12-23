@@ -53,7 +53,7 @@ public class ProductDoBeanFactory {
 		
 		promos.add(promotion);
 		
-		return new PhysicalProduct(   "3254354673",
+		return new PhysicalProduct("3254354673",
 								   LocalDateTime.now(),
 								   "ACT01",
 								   "Test Product Description",
