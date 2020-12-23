@@ -110,6 +110,10 @@ public class UT_BagItemTest {
 	private IBagItemPortService bagItemPortService;
 	
     private BagItem bagItem = null;
+    
+    private Bag bag;
+    
+    private Product product;
 	
 	@Before
 	public void setUp() {
@@ -118,10 +122,17 @@ public class UT_BagItemTest {
 		
 		Customer c = customerDoBeanFactory.getCustomerDoBean();
 		
-		Bag bag = new Bag(c);
+		bag = new Bag(c);
 		
-		Product product = productDoBeanFactory.getProductDoBean();
+		product = productDoBeanFactory.getProductDoBean();
 		
+	}
+
+	
+	@Test
+	public void whenEligable_thenB3G33PromotionDiscountIsApplied() {
+		bagItemService.checkAllBagItemRules(bagItem);
+
 		bagItem = new BagItem(bag, product, 3);
 		
 		Promotion b3g33 = new Promotion("B3G33", 
@@ -132,27 +143,14 @@ public class UT_BagItemTest {
 		
 		bagItem.getProduct().addPromotion(b3g33);
 		
-	
-	}
-
-	
-	@Test
-	public void whenEligable_thenB3G33PromotionDiscountIsApplied() {
-		bagItemService.checkAllBagItemRules(bagItem);
-
-		assertDiscountsApplied(bagItem);
-	}
-	
-	
-    private void assertDiscountsApplied(BagItem found) {
-
-    	assertThat(found.getDiscounts().size())
+		assertThat(bagItem.getDiscounts().size())
         .isEqualTo(1);
     	
-    	assertThat(found.getBagItemDiscount())
+    	assertThat(bagItem.getBagItemDiscount())
     	.isEqualTo(new Double(71.0));
-    	
-    }
+	}
+	
+	
 
 
 }
