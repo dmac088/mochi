@@ -3,14 +3,9 @@ package io.nzbee.test.unit.domain.beans;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import io.nzbee.Constants;
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
@@ -39,13 +34,13 @@ public class ProductDoBeanFactory {
 								   new Double(78),
 								   new Double(71),
 								   "test_image.jpg",
-								   "en-GB",
-								   "HKD",
+								   Constants.localeENGB,
+								   Constants.currencyHKD,
 								   true,
 								   brandDoBeanFactory.getBrandDoBean(),
 								   departmentDoBeanFactory.getDepartmentDoBean(),
 								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
-								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getPromotionDoBean()));
+								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getPromotionDoBean())));
 	}
 	
 }

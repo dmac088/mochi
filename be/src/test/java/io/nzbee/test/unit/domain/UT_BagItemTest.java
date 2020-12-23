@@ -70,12 +70,12 @@ public class UT_BagItemTest {
 
 		
 		
-		// implement the mocks here 
-		Mockito.when(categoryDoService.findByCode(Constants.localeENGB,
-												  category.getCategoryCode())).thenReturn(category);
-		
-		Mockito.when(categoryDoService.findByDesc(Constants.localeENGB,
-												  category.getCategoryDesc())).thenReturn(category);
+//		// implement the mocks here 
+//		Mockito.when(categoryDoService.findByCode(Constants.localeENGB,
+//												  category.getCategoryCode())).thenReturn(category);
+//		
+//		Mockito.when(categoryDoService.findByDesc(Constants.localeENGB,
+//												  category.getCategoryDesc())).thenReturn(category);
 	}
 
 	
