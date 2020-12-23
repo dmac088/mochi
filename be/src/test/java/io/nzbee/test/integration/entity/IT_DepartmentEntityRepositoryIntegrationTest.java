@@ -25,6 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.test.integration.entity.beans.DepartmentEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.department.IDepartmentEntityBeanFactory;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.product.department.DepartmentEntity;
@@ -32,7 +33,7 @@ import io.nzbee.entity.product.department.DepartmentEntity;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 @SqlGroup({
 	@Sql(scripts = "/database/mochi_schema.sql",
 			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
@@ -58,7 +59,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private DepartmentEntityBeanFactory departmentEntityBeanFactory;
+	private IDepartmentEntityBeanFactory departmentEntityBeanFactory;
 	
     @Autowired
     private IDepartmentService departmentService;
@@ -72,12 +73,10 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	
 	public DepartmentEntity persistNewProductType() {
     	
-		department = departmentEntityBeanFactory.getDepartmentEntityBean();
+		department = departmentEntityBeanFactory.getBean();
 	   
 	    //persist a new transient test category
 	    entityManager.persist(department);
-	    entityManager.flush();
-	    entityManager.close();
 	    	
 	    return department;
 	}
