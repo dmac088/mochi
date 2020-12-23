@@ -110,6 +110,10 @@ public class BagController {
     		
     	bagItem.addToQuantity(dto.getItemQty());      					  
     	
+    	//Run through the business rules
+	    	//Checks out of stock
+	    	//Checks bag and bagItem limits
+	    	//Checks promotion eligibility, and applies discount 
     	bagItemService.checkAllBagItemRules(bagItem);
 		
     	if(bagItem.isErrors()) {

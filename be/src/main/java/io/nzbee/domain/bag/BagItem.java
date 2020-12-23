@@ -25,8 +25,6 @@ public class BagItem {
 	
 	private String bagItemStatus;
 	
-	private Double bagItemDiscount;
-	
 	private List<Discount> discounts;
 	
 	public BagItem(Bag bag, 
@@ -38,7 +36,6 @@ public class BagItem {
 		this.locale 			= p.getLclCd();
 		this.currency 			= p.getCurrency();
 		this.bagItemStatus 		= Constants.bagStatusCodeNew;
-		this.bagItemDiscount	= new Double(0);
 		this.discounts 			= new ArrayList<Discount>();
 	}
 
@@ -67,7 +64,9 @@ public class BagItem {
 	}
 	
 	public Double getBagItemTotal() {
-		return (this.quantity * this.product.getProductMarkdown()) - this.bagItemDiscount;
+		return (this.quantity * this.product.getProductMarkdown()) 
+				-
+				this.getBagItemDiscount();
 	}
 
 	public boolean isErrors() {
@@ -95,11 +94,7 @@ public class BagItem {
 	}
 	
 	public Double getBagItemDiscount() {
-		return bagItemDiscount;
-	}
-
-	public void addBagItemDiscount(Double amount) {
-		this.bagItemDiscount += amount;
+		return this.discounts.stream().mapToDouble(d -> d.getDiscountAmount()).sum();
 	}
 	
 	public void addDiscount(Discount discount) {

@@ -1,6 +1,7 @@
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.bag.discount.Discount;
 import io.nzbee.domain.bag.DroolsBagItemWrapper;
 import java.util.List;
 import org.apache.tomcat.util.buf.StringUtils;
@@ -10,7 +11,7 @@ dialect "mvel"
 function String pendingItemKey(DroolsBagItemWrapper bagItem) { 
 	return bagItem.getCustomerId() + "-"+ bagItem.getProductDesc();
 }
-//Is it out of stock?
+
 rule "Is Out-Of Stock"
 when
 $bagItem : DroolsBagItemWrapper(!bagItemStatus.equals("PRO01") && !isInStock())
@@ -32,9 +33,10 @@ System.out.println("promotion codes = " + StringUtils.join($bagItem.getPromotion
 System.out.println("current quantity = " + $bagItem.getBagItemQuantity());
 System.out.println("promotion = \"Buy 2 get 50% off\"");
 System.out.println("total line amount = " + $bagItem.getBagItemQuantity() * $bagItem.getMarkdownPrice());
-Double discount = new Double((Math.floor($bagItem.getBagItemQuantity() / 2) * $bagItem.getMarkdownPrice()));
-System.out.println("discount amount is = " + discount);
-$bagItem.addBagItemDiscount(discount * -1);
+Double discAmt = new Double((Math.floor($bagItem.getBagItemQuantity() / 2) * $bagItem.getMarkdownPrice()));
+System.out.println("discount amount is = " + discAmt);
+Discount discount = new Discount($bagItem.getBagItem(), $bagItem.getPromotion("B2G50"), discAmt);
+$bagItem.addDiscount(discount);
 end
 
 rule "Buy 3 get 1 free"
@@ -45,9 +47,10 @@ System.out.println("promotion codes = " + StringUtils.join($bagItem.getPromotion
 System.out.println("current quantity = " + $bagItem.getBagItemQuantity());
 System.out.println("promotion = \"Buy 3 get 33% off\"");
 System.out.println("total line amount = " + $bagItem.getBagItemQuantity() * $bagItem.getMarkdownPrice());
-Double discount = new Double((Math.floor($bagItem.getBagItemQuantity() / 3) * $bagItem.getMarkdownPrice()));
-System.out.println("discount amount is = " + discount);
-$bagItem.addBagItemDiscount(discount * -1);
+Double discAmt = new Double((Math.floor($bagItem.getBagItemQuantity() / 3) * $bagItem.getMarkdownPrice()));
+System.out.println("discount amount is = " + discAmt);
+Discount discount = new Discount($bagItem.getBagItem(), $bagItem.getPromotion("B3G33"), discAmt);
+$bagItem.addDiscount(discount);
 end
 
 rule "Item quantity exceeds limit"
