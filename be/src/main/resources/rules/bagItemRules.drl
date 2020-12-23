@@ -37,7 +37,6 @@ System.out.println("discount amount is = " + discount);
 $bagItem.addBagItemDiscount(discount * -1);
 end
 
-
 rule "Buy 3 get 1 free"
 when 
 $bagItem : DroolsBagItemWrapper(isInStock() && promotionCodes.contains("B3G33") && bagItemQuantity >= 2)
@@ -51,8 +50,6 @@ System.out.println("discount amount is = " + discount);
 $bagItem.addBagItemDiscount(discount * -1);
 end
 
-
-
 rule "Item quantity exceeds limit"
 when 
 $bagItem : DroolsBagItemWrapper(	!bagItemStatus.equals("PRO01")
@@ -65,8 +62,6 @@ $bagItem.setError(error);
 $bagItem.logItemError(pendingItemKey($bagItem), $bagItem.getBagItem());
 end
 
-
-
 rule "Item quantity below minumum"
 when 
 $bagItem : DroolsBagItemWrapper(!bagItemStatus.equals("PRO01")
@@ -78,8 +73,6 @@ $bagItem.setErrors(true);
 $bagItem.setError(error);
 $bagItem.logItemError(pendingItemKey($bagItem), $bagItem.getBagItem());
 end
-
-
 
 rule "Bag quantity exceeds limit"
 when  
