@@ -1,4 +1,4 @@
-package io.nzbee.test.unit.domain.beans;
+package io.nzbee.test.unit.domain.beans.product;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -10,11 +10,16 @@ import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.PhysicalProduct;
+import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
+import io.nzbee.test.unit.domain.beans.BrandDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.DepartmentDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.PromotionDoBeanFactory;
 
 @Service("ut")
 @Profile(value = "tst")
-public class ProductDoBeanFactory {
+public class ProductDoBeanFactory implements IProductDoBeanFactory {
 
 	@Autowired
 	private BrandDoBeanFactory brandDoBeanFactory;
@@ -64,6 +69,11 @@ public class ProductDoBeanFactory {
 								   departmentDoBeanFactory.getDepartmentDoBean(),
 								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getPromotionDoBean())));
+	}
+
+	@Override
+	public Product getBean() {
+		return this.getInStockPhysicalProductDoBean();
 	}
 	
 }
