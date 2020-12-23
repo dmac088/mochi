@@ -1,6 +1,10 @@
 package io.nzbee.domain.bag;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.nzbee.Constants;
+import io.nzbee.domain.bag.discount.Discount;
 import io.nzbee.domain.product.Product;
 
 public class BagItem {
@@ -23,6 +27,7 @@ public class BagItem {
 	
 	private Double bagItemDiscount;
 	
+	private List<Discount> discounts;
 	
 	public BagItem(Bag bag, 
 			  	   Product p, 
@@ -34,6 +39,7 @@ public class BagItem {
 		this.currency 			= p.getCurrency();
 		this.bagItemStatus 		= Constants.bagStatusCodeNew;
 		this.bagItemDiscount	= new Double(0);
+		this.discounts 			= new ArrayList<Discount>();
 	}
 
 	public Bag getBag() {
@@ -94,6 +100,10 @@ public class BagItem {
 
 	public void addBagItemDiscount(Double amount) {
 		this.bagItemDiscount += amount;
+	}
+
+	public List<Discount> getDiscounts() {
+		return discounts;
 	}
 	
 	
