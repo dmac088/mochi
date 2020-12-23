@@ -30,7 +30,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.test.integration.beans.entity.BrandEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.BrandEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

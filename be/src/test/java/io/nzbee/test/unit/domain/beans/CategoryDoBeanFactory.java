@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.beans;
+package io.nzbee.test.unit.domain.beans;
 
 import java.util.ArrayList;
 import java.util.List;

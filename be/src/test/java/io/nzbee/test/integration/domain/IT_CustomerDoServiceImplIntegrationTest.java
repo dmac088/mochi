@@ -19,7 +19,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
-import io.nzbee.test.integration.beans.CustomerDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

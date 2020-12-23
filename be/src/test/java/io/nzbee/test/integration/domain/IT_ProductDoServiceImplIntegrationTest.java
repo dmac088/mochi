@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.test.integration.beans.ProductDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.ProductDoFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -38,13 +38,13 @@ public class IT_ProductDoServiceImplIntegrationTest {
     private IProductPortService productService;
 	
 	@Autowired
-	private ProductDoBeanFactory productDoBeanFactory;
+	private ProductDoFactory productDoFactory;
 	
 	private Product product = null;
 	
 	
 	private Product persistNewProduct() {
-		product = productDoBeanFactory.getProductDoBean();
+		product = productDoFactory.getProductDoBean();
    	
 		productService.save(product);
 	    	

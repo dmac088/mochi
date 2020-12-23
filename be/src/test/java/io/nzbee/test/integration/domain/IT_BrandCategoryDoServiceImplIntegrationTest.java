@@ -16,10 +16,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
-import io.nzbee.test.integration.beans.CategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

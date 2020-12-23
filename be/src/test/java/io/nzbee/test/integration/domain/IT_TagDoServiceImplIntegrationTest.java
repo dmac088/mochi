@@ -18,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
-import io.nzbee.test.integration.beans.TagDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.TagDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

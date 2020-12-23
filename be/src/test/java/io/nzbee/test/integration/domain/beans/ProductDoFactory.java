@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.beans;
+package io.nzbee.test.integration.domain.beans;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -20,9 +20,11 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.Promotion;
 
+
+
 @Service
 @Profile(value = "tst")
-public class ProductDoBeanFactory {
+public class ProductDoFactory {
 	
 	@Autowired
 	private ICategoryService cs;

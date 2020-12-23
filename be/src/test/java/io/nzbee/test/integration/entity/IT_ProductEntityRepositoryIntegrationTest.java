@@ -31,7 +31,7 @@ import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.test.integration.beans.entity.ProductEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.ProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

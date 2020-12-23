@@ -29,7 +29,7 @@ import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.role.customer.CustomerEntity;
-import io.nzbee.test.integration.beans.entity.PartyEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.PartyEntityBeanFactory;
 
 
 @RunWith(SpringRunner.class)
