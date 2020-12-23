@@ -32,6 +32,7 @@ import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.DepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.PromotionDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.product.IProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -104,7 +105,7 @@ public class UT_BagItemTest {
 	private CustomerDoBeanFactory customerDoBeanFactory;
 	
 	@Autowired
-	private ProductDoBeanFactory productDoBeanFactory;
+	private IProductDoBeanFactory productDoBeanFactory;
 	
 	@Autowired
     private IBagItemService bagItemService;

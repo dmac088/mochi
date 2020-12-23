@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 
-@Service("ut")
+@Service
 @Profile(value = "tst")
 public class BagDoBeanFactory implements IBagDoBeanFactory {
 	
