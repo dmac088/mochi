@@ -175,7 +175,7 @@ public class UT_BagItemTest {
 	}
 	
 	@Test
-	public void whenItemQuantityExceedsMaximum_thenRestrictionIsApplied() {
+	public void whenItemQuantityExceedsMaximum_thenBagItemIsNotAdded() {
 		
 		bagItem = new BagItem(bag, product, 7);
 		
@@ -185,6 +185,15 @@ public class UT_BagItemTest {
     	.isFalse();
 	}
 	
-	
+	@Test
+	public void whenItemIsOutOfStock_thenBagItemIsNotAdded() {
+		
+		bagItem = new BagItem(bag, product, 7);
+		
+		bagItemService.checkAllBagItemRules(bagItem);
+    	
+    	assertThat(bag.bagItemExists(product.getProductUPC()))
+    	.isFalse();
+	}
 
 }
