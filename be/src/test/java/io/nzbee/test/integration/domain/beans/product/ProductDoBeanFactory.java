@@ -4,51 +4,49 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import io.nzbee.Constants;
 import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.brand.IBrandService;
-import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
-import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
-import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.Promotion;
+import io.nzbee.test.integration.domain.beans.bag.category.ICategoryDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.brand.IBrandDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.department.IDepartmentDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.promotion.IPromotionDoBeanFactory;
 
 @Service
 @Profile(value = "it")
 public class ProductDoBeanFactory implements IProductDoBeanFactory {
 	
 	@Autowired
-	private ICategoryService cs;
+	private ICategoryDoBeanFactory categoryDoBeanFactory;
 	
 	@Autowired
-	private IBrandService bs;
+	private IBrandDoBeanFactory brandDoBeanFactory;
 	
 	@Autowired
-	private IDepartmentService ds;
+	private IDepartmentDoBeanFactory departmentDoBeanFactory;
 	
 	@Autowired
-	private IPromotionService ps;
+	private IPromotionDoBeanFactory promotionDoBeanFactory;
 	
 	
 	@Override
 	public final Product getBean() {
 		
-		ProductCategory pc1 = (ProductCategory) cs.findByCode(Constants.localeENGB, "POM01");
+		ProductCategory pc1 = (ProductCategory) categoryDoBeanFactory.getPomegranateBean();
 		
-		ProductCategory pc2 = (ProductCategory) cs.findByCode(Constants.localeENGB, "CIT01");
+		ProductCategory pc2 = (ProductCategory) categoryDoBeanFactory.getCitrusBean();
 		
-		Brand brand = bs.findByCode(Constants.localeENGB, "ENZ01");
+		Brand brand = brandDoBeanFactory.getBean();
 		
-		Department department = ds.findByCode(Constants.localeENGB, "ACC01");
+		Department department = departmentDoBeanFactory.getBean();
 		
-		Promotion promotion = ps.findByCode(Constants.localeENGB, "B2G50");
+		Promotion promotion = promotionDoBeanFactory.getBean();
 		
 		List<Promotion> promos = new ArrayList<Promotion>();
 		
