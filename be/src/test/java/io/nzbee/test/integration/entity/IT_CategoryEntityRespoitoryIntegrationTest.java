@@ -63,7 +63,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB);
 
 		// then
-		assertThat(found).isNotNull();
+		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(88);
 		assertTrue(isOrdered(found));
 	}
@@ -82,6 +83,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 		// then
 		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(2);	
 		assertTrue(isOrdered(found));
 	}
@@ -98,6 +100,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 		// then
 		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(2);	
 		assertTrue(isOrdered(found));
 	}
@@ -120,6 +123,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 		// then only children
 		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(7);	
 		assertTrue(isOrdered(found));
 	}
@@ -138,6 +142,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		
 		// then
 		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(35);	
 		assertTrue(isOrdered(found));
 	}
@@ -156,6 +161,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		
 		// then
 		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(35);	
 		assertTrue(isOrdered(found));
 	}
@@ -167,7 +173,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryBrandEntity.class);
 
 		// then
-		assertThat(found).isNotNull();
+		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(1);
 		assertTrue(isOrdered(found));
 	}
@@ -179,7 +186,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryProductEntity.class);
 
 		// then
-		assertThat(found).isNotNull();
+		assertNotNull(found);
+		assertTrue(!found.isEmpty());
 		assertThat(found).size().isEqualTo(87);
 		assertTrue(isOrdered(found));
 	}
@@ -192,6 +200,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("162.0"));
 	}
 
@@ -203,6 +212,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("108.0"));
 	}
 
@@ -214,6 +224,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("855.0"));
 	}
 
@@ -225,6 +236,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("85.5"));
 	}
 
@@ -236,6 +248,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("20.8"));
 	}
 
@@ -247,6 +260,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("13.8"));
 	}
 
@@ -258,6 +272,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("109.6"));
 	}
 
@@ -269,6 +284,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
 
 		// then
+		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("11.0"));
 	}
 
