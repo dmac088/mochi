@@ -20,8 +20,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.Promotion;
 
-
-
 @Service
 @Profile(value = "it")
 public class ProductDoBeanFactory implements IProductDoBeanFactory {

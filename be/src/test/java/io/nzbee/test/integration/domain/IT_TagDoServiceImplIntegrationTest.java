@@ -17,7 +17,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
-import io.nzbee.test.unit.domain.beans.TagDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.tag.ITagDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -32,12 +32,12 @@ public class IT_TagDoServiceImplIntegrationTest {
     private ITagPortService tagService;
 	
 	@Autowired
-	private TagDoBeanFactory tagDoBeanFactory;
+	private ITagDoBeanFactory tagDoBeanFactory;
 	
 	private Tag tag = null;
 	
 	public Tag persistNewTag() {
-		tag = tagDoBeanFactory.getTagDoBean();
+		tag = tagDoBeanFactory.getBean();
    	
 		tagService.save(tag);
 	    	
