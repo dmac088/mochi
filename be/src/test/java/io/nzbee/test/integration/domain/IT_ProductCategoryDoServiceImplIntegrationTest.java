@@ -12,9 +12,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.bag.category.ICategoryDoBeanFactory;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.Category;
 
@@ -31,13 +30,13 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     private ICategoryPortService categoryService;
 	
 	@Autowired
-	private CategoryDoBeanFactory categoryDoBeanFactory;
+	private ICategoryDoBeanFactory categoryDoBeanFactory;
 	
-	private ProductCategory category = null;
+	private Category category = null;
 	
-	public ProductCategory persistNewCategory() {
+	public Category persistNewCategory() {
     	
-		category = categoryDoBeanFactory.getProductCategoryDoBean();
+		category = categoryDoBeanFactory.getBean();
 	    	
 	    categoryService.save(category);
 	    	

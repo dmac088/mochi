@@ -18,7 +18,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
-import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.customer.ICustomerDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -33,12 +33,12 @@ public class IT_CustomerDoServiceImplIntegrationTest {
 	private ICustomerPortService customerService;
 
 	@Autowired
-	private CustomerDoBeanFactory customerDoBeanFactory;
+	private ICustomerDoBeanFactory customerDoBeanFactory;
 
 	@Before
 	@WithUserDetails(value = "admin")
 	public void setUp() { 
-		Customer customer = customerDoBeanFactory.getCustomerDoBean();
+		Customer customer = customerDoBeanFactory.getBean();
 	    	
 		customerService.save(customer);
 	}

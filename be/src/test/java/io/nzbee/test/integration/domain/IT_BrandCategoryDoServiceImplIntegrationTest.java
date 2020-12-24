@@ -15,9 +15,8 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.bag.category.ICategoryDoBeanFactory;
 import io.nzbee.Constants;
-import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 
 @RunWith(SpringRunner.class)
@@ -33,14 +32,14 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
     private ICategoryPortService categoryService;
 	
 	@Autowired
-	private CategoryDoBeanFactory categoryDoBeanFactory;
+	private ICategoryDoBeanFactory categoryDoBeanFactory;
 	
-	private BrandCategory category = null;
+	private Category category = null;
 	
 
-	public BrandCategory persistNewCategory() {
+	public Category persistNewCategory() {
 	    	
-		category = categoryDoBeanFactory.getBrandCategoryDoBean();
+		category = categoryDoBeanFactory.getBean();
 	    
 	    categoryService.save(category);
 	    	
