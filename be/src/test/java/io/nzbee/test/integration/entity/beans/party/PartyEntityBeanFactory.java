@@ -1,9 +1,8 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.integration.entity.beans.party;
 
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.party.Party;
@@ -14,17 +13,16 @@ import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 
 @Service(value = "partyEntityBeanFactory")
-@Profile(value = "tst")
-public class PartyEntityBeanFactory {
+@Profile(value = "it")
+public class PartyEntityBeanFactory implements IPartyEntityBeanFactory {
 
 	@Autowired
 	private IUserRoleService roleService;
-	
-	@Bean 
-	public final Party getCustomerEntityBean() {
 
+	@Override
+	public Party getBean() {
 		UserRole ur = roleService.findByName("Customer");
-	
+		
 		final User user = new User();
 		user.setEnabled(true);
 		user.setUsername("mackdad");

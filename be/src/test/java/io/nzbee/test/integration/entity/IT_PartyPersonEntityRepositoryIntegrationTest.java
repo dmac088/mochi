@@ -3,9 +3,7 @@ package io.nzbee.test.integration.entity;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
 import java.util.Optional;
-
 import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -29,7 +27,7 @@ import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.role.customer.CustomerEntity;
-import io.nzbee.test.integration.entity.beans.PartyEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.party.IPartyEntityBeanFactory;
 
 
 @RunWith(SpringRunner.class)
@@ -75,13 +73,13 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
     private IPersonService personService;
 	
 	@Autowired
-	private PartyEntityBeanFactory partyEntityBeanFactory;
+	private IPartyEntityBeanFactory partyEntityBeanFactory;
 	
 
 	@Before
     public void setUp() { 
 
-		Party customer = partyEntityBeanFactory.getCustomerEntityBean();
+		Party customer = partyEntityBeanFactory.getBean();
 	    	
    	    entityManager.persist(customer);
    
