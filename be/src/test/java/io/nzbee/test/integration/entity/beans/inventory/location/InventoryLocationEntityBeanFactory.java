@@ -1,16 +1,15 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.integration.entity.beans.inventory.location;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.inventory.location.InventoryLocation;
 
-@Service(value = "inventoryLocationEntityBeanFactory")
-@Profile(value = "tst")
-public class InventoryLocationEntityBeanFactory {
+@Service
+@Profile(value = "it")
+public class InventoryLocationEntityBeanFactory implements IInventoryLocationEntityBeanFactory {
 
-	@Bean
-	public final InventoryLocation getInventoryLocationEntityBean() {
+	@Override
+	public final InventoryLocation getBean() {
 		InventoryLocation inventoryLocation = new InventoryLocation();
 		
 		inventoryLocation.setLocationCode("TST01");

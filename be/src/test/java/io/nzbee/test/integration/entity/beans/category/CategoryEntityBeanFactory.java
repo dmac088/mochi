@@ -1,9 +1,8 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.integration.entity.beans.category;
 
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
@@ -13,11 +12,11 @@ import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 
 
-@Service(value = "categoryEntityBeanFactory")
-@Profile(value = "tst")
-public class CategoryEntityBeanFactory {
+@Service
+@Profile(value = "it")
+public class CategoryEntityBeanFactory implements ICategoryEntityBeanFactory {
 
-	@Bean
+	@Override
 	public final CategoryEntity getProductCategoryEntityBean() {
 		final CategoryEntity category = new CategoryProductEntity();
 	
@@ -33,7 +32,7 @@ public class CategoryEntityBeanFactory {
 		return category;
 	}
 	
-	@Bean
+	@Override
 	public final CategoryEntity getBrandCategoryEntityBean() {
 		final CategoryEntity category = new CategoryBrandEntity();
 		
@@ -50,7 +49,7 @@ public class CategoryEntityBeanFactory {
 	}
 	
 	
-	@Bean
+	@Override
 	public final List<CategoryEntity> getProductCategoryEntityListBean() {
 		List<CategoryEntity> lc = new ArrayList<CategoryEntity>();
 		
@@ -61,7 +60,7 @@ public class CategoryEntityBeanFactory {
 		return lc;
 	}
 	
-	@Bean
+	@Override
 	public final List<CategoryEntity> getBrandCategoryEntityListBean() {
 		List<CategoryEntity> lc = new ArrayList<CategoryEntity>();
 		
@@ -70,6 +69,11 @@ public class CategoryEntityBeanFactory {
 		lc.add(category);
 		
 		return lc;
+	}
+
+	@Override
+	public CategoryEntity getBean() {
+		return this.getProductCategoryEntityBean();
 	}
 	
 	

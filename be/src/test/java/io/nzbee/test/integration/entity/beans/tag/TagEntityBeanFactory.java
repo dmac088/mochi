@@ -1,19 +1,17 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.integration.entity.beans.tag;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 
-@Service(value = "tagEntityBeanFactory")
+@Service
 @Profile(value = "tst")
-public class TagEntityBeanFactory {
+public class TagEntityBeanFactory implements ITagEntityBeanFactory {
 	
-	
-	@Bean
-	public final TagEntity getTagEntityBean() {
+	@Override
+	public final TagEntity getBean() {
 		final TagEntity tag = new TagEntity();
 		tag.setTagCode("TST02");
 

@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatusEntity;
-import io.nzbee.test.integration.entity.beans.ProductStatusEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.product.status.IProductStatusEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -55,7 +55,7 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private ProductStatusEntityBeanFactory productStatusEntityBeanFactory;
+	private IProductStatusEntityBeanFactory productStatusEntityBeanFactory;
 	
     @Autowired
     private IProductStatusRepository productStatusRepository;
@@ -69,7 +69,7 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	
 	public ProductStatusEntity persistNewProductStatus() {
     	
-		productStatus = productStatusEntityBeanFactory.getProductStatusEntityBean();
+		productStatus = productStatusEntityBeanFactory.getBean();
 	   
 	    //persist a new transient test category
 	    entityManager.persist(productStatus);

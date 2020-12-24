@@ -30,7 +30,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
 import io.nzbee.entity.tag.TagEntity;
-import io.nzbee.test.integration.entity.beans.TagEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.tag.ITagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -54,7 +54,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private TagEntityBeanFactory tagEntityBeanFactory;
+	private ITagEntityBeanFactory tagEntityBeanFactory;
 
 	@Autowired
 	private ITagService tagService;
@@ -64,7 +64,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	@Before
 	public void persistNewTag() {
 
-		tag = tagEntityBeanFactory.getTagEntityBean();
+		tag = tagEntityBeanFactory.getBean();
 
 		// persist a new transient test tag
 		tagService.save(tag);

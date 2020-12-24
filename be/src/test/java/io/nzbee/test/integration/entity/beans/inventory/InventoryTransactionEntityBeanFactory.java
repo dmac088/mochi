@@ -1,12 +1,10 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.integration.entity.beans.inventory;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
@@ -24,9 +22,9 @@ import io.nzbee.entity.role.supplier.ISupplierService;
 import io.nzbee.entity.role.supplier.Supplier;
 
 
-@Service(value = "inventoryTransactionEntityBeanFactory")
-@Profile(value = "tst")
-public class InventoryTransactionEntityBeanFactory {
+@Service
+@Profile(value = "it")
+public class InventoryTransactionEntityBeanFactory implements IInventoryEntityBeanFactory {
 
 	@Autowired
 	private IInventoryLocationService inventoryLocationService;
@@ -43,8 +41,8 @@ public class InventoryTransactionEntityBeanFactory {
 	@Autowired
 	private IProductService productService;
 	
-	@Bean
-	public final InventoryTransaction getInventoryTransactionEntityBean() {
+	@Override
+	public final InventoryTransaction getBean() {
 		final InventoryTransaction inventoryTransaction = new InventoryTransaction();
 		
 		Optional<InventoryLocation> iL 	= inventoryLocationService.findByCode("LCK01");
