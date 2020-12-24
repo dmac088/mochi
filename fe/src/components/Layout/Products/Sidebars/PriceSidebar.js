@@ -46,6 +46,7 @@ function PriceSidebar(props) {
     }, [categoryCode, categories.loading, loading]);
 
     const changePrice = (newPrice) => {
+        console.log('changePrice');
         setObjectState((prevState) => ({
             ...prevState,
             currentPrice: newPrice,
