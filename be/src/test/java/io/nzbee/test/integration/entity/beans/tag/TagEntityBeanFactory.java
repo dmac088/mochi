@@ -7,7 +7,7 @@ import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 
 @Service
-@Profile(value = "tst")
+@Profile(value = "it")
 public class TagEntityBeanFactory implements ITagEntityBeanFactory {
 	
 	@Override
