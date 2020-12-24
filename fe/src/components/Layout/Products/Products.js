@@ -85,8 +85,20 @@ function Products(props) {
     }
 
     useEffect(() => {
+        if(categoryCode !== prevCategoryCode) {
+            console.log("category changed");
+            setObjectState((prevState) => ({
+                ...prevState,
+                selectedFacets: [],
+                loading: true,
+            }));
+        }
+    }, [categoryCode]);
+
+    useEffect(() => {
         let isSubscribed = true;
         const currentCategory = findByCode(categories.list, categoryCode);
+      
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||
             categoriesLoading !== prevCategoriesLoading ||
