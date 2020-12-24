@@ -23,7 +23,7 @@ import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
 
-@Service(value = "productEntityBeanFactory")
+@Service
 @Profile(value = "it")
 public class ProductEntityBeanFactory implements IProductEntityBeanFactory {
 	
