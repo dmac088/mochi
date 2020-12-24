@@ -25,15 +25,9 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import io.nzbee.Constants;
-import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.address.IPartyAddressService;
 import io.nzbee.entity.party.address.PartyAddressEntity;
-import io.nzbee.entity.party.address.type.AddressTypeEntity;
-import io.nzbee.entity.party.address.type.IAddressTypeService;
-import io.nzbee.entity.party.person.IPersonService;
-import io.nzbee.test.integration.entity.beans.PartyAddressEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.party.address.IPartyAddressEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -66,23 +60,14 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     @Autowired
     private IPartyAddressService partyAddressService;
     
-    @Autowired 
-    private IPersonService personService;
-    
     @Autowired
-    private PartyAddressEntityBeanFactory partyAddressEntityBeanFactory;
-    
-    @Autowired 
-    private IAddressTypeService addressTypeService;
+    private IPartyAddressEntityBeanFactory partyAddressEntityBeanFactory;
     
     private PartyAddressEntity p = null;
     
 	public PartyAddressEntity persistNewPartyAddress() {
-    	
-		AddressTypeEntity ate = addressTypeService.findByCode("BIL01").get();
-		Party party = personService.findByUsernameAndRole("bob@bob", Constants.partyRoleCustomer).get();
-		
-		p = partyAddressEntityBeanFactory.getPartyAddressEntityBean(party, ate);
+    
+		p = partyAddressEntityBeanFactory.getBean();
 	    
 	    entityManager.persist(p);
 	    	
