@@ -2,9 +2,11 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Test;
@@ -23,6 +25,7 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import com.google.common.collect.Ordering;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.ICategoryService;
@@ -62,6 +65,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertThat(found).isNotNull();
 		assertThat(found.size()).isEqualTo(88);
+		assertTrue(isOrdered(found));
 	}
 	
 	@Test
@@ -79,6 +83,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertThat(found.size()).isEqualTo(2);	
+		assertTrue(isOrdered(found));
 	}
 	
 	@Test
@@ -94,6 +99,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertThat(found.size()).isEqualTo(2);	
+		assertTrue(isOrdered(found));
 	}
 	
 	@Test
@@ -115,6 +121,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then only children
 		assertNotNull(found);
 		assertThat(found.size()).isEqualTo(7);	
+		assertTrue(isOrdered(found));
 	}
 	
 	@Test
@@ -131,7 +138,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		
 		// then
 		assertNotNull(found);
-		assertThat(found.size()).isEqualTo(35);		
+		assertThat(found.size()).isEqualTo(35);	
+		assertTrue(isOrdered(found));
 	}
 	
 	@Test
@@ -148,7 +156,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		
 		// then
 		assertNotNull(found);
-		assertThat(found.size()).isEqualTo(35);		
+		assertThat(found.size()).isEqualTo(35);	
+		assertTrue(isOrdered(found));
 	}
 
 	@Test
@@ -160,6 +169,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertThat(found).isNotNull();
 		assertThat(found.size()).isEqualTo(1);
+		assertTrue(isOrdered(found));
 	}
 
 	@Test
@@ -171,6 +181,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertThat(found).isNotNull();
 		assertThat(found).size().isEqualTo(87);
+		assertTrue(isOrdered(found));
 	}
 
 	@Test
@@ -264,6 +275,10 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@After
 	public void closeConnection() {
 		entityManager.close();
+	}
+	
+	private boolean isOrdered(List<CategoryDTO> list) {
+		return Ordering.from(String.CASE_INSENSITIVE_ORDER).isOrdered(list.stream().map(c -> c.getCategoryDesc()).collect(Collectors.toList())); 
 	}
 
 }

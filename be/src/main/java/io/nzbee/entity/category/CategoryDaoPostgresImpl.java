@@ -828,7 +828,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((!maxPriceOnly && !childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
 				((!maxPriceOnly && !childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
 				((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : "") + 
-				((!maxPriceOnly)  ? "ORDER BY a.cat_desc ASC " : ""));
+				((!maxPriceOnly)  ? "ORDER BY lower(a.cat_desc) ASC " : ""));
 			
 		return sql;
 	}
