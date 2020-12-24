@@ -59,10 +59,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// when
 		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB);
 
-		System.out.println("size = " + found.size());
-		
 		// then
-		assertAllCategoriesFound(found);
+		assertThat(found).isNotNull();
+		assertThat(found.size()).isEqualTo(88);
 	}
 	
 	@Test
@@ -73,9 +72,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB,
-													  Constants.currencyHKD, 
-													  ls);
+		List<CategoryDTO> found = categoryService.findAll(	Constants.localeENGB,
+													  		Constants.currencyHKD, 
+													  		ls);
 
 		// then
 		assertNotNull(found);
@@ -105,13 +104,13 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		List<CategoryDTO> found = categoryService.findAll( Constants.localeENGB, 
-														  Constants.currencyHKD, 
-														  "FRT01", 
-														  ls, 
-														  new HashSet<String>(), 
-														  new HashSet<String>(), 
-														  null);	
+		List<CategoryDTO> found = categoryService.findAll( 	Constants.localeENGB, 
+														  	Constants.currencyHKD, 
+															"FRT01", 
+															ls, 
+															new HashSet<String>(), 
+															new HashSet<String>(), 
+															null);	
 
 		// then only children
 		assertNotNull(found);
@@ -122,7 +121,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategories_thenReturnAllCategories() {
 		
 		//when
-		List<CategoryDTO> found = categoryService.findAll(   Constants.localeENGB, 
+		List<CategoryDTO> found = categoryService.findAll(  Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
@@ -139,7 +138,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategoriesWithNullPrice_thenReturnAllCategories() {
 		
 		//when
-		List<CategoryDTO> found = categoryService.findAll(   Constants.localeENGB, 
+		List<CategoryDTO> found = categoryService.findAll(  Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
 															new HashSet<String>(), 
@@ -159,7 +158,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryBrandEntity.class);
 
 		// then
-		assertAllBrandCategoriesFound(found);
+		assertThat(found).isNotNull();
+		assertThat(found.size()).isEqualTo(1);
 	}
 
 	@Test
@@ -169,7 +169,8 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryProductEntity.class);
 
 		// then
-		assertAllProductCategoriesFound(found);
+		assertThat(found).isNotNull();
+		assertThat(found).size().isEqualTo(87);
 	}
 
 	@Test
@@ -258,24 +259,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 		// then
 		assertThat(found).isEqualTo(new Double("11.0"));
-	}
-
-	private void assertAllCategoriesFound(final List<CategoryDTO> found) {
-
-		assertThat(found).isNotNull();
-		assertThat(found.size()).isEqualTo(88);
-	}
-
-	private void assertAllBrandCategoriesFound(final List<CategoryDTO> found) {
-
-		assertThat(found).isNotNull();
-		assertThat(found.size()).isEqualTo(1);
-	}
-
-	private void assertAllProductCategoriesFound(final List<CategoryDTO> found) {
-
-		assertThat(found).isNotNull();
-		assertThat(found).size().isEqualTo(87);
 	}
 
 	@After

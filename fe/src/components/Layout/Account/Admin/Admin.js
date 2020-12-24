@@ -23,9 +23,6 @@ function Admin() {
           stateObject.selectedFile, 
           stateObject.selectedFile.name 
         ); 
-     
-        // Details of the uploaded file 
-        //console.log(stateObject.selectedFile); 
         
         // Request made to the backend api 
         // Send formData object 
