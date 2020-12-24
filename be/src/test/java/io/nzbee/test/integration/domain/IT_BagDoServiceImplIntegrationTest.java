@@ -27,7 +27,7 @@ import io.nzbee.test.integration.domain.beans.bag.IBagDoBeanFactory;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_BagDoServiceImplIntegrationTest {
 
 	@MockBean

@@ -23,7 +23,7 @@ import io.nzbee.test.unit.domain.beans.BrandDoBeanFactory;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_BrandDoServiceImplIntegrationTest {
 
 	@TestConfiguration
