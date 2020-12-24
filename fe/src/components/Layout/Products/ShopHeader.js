@@ -19,7 +19,7 @@ function ShopHeader(props) {
             search: '?' + new URLSearchParams(newQuery).toString(),
         });
     } 
-console.log(type);
+    
     return (
         <div className="shop-header mb-35">
             <div className="row">
