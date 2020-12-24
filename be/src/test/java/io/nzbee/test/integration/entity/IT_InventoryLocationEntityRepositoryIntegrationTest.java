@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.inventory.location.IInventoryLocationService;
 import io.nzbee.entity.inventory.location.InventoryLocation;
-import io.nzbee.test.integration.entity.beans.inventory.location.InventoryLocationEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.inventory.location.IInventoryLocationEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -48,7 +48,7 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
-	private InventoryLocationEntityBeanFactory inventoryLocationEntityBeanFactory;
+	private IInventoryLocationEntityBeanFactory inventoryLocationEntityBeanFactory;
  
     @Autowired
     private IInventoryLocationService inventoryLocationService;
@@ -65,10 +65,9 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
     
 	public void persistNewInventoryLocation() {
 		
-		inventoryLocation = inventoryLocationEntityBeanFactory.getInventoryLocationEntityBean();
+		inventoryLocation = inventoryLocationEntityBeanFactory.getBean();
 	    
 	    entityManager.persist(inventoryLocation);
-	    entityManager.flush();
 	}
    
     
