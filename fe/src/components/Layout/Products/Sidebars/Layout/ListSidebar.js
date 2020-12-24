@@ -8,7 +8,7 @@ const renderItems = (items, modFacet) => {
         <a onClick={(e) => {
                               e.preventDefault();
                               modFacet(i);
-                            }}>{`${i.data.desc} (${i.data.count})`}
+                            }}>{`${i.data.desc} ` + ((i.data.count) ? ` (${i.data.count})` : '')}
         </a>
       </li>
     )
