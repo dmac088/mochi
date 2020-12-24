@@ -24,7 +24,7 @@ import io.nzbee.domain.promotion.Promotion;
 
 @Service
 @Profile(value = "it")
-public class ProductDoBeanFactory {
+public class ProductDoBeanFactory implements IProductDoBeanFactory {
 	
 	@Autowired
 	private ICategoryService cs;
@@ -39,7 +39,8 @@ public class ProductDoBeanFactory {
 	private IPromotionService ps;
 	
 	
-	public final Product getProductDoBean() {
+	@Override
+	public final Product getBean() {
 		
 		ProductCategory pc1 = (ProductCategory) cs.findByCode(Constants.localeENGB, "POM01");
 		
