@@ -46,7 +46,6 @@ function PriceSidebar(props) {
     }, [categoryCode, categories.loading, loading]);
 
     const changePrice = (newPrice) => {
-        console.log('changePrice');
         setObjectState((prevState) => ({
             ...prevState,
             currentPrice: newPrice,
@@ -58,7 +57,7 @@ function PriceSidebar(props) {
                     desc: `price <= ${newPrice}`,
                     value: newPrice, 
                     facetingName: "price", 
-                    count: 0,                   
+                    count: null,                   
                 }
         });
     }
