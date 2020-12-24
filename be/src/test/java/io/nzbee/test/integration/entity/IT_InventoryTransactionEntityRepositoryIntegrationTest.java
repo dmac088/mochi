@@ -68,7 +68,7 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
     
 	public void persistNewInventoryTransaction() {
 	
-		inventoryTransaction = inventoryTransactionEntityBeanFactory.getInventoryTransactionEntityBean();
+		inventoryTransaction = inventoryTransactionEntityBeanFactory.getBean();
 	    
 	    entityManager.persist(inventoryTransaction);
 	}
