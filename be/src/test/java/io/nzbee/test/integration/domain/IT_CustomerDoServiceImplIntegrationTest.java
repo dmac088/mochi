@@ -24,7 +24,7 @@ import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_CustomerDoServiceImplIntegrationTest {
 
 	@TestConfiguration

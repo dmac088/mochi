@@ -22,7 +22,7 @@ import io.nzbee.domain.category.Category;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_ProductCategoryDoServiceImplIntegrationTest {
 
 	@TestConfiguration

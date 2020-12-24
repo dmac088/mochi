@@ -23,7 +23,7 @@ import io.nzbee.test.unit.domain.beans.TagDoBeanFactory;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_TagDoServiceImplIntegrationTest {
 
 	@TestConfiguration
