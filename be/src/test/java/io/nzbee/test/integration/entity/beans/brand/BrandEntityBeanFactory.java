@@ -1,19 +1,17 @@
-package io.nzbee.test.integration.entity.beans;
+package io.nzbee.test.integration.entity.beans.brand;
 
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
 
-
-@Service(value = "brandEntityBeanFactory")
-@Profile(value = "tst")
-public class BrandEntityBeanFactory {
+@Service
+@Profile(value = "it")
+public class BrandEntityBeanFactory implements IBrandEntityBeanFactory {
 	
-	@Bean
-	public BrandEntity getBrandEntityBean() {
+	@Override
+	public BrandEntity getBean() {
 		BrandEntity brand = new BrandEntity();
 		brand.setBrandCode("TST02");
 
