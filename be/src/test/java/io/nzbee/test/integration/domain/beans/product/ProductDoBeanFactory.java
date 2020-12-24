@@ -36,7 +36,7 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 	
 	
 	@Override
-	public final Product getBean() {
+	public Product getBean() {
 		
 		ProductCategory pc1 = (ProductCategory) categoryDoBeanFactory.getPomegranateBean();
 		

@@ -31,13 +31,13 @@ public class IT_ProductDoServiceImplIntegrationTest {
     private IProductPortService productService;
 	
 	@Autowired
-	private IProductDoBeanFactory productDoFactory;
+	private IProductDoBeanFactory productDoBeanFactory;
 	
 	private Product product = null;
 	
 	
 	private Product persistNewProduct() {
-		product = productDoFactory.getBean();
+		product = productDoBeanFactory.getBean();
    	
 		productService.save(product);
 	    	
