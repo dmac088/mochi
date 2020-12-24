@@ -24,7 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.inventory.location.IInventoryLocationService;
 import io.nzbee.entity.inventory.location.InventoryLocation;
-import io.nzbee.test.integration.entity.beans.InventoryLocationEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.inventory.location.InventoryLocationEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

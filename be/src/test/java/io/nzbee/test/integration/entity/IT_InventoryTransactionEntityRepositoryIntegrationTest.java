@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.inventory.IInventoryTransactionService;
 import io.nzbee.entity.inventory.InventoryTransaction;
-import io.nzbee.test.integration.entity.beans.InventoryTransactionEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.inventory.InventoryTransactionEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
