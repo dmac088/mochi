@@ -1,4 +1,4 @@
-package io.nzbee.test.unit.domain.beans;
+package io.nzbee.test.unit.domain.beans.category;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +11,28 @@ import io.nzbee.domain.category.ProductCategory;
 
 
 @Service
-@Profile(value = "tst")
-public class CategoryDoBeanFactory {
+@Profile(value = "ut")
+public class CategoryDoBeanFactory implements ICategoryDoBeanFactory {
 
+	@Override
+	public final ProductCategory getBean() {
+		
 	
+		
+		ProductCategory category = 
+				new ProductCategory("TST01",
+									"test product category",
+									true,
+									new Long(2),
+									new Long(0),									
+									"FRT01",
+									new Long(10),
+									"en-GB");
+		
+		return category;
+	}
+	
+	@Override
 	public final ProductCategory getProductCategoryDoBean() {
 		
 	
@@ -32,7 +50,7 @@ public class CategoryDoBeanFactory {
 		return category;
 	}
 	
-	
+	@Override
 	public final BrandCategory getBrandCategoryDoBean() {
 		return new BrandCategory( 	"TST02",
 									"test brand category",

@@ -50,7 +50,6 @@ public class IT_BrandCategoryDoServiceImplIntegrationTest {
 	
 	private Category category = null;
 	
-
 	public Category persistNewCategory() {
 	    	
 		category = categoryDoBeanFactory.getBean();

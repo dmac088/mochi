@@ -25,13 +25,13 @@ import io.nzbee.domain.ports.IBagItemPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionType;
-import io.nzbee.test.unit.domain.beans.BrandDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.DepartmentDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.PromotionDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.brand.BrandDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.customer.CustomerDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.department.DepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.product.IProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "ut")
