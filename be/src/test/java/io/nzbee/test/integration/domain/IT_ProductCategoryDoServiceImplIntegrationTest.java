@@ -24,7 +24,7 @@ import io.nzbee.domain.category.Category;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "it")
+@ActiveProfiles("it")
 @SqlGroup({
 	@Sql(scripts = "/database/mochi_schema.sql",
 			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
