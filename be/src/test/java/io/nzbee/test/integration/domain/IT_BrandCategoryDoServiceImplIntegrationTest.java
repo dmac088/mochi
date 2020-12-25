@@ -2,7 +2,6 @@ package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,10 +17,10 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.test.integration.domain.beans.category.ICategoryDoBeanFactory;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.Category;
+import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.test.integration.domain.beans.category.ICategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
