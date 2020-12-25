@@ -1,7 +1,8 @@
-package io.nzbee.test.integration.domain.beans.bag.category;
+package io.nzbee.test.integration.domain.beans.category;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
+import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 
 
@@ -10,12 +11,12 @@ import io.nzbee.domain.category.ProductCategory;
 public class CategoryDoBeanFactory implements ICategoryDoBeanFactory {
 
 	@Override
-	public final ProductCategory getBean() {
+	public final Category getBean() {
 		return this.getPomegranateBean();
 	}
 	
 	@Override
-	public final ProductCategory getPomegranateBean() {
+	public final Category getPomegranateBean() {
 	
 		ProductCategory category = 
 				new ProductCategory("POM01",
@@ -31,7 +32,7 @@ public class CategoryDoBeanFactory implements ICategoryDoBeanFactory {
 	}
 	
 	@Override
-	public final ProductCategory getCitrusBean() {
+	public final Category getCitrusBean() {
 	
 		ProductCategory category = 
 				new ProductCategory("CIT01",
