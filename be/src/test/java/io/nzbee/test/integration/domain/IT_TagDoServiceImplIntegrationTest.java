@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -21,6 +23,7 @@ import io.nzbee.Constants;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
 import io.nzbee.test.integration.domain.beans.tag.ITagDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.tag.TagDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -38,6 +41,16 @@ import io.nzbee.test.integration.domain.beans.tag.ITagDoBeanFactory;
 })
 public class IT_TagDoServiceImplIntegrationTest {
 
+	@TestConfiguration
+	static class BrandDoServiceImplIntegrationTest_Configuration {
+		// the beans that we need to run this test
+		@Bean
+		public ITagDoBeanFactory tagDoBeanFactory() {
+			return new TagDoBeanFactory();
+		}
+		
+	}
+	
 	@MockBean
     private JavaMailSender mailSender;
 	
