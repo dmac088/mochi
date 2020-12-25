@@ -5,10 +5,11 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.customer.Customer;
 
 @Service
-@Profile(value = "tst")
-public class CustomerDoBeanFactory {
+@Profile(value = "ut")
+public class CustomerDoBeanFactory implements ICustomerDoBeanFactory {
 
-	public final Customer getCustomerDoBean() {
+	@Override
+	public final Customer getBean() {
 		
 		Customer c = 
 				new Customer(
