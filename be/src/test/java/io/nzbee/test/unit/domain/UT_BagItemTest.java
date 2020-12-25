@@ -121,7 +121,7 @@ public class UT_BagItemTest {
 		// we setup a mock so that when
 		MockitoAnnotations.initMocks(this);
 		
-		Customer c = customerDoBeanFactory.getCustomerDoBean();
+		Customer c = customerDoBeanFactory.getBean();
 		
 		bag = new Bag(c);
 		
