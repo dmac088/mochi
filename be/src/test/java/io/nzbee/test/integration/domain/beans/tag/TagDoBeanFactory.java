@@ -12,9 +12,9 @@ public class TagDoBeanFactory implements ITagDoBeanFactory {
 	public Tag getBean() {
 		
 		return new Tag(	"TST01",
-							"test tag",
-							new Long(20),
-							"en-GB");
+						"test tag",
+						new Long(20),
+						"en-GB");
 		
 	}
 	
