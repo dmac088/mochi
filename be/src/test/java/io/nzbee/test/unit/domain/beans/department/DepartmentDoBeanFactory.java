@@ -4,6 +4,7 @@ import io.nzbee.domain.department.Department;
 
 public class DepartmentDoBeanFactory implements IDepartmentDoBeanFactory {
 
+	@Override
 	public final Department getBean() {
 		
 		return new Department(	"TST01",

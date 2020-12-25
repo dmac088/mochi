@@ -6,10 +6,11 @@ import io.nzbee.domain.tag.Tag;
 
 
 @Service
-@Profile(value = "tst")
-public class TagDoBeanFactory {
+@Profile(value = "it")
+public class TagDoBeanFactory implements ITagDoBeanFactory {
 
-	public final Tag getTagDoBean() {
+	@Override
+	public final Tag getBean() {
 		
 		return new Tag(	"TST01",
 							"test tag",
