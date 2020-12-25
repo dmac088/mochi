@@ -12,14 +12,19 @@ public class CategoryDoBeanFactory implements ICategoryDoBeanFactory {
 
 	@Override
 	public final Category getBean() {
-		return this.getPomegranateBean();
+		return new ProductCategory("TST01",
+									"test product category",
+									true,
+									new Long(2),
+									new Long(0),									
+									"FRT01",
+									new Long(10),
+									"en-GB");
 	}
 	
 	@Override
 	public final Category getPomegranateBean() {
-	
-		ProductCategory category = 
-				new ProductCategory("POM01",
+		return new ProductCategory("POM01",
 									"Pomegranate",
 									true,
 									new Long(2),
@@ -27,15 +32,12 @@ public class CategoryDoBeanFactory implements ICategoryDoBeanFactory {
 									"FRT01",
 									new Long(10),
 									"en-GB");
-		
-		return category;
 	}
 	
 	@Override
 	public final Category getCitrusBean() {
 	
-		ProductCategory category = 
-				new ProductCategory("CIT01",
+		return new ProductCategory("CIT01",
 									"Citrus",
 									true,
 									new Long(2),
@@ -43,7 +45,5 @@ public class CategoryDoBeanFactory implements ICategoryDoBeanFactory {
 									"FRT01",
 									new Long(10),
 									"en-GB");
-		
-		return category;
 	}
 }
