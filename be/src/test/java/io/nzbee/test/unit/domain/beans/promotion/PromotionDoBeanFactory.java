@@ -7,6 +7,7 @@ import io.nzbee.domain.promotion.PromotionType;
 
 public class PromotionDoBeanFactory implements IPromotionDoBeanFactory {
 
+	@Override
 	public final Promotion getBean() {
 		
 		return new Promotion(	 "TST01", 

@@ -10,6 +10,7 @@ import io.nzbee.domain.brand.Brand;
 @Profile(value = "ut")
 public class BrandDoBeanFactory implements IBrandDoBeanFactory {
 
+	@Override
 	public final Brand getBean() {
 		
 		Brand brand = new Brand( "TST03",
