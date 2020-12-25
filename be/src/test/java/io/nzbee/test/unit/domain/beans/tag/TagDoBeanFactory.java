@@ -1,4 +1,4 @@
-package io.nzbee.test.unit.domain.beans;
+package io.nzbee.test.unit.domain.beans.tag;
 
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;

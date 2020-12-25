@@ -12,10 +12,10 @@ import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.test.unit.domain.beans.BrandDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.CategoryDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.DepartmentDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.PromotionDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.brand.BrandDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.department.DepartmentDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
 
 @Service
 @Profile(value = "ut")
@@ -47,10 +47,10 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   Constants.localeENGB,
 								   Constants.currencyHKD,
 								   true,
-								   brandDoBeanFactory.getBrandDoBean(),
-								   departmentDoBeanFactory.getDepartmentDoBean(),
-								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
-								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getPromotionDoBean())));
+								   brandDoBeanFactory.getBean(),
+								   departmentDoBeanFactory.getBean(),
+								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getBean())),
+								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 	
 	@Override
@@ -67,10 +67,10 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   Constants.localeENGB,
 								   Constants.currencyHKD,
 								   false,
-								   brandDoBeanFactory.getBrandDoBean(),
-								   departmentDoBeanFactory.getDepartmentDoBean(),
-								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
-								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getPromotionDoBean())));
+								   brandDoBeanFactory.getBean(),
+								   departmentDoBeanFactory.getBean(),
+								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getBean())),
+								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 
 	@Override

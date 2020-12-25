@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.bag.Bag;
-import io.nzbee.test.unit.domain.beans.CustomerDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.customer.CustomerDoBeanFactory;
 
 @Service
 @Profile(value = "ut")

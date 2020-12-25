@@ -1,13 +1,13 @@
-package io.nzbee.test.unit.domain.beans;
+package io.nzbee.test.unit.domain.beans.promotion;
 
 import java.time.LocalDateTime;
 import java.time.Month;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionType;
 
-public class PromotionDoBeanFactory {
+public class PromotionDoBeanFactory implements IPromotionDoBeanFactory {
 
-	public final Promotion getPromotionDoBean() {
+	public final Promotion getBean() {
 		
 		return new Promotion(	 "TST01", 
 								 "Test Promotion 1",
