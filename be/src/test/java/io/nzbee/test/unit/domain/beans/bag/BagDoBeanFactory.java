@@ -15,7 +15,7 @@ public class BagDoBeanFactory implements IBagDoBeanFactory {
 	
 	@Override
 	public Bag getBean() {
-		Bag bag = new Bag(customerDoBeanFactory.getCustomerDoBean());
+		Bag bag = new Bag(customerDoBeanFactory.getBean());
 		
 		return bag;
 	}
