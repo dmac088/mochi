@@ -10,7 +10,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -22,6 +24,7 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
+import io.nzbee.test.integration.domain.beans.customer.CustomerDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.customer.ICustomerDoBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -40,6 +43,16 @@ import io.nzbee.test.integration.domain.beans.customer.ICustomerDoBeanFactory;
 })
 public class IT_CustomerDoServiceImplIntegrationTest {
 
+	@TestConfiguration
+	static class CustomerDoServiceImplIntegrationTest_Configuration {
+		// the beans that we need to run this test
+		@Bean
+		public ICustomerDoBeanFactory customerDoBeanFactory() {
+			return new CustomerDoBeanFactory();
+		}
+		
+	}
+	
 	@MockBean
     private JavaMailSender mailSender;
 	

@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -17,6 +19,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.test.integration.domain.beans.category.CategoryDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.category.ICategoryDoBeanFactory;
 import io.nzbee.Constants;
 import io.nzbee.domain.category.Category;
@@ -36,6 +39,16 @@ import io.nzbee.domain.category.Category;
 			transactionMode = TransactionMode.ISOLATED))
 })
 public class IT_ProductCategoryDoServiceImplIntegrationTest {
+	
+	@TestConfiguration
+	static class ProductCategoryDoServiceImplIntegrationTest_Configuration {
+		// the beans that we need to run this test
+		@Bean
+		public ICategoryDoBeanFactory categoryDoBeanFactory() {
+			return new CategoryDoBeanFactory();
+		}
+		
+	}
 	
 	@MockBean
     private JavaMailSender mailSender;
