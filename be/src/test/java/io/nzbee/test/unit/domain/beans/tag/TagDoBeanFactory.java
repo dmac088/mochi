@@ -4,18 +4,17 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.domain.tag.Tag;
 
-
 @Service
-@Profile(value = "ut")
+@Profile("ut")
 public class TagDoBeanFactory implements ITagDoBeanFactory {
 
 	@Override
-	public final Tag getBean() {
+	public Tag getBean() {
 		
 		return new Tag(	"TST01",
-							"test tag",
-							new Long(20),
-							"en-GB");
+						"test tag",
+						new Long(20),
+						"en-GB");
 		
 	}
 	

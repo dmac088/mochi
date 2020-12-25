@@ -50,7 +50,6 @@ public class IT_BrandDoServiceImplIntegrationTest {
 	
 	private Brand brand = null;
 	
-	
 	public Brand persistNewBrand() {
 		brand = brandDoBeanFactory.getBean();
    	
