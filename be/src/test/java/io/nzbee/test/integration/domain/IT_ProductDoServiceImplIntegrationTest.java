@@ -9,7 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -20,7 +22,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.test.integration.domain.beans.brand.BrandDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.brand.IBrandDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.category.CategoryDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.category.ICategoryDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.department.DepartmentDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.department.IDepartmentDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.product.IProductDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.product.ProductDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -37,6 +46,31 @@ import io.nzbee.test.integration.domain.beans.product.IProductDoBeanFactory;
 			transactionMode = TransactionMode.ISOLATED))
 })
 public class IT_ProductDoServiceImplIntegrationTest {
+	
+	@TestConfiguration
+	static class ProductDoServiceImplIntegrationTest_Configuration {
+		// the beans that we need to run this test
+		@Bean
+		public IProductDoBeanFactory productDoBeanFactory() {
+			return new ProductDoBeanFactory();
+		}
+		
+		@Bean
+		public ICategoryDoBeanFactory categoryDoBeanFactory() {
+			return new CategoryDoBeanFactory();
+		}
+		
+		@Bean
+		public IBrandDoBeanFactory brandDoBeanFactory() {
+			return new BrandDoBeanFactory();
+		}
+		
+		@Bean
+		public IDepartmentDoBeanFactory departmentDoBeanFactory() {
+			return new DepartmentDoBeanFactory();
+		}
+		
+	}
 	
 	@MockBean
     private JavaMailSender mailSender;
