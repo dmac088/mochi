@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.tag.Tag;
 
 @Service
-@Profile(value = "it")
+@Profile("it")
 public class TagDoBeanFactory implements ITagDoBeanFactory {
 
 	@Override
