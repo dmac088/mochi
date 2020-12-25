@@ -2,9 +2,15 @@ package io.nzbee.test.unit.domain.beans.promotion;
 
 import java.time.LocalDateTime;
 import java.time.Month;
+
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
+
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.PromotionType;
 
+@Service
+@Profile(value = "ut")
 public class PromotionDoBeanFactory implements IPromotionDoBeanFactory {
 
 	@Override

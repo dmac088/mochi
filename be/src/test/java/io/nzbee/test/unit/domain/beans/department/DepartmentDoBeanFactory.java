@@ -1,7 +1,11 @@
 package io.nzbee.test.unit.domain.beans.department;
 
+import org.springframework.context.annotation.Profile;
+import org.springframework.stereotype.Service;
 import io.nzbee.domain.department.Department;
 
+@Service
+@Profile(value = "ut")
 public class DepartmentDoBeanFactory implements IDepartmentDoBeanFactory {
 
 	@Override

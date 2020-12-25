@@ -6,7 +6,7 @@ import io.nzbee.domain.tag.Tag;
 
 
 @Service
-@Profile(value = "it")
+@Profile(value = "ut")
 public class TagDoBeanFactory implements ITagDoBeanFactory {
 
 	@Override
