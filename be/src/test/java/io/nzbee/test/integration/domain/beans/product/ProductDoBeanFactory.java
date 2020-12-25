@@ -13,8 +13,8 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.test.integration.domain.beans.bag.category.ICategoryDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.brand.IBrandDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.category.ICategoryDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.department.IDepartmentDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.promotion.IPromotionDoBeanFactory;
 
