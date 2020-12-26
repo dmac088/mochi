@@ -31,7 +31,7 @@ public class UT_BrandTest {
 		// the beans that we need to run this test
 		
 		@Bean
-		public BrandDoBeanFactory brandDoBeanFactory() {
+		public IBrandDoBeanFactory brandDoBeanFactory() {
 			return new BrandDoBeanFactory();
 		}
 		
