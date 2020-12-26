@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -83,12 +85,6 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
         assertFound(found);
     }
     
-//    @Test
-//    public void whenInvalidCode_thenProductCategoryShouldNotBeFound() {
-//        Optional<Category> cat = Optional.ofNullable(categoryService.findByCode(Constants.localeENGB, "ZZZZZ"));
-//      
-//        assertNotFound(cat);
-//    }
     
     @Test
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
@@ -97,22 +93,16 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
         assertFound(found);
      }
     
-    private void assertFound(final Category found) {
+    private void assertFound(Category found) {
 
+    	assertNotNull(found);
+    	
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST01");
     	
-//	    assertThat(found.getCategoryLevel())
-//	    .isEqualTo(new Long(2));
-	    
 	    assertThat(found.getCategoryDesc())
 	    .isEqualTo("test product category");
     }
-    
-//    private void assertNotFound(final Optional<Category> object) {
-//
-//    	assertTrue(!object.isPresent());
-//    	
-//    }
+
     
 }
