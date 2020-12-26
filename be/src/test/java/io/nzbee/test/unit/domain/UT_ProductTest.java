@@ -16,12 +16,21 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.ProductServiceImpl;
+import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.domain.category.Category;
+import io.nzbee.domain.department.Department;
 import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.domain.ports.IPromotionPortService;
 import io.nzbee.entity.adapters.PostgresBrandAdapter;
+import io.nzbee.entity.adapters.PostgresCategoryAdapter;
+import io.nzbee.entity.adapters.PostgresDepartmentAdapter;
 import io.nzbee.entity.adapters.PostgresProductAdapter;
+import io.nzbee.entity.adapters.PostgresPromotionAdapter;
 import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
@@ -76,6 +85,21 @@ public class UT_ProductTest {
 			return new PostgresBrandAdapter();
 		}
 		
+		@Bean
+		public IDepartmentPortService departmentPortService() {
+			return new PostgresDepartmentAdapter();
+		}
+		
+		@Bean
+		public ICategoryPortService categoryPortService() {
+			return new PostgresCategoryAdapter();
+		}
+		
+		@Bean
+		public IPromotionPortService promotionPortService() {
+			return new PostgresPromotionAdapter();
+		}
+		
 		@Bean 
 		public IProductService productService() {
 			return new ProductServiceImpl();
@@ -92,8 +116,26 @@ public class UT_ProductTest {
 	@MockBean
 	private IBrandPortService brandPortService;
 	
+	@MockBean
+	private IDepartmentPortService departmentPortService;
+	
+	@MockBean
+	private ICategoryPortService categoryPortService;
+	
+	@MockBean
+	private IPromotionPortService promotionPortService;
+	
 	@Autowired
 	private IBrandDoBeanFactory brandDoBeanFactory;
+	
+	@Autowired
+	private IDepartmentDoBeanFactory departmentDoBeanFactory;
+	
+	@Autowired
+	private ICategoryDoBeanFactory categoryDoBeanFactory;
+	
+	@Autowired
+	private IPromotionDoBeanFactory promotionDoBeanFactory;
 
 	@Autowired
 	private IProductDoBeanFactory productDoBeanFactory;
@@ -103,8 +145,12 @@ public class UT_ProductTest {
 		// we setup a mock so that when
 		MockitoAnnotations.initMocks(this);
 
-		Product product = productDoBeanFactory.getBean();
-		Brand 	brand 	= brandDoBeanFactory.getBean();
+		Product 	product 		= productDoBeanFactory.getBean();
+		Brand 		brand 			= brandDoBeanFactory.getBean();
+		Department 	department 		= departmentDoBeanFactory.getBean();
+		Category 	category 		= categoryDoBeanFactory.getBean();
+		Promotion 	promotion 		= promotionDoBeanFactory.getBean();
+		
 
 		// need to fill more of the properties here
 		Mockito.when(productPortService.findByCode(	Constants.localeENGB,
@@ -120,6 +166,24 @@ public class UT_ProductTest {
 		
 		Mockito.when(brandPortService.findByDesc(	Constants.localeENGB,
 													brand.getBrandDesc())).thenReturn(brand);
+		
+		Mockito.when(departmentPortService.findByCode(	Constants.localeENGB,
+														brand.getBrandCode())).thenReturn(department);
+
+		Mockito.when(departmentPortService.findByDesc(	Constants.localeENGB,
+														brand.getBrandDesc())).thenReturn(department);
+		
+		Mockito.when(categoryPortService.findByCode(	Constants.localeENGB,
+														category.getCategoryCode())).thenReturn(category);
+
+		Mockito.when(categoryPortService.findByDesc(	Constants.localeENGB,
+														category.getCategoryDesc())).thenReturn(category);
+		
+		Mockito.when(promotionPortService.findByCode(	Constants.localeENGB,
+														promotion.getPromotionCode())).thenReturn(promotion);
+
+//		Mockito.when(promotionPortService.findByDesc(	Constants.localeENGB,
+//														promotion.getPromotionDesc())).thenReturn(promotion);
 	}
 
 	@Test
