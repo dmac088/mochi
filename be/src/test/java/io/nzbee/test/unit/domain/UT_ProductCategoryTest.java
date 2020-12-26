@@ -72,7 +72,7 @@ public class UT_ProductCategoryTest {
 
 	@Test
 	public void whenFindByCode_thenProductCategoryIsFound() {
-		String code = "TST02";
+		String code = "TST01";
 
 		Category found = categoryService.findByCode(Constants.localeENGB,
 													  code);
@@ -82,7 +82,7 @@ public class UT_ProductCategoryTest {
 	
 	@Test
 	public void whenFindByDesc_thenProductCategoryIsFound() {
-		String desc = "test brand category";
+		String desc = "test product category";
 
 		Category found = categoryService.findByDesc(Constants.localeENGB,
 													  desc);
@@ -96,10 +96,10 @@ public class UT_ProductCategoryTest {
     	assertNotNull(found);
     	
     	assertThat(found.getCategoryCode())
-        .isEqualTo("TST02");
+        .isEqualTo("TST01");
     	
 	    assertThat(found.getCategoryDesc())
-	    .isEqualTo("test brand category");
+	    .isEqualTo("test product category");
     }
 
 
