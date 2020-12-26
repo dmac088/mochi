@@ -73,7 +73,7 @@ public class UT_BrandTest {
 
 	@Test
 	public void whenFindByCode_thenProductBrandIsFound() {
-		String code = "TST01";
+		String code = "TST03";
 
 		Brand found = brandService.findByCode(Constants.localeENGB,
 											  code);
@@ -97,7 +97,7 @@ public class UT_BrandTest {
     	assertNotNull(found);
     	
     	assertThat(found.getBrandCode())
-        .isEqualTo("TST01");
+        .isEqualTo("TST03");
     	
 	    assertThat(found.getBrandDesc())
 	    .isEqualTo("test brand");
