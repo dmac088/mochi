@@ -15,6 +15,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.product.ProductServiceImpl;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.brand.Brand;
@@ -43,6 +44,11 @@ public class UT_ProductTest {
 	@TestConfiguration
 	static class ProductProductDomainServiceImplUnitTest {
 		// the beans that we need to run this test
+		
+		@Bean
+		public IProductService productService() {
+			return new ProductServiceImpl();
+		}
 		
 		@Bean
 		public IProductDoBeanFactory productDoBeanFactory() {
