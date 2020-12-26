@@ -18,7 +18,6 @@ import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.brand.BrandServiceImpl;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.ports.IBrandPortService;
-import io.nzbee.entity.adapters.PostgresBrandAdapter;
 import io.nzbee.test.unit.domain.beans.brand.BrandDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.brand.IBrandDoBeanFactory;
 
@@ -33,11 +32,6 @@ public class UT_BrandTest {
 		@Bean
 		public IBrandDoBeanFactory brandDoBeanFactory() {
 			return new BrandDoBeanFactory();
-		}
-		
-		@Bean
-		public IBrandPortService brandPortService() {
-			return new PostgresBrandAdapter();
 		}
 		
 		@Bean 

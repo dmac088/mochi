@@ -18,7 +18,6 @@ import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.ports.ICategoryPortService;
-import io.nzbee.entity.adapters.PostgresCategoryAdapter;
 import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.category.ICategoryDoBeanFactory;
 
@@ -33,11 +32,6 @@ public class UT_ProductCategoryTest {
 		@Bean
 		public CategoryDoBeanFactory categoryDoBeanFactory() {
 			return new CategoryDoBeanFactory();
-		}
-		
-		@Bean
-		public ICategoryPortService categoryPortService() {
-			return new PostgresCategoryAdapter();
 		}
 		
 		@Bean 

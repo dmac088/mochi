@@ -18,7 +18,6 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.department.DepartmentServiceImpl;
 import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.ports.IDepartmentPortService;
-import io.nzbee.entity.adapters.PostgresDepartmentAdapter;
 import io.nzbee.test.unit.domain.beans.department.DepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.department.IDepartmentDoBeanFactory;
 
@@ -33,11 +32,6 @@ public class UT_DepartmentTest {
 		@Bean
 		public DepartmentDoBeanFactory departmentDoBeanFactory() {
 			return new DepartmentDoBeanFactory();
-		}
-		
-		@Bean
-		public IDepartmentPortService departmentPortService() {
-			return new PostgresDepartmentAdapter();
 		}
 		
 		@Bean 
