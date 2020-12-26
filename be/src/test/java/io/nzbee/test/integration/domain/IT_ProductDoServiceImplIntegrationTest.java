@@ -30,8 +30,8 @@ import io.nzbee.test.integration.domain.beans.department.DepartmentDoBeanFactory
 import io.nzbee.test.integration.domain.beans.department.IDepartmentDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.product.IProductDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.product.ProductDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.promotion.IPromotionDoBeanFactory;
+import io.nzbee.test.integration.domain.beans.promotion.PromotionDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
