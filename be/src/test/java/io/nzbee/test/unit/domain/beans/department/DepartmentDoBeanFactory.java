@@ -12,7 +12,7 @@ public class DepartmentDoBeanFactory implements IDepartmentDoBeanFactory {
 	public final Department getBean() {
 		
 		return new Department(	"TST01",
-								"Test Department 1",
+								"test department",
 								"en-GB");
 		
 	}
