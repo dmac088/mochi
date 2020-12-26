@@ -30,6 +30,8 @@ import io.nzbee.test.integration.domain.beans.department.DepartmentDoBeanFactory
 import io.nzbee.test.integration.domain.beans.department.IDepartmentDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.product.IProductDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.product.ProductDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -50,6 +52,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
 	@TestConfiguration
 	static class ProductDoServiceImplIntegrationTest_Configuration {
 		// the beans that we need to run this test
+		
 		@Bean
 		public IProductDoBeanFactory productDoBeanFactory() {
 			return new ProductDoBeanFactory();
@@ -68,6 +71,11 @@ public class IT_ProductDoServiceImplIntegrationTest {
 		@Bean
 		public IDepartmentDoBeanFactory departmentDoBeanFactory() {
 			return new DepartmentDoBeanFactory();
+		}
+		
+		@Bean
+		public IPromotionDoBeanFactory promotionDoBeanFactory() {
+			return new PromotionDoBeanFactory();
 		}
 		
 	}

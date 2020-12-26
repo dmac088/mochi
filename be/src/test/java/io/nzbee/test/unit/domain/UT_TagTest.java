@@ -18,7 +18,6 @@ import io.nzbee.domain.tag.Tag;
 import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.ports.ITagPortService;
-import io.nzbee.entity.adapters.PostgresTagAdapter;
 import io.nzbee.test.unit.domain.beans.tag.TagDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.tag.ITagDoBeanFactory;
 
@@ -33,11 +32,6 @@ public class UT_TagTest {
 		@Bean
 		public TagDoBeanFactory tagDoBeanFactory() {
 			return new TagDoBeanFactory();
-		}
-		
-		@Bean
-		public ITagPortService tagPortService() {
-			return new PostgresTagAdapter();
 		}
 		
 		@Bean 

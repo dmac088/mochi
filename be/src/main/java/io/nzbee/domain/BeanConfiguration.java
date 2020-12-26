@@ -2,6 +2,8 @@ package io.nzbee.domain;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
+
 import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.BagServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
@@ -25,6 +27,7 @@ import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 
 
 @Configuration
+@Profile("prd")
 public class BeanConfiguration {
  
     @Bean
