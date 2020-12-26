@@ -116,10 +116,10 @@ public class UT_ProductTest {
 													product.getProductDesc())).thenReturn(product);
 		
 		Mockito.when(brandPortService.findByCode(	Constants.localeENGB,
-													product.getProductUPC())).thenReturn(brand);
+													brand.getBrandCode())).thenReturn(brand);
 		
 		Mockito.when(brandPortService.findByDesc(	Constants.localeENGB,
-													product.getProductDesc())).thenReturn(brand);
+													brand.getBrandDesc())).thenReturn(brand);
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class UT_ProductTest {
 		String code = "3254354673";
 
 		Product found = productService.findByCode(Constants.localeENGB,
-											  code);
+											  	code);
 
 		assertFound(found);
 	}
