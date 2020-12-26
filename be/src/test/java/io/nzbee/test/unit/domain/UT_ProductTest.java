@@ -15,7 +15,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
-import io.nzbee.domain.product.ProductServiceImpl;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.brand.Brand;
@@ -26,11 +25,6 @@ import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.ports.IPromotionPortService;
-import io.nzbee.entity.adapters.PostgresBrandAdapter;
-import io.nzbee.entity.adapters.PostgresCategoryAdapter;
-import io.nzbee.entity.adapters.PostgresDepartmentAdapter;
-import io.nzbee.entity.adapters.PostgresProductAdapter;
-import io.nzbee.entity.adapters.PostgresPromotionAdapter;
 import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
@@ -73,36 +67,6 @@ public class UT_ProductTest {
 		@Bean
 		public IPromotionDoBeanFactory promotionDoBeanFactory() {
 			return new PromotionDoBeanFactory();
-		}
-		
-		@Bean
-		public IProductPortService productPortService() {
-			return new PostgresProductAdapter();
-		}
-		
-		@Bean
-		public IBrandPortService brandPortService() {
-			return new PostgresBrandAdapter();
-		}
-		
-		@Bean
-		public IDepartmentPortService departmentPortService() {
-			return new PostgresDepartmentAdapter();
-		}
-		
-		@Bean
-		public ICategoryPortService categoryPortService() {
-			return new PostgresCategoryAdapter();
-		}
-		
-		@Bean
-		public IPromotionPortService promotionPortService() {
-			return new PostgresPromotionAdapter();
-		}
-		
-		@Bean 
-		public IProductService productService() {
-			return new ProductServiceImpl();
 		}
 		
 	}
