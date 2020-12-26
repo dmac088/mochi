@@ -6,32 +6,31 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.test.unit.domain.beans.brand.BrandDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.department.DepartmentDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.brand.IBrandDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.category.ICategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.department.IDepartmentDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
 
 @Service
 @Profile(value = "ut")
 public class ProductDoBeanFactory implements IProductDoBeanFactory {
 
 	@Autowired
-	private BrandDoBeanFactory brandDoBeanFactory;
+	private IBrandDoBeanFactory brandDoBeanFactory;
 	
 	@Autowired 
-	private DepartmentDoBeanFactory departmentDoBeanFactory;
+	private IDepartmentDoBeanFactory departmentDoBeanFactory;
 	
 	@Autowired 
-	private CategoryDoBeanFactory categoryDoBeanFactory;
+	private ICategoryDoBeanFactory categoryDoBeanFactory;
 	
 	@Autowired 
-	private PromotionDoBeanFactory promotionDoBeanFactory;
+	private IPromotionDoBeanFactory promotionDoBeanFactory;
 	
 	@Override
 	public Product getInStockPhysicalProductDoBean() {
@@ -49,7 +48,7 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   true,
 								   brandDoBeanFactory.getBean(),
 								   departmentDoBeanFactory.getBean(),
-								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getBean())),
+								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 	
@@ -69,7 +68,7 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   false,
 								   brandDoBeanFactory.getBean(),
 								   departmentDoBeanFactory.getBean(),
-								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getBean())),
+								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 

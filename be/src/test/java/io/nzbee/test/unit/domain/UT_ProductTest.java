@@ -20,10 +20,17 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.entity.adapters.PostgresBrandAdapter;
 import io.nzbee.entity.adapters.PostgresProductAdapter;
 import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.brand.BrandDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.brand.IBrandDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.category.ICategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.department.DepartmentDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.department.IDepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.product.IProductDoBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -45,8 +52,28 @@ public class UT_ProductTest {
 		}
 		
 		@Bean
+		public IDepartmentDoBeanFactory departmentDoBeanFactory() {
+			return new DepartmentDoBeanFactory();
+		}
+		
+		@Bean
+		public ICategoryDoBeanFactory categoryDoBeanFactory() {
+			return new CategoryDoBeanFactory();
+		}
+		
+		@Bean
+		public IPromotionDoBeanFactory promotionDoBeanFactory() {
+			return new PromotionDoBeanFactory();
+		}
+		
+		@Bean
 		public IProductPortService productPortService() {
 			return new PostgresProductAdapter();
+		}
+		
+		@Bean
+		public IBrandPortService brandPortService() {
+			return new PostgresBrandAdapter();
 		}
 		
 		@Bean 
@@ -97,7 +124,7 @@ public class UT_ProductTest {
 
 	@Test
 	public void whenFindByCode_thenProductProductIsFound() {
-		String code = "TST01";
+		String code = "3254354673";
 
 		Product found = productService.findByCode(Constants.localeENGB,
 											  code);
@@ -107,7 +134,7 @@ public class UT_ProductTest {
 	
 	@Test
 	public void whenFindByDesc_thenProductProductIsFound() {
-		String desc = "test product";
+		String desc = "Test Product Description";
 
 		Product found = productService.findByDesc(Constants.localeENGB,
 											  desc);
@@ -121,10 +148,10 @@ public class UT_ProductTest {
     	assertNotNull(found);
     	
     	assertThat(found.getProductUPC())
-        .isEqualTo("TST01");
+        .isEqualTo("3254354673");
     	
 	    assertThat(found.getProductDesc())
-	    .isEqualTo("test product");
+	    .isEqualTo("Test Product Description");
     }
 
 
