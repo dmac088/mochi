@@ -191,7 +191,8 @@ public class UT_ProductTest {
 		String code = "3254354673";
 
 		Product found = productService.findByCode(Constants.localeENGB,
-											  	code);
+												  Constants.currencyHKD,
+											  	  code);
 
 		assertFound(found);
 	}
@@ -201,7 +202,8 @@ public class UT_ProductTest {
 		String desc = "Test Product Description";
 
 		Product found = productService.findByDesc(Constants.localeENGB,
-											  desc);
+												  Constants.currencyHKD,
+												  desc);
 
 		assertFound(found);
 	}
