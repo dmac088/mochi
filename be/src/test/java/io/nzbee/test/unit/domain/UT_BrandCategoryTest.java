@@ -1,6 +1,7 @@
 package io.nzbee.test.unit.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertNotNull;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -24,7 +25,7 @@ public class UT_BrandCategoryTest {
 
 	@TestConfiguration
 	static class BrandCategoryDomainServiceImplUnitTest {
-		// the beans that we need to run this unit test
+		// the beans that we need to run this test
 		
 		@Bean
 		public CategoryDoBeanFactory categoryDoBeanFactory() {
@@ -64,9 +65,21 @@ public class UT_BrandCategoryTest {
 		assertFound(found);
 	}
 	
-	
-    private void assertFound(final io.nzbee.domain.category.Category found) {
+	@Test
+	public void whenFindByDesc_thenBrandCategoryIsFound() {
+		String desc = "test brand category";
 
+		Category found = categoryDoService.findByDesc(Constants.localeENGB,
+													  desc);
+
+		assertFound(found);
+	}
+	
+	
+    private void assertFound(Category found) {
+
+    	assertNotNull(found);
+    	
     	assertThat(found.getCategoryCode())
         .isEqualTo("TST02");
     	
