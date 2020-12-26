@@ -23,10 +23,10 @@ import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "ut")
-public class UT_BrandCategoryTest {
+public class UT_ProductCategoryTest {
 
 	@TestConfiguration
-	static class BrandCategoryDomainServiceImplUnitTest {
+	static class ProductCategoryDomainServiceImplUnitTest {
 		// the beans that we need to run this test
 		
 		@Bean
@@ -60,7 +60,7 @@ public class UT_BrandCategoryTest {
 		// we setup a mock so that when
 		MockitoAnnotations.initMocks(this);
 
-		Category category = categoryDoBeanFactory.getBrandCategoryDoBean();
+		Category category = categoryDoBeanFactory.getProductCategoryDoBean();
 
 		// need to fill more of the properties here
 		Mockito.when(categoryPortService.findByCode(Constants.localeENGB,
@@ -71,7 +71,7 @@ public class UT_BrandCategoryTest {
 	}
 
 	@Test
-	public void whenFindByCode_thenBrandCategoryIsFound() {
+	public void whenFindByCode_thenProductCategoryIsFound() {
 		String code = "TST02";
 
 		Category found = categoryService.findByCode(Constants.localeENGB,
@@ -81,7 +81,7 @@ public class UT_BrandCategoryTest {
 	}
 	
 	@Test
-	public void whenFindByDesc_thenBrandCategoryIsFound() {
+	public void whenFindByDesc_thenProductCategoryIsFound() {
 		String desc = "test brand category";
 
 		Category found = categoryService.findByDesc(Constants.localeENGB,
