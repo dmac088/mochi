@@ -20,6 +20,7 @@ import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.entity.adapters.PostgresCategoryAdapter;
 import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
+import io.nzbee.test.unit.domain.beans.category.ICategoryDoBeanFactory;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "ut")
@@ -53,7 +54,7 @@ public class UT_ProductCategoryTest {
 	private ICategoryPortService categoryPortService;
 
 	@Autowired
-	private CategoryDoBeanFactory categoryDoBeanFactory;
+	private ICategoryDoBeanFactory categoryDoBeanFactory;
 	
 	@Before
 	public void setUp() {
