@@ -27,7 +27,7 @@ import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 
 
 @Configuration
-@Profile("prd")
+@Profile("dev")
 public class BeanConfiguration {
  
     @Bean
