@@ -218,6 +218,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		System.out.println(found);
 		assertNotNull(found);
 		assertThat(found).isGreaterThan(new Double(0));
+		assertThat(found).isEqualTo(new Double(12));
 	}
 
 	@Test
