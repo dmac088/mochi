@@ -599,6 +599,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				" 			COALESCE(s2.cat_id,s1.cat_id)         			AS cat_id, 		" + 
 				"			COALESCE(s2.cat_prnt_id,s1.cat_prnt_id)			AS cat_prnt_id, " +
 				"			COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd)         AS cat_prnt_cd, " +
+				"			COALESCE(s2.cat_lvl,s1.cat_lvl)         		AS cat_lvl, " +
 				" 			COALESCE(s2.cat_cd,s1.cat_cd)         			AS cat_cd 		" + 
 				" FROM      descendants s1 " + 
 				" LEFT JOIN descendants s2 " + 
@@ -612,6 +613,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				" COALESCE(s2.cat_id,s1.cat_id), 					" +  
 				" COALESCE(s2.cat_prnt_id,s1.cat_prnt_id), 			" +
 				" COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd), 			" +
+				" COALESCE(s2.cat_lvl,s1.cat_lvl),					" + 
 				" COALESCE(s2.cat_cd,s1.cat_cd)) 					" + 
 				", summaries " +
 				"AS " +
