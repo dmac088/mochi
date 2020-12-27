@@ -557,7 +557,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalElements())
 		.isEqualTo(new Long(12));
 		assertThat(returnFacets.size())
-		.isEqualTo(21);
+		.isEqualTo(23);
 		
 		returnFacets.clear();
 		
