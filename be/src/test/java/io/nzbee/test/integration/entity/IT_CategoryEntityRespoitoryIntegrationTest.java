@@ -207,11 +207,15 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@Test
 	public void whenGetMaxPriceForCoolStarionaryCategory_thenReturnCorrectMaxPriceInHKD() {
 
+		Set<String> ls = new HashSet<String>();
+		ls.add("FCOO1");
+		
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "FCOO1",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "FAS01",
+				ls, new HashSet<String>(), new HashSet<String>());
 
 		// then
+		System.out.println(found);
 		assertNotNull(found);
 		assertThat(found).isGreaterThan(new Double(0));
 	}
