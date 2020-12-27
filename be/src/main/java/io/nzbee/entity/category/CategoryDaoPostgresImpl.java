@@ -579,8 +579,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  AND a.lcl_cd = :locale " +
 				"  WHERE 0=0 " +
 				((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " 	: "") + 
-				((hasCategoryId)  	? " AND t.cat_id 	= :categoryId" 		: "") +
-				((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode" 	: "") +
+				((hasCategoryId)  	? " AND t.cat_id 	= :categoryId " 	: "") +
+				((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode " 	: "") +
 				((!hasCategoryCd 	&& !hasCategoryDesc 	&& !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
@@ -593,22 +593,41 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  FROM mochi.category AS t  " +
 				"  JOIN descendants AS d  " +
 				"  ON t.cat_prnt_id = d.cat_id " +
-				"), summaries_pta " +
+				"), categories AS ( " + 
+ 
+				" SELECT    COALESCE(s2.cat_typ_id,s1.cat_typ_id) 			AS cat_typ_id, 	" +
+				" 			COALESCE(s2.cat_id,s1.cat_id)         			AS cat_id, 		" + 
+				"			COALESCE(s2.cat_prnt_id,s1.cat_prnt_id)			AS cat_prnt_id, " +
+				"			COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd)         AS cat_prnt_cd, " +
+				" 			COALESCE(s2.cat_cd,s1.cat_cd)         			AS cat_cd 		" + 
+				" FROM      descendants s1 " + 
+				" LEFT JOIN descendants s2 " + 
+				" ON        s1.node <> s2.node " + 
+				" AND       LEFT(s2.node, length(s1.node)) = s1.node " + 
+				" WHERE 0=0 " + 
+				((hasCategories) 
+				? " AND  s1.cat_cd IN (:categoryCodes) " 
+				: "") +
+				" GROUP BY  COALESCE(s2.cat_typ_id,s1.cat_typ_id), 	" + 
+				" COALESCE(s2.cat_id,s1.cat_id), 					" +  
+				" COALESCE(s2.cat_prnt_id,s1.cat_prnt_id), 			" +
+				" COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd), 			" +
+				" COALESCE(s2.cat_cd,s1.cat_cd)) 					" + 
+				", summaries " +
 				"AS " +
 				"( " +
 				"select " +
 				"    cc.cat_id 					AS cat_id, " +
 				"    cc.cat_cd 					AS cat_cd, " +
-				"    cc.cat_lvl 				AS cat_lvl, " +
 				"    cc.cat_prnt_cd 			AS cat_prnt_cd, " +
 				"    cc.cat_prnt_id 			AS cat_prnt_id, " +
 				"    cc.cat_typ_id 				AS cat_type_id, " +
-				"    cc.node, " +
 				"    COUNT(DISTINCT prd.upc_cd) 	AS object_count " +
 				((maxPriceOnly) ? ",    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
 								 "      MAX(retail_price.prc_val) 		AS max_retail_price " 
 							   : "") + 
-				"FROM descendants cc " +
+				"FROM categories cc " +
+							   
 				"LEFT JOIN mochi.product_category pc " +
 				"ON cc.cat_id = pc.cat_id " +
 				
@@ -624,11 +643,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 								
 				" WHERE prd_sts_cd = :activeProductCode " +
 				") prd  " +
-				"		 ON pc.prd_id = prd.prd_id " +
+				" ON pc.prd_id = prd.prd_id " +
 				
 				((hasBrands) ?
 				"INNER JOIN mochi.brand b " +
-				"		ON prd.bnd_id = b.bnd_id "
+				" ON prd.bnd_id = b.bnd_id "
 				: "") +
 				
 				((hasTags) ?
@@ -668,19 +687,19 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		  " +
 				"		 INNER JOIN mochi.currency curr  " +
 				"		 ON prc.ccy_id = curr.ccy_id  " +
-				"		  " +
+
 				"		 INNER JOIN mochi.price_type pt  " +
 				"		 ON prc.prc_typ_id = pt.prc_typ_id " +
 
 				"		 INNER JOIN mochi.product_status ps " +
 				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
-				"		  " +
+ 
 				"		 WHERE curr.ccy_cd = 	:currency " +
 				"		 AND prc_typ_cd = 		:retailPriceCode " +
 				"		 AND prd_sts_cd = 		:activeProductCode " +
 				"		 ) retail_price " +
 				"		 ON pc.prd_id = retail_price.prd_id " +
-				"		  " +
+
 				"LEFT JOIN 	(SELECT prd.prd_id,  " +
 				"			prc_typ_cd, " +
 				"			prc_val  " +
@@ -708,48 +727,17 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id	<> :categoryId " : "") +
 				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd 	<> :categoryCode " : "") +
 				((hasBrands)   						? " AND b.bnd_cd 	in :brandCodes " : "") +
-				((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
+				//((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
 				((hasTags) 							? " AND t.tag_cd 	in :tagCodes " : "") +
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
-				"	 cc.cat_lvl, " +
+				//"	 cc.cat_lvl, " +
 				"	 cc.cat_prnt_cd, " +
 				"	 cc.cat_prnt_id, " +
-				"	 cc.cat_typ_id, " +
-				"	 cc.node) " +
-				" , summaries_ptb AS " +
-				"( " +
-				"SELECT 	 " +
-				"	s1.cat_id, " +
-				"	s1.cat_cd, " +
-				"	s1.cat_lvl, " +
-				"	s1.cat_prnt_cd, " +
-				"	s1.cat_prnt_id, " +
-				"	s1.cat_type_id, " +
-				"	coalesce(s1.object_count, 0) + " +
-				"	sum(coalesce(s2.object_count,0)) as object_count, " +
-				((maxPriceOnly) 
-						? 	"	greatest(0, s1.max_retail_price, max(s2.max_retail_price)) as max_retail_price, " +
-							"	greatest(0, s1.max_markdown_price, max(s2.max_markdown_price)) as max_markdown_price, " 
-						:   "") +
-				"   count(distinct s2.cat_id) as child_cat_count " +
-				"FROM summaries_pta s1 " +
-				"LEFT JOIN summaries_pta s2 " +
-				"ON s1.node <> s2.Node and left(s2.node, length(s1.node)) = s1.node " +
-				"GROUP BY " +
-				"	s1.cat_id, " +
-				"	s1.cat_cd, " +
-				"	s1.cat_lvl, " +
-				"	s1.cat_prnt_cd, " +
-				"	s1.cat_prnt_id, " +
-				"	s1.cat_type_id, " +
-				"	s1.object_count " +
-				((maxPriceOnly) 
-					? "	,s1.max_retail_price, " +
-					 "	s1.max_markdown_price " 
-					: "") +
-				") " +
+				"	 cc.cat_typ_id " +
+				//"	 cc.node " +
+				" ) " +
 				"SELECT " +
 				((maxPriceOnly) 
 				? "		MAX(s.max_markdown_price) as max_markdown_price " 
@@ -777,15 +765,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       s.object_count			AS object_count, " +
 				"		coalesce(cs.child_cat_count,0)		AS child_cat_count ") +
 
-				"FROM summaries_ptb s " +
+				"FROM summaries s " +
 
-				"LEFT JOIN summaries_ptb ps " +
+				"LEFT JOIN summaries ps " +
 				"ON ps.cat_id = s.cat_prnt_id " +
 
 				"LEFT JOIN (" + 
 				" SELECT 	cat_prnt_cd as cat_cd, " +
 				" 			count(distinct cat_id) as child_cat_count " +
-				" FROM summaries_ptb cs " +
+				" FROM summaries cs " +
 				" GROUP BY cat_prnt_cd" +
 				") cs " +
 				"ON s.cat_cd = cs.cat_cd " +
