@@ -621,6 +621,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"select " +
 				"    cc.cat_id 					AS cat_id, " +
 				"    cc.cat_cd 					AS cat_cd, " +
+				"    cc.cat_lvl 				AS cat_lvl, " +
 				"    cc.cat_prnt_cd 			AS cat_prnt_cd, " +
 				"    cc.cat_prnt_id 			AS cat_prnt_id, " +
 				"    cc.cat_typ_id 				AS cat_type_id, " +
@@ -734,11 +735,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"GROUP BY  " +
 				"	 cc.cat_id, " +
 				"	 cc.cat_cd, " +
-				//"	 cc.cat_lvl, " +
+				"	 cc.cat_lvl, " +
 				"	 cc.cat_prnt_cd, " +
 				"	 cc.cat_prnt_id, " +
 				"	 cc.cat_typ_id " +
-				//"	 cc.node " +
 				" ) " +
 				"SELECT " +
 				((maxPriceOnly) 
