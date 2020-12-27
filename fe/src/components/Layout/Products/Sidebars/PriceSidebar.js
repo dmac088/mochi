@@ -28,7 +28,8 @@ function PriceSidebar(props) {
     useEffect(() => {
         let isSubscribed = true;
         if (type === 'browse' && 
-            (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
+            (categoryCode !== prevCategoryCode || !categories.loading || loading )) {
+            console.log('fetching maxPrice');
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
             axios.post(currentCategory._links.maxPriceFacet.href, selectedFacets.map(f => f.data))

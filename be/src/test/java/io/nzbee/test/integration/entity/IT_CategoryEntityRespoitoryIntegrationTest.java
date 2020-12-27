@@ -203,6 +203,18 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("162.0"));
 	}
+	
+	@Test
+	public void whenGetMaxPriceForCoolStarionaryCategory_thenReturnCorrectMaxPriceInHKD() {
+
+		// when
+		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "FCOO1",
+				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+
+		// then
+		assertNotNull(found);
+		assertThat(found).isGreaterThan(new Double(0));
+	}
 
 	@Test
 	public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInHKD() {
