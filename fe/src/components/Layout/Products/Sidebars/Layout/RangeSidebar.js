@@ -24,7 +24,7 @@ export const RangeSidebar = (props) => {
         min={maxPrice / 5}
         max={maxPrice}
         step={maxPrice / 5}
-        defaultValue={maxPrice}
+        defaultValue={(currentPrice) ? currentPrice : maxPrice}
         value={(currentPrice) ? currentPrice : maxPrice}
         railStyle={{ height: 10 }}
         />
