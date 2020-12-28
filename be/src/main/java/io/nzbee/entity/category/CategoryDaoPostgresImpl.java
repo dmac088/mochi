@@ -593,7 +593,19 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  FROM mochi.category AS t  " +
 				"  JOIN descendants AS d  " +
 				"  ON t.cat_prnt_id = d.cat_id " +
-				"), categories AS ( " + 
+				"), " +
+				"rootCategory AS ( " +
+				"		select cat_lvl " +
+				"  FROM mochi.category t " +
+				"  LEFT JOIN mochi.category_attr_lcl a " +
+				"  ON t.cat_id = a.cat_id " +
+				"  AND a.lcl_cd = :locale " +
+				"  WHERE 0=0 " + 
+						((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " 	: "") + 
+						((hasCategoryId)  	? " AND t.cat_id 	= :categoryId " 	: "") + 
+						((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode " 	: "") +
+				") " + 
+				", categories AS ( " + 
 				
 		        "SELECT    	 COALESCE(s2.cat_typ_id,s1.cat_typ_id)   	AS cat_typ_id, 			" +
 		        "	         COALESCE(s2.cat_id,s1.cat_id)           	AS cat_id, 				" +
@@ -612,11 +624,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		        "ON        s1.node <> s2.node 													" + 
 		        "AND       LEFT(s2.node, length(s1.node)) = s1.node 							" + 
 		        "WHERE     0=0 																	" +
-//		        ((hasCategoryCd) 
-//		        		? "AND 	   	COALESCE(s1.cat_prnt_cd, s2.cat_prnt_cd) = :categoryCode	" 
-//		        		: "") 																      +
 		        ((hasCategories) 
-						? " AND 	COALESCE(s1.cat_cd, s2.cat_cd) IN (:categoryCodes) 			" 
+						? " AND s1.cat_cd IN (:categoryCodes) 									" 
 						: "") 																	  +
 		        "GROUP BY  	 COALESCE(s2.cat_typ_id,s1.cat_typ_id), 							" +
 		        "	         COALESCE(s2.cat_id,s1.cat_id), 									" +
@@ -782,6 +791,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 				"FROM summaries s " +
 				
+				"JOIN rootCategory rc " +
+				"ON s.cat_lvl <= rc.cat_lvl + 1 " +
+				
 				"LEFT JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
 				"AND a.lcl_cd = :locale " +
@@ -820,7 +832,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((!maxPriceOnly && !childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
 				((!maxPriceOnly && !childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
 			//	((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : "") + 
-				((!maxPriceOnly)  ? "ORDER BY lower(a.cat_desc) ASC " : ""));
+				((!maxPriceOnly)  ? "ORDER BY lower(a.cat_desc) ASC " : "")));
 			
 		return sql;
 	}
