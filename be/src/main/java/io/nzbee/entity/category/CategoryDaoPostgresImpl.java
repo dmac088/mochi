@@ -184,7 +184,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	public <T> List<CategoryDTO> findAllByType(String locale, Class<T> cls) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCodeAndType parameters : {}, {}, {}", locale, cls.getSimpleName(), cls.getAnnotation(DiscriminatorValue.class).value());
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByType parameters : {}, {}, {}", locale, cls.getSimpleName(), cls.getAnnotation(DiscriminatorValue.class).value());
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -196,9 +196,10 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 false,
 															 false,
-															 false, 
+															 true, 
 															 true))
 				 .setParameter("locale", locale)
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
@@ -581,7 +582,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " 	: "") + 
 				((hasCategoryId)  	? " AND t.cat_id 	= :categoryId " 	: "") +
 				((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode " 	: "") +
-				((!hasCategoryCd 	&& !hasCategoryDesc 	&& !hasCategoryId) 		? " AND cat_prnt_id IS NULL " : "") +
 				"  UNION ALL " +
 				"  SELECT 	t.cat_id,  " +
 				"			t.cat_cd,  " +
@@ -601,23 +601,17 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  ON t.cat_id = a.cat_id " +
 				"  AND a.lcl_cd = :locale " +
 				"  WHERE 0=0 " + 
-						((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " 	: "") + 
-						((hasCategoryId)  	? " AND t.cat_id 	= :categoryId " 	: "") + 
-						((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode " 	: "") +
+				((hasCategoryDesc)  ? " AND a.cat_desc 	= :categoryDesc " 	: "") + 
+				((hasCategoryId)  	? " AND t.cat_id 	= :categoryId " 	: "") + 
+				((hasCategoryCd  	? " AND t.cat_cd 	= :categoryCode " 	: "") +
 				") " + 
 				", categories AS ( " + 
 				
 		        "SELECT    	 COALESCE(s2.cat_typ_id,s1.cat_typ_id)   	AS cat_typ_id, 			" +
 		        "	         COALESCE(s2.cat_id,s1.cat_id)           	AS cat_id, 				" +
-		        "		  	 COALESCE(s2.cat_cd,s1.cat_cd)           	AS cat_cd, 				" +
-		        "		     COALESCE(s2.cat_lvl,s1.cat_lvl)         	AS cat_lvl,				" +
-		        "	         COALESCE(s2.cat_prnt_id,s1.cat_prnt_id) 	AS cat_prnt_id,			" + 
-		        "	         COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd) 	AS cat_prnt_cd, 		" + 
 		        "			 COALESCE(s1.cat_id,s2.cat_id)				AS display_cat_id,		" +
 		        "			 COALESCE(s1.cat_cd,s2.cat_cd)				AS display_cat_cd,		" +
-		        "			 COALESCE(s1.cat_lvl,s2.cat_lvl)			AS display_cat_lvl,		" +
-		        "			 COALESCE(s1.cat_prnt_id,s2.cat_prnt_id) 	AS display_cat_prnt_id, " +
-		        "			 COALESCE(s1.cat_prnt_cd,s2.cat_prnt_cd) 	AS display_cat_prnt_cd	" +
+		        "			 COALESCE(s1.cat_lvl,s2.cat_lvl)			AS display_cat_lvl		" +
 		        
 		        "FROM      descendants s1 														" +
 		        "LEFT JOIN descendants s2 														" +
@@ -627,28 +621,20 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		        ((hasCategories) 
 						? " AND s1.cat_cd IN (:categoryCodes) 									" 
 						: "") 																	  +
+						
 		        "GROUP BY  	 COALESCE(s2.cat_typ_id,s1.cat_typ_id), 							" +
 		        "	         COALESCE(s2.cat_id,s1.cat_id), 									" +
-		        "	         COALESCE(s2.cat_prnt_id,s1.cat_prnt_id), 							" +
-		        "	         COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd), 							" +
-		        "	         COALESCE(s2.cat_lvl,s1.cat_lvl), 									" +
-		        "	         COALESCE(s2.cat_cd,s1.cat_cd),										" +
-		        "			 COALESCE(s1.cat_prnt_id,s2.cat_prnt_id), 							" +
-		        "	         COALESCE(s1.cat_prnt_cd,s2.cat_prnt_cd), 							" +
 		        "	         COALESCE(s1.cat_id,s2.cat_id), 									" +
 		        "	         COALESCE(s1.cat_cd,s2.cat_cd), 									" +
 		        "	         COALESCE(s1.cat_lvl,s2.cat_lvl) 									" +
 				") 					" + 
-				", summaries " +
-				"AS " +
-				"( " +
+				", summaries AS ( " +
 				"select " +
                 "cc.display_cat_id                  	AS cat_id, 								" +
-				"cc.display_cat_prnt_id			   		AS cat_prnt_id,							" +
                 "cc.display_cat_cd                  	AS cat_cd, 								" +
                 "cc.display_cat_lvl         		   	AS cat_lvl, 							" +
-                "cc.cat_typ_id              		   	AS cat_type_id, 						" +
-				"COUNT(DISTINCT cc.cat_cd)		   		AS child_cat_count,						" +
+                "cc.cat_typ_id              		   	AS cat_typ_id, 						" +
+				"COUNT(DISTINCT cc.cat_id)		   		AS child_cat_count,						" +
                 "COUNT(DISTINCT prd.upc_cd) 		   	AS object_count 						" +
 				((maxPriceOnly) ? ",    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
 								 "      MAX(retail_price.prc_val) 		AS max_retail_price 	"  
@@ -750,17 +736,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"		 ON pc.prd_id = markdown_price.prd_id " 
 				: "") +
 				" WHERE 0=0 " +
-				((childrenOnly && hasCategoryId)  	? " AND cc.cat_id	<> :categoryId " : "") +
-				((childrenOnly && hasCategoryCd)  	? " AND cc.cat_cd 	<> :categoryCode " : "") +
-				((hasBrands)   						? " AND b.bnd_cd 	in :brandCodes " : "") +
-				//((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
-				((hasTags) 							? " AND t.tag_cd 	in :tagCodes " : "") +
+				((childrenOnly && hasCategoryId)  	? " AND cc.display_cat_id	<> :categoryId " 	: "") +
+				((childrenOnly && hasCategoryCd)  	? " AND cc.display_cat_cd 	<> :categoryCode " 	: "") +
+				((hasBrands)   						? " AND b.bnd_cd 			in :brandCodes " 	: "") +
+				((hasTags) 							? " AND t.tag_cd 			in :tagCodes " 		: "") +
 				"GROUP BY  																	" +
 				"cc.display_cat_id,															" +
                 "cc.display_cat_cd,															" +
                 "cc.display_cat_lvl,														" +
-                "cc.cat_typ_id,																" +
-				"cc.display_cat_prnt_id 													" +
+                "cc.cat_typ_id																" +
 				" ) 																		" +
 				"SELECT 																	" +
 				((maxPriceOnly) 
@@ -769,7 +753,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"       s.cat_cd 						AS cat_cd, " +
 				"       s.cat_lvl 						AS cat_lvl, " +	
 				"		a.cat_lcl_id 					AS cat_lcl_id, "	+	
-				"		s.cat_type_id 					AS cat_typ_id, 	" +
+				"		s.cat_typ_id 					AS cat_typ_id, 	" +
 				"       ct.cat_typ_cd					AS cat_typ_cd, " +
 				"       ct.cat_typ_desc 				AS cat_typ_desc, " +
 				"       a.cat_desc 						AS cat_desc, " +
@@ -791,28 +775,28 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 				"FROM summaries s " +
 				
-				"JOIN rootCategory rc " +
-				"ON s.cat_lvl <= rc.cat_lvl + 1 " +
-				
 				"LEFT JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
 				"AND a.lcl_cd = :locale " +
 			
 				"INNER JOIN mochi.category_type ct " +
-				"ON ct.cat_typ_id = s.cat_type_id  " +
+				"ON ct.cat_typ_id = s.cat_typ_id  " +
 				
 				((hasType) 
 				? "AND ct.cat_typ_id = :typeDiscriminator "  
 				: " ") +
 				
-				"LEFT JOIN mochi.category pc " +
-				"ON pc.cat_id = s.cat_prnt_id  " +
+				"INNER JOIN mochi.category c " +
+				"ON 		   s.cat_id = c.cat_id " +
 				
-				"LEFT JOIN mochi.category ppc " +
-				"ON ppc.cat_id = pc.cat_prnt_id  " +
+				"LEFT JOIN  mochi.category pc " +
+				"ON         pc.cat_id = c.cat_prnt_id " +
 				
-				"LEFT JOIN mochi.category_type pct " +
-				"ON pc.cat_typ_id = pct.cat_typ_id  " +
+				"LEFT JOIN  mochi.category ppc " +
+				"ON         ppc.cat_id = pc.cat_prnt_id " +
+				
+				"LEFT JOIN  mochi.category_type pct " +
+				"ON         pc.cat_typ_id = pct.cat_typ_id " +
 				
 				"LEFT JOIN mochi.category_attr_lcl pa " +
 				"ON pc.cat_id = pa.cat_id " +
