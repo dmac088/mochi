@@ -124,7 +124,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then only children
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(8);	
+		assertThat(found.size()).isEqualTo(7);	
 		assertTrue(isOrdered(found));
 	}
 	
@@ -143,7 +143,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(36);	
+		assertThat(found.size()).isEqualTo(35);	
 		assertTrue(isOrdered(found));
 	}
 	
@@ -162,7 +162,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(36);	
+		assertThat(found.size()).isEqualTo(35);	
 		assertTrue(isOrdered(found));
 	}
 
@@ -188,7 +188,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found).size().isEqualTo(87);
+		assertThat(found).size().isEqualTo(36);
 		assertTrue(isOrdered(found));
 	}
 
