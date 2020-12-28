@@ -594,62 +594,73 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  JOIN descendants AS d  " +
 				"  ON t.cat_prnt_id = d.cat_id " +
 				"), categories AS ( " + 
- 
-				" SELECT    COALESCE(s2.cat_typ_id,s1.cat_typ_id) 			AS cat_typ_id, 	" +
-				" 			COALESCE(s2.cat_id,s1.cat_id)         			AS cat_id, 		" + 
-				"			COALESCE(s2.cat_prnt_id,s1.cat_prnt_id)			AS cat_prnt_id, " +
-				"			COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd)         AS cat_prnt_cd, " +
-				"			COALESCE(s2.cat_lvl,s1.cat_lvl)         		AS cat_lvl, " +
-				" 			COALESCE(s2.cat_cd,s1.cat_cd)         			AS cat_cd 		" + 
-				" FROM      descendants s1 " + 
-				" LEFT JOIN descendants s2 " + 
-				" ON        s1.node <> s2.node " + 
-				" AND       LEFT(s2.node, length(s1.node)) = s1.node " + 
-				" WHERE 0=0 " + 
-				((hasCategories) 
-				? " AND  s1.cat_cd IN (:categoryCodes) " 
-				: "") +
-				" GROUP BY  COALESCE(s2.cat_typ_id,s1.cat_typ_id), 	" + 
-				" COALESCE(s2.cat_id,s1.cat_id), 					" +  
-				" COALESCE(s2.cat_prnt_id,s1.cat_prnt_id), 			" +
-				" COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd), 			" +
-				" COALESCE(s2.cat_lvl,s1.cat_lvl),					" + 
-				" COALESCE(s2.cat_cd,s1.cat_cd)) 					" + 
+				
+		        "SELECT    	 COALESCE(s2.cat_typ_id,s1.cat_typ_id)   	AS cat_typ_id, 			" +
+		        "	         COALESCE(s2.cat_id,s1.cat_id)           	AS cat_id, 				" +
+		        "		  	 COALESCE(s2.cat_cd,s1.cat_cd)           	AS cat_cd, 				" +
+		        "		     COALESCE(s2.cat_lvl,s1.cat_lvl)         	AS cat_lvl,				" +
+		        "	         COALESCE(s2.cat_prnt_id,s1.cat_prnt_id) 	AS cat_prnt_id,			" + 
+		        "	         COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd) 	AS cat_prnt_cd, 		" + 
+		        "			 COALESCE(s1.cat_id,s2.cat_id)				AS display_cat_id,		" +
+		        "			 COALESCE(s1.cat_cd,s2.cat_cd)				AS display_cat_cd,		" +
+		        "			 COALESCE(s1.cat_lvl,s2.cat_lvl)			AS display_cat_lvl,		" +
+		        "			 COALESCE(s1.cat_prnt_id,s2.cat_prnt_id) 	AS display_cat_prnt_id, " +
+		        "			 COALESCE(s1.cat_prnt_cd,s2.cat_prnt_cd) 	AS display_cat_prnt_cd	" +
+		        
+		        "FROM      descendants s1 														" +
+		        "LEFT JOIN descendants s2 														" +
+		        "ON        s1.node <> s2.node 													" + 
+		        "AND       LEFT(s2.node, length(s1.node)) = s1.node 							" + 
+		        "WHERE     0=0 																	" +
+		        ((hasCategories) 
+						? " AND COALESCE(s1.cat_prnt_cd,s2.cat_prnt_cd) IN (:categoryCodes) " 
+						: "") 																	  +
+		        "GROUP BY  	 COALESCE(s2.cat_typ_id,s1.cat_typ_id), 							" +
+		        "	         COALESCE(s2.cat_id,s1.cat_id), 									" +
+		        "	         COALESCE(s2.cat_prnt_id,s1.cat_prnt_id), 							" +
+		        "	         COALESCE(s2.cat_prnt_cd,s1.cat_prnt_cd), 							" +
+		        "	         COALESCE(s2.cat_lvl,s1.cat_lvl), 									" +
+		        "	         COALESCE(s2.cat_cd,s1.cat_cd),										" +
+		        "			 COALESCE(s1.cat_prnt_id,s2.cat_prnt_id), 							" +
+		        "	         COALESCE(s1.cat_prnt_cd,s2.cat_prnt_cd), 							" +
+		        "	         COALESCE(s1.cat_id,s2.cat_id), 									" +
+		        "	         COALESCE(s1.cat_cd,s2.cat_cd), 									" +
+		        "	         COALESCE(s1.cat_lvl,s2.cat_lvl) 									" +
+				") 					" + 
 				", summaries " +
 				"AS " +
 				"( " +
 				"select " +
-				"    cc.cat_id 					AS cat_id, " +
-				"    cc.cat_cd 					AS cat_cd, " +
-				"    cc.cat_lvl 				AS cat_lvl, " +
-				"    cc.cat_prnt_cd 			AS cat_prnt_cd, " +
-				"    cc.cat_prnt_id 			AS cat_prnt_id, " +
-				"    cc.cat_typ_id 				AS cat_type_id, " +
-				"    COUNT(DISTINCT prd.upc_cd) 	AS object_count " +
+                "cc.display_cat_id                  	AS cat_id, 								" +
+				"cc.display_cat_prnt_id			   		AS cat_prnt_id,							" +
+                "cc.display_cat_cd                  	AS cat_cd, 								" +
+                "cc.display_cat_lvl         		   	AS cat_lvl, 							" +
+                "cc.cat_typ_id              		   	AS cat_type_id, 						" +
+				"COUNT(DISTINCT cc.cat_cd)		   		AS child_cat_count,						" +
+                "COUNT(DISTINCT prd.upc_cd) 		   	AS object_count 						" +
 				((maxPriceOnly) ? ",    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
-								 "      MAX(retail_price.prc_val) 		AS max_retail_price " 
+								 "      MAX(retail_price.prc_val) 		AS max_retail_price 	"  
 							   : "") + 
-				"FROM categories cc " +
+				"FROM categories cc 															" +
 							   
-				"LEFT JOIN mochi.product_category pc " +
-				"ON cc.cat_id = pc.cat_id " +
+				"LEFT JOIN mochi.product_category pc 											" +
+				"ON cc.cat_id = pc.cat_id 														" +
 				
-				"LEFT JOIN 	( " +
-				"		 SELECT prd.prd_id,  " +
-				"			prd.bnd_id, " +
-				"			upc_cd " +
-				"		 FROM mochi.product prd " +
+				"LEFT JOIN 	( 																	" +
+				"		 SELECT prd.prd_id,  													" +
+				"				prd.bnd_id, 													" +
+				"				upc_cd 															" +
+				"		 FROM mochi.product prd 												" +
+				"		  																		" +
+				"		 INNER JOIN mochi.product_status ps 									" +
+				"		 ON prd.prd_sts_id = ps.prd_sts_id 										" +
 				"		  " +
-				"		 INNER JOIN mochi.product_status ps " +
-				"		 ON prd.prd_sts_id = ps.prd_sts_id " +
-				"		  " +
-								
-				" WHERE prd_sts_cd = :activeProductCode " +
-				") prd  " +
-				" ON pc.prd_id = prd.prd_id " +
+				" WHERE prd_sts_cd = :activeProductCode 										" +
+				") prd  																		" +
+				" ON pc.prd_id = prd.prd_id 													" +
 				
 				((hasBrands) ?
-				"INNER JOIN mochi.brand b " +
+				" INNER JOIN mochi.brand b " +
 				" ON prd.bnd_id = b.bnd_id "
 				: "") +
 				
@@ -732,53 +743,41 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				((hasBrands)   						? " AND b.bnd_cd 	in :brandCodes " : "") +
 				//((hasCategories) 					? " AND cc.cat_cd 	in :categoryCodes " : "") +
 				((hasTags) 							? " AND t.tag_cd 	in :tagCodes " : "") +
-				"GROUP BY  " +
-				"	 cc.cat_id, " +
-				"	 cc.cat_cd, " +
-				"	 cc.cat_lvl, " +
-				"	 cc.cat_prnt_cd, " +
-				"	 cc.cat_prnt_id, " +
-				"	 cc.cat_typ_id " +
-				" ) " +
-				"SELECT " +
+				"GROUP BY  																	" +
+				"cc.display_cat_id,															" +
+                "cc.display_cat_cd,															" +
+                "cc.display_cat_lvl,														" +
+                "cc.cat_typ_id,																" +
+				"cc.display_cat_prnt_id 													" +
+				" ) 																		" +
+				"SELECT 																	" +
 				((maxPriceOnly) 
 				? "		MAX(s.max_markdown_price) as max_markdown_price " 
-				: "		s.cat_id 				AS cat_id, " +
-				"       s.cat_cd 				AS cat_cd, " +
-				"       s.cat_lvl 				AS cat_lvl, " +	
-				"		a.cat_lcl_id 			AS cat_lcl_id, "	+	
-				"		s.cat_type_id 			AS cat_typ_id, 	" +
-				"       ct.cat_typ_cd			AS cat_typ_cd, " +
-				"       ct.cat_typ_desc 		AS cat_typ_desc, " +
-				"       a.cat_desc 				AS cat_desc, " +
-				"       a.lcl_cd 				AS lcl_cd, " +
-				"		pc.cat_id   			AS cat_prnt_id, " +
-				"		pc.cat_cd   			AS cat_prnt_cd, " +
-				"		pc.cat_lvl   			AS cat_prnt_lvl, " +
-				"		pc.cat_typ_id 			AS cat_prnt_typ_id, " +
-				"		pct.cat_typ_cd			AS cat_prnt_typ_cd, " +
-				"		pct.cat_typ_desc		AS cat_prnt_typ_desc, " +
-				"		ppc.cat_id 				AS cat_prnt_prnt_id, " +
-				"		pc.cat_prnt_cd 			AS cat_prnt_prnt_cd, " + 
-				" 		pa.cat_lcl_id 			AS cat_prnt_lcl_id, " +
-				"       pa.cat_desc 			AS cat_prnt_desc, " +
-				"       pa.lcl_cd 				AS cat_prnt_lcl_cd, " +
-				"       a.cat_img_pth			AS cat_img_pth, " +
-				"       s.object_count			AS object_count, " +
-				"		coalesce(cs.child_cat_count,0)		AS child_cat_count ") +
+				: "		s.cat_id 						AS cat_id, " +
+				"       s.cat_cd 						AS cat_cd, " +
+				"       s.cat_lvl 						AS cat_lvl, " +	
+				"		a.cat_lcl_id 					AS cat_lcl_id, "	+	
+				"		s.cat_type_id 					AS cat_typ_id, 	" +
+				"       ct.cat_typ_cd					AS cat_typ_cd, " +
+				"       ct.cat_typ_desc 				AS cat_typ_desc, " +
+				"       a.cat_desc 						AS cat_desc, " +
+				"       a.lcl_cd 						AS lcl_cd, " +
+				"		pc.cat_id   					AS cat_prnt_id, " +
+				"		pc.cat_cd   					AS cat_prnt_cd, " +
+				"		pc.cat_lvl   					AS cat_prnt_lvl, " +
+				"		pc.cat_typ_id 					AS cat_prnt_typ_id, " +
+				"		pct.cat_typ_cd					AS cat_prnt_typ_cd, " +
+				"		pct.cat_typ_desc				AS cat_prnt_typ_desc, " +
+				"		ppc.cat_id 						AS cat_prnt_prnt_id, " +
+				"		pc.cat_prnt_cd 					AS cat_prnt_prnt_cd, " + 
+				" 		pa.cat_lcl_id 					AS cat_prnt_lcl_id, " +
+				"       pa.cat_desc 					AS cat_prnt_desc, " +
+				"       pa.lcl_cd 						AS cat_prnt_lcl_cd, " +
+				"       a.cat_img_pth					AS cat_img_pth, " +
+				"       s.object_count					AS object_count, " +
+				"		coalesce(s.child_cat_count,0)	AS child_cat_count ") +
 
 				"FROM summaries s " +
-
-				"LEFT JOIN summaries ps " +
-				"ON ps.cat_id = s.cat_prnt_id " +
-
-				"LEFT JOIN (" + 
-				" SELECT 	cat_prnt_cd as cat_cd, " +
-				" 			count(distinct cat_id) as child_cat_count " +
-				" FROM summaries cs " +
-				" GROUP BY cat_prnt_cd" +
-				") cs " +
-				"ON s.cat_cd = cs.cat_cd " +
 				
 				"LEFT JOIN mochi.category_attr_lcl a " +
 				"ON s.cat_id = a.cat_id " +
@@ -817,7 +816,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				"  end " +
 				((!maxPriceOnly && !childrenOnly && hasCategoryDesc) ? 	" 	AND a.cat_desc = 	:categoryDesc " : "") +
 				((!maxPriceOnly && !childrenOnly && hasCategoryId) ? 	" 	AND s.cat_id = 		:categoryId " : "") +
-				((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : "") + 
+			//	((!maxPriceOnly && !childrenOnly && hasCategoryCd) ? 	" 	AND s.cat_cd = 		:categoryCode " : "") + 
 				((!maxPriceOnly)  ? "ORDER BY lower(a.cat_desc) ASC " : ""));
 			
 		return sql;
