@@ -612,11 +612,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		        "ON        s1.node <> s2.node 													" + 
 		        "AND       LEFT(s2.node, length(s1.node)) = s1.node 							" + 
 		        "WHERE     0=0 																	" +
-		        ((hasCategoryCd) 
-		        		? "AND 	   s1.cat_prnt_cd = :categoryCode								" 
-		        		: "") 																      +
+//		        ((hasCategoryCd) 
+//		        		? "AND 	   	COALESCE(s1.cat_prnt_cd, s2.cat_prnt_cd) = :categoryCode	" 
+//		        		: "") 																      +
 		        ((hasCategories) 
-						? " AND s2.cat_prnt_cd IN (:categoryCodes) " 
+						? " AND 	COALESCE(s1.cat_cd, s2.cat_cd) IN (:categoryCodes) 			" 
 						: "") 																	  +
 		        "GROUP BY  	 COALESCE(s2.cat_typ_id,s1.cat_typ_id), 							" +
 		        "	         COALESCE(s2.cat_id,s1.cat_id), 									" +
