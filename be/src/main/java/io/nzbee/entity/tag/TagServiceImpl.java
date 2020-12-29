@@ -21,7 +21,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	private static final String CACHE_NAME = "tagCache";
 	
 	@Autowired
-	private ITagDao tagDAO;
+	private ITagDao tagDao;
 	
 	@Autowired
 	private ITagRepository tagRepository;
@@ -42,34 +42,34 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<TagDTO> findAll(String locale) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}", locale);
-		return tagDAO.findAll(locale);
+		return tagDao.findAll(locale);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<TagDTO> findAll(String locale, Set<String> codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, StringUtils.join(codes));
-		return tagDAO.findAll(locale, codes);
+		return tagDao.findAll(locale, codes);
 	}
 	
 	@Override
 	public List<TagEntity> findAll(Set<String> codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}", StringUtils.join(codes));
-		return tagDAO.findAll(codes);
+		return tagDao.findAll(codes);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
 	public Optional<TagDTO> findById(String locale, Long id) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, id);
-		return tagDAO.findById(locale, id);
+		return tagDao.findById(locale, id);
 	}
 
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #tagCode}")
 	public Optional<TagDTO> findByCode(String locale, String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}", locale, code);
-		return tagDAO.findByCode(locale, code);
+		return tagDao.findByCode(locale, code);
 	}
 	
 	@Override
@@ -82,7 +82,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #tagDesc}")
 	public Optional<TagDTO> findByDesc(String locale, String desc) {
 		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, desc);
-		return tagDAO.findByDesc(locale, desc);
+		return tagDao.findByDesc(locale, desc);
 	}
 	
 	@Override
@@ -95,21 +95,21 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Cacheable(cacheNames = CACHE_NAME, key = "#tagCode")
 	public Optional<TagEntity> findByCode(String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}", code);
-		return tagDAO.findByCode(code);
+		return tagDao.findByCode(code);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<TagDTO> findAll(String locale, String currency, Set<String> codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}, {}", locale, currency, codes);
-		return tagDAO.findAll(locale, codes);
+		return tagDao.findAll(locale, codes);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}, {}", locale, currency, categoryCode);
-		return tagDAO.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice);
+		return tagDao.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice);
 	}
 	
 	@Override
@@ -135,7 +135,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
 	public void save(TagEntity tag) {
-		tagDAO.save(tag);
+		tagDao.save(tag);
 	}
 
 	@Override
