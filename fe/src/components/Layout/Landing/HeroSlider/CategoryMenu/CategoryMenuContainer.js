@@ -45,7 +45,7 @@ function CategoryMenuContainer(props) {
     }, []);
 
     const categories = useSelector(state => state.categories.list);
-    const rootCategory = findByCode(categories, 'PRM05');
+    const rootCategory = findByCode(categories, 'PRM01');
     if(!rootCategory) { return null; }
     return (
 
