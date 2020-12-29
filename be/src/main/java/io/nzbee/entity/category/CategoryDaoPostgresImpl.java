@@ -265,7 +265,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 true,
 															 false,
-															 false))
+															 true))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
