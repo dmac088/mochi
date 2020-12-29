@@ -3874,8 +3874,8 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
+GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
@@ -4064,8 +4064,8 @@ GRANT ALL ON SEQUENCE customer_cst_num_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 GRANT SELECT ON TABLE customer TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 
 
 --
@@ -4184,16 +4184,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 GRANT SELECT ON TABLE organisation TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 GRANT SELECT ON TABLE party TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 
 
 --
@@ -4214,8 +4214,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 GRANT SELECT ON TABLE party_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 
 
 --
@@ -4229,8 +4229,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 GRANT SELECT ON TABLE person TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 
 
 --
@@ -4412,16 +4412,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 GRANT SELECT ON TABLE role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 GRANT SELECT ON TABLE role_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 
 
 --
