@@ -199,7 +199,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false,
 															 true, 
 															 true,
-															 true))
+															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("parentCategoryCode", "-1")
