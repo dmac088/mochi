@@ -619,6 +619,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				
 		        "SELECT    	 COALESCE(s2.cat_typ_id,s1.cat_typ_id)   	AS cat_typ_id, 			" +
 		        "	         COALESCE(s2.cat_id,s1.cat_id)           	AS cat_id, 				" +
+		        "			 s2.cat_cd        					  		AS cat_cd,				" + 
 		        "			 COALESCE(s1.cat_id,s2.cat_id)				AS display_cat_id,		" +
 		        "			 COALESCE(s1.cat_cd,s2.cat_cd)				AS display_cat_cd,		" +
 		        "			 COALESCE(s1.cat_lvl,s2.cat_lvl)			AS display_cat_lvl		" +
@@ -634,6 +635,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 						
 		        "GROUP BY  	 COALESCE(s2.cat_typ_id,s1.cat_typ_id), 							" +
 		        "	         COALESCE(s2.cat_id,s1.cat_id), 									" +
+		        "			 s2.cat_cd,															" +									
 		        "	         COALESCE(s1.cat_id,s2.cat_id), 									" +
 		        "	         COALESCE(s1.cat_cd,s2.cat_cd), 									" +
 		        "	         COALESCE(s1.cat_lvl,s2.cat_lvl) 									" +
@@ -643,8 +645,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
                 "cc.display_cat_id                  	AS cat_id, 								" +
                 "cc.display_cat_cd                  	AS cat_cd, 								" +
                 "cc.display_cat_lvl         		   	AS cat_lvl, 							" +
-                "cc.cat_typ_id              		   	AS cat_typ_id, 						" +
-				"COUNT(DISTINCT cc.cat_id)		   		AS child_cat_count,						" +
+                "cc.cat_typ_id              		   	AS cat_typ_id, 							" +
+				"COUNT(DISTINCT cc.cat_cd)		   		AS child_cat_count,						" +
                 "COUNT(DISTINCT prd.upc_cd) 		   	AS object_count 						" +
 				((maxPriceOnly) ? ",    MAX(markdown_price.prc_val) 	AS max_markdown_price,  " +
 								 "      MAX(retail_price.prc_val) 		AS max_retail_price 	"  
