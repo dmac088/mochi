@@ -232,7 +232,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(3);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(30));
+        .isEqualTo(new Long(29));
 	} 
 	
 	@Test
