@@ -364,7 +364,7 @@ INSERT INTO party VALUES (234482, 1);
 
 INSERT INTO bag VALUES (234473, 232304, '2020-12-01 21:33:14.43+08', '2020-12-01 21:33:14.431+08');
 INSERT INTO bag VALUES (234476, 232304, '2020-12-01 21:40:31.98+08', '2020-12-01 21:40:31.98+08');
-INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2020-12-14 11:08:19.87+08');
+INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2020-12-29 23:10:54.306+08');
 
 
 --
@@ -387,7 +387,7 @@ INSERT INTO bag_item_status VALUES (3, 'PND01', 'Pending');
 -- Data for Name: bag_item; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag_item VALUES (234502, 234484, 233590, 2, 1);
+INSERT INTO bag_item VALUES (234506, 234484, 17, 2, 1);
 
 
 --
@@ -528,7 +528,6 @@ INSERT INTO category VALUES (21, 'PEA01', 1, 2, 'NUT01', 16);
 INSERT INTO category VALUES (24, 'MAC01', 1, 2, 'NUT01', 16);
 INSERT INTO category VALUES (23, 'BRA01', 1, 2, 'NUT01', 16);
 INSERT INTO category VALUES (19, 'CAS01', 1, 2, 'NUT01', 16);
-INSERT INTO category VALUES (35, 'DUM09', 1, 4, 'REV01', 36);
 INSERT INTO category VALUES (9, 'OTH01', 1, 2, 'VEG01', 4);
 INSERT INTO category VALUES (3, 'FRT01', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (20, 'ALM01', 1, 2, 'NUT01', 16);
@@ -638,7 +637,6 @@ INSERT INTO category_attr_lcl VALUES (69, 31, '假 5', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (71, 32, '假 6', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (73, 33, '假 7', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (75, 34, '假 8', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (77, 35, '假 9', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (79, 36, '紅色蔬菜', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (81, 37, '橙色蔬菜', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (10, 2, 'ALL', '', 'en-GB');
@@ -671,7 +669,6 @@ INSERT INTO category_attr_lcl VALUES (68, 31, 'DUMMY 5', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (70, 32, 'DUMMY 6', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (72, 33, 'DUMMY 7', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (74, 34, 'DUMMY 8', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (76, 35, 'DUMMY 9', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (82, 38, 'Featured', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (83, 38, '精選', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (84, 39, 'MISC', NULL, 'en-GB');
@@ -838,7 +835,6 @@ INSERT INTO category_product VALUES (17);
 INSERT INTO category_product VALUES (33);
 INSERT INTO category_product VALUES (19);
 INSERT INTO category_product VALUES (31);
-INSERT INTO category_product VALUES (35);
 INSERT INTO category_product VALUES (37);
 INSERT INTO category_product VALUES (34);
 INSERT INTO category_product VALUES (32);
@@ -1056,7 +1052,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234504, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234506, true);
 
 
 --
@@ -2112,7 +2108,6 @@ INSERT INTO product_category VALUES (40, 2, 14);
 INSERT INTO product_category VALUES (41, 3, 5);
 INSERT INTO product_category VALUES (42, 4, 8);
 INSERT INTO product_category VALUES (43, 5, 5);
-INSERT INTO product_category VALUES (44, 6, 6);
 INSERT INTO product_category VALUES (45, 7, 8);
 INSERT INTO product_category VALUES (46, 8, 14);
 INSERT INTO product_category VALUES (47, 9, 7);
@@ -2224,6 +2219,7 @@ INSERT INTO product_category VALUES (185, 233709, 233164);
 INSERT INTO product_category VALUES (186, 233716, 233134);
 INSERT INTO product_category VALUES (187, 233723, 233167);
 INSERT INTO product_category VALUES (188, 233730, 233167);
+INSERT INTO product_category VALUES (44, 6, 36);
 
 
 --
