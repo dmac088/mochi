@@ -43,7 +43,7 @@ function CategoryMenuContainer(props) {
             window.removeEventListener('resize', renderMenu, { passive: true });
         };
     }, []);
-
+ 
     const categories = useSelector(state => state.categories.list);
     const rootCategory = findByCode(categories, 'PRM01');
     if(!rootCategory) { return null; }

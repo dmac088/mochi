@@ -145,6 +145,10 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertTrue(!found.isEmpty());
 		assertThat(found.size()).isEqualTo(11);	
 		assertTrue(isOrdered(found));
+		assertTrue(found.stream().filter(f -> f.getCategoryCode().equals("FRT01")).findAny().isPresent());
+		assertTrue(found.stream().filter(f -> f.getCategoryCode().equals("VEG01")).findAny().isPresent());
+		//CategoryProductDTO cp = found.stream().filter(f -> f.getCategoryCode().equals("FRT01")).findAny().get();
+		
 	}
 	
 	@Test
