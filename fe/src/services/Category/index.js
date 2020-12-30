@@ -22,7 +22,6 @@ export const findRootNode = (categories) => {
   const min = categories.reduce(function(prev, current) {
     return (prev.categoryLevel > current.categoryLevel) ? current : prev
   })
-  console.log(min);
   return min;
 }
 
