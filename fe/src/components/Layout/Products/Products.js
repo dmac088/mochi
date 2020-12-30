@@ -3,7 +3,7 @@ import queryString from 'query-string';
 import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../components/Layout/Helpers/api/axios";
 import * as bagService from "../../../services/Bag/index";
-import { findByCode } from '../../../services/Category';
+import { findByCode, findRootNode } from '../../../services/Category';
 import ProductGrid from './Product/Grid/ProductGrid';
 import ProductList from './Product/List/ProductList';
 import CategorySidebar from './Sidebars/CategorySidebar';
@@ -97,7 +97,7 @@ function Products(props) {
 
     useEffect(() => {
         let isSubscribed = true;
-        const currentCategory = findByCode(categories.list, categoryCode);
+        const currentCategory = findRootNode(categories.list);
       
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||

@@ -16,6 +16,17 @@ export const findByCode = (categories, code) => {
     return categories.filter(o => o.data.categoryCode === code)[0];
 }
 
+export const findRootNode = (categories) => {
+  if (!categories) { return; }
+  if (categories.length <= 0) { return; }
+  const max = categories.reduce(function(prev, current) {
+    return (prev.categoryLevel < current.categoryLevel) ? prev : current
+  })
+  return max;
+}
+
+ //returns object
+
 export const getAllCategories = () => {
     return (dispatch, getState) => {
       dispatch(getCategoriesStarted());
