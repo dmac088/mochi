@@ -30,6 +30,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory;
 
@@ -90,35 +91,74 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
    
     
     @Test
-    public void whenFindById_thenReturnProductCategory() {
+    public void whenFindById_thenReturnProductCategoryEntity() {
     	
         // when
     	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
      
         // then
-    	assertFound(found);
+    	assertFoundEntity(found);
     }
     
     @Test
-    public void whenFindByCode_thenReturnProductCategory() {
+    public void whenFindByCode_thenReturnProductCategoryEntity() {
     	
         // when
     	Optional<CategoryEntity> found = categoryService.findByCode("TST02");
      
         // then
-    	assertFound(found);
+    	assertFoundEntity(found);
     }
     
    
     @Test
-    public void whenFindByDesc_thenReturnProductCategory() {
+    public void whenFindByDesc_thenReturnProductCategoryEntity() {
     	
         // when
     	Optional<CategoryEntity> found = categoryService.findEntityByDesc(Constants.localeENGB,
 				 														  "test product category");
      
         //then
-    	assertFound(found);
+    	assertFoundEntity(found);
+    }
+    
+    @Test
+    public void whenFindByCode_thenReturnProductCategoryDTO() {
+    	
+        // when
+    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "TST02");
+     
+        // then
+    	assertFoundDTO(found);
+    }
+    
+    @Test
+    public void whenFindFruitCategory_thenReturnProductCategoryDTO() {
+    	
+        // when
+    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "FRT01");
+     
+        // then
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
+    	
+    	assertThat(cp.getCategoryCode())
+        .isEqualTo("FRT01");
+    	
+	    assertThat(cp.getCategoryLevel())
+	    .isEqualTo(new Long(1));
+	    
+	    assertThat(cp.getCategoryDesc())
+	    .isEqualTo("Fruit");
+	    
+	    assertThat(cp.getChildCategoryCount())
+	    .isEqualTo(7);
+	    
+	    assertThat(cp.getCount())
+	    .isEqualTo(12);
     }
     
     @Test
@@ -136,8 +176,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 		    											brands, 
 		    											tags, 
 		    											null);
-     
-    	System.out.println(lc.size());
+
         //then
     	assertNotNull(lc);
     	assertThat(lc.size()).isEqualTo(7);
@@ -188,7 +227,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
   
-    private void assertFound(Optional<CategoryEntity> found) {
+    private void assertFoundEntity(Optional<CategoryEntity> found) {
     	
     	assertNotNull(found);
     	
@@ -204,6 +243,25 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 	    
 	    assertThat(cp.getCategoryDescENGB())
 	    .isEqualTo("test product category");
+    }
+    
+    private void assertFoundDTO(Optional<CategoryDTO> found) {
+    	
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
+    	
+    	assertThat(cp.getCategoryCode())
+        .isEqualTo("TST02");
+    	
+	    assertThat(cp.getCategoryLevel())
+	    .isEqualTo(new Long(1));
+	    
+	    assertThat(cp.getCategoryDesc())
+	    .isEqualTo("test product category");
+	    
     }
 
  
