@@ -19,10 +19,11 @@ export const findByCode = (categories, code) => {
 export const findRootNode = (categories) => {
   if (!categories) { return; }
   if (categories.length <= 0) { return; }
-  const max = categories.reduce(function(prev, current) {
-    return (prev.categoryLevel < current.categoryLevel) ? prev : current
+  const min = categories.reduce(function(prev, current) {
+    return (prev.categoryLevel > current.categoryLevel) ? current : prev
   })
-  return max;
+  console.log(min);
+  return min;
 }
 
  //returns object
