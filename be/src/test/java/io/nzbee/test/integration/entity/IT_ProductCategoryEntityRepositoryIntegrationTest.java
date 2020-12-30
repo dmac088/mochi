@@ -191,10 +191,10 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
-    public void whenFindCoolStationaryCategory_thenReturnProductCategoryDTO() {
+    public void whenFindRedAndOrangeVegetablesCategory_thenReturnProductCategoryDTO() {
     	
         // when
-    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "FCOO1");
+    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "ROV01");
      
         // then
     	assertNotNull(found);
@@ -204,19 +204,19 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	CategoryProductDTO cp = (CategoryProductDTO) found.get();
     	
     	assertThat(cp.getCategoryCode())
-        .isEqualTo("FCOO1");
+        .isEqualTo("ROV01");
     	
 	    assertThat(cp.getCategoryLevel())
 	    .isEqualTo(new Long(2));
 	    
 	    assertThat(cp.getCategoryDesc())
-	    .isEqualTo("Cool Stationary ");
+	    .isEqualTo("Red and Orange");
 	    
 	    assertThat(cp.getChildCategoryCount())
-	    .isEqualTo(1);
+	    .isEqualTo(2);
 	    
 	    assertThat(cp.getCount())
-	    .isEqualTo(5);
+	    .isEqualTo(1);
     }
     
     @Test
