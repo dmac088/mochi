@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import 'velocity-animate/velocity.ui';
 import CategoryMenu from "./CategoryMenu";
-import { findByCode } from '../../../../../services/Category';
+import { findByCode, findRootNode } from '../../../../../services/Category';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
 import { localization } from '../../../../Layout/Localization/Localization';
 
@@ -45,7 +45,7 @@ function CategoryMenuContainer(props) {
     }, []);
  
     const categories = useSelector(state => state.categories.list);
-    const rootCategory = findByCode(categories, 'PRM01');
+    const rootCategory = findRootNode(categories);
     if(!rootCategory) { return null; }
     return (
 
