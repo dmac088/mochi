@@ -129,9 +129,9 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	@Caching(evict = {
-			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.code"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.id}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.code}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.tagCode"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagId}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagCode}"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
 	public void save(TagEntity tag) {
