@@ -34,7 +34,7 @@ public abstract class CategoryDTO implements ISearchDimension {
 		this.categoryDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 		this.objectCount	= new Long(0);
-		if(!(tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)] == null)) {
+		if(!(aliasToIndexMap.get(OBJECT_COUNT_ALIAS) == null)) {
 			this.objectCount	= ((Number) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue();
 		}
 		
