@@ -162,6 +162,93 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    public void whenFindVegetableCategory_thenReturnProductCategoryDTO() {
+    	
+        // when
+    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "VEG01");
+     
+        // then
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
+    	
+    	assertThat(cp.getCategoryCode())
+        .isEqualTo("VEG01");
+    	
+	    assertThat(cp.getCategoryLevel())
+	    .isEqualTo(new Long(1));
+	    
+	    assertThat(cp.getCategoryDesc())
+	    .isEqualTo("Vegetables");
+	    
+	    assertThat(cp.getChildCategoryCount())
+	    .isEqualTo(7);
+	    
+	    assertThat(cp.getCount())
+	    .isEqualTo(12);
+    }
+    
+    @Test
+    public void whenFindCoolStationaryCategory_thenReturnProductCategoryDTO() {
+    	
+        // when
+    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "FCOO1");
+     
+        // then
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
+    	
+    	assertThat(cp.getCategoryCode())
+        .isEqualTo("FCOO1");
+    	
+	    assertThat(cp.getCategoryLevel())
+	    .isEqualTo(new Long(2));
+	    
+	    assertThat(cp.getCategoryDesc())
+	    .isEqualTo("Cool Stationary ");
+	    
+	    assertThat(cp.getChildCategoryCount())
+	    .isEqualTo(1);
+	    
+	    assertThat(cp.getCount())
+	    .isEqualTo(5);
+    }
+    
+    @Test
+    public void whenFindPomesCategory_thenReturnProductCategoryDTO() {
+    	
+        // when
+    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "POM01");
+     
+        // then
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
+    	
+    	assertThat(cp.getCategoryCode())
+        .isEqualTo("POM01");
+    	
+	    assertThat(cp.getCategoryLevel())
+	    .isEqualTo(new Long(2));
+	    
+	    assertThat(cp.getCategoryDesc())
+	    .isEqualTo("Pomes");
+	    
+	    assertThat(cp.getChildCategoryCount())
+	    .isEqualTo(0);
+	    
+	    assertThat(cp.getCount())
+	    .isEqualTo(3);
+    }
+    
+    @Test
     public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
     	
     	Set<String> categories = new HashSet<String>();
