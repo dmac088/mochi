@@ -428,6 +428,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Session session = em.unwrap(Session.class);
 		
 		final List<String> categoryCodes = new ArrayList<String>();
+		categoryCodes.add(categoryCode);
 		
 		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
 															 false,
@@ -442,6 +443,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("categoryCode", categoryCode)
+				 .setParameter("categoryCodes", categoryCodes)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 
