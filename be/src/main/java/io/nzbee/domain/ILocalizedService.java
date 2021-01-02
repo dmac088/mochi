@@ -13,5 +13,4 @@ public interface ILocalizedService<T> extends IService<T> {
 
 	List<T> findAll(String locale, Set<String> codes);
 
-	
 }
