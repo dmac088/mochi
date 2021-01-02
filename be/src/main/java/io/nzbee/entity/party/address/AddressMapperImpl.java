@@ -1,9 +1,12 @@
 package io.nzbee.entity.party.address;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.customer.address.Address;
 import io.nzbee.entity.party.person.ICustomerMapper;
 
+@Component(value="addressMapper")
 public class AddressMapperImpl implements IAddressMapper {
 
 	@Autowired
