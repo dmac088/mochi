@@ -25,6 +25,7 @@ import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.dto.customer.ICustomerDTOMapper;
 import io.nzbee.resources.customer.CustomerResource;
 import io.nzbee.resources.customer.CustomerResourceAssembler;
+import io.nzbee.resources.customer.address.CustomerAddressResourceAssembler;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
 
@@ -44,6 +45,9 @@ public class CustomerController {
     
     @Autowired
     private CustomerResourceAssembler customerResourceAssembler;
+    
+    @Autowired
+    private CustomerAddressResourceAssembler customerAddressResourceAssembler;
     
     @Autowired ICustomerDTOMapper customerDTOMapper;
 
@@ -88,8 +92,7 @@ public class CustomerController {
     @GetMapping("/Customer/Address")
 	public ResponseEntity<CustomerResource> getCustomerAddress(Principal customer) {   	
     	Address a = addressService.findByUsername(customer.getName()); 
-    	return null;
-    	//return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.doToDto(c)));
+    	return ResponseEntity.ok(customerAddressResourceAssembler.toModel(customerAddressDTOMapper.doToDto(c)));
 	}
        
     @PostMapping("/Customer/Update")
