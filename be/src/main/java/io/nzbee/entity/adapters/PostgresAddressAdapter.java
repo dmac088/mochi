@@ -4,6 +4,8 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import io.nzbee.Constants;
 import io.nzbee.domain.customer.address.Address;
 import io.nzbee.domain.ports.IAddressPortService;
 import io.nzbee.entity.party.address.IAddressMapper;
@@ -24,7 +26,7 @@ public class PostgresAddressAdapter implements IAddressPortService {
 	public Address findByUsername(String userName) {
 		LOGGER.debug("call PostgresAddressAdapter.findByUsername with parameter {}", userName);
 		
-		Optional<PartyAddressDTO> oa = addressService.findByUsername(userName);
+		Optional<PartyAddressDTO> oa = addressService.findByUsernameAndRole(userName, Constants.partyRoleCustomer);
 		
 		//if there is no current bag, get a new one
 		PartyAddressDTO a = oa.get();

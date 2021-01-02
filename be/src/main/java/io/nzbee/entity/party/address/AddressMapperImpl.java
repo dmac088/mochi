@@ -1,13 +1,26 @@
 package io.nzbee.entity.party.address;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.customer.address.Address;
+import io.nzbee.entity.party.person.IPersonMapper;
 
 public class AddressMapperImpl implements IAddressMapper {
 
+	@Autowired
+	private IPersonMapper personMapper;
+	
 	@Override
 	public Address DTOToDo(PartyAddressDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		return new Address(
+				personMapper.DTOToDo(dto.getPerson()), 
+				dto.getAddressLine1(),
+				dto.getAddressLine2(),
+				dto.getAddressLine3(),
+				dto.getCountry(),
+				dto.getPostcode(),
+				dto.getAddressType().getAddressTypeCode(), 
+				dto.getAddressType().getAddressTypeDesc()
+		);
 	}
 
 	@Override

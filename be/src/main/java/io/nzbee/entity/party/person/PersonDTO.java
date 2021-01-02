@@ -33,8 +33,7 @@ public class PersonDTO {
 					 String familyName,
 					 String userName,
 					 String customerNumber,
-					 Boolean enabled
-					 ) {
+					 Boolean enabled) {
 		this.personId 		= personId;
 		this.givenName 		= givenName;
 		this.familyName 	= familyName;
