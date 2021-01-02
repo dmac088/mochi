@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.ICustomerService;
+import io.nzbee.domain.customer.address.Address;
+import io.nzbee.domain.customer.address.IAddressService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.dto.customer.ICustomerDTOMapper;
@@ -33,6 +35,9 @@ public class CustomerController {
 
     @Autowired
     private ICustomerService customerService;
+    
+    @Autowired
+    private IAddressService addressService;
  
     @Autowired
     private ApplicationEventPublisher eventPublisher;
@@ -78,6 +83,13 @@ public class CustomerController {
 	public ResponseEntity<CustomerResource> getCustomer(Principal customer) {   	
     	Customer c = customerService.findByUsername(customer.getName());
     	return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.doToDto(c)));
+	}
+    
+    @GetMapping("/Customer/Address")
+	public ResponseEntity<CustomerResource> getCustomerAddress(Principal customer) {   	
+    	Address a = addressService.findByUsername(customer.getName()); 
+    	return null;
+    	//return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.doToDto(c)));
 	}
        
     @PostMapping("/Customer/Update")
