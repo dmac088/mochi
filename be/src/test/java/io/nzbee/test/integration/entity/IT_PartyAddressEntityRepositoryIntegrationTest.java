@@ -90,6 +90,17 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     	assertFound(found);
 	}
 	
+	@Test
+	@Rollback(false)
+	@WithUserDetails(value = "admin")
+	public void whenFindByUsername_thenReturnPartyAddress() {
+		 // when
+    	Optional<PartyAddressEntity> found = partyAddressService.findByUsername("bob@bob");
+     
+        // then
+    	assertFound(found);
+	}
+	
 		 
     private void assertFound(final Optional<PartyAddressEntity> found) {
     	assertNotNull(found);
