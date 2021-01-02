@@ -17,7 +17,7 @@ public interface IPartyAddressEntityRepository extends CrudRepository<PartyAddre
 			+ "															 a.postcode,"
 			+ "															 at.addressTypeId,"
 			+ "															 at.addressTypeCode,"
-			+ "															 at.addressTypeDesc"
+			+ "															 at.addressTypeDesc, "
 			+ "															 treat(p AS PersonEntity).partyId, "
 			+ "															 treat(p AS PersonEntity).givenName, "
 			+ "															 treat(p AS PersonEntity).familyName, "
