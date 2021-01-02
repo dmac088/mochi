@@ -1,11 +1,17 @@
 package io.nzbee.domain.customer.address;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import io.nzbee.domain.ports.IAddressPortService;
+
 public class AddressServiceImpl implements IAddressService {
 
+	@Autowired
+	private IAddressPortService addressService;
+	
 	@Override
-	public Address findByUsername(String username) {
-		// TODO Auto-generated method stub
-		return null;
+	public Address findByUsername(String userName) {
+		return addressService.findByUsername(userName);
 	}
 	
 	@Override
