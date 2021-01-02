@@ -28,27 +28,27 @@ public class PostgresAddressAdapter implements IAddressPortService {
 		
 		Optional<PartyAddressDTO> oa = addressService.findByUsernameAndRole(userName, Constants.partyRoleCustomer);
 		
-		//if there is no current bag, get a new one
 		PartyAddressDTO a = oa.get();
 	
-		//map the bag to a domain object
 		return addressMapper.DTOToDo(a);
 	}
 	
 	@Override
 	public void save(Address domainObject) {
-		// TODO Auto-generated method stub
-		
+		LOGGER.debug("call PostgresAddressAdapter.save()");
+		addressService.save(addressMapper.doToEntity(domainObject));
 	}
 
 	@Override
 	public void update(Address domainObject) {
+		LOGGER.debug("call PostgresAddressAdapter.update()");
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void delete(Address domainObject) {
+		LOGGER.debug("call PostgresAddressAdapter.delete()");
 		// TODO Auto-generated method stub
 		
 	}
