@@ -6,5 +6,4 @@ public interface IAddressService extends IService<Address> {
 
 	Address findByUsername(String username);
 	
-	
 }

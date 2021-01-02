@@ -31,6 +31,19 @@ public class PartyAddressDTO {
 	private String country;
 	
 	private String postcode;
+	
+	
+	public PartyAddressDTO(Long addressId, String addressLine1, String addressLine2, String addressLine3,
+			String country, String postcode, Long addressTypeId, String addressTypeCode, String addressTypeDesc) {
+		super();
+		this.addressId 		= addressId;
+		this.addressLine1 	= addressLine1;
+		this.addressLine2 	= addressLine2;
+		this.addressLine3 	= addressLine3;
+		this.country 		= country;
+		this.postcode 		= postcode;
+		this.addressType 	= new AddressTypeDTO(addressTypeId, addressTypeCode, addressTypeDesc);
+	}
 
 	public PartyAddressDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.addressId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
