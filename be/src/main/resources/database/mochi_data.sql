@@ -356,6 +356,7 @@ INSERT INTO party VALUES (234482, 1);
 -- Data for Name: address; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO address VALUES (1, 'Test Line 1', 'Test Line 2', 'Test Line 3', 'Test Ctry', 'Test PC', 1, 234482);
 
 
 --
