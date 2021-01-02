@@ -41,10 +41,6 @@ public class PartyAddressDTO {
 		this.postcode		= tuple[aliasToIndexMap.get(ADDR_POSTCODE_ALIAS)].toString();
 	}
 
-	public AddressTypeDTO getAddressType() {
-		return addressType;
-	}
-
 	public Long getAddressId() {
 		return addressId;
 	}
@@ -69,4 +65,11 @@ public class PartyAddressDTO {
 		return postcode;
 	}
 	
+	public AddressTypeDTO getAddressType() {
+		return addressType;
+	}
+
+	public void setAddressType(AddressTypeDTO addressType) {
+		this.addressType = addressType;
+	}
 }
