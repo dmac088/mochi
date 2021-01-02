@@ -23,8 +23,10 @@ import io.nzbee.domain.customer.address.IAddressService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.dto.customer.ICustomerDTOMapper;
+import io.nzbee.dto.customer.address.ICustomerAddressDTOMapper;
 import io.nzbee.resources.customer.CustomerResource;
 import io.nzbee.resources.customer.CustomerResourceAssembler;
+import io.nzbee.resources.customer.address.CustomerAddressResource;
 import io.nzbee.resources.customer.address.CustomerAddressResourceAssembler;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
@@ -49,7 +51,11 @@ public class CustomerController {
     @Autowired
     private CustomerAddressResourceAssembler customerAddressResourceAssembler;
     
-    @Autowired ICustomerDTOMapper customerDTOMapper;
+    @Autowired 
+    private ICustomerDTOMapper customerDTOMapper;
+    
+    @Autowired 
+    private ICustomerAddressDTOMapper customerAddressDTOMapper;
 
     public CustomerController() {
         super();
@@ -90,9 +96,9 @@ public class CustomerController {
 	}
     
     @GetMapping("/Customer/Address")
-	public ResponseEntity<CustomerResource> getCustomerAddress(Principal customer) {   	
+	public ResponseEntity<CustomerAddressResource> getCustomerAddress(Principal customer) {   	
     	Address a = addressService.findByUsername(customer.getName()); 
-    	return ResponseEntity.ok(customerAddressResourceAssembler.toModel(customerAddressDTOMapper.doToDto(c)));
+    	return ResponseEntity.ok(customerAddressResourceAssembler.toModel(customerAddressDTOMapper.doToDto(a)));
 	}
        
     @PostMapping("/Customer/Update")
