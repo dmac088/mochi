@@ -7,10 +7,10 @@ import io.nzbee.entity.role.customer.CustomerEntity;
 import org.springframework.stereotype.Component;
 
 @Component(value="customerMapper")
-public class CustomerMapper implements ICustomerMapper {
+public class PersonMapperImpl implements IPersonMapper {
 
 	@Override
-	public Customer DTOToDo(CustomerDTO dto) {
+	public Customer DTOToDo(PersonDTO dto) {
 
 		Customer co = new Customer(
 			dto.getGivenName(),
