@@ -10,7 +10,7 @@ import io.nzbee.entity.bag.item.BagItemDTO;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
-import io.nzbee.entity.party.person.CustomerDTO;
+import io.nzbee.entity.party.person.PersonDTO;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
@@ -30,7 +30,7 @@ public class BagDTOResultTransformer implements ResultTransformer {
 	
 	private Map<Long, DepartmentDTO> departmentDTOMap = new LinkedHashMap<>();
 	
-	private Map<Long, CustomerDTO> customerDTOMap = new LinkedHashMap<>();
+	private Map<Long, PersonDTO> customerDTOMap = new LinkedHashMap<>();
 	
 	private Map<Long, CategoryProductDTO> categoryDTOMap = new LinkedHashMap<>();
 	
@@ -53,12 +53,12 @@ public class BagDTOResultTransformer implements ResultTransformer {
             }
         );
         
-        Long customerId = ((Number) tuple[aliasToIndexMap.get(CustomerDTO.ID_ALIAS)]).longValue();
+        Long customerId = ((Number) tuple[aliasToIndexMap.get(PersonDTO.ID_ALIAS)]).longValue();
         
-        CustomerDTO customerDTO = customerDTOMap.computeIfAbsent(
+        PersonDTO customerDTO = customerDTOMap.computeIfAbsent(
             customerId,
             cId -> {
-            	CustomerDTO c = new CustomerDTO(tuple, aliasToIndexMap);
+            	PersonDTO c = new PersonDTO(tuple, aliasToIndexMap);
             	return c;
             }
         );   

@@ -2,7 +2,7 @@ package io.nzbee.entity.party.person;
 
 import java.util.Map;
 
-public class CustomerDTO {
+public class PersonDTO {
 	
 	public static final String ID_ALIAS = "pty_id";
 	
@@ -28,7 +28,7 @@ public class CustomerDTO {
 	
 	private Boolean enabled;
 	
-	public CustomerDTO(Long personId,
+	public PersonDTO(Long personId,
 					 String givenName,
 					 String familyName,
 					 String userName,
@@ -43,7 +43,7 @@ public class CustomerDTO {
 		this.enabled		= enabled;
 	}
 
-	public CustomerDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public PersonDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.personId 			= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.givenName 			= tuple[aliasToIndexMap.get(GIVEN_NAME_ALIAS)].toString();
 		this.familyName 		= tuple[aliasToIndexMap.get(FAMILY_NAME_ALIAS)].toString();

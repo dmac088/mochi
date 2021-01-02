@@ -4,7 +4,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import io.nzbee.entity.bag.item.BagItemDTO;
-import io.nzbee.entity.party.person.CustomerDTO;
+import io.nzbee.entity.party.person.PersonDTO;
 
 public class BagDTO {
 	
@@ -14,7 +14,7 @@ public class BagDTO {
 	
 	private Set<BagItemDTO> bagItems  = new HashSet<BagItemDTO>();
 	
-	private CustomerDTO customer;
+	private PersonDTO customer;
 
 	public BagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.bagId = ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
@@ -28,11 +28,11 @@ public class BagDTO {
 		return bagId;
 	}
 
-	public CustomerDTO getCustomer() {
+	public PersonDTO getCustomer() {
 		return customer;
 	}
 
-	public void setCustomer(CustomerDTO customer) {
+	public void setCustomer(PersonDTO customer) {
 		this.customer = customer;
 	}
 	
