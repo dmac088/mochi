@@ -14,6 +14,8 @@ import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.CustomerServiceImpl;
 import io.nzbee.domain.customer.ICustomerService;
+import io.nzbee.domain.customer.address.AddressServiceImpl;
+import io.nzbee.domain.customer.address.IAddressService;
 import io.nzbee.domain.department.DepartmentServiceImpl;
 import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.IProductService;
@@ -78,6 +80,11 @@ public class BeanConfiguration {
     @Bean
     public IBagItemDTOMapper bagItemDtoMapper() {
 		return new BagItemDTOMapperImpl();
+    }
+    
+    @Bean
+    public IAddressService addressService() {
+        return new AddressServiceImpl();
     }
   
 }
