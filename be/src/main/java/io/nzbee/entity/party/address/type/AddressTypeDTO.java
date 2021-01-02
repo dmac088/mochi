@@ -10,11 +10,28 @@ public class AddressTypeDTO {
 	
 	public static final String ADDRESS_TYPE_DESC_ALIAS = "addr_typ_desc";
 		
+	private Long addressTypeId;
+	
+	private String addressTypeCode;
+	
+	private String addressTypeDesc;
+	
 	public AddressTypeDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		
-		
+		this.addressTypeId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
+		this.addressTypeCode	= tuple[aliasToIndexMap.get(ADDRESS_TYPE_CODE_ALIAS)].toString();
+		this.addressTypeDesc	= tuple[aliasToIndexMap.get(ADDRESS_TYPE_DESC_ALIAS)].toString();
 	}
-	
-	
+
+	public Long getAddressTypeId() {
+		return addressTypeId;
+	}
+
+	public String getAddressTypeCode() {
+		return addressTypeCode;
+	}
+
+	public String getAddressTypeDesc() {
+		return addressTypeDesc;
+	}
 	
 }
