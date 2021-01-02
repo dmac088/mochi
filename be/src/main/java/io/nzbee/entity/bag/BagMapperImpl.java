@@ -12,7 +12,7 @@ import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.bag.item.IBagItemMapper;
-import io.nzbee.entity.party.person.IPersonMapper;
+import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.party.person.PersonDTO;
@@ -24,7 +24,7 @@ public class BagMapperImpl implements IBagMapper {
 	private IBagService bagService;
 	
 	@Autowired
-	private IPersonMapper personMapper;
+	private ICustomerMapper personMapper;
 	
 	@Autowired
 	private IBagItemMapper bagItemMapper;

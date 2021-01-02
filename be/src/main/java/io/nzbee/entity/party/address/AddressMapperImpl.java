@@ -2,12 +2,12 @@ package io.nzbee.entity.party.address;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.customer.address.Address;
-import io.nzbee.entity.party.person.IPersonMapper;
+import io.nzbee.entity.party.person.ICustomerMapper;
 
 public class AddressMapperImpl implements IAddressMapper {
 
 	@Autowired
-	private IPersonMapper personMapper;
+	private ICustomerMapper personMapper;
 	
 	@Override
 	public Address DTOToDo(PartyAddressDTO dto) {

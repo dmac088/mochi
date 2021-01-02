@@ -40,7 +40,7 @@ import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 import io.nzbee.security.user.verificationtoken.VerificationToken;
 import io.nzbee.security.user.verificationtoken.VerificationTokenRepository;
-import io.nzbee.entity.party.person.IPersonMapper;
+import io.nzbee.entity.party.person.ICustomerMapper;
 
 @Component
 public class PostgresCustomerAdapter implements ICustomerPortService {
@@ -49,7 +49,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	private IPersonService personService;
 	
 	@Autowired
-	private IPersonMapper customerMapper;
+	private ICustomerMapper customerMapper;
 	
 	@Autowired
 	private IRoleTypeRepository roleTypeRepository;
