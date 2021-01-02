@@ -21,6 +21,13 @@ public class AddressTypeDTO {
 		this.addressTypeCode	= tuple[aliasToIndexMap.get(ADDRESS_TYPE_CODE_ALIAS)].toString();
 		this.addressTypeDesc	= tuple[aliasToIndexMap.get(ADDRESS_TYPE_DESC_ALIAS)].toString();
 	}
+	
+	public AddressTypeDTO(Long addressTypeId, String addressTypeCode, String addressTypeDesc) {
+		super();
+		this.addressTypeId = addressTypeId;
+		this.addressTypeCode = addressTypeCode;
+		this.addressTypeDesc = addressTypeDesc;
+	}
 
 	public Long getAddressTypeId() {
 		return addressTypeId;
