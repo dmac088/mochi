@@ -7,7 +7,7 @@ import io.nzbee.domain.customer.address.Address;
 import io.nzbee.test.integration.domain.beans.customer.ICustomerDoBeanFactory;
 
 @Service
-@Profile(value = "it")
+@Profile("it")
 public class CustomerAddressDoBeanFactory implements ICustomerAddressDoBeanFactory {
 
 	@Autowired 

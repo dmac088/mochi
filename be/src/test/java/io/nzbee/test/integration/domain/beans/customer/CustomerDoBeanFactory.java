@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.domain.customer.Customer;
 
 @Service
-@Profile(value = "it")
+@Profile("it")
 public class CustomerDoBeanFactory implements ICustomerDoBeanFactory {
 
 	@Override

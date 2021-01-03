@@ -35,7 +35,7 @@ public class PartyServiceImpl implements IPartyService {
 
 	@Override
 	public Optional<Party> findByCode(String code) {
-		return null;
+		return partyRepository.findByPartyUserUsername(code);
 	}
 
 	@Override
@@ -51,6 +51,11 @@ public class PartyServiceImpl implements IPartyService {
 	@Override
 	public void delete(Party t) {
 		partyRepository.delete(t);
+	}
+
+	@Override
+	public Optional<Party> findByUsername(String userName) {
+		return partyRepository.findByPartyUserUsername(userName);
 	}
 
 }
