@@ -33,6 +33,7 @@ export const getCustomerSuccess = customer => ({
   payload: {
       ...customer,
       loading: false,
+      isDone: true,
     }
 });
 
