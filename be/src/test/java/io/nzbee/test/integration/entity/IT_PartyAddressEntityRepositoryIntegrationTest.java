@@ -48,7 +48,7 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 
 	@TestConfiguration
     static class PartyAddressEntityRepositoryIntegrationTest {
-        
+       
     }
 	
 	@MockBean
