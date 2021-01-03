@@ -2,9 +2,11 @@
 import React, { useEffect } from "react";
 
 function Address(props) {
+    const { customer } = props;
 
     useEffect(() => {
         let isSubscribed = true;
+        console.log(customer);
         // axios.get(
 
         // );
