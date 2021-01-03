@@ -76,7 +76,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     })
 @WebMvcTest(CategoryController.class)
 @Import(WebSecurityConfig.class)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_CategoryControllerIntegrationTest {
 	
     @Autowired
@@ -104,7 +104,7 @@ public class IT_CategoryControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(88)));
+        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(87)));
         
     }
     
@@ -120,8 +120,7 @@ public class IT_CategoryControllerIntegrationTest {
         		.andExpect(content().contentType("application/hal+json"))
         		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"))
         		.andExpect(jsonPath("$.data.categoryDesc").value("Fruit"))
-        		.andExpect(jsonPath("$.data.locale").value(Constants.localeENGB))
-        		.andExpect(jsonPath("$.data.currency").value(Constants.currencyHKD));
+        		.andExpect(jsonPath("$.data.locale").value(Constants.localeENGB));
     }
     
 
