@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession } from '../../../../services/Session';
 import { clearBag } from '../../../../services/Bag';
@@ -21,6 +21,12 @@ function Dashboard(props) {
   const dispatch = useDispatch();
   const customer = useSelector(state => state.customer);
   const discovery = useSelector(state => state.discovery);
+
+  const [stateObject, setObjectState] = useState({
+    address: null,
+    loading: true,
+    isDone: false,
+  });
 
   const logout = (e) => {
     e.preventDefault();
@@ -59,7 +65,9 @@ function Dashboard(props) {
       return (
         <TheComponent 
           {...props}
-          customer={customer} />
+          customer={customer}
+          setAddressState={setObjectState}
+          addressState={stateObject} />
       );
     }
     return <Default {...props}

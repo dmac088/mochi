@@ -41,7 +41,6 @@ const isAuthenticated = () => {
 }
 
 export const addToBag = (productCode, quantity = 1) => {
-    console.log('addToBag');
 
     if (isAuthenticated()) {
         store.dispatch(addItem({
@@ -52,7 +51,6 @@ export const addToBag = (productCode, quantity = 1) => {
 }
 
 const addItem = (item) => {
-    console.log('addItem');
     return (dispatch, getState) => {
 
         dispatch(addBagItemStarted());
@@ -71,7 +69,6 @@ const addItem = (item) => {
 }
 
 export const removeItem = (itemCode) => {
-    console.log('removeItem');
     return (dispatch, getState) => {
 
         dispatch(removeBagItemStarted());
@@ -90,7 +87,6 @@ export const removeItem = (itemCode) => {
 }
 
 const updateItem = (item) => {
-    console.log('updateItem');
     return (dispatch, getState) => {
 
         dispatch(updateBagItemStarted());
@@ -109,7 +105,6 @@ const updateItem = (item) => {
 }
 
 export const getBag = () => {
-    console.log('getBag');
     return (dispatch, getState) => {
         const state = getState();
 
@@ -127,7 +122,6 @@ export const getBag = () => {
 }
 
 export const clearBag = () => {
-    console.log('clearBag');
     return (dispatch) => {
         dispatch(emptyBag());
         dispatch(emptyBagContents());
@@ -136,7 +130,6 @@ export const clearBag = () => {
 
 //we need to inject the dependencies into the function
 export const getBagContents = () => {
-    console.log('getBagContents');
     return (dispatch, getState) => {
 
         dispatch(getBagContentsStarted());

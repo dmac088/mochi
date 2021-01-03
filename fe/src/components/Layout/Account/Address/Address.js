@@ -5,13 +5,7 @@ import { getAccountSubPath } from "../../Helpers/Route/Route";
 import { Link } from 'react-router-dom';
 
 function Address(props) {
-    const { match, history, customer } = props;
-
-    const [stateObject, setObjectState] = useState({
-        address: null,
-        loading: true,
-        isDone: false,
-    });
+    const { match, customer, setAddressState, addressState } = props;
 
     useEffect(() => {
         let isSubscribed = true;
@@ -19,7 +13,7 @@ function Address(props) {
             axios.get(customer._links.address.href)
                 .then((response) => {
                     if (isSubscribed) {
-                        setObjectState((prevState) => ({
+                        setAddressState((prevState) => ({
                             ...prevState,
                             address: response.data.data,
                             loading: false,
@@ -32,19 +26,19 @@ function Address(props) {
     }, [customer.loading, customer.isDone]);
 
     return (
-        (stateObject.loading)
+        (addressState.loading)
             ? <Spinner />
             : <React.Fragment>
                 <h3>Default Billing Address</h3>
 
                 <address>
                     <p><strong>{customer.data.givenName}</strong></p>
-                    <p>{stateObject.address.addressLine1}
-                        <br />{stateObject.address.addressLine2}
-                        <br />{stateObject.address.addressLine3}
+                    <p>{addressState.address.addressLine1}
+                        <br />{addressState.address.addressLine2}
+                        <br />{addressState.address.addressLine3}
                     </p>
-                    <p>{stateObject.address.country}</p>
-                    <p>{stateObject.address.postCode}</p>
+                    <p>{addressState.address.country}</p>
+                    <p>{addressState.address.postCode}</p>
 
                     <Link   to={() => getAccountSubPath(match, 'editaddress')} 
                             className="btn d-inline-block edit-address-btn">
