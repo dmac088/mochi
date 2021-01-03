@@ -3,8 +3,6 @@ import React, { useEffect } from "react";
 
 function Address(props) {
 
-    console.log(props);
-
     useEffect(() => {
         let isSubscribed = true;
         // axios.get(
