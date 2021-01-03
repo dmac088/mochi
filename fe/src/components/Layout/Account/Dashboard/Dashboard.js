@@ -18,7 +18,6 @@ import AccountDetails  from "../AccountDetails/AccountDetails";
 
 function Dashboard(props) {
   const { match, history } = props;
-
   const dispatch = useDispatch();
   const customer = useSelector(state => state.customer);
   const discovery = useSelector(state => state.discovery);
@@ -53,7 +52,6 @@ function Dashboard(props) {
     path: "/:lang/:curr/myaccount/:component"
   })
   
-
   const selectedComponent = () => {   
     if(mockMatch) {
       const { params } = mockMatch;
