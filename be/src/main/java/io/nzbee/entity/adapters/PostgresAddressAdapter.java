@@ -28,7 +28,7 @@ public class PostgresAddressAdapter implements IAddressPortService {
 	public Address findByUsername(String userName) {
 		LOGGER.debug("call PostgresAddressAdapter.findByUsername with parameter {}", userName);
 		
-		Optional<PartyAddressDTO> oa = addressService.findByUsernameAndRole(userName, Constants.partyRoleCustomer);
+		Optional<PartyAddressDTO> oa = addressService.findByUsername(userName, Constants.partyRoleCustomer);
 		
 		PartyAddressDTO a = oa.get();
 	
