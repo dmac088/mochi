@@ -7,6 +7,7 @@ function Address(props) {
     const [stateObject, setObjectState] = useState({
         address: null,
         loading: false,
+        isDone: false,
     });
 
     useEffect(() => {
@@ -20,6 +21,7 @@ function Address(props) {
                         ...prevState,
                         address: response.data.data,
                         loading: false,
+                        isDone: true,
                     }));
                 }
             });
@@ -27,7 +29,7 @@ function Address(props) {
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
 
-    if(!stateObject.address) {
+    if(!stateObject.loading && !stateObject.isDone) {
         return null;
     }
 
