@@ -17,20 +17,20 @@ function MainMenu(props) {
                 <li>
                     <BasicMenuItem
                         {...props}
-                        routePath={getCategoryPath('ACC01', match)}
-                        descKey={'accessories'} />
+                        routePath={getCategoryPath('FRT01', match)}
+                        descKey={'fruit'} />
                 </li>
                 <li>
                     <BasicMenuItem
                         {...props}
-                        routePath={getCategoryPath('FAS01', match)}
-                        descKey={'fashion'} />
+                        routePath={getCategoryPath('VEG01', match)}
+                        descKey={'vegetables'} />
                 </li>
                 <li>
                     <BasicMenuItem
                         {...props}
-                        routePath={getCategoryPath('HOM01', match)}
-                        descKey={'homeandlifestyle'} />
+                        routePath={getCategoryPath('NUT01', match)}
+                        descKey={'nuts'} />
                 </li>
                 <li>
                     <BasicMenuItem
