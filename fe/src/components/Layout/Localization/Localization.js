@@ -7,6 +7,8 @@ export const localization = {
         "contact": "Contact Us",
         "mycheckout": "Checkout",
         "myaccount": "My Account",
+        "viewaddress": "View Address",
+        "editaddress": "Edit Address",
         "mywishlist": "My Wishlist",
         "subtotal": "Subtotal",
         "checkout": "Checkout",
