@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import { getAccountSubPath } from "../../Helpers/Route/Route";
@@ -44,16 +44,7 @@ function Address(props) {
                             className="btn d-inline-block edit-address-btn">
                             <i className="fa fa-edit"></i>Edit Address</Link>
                 </address>
-
-                <h3>Default Shipping Address</h3>
-
-                <address>
-                    <p><strong>Alex Tuntuni</strong></p>
-                    <p>1355 Market St, Suite 900 <br />San Francisco, CA 94103</p>
-                    <p>Mobile: (123) 456-7890</p>
-
-                    <Link to={() => getAccountSubPath(match, 'editaddress')} className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</Link>
-                </address>
+                
             </React.Fragment>
     );
 }

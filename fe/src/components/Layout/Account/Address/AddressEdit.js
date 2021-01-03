@@ -11,6 +11,7 @@ function AddressEdit(props) {
         (!addressState.address)
         ? <Spinner />
         : <React.Fragment>
+            <h3>Edit Billing Address</h3>
             <div className="account-details-form">
                 <form action="#">
                     <div className="row">
