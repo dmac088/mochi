@@ -6,8 +6,8 @@ import io.nzbee.entity.IDao;
 
 public interface IPartyAddressService extends IDao<PartyAddressEntity> {
 	
-	Optional<PartyAddressEntity> findEntityByUsername(String userName);
+	Optional<PartyAddressEntity> findByUsername(String userName);
 
-	Optional<PartyAddressDTO> findByUsernameAndRole(String userName, String roleName);
+	Optional<PartyAddressDTO> findByUsername(String userName, String roleName);
 	
 }
