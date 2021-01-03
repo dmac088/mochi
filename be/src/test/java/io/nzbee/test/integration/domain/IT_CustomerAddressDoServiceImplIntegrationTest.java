@@ -24,7 +24,6 @@ import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.customer.address.Address;
 import io.nzbee.domain.ports.IAddressPortService;
-import io.nzbee.test.integration.domain.beans.customer.CustomerDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.customer.ICustomerDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.customer.address.CustomerAddressDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.customer.address.ICustomerAddressDoBeanFactory;
@@ -48,11 +47,6 @@ public class IT_CustomerAddressDoServiceImplIntegrationTest {
 	@TestConfiguration
 	static class CustomerAddressDoServiceImplIntegrationTest_Configuration {
 		// the beans that we need to run this test
-		@Bean
-		public ICustomerDoBeanFactory customerDoBeanFactory() {
-			return new CustomerDoBeanFactory();
-		}
-		
 		@Bean
 		public ICustomerAddressDoBeanFactory customerAddressDoBeanFactory() {
 			return new CustomerAddressDoBeanFactory();
@@ -90,7 +84,7 @@ public class IT_CustomerAddressDoServiceImplIntegrationTest {
 	public void whenFindCustomerAddressByUsername_thenReturnCustomerAddress() {
 		
 		// when
-		Address found = customerAddressService.findByUsername("tst088");
+		Address found = customerAddressService.findByUsername("bob@bob");
 
 		// then
 		assertFound(found);
@@ -122,7 +116,7 @@ public class IT_CustomerAddressDoServiceImplIntegrationTest {
 	    .isEqualTo("Billing Address");
 		
 		assertThat(found.getCustomer().getUserName())
-	    .isEqualTo("tst088");
+	    .isEqualTo("bob@bob");
 		
 	}
 	
