@@ -29,6 +29,9 @@ export const localization = {
         "browse": "Browse",
         "accessories": "Accessories",
         "fashion": "Fashion",
+        "fruit": "Fruit",
+        "vegetables": "Vegetables",
+        "nuts": "Nuts",
         "homeandlifestyle": "Home & Lifestyle",
     },
     "zh-HK": {
@@ -52,5 +55,8 @@ export const localization = {
         "accessories": "飾物",
         "fashion": "時裝",
         "homeandlifestyle": "家居",
+        "fruit": "水果",
+        "vegetables": "蔬菜",
+        "nuts": "堅果",
     }
 }
