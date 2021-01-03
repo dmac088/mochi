@@ -68,7 +68,10 @@ public class IT_CustomerAddressDoServiceImplIntegrationTest {
 
 	@Autowired
 	private ICustomerAddressDoBeanFactory customerAddressDoBeanFactory;
-
+	
+	@MockBean
+	private ICustomerDoBeanFactory customerDoBeanFactory;
+	
 	@Before
 	@WithUserDetails(value = "admin")
 	public void setUp() { 

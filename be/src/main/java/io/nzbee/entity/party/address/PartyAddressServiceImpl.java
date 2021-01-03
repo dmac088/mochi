@@ -38,8 +38,7 @@ public class PartyAddressServiceImpl implements IPartyAddressService {
 
 	@Override
 	public void save(PartyAddressEntity t) {
-		// TODO Auto-generated method stub
-		
+		partyAddressRepository.save(t);
 	}
 
 	@Override
