@@ -25,8 +25,6 @@ export const findRootNode = (categories) => {
   return min;
 }
 
- //returns object
-
 export const getAllCategories = () => {
     return (dispatch, getState) => {
       dispatch(getCategoriesStarted());
