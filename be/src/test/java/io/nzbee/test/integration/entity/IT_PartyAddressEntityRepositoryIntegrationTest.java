@@ -18,14 +18,12 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.party.address.IPartyAddressService;
 import io.nzbee.entity.party.address.PartyAddressDTO;
@@ -83,7 +81,6 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
-	@Rollback(false)
 	@WithUserDetails(value = "admin")
 	public void whenFindById_thenReturnPartyAddress() {
 		 // when
@@ -94,7 +91,6 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
-	@Rollback(false)
 	@WithUserDetails(value = "admin")
 	public void whenFindByUsername_thenReturnPartyAddressEntity() {
 		 // when
@@ -105,7 +101,6 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
-	@Rollback(false)
 	@WithUserDetails(value = "admin")
 	public void whenFindByUsername_thenReturnPartyAddressDTO() {
 		 // when
