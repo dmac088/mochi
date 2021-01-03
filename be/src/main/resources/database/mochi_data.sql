@@ -365,7 +365,7 @@ INSERT INTO address VALUES (1, 'Test Line 1', 'Test Line 2', 'Test Line 3', 'Tes
 
 INSERT INTO bag VALUES (234473, 232304, '2020-12-01 21:33:14.43+08', '2020-12-01 21:33:14.431+08');
 INSERT INTO bag VALUES (234476, 232304, '2020-12-01 21:40:31.98+08', '2020-12-01 21:40:31.98+08');
-INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2021-01-03 16:00:11.973+08');
+INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2021-01-03 23:13:29.022+08');
 
 
 --
@@ -388,7 +388,7 @@ INSERT INTO bag_item_status VALUES (3, 'PND01', 'Pending');
 -- Data for Name: bag_item; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag_item VALUES (234506, 234484, 17, 1, 1);
+INSERT INTO bag_item VALUES (234506, 234484, 17, 2, 1);
 
 
 --
@@ -497,22 +497,16 @@ INSERT INTO category VALUES (40, 'BND01', 1, 0, NULL, NULL);
 INSERT INTO category VALUES (2, 'PRM01', 1, 0, NULL, NULL);
 INSERT INTO category VALUES (38, 'FET01', 1, 1, 'PRM02', 39);
 INSERT INTO category VALUES (25, 'OFT01', 1, 2, 'FRT01', 3);
-INSERT INTO category VALUES (31, 'DUM05', 1, 1, 'PRM01', 2);
-INSERT INTO category VALUES (33, 'DUM07', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (4, 'VEG01', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (13, 'MEL01', 1, 2, 'FRT01', 3);
 INSERT INTO category VALUES (11, 'DRU01', 1, 2, 'FRT01', 3);
 INSERT INTO category VALUES (36, 'REV01', 1, 3, 'ROV01', 6);
 INSERT INTO category VALUES (22, 'PEC01', 1, 2, 'NUT01', 16);
-INSERT INTO category VALUES (28, 'DUM02', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (10, 'POM01', 1, 2, 'FRT01', 3);
 INSERT INTO category VALUES (42, 'OTH02', 1, 1, 'BND01', 40);
 INSERT INTO category VALUES (17, 'PIS01', 1, 2, 'NUT01', 16);
-INSERT INTO category VALUES (34, 'DUM08', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (5, 'DGV01', 1, 2, 'VEG01', 4);
 INSERT INTO category VALUES (15, 'TRO01', 1, 2, 'FRT01', 3);
-INSERT INTO category VALUES (32, 'DUM06', 1, 1, 'PRM01', 2);
-INSERT INTO category VALUES (30, 'DUM04', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (6, 'ROV01', 1, 2, 'VEG01', 4);
 INSERT INTO category VALUES (12, 'BER01', 1, 2, 'FRT01', 3);
 INSERT INTO category VALUES (43, 'BSP01', 1, 1, 'PRM02', 39);
@@ -521,8 +515,6 @@ INSERT INTO category VALUES (16, 'NUT01', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (18, 'HAZ01', 1, 2, 'NUT01', 16);
 INSERT INTO category VALUES (26, 'ONT01', 1, 2, 'NUT01', 16);
 INSERT INTO category VALUES (7, 'BAP01', 1, 2, 'VEG01', 4);
-INSERT INTO category VALUES (29, 'DUM03', 1, 1, 'PRM01', 2);
-INSERT INTO category VALUES (27, 'DUM01', 1, 1, 'PRM01', 2);
 INSERT INTO category VALUES (14, 'CIT01', 1, 2, 'FRT01', 3);
 INSERT INTO category VALUES (44, 'UNK01', 1, 1, 'PRM02', 39);
 INSERT INTO category VALUES (21, 'PEA01', 1, 2, 'NUT01', 16);
@@ -630,14 +622,6 @@ INSERT INTO category_attr_lcl VALUES (53, 23, '巴西', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (55, 24, '澳洲', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (57, 25, '其他水果', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (59, 26, '其他堅果', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (61, 27, '假 1', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (63, 28, '假 2', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (65, 29, '假 3', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (67, 30, '假 4', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (69, 31, '假 5', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (71, 32, '假 6', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (73, 33, '假 7', NULL, 'zh-HK');
-INSERT INTO category_attr_lcl VALUES (75, 34, '假 8', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (79, 36, '紅色蔬菜', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (81, 37, '橙色蔬菜', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (10, 2, 'ALL', '', 'en-GB');
@@ -662,14 +646,6 @@ INSERT INTO category_attr_lcl VALUES (52, 23, 'Brazil', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (54, 24, 'Macadamia', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (56, 25, 'Other Fruit', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (58, 26, 'Other Nuts', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (60, 27, 'DUMMY 1', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (62, 28, 'DUMMY 2', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (64, 29, 'DUMMY 3', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (66, 30, 'DUMMY 4', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (68, 31, 'DUMMY 5', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (70, 32, 'DUMMY 6', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (72, 33, 'DUMMY 7', NULL, 'en-GB');
-INSERT INTO category_attr_lcl VALUES (74, 34, 'DUMMY 8', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (82, 38, 'Featured', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (83, 38, '精選', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (84, 39, 'MISC', NULL, 'en-GB');
@@ -815,37 +791,29 @@ INSERT INTO category_product VALUES (40);
 INSERT INTO category_product VALUES (42);
 INSERT INTO category_product VALUES (8);
 INSERT INTO category_product VALUES (16);
-INSERT INTO category_product VALUES (28);
 INSERT INTO category_product VALUES (36);
 INSERT INTO category_product VALUES (15);
 INSERT INTO category_product VALUES (4);
-INSERT INTO category_product VALUES (30);
 INSERT INTO category_product VALUES (23);
 INSERT INTO category_product VALUES (20);
 INSERT INTO category_product VALUES (25);
 INSERT INTO category_product VALUES (26);
 INSERT INTO category_product VALUES (13);
 INSERT INTO category_product VALUES (22);
-INSERT INTO category_product VALUES (27);
 INSERT INTO category_product VALUES (21);
 INSERT INTO category_product VALUES (5);
 INSERT INTO category_product VALUES (11);
 INSERT INTO category_product VALUES (3);
 INSERT INTO category_product VALUES (14);
 INSERT INTO category_product VALUES (17);
-INSERT INTO category_product VALUES (33);
 INSERT INTO category_product VALUES (19);
-INSERT INTO category_product VALUES (31);
 INSERT INTO category_product VALUES (37);
-INSERT INTO category_product VALUES (34);
-INSERT INTO category_product VALUES (32);
 INSERT INTO category_product VALUES (12);
 INSERT INTO category_product VALUES (10);
 INSERT INTO category_product VALUES (18);
 INSERT INTO category_product VALUES (9);
 INSERT INTO category_product VALUES (24);
 INSERT INTO category_product VALUES (6);
-INSERT INTO category_product VALUES (29);
 INSERT INTO category_product VALUES (2);
 INSERT INTO category_product VALUES (7);
 INSERT INTO category_product VALUES (44);
