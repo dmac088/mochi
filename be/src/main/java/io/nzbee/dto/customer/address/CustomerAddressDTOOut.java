@@ -1,8 +1,6 @@
 package io.nzbee.dto.customer.address;
 
 public class CustomerAddressDTOOut {
-
-	private String customerId;
 	
     private String addressLine1;
 	
@@ -16,14 +14,6 @@ public class CustomerAddressDTOOut {
 
 	public CustomerAddressDTOOut() {
 	
-	}
-    
-	public String getCustomerId() {
-		return customerId;
-	}
-
-	public void setCustomerId(String customerId) {
-		this.customerId = customerId;
 	}
 
 	public String getAddressLine1() {

@@ -15,7 +15,6 @@ public class CustomerAddressDTOMapperImpl implements ICustomerAddressDTOMapper {
 		cdo.setAddressLine3(d.getAddressLine3());
 		cdo.setCountry(d.getCountry());
 		cdo.setPostCode(d.getPostCode());
-		cdo.setCustomerId(d.getCustomer().getCustomerID());
 		return cdo;
 	}
 
