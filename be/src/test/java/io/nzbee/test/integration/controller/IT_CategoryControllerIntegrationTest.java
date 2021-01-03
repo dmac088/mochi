@@ -97,9 +97,7 @@ public class IT_CategoryControllerIntegrationTest {
     @Transactional
     public void testFindAll() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD")
-                //.with(user(TEST_USER_ID))
                 .with(csrf())
-                //.content(birthday)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
