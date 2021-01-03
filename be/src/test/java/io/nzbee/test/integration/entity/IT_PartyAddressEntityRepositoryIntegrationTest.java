@@ -25,7 +25,10 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.party.address.IPartyAddressService;
+import io.nzbee.entity.party.address.PartyAddressDTO;
 import io.nzbee.entity.party.address.PartyAddressEntity;
 import io.nzbee.test.integration.entity.beans.party.address.IPartyAddressEntityBeanFactory;
 
@@ -87,22 +90,33 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     	Optional<PartyAddressEntity> found = partyAddressService.findById(p.getAddressId());
      
         // then
-    	assertFound(found);
+    	assertFoundEntity(found);
 	}
 	
 	@Test
 	@Rollback(false)
 	@WithUserDetails(value = "admin")
-	public void whenFindByUsername_thenReturnPartyAddress() {
+	public void whenFindByUsername_thenReturnPartyAddressEntity() {
 		 // when
     	Optional<PartyAddressEntity> found = partyAddressService.findByUsername("bob@bob");
      
         // then
-    	assertFound(found);
+    	assertFoundEntity(found);
+	}
+	
+	@Test
+	@Rollback(false)
+	@WithUserDetails(value = "admin")
+	public void whenFindByUsername_thenReturnPartyAddressDTO() {
+		 // when
+    	Optional<PartyAddressDTO> found = partyAddressService.findByUsername("bob@bob", Constants.partyRoleCustomer);
+     
+        // then
+    	assertFoundDTO(found);
 	}
 	
 		 
-    private void assertFound(final Optional<PartyAddressEntity> found) {
+    private void assertFoundEntity(final Optional<PartyAddressEntity> found) {
     	assertNotNull(found);
     	
     	assertTrue(found.isPresent());
@@ -124,6 +138,30 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
     	assertThat(found.get().getParty()).isNotNull();
     	
     	assertThat(found.get().getParty().getUser().getUsername()).isEqualTo("bob@bob");
+    }
+    
+    private void assertFoundDTO(Optional<PartyAddressDTO> found) {
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	assertThat(found.get().getAddressLine1()).isEqualTo("Test address line 1");
+    	
+    	assertThat(found.get().getAddressLine2()).isEqualTo("Test address line 2");
+    	
+    	assertThat(found.get().getAddressLine3()).isEqualTo("Test address line 3");
+    	
+    	assertThat(found.get().getCountry()).isEqualTo("Test Country");
+    	
+    	assertThat(found.get().getPostcode()).isEqualTo("Test PC");
+    	
+    	assertThat(found.get().getAddressType()).isNotNull();
+    	
+    	assertThat(found.get().getAddressType().getAddressTypeCode()).isEqualTo("BIL01");
+    	
+    	assertThat(found.get().getPerson()).isNotNull();
+    	
+    	assertThat(found.get().getPerson().getUserName()).isEqualTo("bob@bob");
     }
     
     @After

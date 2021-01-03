@@ -55,12 +55,12 @@ public class PartyAddressServiceImpl implements IPartyAddressService {
 	}
 
 	@Override
-	public Optional<PartyAddressEntity> findEntityByUsername(String userName) {
+	public Optional<PartyAddressEntity> findByUsername(String userName) {
 		return partyAddressRepository.findByPartyPartyUserUsername(userName);
 	}
 
 	@Override
-	public Optional<PartyAddressDTO> findByUsernameAndRole(String userName, String roleName) {
+	public Optional<PartyAddressDTO> findByUsername(String userName, String roleName) {
 		return partyAddressRepository.findByUsernameAndRole(userName, roleName);
 	}
 	
