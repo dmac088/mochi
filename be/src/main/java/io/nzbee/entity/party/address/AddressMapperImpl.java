@@ -21,6 +21,7 @@ public class AddressMapperImpl implements IAddressMapper {
 	@Autowired
 	private IPartyService partyService;
 	
+	@Autowired
 	private IAddressTypeService addressTypeService;
 	
 	@Override
