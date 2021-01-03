@@ -30,7 +30,6 @@ function Dashboard(props) {
   }
   
   useEffect(() => {
-    console.log(discovery);
     if(!discovery.loading && discovery.isDone) {
       if(!customer.loading && !customer.isDone) {
         dispatch(findByUserName());
