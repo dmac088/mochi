@@ -3,8 +3,6 @@ import  { GET_DISCOVERY_STARTED,
           GET_DISCOVERY_SUCCESS,
           GET_DISCOVERY_FAILURE
         } from "./ActionTypes";
-import { getAllCategories } from './CategoryActions'
-import { getBag, getBagItems } from '../services/Bag/index'; 
 
   export const discover = () => { 
       return (dispatch) => {

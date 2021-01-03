@@ -31,14 +31,16 @@ export const getAllCategories = () => {
     return (dispatch, getState) => {
       dispatch(getCategoriesStarted());
       const state = getState();
-      return axios.get(state.discovery.links.getAllProductCategories.href)
-      .then((payload) => {
-        return payload.data._embedded.categoryResources;
-      }).then((categories) => {
-        dispatch(getCategoriesSuccess(categories));
-      }).catch((error) => {
-        dispatch(getCategoriesFailure(error.response));
-      });
+      if(!state.discovery.loading && state.discovery.isDone) {
+        return axios.get(state.discovery.links.getAllProductCategories.href)
+        .then((payload) => {
+          return payload.data._embedded.categoryResources;
+        }).then((categories) => {
+          dispatch(getCategoriesSuccess(categories));
+        }).catch((error) => {
+          dispatch(getCategoriesFailure(error.response));
+        });
+      }
     }
   }
 
