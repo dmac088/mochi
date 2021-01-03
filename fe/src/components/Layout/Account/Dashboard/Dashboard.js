@@ -10,6 +10,7 @@ import Default from "../Default/Default";
 import Orders from "../Orders/Orders";
 import Payment from "../Payment/Payment";
 import Address  from "../Address/Address";
+import AddressEdit  from "../Address/AddressEdit";
 import Download  from "../Download/Download";
 import Admin from "../Admin/Admin";
 import AccountDetails  from "../AccountDetails/AccountDetails";
@@ -40,7 +41,8 @@ function Dashboard(props) {
   const componentChoice = {
       "orders": Orders,
       "payment": Payment,
-      "address": Address,
+      "viewaddress": Address,
+      "editaddress": AddressEdit,
       "download": Download,
       "accountdetails": AccountDetails,
       "dashboard": Default,
@@ -89,7 +91,7 @@ function Dashboard(props) {
 
                     <Link to={() => getAccountSubPath(match, 'payment')}  className={activeClass('payment')} data-toggle="tab"><i className="fa fa-credit-card"></i> Payment Method</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'address')}  className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
+                    <Link to={() => getAccountSubPath(match, 'viewaddress')}  className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
                     <Link to={() => getAccountSubPath(match, 'accountdetails')} className={activeClass('accountdetails')} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 

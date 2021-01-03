@@ -7,3 +7,5 @@ function AddressEdit(props) {
         </React.Fragment>
     );
 }
+
+export default AddressEdit;

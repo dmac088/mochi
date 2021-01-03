@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
+import { getAccountSubPath } from "../../Helpers/Route/Route";
+import { Link } from 'react-router-dom';
 
 function Address(props) {
-    const { customer } = props;
+    const { match, history, customer } = props;
 
     const [stateObject, setObjectState] = useState({
         address: null,
@@ -44,7 +46,7 @@ function Address(props) {
                     <p>{stateObject.address.country}</p>
                     <p>{stateObject.address.postCode}</p>
 
-                    <a href="#" className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</a>
+                    <Link to={() => getAccountSubPath(match, 'editaddress')} className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</Link>
                 </address>
 
                 <h3>Default Shipping Address</h3>
@@ -54,7 +56,7 @@ function Address(props) {
                     <p>1355 Market St, Suite 900 <br />San Francisco, CA 94103</p>
                     <p>Mobile: (123) 456-7890</p>
 
-                    <a href="#" className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</a>
+                    <Link to={() => getAccountSubPath(match, 'editaddress')} className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</Link>
                 </address>
             </React.Fragment>
     );
