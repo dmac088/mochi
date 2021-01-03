@@ -57,7 +57,7 @@ public class BeanConfiguration {
         return new PromotionServiceImpl();
     }
     
-    @Bean(name="customerDomainService")
+    @Bean
     public ICustomerService customerService() {
         return new CustomerServiceImpl();
     }

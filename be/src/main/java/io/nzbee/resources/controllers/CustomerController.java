@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,7 +34,9 @@ import io.nzbee.security.events.OnRegistrationCompleteEvent;
 
 @RestController
 @RequestMapping("/api")
+@Profile("dev")
 public class CustomerController {
+	
     private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
     @Autowired
