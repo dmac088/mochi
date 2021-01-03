@@ -31,15 +31,18 @@ function Address(props) {
         return null;
     }
 
-    console.log(customer);
     return (
         <React.Fragment>
             <h3>Default Billing Address</h3>
 
             <address>
                 <p><strong>{customer.data.givenName}</strong></p>
-                <p>{stateObject.address.addressLine1} <br />{stateObject.address.addressLine2}</p>
-                <p>{stateObject.address.addressLine3}</p>
+                <p>{stateObject.address.addressLine1} 
+                    <br />{stateObject.address.addressLine2}
+                    <br />{stateObject.address.addressLine3}
+                </p>
+                <p>{stateObject.address.country}</p>
+                <p>{stateObject.address.postCode}</p>
             
             <a href="#" className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</a>
             </address>
