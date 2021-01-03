@@ -19,6 +19,8 @@ function Dashboard(props) {
   const { match, history } = props;
 
   const dispatch = useDispatch();
+  const customer = useSelector(state => state.customer);
+  const discovery = useSelector(state => state.discovery);
 
   const logout = (e) => {
     e.preventDefault();
@@ -28,10 +30,13 @@ function Dashboard(props) {
   }
   
   useEffect(() => {
-      dispatch(findByUserName());
-  }, []);
-
-  const customer = useSelector(state => state.customer);
+    console.log(discovery);
+    if(!discovery.loading && discovery.isDone) {
+      if(!customer.loading && !customer.isDone) {
+        dispatch(findByUserName());
+      }
+    }
+  }, [discovery.loading, discovery.isDone, customer.loading, customer.isDone]);
 
   const componentChoice = {
       "orders": Orders,

@@ -1,7 +1,19 @@
 
-import React from 'react';
+import React, { useEffect } from "react";
 
-function Address() {
+function Address(props) {
+
+    console.log(props);
+
+    useEffect(() => {
+        let isSubscribed = true;
+        // axios.get(
+
+        // );
+        return () => (isSubscribed = false);
+    });
+
+
     return (
         <React.Fragment>
             <h3>Default Billing Address</h3>

@@ -12,11 +12,10 @@ import { authenticate } from '../Session';
 
 export const findByUserName = () => {
   return (dispatch, getState) => {
-
     const state = getState();
     const { userName } = state.session;
     const { href } = state.discovery.links.getCustomer;
-
+    
     dispatch(getCustomerStarted());
 
     axios.get(href.replace('{username}', userName))
