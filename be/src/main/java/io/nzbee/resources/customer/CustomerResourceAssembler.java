@@ -19,6 +19,7 @@ public class CustomerResourceAssembler extends RepresentationModelAssemblerSuppo
 	public CustomerResource toModel(CustomerDTOOut c) {
 		CustomerResource cr = new CustomerResource(c);
 		cr.add(linkTo(methodOn(CustomerController.class).getCustomer(null)).withSelfRel());
+		cr.add(linkTo(methodOn(CustomerController.class).getCustomerAddress(null)).withRel("bag"));
 		cr.add(linkTo(methodOn(BagController.class).getCustomerBag(null, null, null)).withRel("bag"));
 		return cr;
 	}
