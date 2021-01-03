@@ -46,7 +46,9 @@ function Address(props) {
                     <p>{stateObject.address.country}</p>
                     <p>{stateObject.address.postCode}</p>
 
-                    <Link to={() => getAccountSubPath(match, 'editaddress')} className="btn d-inline-block edit-address-btn"><i className="fa fa-edit"></i>Edit Address</Link>
+                    <Link   to={() => getAccountSubPath(match, 'editaddress')} 
+                            className="btn d-inline-block edit-address-btn">
+                            <i className="fa fa-edit"></i>Edit Address</Link>
                 </address>
 
                 <h3>Default Shipping Address</h3>
