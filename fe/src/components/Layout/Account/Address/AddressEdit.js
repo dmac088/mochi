@@ -1,9 +1,9 @@
 import React, { useEffect }  from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAddress } from '../../../../services/Address/index';
+import { getAddress, updateAddress } from '../../../../services/Address/index';
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
-function AddressEdit(props) {
+function AddressEdit() {
     const address = useSelector(state => state.address);
     const customer = useSelector(state => state.customer);
     const dispatch = useDispatch();
@@ -11,21 +11,23 @@ function AddressEdit(props) {
     const saveButtonClick = (e) => {
         e.preventDefault();     
         console.log("saveButtonClick");   
+        dispatch(updateAddress());
     }
 
     useEffect(() => {
         let isSubscribed = true;
         if(isSubscribed) {
             if (!customer.loading && customer.isDone) {
-                //customer needs to be loaded before we fetch the address
                 if (!address.loading && !address.isDone) {
-                    //address is dependent on customer
                     dispatch(getAddress(customer));
                 }
             }
         }
         return () => (isSubscribed = false);
-    }, [customer.loading, customer.isDone, address.loading, address.isDone]);
+    }, [customer.loading, 
+        customer.isDone, 
+        address.loading, 
+        address.isDone]);
 
     console.log(address);
     return (
