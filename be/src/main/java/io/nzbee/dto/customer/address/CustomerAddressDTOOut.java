@@ -11,6 +11,10 @@ public class CustomerAddressDTOOut {
     private String country;
 
     private String postCode;
+    
+    private String addressTypeCode;
+    
+    private String addressTypeDesc;
 
 	public CustomerAddressDTOOut() {
 	
@@ -54,6 +58,22 @@ public class CustomerAddressDTOOut {
 
 	public void setPostCode(String postCode) {
 		this.postCode = postCode;
+	}
+
+	public String getAddressTypeCode() {
+		return addressTypeCode;
+	}
+
+	public void setAddressTypeCode(String addressTypeCode) {
+		this.addressTypeCode = addressTypeCode;
+	}
+
+	public String getAddressTypeDesc() {
+		return addressTypeDesc;
+	}
+
+	public void setAddressTypeDesc(String addressTypeDesc) {
+		this.addressTypeDesc = addressTypeDesc;
 	}
 
 }

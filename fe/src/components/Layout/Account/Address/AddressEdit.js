@@ -28,7 +28,8 @@ function AddressEdit() {
         customer.isDone, 
         address.loading, 
         address.isDone]);
-        
+
+    console.log(address);
     return (
         ((!address.isDone || address.loading))
         ? <Spinner />
