@@ -21,6 +21,7 @@ function Address(props) {
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
 
+    console.log(address);
     return (
         ((!address.isDone || address.loading))
             ? <Spinner />
@@ -29,7 +30,7 @@ function Address(props) {
 
                 <address>
                     <p><strong>{customer.data.givenName} {customer.data.familyName}</strong></p>
-                    <p>{address.addressLine1}
+                    <p>{address.data.addressLine1}
                         <br />{address.data.addressLine2}
                         <br />{address.data.addressLine3}
                     </p>
