@@ -14,6 +14,7 @@ function Address(props) {
     useEffect(() => {
         let isSubscribed = true;
         if(isSubscribed) {
+            //customer needs to be loaded before we fetch the address
             if (!customer.loading && customer.isDone) {
                 dispatch(getAddress(customer));
             }
