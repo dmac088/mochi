@@ -23,8 +23,9 @@ export const getAddress = (customer) => {
 }
 
 
-export const updateAddress = () => {
+export const updateAddress = (address) => {
     return (dispatch) => {
         dispatch(updateAddressStarted());
+        console.log(address);
     }
 }

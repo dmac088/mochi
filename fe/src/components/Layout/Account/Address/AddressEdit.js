@@ -1,11 +1,37 @@
-import React from "react";
+import React, { useEffect }  from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { getAddress } from '../../../../services/Address/index';
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
 function AddressEdit(props) {
-    const { addressState } = props;
-    console.log(addressState);
+    const address = useSelector(state => state.address);
+    const customer = useSelector(state => state.customer);
+    const dispatch = useDispatch();
+    
+    const saveButtonClick = (e) => {
+        e.preventDefault();     
+        console.log("saveButtonClick");   
+    }
+
+    useEffect(() => {
+        let isSubscribed = true;
+        if(isSubscribed) {
+            if (!customer.loading && customer.isDone) {
+                //customer needs to be loaded before we fetch the address
+                if (!address.loading && !address.isDone) {
+                    //address is dependent on customer
+                    dispatch(getAddress(customer));
+                }
+            }
+        }
+        return () => (isSubscribed = false);
+    }, [customer.loading, customer.isDone, address.loading, address.isDone]);
+
+    console.log(address);
     return (
-         <React.Fragment>
+        ((!address.isDone || address.loading))
+        ? <Spinner />
+        : <React.Fragment>
             <h3>Edit Billing Address</h3>
             <div className="account-details-form">
                 <form action="#">
@@ -31,7 +57,7 @@ function AddressEdit(props) {
                         </div>
 
                         <div className="col-12">
-                            <button className="save-change-btn">Save Changes</button>
+                            <button onClick={saveButtonClick} className="save-change-btn">Save Changes</button>
                         </div>
 
                     </div>

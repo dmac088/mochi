@@ -23,12 +23,6 @@ function Dashboard(props) {
   const discovery = useSelector(state => state.discovery);
   const session = useSelector(state => state.session);
 
-  const [stateObject, setObjectState] = useState({
-    address: null,
-    loading: true,
-    isDone: false,
-  });
-
   const logout = (e) => {
     e.preventDefault();
     dispatch(logoutSession());
@@ -75,9 +69,7 @@ function Dashboard(props) {
       return (
         <TheComponent 
           {...props}
-          customer={customer}
-          setAddressState={setObjectState}
-          addressState={stateObject} />
+          customer={customer} />
       );
     }
     return <Default {...props}
