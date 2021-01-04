@@ -21,6 +21,7 @@ function Dashboard(props) {
   const dispatch = useDispatch();
   const customer = useSelector(state => state.customer);
   const discovery = useSelector(state => state.discovery);
+  const session = useSelector(state => state.session);
 
   const [stateObject, setObjectState] = useState({
     address: null,
@@ -37,11 +38,18 @@ function Dashboard(props) {
   
   useEffect(() => {
     if(!discovery.loading && discovery.isDone) {
-      if(!customer.loading && !customer.isDone) {
-        dispatch(findByUserName());
+      if(!session.loading && session.isDone) {
+        if(!customer.loading && !customer.isDone) {
+          dispatch(findByUserName(discovery, session));
+        }
       }
     }
-  }, [discovery.loading, discovery.isDone, customer.loading, customer.isDone]);
+  }, [discovery.loading, 
+      discovery.isDone, 
+      session.loading,
+      session.isDone,
+      customer.loading, 
+      customer.isDone]);
 
   const componentChoice = {
       "orders": Orders,

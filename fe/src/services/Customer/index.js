@@ -10,11 +10,10 @@ import {
 } from '../../actions/CustomerActions'
 import { authenticate } from '../Session';
 
-export const findByUserName = () => {
-  return (dispatch, getState) => {
-    const state = getState();
-    const { userName } = state.session;
-    const { href } = state.discovery.links.getCustomer;
+export const findByUserName = (discovery, session) => {
+  return (dispatch) => {
+    const { userName } = session;
+    const { href } = discovery.links.getCustomer;
     
     dispatch(getCustomerStarted());
 
