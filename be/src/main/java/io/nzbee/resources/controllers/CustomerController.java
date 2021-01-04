@@ -121,7 +121,7 @@ public class CustomerController {
 	        		address.getAddressTypeCode()
 	        		);
         
-        addressService.update(a);
+        addressService.save(a);
         
         return new GenericResponse("success");
     }
