@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.address.type.AddressTypeEntity;
 
@@ -30,6 +32,7 @@ public class PartyAddressEntity {
 	@Column(name="addr_ln_3")
 	private String addressLine3;
 	
+	@NotNull
 	@Column(name="addr_cnty")
 	private String addressCountry;
 	
