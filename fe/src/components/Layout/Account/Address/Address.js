@@ -30,11 +30,11 @@ function Address(props) {
                 <address>
                     <p><strong>{customer.data.givenName} {customer.data.familyName}</strong></p>
                     <p>{address.addressLine1}
-                        <br />{address.addressLine2}
-                        <br />{address.addressLine3}
+                        <br />{address.data.addressLine2}
+                        <br />{address.data.addressLine3}
                     </p>
-                    <p>{address.country}</p>
-                    <p>{address.postCode}</p>
+                    <p>{address.data.country}</p>
+                    <p>{address.data.postCode}</p>
 
                     <Link   to={() => getAccountSubPath(match, 'editaddress')} 
                             className="btn d-inline-block edit-address-btn">
