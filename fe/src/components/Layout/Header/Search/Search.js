@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useSelector } from 'react-redux';
 import { instance as axios } from "../../../../components/Layout/Helpers/api/axios";
 import { AsyncTypeahead } from 'react-bootstrap-typeahead';
-import { InputGroup, Form, Button } from 'react-bootstrap';
+import { InputGroup, Form } from 'react-bootstrap';
 import 'react-bootstrap-typeahead/css/Typeahead.css';
 import './Search.css';
 import { getSearchPath } from "../../Helpers/Route/Route";
