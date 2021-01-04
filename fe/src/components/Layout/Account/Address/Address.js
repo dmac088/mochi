@@ -2,43 +2,45 @@ import React, { useEffect } from "react";
 import { instance as axios } from "../../../Layout/Helpers/api/axios";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import { getAccountSubPath } from "../../Helpers/Route/Route";
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom'
+import { getAddress } from '../../../../services/Address/index';
+import { useDispatch, useSelector } from 'react-redux';
 
 function Address(props) {
-    const { match, customer, setAddressState, addressState } = props;
+    const { match, setAddressState, addressState } = props;
+
+    const dispatch = useDispatch();
+
+    const address = useSelector(state => state.address);
+    const customer = useSelector(state => state.customer);
 
     useEffect(() => {
         let isSubscribed = true;
-        if (!customer.loading && customer.isDone) {
-            axios.get(customer._links.address.href)
-                .then((response) => {
-                    if (isSubscribed) {
-                        setAddressState((prevState) => ({
-                            ...prevState,
-                            address: response.data,
-                            loading: false,
-                            isDone: true,
-                        }));
-                    }
-                });
+        if(isSubscribed) {
+            if (!customer.loading && customer.isDone) {
+                dispatch(getAddress(customer));
+            }
         }
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
 
+//console.log(customer); 
+     console.log(address);
     return (
-        (addressState.loading)
+        //<React.Fragment/>
+        ((!address.isDone || address.loading))
             ? <Spinner />
             : <React.Fragment>
                 <h3>Default Billing Address</h3>
 
                 <address>
                     <p><strong>{customer.data.givenName} {customer.data.familyName}</strong></p>
-                    <p>{addressState.address.data.addressLine1}
-                        <br />{addressState.address.data.addressLine2}
-                        <br />{addressState.address.data.addressLine3}
+                    <p>{address.addressLine1}
+                        <br />{address.addressLine2}
+                        <br />{address.addressLine3}
                     </p>
-                    <p>{addressState.address.data.country}</p>
-                    <p>{addressState.address.data.postCode}</p>
+                    <p>{address.country}</p>
+                    <p>{address.postCode}</p>
 
                     <Link   to={() => getAccountSubPath(match, 'editaddress')} 
                             className="btn d-inline-block edit-address-btn">
