@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { getAddress, updateAddress } from '../../../../services/Address/index';
+import { getAccountSubPath } from "../../Helpers/Route/Route";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 
-function AddressEdit() {
+function AddressEdit(props) {
+    const { history, match } = props;
+
     const address = useSelector(state => state.address);
     const customer = useSelector(state => state.customer);
     const dispatch = useDispatch();
@@ -14,6 +17,7 @@ function AddressEdit() {
         addressLine3: null,
         country: null,
         postCode: null,
+        addressTypeCode: "BIL01"
     });
 
     const setAddressLine1 = (e) => {
@@ -64,7 +68,12 @@ function AddressEdit() {
     const saveButtonClick = (e) => {
         e.preventDefault();     
         console.log("saveButtonClick");   
-        dispatch(updateAddress(address, stateObject));
+        dispatch(updateAddress(address, stateObject))
+        .then(() => {
+            console.log('updated!');
+            console.log(props);
+            history.push(getAccountSubPath(match, 'viewaddress'));
+        });
     }
 
     useEffect(() => {
@@ -82,7 +91,6 @@ function AddressEdit() {
         address.loading, 
         address.isDone]);
 
-    console.log(stateObject);
     return (
         ((!address.isDone || address.loading))
         ? <Spinner />

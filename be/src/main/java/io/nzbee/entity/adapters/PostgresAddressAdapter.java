@@ -5,13 +5,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.customer.address.Address;
 import io.nzbee.domain.ports.IAddressPortService;
 import io.nzbee.entity.party.address.IAddressMapper;
 import io.nzbee.entity.party.address.IPartyAddressService;
 import io.nzbee.entity.party.address.PartyAddressDTO;
+import io.nzbee.entity.party.address.PartyAddressEntity;
 
 @Service
 public class PostgresAddressAdapter implements IAddressPortService {
@@ -38,7 +38,19 @@ public class PostgresAddressAdapter implements IAddressPortService {
 	@Override
 	public void save(Address domainObject) {
 		LOGGER.debug("call PostgresAddressAdapter.save()");
-		addressService.save(addressMapper.doToEntity(domainObject));
+		Optional<PartyAddressEntity> opa = addressService.findByUsername(domainObject.getCustomer().getUserName());
+		
+		PartyAddressEntity pa = opa.isPresent() 
+		? opa.get()
+		: new PartyAddressEntity();
+		
+		pa.setAddressLine1(domainObject.getAddressLine1());
+		pa.setAddressLine2(domainObject.getAddressLine2());
+		pa.setAddressLine3(domainObject.getAddressLine3());
+		pa.setAddressCountry(domainObject.getCountry());
+		pa.setAddressPostCode(domainObject.getPostCode());
+		
+		addressService.save(pa);
 	}
 
 	@Override
