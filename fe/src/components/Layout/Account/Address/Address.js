@@ -16,7 +16,8 @@ function Address(props) {
         if(isSubscribed) {
             //customer needs to be loaded before we fetch the address
             if (!customer.loading && customer.isDone) {
-                dispatch(getAddress());
+                //address is dependent on customer
+                dispatch(getAddress(customer));
             }
         }
         return () => (isSubscribed = false);
