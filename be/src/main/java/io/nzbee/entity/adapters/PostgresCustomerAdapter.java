@@ -276,4 +276,6 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 				
 		bagService.save(b);
 	}
+
+
 }
