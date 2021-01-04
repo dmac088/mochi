@@ -20,7 +20,7 @@ function Address(props) {
         }
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
- d
+
     return (
         ((!address.isDone && address.loading))
             ? <Spinner />
