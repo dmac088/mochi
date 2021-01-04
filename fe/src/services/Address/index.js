@@ -2,7 +2,10 @@ import { instance as axios } from "../../components/Layout/Helpers/api/axios";
 import {
     getAddressStarted,
     getAddressSuccess,
-    getAddressFailure
+    getAddressFailure,
+    updateAddressStarted,
+    updateAddressSuccess,
+    updateAddressFailure,
 } from "../../actions/AddressActions";
 
 export const getAddress = (customer) => {
@@ -17,4 +20,11 @@ export const getAddress = (customer) => {
                 dispatch(getAddressFailure(error.response));
             });
     }
+}
+
+
+export const updateAddress = () => {
+
+    dispatch(updateAddressStarted());
+
 }
