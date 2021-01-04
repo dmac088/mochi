@@ -5,18 +5,22 @@ import {
 } from "./ActionTypes";
 
 export const getAddressStarted = () => ({
-    type: GET_ADDRESS_STARTED
+    type: GET_ADDRESS_STARTED,
+    payload: {
+        loading: true,
+    }
 });
 
 export const getAddressSuccess = address => ({
     type: GET_ADDRESS_SUCCESS,
     payload: {
         loading: false,
+        isDone: true,
         ...address,
     }
 });
 
-export const regAddressFailure = error => ({
+export const getAddressFailure = error => ({
     type: GET_ADDRESS_FAILURE,
     payload: {
         error,
