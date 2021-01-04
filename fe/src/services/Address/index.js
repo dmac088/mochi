@@ -10,7 +10,7 @@ export const getAddress = (customer) => {
         dispatch(getAddressStarted());
         return axios.get(customer._links.address.href)
             .then((payload) => {
-                return payload.data.data;
+                return payload.data;
             }).then((address) => {
                 dispatch(getAddressSuccess(address));
             }).catch((error) => {
