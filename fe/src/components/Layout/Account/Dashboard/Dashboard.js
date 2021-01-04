@@ -37,6 +37,7 @@ function Dashboard(props) {
   }
   
   useEffect(() => {
+    let isSubscribed = true;
     if(!discovery.loading && discovery.isDone) {
       if(!session.loading && session.isDone) {
         if(!customer.loading && !customer.isDone) {
@@ -44,6 +45,7 @@ function Dashboard(props) {
         }
       }
     }
+    return () => (isSubscribed = false);
   }, [discovery.loading, 
       discovery.isDone, 
       session.loading,
