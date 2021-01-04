@@ -66,4 +66,5 @@ public class CustomerServiceImpl implements ICustomerService {
 		customerService.authWithoutPassword(token);
 	}
 
+
 }

@@ -24,6 +24,7 @@ import io.nzbee.domain.customer.address.IAddressService;
 import io.nzbee.domain.services.GenericResponse;
 import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.dto.customer.ICustomerDTOMapper;
+import io.nzbee.dto.customer.address.CustomerAddressDTOIn;
 import io.nzbee.dto.customer.address.ICustomerAddressDTOMapper;
 import io.nzbee.resources.customer.CustomerResource;
 import io.nzbee.resources.customer.CustomerResourceAssembler;
@@ -103,6 +104,27 @@ public class CustomerController {
     	Address a = addressService.findByUsername(customer.getName()); 
     	return ResponseEntity.ok(customerAddressResourceAssembler.toModel(customerAddressDTOMapper.doToDto(a)));
 	}
+    
+    @PostMapping("/Customer/Address/Update")
+    public GenericResponse updateCustomerAddres(@RequestBody final CustomerAddressDTOIn address, Principal customer, final HttpServletRequest request) {
+        LOGGER.debug("Updating customer address with information: {}", address);
+        
+        Customer c = customerService.findByUsername(customer.getName());
+        
+        Address a = new Address(
+	        		c,
+	        		address.getAddressLine1(),
+	        		address.getAddressLine2(),
+	        		address.getAddressLine3(),
+	        		address.getCountry(),
+	        		address.getPostCode(),
+	        		address.getAddressTypeCode()
+	        		);
+        
+        addressService.update(a);
+        
+        return new GenericResponse("success");
+    }
        
     @PostMapping("/Customer/Update")
     public GenericResponse updateCustomer(@RequestBody final CustomerDTOIn customer) {

@@ -74,5 +74,6 @@ public class PersonServiceImpl implements IPersonService {
 	public boolean userExists(String userName, String roleType) {
 		return personDao.findByUsernameAndRole(userName, roleType).isPresent();
 	}
-	
+
+
 }

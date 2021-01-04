@@ -2,7 +2,6 @@ package io.nzbee.dto.customer.address;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.customer.address.Address;
-import io.nzbee.dto.customer.CustomerDTOIn;
 
 @Component
 public class CustomerAddressDTOMapperImpl implements ICustomerAddressDTOMapper {
@@ -19,9 +18,9 @@ public class CustomerAddressDTOMapperImpl implements ICustomerAddressDTOMapper {
 	}
 
 	@Override
-	public Address dtoToDo(CustomerDTOIn dto) {
-		// TODO Auto-generated method stub
+	public Address dtoToDo(CustomerAddressDTOIn dto) {
 		return null;
+	
 	}
 
 
