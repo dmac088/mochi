@@ -6,7 +6,7 @@ public class CustomerDTOOut {
 	
     private String givenName;
     
-    private String fammilyName;
+    private String familyName;
 
 	public CustomerDTOOut() {
 	}
@@ -30,12 +30,12 @@ public class CustomerDTOOut {
 		this.givenName = givenName;
 	}
 
-	public String getFammilyName() {
-		return fammilyName;
+	public String getFamilyName() {
+		return familyName;
 	}
 
-	public void setFammilyName(String fammilyName) {
-		this.fammilyName = fammilyName;
+	public void setFamilyName(String familyName) {
+		this.familyName = familyName;
 	}
 
 }
