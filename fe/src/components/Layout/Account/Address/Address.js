@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import { instance as axios } from "../../../Layout/Helpers/api/axios";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import { getAccountSubPath } from "../../Helpers/Route/Route";
 import { Link } from 'react-router-dom'
@@ -7,10 +6,8 @@ import { getAddress } from '../../../../services/Address/index';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Address(props) {
-    const { match, setAddressState, addressState } = props;
-
+    const { match } = props;
     const dispatch = useDispatch();
-
     const address = useSelector(state => state.address);
     const customer = useSelector(state => state.customer);
 
@@ -24,10 +21,7 @@ function Address(props) {
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
 
-//console.log(customer); 
-     console.log(address);
     return (
-        //<React.Fragment/>
         ((!address.isDone || address.loading))
             ? <Spinner />
             : <React.Fragment>
