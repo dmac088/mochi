@@ -118,8 +118,7 @@ public class CustomerController {
 	        		address.getAddressLine3(),
 	        		address.getCountry(),
 	        		address.getPostCode(),
-	        		address.getAddressTypeCode()
-	        		);
+	        		address.getAddressTypeCode());
         
         addressService.save(a);
         
