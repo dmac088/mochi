@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAddress, updateAddress } from '../../../../services/Address/index';
 import { getAccountSubPath } from "../../Helpers/Route/Route";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
+import { InputGroup, Form } from 'react-bootstrap';
 
 function AddressEdit(props) {
     const { history, match } = props;
@@ -65,13 +66,10 @@ function AddressEdit(props) {
         }));
     }
 
-    const saveButtonClick = (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault();     
-        console.log("saveButtonClick");   
         dispatch(updateAddress(address, stateObject))
         .then(() => {
-            console.log('updated!');
-            console.log(props);
             history.push(getAccountSubPath(match, 'viewaddress'));
         });
     }
@@ -97,7 +95,7 @@ function AddressEdit(props) {
         : <React.Fragment>
             <h3>Edit {address.data.addressTypeDesc}</h3>
             <div className="account-details-form">
-                <form action="#">
+                <Form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-12 mb-30">
                             <input onChange={setAddressLine1} id="address-line-1" placeholder="Address Line 1" type="text" />
@@ -112,7 +110,7 @@ function AddressEdit(props) {
                         </div>
 
                         <div className="col-12 mb-30">
-                            <input onChange={setAddressCountry} id="country" placeholder="Country" type="text" />
+                            <input onChange={setAddressCountry} id="country" placeholder="Country" type="text" required/>
                         </div>
 
                         <div className="col-12 mb-30">
@@ -120,11 +118,11 @@ function AddressEdit(props) {
                         </div>
 
                         <div className="col-12">
-                            <button onClick={saveButtonClick} className="save-change-btn">Save Changes</button>
+                            <button type="submit" className="save-change-btn">Save Changes</button>
                         </div>
 
                     </div>
-                </form>
+                </Form>
             </div>
         </React.Fragment>
     );
