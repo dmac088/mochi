@@ -11,6 +11,7 @@ public class CustomerDTOMapperImpl implements ICustomerDTOMapper {
 		CustomerDTOOut cdo = new CustomerDTOOut();
 		cdo.setCustomerId(d.getCustomerID());
 		cdo.setGivenName(d.getGivenName());
+		cdo.setFammilyName(d.getFamilyName());
 		return cdo;
 	}
 

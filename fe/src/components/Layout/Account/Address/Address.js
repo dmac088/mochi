@@ -25,6 +25,7 @@ function Address(props) {
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
 
+    console.log(customer);
     return (
         (addressState.loading)
             ? <Spinner />
@@ -32,7 +33,7 @@ function Address(props) {
                 <h3>Default Billing Address</h3>
 
                 <address>
-                    <p><strong>{customer.data.givenName}</strong></p>
+                    <p><strong>{customer.data.givenName} {customer.data.familyName}</strong></p>
                     <p>{addressState.address.addressLine1}
                         <br />{addressState.address.addressLine2}
                         <br />{addressState.address.addressLine3}
@@ -44,7 +45,7 @@ function Address(props) {
                             className="btn d-inline-block edit-address-btn">
                             <i className="fa fa-edit"></i>Edit Address</Link>
                 </address>
-                
+
             </React.Fragment>
     );
 }

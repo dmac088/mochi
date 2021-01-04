@@ -5,6 +5,8 @@ public class CustomerDTOOut {
     private String customerId;
 	
     private String givenName;
+    
+    private String fammilyName;
 
 	public CustomerDTOOut() {
 	}
@@ -26,6 +28,14 @@ public class CustomerDTOOut {
 
 	public void setGivenName(String givenName) {
 		this.givenName = givenName;
+	}
+
+	public String getFammilyName() {
+		return fammilyName;
+	}
+
+	public void setFammilyName(String fammilyName) {
+		this.fammilyName = fammilyName;
 	}
 
 }
