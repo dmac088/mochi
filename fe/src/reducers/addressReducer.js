@@ -17,20 +17,18 @@ import {
       case GET_ADDRESS_STARTED:
         return {
           ...state,
-          loading: true,
+          ...action.payload,
       }
   
       case GET_ADDRESS_SUCCESS:
         return {
           ...state,
           ...action.payload,
-          loading: false,
       }
   
       case GET_ADDRESS_FAILURE:
         return {
           ...state,
-          loading: false,
           error: action.payload.error
       }
   
