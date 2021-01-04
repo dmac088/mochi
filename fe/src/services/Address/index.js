@@ -5,9 +5,10 @@ import {
     getAddressFailure
 } from "../../actions/AddressActions";
 
-export const getAddress = (customer) => {
-    return (dispatch) => {
+export const getAddress = () => {
+    return (dispatch, getState) => {
         dispatch(getAddressStarted());
+        const customer = getState().customer;
         return axios.get(customer._links.address.href)
             .then((payload) => {
                 return payload.data;
