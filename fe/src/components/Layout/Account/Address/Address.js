@@ -15,7 +15,7 @@ function Address(props) {
                     if (isSubscribed) {
                         setAddressState((prevState) => ({
                             ...prevState,
-                            address: response.data.data,
+                            address: response.data,
                             loading: false,
                             isDone: true,
                         }));
@@ -25,7 +25,6 @@ function Address(props) {
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
 
-    console.log(customer);
     return (
         (addressState.loading)
             ? <Spinner />
@@ -34,12 +33,12 @@ function Address(props) {
 
                 <address>
                     <p><strong>{customer.data.givenName} {customer.data.familyName}</strong></p>
-                    <p>{addressState.address.addressLine1}
-                        <br />{addressState.address.addressLine2}
-                        <br />{addressState.address.addressLine3}
+                    <p>{addressState.address.data.addressLine1}
+                        <br />{addressState.address.data.addressLine2}
+                        <br />{addressState.address.data.addressLine3}
                     </p>
-                    <p>{addressState.address.country}</p>
-                    <p>{addressState.address.postCode}</p>
+                    <p>{addressState.address.data.country}</p>
+                    <p>{addressState.address.data.postCode}</p>
 
                     <Link   to={() => getAccountSubPath(match, 'editaddress')} 
                             className="btn d-inline-block edit-address-btn">
