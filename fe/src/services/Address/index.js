@@ -24,7 +24,7 @@ export const getAddress = (customer) => {
 
 
 export const updateAddress = () => {
-
-    dispatch(updateAddressStarted());
-
+    return (dispatch) => {
+        dispatch(updateAddressStarted());
+    }
 }
