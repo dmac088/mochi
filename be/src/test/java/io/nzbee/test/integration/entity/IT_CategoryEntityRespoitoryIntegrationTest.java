@@ -65,7 +65,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(87);
+		assertThat(found.size()).isEqualTo(79);
 		assertTrue(isOrdered(found));
 	}
 	
@@ -143,7 +143,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(11);	
+		assertThat(found.size()).isEqualTo(3);	
 		assertTrue(isOrdered(found));
 		assertTrue(found.stream().filter(f -> f.getCategoryCode().equals("FRT01")).findAny().isPresent());
 		assertTrue(found.stream().filter(f -> f.getCategoryCode().equals("VEG01")).findAny().isPresent());
@@ -166,7 +166,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(11);	
+		assertThat(found.size()).isEqualTo(3);	
 		assertTrue(isOrdered(found));
 	}
 
@@ -192,7 +192,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found).size().isEqualTo(35);
+		assertThat(found).size().isEqualTo(27);
 		assertTrue(isOrdered(found));
 	}
 
