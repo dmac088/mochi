@@ -24,7 +24,7 @@ function Address(props) {
     }, [customer.loading, customer.isDone]);
 
     return (
-        ((!address.isDone && address.loading))
+        ((!address.isDone || address.loading))
             ? <Spinner />
             : <React.Fragment>
                 <h3>Default Billing Address</h3>
