@@ -36,6 +36,5 @@ export const updateAddress = (address, payload) => {
         }).catch((error) => {
             dispatch(updateAddressFailure(error.response));
         });
-        console.log(address);
     }
 }

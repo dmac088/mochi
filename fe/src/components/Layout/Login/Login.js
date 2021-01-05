@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { authenticate } from '../../../services/Session/index';
 import { getBag } from '../../../services/Bag/index';
 import { getForgotPath } from "../Helpers/Route/Route";
+import { Form } from 'react-bootstrap';
 
 function Login(props) {
 
@@ -35,7 +36,7 @@ function Login(props) {
 
   const error = useSelector(state => state.session.error);
 
-  const login = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();  
     dispatch(authenticate(stateObject.username, stateObject.password))
     .then(() => dispatch(getBag()));
@@ -45,7 +46,7 @@ function Login(props) {
   const data  = (error) ? error.data : null;
 
   return (
-     <form action="#">
+     <Form onSubmit={handleSubmit}>
       <div className="login-form">
         <h4 className="login-title">Login</h4>
         <div className="row">
@@ -67,14 +68,14 @@ function Login(props) {
             <a href={getForgotPath(match)}> Forgot password?</a>
           </div>
           <div className="col-md-12">
-            <button onClick={login} className="register-button mt-0">Login</button>
+            <button type="submit" className="register-button mt-0">Login</button>
           </div>
           <div className="col-md-12">
             {status} - {((data) ? data.error_description : "")}
           </div>
         </div>
       </div>
-    </form>
+    </Form>
   )
 }
 
