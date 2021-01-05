@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.ITagPortService;
@@ -25,7 +24,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 	private ITagMapper tagMapper;
 	
 	@Override
-	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public Tag findByCode(String locale, String code) {
 		TagDTO t = tagService.findByCode(locale, code)
@@ -34,7 +32,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 
 	@Override
-	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public Tag findByDesc(String locale, String desc) {
 		TagDTO t = tagService.findByDesc(locale, desc)
@@ -43,7 +40,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 	
 	@Override
-	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public List<Tag> findAll(String locale) {
 		return tagService.findAll(locale)
@@ -51,7 +47,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 
 	@Override
-	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Double maxPrice) {
@@ -60,7 +55,6 @@ public class PostgresTagAdapter  implements ITagPortService {
 	}
 
 	@Override
-	@Cacheable("tags")
 	@Transactional(readOnly = true)
 	public List<Tag> findAll(String locale, Set<String> codes) {
 		return tagService.findAll(locale, codes)
