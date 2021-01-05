@@ -13,12 +13,12 @@ function AddressEdit(props) {
     const dispatch = useDispatch();
 
     const [stateObject, setObjectState] = useState({
-        addressLine1: null,
-        addressLine2: null, 
-        addressLine3: null,
-        country: null,
-        postCode: null,
-        addressTypeCode: "BIL01"
+        addressLine1:       null,
+        addressLine2:       null,
+        addressLine3:       null,
+        country:            null,
+        postCode:           null,
+        addressTypeCode:    "BIL01"
     });
 
     const setAddressLine1 = (e) => {
@@ -101,27 +101,43 @@ function AddressEdit(props) {
                 <Form onSubmit={handleSubmit}>
                     <div className="row">
                         <div className="col-12 mb-30">
-                            <input onChange={setAddressLine1} id="address-line-1" placeholder="Address Line 1" type="text" />
+                            <input  onChange={setAddressLine1} 
+                                    id="address-line-1" 
+                                    placeholder="Address Line 1" 
+                                    type="text" />
                         </div>
 
                         <div className="col-12 mb-30">
-                            <input onChange={setAddressLine2} id="address-line-2" placeholder="Address Line 2" type="text" />
+                            <input  onChange={setAddressLine2} 
+                                    id="address-line-2" 
+                                    placeholder="Address Line 2" 
+                                    type="text" />
                         </div>
 
                         <div className="col-12 mb-30">
-                            <input onChange={setAddressLine3} id="address-line-3" placeholder="Address Line 3" type="text" />
+                            <input  onChange={setAddressLine3} 
+                                    id="address-line-3" 
+                                    placeholder="Address Line 3" 
+                                    type="text" />
                         </div>
 
                         <div className="col-12 mb-30">
-                            <input onChange={setAddressCountry} id="country" placeholder="Country" type="text" required/>
+                            <input  onChange={setAddressCountry} 
+                                    id="country" 
+                                    placeholder="Country" 
+                                    type="text" required/>
                         </div>
 
                         <div className="col-12 mb-30">
-                            <input onChange={setAddressPostCode} id="post-code" placeholder="Post Code" type="text" />
+                            <input  onChange={setAddressPostCode} 
+                                    id="post-code" 
+                                    placeholder="Post Code" 
+                                    type="text" />
                         </div>
 
                         <div className="col-12">
-                            <button type="submit" className="save-change-btn">Save Changes</button>
+                            <button type="submit" 
+                                    className="save-change-btn">Save Changes</button>
                         </div>
 
                     </div>
