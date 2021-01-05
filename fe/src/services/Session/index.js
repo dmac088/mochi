@@ -7,12 +7,11 @@ import axios from "axios";
 import LocalStorageService from '../../components/Layout/Helpers/Storage/Token/LocalStorageService';
 import * as apiConfig from '../api';
 
-export const authenticate = (username, password) => {
-    return (dispatch, getState) => {
-      const state = getState();
+export const authenticate = (discovery, username, password) => {
+    return (dispatch) => {
       const localStorageService = LocalStorageService.getService();
   
-      const { href } = state.discovery.links.accessTokens;
+      const { href } = discovery.links.accessTokens;
   
       const form = new FormData();
       Object.keys(apiConfig.formData).forEach((key) => {
