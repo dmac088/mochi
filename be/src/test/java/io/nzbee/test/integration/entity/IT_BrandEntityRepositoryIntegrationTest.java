@@ -27,6 +27,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
@@ -102,18 +103,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
         // then
     	assertFound(found);
     }
-    
-    // write test cases here
-    @Test
-    public void whenFindByDesc_thenReturnBrand() {
-    	
-        // when
-    	Optional<BrandEntity> found = brandService.findEntityByDesc(Constants.localeENGB, 
-				 							  	 				 "test brand");
-     
-        //then
-    	assertFound(found);
-    }
+   
     
     @Test
     public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
@@ -125,8 +115,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
-					  								categoryCodes, 
-					  								tagCodes, 
+					  								new StringCollectionWrapper(categoryCodes), 
+					  								new StringCollectionWrapper(tagCodes), 
 					  								null);
      
         //then
@@ -146,8 +136,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
-					  								categoryCodes, 
-					  								tagCodes, 
+					  								new StringCollectionWrapper(categoryCodes), 
+					  								new StringCollectionWrapper(tagCodes), 
 					  								null);
      
         //then
@@ -167,8 +157,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyHKD, 
 					  								"FRT01", 
-					  								categoryCodes, 
-					  								tagCodes, 
+					  								new StringCollectionWrapper(categoryCodes), 
+					  								new StringCollectionWrapper(tagCodes), 
 					  								price
 					  								);
      
@@ -189,8 +179,8 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
-					  								categoryCodes, 
-					  								tagCodes, 
+					  								new StringCollectionWrapper(categoryCodes), 
+					  								new StringCollectionWrapper(tagCodes), 
 					  								price);
      
         //then

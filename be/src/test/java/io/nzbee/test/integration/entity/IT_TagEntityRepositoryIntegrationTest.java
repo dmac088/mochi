@@ -27,6 +27,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
 import io.nzbee.entity.tag.TagEntity;
@@ -90,17 +91,6 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertFound(found);
 	}
-
-	// write test cases here
-	@Test
-	public void whenFindByDesc_thenReturnTag() {
-
-		// when
-		Optional<TagEntity> found = tagService.findEntityByDesc(Constants.localeENGB, "test tag");
-
-		// then
-		assertFound(found);
-	}
 	
 	@Test
 	public void whenFindAllForTestTag_thenReturnTheTestTag() {
@@ -127,8 +117,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		List<TagDTO> lb = tagService.findAll( Constants.localeENGB, 
 											  Constants.currencyUSD, 
 											  "FRT01",
-											  categoryCodes, 
-											  brandCodes,
+											  new StringCollectionWrapper(categoryCodes), 
+											  new StringCollectionWrapper(brandCodes),
 											  new Double(1000));
 
 		// then
@@ -148,8 +138,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		List<TagDTO> lt = tagService.findAll(	Constants.localeENGB, 
 												Constants.currencyUSD, 
 												"FRT01",
-												categoryCodes, 
-												brandCodes,
+												new StringCollectionWrapper(categoryCodes), 
+												new StringCollectionWrapper(brandCodes),
 												new Double(1000));
 
 		// then
@@ -170,8 +160,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
 												Constants.currencyHKD, 
 												"FRT01",
-												categoryCodes, 
-												brandCodes,
+												new StringCollectionWrapper(categoryCodes), 
+												new StringCollectionWrapper(brandCodes),
 												price);
 
 		// then
@@ -191,8 +181,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
 												Constants.currencyUSD, 
 												"FRT01",
-												categoryCodes, 
-												brandCodes,
+												new StringCollectionWrapper(categoryCodes), 
+												new StringCollectionWrapper(brandCodes),
 												price);
 
 		// then

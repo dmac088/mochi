@@ -27,6 +27,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
@@ -109,18 +110,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         // then
     	assertFoundEntity(found);
     }
-    
    
-    @Test
-    public void whenFindByDesc_thenReturnProductCategoryEntity() {
-    	
-        // when
-    	Optional<CategoryEntity> found = categoryService.findEntityByDesc(Constants.localeENGB,
-				 														  "test product category");
-     
-        //then
-    	assertFoundEntity(found);
-    }
     
     @Test
     public void whenFindByCode_thenReturnProductCategoryDTO() {
@@ -259,9 +249,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	List<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
 		    											Constants.currencyUSD, 
 		    											"FRT01",
-		    											categories,
-		    											brands, 
-		    											tags, 
+		    											new StringCollectionWrapper(categories),
+		    											new StringCollectionWrapper(brands), 
+		    											new StringCollectionWrapper(tags), 
 		    											null);
 
         //then
@@ -281,9 +271,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	List<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
     													Constants.currencyUSD, 
     													"FRT01", 
-    													categories,
-    													brands, 
-    													tags, 
+    													new StringCollectionWrapper(categories),
+    													new StringCollectionWrapper(brands), 
+    													new StringCollectionWrapper(tags), 
     													null);
      
         //then
@@ -303,9 +293,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	List<CategoryDTO> lc = categoryService.findAll(		Constants.localeENGB, 
 		    												Constants.currencyUSD, 
 		    												"FRT01", 
-		    												categories,
-		    												brands, 
-		    												tags, 
+		    												new StringCollectionWrapper(categories),
+		    												new StringCollectionWrapper(brands), 
+		    												new StringCollectionWrapper(tags), 
 		    												null);
      
         //then

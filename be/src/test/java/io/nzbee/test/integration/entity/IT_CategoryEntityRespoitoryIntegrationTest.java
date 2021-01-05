@@ -27,6 +27,7 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.google.common.collect.Ordering;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
@@ -116,9 +117,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll( 	Constants.localeENGB, 
 														  	Constants.currencyHKD, 
 															"FRT01", 
-															ls, 
-															new HashSet<String>(), 
-															new HashSet<String>(), 
+															new StringCollectionWrapper(ls), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()), 
 															null);	
 
 		// then only children
@@ -135,9 +136,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll(  Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
-															new HashSet<String>(), 
-															new HashSet<String>(),
-															new HashSet<String>(), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()),
+															new StringCollectionWrapper(new HashSet<String>()), 
 															null);
 		
 		// then
@@ -158,9 +159,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		List<CategoryDTO> found = categoryService.findAll(  Constants.localeENGB, 
 															Constants.currencyHKD, 
 															"PRM01", 
-															new HashSet<String>(), 
-															new HashSet<String>(),
-															new HashSet<String>(), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()),
+															new StringCollectionWrapper(new HashSet<String>()), 
 															null);
 		
 		// then
@@ -200,8 +201,12 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "FRT01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyHKD, 
+													"FRT01",
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
@@ -215,8 +220,11 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("FCOO1");
 		
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "FAS01",
-				ls, new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyHKD, "FAS01",
+													new StringCollectionWrapper(ls), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		System.out.println(found);
@@ -229,8 +237,11 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "VEG01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyHKD, "VEG01",
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
@@ -241,8 +252,12 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "PRM01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyHKD, 
+													Constants.primaryRootCategoryCode,
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
@@ -253,8 +268,12 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyHKD, "POM01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyHKD, 
+													"POM01",
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
@@ -265,8 +284,12 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyUSD, "FRT01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyUSD, 
+													"FRT01",
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
@@ -277,8 +300,12 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyUSD, "VEG01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyUSD, 
+													"VEG01",
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
@@ -289,8 +316,12 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyUSD, "PRM01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyUSD, 
+													Constants.primaryRootCategoryCode,
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
@@ -301,8 +332,12 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(Constants.localeENGB, Constants.currencyUSD, "POM01",
-				new HashSet<String>(), new HashSet<String>(), new HashSet<String>());
+		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
+													Constants.currencyUSD, 
+													"POM01",
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()), 
+													new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);

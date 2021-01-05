@@ -25,7 +25,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
@@ -116,17 +115,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	assertFound(found);
     }
     
- // write test cases here
-    @Test
-    public void whenFindByDesc_thenReturnBrandCategory() {
-    	
-        // when
-    	Optional<CategoryEntity> found = categoryService.findEntityByDesc(Constants.localeENGB, 
-				 														  "test brand category");
-     
-        //then
-    	assertFound(found);
-    }
     
     private void assertFound(Optional<CategoryEntity> found) {
     	
