@@ -35,10 +35,11 @@ function Login(props) {
   const dispatch = useDispatch();
 
   const error = useSelector(state => state.session.error);
+  const discovery = useSelector(state => state.discovery);
 
   const handleSubmit = (e) => {
     e.preventDefault();  
-    dispatch(authenticate(stateObject.username, stateObject.password))
+    dispatch(authenticate(discovery, stateObject.username, stateObject.password))
     .then(() => dispatch(getBag()));
   }
 
