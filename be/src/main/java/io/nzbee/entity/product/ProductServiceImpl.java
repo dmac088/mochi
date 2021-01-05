@@ -34,12 +34,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public Optional<ProductEntity> findEntityByCode(String code) {
-		return productDAO.findByCode(code);
-	}
-
-
-	@Override
 	public List<ProductDTO> findAll(String locale) {
 		return productDAO.findAll(locale);
 	}
@@ -172,22 +166,5 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public Optional<ProductEntity> findEntityByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ProductEntity> findEntityById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-
-
-
 
 }

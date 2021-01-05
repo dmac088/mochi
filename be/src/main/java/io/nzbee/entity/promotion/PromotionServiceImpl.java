@@ -95,25 +95,8 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 
 	@Override
-	public Optional<PromotionEntity> findEntityByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<PromotionDTO> findByDesc(String locale, String desc) {
 		return promotionDao.findByDesc(locale, desc);
-	}
-
-	@Override
-	public Optional<PromotionEntity> findEntityByDesc(String locale, String desc) {
-		return promotionRepository.findByAttributesLocaleAndAttributesPromotionDesc(locale, desc);
-	}
-
-	@Override
-	public Optional<PromotionEntity> findEntityById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 }

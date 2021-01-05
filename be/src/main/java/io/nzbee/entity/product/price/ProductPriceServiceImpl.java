@@ -120,23 +120,5 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
-	@Override
-	public Optional<ProductPriceEntity> findEntityByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ProductPriceEntity> findEntityByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ProductPriceEntity> findEntityById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

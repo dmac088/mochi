@@ -20,6 +20,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 
@@ -27,6 +29,8 @@ import io.nzbee.Constants;
 public class TagDaoPostgresImpl implements ITagDao {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+	private static final String CACHE_NAME = "tagCache";
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -55,6 +59,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 	@SuppressWarnings("deprecation")
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #id}")
+			}
+	)
 	public Optional<TagDTO> findById(String locale, Long id) {
 		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, id);
 		
@@ -62,7 +71,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		List<Long> ltids = Arrays.asList(id);
 		
-		Query query = session.createNativeQuery(constructSQL(
+		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
 															 false,
 															 false,
@@ -83,37 +92,12 @@ public class TagDaoPostgresImpl implements ITagDao {
 		return Optional.ofNullable(result);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
-	public Optional<TagDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}", locale, code);
-		
-		Session session = em.unwrap(Session.class);
-		
-		List<String> ltc = Arrays.asList(code);
-		
-		Query query = session.createNativeQuery(constructSQL(
-															 false,
-															 false,
-															 false,
-															 true,
-															 false,
-															 false))
-				 .setParameter("locale", locale)
-				 .setParameter("tagCodes", ltc)
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new TagDTOResultTransformer());
-		
-		TagDTO result = (TagDTO) query.getSingleResult();
-		
-		return Optional.ofNullable(result);
-	}
-	
-	
-	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="#code")
+			}
+	)
 	public Optional<TagEntity> findByCode(String code) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}", code);
 		
@@ -144,9 +128,49 @@ public class TagDaoPostgresImpl implements ITagDao {
 		}
 		
 	}
-
+	
 	@SuppressWarnings("deprecation")
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #code}")
+			}
+	)
+	public Optional<TagDTO> findByCode(String locale, String code) {
+		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}", locale, code);
+		
+		Session session = em.unwrap(Session.class);
+		
+		List<String> ltc = Arrays.asList(code);
+		
+		Query query = session.createNativeQuery(constructSQL(false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false))
+				 .setParameter("locale", locale)
+				 .setParameter("tagCodes", ltc)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+		
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new TagDTOResultTransformer());
+		
+		TagDTO result = (TagDTO) query.getSingleResult();
+		
+		return Optional.ofNullable(result);
+	}
+	
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #desc}")
+			}
+	)
 	public Optional<TagDTO> findByDesc(String locale, String desc) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}", locale, desc);
 		
@@ -154,7 +178,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		List<String> ltd = Arrays.asList(desc);
 		
-		Query query = session.createNativeQuery(constructSQL(
+		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
 															 false,
 															 false,
@@ -176,53 +200,39 @@ public class TagDaoPostgresImpl implements ITagDao {
 		catch(NoResultException nre) {
 			return Optional.empty();
 		}
-
 	}
-
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<TagDTO> findAll(String locale, Set<String> tagCodes) {
-		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(tagCodes));
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #codes}")
+			}
+	)
+	public List<TagDTO> findAll(String locale, Set<String> codes) {
+		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
 
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(
+		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
 															 false,
 															 false,
-															 !tagCodes.isEmpty(),
+															 !codes.isEmpty(),
 															 false,
 															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		
-		if(!tagCodes.isEmpty()) {
-			query.setParameter("tagCodes", tagCodes);
+		if(!codes.isEmpty()) {
+			query.setParameter("tagCodes", codes);
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 		return query.getResultList();
-	}
-	
-	@Override
-	public void save(TagEntity t) {
-		em.persist(t);
-	}
-
-	@Override
-	public void update(TagEntity t, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(TagEntity t) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -232,7 +242,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(
+		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
 															 false,
 															 false,
@@ -246,9 +256,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 		return query.getResultList();
-		
 	}
-
+	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
@@ -258,7 +267,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		categoryCodes.add(categoryCode);
 		
-		Query query = session.createNativeQuery(constructSQL(
+		Query query = session.createNativeQuery(constructSQL(true,
 															 !categoryCodes.isEmpty(),
 															 !brandCodes.isEmpty(),
 															 !(maxPrice == null),
@@ -266,7 +275,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false))
 				 .setParameter("locale", locale)
-				// .setParameter("categoryCode", categoryCode)
+				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		if(!categoryCodes.isEmpty()) {
@@ -290,8 +299,27 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 	}
 	
+	@Override
+	public void save(TagEntity t) {
+		em.persist(t);
+		
+	}
+
+	@Override
+	public void update(TagEntity t, String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(TagEntity t) {
+		// TODO Auto-generated method stub
+		
+	}
+		
 
 	private String constructSQL(
+			boolean hasCategory,
 			boolean hasCategories,
 			boolean hasBrands,
 			boolean hasPrice,
@@ -312,8 +340,9 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"                              || '/' AS text) node " + 
 				"          FROM      mochi.category            AS t " + 
 				"          WHERE     0=0 " + 
-				"          AND t.cat_lvl = 0 " +
-				//"          AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " + 
+				"		   AND " + ((hasCategory) 
+						   ? " coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode "
+						   : " t.cat_lvl = 0 ") + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
 				"                 t.cat_cd, " + 
