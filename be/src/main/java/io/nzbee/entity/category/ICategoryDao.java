@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.ILocalizedDao;
+import io.nzbee.entity.StringCollectionWrapper;
 
 public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity> {
 	
@@ -19,14 +20,15 @@ public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity>
 
 	<T> List<CategoryDTO> findAllByType(String locale, Class<T> cls);
 
-	List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);
-
-	Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes, Set<String> tagCodes);
-
 	List<CategoryEntity> findAll();
 
 	Optional<CategoryEntity> findByCode(String categoryCode);
+
+	List<CategoryDTO> findAll(String locale, String currency, String categoryCode,
+			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
+			Double maxPrice);
+
+	Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes);
 	
 }

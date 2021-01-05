@@ -10,6 +10,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.ICategoryService;
 
 
@@ -111,9 +113,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice, #page, #size, #sort}")
+	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page, String size, String sort) {
 		return productDAO.findAll(
 								  locale,
 						 		  currency,

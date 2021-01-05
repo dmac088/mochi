@@ -28,6 +28,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity_;
@@ -47,17 +48,73 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
-			Set<String> tagCodes) {
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
+			}
+	)
+	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+			StringCollectionWrapper tagCodes, Double maxPrice) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.getMaxPrice parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}", locale, currency, categoryCode, StringUtils.join(categoryCodes), StringUtils.join(brandCodes), StringUtils.join(tagCodes));
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes.getCodes()), StringUtils.join(tagCodes.getCodes()));
 		
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(), 
-															 !brandCodes.isEmpty(),
-															 !tagCodes.isEmpty(),
+		Query query = session.createNativeQuery(constructSQL(false, 
+															 !brandCodes.getCodes().isEmpty(),
+															 !tagCodes.getCodes().isEmpty(),
+															 !(maxPrice == null),
+															 true,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 true))
+				 .setParameter("locale", locale)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+		
+		query.setParameter("categoryCode", categoryCode);
+		
+		if(!brandCodes.getCodes().isEmpty()) {
+			 query.setParameter("brandCodes", brandCodes);
+		}
+			
+		if(!tagCodes.getCodes().isEmpty()) {
+			 query.setParameter("tagCodes", tagCodes);
+		}
+		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
+			query.setParameter("currency", currency);
+			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
+		}
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
+		
+		return query.getResultList();
+	}
+	
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey()}")
+			}
+	)
+	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+			StringCollectionWrapper tagCodes) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.getMaxPrice parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}", locale, currency, categoryCode, StringUtils.join(categoryCodes.getCodes()), StringUtils.join(brandCodes.getCodes()), StringUtils.join(tagCodes.getCodes()));
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.getCodes().isEmpty(), 
+															 !brandCodes.getCodes().isEmpty(),
+															 !tagCodes.getCodes().isEmpty(),
 															 false,
 															 false,
 															 true,
@@ -73,15 +130,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("retailPriceCode", Constants.retailPriceCode)
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 				 
-		if(!categoryCodes.isEmpty()) {
+		if(!categoryCodes.getCodes().isEmpty()) {
 			 query.setParameter("categoryCodes", categoryCodes);
 		}
 		
-		if(!brandCodes.isEmpty()) {
+		if(!brandCodes.getCodes().isEmpty()) {
 			 query.setParameter("brandCodes", brandCodes);
 		}
 			
-		if(!tagCodes.isEmpty()) {
+		if(!tagCodes.getCodes().isEmpty()) {
 			 query.setParameter("tagCodes", tagCodes);
 		}
 		
@@ -237,54 +294,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new CategoryDTOResultTransformer());
-		
-		return query.getResultList();
-	}
-	
-
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	@Override
-	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes,
-			Set<String> tagCodes, Double maxPrice) {
-		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes), StringUtils.join(tagCodes));
-		
-		Session session = em.unwrap(Session.class);
-		
-		Query query = session.createNativeQuery(constructSQL(false, 
-															 !brandCodes.isEmpty(),
-															 !tagCodes.isEmpty(),
-															 !(maxPrice == null),
-															 true,
-															 false,
-															 false,
-															 false,
-															 true,
-															 false,
-															 true))
-				 .setParameter("locale", locale)
-				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		query.setParameter("categoryCode", categoryCode);
-		
-		if(!brandCodes.isEmpty()) {
-			 query.setParameter("brandCodes", brandCodes);
-		}
-			
-		if(!tagCodes.isEmpty()) {
-			 query.setParameter("tagCodes", tagCodes);
-		}
-		
-		if(!(maxPrice == null)) {
-			query.setParameter("maxPrice", maxPrice);
-			query.setParameter("currency", currency);
-			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
-		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new CategoryDTOResultTransformer());

@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import io.nzbee.entity.ILocalizedDao;
+import io.nzbee.entity.StringCollectionWrapper;
 
 public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 	
@@ -15,10 +16,6 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 							String orderby);
 
 	<T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls);
-
-
-	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
 
 	Optional<ProductDTO> findByCode(String locale, String currency, String code);
 
@@ -31,6 +28,10 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 	Optional<ProductEntity> findByCode(String productUPC);
 
 	Optional<ProductDTO> findById(String locale, String currency, Long productId);
+
+	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page,
+			String size, String sort);
 
 	
 }

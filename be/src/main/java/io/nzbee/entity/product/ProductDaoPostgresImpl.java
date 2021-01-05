@@ -29,6 +29,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
@@ -378,8 +379,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
-	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-		   Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice, #page, #size, #sort}")
+			}
+	)
+	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page, String size, String sort) {
 		
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: locale = {}, "
 				+ "														   currency = {}, "
@@ -394,9 +400,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 																							 locale, 
 																							 currency, 
 																							 categoryCode, 
-																							 categoryCodes,
-																							 brandCodes,
-																							 tagCodes,
+																							 categoryCodes.getCodes(),
+																							 brandCodes.getCodes(),
+																							 tagCodes.getCodes(),
 																							 maxPrice,
 																							 page,
 																							 size,
@@ -406,9 +412,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	 														 false,
 															 false,
 															 !(categoryCode == null),
-															 categoryCodes.size()>=1, 
-															 brandCodes.size()>=1,
-  				 											 tagCodes.size()>=1,
+															 categoryCodes.getCodes().size()>=1, 
+															 brandCodes.getCodes().size()>=1,
+  				 											 tagCodes.getCodes().size()>=1,
   				 											 !(maxPrice == null),
   				 											 false,
   				 											 true,
@@ -421,15 +427,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
 		.setParameter("categoryCode", categoryCode);
 		
-		if(!categoryCodes.isEmpty()) {
+		if(!categoryCodes.getCodes().isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 		
-		if(!brandCodes.isEmpty()) {
+		if(!brandCodes.getCodes().isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);
 		}
 		
-		if(!tagCodes.isEmpty()) {
+		if(!tagCodes.getCodes().isEmpty()) {
 			query.setParameter("tagCodes", tagCodes);
 		}
 		
@@ -448,9 +454,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 														false,
 														false,
 														!(categoryCode == null),
-														!categoryCodes.isEmpty(), 
-														!brandCodes.isEmpty(),
-					   									!tagCodes.isEmpty(),
+														!categoryCodes.getCodes().isEmpty(), 
+														!brandCodes.getCodes().isEmpty(),
+					   									!tagCodes.getCodes().isEmpty(),
 					   									!(maxPrice == null),
 					   									false,
 					   									false,
@@ -470,15 +476,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("limit", pageable.getPageSize())
 		.setParameter("offset", pageable.getOffset());
 		
-		if(!categoryCodes.isEmpty()) {
+		if(!categoryCode.isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 		
-		if(!brandCodes.isEmpty()) {
+		if(!brandCodes.getCodes().isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);
 		}
 		
-		if(!tagCodes.isEmpty()) {
+		if(!tagCodes.getCodes().isEmpty()) {
 			query.setParameter("tagCodes", tagCodes);
 		}
 		

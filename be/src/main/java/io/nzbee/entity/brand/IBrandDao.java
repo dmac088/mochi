@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.ILocalizedDao;
+import io.nzbee.entity.StringCollectionWrapper;
 
 public interface IBrandDao extends ILocalizedDao<BrandDTO, BrandEntity> {
 	
@@ -11,10 +12,10 @@ public interface IBrandDao extends ILocalizedDao<BrandDTO, BrandEntity> {
 	
 	Optional<BrandDTO> findByProductCode(String locale, String productCode);
 
-	List<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> tagCodes, Double maxPrice);
-
 	List<BrandDTO> findAllByCategory(String locale, String categoryCode);
 
 	Optional<BrandEntity> findByCode(String code);
+
+	List<BrandDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper tagCodes, Double maxPrice);
 }
