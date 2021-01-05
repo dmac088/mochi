@@ -21,11 +21,12 @@ function Address(props) {
         return () => (isSubscribed = false);
     }, [customer.loading, customer.isDone]);
 
+    console.log(address);
     return (
         ((!address.isDone || address.loading))
             ? <Spinner />
             : <React.Fragment>
-                <h3>Default Billing Address</h3>
+                <h3>Default {address.data.addressTypeDesc}</h3>
 
                 <address>
                     <p><strong>{customer.data.givenName} {customer.data.familyName}</strong></p>
