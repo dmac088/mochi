@@ -12,6 +12,8 @@ import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.tag.ITagMapper;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
+import io.nzbee.entity.tag.TagEntity;
+import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 import io.nzbee.exceptions.tag.TagNotFoundException;
 
 @Component
@@ -65,23 +67,23 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Transactional
 	public void save(Tag domainObject) {
 		
-		Optional<io.nzbee.entity.tag.TagEntity> ot = 
+		Optional<TagEntity> ot = 
 				tagService.findByCode(domainObject.getTagCode().toUpperCase());
 		
 		
-		io.nzbee.entity.tag.TagEntity t = 
+		TagEntity t = 
 				(ot.isPresent())
 				? ot.get() 
-				: new io.nzbee.entity.tag.TagEntity();
+				: new TagEntity();
 				
-		io.nzbee.entity.tag.attribute.TagAttributeEntity ta = new io.nzbee.entity.tag.attribute.TagAttributeEntity();
+		TagAttributeEntity ta = new TagAttributeEntity();
 		
 		if(ot.isPresent()) {
-			Optional<io.nzbee.entity.tag.attribute.TagAttributeEntity> ota =
+			Optional<TagAttributeEntity> ota =
 			ot.get().getAttributes().stream().filter(a -> a.getLclCd().equals(domainObject.getLocale())).findFirst();
 			ta = (ota.isPresent()) 
 			? ota.get()
-			: new io.nzbee.entity.tag.attribute.TagAttributeEntity();
+			: new TagAttributeEntity();
 		}		
 		
 		ta.setTagDesc(domainObject.getTagDesc());
