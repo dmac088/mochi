@@ -104,14 +104,16 @@ function AddressEdit(props) {
                             <input  onChange={setAddressLine1} 
                                     id="address-line-1" 
                                     placeholder="Address Line 1" 
-                                    type="text" />
+                                    type="text"
+                                    autoComplete="on" />
                         </div>
 
                         <div className="col-12 mb-30">
                             <input  onChange={setAddressLine2} 
                                     id="address-line-2" 
                                     placeholder="Address Line 2" 
-                                    type="text" />
+                                    type="text"
+                                    autoComplete="on" />
                         </div>
 
                         <div className="col-12 mb-30">
@@ -125,14 +127,17 @@ function AddressEdit(props) {
                             <input  onChange={setAddressCountry} 
                                     id="country" 
                                     placeholder="Country" 
-                                    type="text" required/>
+                                    type="text"
+                                    autoComplete="on"
+                                    required/>
                         </div>
 
                         <div className="col-12 mb-30">
                             <input  onChange={setAddressPostCode} 
                                     id="post-code" 
                                     placeholder="Post Code" 
-                                    type="text" />
+                                    type="text" 
+                                    autoComplete="on"/>
                         </div>
 
                         <div className="col-12">
