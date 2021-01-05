@@ -41,12 +41,6 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	public Optional<CategoryBrandDTO> findByCode(String locale, String code) {
 		return brandCategoryDao.findByCode(locale, code);
 	}
-
-	@Override
-	public Optional<CategoryBrandEntity> findEntityByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
 	public Optional<CategoryBrandDTO> findByDesc(String locale, String desc) {
@@ -91,18 +85,6 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 
 	@Override
 	public List<CategoryBrandEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<CategoryBrandEntity> findEntityByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<CategoryBrandEntity> findEntityById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

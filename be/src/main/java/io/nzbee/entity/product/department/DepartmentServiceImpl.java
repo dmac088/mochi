@@ -51,12 +51,6 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	public Optional<DepartmentDTO> findByCode(String locale, String code) {
 		return departmentDao.findByCode(locale, code);
 	}
-	
-	@Override
-	public Optional<DepartmentEntity> findEntityByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Optional<DepartmentDTO> findByDesc(String locale, String desc) {
@@ -87,18 +81,6 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Override
 	public List<DepartmentEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<DepartmentEntity> findEntityByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<DepartmentEntity> findEntityById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

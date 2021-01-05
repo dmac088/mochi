@@ -55,12 +55,6 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	}
 
 	@Override
-	public Optional<CategoryProductEntity> findEntityByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<CategoryProductDTO> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
@@ -110,18 +104,6 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 
 	@Override
 	public List<CategoryProductEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<CategoryProductEntity> findEntityByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<CategoryProductEntity> findEntityById(Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -48,16 +48,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public Optional<CategoryEntity> findEntityByCode(String code) {
-		return categoryRepository.findByCategoryCode(code);
-	}
-	
-	@Override
-	public Optional<CategoryEntity> findEntityByDesc(String locale, String desc) {
-		return categoryRepository.findByAttributesLclCdAndAttributesCategoryDesc(locale, desc);
-	}
-	
-	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryDesc}")
 	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
 		return categoryDAO.findByDesc(locale, categoryDesc);
@@ -161,13 +151,5 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	public List<CategoryEntity> findAll(Set<String> codes) {
 		return categoryDAO.findAll(codes);
 	}
-
-	@Override
-	public Optional<CategoryEntity> findEntityById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 
 }

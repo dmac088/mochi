@@ -73,22 +73,10 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	public Optional<TagEntity> findEntityByCode(String code) {
-		LOGGER.debug("call TagServiceImpl.findEntityByCode with parameters : {}", code);
-		return tagRepository.findByTagCode(code);
-	}
-
-	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
 	public Optional<TagDTO> findByDesc(String locale, String desc) {
 		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, desc);
 		return tagDao.findByDesc(locale, desc);
-	}
-	
-	@Override
-	public Optional<TagEntity> findEntityByDesc(String locale, String desc) {
-		LOGGER.debug("call TagServiceImpl.findEntityByDesc with parameters : {}, {}", locale, desc);
-		return tagRepository.findByAttributesLclCdAndAttributesTagDesc(locale, desc);
 	}
 	
 	@Override
@@ -149,11 +137,5 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public Optional<TagEntity> findEntityById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 }

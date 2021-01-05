@@ -42,15 +42,15 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #brandId}")
+					@CachePut(value = CACHE_NAME, key="{#locale, #id}")
 			}
 	)
-	public Optional<BrandDTO> findById(String locale, Long brandId) {
-		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}", locale, brandId);
+	public Optional<BrandDTO> findById(String locale, Long id) {
+		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}", locale, id);
 		
 		Session session = em.unwrap(Session.class);
 		
-		List<Long> lbid = Arrays.asList(brandId);
+		List<Long> lbid = Arrays.asList(id);
 		
 		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
@@ -79,11 +79,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#brandCode")
+					@CachePut(value = CACHE_NAME, key="#code")
 			}
 	)
-	public Optional<BrandEntity> findByCode(String brandCode) {
-		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}", brandCode);
+	public Optional<BrandEntity> findByCode(String code) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}", code);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -94,7 +94,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		List<Predicate> conditions = new ArrayList<Predicate>();
 
 		conditions.add(
-				cb.equal(root.get(BrandEntity_.BRAND_CODE), brandCode)
+				cb.equal(root.get(BrandEntity_.BRAND_CODE), code)
 		);
 		
 		TypedQuery<BrandEntity> query = em.createQuery(cq
@@ -115,15 +115,15 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #brandCode}")
+					@CachePut(value = CACHE_NAME, key="{#locale, #code}")
 			}
 	)
-	public Optional<BrandDTO> findByCode(String locale, String brandCode) {
-		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, brandCode);
+	public Optional<BrandDTO> findByCode(String locale, String code) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, code);
 		
 		Session session = em.unwrap(Session.class);
 		
-		List<String> lbc = Arrays.asList(brandCode);
+		List<String> lbc = Arrays.asList(code);
 		
 		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
@@ -153,15 +153,15 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #brandDesc}")
+					@CachePut(value = CACHE_NAME, key="{#locale, #desc}")
 			}
 	)
-	public Optional<BrandDTO> findByDesc(String locale, String brandDesc) {
-		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}", locale, brandDesc);
+	public Optional<BrandDTO> findByDesc(String locale, String desc) {
+		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}", locale, desc);
 		
 		Session session = em.unwrap(Session.class);
 		
-		List<String> lbd = Arrays.asList(brandDesc);
+		List<String> lbd = Arrays.asList(desc);
 		
 		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
@@ -189,25 +189,30 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<BrandDTO> findAll(String locale, Set<String> brandCodes) {
-		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(brandCodes, ','));
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #codes}")
+			}
+	)
+	public List<BrandDTO> findAll(String locale, Set<String> codes) {
+		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(codes, ','));
 		
 		Session session = em.unwrap(Session.class);
 		
-		List<String> lbc = brandCodes.stream().collect(Collectors.toList());
+		List<String> lbc = codes.stream().collect(Collectors.toList());
 		
 		Query query = session.createNativeQuery(constructSQL(false,
 															 false,
 															 false,
 															 false,
 															 false,
-															 !brandCodes.isEmpty(),
+															 !codes.isEmpty(),
 															 false,
 															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		if(!brandCodes.isEmpty()) {
+		if(!codes.isEmpty()) {
 			query.setParameter("brandCodes", lbc);
 		}
 		
