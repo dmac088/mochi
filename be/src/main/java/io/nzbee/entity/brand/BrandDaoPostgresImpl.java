@@ -341,11 +341,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		if(!categoryCodes.getCodes().isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
+			query.setParameter("categoryCodes", categoryCodes.getCodes());
 		}
 		
 		if(!tagCodes.getCodes().isEmpty()) {
-			query.setParameter("tagCodes", tagCodes);
+			query.setParameter("tagCodes", tagCodes.getCodes());
 		}
 		
 		if(!(maxPrice == null)) {

@@ -428,15 +428,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("categoryCode", categoryCode);
 		
 		if(!categoryCodes.getCodes().isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
+			query.setParameter("categoryCodes", categoryCodes.getCodes());
 		}
 		
 		if(!brandCodes.getCodes().isEmpty()) {
-			query.setParameter("brandCodes", brandCodes);
+			query.setParameter("brandCodes", brandCodes.getCodes());
 		}
 		
 		if(!tagCodes.getCodes().isEmpty()) {
-			query.setParameter("tagCodes", tagCodes);
+			query.setParameter("tagCodes", tagCodes.getCodes());
 		}
 		
 		if(!(maxPrice == null)) {
@@ -477,15 +477,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("offset", pageable.getOffset());
 		
 		if(!categoryCode.isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
+			query.setParameter("categoryCodes", categoryCodes.getCodes());
 		}
 		
 		if(!brandCodes.getCodes().isEmpty()) {
-			query.setParameter("brandCodes", brandCodes);
+			query.setParameter("brandCodes", brandCodes.getCodes());
 		}
 		
 		if(!tagCodes.getCodes().isEmpty()) {
-			query.setParameter("tagCodes", tagCodes);
+			query.setParameter("tagCodes", tagCodes.getCodes());
 		}
 		
 		if(!(maxPrice == null)) {

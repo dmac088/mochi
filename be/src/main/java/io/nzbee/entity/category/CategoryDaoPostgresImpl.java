@@ -80,11 +80,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		query.setParameter("categoryCode", categoryCode);
 		
 		if(!brandCodes.getCodes().isEmpty()) {
-			 query.setParameter("brandCodes", brandCodes);
+			 query.setParameter("brandCodes", brandCodes.getCodes());
 		}
 			
 		if(!tagCodes.getCodes().isEmpty()) {
-			 query.setParameter("tagCodes", tagCodes);
+			 query.setParameter("tagCodes", tagCodes.getCodes());
 		}
 		
 		if(!(maxPrice == null)) {
@@ -131,15 +131,15 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 				 
 		if(!categoryCodes.getCodes().isEmpty()) {
-			 query.setParameter("categoryCodes", categoryCodes);
+			 query.setParameter("categoryCodes", categoryCodes.getCodes());
 		}
 		
 		if(!brandCodes.getCodes().isEmpty()) {
-			 query.setParameter("brandCodes", brandCodes);
+			 query.setParameter("brandCodes", brandCodes.getCodes());
 		}
 			
 		if(!tagCodes.getCodes().isEmpty()) {
-			 query.setParameter("tagCodes", tagCodes);
+			 query.setParameter("tagCodes", tagCodes.getCodes());
 		}
 		
 		query.setParameter("categoryCode", categoryCode);

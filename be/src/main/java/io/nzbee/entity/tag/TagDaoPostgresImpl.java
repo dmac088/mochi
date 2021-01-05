@@ -24,6 +24,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 
 @Component 
 public class TagDaoPostgresImpl implements ITagDao {
@@ -260,19 +261,19 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes, #brandCodes, #maxPrice}")
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #maxPrice}")
 			}
 	)
-	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
+	public List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, categoryCodes = {}, brandCodes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
 		
-		categoryCodes.add(categoryCode);
+		categoryCodes.getCodes().add(categoryCode);
 		
 		Query query = session.createNativeQuery(constructSQL(true,
-															 !categoryCodes.isEmpty(),
-															 !brandCodes.isEmpty(),
+															 !categoryCodes.getCodes().isEmpty(),
+															 !brandCodes.getCodes().isEmpty(),
 															 !(maxPrice == null),
 															 false,
 															 false,
@@ -281,11 +282,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		if(!categoryCodes.isEmpty()) {
+		if(!categoryCodes.getCodes().isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 		
-		if(!brandCodes.isEmpty()) {
+		if(!brandCodes.getCodes().isEmpty()) {
 			query.setParameter("brandCodes", brandCodes);
 		}
 		
