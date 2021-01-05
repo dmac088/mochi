@@ -16,6 +16,7 @@ import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
@@ -248,9 +249,9 @@ public class PostgresProductAdapter implements IProductPortService {
 															locale, 
 															currency,
 															categoryCode, 
-															categoryCodes, 
-															brandCodes, 
-															tagCodes, 
+															new StringCollectionWrapper(categoryCodes), 
+															new StringCollectionWrapper(brandCodes), 
+															new StringCollectionWrapper(tagCodes), 
 															maxPrice, 
 															page, 
 															size, 
