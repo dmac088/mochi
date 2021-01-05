@@ -21,6 +21,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Autowired
 	private IBrandRepository brandRepository;
 
+	//Entity fetch
 	@Override
 	public List<BrandEntity> findAll() {
 		return brandRepository.findAll();
@@ -44,6 +45,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 		return brandDao.findByCode(code);
 	}
 
+	//DTO Fetch
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
 	public Optional<BrandDTO> findByCode(String locale, String code) {
