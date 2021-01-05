@@ -32,10 +32,12 @@ function Dashboard(props) {
   
   useEffect(() => {
     let isSubscribed = true;
-    if(!discovery.loading && discovery.isDone) {
-      if(!session.loading && session.isDone) {
-        if(!customer.loading && !customer.isDone) {
-          dispatch(findByUserName(discovery, session));
+    if(isSubscribed) {
+      if(!discovery.loading && discovery.isDone) {
+        if(!session.loading && session.isDone) {
+          if(!customer.loading && !customer.isDone) {
+            dispatch(findByUserName(discovery, session));
+          }
         }
       }
     }
@@ -102,8 +104,6 @@ function Dashboard(props) {
                     <Link to={() => getAccountSubPath(match, 'viewaddress')}  className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
                     <Link to={() => getAccountSubPath(match, 'accountdetails')} className={activeClass('accountdetails')} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
-
-                    <Link to={() => getAccountSubPath(match, 'admin')} className={activeClass('admin')} data-toggle="tab"><i className="fa fa-user"></i> Admin</Link>
 
                     <a href="#" onClick={logout}><i className="fa fa-sign-out"></i> Logout</a>
                   </div>
