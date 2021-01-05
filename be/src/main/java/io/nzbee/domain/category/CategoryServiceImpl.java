@@ -3,7 +3,6 @@ package io.nzbee.domain.category;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.ICategoryPortService;
 
 public class CategoryServiceImpl implements ICategoryService {
@@ -12,7 +11,6 @@ public class CategoryServiceImpl implements ICategoryService {
     private ICategoryPortService categoryService;
     
     @Override
-    @Transactional(readOnly=true)
 	public List<Category> findAll(String locale) {
     	return categoryService.findAll(locale);
 	}
@@ -28,37 +26,31 @@ public class CategoryServiceImpl implements ICategoryService {
 	}
 
 	@Override
-	@Transactional(readOnly=true)
 	public Category findByCode(String locale, String code) {
 		return categoryService.findByCode(locale, code);
 	}
 	
 	@Override
-	@Transactional(readOnly=true)
 	public Category findByDesc(String locale, String desc) {
 		return categoryService.findByDesc(locale, desc);
 	}
     
     @Override
-    @Transactional(readOnly=true)
  	public List<Category> findByParent(String locale, String parentCategoryCode) {
     	return categoryService.findByParent(parentCategoryCode, locale);
  	}
     
     @Override
-    @Transactional(readOnly=true)
   	public List<Category> findAllForLevel(String locale, Long level) {
      	return categoryService.findAllForLevel(locale, level);
   	}	
     
     @Override
-    @Transactional(readOnly=true)
   	public List<ProductCategory> findAllByProductCode(String locale, String code) {
      	return categoryService.findAllByProductCode(locale, code);
   	}	
     
     @Override
-	@Transactional(readOnly=true)
 	public List<Category> findAll(String locale, Set<String> codes) {
 		return categoryService.findAll(locale, codes);
 	}

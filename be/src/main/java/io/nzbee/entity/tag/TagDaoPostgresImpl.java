@@ -42,14 +42,12 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@Override
 	public Optional<TagEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return tagRepository.findById(id);
 	}
 
 	@Override
 	public List<TagEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		return tagRepository.findAll();
 	}
 
 	@Override
@@ -95,7 +93,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#code")
+					@CachePut(value = CACHE_NAME, key="{#code}")
 			}
 	)
 	public Optional<TagEntity> findByCode(String code) {
@@ -260,6 +258,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes, #brandCodes, #maxPrice}")
+			}
+	)
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, categoryCodes = {}, brandCodes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		

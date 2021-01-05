@@ -21,8 +21,12 @@ public class TagServiceImpl implements ITagService {
 	}
 
 	@Override
-	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categories,
-			Set<String> brands, Double maxPrice) {
+	public List<Tag> findAll(	String locale, 
+								String currency, 
+								String categoryCode, 
+								Set<String> categories,
+								Set<String> brands, 
+								Double maxPrice) {
 		return tagService.findAll(	 locale, 
 				 currency, 
 				 categoryCode,
