@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.exceptions.brand.BrandNotFoundException;
@@ -57,8 +58,8 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		return brandService.findAll(locale, 
 									currency, 
 									categoryCode, 
-									categoryCodes,
-									tagCodes,
+									new StringCollectionWrapper(categoryCodes),
+									new StringCollectionWrapper(tagCodes),
 				 					maxPrice)
 				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toList());
 	}

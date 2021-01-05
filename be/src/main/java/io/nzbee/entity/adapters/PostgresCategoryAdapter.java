@@ -14,6 +14,7 @@ import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.ports.ICategoryPortService;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryMapper;
@@ -46,7 +47,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes) {
-		return categoryService.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
+		return categoryService.getMaxPrice(locale, currency, categoryCode, new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new StringCollectionWrapper(tagCodes));
 	}
 	
 	@Override
@@ -60,7 +61,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Transactional(readOnly = true)
 	public List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call PostgresCategoryAdapter.findAll parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = ", locale, currency, categoryCode, brandCodes, tagCodes, maxPrice);
-		return categoryService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice)
+		return categoryService.findAll(locale, currency, categoryCode, new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new StringCollectionWrapper(tagCodes), maxPrice)
 				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 
