@@ -105,7 +105,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, categoryCodes = {}, brandCodes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
-		return tagDao.findAll(locale, currency, categoryCode, categoryCodes.getCodes(), brandCodes.getCodes(), maxPrice);
+		return tagDao.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice);
 	}
 	
 	@Override
