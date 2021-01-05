@@ -33,9 +33,38 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#id}")
 	public Optional<TagEntity> findById(Long id) {
 		LOGGER.debug("call TagServiceImpl.findById with parameters : {}", id);
 		return tagRepository.findById(id);
+	}
+
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
+	public Optional<TagDTO> findById(String locale, Long id) {
+		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, id);
+		return tagDao.findById(locale, id);
+	}
+
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
+	public Optional<TagDTO> findByCode(String locale, String code) {
+		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}", locale, code);
+		return tagDao.findByCode(locale, code);
+	}
+	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "#code")
+	public Optional<TagEntity> findByCode(String code) {
+		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}", code);
+		return tagDao.findByCode(code);
+	}
+	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
+	public Optional<TagDTO> findByDesc(String locale, String desc) {
+		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, desc);
+		return tagDao.findByDesc(locale, desc);
 	}
 	
 	@Override
@@ -56,34 +85,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public List<TagEntity> findAll(Set<String> codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}", StringUtils.join(codes));
 		return tagDao.findAll(codes);
-	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
-	public Optional<TagDTO> findById(String locale, Long id) {
-		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, id);
-		return tagDao.findById(locale, id);
-	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
-	public Optional<TagDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}", locale, code);
-		return tagDao.findByCode(locale, code);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
-	public Optional<TagDTO> findByDesc(String locale, String desc) {
-		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, desc);
-		return tagDao.findByDesc(locale, desc);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#code")
-	public Optional<TagEntity> findByCode(String code) {
-		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}", code);
-		return tagDao.findByCode(code);
 	}
 	
 	@Override
