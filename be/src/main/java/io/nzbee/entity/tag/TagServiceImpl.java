@@ -43,7 +43,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#code")
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#code}")
 	public Optional<TagEntity> findByCode(String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}", code);
 		return tagDao.findByCode(code);
@@ -72,7 +72,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
 	public Optional<TagDTO> findByDesc(String locale, String desc) {
 		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, desc);
 		return tagDao.findByDesc(locale, desc);
@@ -123,7 +122,8 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	@Caching(evict = {
-			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.tagCode"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.tagId}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.tagCode}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagId}"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagCode}"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
