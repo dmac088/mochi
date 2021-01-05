@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.domain.tag.Tag;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.tag.ITagMapper;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
@@ -52,7 +53,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Transactional(readOnly = true)
 	public List<Tag> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Double maxPrice) {
-		return tagService.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice)
+		return tagService.findAll(locale, currency, categoryCode, new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), maxPrice)
 				.stream().map(b -> (Tag) tagMapper.DTOToDo(b)).collect(Collectors.toList());
 	}
 

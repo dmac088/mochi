@@ -12,6 +12,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.IFacetService;
 
 @Service(value = "tagEntityService")
@@ -99,10 +101,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #maxPrice}")
+	public List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, categoryCodes = {}, brandCodes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
-		return tagDao.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice);
+		
+		return tagDao.findAll(locale, currency, categoryCode, categoryCodes.getCodes(), brandCodes.getCodes(), maxPrice);
 	}
 	
 	@Override

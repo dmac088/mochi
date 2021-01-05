@@ -191,7 +191,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #codes}")
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #codes}")
 			}
 	)
 	public List<BrandDTO> findAll(String locale, Set<String> codes) {
@@ -316,6 +316,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes, #tagCodes, #maxPrice}")
+			}
+	)
 	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
 		
