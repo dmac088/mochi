@@ -283,11 +283,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		if(!categoryCodes.getCodes().isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
+			query.setParameter("categoryCodes", categoryCodes.getCodes());
 		}
 		
 		if(!brandCodes.getCodes().isEmpty()) {
-			query.setParameter("brandCodes", brandCodes);
+			query.setParameter("brandCodes", brandCodes.getCodes());
 		}
 		
 		if(!(maxPrice == null)) {

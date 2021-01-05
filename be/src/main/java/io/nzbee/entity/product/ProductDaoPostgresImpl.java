@@ -476,7 +476,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("limit", pageable.getPageSize())
 		.setParameter("offset", pageable.getOffset());
 		
-		if(!categoryCode.isEmpty()) {
+		if(!categoryCodes.getCodes().isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes.getCodes());
 		}
 		
