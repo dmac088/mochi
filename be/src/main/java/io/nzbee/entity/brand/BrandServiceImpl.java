@@ -8,6 +8,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.IFacetService;
 
 @Service(value="brandEntityService")
@@ -70,8 +72,8 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes, #tagCodes, #maxPrice}")
-	public List<BrandDTO> findAll(String locale, String currency, String categoryCode,  Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
+	public List<BrandDTO> findAll(String locale, String currency, String categoryCode,  StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
 		return brandDao.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
 	}
 	

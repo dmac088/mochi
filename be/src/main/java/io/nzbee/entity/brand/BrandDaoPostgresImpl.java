@@ -25,6 +25,7 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandEntity_;
 
 @Component
@@ -318,18 +319,18 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes, #tagCodes, #maxPrice}")
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
 			}
 	)
-	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(
 															 true,
-															 !categoryCodes.isEmpty(),
-															 !tagCodes.isEmpty(),
+															 !categoryCodes.getCodes().isEmpty(),
+															 !tagCodes.getCodes().isEmpty(),
 															 !(maxPrice == null),
 															 false,
 															 false,
@@ -339,11 +340,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				 .setParameter("categoryCode", categoryCode)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		if(!categoryCodes.isEmpty()) {
+		if(!categoryCodes.getCodes().isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes);
 		}
 		
-		if(!tagCodes.isEmpty()) {
+		if(!tagCodes.getCodes().isEmpty()) {
 			query.setParameter("tagCodes", tagCodes);
 		}
 		

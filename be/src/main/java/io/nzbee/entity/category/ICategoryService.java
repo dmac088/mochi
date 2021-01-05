@@ -1,8 +1,8 @@
 package io.nzbee.entity.category;
 
 import java.util.List;
-import java.util.Set;
 import io.nzbee.entity.ILocalizedService;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.search.ISearchDimensionService;
 
@@ -14,11 +14,11 @@ public interface ICategoryService extends ILocalizedService<CategoryDTO, Categor
 	
 	<T> List<CategoryDTO> findAll(String locale, Class<T> classType);
 
-	List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brands, Set<String> tags, Double maxPrice);
+	List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brands, StringCollectionWrapper tags, Double maxPrice);
 
-	Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brands, Set<String> tags);
+	Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brands, StringCollectionWrapper tags);
 
 	List<CategoryEntity> findAll();
 	

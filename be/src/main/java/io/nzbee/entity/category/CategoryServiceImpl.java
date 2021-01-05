@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.search.IFacetService;
 
@@ -42,7 +44,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryCode")
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#categoryCode}")
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
 		return categoryRepository.findByCategoryCode(categoryCode);
 	}
@@ -54,17 +56,17 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
-			Set<String> tags, Double maxPrice) {
-		return categoryDAO.findAll(locale, currency, categoryCode, categoryCodes, brands, tags, maxPrice);
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
+	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+			StringCollectionWrapper tagCodes, Double maxPrice) {
+		return categoryDAO.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public Double getMaxPrice(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brands,
-			Set<String> tags) {
-		return categoryDAO.getMaxPrice(locale, currency, categoryCode, categoryCodes, brands, tags);
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey()}")
+	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+			StringCollectionWrapper tagCodes) {
+		return categoryDAO.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
 	}
 	
 	@Override
@@ -112,7 +114,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryCode"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.categoryCode}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryId}"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryCode}")
 	})

@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.ILocalizedService;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.ISearchDimensionService;
 
 public interface IBrandService extends ILocalizedService<BrandDTO, BrandEntity>, ISearchDimensionService<BrandDTO> {
@@ -14,7 +15,7 @@ public interface IBrandService extends ILocalizedService<BrandDTO, BrandEntity>,
 	
 	Optional<BrandDTO> findByProductCode(String locale, String productCode);
 
-	List<BrandDTO> findAll(String locale, String currency, String caetgoryCode, Set<String> categoryCodes,
-			Set<String> tagCodes, Double maxPrice);
+	List<BrandDTO> findAll(String locale, String currency, String caetgoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper tagCodes, Double maxPrice);
 
 }
