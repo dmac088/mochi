@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.tomcat.util.buf.StringUtils;
+import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,7 +102,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes, Set<String> brandCodes, Double maxPrice) {
-		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}, {}", locale, currency, categoryCode);
+		LOGGER.debug("call TagServiceImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, categoryCodes = {}, brandCodes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		return tagDao.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, maxPrice);
 	}
 	
