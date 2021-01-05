@@ -52,11 +52,11 @@ function Login(props) {
         <div className="row">
           <div className="col-md-12 col-12 mb-20">
             <label>Email Address*</label>
-            <input onChange={setUsername} className="mb-0" type="email" placeholder="Email Address" />
+            <input onChange={setUsername} className="mb-0" type="email" placeholder="Email Address" required/>
           </div>
           <div className="col-12 mb-20">
             <label>Password</label>
-            <input onChange={setPassword} className="mb-0" type="password" placeholder="Password" />
+            <input onChange={setPassword} className="mb-0" type="password" placeholder="Password" required/>
           </div>
           <div className="col-md-8">
             <div className="check-box d-inline-block ml-0 ml-md-2 mt-10">
