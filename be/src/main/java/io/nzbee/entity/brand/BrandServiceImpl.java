@@ -53,7 +53,6 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
 	public Optional<BrandDTO> findByDesc(String locale, String desc) {
 		return brandDao.findByDesc(locale, desc);
 	}
@@ -96,11 +95,12 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	@Caching(
 			evict = {
-				@CacheEvict(cacheNames = CACHE_NAME + "Other", 			allEntries = true),
-				@CacheEvict(cacheNames = CACHE_NAME + "ByProductCode", 	allEntries = true),
-				@CacheEvict(cacheNames = CACHE_NAME, key="#brand.brandCode"),
+				@CacheEvict(cacheNames = CACHE_NAME, key="{#brand.brandId}"),
+				@CacheEvict(cacheNames = CACHE_NAME, key="{#brand.brandCode}"),
 				@CacheEvict(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandId}"),
 				@CacheEvict(cacheNames = CACHE_NAME, key="{#brand.locale, #brand.brandCode}"),
+				@CacheEvict(cacheNames = CACHE_NAME + "Other", 			allEntries = true),
+				@CacheEvict(cacheNames = CACHE_NAME + "ByProductCode", 	allEntries = true),
 			})
 	public void save(BrandEntity brand) {
 		brandDao.save(brand);
