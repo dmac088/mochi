@@ -27,32 +27,33 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#id}")
 	public Optional<BrandEntity> findById(Long id) {
 		return brandRepository.findById(id);
 	}	
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandId}")
-	public Optional<BrandDTO> findById(String locale, Long brandId) {
-		return brandDao.findById(locale, brandId);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
+	public Optional<BrandDTO> findById(String locale, Long id) {
+		return brandDao.findById(locale, id);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#brandCode")
-	public Optional<BrandEntity> findByCode(String brandCode) {
-		return brandDao.findByCode(brandCode);
+	@Cacheable(cacheNames = CACHE_NAME, key = "#code")
+	public Optional<BrandEntity> findByCode(String code) {
+		return brandDao.findByCode(code);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandCode}")
-	public Optional<BrandDTO> findByCode(String locale, String brandCode) {
-		return brandDao.findByCode(locale, brandCode);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
+	public Optional<BrandDTO> findByCode(String locale, String code) {
+		return brandDao.findByCode(locale, code);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #brandDesc}")
-	public Optional<BrandDTO> findByDesc(String locale, String brandDesc) {
-		return brandDao.findByDesc(locale, brandDesc);
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #desc}")
+	public Optional<BrandDTO> findByDesc(String locale, String desc) {
+		return brandDao.findByDesc(locale, desc);
 	}
 	
 	@Override
@@ -60,17 +61,17 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public List<BrandDTO> findAll(String locale) {
 		return brandDao.findAll(locale);
 	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<BrandDTO> findAll(String locale, String currency, String categoryCode,  Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
-		return brandDao.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
-	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<BrandDTO> findAll(String locale, Set<String> codes) {
 		return brandDao.findAll(locale, codes);
+	}
+
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	public List<BrandDTO> findAll(String locale, String currency, String categoryCode,  Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
+		return brandDao.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
 	}
 	
 	@Override
