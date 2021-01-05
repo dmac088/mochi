@@ -9,11 +9,11 @@ import { Link } from 'react-router-dom';
 import Default from "../Default/Default";
 import Orders from "../Orders/Orders";
 import Payment from "../Payment/Payment";
-import Address  from "../Address/Address";
-import AddressEdit  from "../Address/AddressEdit";
-import Download  from "../Download/Download";
+import Address from "../Address/Address";
+import AddressEdit from "../Address/AddressEdit";
+import Download from "../Download/Download";
 import Admin from "../Admin/Admin";
-import AccountDetails  from "../AccountDetails/AccountDetails";
+import AccountDetails from "../AccountDetails/AccountDetails";
 
 
 function Dashboard(props) {
@@ -29,62 +29,63 @@ function Dashboard(props) {
     dispatch(clearBag());
     history.push(getAccountPath(match));
   }
-  
+
   useEffect(() => {
     let isSubscribed = true;
-    if(isSubscribed) {
-      if(!discovery.loading && discovery.isDone) {
-        if(!session.loading && session.isDone) {
-          if(!customer.loading && !customer.isDone) {
+    if (isSubscribed) {
+      if (!discovery.loading && discovery.isDone) {
+        if (!session.loading && session.isDone) {
+          if (!customer.loading && !customer.isDone) {
             dispatch(findByUserName(discovery, session));
           }
         }
       }
     }
     return () => (isSubscribed = false);
-  }, [discovery.loading, 
-      discovery.isDone, 
-      session.loading,
-      session.isDone,
-      customer.loading, 
-      customer.isDone]);
+  }, [
+    discovery.loading,
+    discovery.isDone,
+    session.loading,
+    session.isDone,
+    customer.loading,
+    customer.isDone]);
 
   const componentChoice = {
-      "orders": Orders,
-      "payment": Payment,
-      "viewaddress": Address,
-      "editaddress": AddressEdit,
-      "download": Download,
-      "accountdetails": AccountDetails,
-      "dashboard": Default,
-      "admin": Admin,
+    "orders": Orders,
+    "payment": Payment,
+    "viewaddress": Address,
+    "editaddress": AddressEdit,
+    "download": Download,
+    "accountdetails": AccountDetails,
+    "dashboard": Default,
+    "admin": Admin,
   }
 
   const mockMatch = matchPath(history.location.pathname, {
     path: "/:lang/:curr/myaccount/:component"
   })
-  
-  const selectedComponent = () => {   
-    if(mockMatch) {
+
+  const selectedComponent = () => {
+    if (mockMatch) {
       const { params } = mockMatch;
       const TheComponent = componentChoice[params.component];
       return (
-        <TheComponent 
+        <TheComponent
           {...props}
           customer={customer} />
       );
     }
     return <Default {...props}
-                    customer={customer}/>;
+      customer={customer} />;
   }
 
   const activeClass = (tab) => {
-    if(!mockMatch) { return null; } 
+    if (!mockMatch) { return null; }
     const { params } = mockMatch;
     return (params.component === tab) ? "active" : "";
   }
 
-  return ( 
+  return (
     <React.Fragment>
       <div className="my-account-section section position-relative mb-50 fix">
         <div className="container">
@@ -95,13 +96,13 @@ function Dashboard(props) {
                   <div className="myaccount-tab-menu nav" role="tablist">
                     <Link to={() => getAccountSubPath(match, 'dashboard')} className={activeClass('dashboard')} data-toggle="tab"><i className="fa fa-dashboard"></i>Dashboard</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'orders')}  className={activeClass('orders')} data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
+                    <Link to={() => getAccountSubPath(match, 'orders')} className={activeClass('orders')} data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'download')}  className={activeClass('download')} data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
+                    <Link to={() => getAccountSubPath(match, 'download')} className={activeClass('download')} data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'payment')}  className={activeClass('payment')} data-toggle="tab"><i className="fa fa-credit-card"></i> Payment Method</Link>
+                    <Link to={() => getAccountSubPath(match, 'payment')} className={activeClass('payment')} data-toggle="tab"><i className="fa fa-credit-card"></i> Payment Method</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'viewaddress')}  className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
+                    <Link to={() => getAccountSubPath(match, 'viewaddress')} className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
                     <Link to={() => getAccountSubPath(match, 'accountdetails')} className={activeClass('accountdetails')} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 
