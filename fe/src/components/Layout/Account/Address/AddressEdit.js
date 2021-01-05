@@ -70,6 +70,9 @@ function AddressEdit(props) {
         e.preventDefault();     
         dispatch(updateAddress(address, stateObject))
         .then(() => {
+            dispatch(getAddress(customer));
+        })
+        .then(() => {
             history.push(getAccountSubPath(match, 'viewaddress'));
         });
     }
