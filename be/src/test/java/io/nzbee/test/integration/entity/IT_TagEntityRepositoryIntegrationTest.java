@@ -95,7 +95,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnTagDTO() {
 
 		// when
-		Optional<TagDTO> found = tagService.findByCode("ORG01", Constants.localeENGB);
+		Optional<TagDTO> found = tagService.findByCode(Constants.localeENGB, "ORG01");
 
 		// then
 		assertFoundDTO(found);
@@ -105,7 +105,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnTagDTO() {
 
 		// when
-		Optional<TagDTO> found = tagService.findByDesc("ORGANIC", Constants.localeENGB);
+		Optional<TagDTO> found = tagService.findByDesc(Constants.localeENGB, "ORGANIC");
 
 		// then
 		assertFoundDTO(found);
