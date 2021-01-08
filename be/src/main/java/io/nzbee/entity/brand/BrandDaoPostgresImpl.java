@@ -53,7 +53,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<Long> lbid = Arrays.asList(id);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
@@ -61,6 +61,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 true))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandIds", lbid);
@@ -126,7 +127,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<String> lbc = Arrays.asList(code);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
@@ -134,6 +135,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 true,
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandCodes", lbc);
@@ -164,7 +166,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<String> lbd = Arrays.asList(desc);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
@@ -172,6 +174,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 true,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandDescriptions", lbd);
@@ -202,7 +205,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<String> lbc = codes.stream().collect(Collectors.toList());
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
@@ -210,6 +213,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 !codes.isEmpty(),
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -234,7 +238,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<String> lc = new ArrayList<String>(Arrays.asList(categoryCode));
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 														     true,
 															 false,
 															 false,
@@ -242,6 +246,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("categoryCodes", lc);
@@ -269,7 +274,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		List<String> lpc = new ArrayList<String>(Arrays.asList(productCode));
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
@@ -277,6 +282,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("productCodes", lpc);
@@ -296,7 +302,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
@@ -304,6 +310,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -328,7 +335,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		Session session = em.unwrap(Session.class);
 		
 		Query query = session.createNativeQuery(constructSQL(
-															 true,
 															 !categoryCodes.getCodes().isEmpty(),
 															 !tagCodes.getCodes().isEmpty(),
 															 !(maxPrice == null),
@@ -382,7 +388,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 
 	
 	private String constructSQL(
-			boolean hasCategory,
 			boolean hasCategories,
 			boolean hasTags,
 			boolean hasPrice,
@@ -403,9 +408,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			"                              || '/' AS text) node " + 
 			"          FROM      mochi.category            AS t " + 
 			"          WHERE     0=0 " +
-			"		   AND " + ((hasCategory) 
-					   ? " coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode "
-					   : " t.cat_lvl = 0 ") + 
+			" 		   AND t.cat_cd 	= :categoryCode " + 
 			"          UNION ALL " + 
 			"          SELECT t.cat_id, " + 
 			"                 t.cat_cd, " + 

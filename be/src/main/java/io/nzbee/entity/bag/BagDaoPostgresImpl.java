@@ -42,6 +42,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		LOGGER.debug("call BagDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, currency, userName);
 		
 		Query query = em.createNativeQuery(this.getSQL())
+						.setParameter("categoryCode", Constants.primaryRootCategoryCode)
 						.setParameter("userName", userName)
 						.setParameter("locale", locale)
 						.setParameter("currency", currency)
@@ -157,7 +158,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"                              || '/' AS text) node " + 
 		"          FROM      mochi.category            AS t " + 
 		"          WHERE     0=0 " +
-		" 		   AND t.cat_lvl = 0 " + 
+		" 		   AND t.cat_cd = :categoryCode " + 
 		"          UNION ALL " + 
 		"          SELECT t.cat_id, " + 
 		"                 t.cat_cd, " + 

@@ -102,13 +102,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-				
-		.setParameter("locale", locale)
-		.setParameter("currency", currency)
-		.setParameter("activeProductCode", Constants.activeSKUCode)
-		.setParameter("retailPriceCode", Constants.retailPriceCode)
-		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
-		.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()))
+				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				.setParameter("locale", locale)
+				.setParameter("currency", currency)
+				.setParameter("activeProductCode", Constants.activeSKUCode)
+				.setParameter("retailPriceCode", Constants.retailPriceCode)
+				.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+				.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()))
 		
 		.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
@@ -140,6 +140,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
+		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productId", productId)
@@ -183,11 +184,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-		.setParameter("locale", locale)
-		.setParameter("currency", currency)
-		.setParameter("activeProductCode", Constants.activeSKUCode)
-		.setParameter("retailPriceCode", Constants.retailPriceCode)
-		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				.setParameter("locale", locale)
+				.setParameter("currency", currency)
+				.setParameter("activeProductCode", Constants.activeSKUCode)
+				.setParameter("retailPriceCode", Constants.retailPriceCode)
+				.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!productCodes.isEmpty()) {
 			query.setParameter("productCodes", productCodes);
@@ -226,12 +228,13 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-		.setParameter("locale", locale)
-		.setParameter("currency", currency)
-		.setParameter("productDesc", productDesc)
-		.setParameter("activeProductCode", Constants.activeSKUCode)
-		.setParameter("retailPriceCode", Constants.retailPriceCode)
-		.setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				.setParameter("locale", locale)
+				.setParameter("currency", currency)
+				.setParameter("productDesc", productDesc)
+				.setParameter("activeProductCode", Constants.activeSKUCode)
+				.setParameter("retailPriceCode", Constants.retailPriceCode)
+				.setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
@@ -261,6 +264,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -294,6 +298,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -335,6 +340,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 true,
 															 false,
 															 ""))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", 			locale)
 				 .setParameter("currency", 			currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -357,6 +363,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  false,
 													  true,
 													  ""))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -529,7 +536,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"          WHERE     0=0 " +
 				((hasCategory) 
 				? " AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " 
-				: " AND t.cat_lvl = 0 ") + 
+				: " AND t.cat_cd = :categoryCode ") + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
 				"                 t.cat_cd, " + 

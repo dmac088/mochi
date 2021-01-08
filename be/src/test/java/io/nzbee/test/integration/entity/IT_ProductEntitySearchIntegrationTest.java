@@ -186,7 +186,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(2));
+        .isEqualTo(new Long(1));
 	} 
 	
 	@Test
@@ -278,7 +278,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(2));
+        .isEqualTo(new Long(1));
 	} 
 	
 	@Test
@@ -439,7 +439,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(3));
+        .isEqualTo(new Long(2));
 	}
 	
 	@Test
@@ -642,7 +642,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		System.out.println("results = " + String.join(",", sp));
         // then
 		assertThat(sp.length)
-        .isEqualTo(11);
+        .isEqualTo(1);
 	}
 	
 	
