@@ -70,13 +70,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		List<Long> ltids = Arrays.asList(id);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
 															 false,
 															 false,
 															 true))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("tagIDs", ltids)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -142,13 +143,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		List<String> ltc = Arrays.asList(code);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
-															 true,
+															 !ltc.isEmpty(),
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("tagCodes", ltc)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -157,9 +159,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new TagDTOResultTransformer());
 		
-		TagDTO result = (TagDTO) query.getSingleResult();
+		try {
+			TagDTO result = (TagDTO) query.getSingleResult();
+			return Optional.ofNullable(result);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 		
-		return Optional.ofNullable(result);
 	}
 	
 	
@@ -177,13 +184,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		List<String> ltd = Arrays.asList(desc);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
 															 false,
 															 true,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("tagDescriptions", ltd)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -213,13 +221,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
 															 !codes.isEmpty(),
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -241,13 +250,14 @@ public class TagDaoPostgresImpl implements ITagDao {
 
 		Session session = em.unwrap(Session.class);
 		
-		Query query = session.createNativeQuery(constructSQL(false,
+		Query query = session.createNativeQuery(constructSQL(
 															 false,
 															 false,
 															 false,
 															 false,
 															 false,
 															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				
@@ -271,7 +281,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		categoryCodes.getCodes().add(categoryCode);
 		
-		Query query = session.createNativeQuery(constructSQL(true,
+		Query query = session.createNativeQuery(constructSQL(
 															 !categoryCodes.getCodes().isEmpty(),
 															 !brandCodes.getCodes().isEmpty(),
 															 !(maxPrice == null),
@@ -323,7 +333,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 
 	private String constructSQL(
-			boolean hasCategory,
 			boolean hasCategories,
 			boolean hasBrands,
 			boolean hasPrice,
@@ -344,9 +353,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"                              || '/' AS text) node " + 
 				"          FROM      mochi.category            AS t " + 
 				"          WHERE     0=0 " + 
-				"		   AND " + ((hasCategory) 
-						   ? " coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode "
-						   : " t.cat_lvl = 0 ") + 
+				" 		   AND t.cat_cd 	= :categoryCode " + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
 				"                 t.cat_cd, " + 
