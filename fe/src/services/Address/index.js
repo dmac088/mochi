@@ -8,7 +8,7 @@ import {
     updateAddressFailure,
 } from "../../actions/AddressActions";
 
-export const getAddress = (customer) => {
+export const getAddress = (customer, addressType) => {
     return (dispatch) => {
         dispatch(getAddressStarted());
         return axios.get(customer._links.address.href)

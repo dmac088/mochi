@@ -6,7 +6,7 @@ import { getAddress } from '../../../../services/Address/index';
 import { useDispatch, useSelector } from 'react-redux';
 
 function Address(props) {
-    const { match } = props;
+    const { match, type } = props;
     const dispatch = useDispatch();
     const address = useSelector(state => state.address);
     const customer = useSelector(state => state.customer);
@@ -15,7 +15,7 @@ function Address(props) {
         let isSubscribed = true;
         if(isSubscribed) {
             if (!customer.loading && customer.isDone) {
-                dispatch(getAddress(customer));
+                dispatch(getAddress(customer, type));
             }
         }
         return () => (isSubscribed = false);
