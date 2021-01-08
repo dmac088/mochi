@@ -39,8 +39,10 @@ function Login(props) {
 
   const handleSubmit = (e) => {
     e.preventDefault();  
-    dispatch(authenticate(discovery, stateObject.username, stateObject.password))
-    .then(() => dispatch(getBag()));
+    if(!discovery.loading && discovery.isDone) {
+      dispatch(authenticate(discovery, stateObject.username, stateObject.password))
+      .then(() => dispatch(getBag()));
+    }
   }
 
   const status = (error) ? error.status : null;

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession } from '../../../../services/Session';
 import { clearBag } from '../../../../services/Bag';
@@ -9,8 +9,8 @@ import { Link } from 'react-router-dom';
 import Default from "../Default/Default";
 import Orders from "../Orders/Orders";
 import Payment from "../Payment/Payment";
-import Address from "../Address/Address";
 import AddressEdit from "../Address/AddressEdit";
+import AddressList from "../Address/AddressList";
 import Download from "../Download/Download";
 import Admin from "../Admin/Admin";
 import AccountDetails from "../AccountDetails/AccountDetails";
@@ -53,7 +53,7 @@ function Dashboard(props) {
   const componentChoice = {
     "orders": Orders,
     "payment": Payment,
-    "viewaddress": Address,
+    "viewaddress": AddressList,
     "editaddress": AddressEdit,
     "download": Download,
     "accountdetails": AccountDetails,

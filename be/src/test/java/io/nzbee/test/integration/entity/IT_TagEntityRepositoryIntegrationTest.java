@@ -72,28 +72,47 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	}
 
 	@Test
-	public void whenFindById_thenReturnTag() {
+	public void whenFindById_thenReturnTagEntity() {
 		
 		// when
 		Optional<TagEntity> found = tagService.findById(tag.getTagId());
 
 		// then
-		assertFound(found);
+		assertFoundEntity(found);
 	}
 
-	// write test cases here
 	@Test
-	public void whenFindByCode_thenReturnTag() {
+	public void whenFindByCode_thenReturnTagEntity() {
 
 		// when
 		Optional<TagEntity> found = tagService.findByCode("TST02");
 
 		// then
-		assertFound(found);
+		assertFoundEntity(found);
 	}
 	
 	@Test
-	public void whenFindAllForTestTag_thenReturnTheTestTag() {
+	public void whenFindByCode_thenReturnTagDTO() {
+
+		// when
+		Optional<TagDTO> found = tagService.findByCode("TST02", Constants.localeENGB);
+
+		// then
+		assertFoundDTO(found);
+	}
+	
+	@Test
+	public void whenFindByDesc_thenReturnTagDTO() {
+
+		// when
+		Optional<TagDTO> found = tagService.findByDesc("test tag", Constants.localeENGB);
+
+		// then
+		assertFoundDTO(found);
+	}
+	
+	@Test
+	public void whenFindAllForTestTag_thenReturnTagDTO() {
 
 		Set<String> tagCodes = new HashSet<String>();
 		
@@ -190,14 +209,24 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		assertThat(lb.size()).isEqualTo(2);
 	}
 
-	private void assertFound(Optional<TagEntity> found) {
+	private void assertFoundEntity(Optional<TagEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 
 		assertThat(found.get().getTagCode()).isEqualTo("TST02");
-		assertThat(found.get().getAttributes().stream().filter(t -> t.getLclCd().equals(Constants.localeENGB)).findAny().get().getTagDesc()).isEqualTo("test tag");
+		assertThat(found.get().getAttributes().stream().filter(t -> t.getLclCd().equals(Constants.localeENGB)).findAny().get().getTagDesc()).isEqualTo("test tag");	
+	}
+	
+	private void assertFoundDTO(Optional<TagDTO> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
+
+		assertThat(found.get().getTagCode()).isEqualTo("TST02");
+		assertThat(found.get().getTagDesc()).isEqualTo("test tag");
 		
 	}
 
