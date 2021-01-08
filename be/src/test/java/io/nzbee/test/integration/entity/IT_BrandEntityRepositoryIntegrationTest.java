@@ -84,25 +84,45 @@ public class IT_BrandEntityRepositoryIntegrationTest {
    
     
     @Test
-    public void whenFindById_thenReturnBrand() {
+    public void whenFindById_thenReturnBrandEntity() {
     	
         // when
     	Optional<BrandEntity> found = brandService.findById(brand.getBrandId());
      
         // then
-    	assertFound(found);
+    	assertFoundEntity(found);
     }
     
     
     @Test
-    public void whenFindByCode_thenReturnBrand() {
+    public void whenFindByCode_thenReturnBrandEntity() {
     	
         // when
     	Optional<BrandEntity> found = brandService.findByCode("TST02");
      
         // then
-    	assertFound(found);
+    	assertFoundEntity(found);
     }
+    
+	@Test
+	public void whenFindByCode_thenReturnBrandDTO() {
+
+		// when
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
+
+		// then
+		assertFoundDTO(found);
+	}
+	
+	@Test
+	public void whenFindByDesc_thenReturnBrandDTO() {
+
+		// when
+		Optional<BrandDTO> found = brandService.findByDesc(Constants.localeENGB, "Enza");
+
+		// then
+		assertFoundDTO(found);
+	}
    
     
     @Test
@@ -189,7 +209,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 
 	}
     
-    private void assertFound(final Optional<BrandEntity> found) {
+    private void assertFoundEntity(Optional<BrandEntity> found) {
     	
     	assertNotNull(found);
     	
@@ -206,6 +226,19 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	    
     }
     
+   private void assertFoundDTO(Optional<BrandDTO> found) {
+    	
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	assertThat(found.get().getBrandCode())
+        .isEqualTo("ENZ01");
+    	
+	    assertThat(found.get().getBrandDesc())
+	    .isEqualTo("Enza");
+	    
+    }
     
     @After
     public void closeConnection() {
