@@ -18,7 +18,7 @@ public class CustomerAddressResourceAssembler extends RepresentationModelAssembl
 	@Override
 	public CustomerAddressResource toModel(CustomerAddressDTOOut c) {
 		CustomerAddressResource cr = new CustomerAddressResource(c);
-		cr.add(linkTo(methodOn(CustomerController.class).getCustomerAddress(null)).withSelfRel());
+		cr.add(linkTo(methodOn(CustomerController.class).getCustomerAddress(null, null)).withSelfRel());
 		cr.add(linkTo(methodOn(CustomerController.class).updateCustomerAddres(null, null, null)).withRel("updateAddress"));
 		return cr;
 	}
