@@ -10,8 +10,8 @@ public class AddressServiceImpl implements IAddressService {
 	private IAddressPortService addressService;
 	
 	@Override
-	public Address findByUsername(String userName) {
-		return addressService.findByUsername(userName);
+	public Address findByUsernameAndType(String userName, String addressTypeCode) {
+		return addressService.findByUsernameAndType(userName, addressTypeCode);
 	}
 	
 	@Override

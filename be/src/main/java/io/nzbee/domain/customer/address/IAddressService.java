@@ -4,6 +4,6 @@ import io.nzbee.domain.IService;
 
 public interface IAddressService extends IService<Address> {
 
-	Address findByUsername(String username);
+	Address findByUsernameAndType(String userName, String addressTypeCode);
 	
 }
