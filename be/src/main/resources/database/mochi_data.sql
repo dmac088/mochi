@@ -357,6 +357,7 @@ INSERT INTO party VALUES (234482, 1);
 --
 
 INSERT INTO address VALUES (1, 'Test Line 1', 'Test Line 2', 'Test Line 3', 'Test Ctry', 'Test PC', 2, 234482);
+INSERT INTO address VALUES (2, 'Test Line 1', 'Test Line 2', 'Test Line 3', 'Test Ctry', 'Test PC', 1, 234482);
 
 
 --

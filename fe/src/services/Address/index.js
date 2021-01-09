@@ -8,10 +8,11 @@ import {
     updateAddressFailure,
 } from "../../actions/AddressActions";
 
-export const getAddress = (customer, addressType) => {
+export const getAddress = (customer, addressTypeCode) => {
     return (dispatch) => {
         dispatch(getAddressStarted());
-        return axios.get(customer._links.address.href)
+        
+        return axios.get(customer._links.address.href.replace('{addressTypeCode}', addressTypeCode))
             .then((payload) => {
                 return payload.data;
             }).then((address) => {
