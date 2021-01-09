@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutSession } from '../../../../services/Session';
 import { clearBag } from '../../../../services/Bag';
@@ -15,6 +15,16 @@ import Download from "../Download/Download";
 import Admin from "../Admin/Admin";
 import AccountDetails from "../AccountDetails/AccountDetails";
 
+const componentAlias = {
+  ORDERS          : 'orders',
+  PAYMENT         : 'payment',
+  VIEW_ADDRESS    : 'viewaddress',
+  EDIT_ADDRESS    : 'editaddress',
+  DOWNLOAD        : 'download',
+  ACCOUNT_DETAILS : 'accountdetails',
+  DASHBOARD       : 'dashboard',
+  ADMIN           : 'admin',
+}
 
 function Dashboard(props) {
   const { match, history } = props;
@@ -22,6 +32,12 @@ function Dashboard(props) {
   const customer = useSelector(state => state.customer);
   const discovery = useSelector(state => state.discovery);
   const session = useSelector(state => state.session);
+
+  const [addressObject, setAddressObjectState] = useState({
+    getAddress:         null,
+    updateAddress:      null,
+    addressTypeCode:    null
+  });
 
   const logout = (e) => {
     e.preventDefault();
@@ -51,16 +67,15 @@ function Dashboard(props) {
     customer.isDone]);
 
   const componentChoice = {
-    "orders": Orders,
-    "payment": Payment,
-    "viewaddress": AddressList,
-    "editaddress": AddressEdit,
-    "download": Download,
-    "accountdetails": AccountDetails,
-    "dashboard": Default,
-    "admin": Admin,
+      [componentAlias.ORDERS]           : Orders,
+      [componentAlias.PAYMENT]          : Payment,
+      [componentAlias.VIEW_ADDRESS]     : AddressList,
+      [componentAlias.EDIT_ADDRESS]     : AddressEdit,
+      [componentAlias.DOWNLOAD]         : Download,
+      [componentAlias.ACCOUNT_DETAILS]  : AccountDetails,
+      [componentAlias.DASHBOARD]        : Default,
+      [componentAlias.ADMIN]            : Admin,
   }
-
   const mockMatch = matchPath(history.location.pathname, {
     path: "/:lang/:curr/myaccount/:component"
   })
@@ -94,7 +109,7 @@ function Dashboard(props) {
               <div className="row">
                 <div className="col-lg-3 col-12">
                   <div className="myaccount-tab-menu nav" role="tablist">
-                    <Link to={() => getAccountSubPath(match, 'dashboard')} className={activeClass('dashboard')} data-toggle="tab"><i className="fa fa-dashboard"></i>Dashboard</Link>
+                    <Link to={() => getAccountSubPath(match, componentAlias.DASHBOARD)} className={activeClass(componentAlias.DASHBOARD)} data-toggle="tab"><i className="fa fa-dashboard"></i>Dashboard</Link>
 
                     <Link to={() => getAccountSubPath(match, 'orders')} className={activeClass('orders')} data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
 

@@ -10,8 +10,6 @@ function AddressEdit(props) {
     const customer = useSelector(state => state.customer);
     const dispatch = useDispatch();
 
-    console.log(customer);
-
     const [stateObject, setObjectState] = useState({
         addressLine1:       null,
         addressLine2:       null,
