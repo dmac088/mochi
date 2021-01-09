@@ -99,9 +99,9 @@ public class CustomerController {
     	return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.doToDto(c)));
 	}
     
-    @GetMapping("/Customer/Address")
-	public ResponseEntity<CustomerAddressResource> getCustomerAddress(Principal customer) {   	
-    	Address a = addressService.findByUsername(customer.getName()); 
+    @GetMapping("/Customer/Address/{addressTypeCode}")
+	public ResponseEntity<CustomerAddressResource> getCustomerAddress(Principal customer, @PathVariable String addressTypeCode) {   	
+    	Address a = addressService.findByUsernameAndType(customer.getName(), addressTypeCode); 
     	return ResponseEntity.ok(customerAddressResourceAssembler.toModel(customerAddressDTOMapper.doToDto(a)));
 	}
     

@@ -25,7 +25,7 @@ public class PostgresAddressAdapter implements IAddressPortService {
 	private IAddressMapper addressMapper;
 	
 	@Override
-	public Address findByUsername(String userName) {
+	public Address findByUsernameAndType(String userName, String addressTypeCode) {
 		LOGGER.debug("call PostgresAddressAdapter.findByUsername with parameter {}", userName);
 		
 		Optional<PartyAddressDTO> oa = addressService.findByUsernameAndRoleAndType(userName, Constants.partyRoleCustomer, Constants.billingAddressCode);
