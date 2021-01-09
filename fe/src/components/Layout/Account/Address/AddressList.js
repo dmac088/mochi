@@ -6,10 +6,10 @@ function AddressList(props) {
     return (
         <React.Fragment>
             {/* billing address */}
-            <Address 
+            {/* <Address 
             {...props}
             type="BIL01"/>
-            <br />
+            <br /> */}
             {/* mailing address */}
             <Address 
             {...props}

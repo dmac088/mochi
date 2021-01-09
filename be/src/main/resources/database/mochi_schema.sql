@@ -3874,8 +3874,8 @@ ALTER TABLE ONLY tag_attr_lcl
 --
 
 GRANT ALL ON SCHEMA mochi TO security_owner;
-GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT USAGE ON SCHEMA mochi TO security_app;
+GRANT USAGE ON SCHEMA mochi TO mochi_app;
 
 
 --
