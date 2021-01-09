@@ -1,7 +1,7 @@
 import {
-    GET_ADDRESS_STARTED,
-    GET_ADDRESS_SUCCESS,
-    GET_ADDRESS_FAILURE,
+    GET_SHIPPING_ADDRESS_STARTED,
+    GET_SHIPPING_ADDRESS_SUCCESS,
+    GET_SHIPPING_ADDRESS_FAILURE,
   } from "../actions/ActionTypes";
   
   const initialState = {
@@ -14,19 +14,19 @@ import {
   
     switch (action.type) {
 
-      case GET_ADDRESS_STARTED:
+      case GET_SHIPPING_ADDRESS_STARTED:
         return {
           ...state,
           ...action.payload,
       }
   
-      case GET_ADDRESS_SUCCESS:
+      case GET_SHIPPING_ADDRESS_SUCCESS:
         return {
           ...state,
           ...action.payload,
       }
   
-      case GET_ADDRESS_FAILURE:
+      case GET_SHIPPING_ADDRESS_FAILURE:
         return {
           ...state,
           error: action.payload.error

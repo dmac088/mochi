@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import { getAccountSubPath } from "../../Helpers/Route/Route";
 import { Link } from 'react-router-dom'
-import { getAddress } from '../../../../services/Address/index';
+
 import { useDispatch, useSelector } from 'react-redux';
 
 function Address(props) {
-    const { match, type } = props;
+    const { match, type, address, getAddress, updateAddress } = props;
     const dispatch = useDispatch();
-    const address = useSelector(state => state.address);
     const customer = useSelector(state => state.customer);
 
     useEffect(() => {
