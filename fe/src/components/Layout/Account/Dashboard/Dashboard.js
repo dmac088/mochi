@@ -111,15 +111,15 @@ function Dashboard(props) {
                   <div className="myaccount-tab-menu nav" role="tablist">
                     <Link to={() => getAccountSubPath(match, componentAlias.DASHBOARD)} className={activeClass(componentAlias.DASHBOARD)} data-toggle="tab"><i className="fa fa-dashboard"></i>Dashboard</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'orders')} className={activeClass('orders')} data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
+                    <Link to={() => getAccountSubPath(match, componentAlias.ORDERS)} className={activeClass(componentAlias.ORDERS)} data-toggle="tab"><i className="fa fa-cart-arrow-down"></i> Orders</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'download')} className={activeClass('download')} data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
+                    <Link to={() => getAccountSubPath(match, componentAlias.DOWNLOAD)} className={activeClass(componentAlias.DOWNLOAD)} data-toggle="tab"><i className="fa fa-cloud-download"></i> Download</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'payment')} className={activeClass('payment')} data-toggle="tab"><i className="fa fa-credit-card"></i> Payment Method</Link>
+                    <Link to={() => getAccountSubPath(match, componentAlias.PAYMENT)} className={activeClass(componentAlias.PAYMENT)} data-toggle="tab"><i className="fa fa-credit-card"></i> Payment Method</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'viewaddress')} className={activeClass('address')} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
+                    <Link to={() => getAccountSubPath(match, componentAlias.VIEW_ADDRESS)} className={activeClass(componentAlias.VIEW_ADDRESS)} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
-                    <Link to={() => getAccountSubPath(match, 'accountdetails')} className={activeClass('accountdetails')} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
+                    <Link to={() => getAccountSubPath(match, componentAlias.ACCOUNT_DETAILS)} className={activeClass(componentAlias.ACCOUNT_DETAILS)} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 
                     <a href="#" onClick={logout}><i className="fa fa-sign-out"></i> Logout</a>
                   </div>
