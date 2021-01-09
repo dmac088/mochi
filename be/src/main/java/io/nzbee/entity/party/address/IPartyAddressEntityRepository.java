@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 public interface IPartyAddressEntityRepository extends CrudRepository<PartyAddressEntity, Long> {
 
-	Optional<PartyAddressEntity> findByPartyPartyUserUsername(String userName);
+	Optional<PartyAddressEntity> findByPartyPartyUserUsernameAndTypeAddressTypeCode(String userName, String addressTypeCode);
 
 	@Query(	  " SELECT new io.nzbee.entity.party.address.PartyAddressDTO(a.addressId, "
 			+ "															 a.addressLine1, "
@@ -32,8 +32,9 @@ public interface IPartyAddressEntityRepository extends CrudRepository<PartyAddre
 			+ " JOIN r.roleType rt "
 			+ " JOIN p.partyUser u "
 			+ " WHERE u.username = :userName "
-			+ " AND rt.roleTypeDesc = :roleName" )
-	Optional<PartyAddressDTO> findByUsernameAndRole(String userName, String roleName);
+			+ " AND rt.roleTypeDesc = :roleName" 
+			+ " AND at.addressTypeCode = :addressTypeCode ")
+	Optional<PartyAddressDTO> findByUsernameAndRole(String userName, String roleName, String addressTypeCode);
 	
 }
  

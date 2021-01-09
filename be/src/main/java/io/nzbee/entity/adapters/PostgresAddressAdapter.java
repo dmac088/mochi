@@ -28,7 +28,7 @@ public class PostgresAddressAdapter implements IAddressPortService {
 	public Address findByUsername(String userName) {
 		LOGGER.debug("call PostgresAddressAdapter.findByUsername with parameter {}", userName);
 		
-		Optional<PartyAddressDTO> oa = addressService.findByUsername(userName, Constants.partyRoleCustomer);
+		Optional<PartyAddressDTO> oa = addressService.findByUsernameAndRoleAndType(userName, Constants.partyRoleCustomer, Constants.billingAddressCode);
 		
 		PartyAddressDTO a = oa.get();
 	
@@ -38,7 +38,7 @@ public class PostgresAddressAdapter implements IAddressPortService {
 	@Override
 	public void save(Address domainObject) {
 		LOGGER.debug("call PostgresAddressAdapter.save()");
-		Optional<PartyAddressEntity> opa = addressService.findByUsername(domainObject.getCustomer().getUserName());
+		Optional<PartyAddressEntity> opa = addressService.findByUsernameAndType(domainObject.getCustomer().getUserName(), Constants.billingAddressCode);
 		
 		PartyAddressEntity pa = opa.isPresent() 
 		? opa.get()

@@ -54,13 +54,13 @@ public class PartyAddressServiceImpl implements IPartyAddressService {
 	}
 
 	@Override
-	public Optional<PartyAddressEntity> findByUsername(String userName) {
-		return partyAddressRepository.findByPartyPartyUserUsername(userName);
+	public Optional<PartyAddressEntity> findByUsernameAndType(String userName, String addressTypeCode) {
+		return partyAddressRepository.findByPartyPartyUserUsernameAndTypeAddressTypeCode(userName, addressTypeCode);
 	}
 
 	@Override
-	public Optional<PartyAddressDTO> findByUsername(String userName, String roleName) {
-		return partyAddressRepository.findByUsernameAndRole(userName, roleName);
+	public Optional<PartyAddressDTO> findByUsernameAndRoleAndType(String userName, String roleName, String addressTypeCode) {
+		return partyAddressRepository.findByUsernameAndRole(userName, roleName, addressTypeCode);
 	}
 	
 	
