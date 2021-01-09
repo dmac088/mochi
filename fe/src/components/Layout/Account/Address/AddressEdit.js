@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { getAddress, updateAddress } from '../../../../services/Address/index';
 import { getAccountSubPath } from "../../Helpers/Route/Route";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import { Form } from 'react-bootstrap';
 
 function AddressEdit(props) {
-    const { history, match } = props;
+    const { history, match, address, getAddress, updateAddress } = props;
 
-    const address = useSelector(state => state.address);
     const customer = useSelector(state => state.customer);
     const dispatch = useDispatch();
+
+    console.log(customer);
 
     const [stateObject, setObjectState] = useState({
         addressLine1:       null,
@@ -87,10 +87,12 @@ function AddressEdit(props) {
             }
         }
         return () => (isSubscribed = false);
-    }, [customer.loading, 
+    }, [
+        customer.loading, 
         customer.isDone, 
         address.loading, 
-        address.isDone]);
+        address.isDone
+    ]);
 
     return (
         ((!address.isDone || address.loading))

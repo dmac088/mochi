@@ -1,24 +1,24 @@
 import { instance as axios } from "../../components/Layout/Helpers/api/axios";
 import {
-    getAddressStarted,
-    getAddressSuccess,
-    getAddressFailure,
-    updateAddressStarted,
-    updateAddressSuccess,
-    updateAddressFailure,
-} from "../../actions/AddressActions";
+    getShippingAddressStarted,
+    getShippingAddressSuccess,
+    getShippingAddressFailure,
+    updateShippingAddressStarted,
+    updateShippingAddressSuccess,
+    updateShippingAddressFailure,
+} from "../../actions/ShippingAddressActions";
 
 export const getAddress = (customer, addressTypeCode) => {
     return (dispatch) => {
-        dispatch(getAddressStarted());
+        dispatch(getShippingAddressStarted());
         
         return axios.get(customer._links.address.href.replace('{addressTypeCode}', addressTypeCode))
             .then((payload) => {
                 return payload.data;
             }).then((address) => {
-                dispatch(getAddressSuccess(address));
+                dispatch(getShippingAddressSuccess(address));
             }).catch((error) => {
-                dispatch(getAddressFailure(error.response));
+                dispatch(getShippingAddressFailure(error.response));
             });
     }
 }
@@ -26,16 +26,16 @@ export const getAddress = (customer, addressTypeCode) => {
 
 export const updateAddress = (address, payload) => {
     return (dispatch) => {
-        dispatch(updateAddressStarted());
+        dispatch(updateShippingAddressStarted());
         console.log(address);
         return axios.post(  address._links.updateAddress.href,
                             payload)
         .then((payload) => {
             return payload.data;
         }).then((address) => {
-            dispatch(updateAddressSuccess(address));
+            dispatch(updateShippingAddressSuccess(address));
         }).catch((error) => {
-            dispatch(updateAddressFailure(error.response));
+            dispatch(updateShippingAddressFailure(error.response));
         });
     }
 }
