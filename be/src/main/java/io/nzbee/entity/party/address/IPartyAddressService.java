@@ -5,9 +5,9 @@ import java.util.Optional;
 import io.nzbee.entity.IDao;
 
 public interface IPartyAddressService extends IDao<PartyAddressEntity> {
-	
-	Optional<PartyAddressEntity> findByUsername(String userName);
 
-	Optional<PartyAddressDTO> findByUsername(String userName, String roleName);
+	Optional<PartyAddressEntity> findByUsernameAndType(String userName, String addressTypeCode);
+
+	Optional<PartyAddressDTO> findByUsernameAndRoleAndType(String userName, String roleName, String addressTypeCode);
 	
 }

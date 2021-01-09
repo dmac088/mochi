@@ -92,9 +92,9 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	
 	@Test
 	@WithUserDetails(value = "admin")
-	public void whenFindByUsername_thenReturnPartyAddressEntity() {
+	public void whenFindBillingAddressByUsername_thenReturnPartyBillingAddressEntity() {
 		 // when
-    	Optional<PartyAddressEntity> found = partyAddressService.findByUsername("bob@bob");
+    	Optional<PartyAddressEntity> found = partyAddressService.findByUsernameAndType("bob@bob", Constants.billingAddressCode);
      
         // then
     	assertFoundEntity(found);
@@ -104,7 +104,7 @@ public class IT_PartyAddressEntityRepositoryIntegrationTest {
 	@WithUserDetails(value = "admin")
 	public void whenFindByUsername_thenReturnPartyAddressDTO() {
 		 // when
-    	Optional<PartyAddressDTO> found = partyAddressService.findByUsername("bob@bob", Constants.partyRoleCustomer);
+    	Optional<PartyAddressDTO> found = partyAddressService.findByUsernameAndRoleAndType("bob@bob", Constants.partyRoleCustomer, Constants.billingAddressCode);
      
         // then
     	assertFoundDTO(found);
