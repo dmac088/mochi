@@ -15,11 +15,10 @@ import Download from "../Download/Download";
 import Admin from "../Admin/Admin";
 import AccountDetails from "../AccountDetails/AccountDetails";
 
-const componentAlias = {
+export const componentAlias = {
   ORDERS          : 'orders',
   PAYMENT         : 'payment',
-  VIEW_ADDRESS    : 'viewaddress',
-  EDIT_ADDRESS    : 'editaddress',
+  ADDRESS         : 'address',
   DOWNLOAD        : 'download',
   ACCOUNT_DETAILS : 'accountdetails',
   DASHBOARD       : 'dashboard',
@@ -32,12 +31,6 @@ function Dashboard(props) {
   const customer = useSelector(state => state.customer);
   const discovery = useSelector(state => state.discovery);
   const session = useSelector(state => state.session);
-
-  const [addressObject, setAddressObjectState] = useState({
-    getAddress:         null,
-    updateAddress:      null,
-    addressTypeCode:    null
-  });
 
   const logout = (e) => {
     e.preventDefault();
@@ -69,7 +62,7 @@ function Dashboard(props) {
   const componentChoice = {
       [componentAlias.ORDERS]           : Orders,
       [componentAlias.PAYMENT]          : Payment,
-      [componentAlias.VIEW_ADDRESS]     : AddressList,
+      [componentAlias.ADDRESS]     : AddressList,
       [componentAlias.EDIT_ADDRESS]     : AddressEdit,
       [componentAlias.DOWNLOAD]         : Download,
       [componentAlias.ACCOUNT_DETAILS]  : AccountDetails,
@@ -117,7 +110,7 @@ function Dashboard(props) {
 
                     <Link to={() => getAccountSubPath(match, componentAlias.PAYMENT)} className={activeClass(componentAlias.PAYMENT)} data-toggle="tab"><i className="fa fa-credit-card"></i> Payment Method</Link>
 
-                    <Link to={() => getAccountSubPath(match, componentAlias.VIEW_ADDRESS)} className={activeClass(componentAlias.VIEW_ADDRESS)} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
+                    <Link to={() => getAccountSubPath(match, componentAlias.ADDRESS)} className={activeClass(componentAlias.ADDRESS)} data-toggle="tab"><i className="fa fa-map-marker"></i> address</Link>
 
                     <Link to={() => getAccountSubPath(match, componentAlias.ACCOUNT_DETAILS)} className={activeClass(componentAlias.ACCOUNT_DETAILS)} data-toggle="tab"><i className="fa fa-user"></i> Account Details</Link>
 

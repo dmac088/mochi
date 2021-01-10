@@ -1,12 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import AddressView from "./AddressView";
+import AddressEdit from "./AddressEdit";
 
 function Address(props) {
-    const {type, address, getAddress} = props;
+    const { type, address, getAddress, updateAddress } = props;
     const dispatch = useDispatch();
     const customer = useSelector(state => state.customer);
+
+    const [stateObject, setObjectState] = useState({
+        showEdit: false,
+    });
+
+    const toggleEdit = () => {
+        setObjectState((prevState) => ({ 
+          ...prevState, 
+          showEdit: !stateObject.showEdit,
+        }));
+    }
 
     useEffect(() => {
         let isSubscribed = true;
@@ -21,9 +33,13 @@ function Address(props) {
     return (
         ((!address.isDone || address.loading))
             ? <Spinner />
-            : <AddressView  
-                address={address}
-                customer={customer} />
+            : (stateObject.showEdit)
+                ? <AddressEdit 
+                        {...props}
+                        toggleEdit={toggleEdit} />
+                : <AddressView  
+                        {...props}
+                        toggleEdit={toggleEdit} />
     );
 }
 

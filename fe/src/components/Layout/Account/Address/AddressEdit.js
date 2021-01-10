@@ -3,9 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAccountSubPath } from "../../Helpers/Route/Route";
 import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import { Form } from 'react-bootstrap';
+import { componentAlias } from '../Dashboard/Dashboard';
 
 function AddressEdit(props) {
-    const { history, match, address, getAddress, updateAddress } = props;
+    const { history, match, address, getAddress, updateAddress, type, toggleEdit } = props;
 
     const customer = useSelector(state => state.customer);
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function AddressEdit(props) {
         addressLine3:       null,
         country:            null,
         postCode:           null,
-        addressTypeCode:    "BIL01"
+        addressTypeCode:    type
     });
 
     const setAddressLine1 = (e) => {
@@ -68,9 +69,10 @@ function AddressEdit(props) {
         e.preventDefault();     
         dispatch(updateAddress(address, stateObject))
         .then(() => {
-            dispatch(getAddress(customer))
+            dispatch(getAddress(customer, type))
             .then(() => {
-                history.push(getAccountSubPath(match, 'viewaddress'));
+                toggleEdit(e);
+               // history.push(getAccountSubPath(match, componentAlias.ADDRESS));
             });
         })
     }

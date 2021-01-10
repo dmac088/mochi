@@ -1,7 +1,7 @@
 import React from "react";
 
 function AddressView(props) {
-    const { address, customer } = props;
+    const { address, customer, toggleEdit } = props;
 
     return (
             <React.Fragment>
@@ -15,8 +15,11 @@ function AddressView(props) {
                     </p>
                     <p>{address.data.country}</p>
                     <p>{address.data.postCode}</p>
-
+                    <a href="#" onClick={toggleEdit}
+                        className="btn d-inline-block edit-address-btn">
+                        <i className="fa fa-edit"></i>Edit Address</a>
                 </address>
+
             </React.Fragment>
     );
 }
