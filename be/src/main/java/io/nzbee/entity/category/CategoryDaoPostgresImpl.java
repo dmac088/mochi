@@ -258,6 +258,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return query.getResultList();
 	}
 	
+	
 	@Override
 	@Caching(
 			put = {
@@ -459,11 +460,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	
-	
-	
-	
-	
-
 	@Override
 	public List<CategoryEntity> findByParent(String parentCategoryCode, String locale) {
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByParent parameters : {}, {}", parentCategoryCode, locale);
