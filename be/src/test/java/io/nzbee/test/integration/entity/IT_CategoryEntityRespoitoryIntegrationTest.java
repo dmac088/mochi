@@ -5,10 +5,12 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +31,11 @@ import com.google.common.collect.Ordering;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryDTO;
+import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.product.CategoryProductEntity;
+import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -57,6 +61,65 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@Autowired
 	private ICategoryService categoryService;
 
+	@Autowired
+	private ICategoryEntityBeanFactory categoryEntityBeanFactory;
+	
+    @Before
+    public void setUp() { 
+    	this.persistNewCategory();
+    }
+    
+    private CategoryEntity category = null;
+    
+	public void persistNewCategory() {
+    	
+		category = categoryEntityBeanFactory.getBean();
+		
+	    //persist a new transient test category
+	    categoryService.save(category);
+	}
+	
+	@Test
+    public void whenFindById_thenReturnCategoryEntity() {
+    	
+        // when
+    	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
+     
+        // then
+    	assertFoundEntity(found);
+    }
+    
+    
+    @Test
+    public void whenFindByCode_thenReturnCategoryEntity() {
+    	
+        // when
+    	Optional<CategoryEntity> found = categoryService.findByCode("TST02");
+     
+        // then
+    	assertFoundEntity(found);
+    }
+    
+	@Test
+	public void whenFindByCode_thenReturnCategoryDTO() {
+
+		// when
+		Optional<CategoryDTO> found = categoryService.findByCode(Constants.localeENGB, "TST02");
+
+		// then
+		assertFoundDTO(found);
+	}
+	
+	@Test
+	public void whenFindByDesc_thenReturnCategoryDTO() {
+
+		// when
+		Optional<CategoryDTO> found = categoryService.findByDesc(Constants.localeENGB, "test product category");
+
+		// then
+		assertFoundDTO(found);
+	}
+	
 	@Test
 	public void whenFindAll_thenReturnAllCategories() {
 
@@ -66,7 +129,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(79);
+		assertThat(found.size()).isEqualTo(80);
 		assertTrue(isOrdered(found));
 	}
 	
@@ -343,7 +406,38 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertNotNull(found);
 		assertThat(found).isEqualTo(new Double("11.0"));
 	}
-
+	
+	private void assertFoundEntity(Optional<CategoryEntity> found) {
+    	
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	assertThat(found.get().getCategoryCode())
+        .isEqualTo("TST02");
+    	
+	    assertThat(found.get().getCategoryDescENGB())
+	    .isEqualTo("test product category");
+	    
+	    assertThat(found.get().getCategoryDescZHHK())
+	    .isEqualTo("測試產品類別");
+	    
+    }
+	
+	 private void assertFoundDTO(Optional<CategoryDTO> found) {
+	    	
+	    	assertNotNull(found);
+	    	
+	    	assertTrue(found.isPresent());
+	    	
+	    	assertThat(found.get().getCategoryCode())
+	        .isEqualTo("TST02");
+	    	
+		    assertThat(found.get().getCategoryDesc())
+		    .isEqualTo("test product category");
+		    
+	    }
+	
 	@After
 	public void closeConnection() {
 		entityManager.close();

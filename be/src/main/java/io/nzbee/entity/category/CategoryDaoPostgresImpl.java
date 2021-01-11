@@ -47,7 +47,74 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
+	
+	@Autowired
+	private ICategoryRepository categoryRepository;
 
+
+	@Override
+	public Optional<CategoryEntity> findById(long id) {
+		return categoryRepository.findById(id);
+	}
+	
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="#categoryCode")
+			}
+	)
+	public Optional<CategoryEntity> findByCode(String categoryCode) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
+		
+		return categoryRepository.findByCategoryCode(categoryCode);
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="{#locale, #categoryCode}")
+			}
+		)
+	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}", locale, categoryCode);
+		
+		Session session = em.unwrap(Session.class);
+		
+		final List<String> categoryCodes = new ArrayList<String>();
+		categoryCodes.add(categoryCode);
+		
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false))
+				 .setParameter("locale", locale)
+				 .setParameter("categoryCode", categoryCode)
+				 .setParameter("categoryCodes", categoryCodes)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
+		
+		try {
+			CategoryDTO category = (CategoryDTO) query.getSingleResult();
+			return Optional.ofNullable(category);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+	}
+	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	@Caching(
@@ -199,43 +266,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return query.getResultList();
 	}
 	
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CACHE_NAME, key="#categoryCode")
-			}
-	)
-	public Optional<CategoryEntity> findByCode(String categoryCode) {
-		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<CategoryEntity> cq = cb.createQuery(CategoryEntity.class);
-		
-		Root<CategoryEntity> root = cq.from(CategoryEntity.class);
-		
-		List<Predicate> conditions = new ArrayList<Predicate>();
-
-		conditions.add(
-				cb.equal(root.get(CategoryEntity_.CATEGORY_CODE), categoryCode)
-		);
-		
-		TypedQuery<CategoryEntity> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		try {
-			CategoryEntity p = query.getSingleResult();
-			return Optional.ofNullable(p);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
-		
-	}
+	
 
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
@@ -421,51 +452,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			return Optional.empty();
 		}
 
-	}
-
-	@SuppressWarnings("deprecation")
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #categoryCode}")
-			}
-		)
-	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
-		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode parameters : {}, {}", locale, categoryCode);
-		
-		Session session = em.unwrap(Session.class);
-		
-		final List<String> categoryCodes = new ArrayList<String>();
-		categoryCodes.add(categoryCode);
-		
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 true,
-															 false,
-															 false))
-				 .setParameter("locale", locale)
-				 .setParameter("categoryCode", categoryCode)
-				 .setParameter("categoryCodes", categoryCodes)
-				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new CategoryDTOResultTransformer());
-		
-		try {
-			CategoryDTO category = (CategoryDTO) query.getSingleResult();
-			return Optional.ofNullable(category);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
 	}
 	
 
@@ -872,13 +858,5 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public Optional<CategoryEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
 
 }

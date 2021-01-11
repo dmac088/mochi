@@ -23,11 +23,17 @@ public class CategoryEntityBeanFactory implements ICategoryEntityBeanFactory {
 		category.setCategoryCode("TST02");
 		category.setCategoryLevel(new Long(1));
 
-		final CategoryAttributeEntity categoryAttribute = new CategoryAttributeEntity();
-		categoryAttribute.setCategory(category);
-		categoryAttribute.setCategoryDesc("test product category");
-		categoryAttribute.setLclCd(Constants.localeENGB);
-		category.addCategoryAttribute(categoryAttribute);
+		final CategoryAttributeEntity categoryAttributeEn = new CategoryAttributeEntity();
+		categoryAttributeEn.setCategory(category);
+		categoryAttributeEn.setCategoryDesc("test product category");
+		categoryAttributeEn.setLclCd(Constants.localeENGB);
+		category.addCategoryAttribute(categoryAttributeEn);
+		
+		final CategoryAttributeEntity categoryAttributeCn = new CategoryAttributeEntity();
+		categoryAttributeCn.setCategory(category);
+		categoryAttributeCn.setCategoryDesc("測試產品類別");
+		categoryAttributeCn.setLclCd(Constants.localeZHHK);
+		category.addCategoryAttribute(categoryAttributeCn);
 		
 		return category;
 	}
