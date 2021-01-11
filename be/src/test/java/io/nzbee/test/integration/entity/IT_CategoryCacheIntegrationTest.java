@@ -1,8 +1,10 @@
 package io.nzbee.test.integration.entity;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.persistence.EntityManager;
 import org.junit.After;
 import org.junit.Before;
@@ -16,7 +18,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cache.Cache;
-import org.springframework.cache.Cache.ValueWrapper;
 import org.springframework.cache.CacheManager;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
@@ -28,6 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -84,10 +86,15 @@ public class IT_CategoryCacheIntegrationTest {
         // then
     	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
     	
-    	ValueWrapper vw = cache.get("{" + found.get().getCategoryId() + "}");
+    	assertNotNull(cache);
     	
-    	assertNotNull(vw);
-    	assertTrue(vw.get().equals(found.get().getCategoryId()));
+    	@SuppressWarnings("rawtypes")
+		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
+    	Object ob = nativeCache.get(found.get().getCategoryId());
+    	
+    	assertTrue(nativeCache.containsKey((found.get().getCategoryId())));
+    	assertNotNull(ob);
+    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
     }
     
     
