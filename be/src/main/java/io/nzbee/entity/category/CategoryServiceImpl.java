@@ -110,9 +110,10 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.categoryCode}"),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryId}"),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#category.locale, #category.categoryCode}")
+			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryId"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryCode"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#category.locale + \", \" + #category.categoryId"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#category.locale + \", \" + #category.categoryCode")
 	})
 	public void save(CategoryEntity category) {
 		categoryDAO.save(category);
