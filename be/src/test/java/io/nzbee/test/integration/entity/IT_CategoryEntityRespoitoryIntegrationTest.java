@@ -143,7 +143,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// when
 		List<CategoryDTO> found = categoryService.findAll(	Constants.localeENGB,
 													  		Constants.currencyHKD, 
-													  		ls);
+													  		new StringCollectionWrapper(ls));
 
 		// then
 		assertNotNull(found);
@@ -160,7 +160,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, ls);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, new StringCollectionWrapper(ls));
 
 		// then
 		assertNotNull(found);
