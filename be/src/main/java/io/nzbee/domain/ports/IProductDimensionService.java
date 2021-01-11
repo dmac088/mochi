@@ -12,5 +12,6 @@ public interface IProductDimensionService<X> extends IPortService<X> {
 	X findByCode(String locale, String code);
 
 	X findByDesc(String locale, String desc);
+
 	    
 }

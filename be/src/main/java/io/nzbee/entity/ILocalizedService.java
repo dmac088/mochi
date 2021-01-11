@@ -8,7 +8,7 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	
 	List<T> findAll(String locale);
 	
-	List<T> findAll(String locale, Set<String> codes);
+	List<T> findAll(String locale, StringCollectionWrapper codes);
 	
 	List<Z> findAll(Set<String> codes);
 	
@@ -17,5 +17,7 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	Optional<T> findByDesc(String locale, String desc);
 	
 	Optional<T> findByCode(String locale, String code);
+
+	List<T> findAll(String locale, String currency, StringCollectionWrapper codes);
 	
 }

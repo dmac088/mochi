@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryServiceImpl;
 
 @Service
@@ -38,7 +39,7 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	}
 
 	@Override
-	public List<CategoryProductDTO> findAll(String locale, Set<String> codes) {
+	public List<CategoryProductDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -104,6 +105,12 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 
 	@Override
 	public List<CategoryProductEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CategoryProductDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

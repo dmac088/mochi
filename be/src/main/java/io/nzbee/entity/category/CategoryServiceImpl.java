@@ -24,46 +24,44 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	private ICategoryDao categoryDAO;
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#categoryId}")
-	public Optional<CategoryEntity> findById(Long id) {
-		return categoryDAO.findById(id);
+	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryId")
+	public Optional<CategoryEntity> findById(Long categoryId) {
+		return categoryDAO.findById(categoryId);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryId}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryId")
 	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
 		return categoryDAO.findById(locale, categoryId);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryCode}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryCode")
 	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
 		return categoryDAO.findByCode(locale, categoryCode);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#categoryCode}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryCode")
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
 		return categoryDAO.findByCode(categoryCode);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #categoryDesc}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryDesc")
 	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
 		return categoryDAO.findByDesc(locale, categoryDesc);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
-	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
-			StringCollectionWrapper tagCodes, Double maxPrice) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
+	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
 		return categoryDAO.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey()}")
-	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
-			StringCollectionWrapper tagCodes) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey()")
+	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes) {
 		return categoryDAO.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
 	}
 	
@@ -74,25 +72,25 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
-		return categoryDAO.findAll(locale, categoryCodes);
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #categoryCodes.getCacheKey()")
+	public List<CategoryDTO> findAll(String locale, StringCollectionWrapper categoryCodes) {
+		return categoryDAO.findAll(locale, categoryCodes.getCodes());
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #classType.getName()")
 	public <T> List<CategoryDTO> findAll(String locale, Class<T> classType) {
 		return categoryDAO.findAllByType(locale, classType);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "\"findByParent\" + #locale + \", \" + #parentCategoryCode")
 	public List<CategoryEntity> findByParent(String locale, String parentCategoryCode) {
 		return categoryDAO.findByParent(locale, parentCategoryCode);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #level.toString()")
 	public List<CategoryEntity> findAllForLevel(String locale, Long level) {
 		return categoryDAO.findByLevel(locale, level);
 	}
@@ -104,7 +102,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	public List<CategoryDTO> findAll(String locale, String currency, Set<String> categoryCodes) {
+	public List<CategoryDTO> findAll(String locale, String currency, StringCollectionWrapper categoryCodes) {
 		return categoryDAO.findAll(locale, categoryCodes);
 	}
 
@@ -151,5 +149,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	public List<CategoryEntity> findAll(Set<String> codes) {
 		return categoryDAO.findAll(codes);
 	}
+
 
 }

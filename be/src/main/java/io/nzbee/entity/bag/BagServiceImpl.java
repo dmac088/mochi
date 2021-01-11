@@ -9,6 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.StringCollectionWrapper;
+
 @Service(value="bagEntityService")
 public class BagServiceImpl implements IBagService {
 
@@ -67,7 +69,7 @@ public class BagServiceImpl implements IBagService {
 	}
 
 	@Override
-	public List<BagDTO> findAll(String locale, Set<String> codes) {
+	public List<BagDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -93,6 +95,12 @@ public class BagServiceImpl implements IBagService {
 
 	@Override
 	public Optional<BagDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BagDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

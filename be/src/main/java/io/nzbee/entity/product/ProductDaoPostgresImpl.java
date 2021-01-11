@@ -280,11 +280,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
-	public List<ProductDTO> findAll(		String locale, 
+	public List<ProductDTO> findAll(	String locale, 
 										String currency, 
-										Set<String> codes) {
+										StringCollectionWrapper codes) {
 		
-		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes, ','));
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes.getCodes(), ','));
 		
 		Query query = em.createNativeQuery(this.constructSQL(true,
 															 false,
@@ -305,7 +305,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("retailPriceCode", Constants.retailPriceCode)
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
-		if(!codes.isEmpty()) {
+		if(!codes.getCodes().isEmpty()) {
 			query.setParameter("productCodes", codes);
 		} else {
 			Set<String> dummy = new HashSet<String>();
@@ -887,13 +887,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return null;
 	}
 
-
-	@Override
-	public List<ProductDTO> findAll(String locale, Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	@Override
 	public Optional<ProductDTO> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
@@ -936,6 +929,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return null;
 	}
 
-	
-
+	@Override
+	public List<ProductDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -77,7 +77,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="{#locale, #categoryCode}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryId")
 			}
 		)
 	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
@@ -858,6 +858,12 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@Override
 	public CategoryDTO objectToDTO(Object[] o, String locale, String currency) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CategoryDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

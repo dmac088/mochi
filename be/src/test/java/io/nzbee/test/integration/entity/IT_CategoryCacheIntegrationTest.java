@@ -26,9 +26,11 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactory;
 
@@ -78,7 +80,7 @@ public class IT_CategoryCacheIntegrationTest {
 	}
 	
 	@Test
-    public void whenFindById_thenReturnCategoryEntityFromCache() {
+    public void whenFindEntityById_thenReturnCategoryEntityFromCache() {
     	
         // when
     	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
@@ -98,7 +100,7 @@ public class IT_CategoryCacheIntegrationTest {
     }
 	
 	@Test
-    public void whenFindByCode_thenReturnCategoryEntityFromCache() {
+    public void whenFindEntityByCode_thenReturnCategoryEntityFromCache() {
     	
         // when
     	Optional<CategoryEntity> found = categoryService.findByCode(category.getCategoryCode());
@@ -115,6 +117,39 @@ public class IT_CategoryCacheIntegrationTest {
     	assertTrue(nativeCache.containsKey((found.get().getCategoryCode())));
     	assertNotNull(ob);
     	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
+    }
+	
+	@Test
+    public void whenFindDTOById_thenReturnCategoryDTOFromCache() {
+    	
+        // when
+    	categoryService.findById(Constants.localeENGB, category.getCategoryId());
+     
+        // then
+    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
+    	
+    	assertNotNull(cache);
+    	
+    	@SuppressWarnings("rawtypes")
+		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
+    	String key = Constants.localeENGB + ", " + category.getCategoryId().toString();
+    	Object ob = nativeCache.get(key);
+    	//[en-GB, 234507]
+    	
+    	for(Object k : nativeCache.keySet()) {
+    		System.out.println(k);
+    		System.out.println(key);
+    		System.out.println(k.getClass().getSimpleName());
+    		System.out.println(key.getClass().getSimpleName());
+    		System.out.println(k.hashCode());
+    		System.out.println(key.hashCode());
+    		System.out.println(k.equals(key));
+    	}
+    	
+    	assertNotNull(ob);
+    	assertTrue(nativeCache.containsKey(key));
+    	
+    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
     }
     
 	@After

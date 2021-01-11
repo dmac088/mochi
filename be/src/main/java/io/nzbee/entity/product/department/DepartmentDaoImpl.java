@@ -16,6 +16,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
+
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.ProductEntity_;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
@@ -40,7 +42,7 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	}
 
 	@Override
-	public List<DepartmentDTO> findAll(String locale, Set<String> codes) {
+	public List<DepartmentDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -7,6 +7,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.StringCollectionWrapper;
+
 @Service
 public class ProductPriceServiceImpl implements IProductPriceService {
 
@@ -74,12 +76,6 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public List<ProductPriceDTO> findAll(String locale, Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<ProductPriceDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -117,6 +113,18 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 
 	@Override
 	public List<ProductPriceEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductPriceDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductPriceDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

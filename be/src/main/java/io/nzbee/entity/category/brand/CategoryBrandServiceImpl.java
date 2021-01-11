@@ -7,6 +7,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.StringCollectionWrapper;
+
 @Service
 public class CategoryBrandServiceImpl implements ICategoryBrandService {
 
@@ -26,7 +28,7 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	}
 
 	@Override
-	public List<CategoryBrandDTO> findAll(String locale, Set<String> codes) {
+	public List<CategoryBrandDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -85,6 +87,12 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 
 	@Override
 	public List<CategoryBrandEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CategoryBrandDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
