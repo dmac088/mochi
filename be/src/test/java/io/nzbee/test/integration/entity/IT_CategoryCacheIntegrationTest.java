@@ -120,7 +120,7 @@ public class IT_CategoryCacheIntegrationTest {
     }
 	
 	@Test
-    public void whenFindDTOById_thenReturnCategoryDTOFromCache() {
+    public void whenFindDTOByIdAndLocale_thenReturnCategoryDTOFromCache() {
     	
         // when
     	categoryService.findById(Constants.localeENGB, category.getCategoryId());
@@ -134,21 +134,30 @@ public class IT_CategoryCacheIntegrationTest {
 		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
     	String key = Constants.localeENGB + ", " + category.getCategoryId().toString();
     	Object ob = nativeCache.get(key);
-    	//[en-GB, 234507]
-    	
-    	for(Object k : nativeCache.keySet()) {
-    		System.out.println(k);
-    		System.out.println(key);
-    		System.out.println(k.getClass().getSimpleName());
-    		System.out.println(key.getClass().getSimpleName());
-    		System.out.println(k.hashCode());
-    		System.out.println(key.hashCode());
-    		System.out.println(k.equals(key));
-    	}
-    	
+    
     	assertNotNull(ob);
-    	assertTrue(nativeCache.containsKey(key));
+    	assertTrue(nativeCache.containsKey(key)); 	
+    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
+    }
+	
+	@Test
+    public void whenFindDTOByCodeAndLocale_thenReturnCategoryDTOFromCache() {
     	
+        // when
+    	categoryService.findByCode(Constants.localeENGB, category.getCategoryCode());
+     
+        // then
+    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
+    	
+    	assertNotNull(cache);
+    	
+    	@SuppressWarnings("rawtypes")
+		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
+    	String key = Constants.localeENGB + ", " + category.getCategoryCode().toString();
+    	Object ob = nativeCache.get(key);
+    
+    	assertNotNull(ob);
+    	assertTrue(nativeCache.containsKey(key)); 	
     	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
     }
     
