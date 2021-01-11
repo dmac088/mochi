@@ -23,12 +23,10 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Qualifier(value = "categoryEntityPostgresDao")
 	private ICategoryDao categoryDAO;
 	
-	@Autowired
-	private ICategoryRepository categoryRepository;
-	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "{#categoryId}")
 	public Optional<CategoryEntity> findById(Long id) {
-		return categoryRepository.findByCategoryId(id);
+		return categoryDAO.findById(id);
 	}
 	
 	@Override
@@ -46,7 +44,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "{#categoryCode}")
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
-		return categoryRepository.findByCategoryCode(categoryCode);
+		return categoryDAO.findByCode(categoryCode);
 	}
 	
 	@Override

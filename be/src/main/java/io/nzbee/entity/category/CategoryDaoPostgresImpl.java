@@ -41,8 +41,6 @@ import io.nzbee.entity.product.ProductEntity_;
 public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
-	
-	public static final String CACHE_NAME = "categoryCache";
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -53,6 +51,11 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#id")
+			}
+	)
 	public Optional<CategoryEntity> findById(long id) {
 		return categoryRepository.findById(id);
 	}
@@ -60,7 +63,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#categoryCode")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#categoryCode")
 			}
 	)
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
@@ -74,7 +77,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #categoryCode}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="{#locale, #categoryCode}")
 			}
 		)
 	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
@@ -119,7 +122,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
 			}
 	)
 	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
@@ -169,7 +172,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey()}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey()}")
 			}
 	)
 	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
@@ -371,7 +374,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #categoryId}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="{#locale, #categoryId}")
 			}
 	)
 	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
@@ -414,7 +417,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #categoryDesc}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="{#locale, #categoryDesc}")
 			}
 	)
 	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
