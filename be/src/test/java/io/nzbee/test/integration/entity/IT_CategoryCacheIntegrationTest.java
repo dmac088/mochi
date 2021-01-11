@@ -160,6 +160,28 @@ public class IT_CategoryCacheIntegrationTest {
     	assertTrue(nativeCache.containsKey(key)); 	
     	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
     }
+	
+	
+	@Test
+    public void whenSavingEntity_thenKeyIsEvictedFromCache() {
+    	
+        // when
+    	categoryService.findByCode(Constants.localeENGB, category.getCategoryCode());
+     
+        // then
+    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
+    	
+    	assertNotNull(cache);
+    	
+    	@SuppressWarnings("rawtypes")
+		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
+    	String key = Constants.localeENGB + ", " + category.getCategoryCode().toString();
+    	Object ob = nativeCache.get(key);
+    
+    	assertNotNull(ob);
+    	assertTrue(nativeCache.containsKey(key)); 	
+    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
+    }
     
 	@After
 	public void closeConnection() {
