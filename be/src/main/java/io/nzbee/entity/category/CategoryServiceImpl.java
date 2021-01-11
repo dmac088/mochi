@@ -28,7 +28,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	@Override
 	public Optional<CategoryEntity> findById(Long id) {
-		return categoryRepository.findById(id);
+		return categoryRepository.findByCategoryId(id);
 	}
 	
 	@Override
