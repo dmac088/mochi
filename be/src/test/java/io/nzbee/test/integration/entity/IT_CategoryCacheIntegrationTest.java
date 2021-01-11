@@ -110,7 +110,7 @@ public class IT_CategoryCacheIntegrationTest {
     	
     	@SuppressWarnings("rawtypes")
 		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
-    	Object ob = nativeCache.get(found.get().getCategoryId());
+    	Object ob = nativeCache.get(found.get().getCategoryCode());
     	
     	assertTrue(nativeCache.containsKey((found.get().getCategoryCode())));
     	assertNotNull(ob);
