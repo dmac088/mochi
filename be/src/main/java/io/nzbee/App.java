@@ -15,7 +15,8 @@ import io.nzbee.util.FileStorageProperties;
 @EnableCaching
 @EnableConfigurationProperties({
     FileStorageProperties.class,
-    Globals.class
+    Globals.class,
+    CacheConfiguration.class,
 })
 @ComponentScan({"io.nzbee.*"})
 public class App {
