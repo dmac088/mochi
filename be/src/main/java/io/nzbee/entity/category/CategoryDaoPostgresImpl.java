@@ -60,24 +60,54 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return categoryRepository.findById(id);
 	}
 	
+	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#categoryCode")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryId")
 			}
 	)
-	public Optional<CategoryEntity> findByCode(String categoryCode) {
+	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
+		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, categoryId);
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
+		Session session = em.unwrap(Session.class);
 		
-		return categoryRepository.findByCategoryCode(categoryCode);
+		final List<String> categoryCodes = new ArrayList<String>();
+		
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false,
+															 false))
+				 .setParameter("locale", locale)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("categoryId", categoryId)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+		
+
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
+		
+		try {
+			CategoryDTO category = (CategoryDTO) query.getSingleResult();
+			return Optional.ofNullable(category);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@SuppressWarnings("deprecation")
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryId")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryCode")
 			}
 		)
 	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
@@ -118,11 +148,70 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		}
 	}
 	
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#categoryCode")
+			}
+	)
+	public Optional<CategoryEntity> findByCode(String categoryCode) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
+		
+		return categoryRepository.findByCategoryCode(categoryCode);
+	}
+	
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryDesc")
+			}
+	)
+	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, categoryDesc);
+		
+		Session session = em.unwrap(Session.class);
+		
+		final List<String> categoryCodes = new ArrayList<String>();
+		
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false,
+															 false,
+															 false))
+				 .setParameter("locale", locale)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("categoryDesc", categoryDesc)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new CategoryDTOResultTransformer());
+		
+		try {
+			CategoryDTO category = (CategoryDTO) query.getSingleResult();
+			return Optional.ofNullable(category);
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+
+	}
+	
+	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
 			}
 	)
 	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
@@ -172,7 +261,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey()}")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey()")
 			}
 	)
 	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
@@ -370,92 +459,9 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	
-	@SuppressWarnings("deprecation")
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="{#locale, #categoryId}")
-			}
-	)
-	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
-		LOGGER.debug("call CategoryDaoPostgresImpl.findById parameters : {}, {}, {}", locale, categoryId);
-		
-		Session session = em.unwrap(Session.class);
-		
-		final List<String> categoryCodes = new ArrayList<String>();
-		
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 true,
-															 false,
-															 false,
-															 false))
-				 .setParameter("locale", locale)
-				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("categoryId", categoryId)
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new CategoryDTOResultTransformer());
-		
-		try {
-			CategoryDTO category = (CategoryDTO) query.getSingleResult();
-			return Optional.ofNullable(category);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
-	}
 	
-	@SuppressWarnings("deprecation")
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="{#locale, #categoryDesc}")
-			}
-	)
-	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
-		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findByDesc parameters : {}, {}, {}", locale, categoryDesc);
-		
-		Session session = em.unwrap(Session.class);
-		
-		final List<String> categoryCodes = new ArrayList<String>();
-		
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 true,
-															 false,
-															 false,
-															 false,
-															 false))
-				 .setParameter("locale", locale)
-				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("categoryDesc", categoryDesc)
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new CategoryDTOResultTransformer());
-		
-		try {
-			CategoryDTO category = (CategoryDTO) query.getSingleResult();
-			return Optional.ofNullable(category);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
-
-	}
+	
+	
 	
 
 	@Override
