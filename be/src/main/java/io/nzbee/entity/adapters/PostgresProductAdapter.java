@@ -236,7 +236,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Product> findAll(String locale, String currency, Set<String> codes) {
-		List<ProductDTO> lp =  productService.findAll(locale, currency, codes);
+		List<ProductDTO> lp =  productService.findAll(locale, currency, new StringCollectionWrapper(codes));
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 	

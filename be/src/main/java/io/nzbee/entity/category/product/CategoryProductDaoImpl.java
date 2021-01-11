@@ -19,6 +19,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryEntity_;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity_;
@@ -151,7 +153,7 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 	}
 
 	@Override
-	public List<CategoryProductDTO> findAll(String locale, Set<String> codes) {
+	public List<CategoryProductDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -220,5 +222,6 @@ public class CategoryProductDaoImpl implements ICategoryProductDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

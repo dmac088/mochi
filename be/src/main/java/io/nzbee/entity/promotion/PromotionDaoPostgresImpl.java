@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
+import io.nzbee.entity.StringCollectionWrapper;
+
 
 @Component(value = "promotionEntityDao")
 public class PromotionDaoPostgresImpl implements IPromotionDao {
@@ -177,5 +179,11 @@ public class PromotionDaoPostgresImpl implements IPromotionDao {
 		"	ON promo.prm_mec_id =  promomec.prm_mec_id " +
 		"	" +
 		"WHERE promo.prm_cd = :promoCode "; 
+	}
+
+	@Override
+	public List<PromotionDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

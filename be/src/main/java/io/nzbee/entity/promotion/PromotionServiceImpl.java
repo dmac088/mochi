@@ -9,6 +9,8 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.StringCollectionWrapper;
+
 @Service(value="promotionEntityService")
 public class PromotionServiceImpl implements IPromotionService {
 
@@ -72,7 +74,7 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 
 	@Override
-	public List<PromotionDTO> findAll(String locale, Set<String> codes) {
+	public List<PromotionDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -97,6 +99,12 @@ public class PromotionServiceImpl implements IPromotionService {
 	@Override
 	public Optional<PromotionDTO> findByDesc(String locale, String desc) {
 		return promotionDao.findByDesc(locale, desc);
+	}
+
+	@Override
+	public List<PromotionDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

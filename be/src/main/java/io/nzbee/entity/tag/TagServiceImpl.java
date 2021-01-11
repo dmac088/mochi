@@ -88,15 +88,15 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<TagDTO> findAll(String locale, Set<String> codes) {
-		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, StringUtils.join(codes));
+	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
+		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, StringUtils.join(codes.getCodes()));
 		return tagDao.findAll(locale, codes);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<TagDTO> findAll(String locale, String currency, Set<String> codes) {
-		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}, {}", locale, currency, codes);
+	public List<TagDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}, {}", locale, currency, codes.getCodes());
 		return tagDao.findAll(locale, codes);
 	}
 	
@@ -146,5 +146,4 @@ public class TagServiceImpl implements ITagService, IFacetService {
 		// TODO Auto-generated method stub
 		
 	}
-	
 }

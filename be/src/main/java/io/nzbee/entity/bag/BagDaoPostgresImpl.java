@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 
 @Component
 public class BagDaoPostgresImpl implements IBagDao {
@@ -72,7 +73,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 	}
 
 	@Override
-	public List<BagDTO> findAll(String locale, Set<String> codes) {
+	public List<BagDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

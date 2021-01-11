@@ -53,7 +53,7 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Category> findAll(String locale, Set<String> codes) {
-		return categoryService.findAll(locale, codes)
+		return categoryService.findAll(locale, new StringCollectionWrapper(codes))
 				.stream().map(c -> (Category) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 

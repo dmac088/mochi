@@ -216,7 +216,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #codes}")
 			}
 	)
-	public List<TagDTO> findAll(String locale, Set<String> codes) {
+	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
 		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
 
 		Session session = em.unwrap(Session.class);
@@ -225,7 +225,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 false,
-															 !codes.isEmpty(),
+															 !codes.getCodes().isEmpty(),
 															 false,
 															 false))
 				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
@@ -233,7 +233,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		
-		if(!codes.isEmpty()) {
+		if(!codes.getCodes().isEmpty()) {
 			query.setParameter("tagCodes", codes);
 		}
 		

@@ -60,7 +60,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Tag> findAll(String locale, Set<String> codes) {
-		return tagService.findAll(locale, codes)
+		return tagService.findAll(locale, new StringCollectionWrapper(codes))
 				.stream().map(t -> tagMapper.DTOToDo(t)).collect(Collectors.toList());
 	}
 	

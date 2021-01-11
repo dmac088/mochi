@@ -90,7 +90,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	public List<BrandDTO> findAll(String locale, String currency, Set<String> brandCodes) {
+	public List<BrandDTO> findAll(String locale, String currency, StringCollectionWrapper brandCodes) {
 		return brandDao.findAll(locale, brandCodes);
 	}
 
@@ -137,6 +137,12 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	@Override
 	public List<BrandEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

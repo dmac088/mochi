@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.StringCollectionWrapper;
+
 @Service
 public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
@@ -68,12 +70,6 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 
 	@Override
-	public List<CategoryBrandDTO> findAll(String locale, Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void save(CategoryBrandEntity t) {
 		em.persist(t);
 	}
@@ -116,6 +112,12 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 
 	@Override
 	public List<CategoryBrandEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<CategoryBrandDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

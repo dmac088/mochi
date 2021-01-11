@@ -6,6 +6,8 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.entity.StringCollectionWrapper;
+
 @Service
 public class DepartmentServiceImpl implements IDepartmentService{
 
@@ -22,7 +24,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	}
 
 	@Override
-	public List<DepartmentDTO> findAll(String locale, Set<String> codes) {
+	public List<DepartmentDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -81,6 +83,12 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Override
 	public List<DepartmentEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<DepartmentDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

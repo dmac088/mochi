@@ -43,6 +43,7 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.PageableUtil;
+import io.nzbee.entity.StringCollectionWrapper;
 
 @Service
 public class SearchServiceImpl implements ISearchService {
@@ -394,7 +395,7 @@ public class SearchServiceImpl implements ISearchService {
 			// create a new array of entity facets
 			ISearchDimensionService service = sfh.getBean(appContext);
 			
-			List<ISearchDimension> lc = service.findAll(lcl, currency, sfh.getCodes());
+			List<ISearchDimension> lc = service.findAll(lcl, currency, new StringCollectionWrapper(sfh.getCodes()));
 
 			facets.stream().filter(x -> !selectedFacets.stream().filter(y -> (x.getValue().equals(y.getValue())))
 			.findFirst().isPresent()).collect(Collectors.toSet())
@@ -439,7 +440,7 @@ public class SearchServiceImpl implements ISearchService {
 		List<String> orderedIds = result.stream().map(o -> o[0].toString()).collect(Collectors.toList());
 		List<ProductDTO> lp = productService.findAll( lcl, 
 													 currency, 
-													 result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+													 new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
 		
 		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((ProductDTO) item).getProductUPC())));		
 	 
@@ -468,7 +469,7 @@ public class SearchServiceImpl implements ISearchService {
 		LOGGER.debug("***********Searching for the following UPC*****************");
 		LOGGER.debug((StringUtils.join(",", result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))));
 		LOGGER.debug("***********************************************************");
-		List<ProductDTO> lp = productService.findAll(locale, currency, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		List<ProductDTO> lp = productService.findAll(locale, currency, new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
 
 		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
 

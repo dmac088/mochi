@@ -541,6 +541,12 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		return null;
 	}
 
+	@Override
+	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 
 

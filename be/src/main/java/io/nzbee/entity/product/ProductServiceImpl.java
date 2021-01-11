@@ -41,7 +41,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<ProductDTO> findAll(String locale, Set<String> codes) {
+	public List<ProductDTO> findAll(String locale, StringCollectionWrapper codes) {
 		return productDAO.findAll(locale, codes);
 	}
 
@@ -96,7 +96,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<ProductDTO> findAll(String locale, String currency, Set<String> productCodes) {
+	public List<ProductDTO> findAll(String locale, String currency, StringCollectionWrapper productCodes) {
 		return productDAO.findAll(locale, currency, productCodes);
 	}
 	

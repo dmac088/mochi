@@ -7,6 +7,7 @@ import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
 
 @Service
 public class TagAttributeServiceImpl implements ITagAttributeService {
@@ -63,7 +64,7 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	}
 	
 	@Override
-	public List<TagAttributeDTO> findAll(String locale, Set<String> codes) {
+	public List<TagAttributeDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
