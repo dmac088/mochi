@@ -78,7 +78,7 @@ public class IT_CategoryCacheIntegrationTest {
 	}
 	
 	@Test
-    public void whenFindById_thenReturnCategoryEntity() {
+    public void whenFindById_thenReturnCategoryEntityFromCache() {
     	
         // when
     	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
@@ -96,9 +96,27 @@ public class IT_CategoryCacheIntegrationTest {
     	assertNotNull(ob);
     	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
     }
+	
+	@Test
+    public void whenFindByCode_thenReturnCategoryEntityFromCache() {
+    	
+        // when
+    	Optional<CategoryEntity> found = categoryService.findByCode(category.getCategoryCode());
+     
+        // then
+    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
+    	
+    	assertNotNull(cache);
+    	
+    	@SuppressWarnings("rawtypes")
+		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
+    	Object ob = nativeCache.get(found.get().getCategoryId());
+    	
+    	assertTrue(nativeCache.containsKey((found.get().getCategoryCode())));
+    	assertNotNull(ob);
+    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
+    }
     
-    
-		
 	@After
 	public void closeConnection() {
 		entityManager.close();
