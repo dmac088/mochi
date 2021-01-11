@@ -84,7 +84,7 @@ public class IT_CustomerAddressDoServiceImplIntegrationTest {
 	public void whenFindCustomerAddressByUsername_thenReturnCustomerAddress() {
 		
 		// when
-		Address found = customerAddressService.findByUsername("bob@bob");
+		Address found = customerAddressService.findByUsernameAndType("bob@bob", "BIL01");
 
 		// then
 		assertFound(found);
