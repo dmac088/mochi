@@ -1,7 +1,12 @@
 spring:
   main:
     allow-bean-definition-overriding: true
-    
+
+  cache:
+    jcache:
+      config: ehcache.xml
+      provider: EHCACHE 
+  
   mail:
     host: smtp.gmail.com
     password: ${SMTPPassword}
