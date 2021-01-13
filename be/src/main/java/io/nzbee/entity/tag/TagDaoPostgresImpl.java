@@ -95,7 +95,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#code}")
+					@CachePut(value = CACHE_NAME, key="#code")
 			}
 	)
 	public Optional<TagEntity> findByCode(String code) {
@@ -133,7 +133,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #code}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #code")
 			}
 	)
 	public Optional<TagDTO> findByCode(String locale, String code) {
@@ -174,7 +174,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #desc}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #desc")
 			}
 	)
 	public Optional<TagDTO> findByDesc(String locale, String desc) {
@@ -213,7 +213,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #codes}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
@@ -271,7 +271,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #maxPrice}")
+					@CachePut(value = CACHE_NAME + "Other", key="{#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {
