@@ -2,8 +2,11 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -90,9 +93,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindById_thenReturnProduct() {
 		 // when
-    	ProductDTO found = productService.findById( Constants.localeENGB, 
+    	Optional<ProductDTO> found = productService.findById( Constants.localeENGB, 
 				  								  	Constants.currencyUSD,  
-				  								  	product.getProductId()).get();
+				  								  	product.getProductId());
      
         // then
     	assertFound(found);
@@ -102,9 +105,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
-    	ProductDTO found = productService.findByCode(Constants.localeENGB, 
+    	Optional<ProductDTO> found = productService.findByCode(Constants.localeENGB, 
 				  								  	 Constants.currencyUSD,  
-												     "123456789").get();
+												     "123456789");
     	
         // then
     	assertFound(found);
@@ -113,9 +116,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	@Test
 	public void whenFindByDesc_thenReturnProduct() {
 		 // when
-    	ProductDTO found = productService.findByDesc(Constants.localeENGB, 
+    	Optional<ProductDTO> found = productService.findByDesc(Constants.localeENGB, 
 				  								  	 Constants.currencyUSD,  
-												  	 "test product").get();
+												  	 "test product");
      
         // then
     	assertFound(found);
@@ -263,32 +266,36 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     }
 	
 	 
-    private void assertFound(final ProductDTO found) {
+    private void assertFound(Optional<ProductDTO> found) {
     	
-    	assertThat(found.getProductUPC())
+    	assertNotNull(found);
+    	
+    	assertTrue(found.isPresent());
+    	
+    	assertThat(found.get().getProductUPC())
         .isEqualTo("123456789");
     	
-    	assertThat(found.getDepartment().getDepartmentCode())
+    	assertThat(found.get().getDepartment().getDepartmentCode())
     	.isEqualTo("ACC01");
     	
-    	assertThat(found.getProductStatusCode())
+    	assertThat(found.get().getProductStatusCode())
     	.isEqualTo("ACT01");
     	
-    	assertThat(found.getBrand().getBrandCode())
+    	assertThat(found.get().getBrand().getBrandCode())
     	.isEqualTo("PLA01");
     	
-    	assertNotNull(found.getCategories());
-    	assertThat(found.getCategories().size()).isEqualTo(2);
-    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findAny().isPresent()).isTrue();
-    	assertThat(found.getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findAny().isPresent()).isTrue();
+    	assertNotNull(found.get().getCategories());
+    	assertThat(found.get().getCategories().size()).isEqualTo(2);
+    	assertThat(found.get().getCategories().stream().filter(f -> f.getCategoryCode().equals("POM01")).findAny().isPresent()).isTrue();
+    	assertThat(found.get().getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findAny().isPresent()).isTrue();
     	
-    	assertThat(found.getRetailPrice())
+    	assertThat(found.get().getRetailPrice())
     	.isEqualTo(new Double(7.8));
     	
-    	assertThat(found.getMarkdownPrice())
+    	assertThat(found.get().getMarkdownPrice())
     	.isEqualTo(new Double(6.45));
     	
-    	assertThat(found.getPromotions().size()).isEqualTo(1);
+    	assertThat(found.get().getPromotions().size()).isEqualTo(1);
     	
 //    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }

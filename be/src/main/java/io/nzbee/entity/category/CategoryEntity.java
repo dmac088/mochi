@@ -1,5 +1,6 @@
 package io.nzbee.entity.category;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -42,7 +43,9 @@ import io.nzbee.search.ISearchDimension;
 @Table(name = "category", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="cat_typ_id")
-public abstract class CategoryEntity implements ISearchDimension {
+public abstract class CategoryEntity implements ISearchDimension, Serializable {
+
+	private static final long serialVersionUID = 3858871432012784690L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

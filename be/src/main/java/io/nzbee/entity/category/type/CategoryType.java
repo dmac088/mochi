@@ -1,5 +1,7 @@
 package io.nzbee.entity.category.type;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,9 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "category_type", schema = "mochi")
-public class CategoryType {
+public class CategoryType implements Serializable {
+
+	private static final long serialVersionUID = -8284927708757318785L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
