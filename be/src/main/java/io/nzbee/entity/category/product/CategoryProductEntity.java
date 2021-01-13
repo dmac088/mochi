@@ -1,5 +1,6 @@
 package io.nzbee.entity.category.product;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -17,9 +18,10 @@ import io.nzbee.entity.product.ProductEntity;
 @Table(name = "category_product", schema = "mochi")
 @DiscriminatorValue("1")
 @JsonTypeName("categoryproduct")
-public class CategoryProductEntity extends CategoryEntity  {
+public class CategoryProductEntity extends CategoryEntity implements Serializable  {
 	
-	
+	private static final long serialVersionUID = 286345140667931120L;
+
 	@ManyToMany(mappedBy = "categories")
     @JsonIgnore
     private Set<ProductEntity> products = new HashSet<ProductEntity>();

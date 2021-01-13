@@ -24,13 +24,13 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	private ICategoryDao categoryDAO;
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryId")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryId.toString()")
 	public Optional<CategoryEntity> findById(Long categoryId) {
 		return categoryDAO.findById(categoryId);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryId")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryId.toString()")
 	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
 		return categoryDAO.findById(locale, categoryId);
 	}
@@ -110,9 +110,9 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryId"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryId.toString()"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="#category.categoryCode"),
-			@CacheEvict(cacheNames = CACHE_NAME, key="#category.locale + \", \" + #category.categoryId"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#category.locale + \", \" + #category.categoryId.toString()"),
 			@CacheEvict(cacheNames = CACHE_NAME, key="#category.locale + \", \" + #category.categoryCode")
 	})
 	public void save(CategoryEntity category) {
