@@ -234,7 +234,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 		
 		if(!codes.getCodes().isEmpty()) {
-			query.setParameter("tagCodes", codes);
+			query.setParameter("tagCodes", codes.getCodes());
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
