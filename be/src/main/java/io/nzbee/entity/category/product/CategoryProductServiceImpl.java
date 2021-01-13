@@ -21,15 +21,14 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	private ICategoryProductDao productCategoryDao;
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME)
-	public List<CategoryProductDTO> findAllByProductCode(String locale, String prodctUPC) {
-		return productCategoryDao.findAllByProductCode(locale, prodctUPC);
+	@Cacheable(cacheNames = CACHE_NAME, key="#locale + \", \" + #productUPC")
+	public List<CategoryProductDTO> findAllByProductCode(String locale, String productUPC) {
+		return productCategoryDao.findAllByProductCode(locale, productUPC);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #prodctUPC}")
-	public Optional<CategoryProductDTO> findPrimaryByProductCode(String locale, String prodctUPC) {
-		return productCategoryDao.findPrimaryByProductCode(locale, prodctUPC);
+	public Optional<CategoryProductDTO> findPrimaryByProductCode(String locale, String productUPC) {
+		return productCategoryDao.findPrimaryByProductCode(locale, productUPC);
 	}
 
 	@Override
@@ -66,8 +65,8 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 			evict = {
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME + "Other", allEntries = true),
 				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="#category.categoryCode"),
-				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryId}"),
-				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="{#category.locale, #category.categoryCode}")
+				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="#category.locale + \", \" + #category.categoryId.toString()"),
+				@CacheEvict(cacheNames = CategoryServiceImpl.CACHE_NAME, key="#category.locale + \", \" + #category.categoryCode")
 			})
 	public void save(CategoryProductEntity category) {
 		productCategoryDao.save(category);

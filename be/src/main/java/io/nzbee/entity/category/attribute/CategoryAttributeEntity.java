@@ -1,5 +1,7 @@
 package io.nzbee.entity.category.attribute;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +20,9 @@ import io.nzbee.entity.category.CategoryEntity;
 
 @Entity
 @Table(name = "category_attr_lcl", schema = "mochi")
-public class CategoryAttributeEntity {
+public class CategoryAttributeEntity implements Serializable {
+
+	private static final long serialVersionUID = -3794133965733083147L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
