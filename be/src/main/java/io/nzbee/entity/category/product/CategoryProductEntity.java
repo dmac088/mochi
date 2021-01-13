@@ -24,7 +24,7 @@ public class CategoryProductEntity extends CategoryEntity implements Serializabl
 
 	@ManyToMany(mappedBy = "categories")
     @JsonIgnore
-    private Set<ProductEntity> products = new HashSet<ProductEntity>();
+    private Set<ProductEntity> products = new HashSet<>();
 	
 	@Transient
 	private Long productCount;

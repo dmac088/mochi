@@ -28,6 +28,8 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.product.CategoryProductDTO;
@@ -76,11 +78,12 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
     private ProductEntity product = null;
     
+    @Transactional
 	public ProductEntity persistNewProduct() {
     	
 		product = productEntityBeanFactory.getBean();
 	    
-	    entityManager.persist(product);
+		productService.save(product);
 	    	
 	    return product;
 	}
