@@ -1,5 +1,7 @@
 package io.nzbee.entity.tag.attribute;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +15,9 @@ import io.nzbee.entity.tag.TagEntity;
 
 @Entity
 @Table(name = "tag_attr_lcl", schema = "mochi")
-public class TagAttributeEntity {
+public class TagAttributeEntity implements Serializable {
+
+	private static final long serialVersionUID = 200437342036762838L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
