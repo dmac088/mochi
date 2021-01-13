@@ -1,10 +1,13 @@
 package io.nzbee.entity.category.brand;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import io.nzbee.entity.category.CategoryDTO;
 
-public class CategoryBrandDTO extends CategoryDTO {
+public class CategoryBrandDTO extends CategoryDTO implements Serializable {
+
+	private static final long serialVersionUID = -1050071867499063932L;
 
 	public static final String BRAND_COUNT_ALIAS = "object_count";
 	

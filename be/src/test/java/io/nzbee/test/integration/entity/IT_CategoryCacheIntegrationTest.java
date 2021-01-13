@@ -2,12 +2,8 @@ package io.nzbee.test.integration.entity;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 import java.util.Optional;
-import java.util.concurrent.ConcurrentHashMap;
 import javax.persistence.EntityManager;
-
-import org.ehcache.CacheManager;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,7 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cache.Cache;
-import org.springframework.cache.ehcache.EhCacheCache;
 import org.springframework.cache.jcache.JCacheCache;
 import org.springframework.cache.jcache.JCacheCacheManager;
 import org.springframework.cache.support.SimpleValueWrapper;
@@ -133,9 +128,11 @@ public class IT_CategoryCacheIntegrationTest {
     	JCacheCache jCache = (JCacheCache) cache;
     	String key = Constants.localeENGB + ", " + category.getCategoryId().toString();
     	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+    	
+    	System.out.println(key);
 
     	assertNotNull(ob.get());
-    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
+    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
     }
 	
 	@Test

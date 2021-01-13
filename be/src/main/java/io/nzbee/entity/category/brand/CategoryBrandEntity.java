@@ -22,7 +22,7 @@ import io.nzbee.entity.category.product.CategoryProductEntity;
 @Table(name = "category_brand", schema = "mochi")
 @DiscriminatorValue("2")
 @JsonTypeName("categorybrand")
-public class CategoryBrandEntity extends CategoryEntity  implements Serializable {
+public class CategoryBrandEntity extends CategoryEntity implements Serializable {
 
 	/**
 	 * 
