@@ -182,7 +182,7 @@ public abstract class ProductEntity implements Serializable {
 		   			inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
 	@IndexedEmbedded(	prefix="product.categories.", 
 						includeEmbeddedObjectId=true)
-	private Set<CategoryProductEntity> categories = new HashSet<CategoryProductEntity>();
+	private Set<CategoryProductEntity> categories = new HashSet<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 				cascade = {
