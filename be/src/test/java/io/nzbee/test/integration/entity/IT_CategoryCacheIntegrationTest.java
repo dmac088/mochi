@@ -129,8 +129,6 @@ public class IT_CategoryCacheIntegrationTest {
     	String key = Constants.localeENGB + ", " + category.getCategoryId().toString();
     	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
-    	System.out.println(key);
-
     	assertNotNull(ob.get());
     	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
     }
@@ -138,22 +136,20 @@ public class IT_CategoryCacheIntegrationTest {
 	@Test
     public void whenFindDTOByCodeAndLocale_thenReturnCategoryDTOFromCache() {
     	
-//        // when
-//    	categoryService.findByCode(Constants.localeENGB, category.getCategoryCode());
-//     
-//        // then
-//    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
-//    	
-//    	assertNotNull(cache);
-//    	
-//    	@SuppressWarnings("rawtypes")
-//		ConcurrentHashMap nativeCache = (ConcurrentHashMap) cache.getNativeCache();
-//    	String key = Constants.localeENGB + ", " + category.getCategoryCode().toString();
-//    	Object ob = nativeCache.get(key);
-//    
-//    	assertNotNull(ob);
-//    	assertTrue(nativeCache.containsKey(key)); 	
-//    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
+	    // when
+	    categoryService.findByCode(Constants.localeENGB, category.getCategoryCode());
+	     
+	    // then
+	    Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
+	    	
+	    assertNotNull(cache);
+	    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    String key = Constants.localeENGB + ", " + category.getCategoryCode().toString();
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+	    	
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
     }
 	
 	
