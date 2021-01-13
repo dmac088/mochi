@@ -1,9 +1,12 @@
 package io.nzbee.entity.product.shipping;
 
+import java.io.Serializable;
 import java.util.Map;
 import io.nzbee.entity.product.ProductDTO;
 
-public class ShippingProductDTO extends ProductDTO {
+public class ShippingProductDTO extends ProductDTO implements Serializable {
+
+	private static final long serialVersionUID = 2891040207798692399L;
 
 	public ShippingProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);

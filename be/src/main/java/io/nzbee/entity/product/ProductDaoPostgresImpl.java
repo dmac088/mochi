@@ -122,7 +122,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #currency, #productId}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #productId.toString()")
 			}
 	)
 	public Optional<ProductDTO> findById(String locale, String currency, Long productId) {
@@ -163,7 +163,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #currency, #productUPC}")
+					@CachePut(value = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productUPC")
 			}
 	)
 	public Optional<ProductDTO> findByCode(String locale, String currency, String productUPC) {
@@ -210,7 +210,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #currency, #productDesc}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #productDesc")
 			}
 	)
 	public Optional<ProductDTO> findByDesc(String locale, String currency, String productDesc) {
@@ -388,7 +388,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice, #page, #size, #sort}")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
 			}
 	)
 	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,

@@ -71,20 +71,20 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #id}")
-	public Optional<ProductDTO> findById(String locale, String currency, long id) {
-		return productDAO.findById(locale, currency, id);
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productId.toString()")
+	public Optional<ProductDTO> findById(String locale, String currency, Long productId) {
+		return productDAO.findById(locale, currency, productId);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #productUPC}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productUPC")
 	public Optional<ProductDTO> findByCode(String locale, String currency, String productUPC) {
 		return productDAO.findByCode(locale, currency, productUPC);
 	}
 	
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #currency, #productDesc}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productDesc")
 	public Optional<ProductDTO> findByDesc(String locale, String currency, String productDesc) {
 		return productDAO.findByDesc(locale, currency, productDesc);
 	}
@@ -113,7 +113,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #brandCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice, #page, #size, #sort}")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
 	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page, String size, String sort) {
 		return productDAO.findAll(
@@ -144,8 +144,8 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.productUPC, #locale, #currency}"),
-			@CacheEvict(cacheNames = CACHE_NAME, key="{#product.productId, #locale, #currency}")
+			@CacheEvict(cacheNames = CACHE_NAME, key="#product.productUPC + \", \" + #locale + \", \" + #currency"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#product.productId.toString() + \", \" + #locale + \", \" + #currency")
 	})
 	public void save(String locale, String currency, ProductEntity product) {
 		productDAO.save(product);
