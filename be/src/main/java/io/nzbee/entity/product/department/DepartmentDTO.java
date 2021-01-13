@@ -1,9 +1,12 @@
 package io.nzbee.entity.product.department;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class DepartmentDTO {
+public class DepartmentDTO implements Serializable {
 	
+	private static final long serialVersionUID = -3285099992446985025L;
+
 	public static final String ID_ALIAS = "dept_id";
 	
 	public static final String CODE_ALIAS = "dept_cd";

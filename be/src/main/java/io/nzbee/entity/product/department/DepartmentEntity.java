@@ -1,5 +1,6 @@
 package io.nzbee.entity.product.department;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -27,7 +28,9 @@ import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 
 @Entity
 @Table(name = "department", schema = "mochi")
-public class DepartmentEntity {
+public class DepartmentEntity implements Serializable {
+
+	private static final long serialVersionUID = 6646482082898774605L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

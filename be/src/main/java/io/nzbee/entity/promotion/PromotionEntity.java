@@ -1,5 +1,6 @@
 package io.nzbee.entity.promotion;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -26,7 +27,9 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
-public class PromotionEntity {
+public class PromotionEntity implements Serializable {
+
+	private static final long serialVersionUID = -8035431077837286610L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

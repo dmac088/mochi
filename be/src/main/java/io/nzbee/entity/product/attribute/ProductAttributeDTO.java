@@ -1,9 +1,12 @@
 package io.nzbee.entity.product.attribute;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class ProductAttributeDTO {
+public class ProductAttributeDTO implements Serializable {
 	
+	private static final long serialVersionUID = 6969987709682578464L;
+
 	public static final String ID_ALIAS 			= "prd_lcl_id";
 	
     public static final String SHORT_DESC_ALIAS 	= "prd_desc";
