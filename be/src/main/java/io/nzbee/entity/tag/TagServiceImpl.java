@@ -87,7 +87,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \\\", \\\" + #codes.getCacheKey()")
 	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, StringUtils.join(codes.getCodes()));
 		return tagDao.findAll(locale, codes);
