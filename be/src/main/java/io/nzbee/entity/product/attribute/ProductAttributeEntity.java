@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.attribute;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,7 +15,9 @@ import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "product_attr_lcl", schema = "mochi")
-public class ProductAttributeEntity {
+public class ProductAttributeEntity implements Serializable {
+
+	private static final long serialVersionUID = 1442836684351542603L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

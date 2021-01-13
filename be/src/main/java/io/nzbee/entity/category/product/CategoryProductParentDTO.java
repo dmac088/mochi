@@ -1,8 +1,11 @@
 package io.nzbee.entity.category.product;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class CategoryProductParentDTO  {
+public class CategoryProductParentDTO implements Serializable {
+
+	private static final long serialVersionUID = 5421781378392242942L;
 
 	public static final String ID_ALIAS = "cat_prnt_id";
 	

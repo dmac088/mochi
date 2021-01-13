@@ -1,8 +1,11 @@
 package io.nzbee.entity.promotion.mechanic;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class PromotionMechanicDTO {
+public class PromotionMechanicDTO implements Serializable {
+
+	private static final long serialVersionUID = -2920277244483237920L;
 
 	public static final String ID_ALIAS = "prm_mec_id";
 	

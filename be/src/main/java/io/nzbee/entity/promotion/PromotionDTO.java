@@ -1,11 +1,14 @@
 package io.nzbee.entity.promotion;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
-public class PromotionDTO {
+public class PromotionDTO implements Serializable {
+
+	private static final long serialVersionUID = -7734587026342633816L;
 
 	public static final String ID_ALIAS = "prm_id";
 	
