@@ -53,7 +53,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#id")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#id.toString()")
 			}
 	)
 	public Optional<CategoryEntity> findById(long id) {
@@ -64,7 +64,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryId")
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryId.toString()")
 			}
 	)
 	public Optional<CategoryDTO> findById(String locale, Long categoryId) {

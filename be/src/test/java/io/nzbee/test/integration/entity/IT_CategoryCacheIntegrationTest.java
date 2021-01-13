@@ -21,7 +21,9 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.cache.Cache;
 import org.springframework.cache.ehcache.EhCacheCache;
+import org.springframework.cache.jcache.JCacheCache;
 import org.springframework.cache.jcache.JCacheCacheManager;
+import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
@@ -87,21 +89,17 @@ public class IT_CategoryCacheIntegrationTest {
     	
         // when
     	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
-//     
-//        // then
-//    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
-//    	
-//    	assertNotNull(cache);
-//    	
-//    	@SuppressWarnings("rawtypes")
-//		EhCacheCache nativeCache = (EhCacheCache) cache.getNativeCache();
-//    	Object ob = nativeCache.get(found.get().getCategoryId());
-//    	
-//    	//nativeCache.
-//    	
-//    	//assertTrue(nativeCache.containsKey((found.get().getCategoryId())));
-//    	assertNotNull(ob);
-//    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
+     
+        // then
+    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
+    	
+    	assertNotNull(cache);
+    	JCacheCache jCache = (JCacheCache) cache;
+    	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(found.get().getCategoryId().toString());
+    	
+    	//assertTrue(nativeCache.containsKey((found.get().getCategoryId())));
+    	assertNotNull(ob.get());
+    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
     }
 	
 	@Test
