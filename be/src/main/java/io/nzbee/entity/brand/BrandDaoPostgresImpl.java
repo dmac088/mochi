@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -117,7 +116,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #code}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #code")
 			}
 	)
 	public Optional<BrandDTO> findByCode(String locale, String code) {
@@ -156,7 +155,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #desc}")
+					@CachePut(value = CACHE_NAME, key="{#locale + \", \" + #desc}")
 			}
 	)
 	public Optional<BrandDTO> findByDesc(String locale, String desc) {
@@ -190,44 +189,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			return Optional.empty();
 		}
 	}
-	
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #codes}")
-			}
-	)
-	public List<BrandDTO> findAll(String locale, Set<String> codes) {
-		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(codes, ','));
-		
-		Session session = em.unwrap(Session.class);
-		
-		List<String> lbc = codes.stream().collect(Collectors.toList());
-		
-		Query query = session.createNativeQuery(constructSQL(
-															 false,
-															 false,
-															 false,
-															 false,
-															 !codes.isEmpty(),
-															 false,
-															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
-				 .setParameter("locale", locale)
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		if(!codes.isEmpty()) {
-			query.setParameter("brandCodes", lbc);
-		}
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
-		
-		List<BrandDTO> results = query.getResultList();
-		
-		return results;
-	}
+
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
@@ -264,7 +226,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "ByProductCode", key="{#locale, #productCode}")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #productCode")
 			}
 	)
 	public Optional<BrandDTO> findByProductCode(String locale, String productCode) {
@@ -326,7 +288,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="{#locale, #currency, #categoryCode, #categoryCodes.getCacheKey(), #tagCodes.getCacheKey(), #maxPrice}")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice.toString()")
 			}
 	)
 	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
