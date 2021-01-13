@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.physical;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -11,7 +13,9 @@ import io.nzbee.entity.product.ProductEntity;
 @Entity
 @Table(name = "product_basic", schema = "mochi")
 @DiscriminatorValue("2")
-public class PhysicalProductEntity extends ProductEntity  {
+public class PhysicalProductEntity extends ProductEntity implements Serializable {
+
+	private static final long serialVersionUID = -2844690299028235683L;
 
 	@Column(name="width")
 	private Integer widthDimension;

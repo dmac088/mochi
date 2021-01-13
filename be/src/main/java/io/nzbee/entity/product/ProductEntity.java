@@ -1,5 +1,6 @@
 package io.nzbee.entity.product;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Objects;
@@ -153,8 +154,10 @@ filters = {
 			@TokenFilterDef(factory = LowerCaseFilterFactory.class)
 		}
 )
-public abstract class ProductEntity { 
+public abstract class ProductEntity implements Serializable { 
 	
+	private static final long serialVersionUID = 8330041694804054991L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prd_id")
