@@ -43,7 +43,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #id}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #id.toString()")
 			}
 	)
 	public Optional<BrandDTO> findById(String locale, Long id) {

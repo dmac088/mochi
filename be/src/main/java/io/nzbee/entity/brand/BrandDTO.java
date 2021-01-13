@@ -1,10 +1,13 @@
 package io.nzbee.entity.brand;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import io.nzbee.search.ISearchDimension;
 
-public class BrandDTO implements ISearchDimension {
+public class BrandDTO implements ISearchDimension, Serializable {
+
+	private static final long serialVersionUID = 7130627751498901160L;
 
 	public static final String ID_ALIAS = "bnd_id";
 	
