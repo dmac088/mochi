@@ -15,9 +15,7 @@ public class CategoryProductMapperImpl implements ICategoryProductMapper {
 				true,
 				dto.getCategoryLevel(),
 				dto.getProductCount(),
-				dto.getParentCategory().isPresent()
-				? dto.getParentCategory().get().getCategoryCode()
-				: null,
+				((dto.getParentCategory() == null) ? null : dto.getParentCategory().getCategoryCode()),
 				dto.getChildCategoryCount(),
 				dto.getLocale()
 			 );

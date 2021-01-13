@@ -1,10 +1,13 @@
 package io.nzbee.entity.category;
 
+import java.io.Serializable;
 import java.util.Map;
 
 import io.nzbee.search.ISearchDimension;
 
-public abstract class CategoryDTO implements ISearchDimension {
+public abstract class CategoryDTO implements ISearchDimension, Serializable {
+
+	private static final long serialVersionUID = -675011158292864319L;
 
 	public static final String ID_ALIAS = "cat_id";
 	

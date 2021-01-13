@@ -1,13 +1,14 @@
 package io.nzbee.entity.category.product;
 
+import java.io.Serializable;
 import java.util.Map;
-import java.util.Optional;
-
 import io.nzbee.entity.category.CategoryDTO;
 
-public class CategoryProductDTO extends CategoryDTO {
+public class CategoryProductDTO extends CategoryDTO implements Serializable {
 
-    public static final String LEVEL_ALIAS = "cat_lvl";
+	private static final long serialVersionUID = -2047877371295351601L;
+
+	public static final String LEVEL_ALIAS = "cat_lvl";
     
     public static final String PRODUCT_COUNT_ALIAS = "object_count";
     
@@ -17,17 +18,17 @@ public class CategoryProductDTO extends CategoryDTO {
 	
 	private Long productCount;
 	
-	private Optional<CategoryProductParentDTO> parentCategory;
+	private CategoryProductParentDTO parentCategory;
 	
 	private Long childCategoryCount;
-	
-	
+
+
 	public CategoryProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);
 		this.categoryLevel 			= ((Number) tuple[aliasToIndexMap.get(LEVEL_ALIAS)]).longValue();
-		this.parentCategory 		= Optional.ofNullable(!(tuple[aliasToIndexMap.get(CategoryProductParentDTO.ID_ALIAS)] == null)  
+		this.parentCategory 		= !(tuple[aliasToIndexMap.get(CategoryProductParentDTO.ID_ALIAS)] == null)  
 									  ? new CategoryProductParentDTO(tuple, aliasToIndexMap)
-									  : null);
+									  : null;
 		this.productCount			= !(aliasToIndexMap.get(PRODUCT_COUNT_ALIAS) == null)
 									  ? ((Number) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue()
 									  : new Long(0);
@@ -45,7 +46,7 @@ public class CategoryProductDTO extends CategoryDTO {
 		return productCount;
 	}
 
-	public Optional<CategoryProductParentDTO> getParentCategory() {
+	public CategoryProductParentDTO getParentCategory() {
 		return parentCategory;
 	}
 
