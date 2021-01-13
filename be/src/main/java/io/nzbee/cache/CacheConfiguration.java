@@ -1,4 +1,4 @@
-package io.nzbee;
+package io.nzbee.cache;
 
 import java.io.IOException;
 

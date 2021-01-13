@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.event.ContextRefreshedEvent;
 
+import io.nzbee.cache.CacheConfiguration;
 import io.nzbee.util.FileStorageProperties;
 @SpringBootApplication
 @EnableCaching
