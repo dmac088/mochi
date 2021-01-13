@@ -1,8 +1,11 @@
 package io.nzbee.entity.brand.attribute;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class BrandAttributeDTO {
+public class BrandAttributeDTO implements Serializable {
+
+	private static final long serialVersionUID = -4554924370162082157L;
 
 	public static final String ID_ALIAS = "bnd_id";
 	
