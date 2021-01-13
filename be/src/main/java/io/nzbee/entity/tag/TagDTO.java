@@ -1,9 +1,12 @@
 package io.nzbee.entity.tag;
 
+import java.io.Serializable;
 import java.util.Map;
 import io.nzbee.search.ISearchDimension;
 
-public class TagDTO implements ISearchDimension  {
+public class TagDTO implements ISearchDimension, Serializable  {
+
+	private static final long serialVersionUID = -5385810041656869889L;
 
 	public static final String ID_ALIAS = "tag_id";
 	

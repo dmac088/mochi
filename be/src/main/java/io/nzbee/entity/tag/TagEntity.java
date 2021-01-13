@@ -1,5 +1,6 @@
 package io.nzbee.entity.tag;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
@@ -53,8 +54,10 @@ import io.nzbee.search.ISearchDimension;
 	                        @FieldResult(name = "tag", 				column = "tag_id")
 	                    })
 		    })
-public class TagEntity implements ISearchDimension {
+public class TagEntity implements ISearchDimension, Serializable {
 	
+	private static final long serialVersionUID = 5869651036409976394L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="tag_id")

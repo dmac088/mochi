@@ -38,21 +38,21 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	//Entity fetch
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#id}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#id.toString()")
 	public Optional<TagEntity> findById(Long id) {
 		LOGGER.debug("call TagServiceImpl.findById with parameters : {}", id);
 		return tagRepository.findById(id);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#code}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#code")
 	public Optional<TagEntity> findByCode(String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}", code);
 		return tagDao.findByCode(code);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	//@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<TagEntity> findAll(Set<String> codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}", StringUtils.join(codes));
 		return tagDao.findAll(codes);
@@ -60,14 +60,14 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	//DTO Fetch
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #id}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale, #id.toString()")
 	public Optional<TagDTO> findById(String locale, Long id) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, id);
 		return tagDao.findById(locale, id);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "{#locale, #code}")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale, #code")
 	public Optional<TagDTO> findByCode(String locale, String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}", locale, code);
 		return tagDao.findByCode(locale, code);
@@ -125,10 +125,10 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	@Override
 	@Caching(evict = {
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.tagId}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.tagCode}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagId}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#tag.locale, #tag.tagCode}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.tagId.toString()"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.tagCode"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.locale + \", \" + #tag.tagId.toString()"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.locale + \", \" + #tag.tagCode"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
 	public void save(TagEntity tag) {
