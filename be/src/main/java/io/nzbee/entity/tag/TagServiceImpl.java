@@ -60,14 +60,14 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	//DTO Fetch
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale, #id.toString()")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #id.toString()")
 	public Optional<TagDTO> findById(String locale, Long id) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, id);
 		return tagDao.findById(locale, id);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale, #code")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #code")
 	public Optional<TagDTO> findByCode(String locale, String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}", locale, code);
 		return tagDao.findByCode(locale, code);
