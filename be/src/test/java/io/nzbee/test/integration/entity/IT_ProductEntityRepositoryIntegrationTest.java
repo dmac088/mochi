@@ -8,13 +8,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -28,8 +25,6 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.product.CategoryProductDTO;
@@ -64,10 +59,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     private JavaMailSender mailSender;
 	
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
-	
-	@Autowired
 	private IProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
@@ -78,7 +69,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     
     private ProductEntity product = null;
     
-    @Transactional
+
 	public ProductEntity persistNewProduct() {
     	
 		product = productEntityBeanFactory.getBean();
@@ -88,7 +79,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    return product;
 	}
 	
-	@Before
+    @Before	
 	public void persistANewProduct() {
 		this.persistNewProduct();
 	}
@@ -300,11 +291,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	
     	assertThat(found.get().getPromotions().size()).isEqualTo(1);
     	
-//    	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
+    //	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }
     
-    @After
-    public void closeConnection() {
-    	entityManager.close();
-    }
 }
