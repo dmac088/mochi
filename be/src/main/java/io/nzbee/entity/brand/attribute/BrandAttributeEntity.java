@@ -1,5 +1,7 @@
 package io.nzbee.entity.brand.attribute;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,8 +20,10 @@ import io.nzbee.entity.brand.BrandEntity;
 
 @Entity
 @Table(name = "brand_attr_lcl", schema = "mochi")
-public class BrandAttributeEntity {
+public class BrandAttributeEntity implements Serializable {
 	
+	private static final long serialVersionUID = -2601499107458333393L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="bnd_lcl_id")
