@@ -155,7 +155,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale + \", \" + #desc}")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #desc")
 			}
 	)
 	public Optional<BrandDTO> findByDesc(String locale, String desc) {
@@ -288,7 +288,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice.toString()")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
 	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
