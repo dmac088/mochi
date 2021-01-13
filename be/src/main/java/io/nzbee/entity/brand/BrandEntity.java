@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand;
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -53,7 +54,9 @@ import io.nzbee.entity.product.ProductEntity;
 	                        @FieldResult(name = "brand", 			column = "bnd_id")
 	                    })
 		    })
-public class BrandEntity {
+public class BrandEntity implements Serializable {
+
+	private static final long serialVersionUID = -3493461048853968278L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
