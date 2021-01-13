@@ -66,7 +66,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice.toString()")
 	public List<BrandDTO> findAll(String locale, String currency, String categoryCode,  StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
 		return brandDao.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
 	}
