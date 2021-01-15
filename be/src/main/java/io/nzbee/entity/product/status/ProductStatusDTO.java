@@ -1,8 +1,11 @@
 package io.nzbee.entity.product.status;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class ProductStatusDTO {
+public class ProductStatusDTO implements Serializable {
+
+	private static final long serialVersionUID = 6141098704509628986L;
 
 	public static final String ID_ALIAS = "prd_sts_id";
 	

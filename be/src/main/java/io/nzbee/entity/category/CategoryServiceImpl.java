@@ -9,12 +9,14 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.search.IFacetService;
 
 @Service(value = "categoryEntityService")
+@Transactional
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	public static final String CACHE_NAME = "categoryCache";

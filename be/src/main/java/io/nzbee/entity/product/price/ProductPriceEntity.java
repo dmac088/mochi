@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.price;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +16,9 @@ import io.nzbee.entity.product.currency.Currency;
 
 @Entity
 @Table(name = "price", schema = "mochi")
-public class ProductPriceEntity {
+public class ProductPriceEntity implements Serializable {
+
+	private static final long serialVersionUID = 8207922937454779518L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
