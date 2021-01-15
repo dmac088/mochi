@@ -4,20 +4,29 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import javax.sql.DataSource;
+
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
@@ -39,22 +48,23 @@ import io.nzbee.test.integration.entity.beans.product.IProductEntityBeanFactory;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
+//@SqlGroup({
+//	@Sql(scripts = "/database/mochi_schema.sql",
+//			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
+//			transactionManager = "mochiTransactionManagerOwner",
+//			transactionMode = TransactionMode.ISOLATED)), 
+//	@Sql(scripts = "/database/mochi_data.sql",
+//			config = @SqlConfig(dataSource = "mochiDataSource", 
+//			transactionManager = "mochiTransactionManager",
+//			transactionMode = TransactionMode.ISOLATED))
+//})
 public class IT_ProductEntityRepositoryIntegrationTest {
 
 	@TestConfiguration
     static class ProductDTORepositoryIntegrationTest {
         
     }
+	
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -68,9 +78,14 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     @Autowired
     private ICategoryProductService productCategoryService;
     
-    private ProductEntity product = null;
+    @Autowired
+    @Qualifier("mochiDataSourceOwner")
+    private DataSource database;
+    
+    private static ProductEntity product = null;
 
     private static boolean setUpIsDone = false;
+    
     
 	public ProductEntity persistNewProduct() {
     	
@@ -81,17 +96,29 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    return product;
 	}
 	
-    @Before	
+    @Before
+    @Rollback(false)
 	public void persistANewProduct() {
     	if (setUpIsDone) {
             return;
         }
+    	try (Connection con = database.getConnection()) {
+            ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+            ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+            //con.commit();
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	this.persistNewProduct();
         setUpIsDone = true;
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindById_thenReturnProduct() {
+		System.out.println("ProductId = " + product.getProductId());
+		
 		 // when
     	Optional<ProductDTO> found = productService.findById( Constants.localeENGB, 
 				  								  	Constants.currencyUSD,  
@@ -103,6 +130,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	
 	
 	@Test
+	@Rollback(false)
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
     	Optional<ProductDTO> found = productService.findByCode(Constants.localeENGB, 
@@ -114,6 +142,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindByDesc_thenReturnProduct() {
 		 // when
     	Optional<ProductDTO> found = productService.findByDesc(Constants.localeENGB, 
@@ -125,6 +154,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
     public void whenFindByProductCode_thenReturnProductCategories() {
     	
         // when
@@ -136,6 +166,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     }
 	
 	@Test
+	@Rollback(false)
     public void whenFindForFruitCategory_thenReturnAllFruitProducts() {
     	
         // when
@@ -156,6 +187,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	
 	
 	@Test
+	@Rollback(false)
     public void whenFindForFruitCategoryWithNullPrice_thenReturnAllFruitProducts() {
     	
         // when
@@ -174,6 +206,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
     public void whenFindForPomesCategory_thenReturnAllPomesProducts() {
     	
 		Set<String> categories = new HashSet<String>();
@@ -197,6 +230,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	
 	
 	@Test
+	@Rollback(false)
     public void whenFindForFruitWithOrganicTag_thenReturnAllOrganicFruitProducts() {
     	
 		Set<String> tags = new HashSet<String>();
@@ -220,6 +254,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     }
 	
 	@Test
+	@Rollback(false)
     public void whenFindForFruitWithBrandEnza_thenReturnAllEnzaFruitProducts() {
     	
 		Set<String> brands = new HashSet<String>();
@@ -243,6 +278,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     }
 	
 	@Test
+	@Rollback(false)
     public void whenFindForBrandEnza_thenReturnAllEnzaProducts() {
     	
 		Set<String> brands = new HashSet<String>();
