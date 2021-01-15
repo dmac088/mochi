@@ -1,14 +1,17 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,12 +23,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
-import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.junit4.SpringRunner;
 import com.google.common.collect.Ordering;
 import io.nzbee.Constants;
@@ -41,9 +43,6 @@ import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactor
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
-		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
 public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 	@TestConfiguration
@@ -64,10 +63,27 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@Autowired
 	private ICategoryEntityBeanFactory categoryEntityBeanFactory;
 	
+	@Autowired
+    @Qualifier("mochiDataSourceOwner")
+    private DataSource database;
+	
+	private static boolean setUpIsDone = false;
+	
     @Before
-    public void setUp() { 
+	public void persistANewCategory() {
+    	if (setUpIsDone) {
+            return;
+        }
+    	try (Connection con = database.getConnection()) {
+            ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+            ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	this.persistNewCategory();
-    }
+        setUpIsDone = true;
+	}
     
     private CategoryEntity category = null;
     
@@ -80,6 +96,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
     public void whenFindById_thenReturnCategoryEntity() {
     	
         // when
@@ -91,6 +108,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     
     
     @Test
+    @Rollback(false)
     public void whenFindByCode_thenReturnCategoryEntity() {
     	
         // when
@@ -101,6 +119,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     }
     
 	@Test
+	@Rollback(false)
 	public void whenFindByCode_thenReturnCategoryDTO() {
 
 		// when
@@ -111,6 +130,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindByDesc_thenReturnCategoryDTO() {
 
 		// when
@@ -121,6 +141,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
@@ -134,6 +155,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindAllWithListOfProductCodesAndCurrency_thenReturnRequestedCategories() {
 
 		Set<String> ls = new HashSet<String>();
@@ -153,6 +175,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindAllWithListOfCategoryCodes_thenReturnRequestedCategories() {
 
 		Set<String> ls = new HashSet<String>();
@@ -170,6 +193,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindAllForListOfSelectedCategoryCodes_thenIgnoreSelectedCategories() {
 
 		Set<String> ls = new HashSet<String>();
@@ -193,6 +217,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindAllCategories_thenReturnAllCategories() {
 		
 		//when
@@ -216,6 +241,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindAllCategoriesWithNullPrice_thenReturnAllCategories() {
 		
 		//when
@@ -235,6 +261,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
 
 		// when
@@ -248,6 +275,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
 
 		// when
@@ -261,6 +289,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
@@ -277,6 +306,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForCoolStarionaryCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		Set<String> ls = new HashSet<String>();
@@ -297,6 +327,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
@@ -312,6 +343,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
@@ -328,6 +360,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceHKD() {
 
 		// when
@@ -344,6 +377,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
@@ -360,6 +394,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
@@ -376,6 +411,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
@@ -392,6 +428,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceUSD() {
 
 		// when

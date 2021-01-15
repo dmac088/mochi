@@ -64,7 +64,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     @Qualifier("mochiDataSourceOwner")
     private DataSource database;
     
-    private static ProductEntity product = null;
+    private ProductEntity product = null;
 
     private static boolean setUpIsDone = false;
     
