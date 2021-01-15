@@ -147,7 +147,7 @@ public class ProductServiceImpl implements IProductService {
 			@CacheEvict(cacheNames = CACHE_NAME, key="#product.productId.toString() + \", \" + #locale + \", \" + #currency")
 	})
 	public void save(String locale, String currency, ProductEntity product) {
-		productDAO.save(product);
+		productRepository.save(product);
 	}
 	
 	@Override
