@@ -48,16 +48,6 @@ import io.nzbee.test.integration.entity.beans.product.IProductEntityBeanFactory;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-//@SqlGroup({
-//	@Sql(scripts = "/database/mochi_schema.sql",
-//			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-//			transactionManager = "mochiTransactionManagerOwner",
-//			transactionMode = TransactionMode.ISOLATED)), 
-//	@Sql(scripts = "/database/mochi_data.sql",
-//			config = @SqlConfig(dataSource = "mochiDataSource", 
-//			transactionManager = "mochiTransactionManager",
-//			transactionMode = TransactionMode.ISOLATED))
-//})
 public class IT_ProductEntityRepositoryIntegrationTest {
 
 	@TestConfiguration
@@ -105,7 +95,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	try (Connection con = database.getConnection()) {
             ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
             ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
-            //con.commit();
         } catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
