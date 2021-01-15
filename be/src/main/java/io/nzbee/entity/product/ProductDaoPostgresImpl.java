@@ -278,8 +278,21 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 	}
 	
+	@Override
+	public List<ProductDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	
+	
+	
 	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #codes.getCacheKey()")
+			}
+	)
 	public List<ProductDTO> findAll(	String locale, 
 										String currency, 
 										StringCollectionWrapper codes) {
@@ -306,7 +319,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		if(!codes.getCodes().isEmpty()) {
-			query.setParameter("productCodes", codes);
+			query.setParameter("productCodes", codes.getCodes());
 		} else {
 			Set<String> dummy = new HashSet<String>();
 			dummy.add("-1");
@@ -929,9 +942,4 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return null;
 	}
 
-	@Override
-	public List<ProductDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

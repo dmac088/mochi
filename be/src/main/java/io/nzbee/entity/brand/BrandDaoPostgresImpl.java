@@ -150,6 +150,41 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 			return Optional.empty();
 		}
 	}
+	
+
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
+			}
+	)
+	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
+		LOGGER.debug("pop call BrandDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
+
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(false,
+															 false,
+															 false,
+															 false,
+															 !codes.getCodes().isEmpty(),
+															 false,
+															 false))
+				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+		
+		
+		if(!codes.getCodes().isEmpty()) {
+			query.setParameter("brandCodes", codes.getCodes());
+		}
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandDTOResultTransformer());
+		
+		return query.getResultList();
+	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -328,8 +363,9 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		List<BrandDTO> results = query.getResultList();
 		
 		return results;
-		
 	}
+	
+
 	
 	@Override
 	public void save(BrandEntity t) {
@@ -502,14 +538,5 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
 
 }
