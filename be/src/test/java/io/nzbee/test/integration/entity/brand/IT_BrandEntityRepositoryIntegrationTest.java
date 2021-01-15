@@ -53,7 +53,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     @Autowired
     private IBrandService brandService;
     
-	private BrandEntity brand = null;
+	private static BrandEntity brand = null;
 	
 	private static boolean setUpIsDone = false;
     
