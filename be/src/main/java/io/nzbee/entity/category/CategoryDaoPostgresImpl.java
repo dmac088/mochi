@@ -428,13 +428,18 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<CategoryDTO> findAll(String locale, Set<String> categoryCodes) {
+	@Caching(
+			put = {
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
+			}
+	)
+	public List<CategoryDTO> findAll(String locale, StringCollectionWrapper codes) {
 		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(categoryCodes, ','));
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(codes.getCodes(), ','));
 		
 		Session session = em.unwrap(Session.class);
 
-		Query query = session.createNativeQuery(constructSQL(!categoryCodes.isEmpty(),
+		Query query = session.createNativeQuery(constructSQL(!codes.getCodes().isEmpty(),
 															 false,
 															 false,
 															 false,
@@ -449,8 +454,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
-		if(!categoryCodes.isEmpty()) {
-			query.setParameter("categoryCodes", categoryCodes);
+		if(!codes.getCodes().isEmpty()) {
+			query.setParameter("categoryCodes", codes.getCodes());
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
@@ -864,10 +869,5 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return null;
 	}
 
-	@Override
-	public List<CategoryDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }
