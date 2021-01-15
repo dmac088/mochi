@@ -1,14 +1,15 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.EntityManager;
-import org.junit.After;
+import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -19,12 +20,10 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
@@ -36,23 +35,15 @@ import io.nzbee.test.integration.entity.beans.tag.ITagEntityBeanFactory;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "it")
-@SqlGroup({
-		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
-		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
 public class IT_TagEntityRepositoryIntegrationTest {
 
 	@TestConfiguration
 	static class TagEntityRepositoryIntegrationTest {
 
 	}
-	
-	@MockBean
-    private JavaMailSender mailSender;
 
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
+	@MockBean
+	private JavaMailSender mailSender;
 
 	@Autowired
 	private ITagEntityBeanFactory tagEntityBeanFactory;
@@ -60,9 +51,14 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	@Autowired
 	private ITagService tagService;
 
-	private TagEntity tag = null;
+	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
 
-	@Before
+	private static TagEntity tag = null;
+
+	private static boolean setUpIsDone = false;
+
 	public void persistNewTag() {
 
 		tag = tagEntityBeanFactory.getBean();
@@ -71,9 +67,26 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		tagService.save(tag);
 	}
 
+	@Before
+	public void persistANewTag() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.persistNewTag();
+		setUpIsDone = true;
+	}
+
 	@Test
+	@Rollback(false)
 	public void whenFindById_thenReturnTagEntity() {
-		
+
 		// when
 		Optional<TagEntity> found = tagService.findById(tag.getTagId());
 
@@ -82,6 +95,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenFindByCode_thenReturnTagEntity() {
 
 		// when
@@ -90,8 +104,9 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertFoundEntity(found);
 	}
-	
+
 	@Test
+	@Rollback(false)
 	public void whenFindByCode_thenReturnTagDTO() {
 
 		// when
@@ -100,8 +115,9 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertFoundDTO(found);
 	}
-	
+
 	@Test
+	@Rollback(false)
 	public void whenFindByDesc_thenReturnTagDTO() {
 
 		// when
@@ -110,12 +126,13 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		// then
 		assertFoundDTO(found);
 	}
-	
+
 	@Test
+	@Rollback(false)
 	public void whenFindAllForTestTag_thenReturnTagDTO() {
 
 		Set<String> tagCodes = new HashSet<String>();
-		
+
 		tagCodes.add("ORG01");
 
 		// when
@@ -127,18 +144,15 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
 
 		Set<String> categoryCodes = new HashSet<String>();
 		Set<String> brandCodes = new HashSet<String>();
 
 		// when
-		List<TagDTO> lb = tagService.findAll( Constants.localeENGB, 
-											  Constants.currencyUSD, 
-											  "FRT01",
-											  new StringCollectionWrapper(categoryCodes), 
-											  new StringCollectionWrapper(brandCodes),
-											  new Double(1000));
+		List<TagDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new Double(1000));
 
 		// then
 		assertNotNull(lb);
@@ -146,6 +160,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenFindAllWithCategoryFacet_thenReturnCorrectResultCount() {
 
 		Set<String> categoryCodes = new HashSet<String>();
@@ -154,20 +169,16 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		categoryCodes.add("POM01");
 
 		// when
-		List<TagDTO> lt = tagService.findAll(	Constants.localeENGB, 
-												Constants.currencyUSD, 
-												"FRT01",
-												new StringCollectionWrapper(categoryCodes), 
-												new StringCollectionWrapper(brandCodes),
-												new Double(1000));
+		List<TagDTO> lt = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new Double(1000));
 
 		// then
 		assertNotNull(lt);
 		assertThat(lt.size()).isEqualTo(2);
 	}
-	
-	
+
 	@Test
+	@Rollback(false)
 	public void whenFindAllWithPriceFacetHKD_thenReturnCorrectResultCount() {
 
 		Set<String> categoryCodes = new HashSet<String>();
@@ -176,19 +187,16 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("97.2");
 
 		// when
-		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
-												Constants.currencyHKD, 
-												"FRT01",
-												new StringCollectionWrapper(categoryCodes), 
-												new StringCollectionWrapper(brandCodes),
-												price);
+		List<TagDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyHKD, "FRT01",
+				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), price);
 
 		// then
 		assertNotNull(lb);
 		assertThat(lb.size()).isEqualTo(2);
 	}
-	
+
 	@Test
+	@Rollback(false)
 	public void whenFindAllWithPriceFacetUSD_thenReturnCorrectResultCount() {
 
 		Set<String> categoryCodes = new HashSet<String>();
@@ -197,12 +205,8 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("12.4");
 
 		// when
-		List<TagDTO> lb = tagService.findAll(	Constants.localeENGB, 
-												Constants.currencyUSD, 
-												"FRT01",
-												new StringCollectionWrapper(categoryCodes), 
-												new StringCollectionWrapper(brandCodes),
-												price);
+		List<TagDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), price);
 
 		// then
 		assertNotNull(lb);
@@ -210,29 +214,25 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	}
 
 	private void assertFoundEntity(Optional<TagEntity> found) {
-		
+
 		assertNotNull(found);
-		
+
 		assertTrue(found.isPresent());
 
 		assertThat(found.get().getTagCode()).isEqualTo("TST02");
-		assertThat(found.get().getAttributes().stream().filter(t -> t.getLclCd().equals(Constants.localeENGB)).findAny().get().getTagDesc()).isEqualTo("test tag");	
+		assertThat(found.get().getAttributes().stream().filter(t -> t.getLclCd().equals(Constants.localeENGB)).findAny()
+				.get().getTagDesc()).isEqualTo("test tag");
 	}
-	
+
 	private void assertFoundDTO(Optional<TagDTO> found) {
-		
+
 		assertNotNull(found);
-		
+
 		assertTrue(found.isPresent());
 
 		assertThat(found.get().getTagCode()).isEqualTo("ORG01");
 		assertThat(found.get().getTagDesc()).isEqualTo("ORGANIC");
-		
-	}
 
-	@After
-	public void closeConnection() {
-		entityManager.close();
 	}
 
 }
