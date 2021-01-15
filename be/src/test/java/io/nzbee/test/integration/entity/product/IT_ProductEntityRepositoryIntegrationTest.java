@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -64,7 +64,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     @Qualifier("mochiDataSourceOwner")
     private DataSource database;
     
-    private ProductEntity product = null;
+    private static ProductEntity product = null;
 
     private static boolean setUpIsDone = false;
     
