@@ -19,6 +19,7 @@ import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.Page;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -68,8 +69,9 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     private ICategoryProductService productCategoryService;
     
     private ProductEntity product = null;
-    
 
+    private static boolean setUpIsDone = false;
+    
 	public ProductEntity persistNewProduct() {
     	
 		product = productEntityBeanFactory.getBean();
@@ -81,7 +83,11 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	
     @Before	
 	public void persistANewProduct() {
-		this.persistNewProduct();
+    	if (setUpIsDone) {
+            return;
+        }
+    	this.persistNewProduct();
+        setUpIsDone = true;
 	}
 	
 	@Test

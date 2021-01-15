@@ -290,7 +290,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #codes.getCacheKey()")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<ProductDTO> findAll(	String locale, 
