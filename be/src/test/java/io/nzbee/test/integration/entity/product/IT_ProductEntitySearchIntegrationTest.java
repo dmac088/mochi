@@ -2,16 +2,17 @@ package io.nzbee.test.integration.entity.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 import org.hibernate.CacheMode;
 import org.hibernate.search.batchindexing.impl.SimpleIndexingProgressMonitor;
 import org.hibernate.search.jpa.FullTextEntityManager;
 import org.hibernate.search.jpa.Search;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,20 +23,21 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.search.IFacetService;
 import io.nzbee.search.facet.IFacet;
 
 @RunWith(SpringRunner.class)
@@ -69,15 +71,29 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Autowired
     private IProductPortService productService;
 	
-	@Autowired
-	List<IFacetService> facetServices;
+    @Autowired
+    @Qualifier("mochiDataSourceOwner")
+    private DataSource database;
    
 	private Set<IFacet> facetPayload = new HashSet<IFacet>();
 	private Set<IFacet> returnFacets = new HashSet<IFacet>();
+
+    private static boolean setUpIsDone = false;
 	
 	@Before
 	public void buildSearchIndex() {
-		FullTextEntityManager fullTextEntityManager 
+		if (setUpIsDone) {
+            return;
+        }
+    	try (Connection con = database.getConnection()) {
+            ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+            ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+        } catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	FullTextEntityManager fullTextEntityManager 
 		  = Search.getFullTextEntityManager(entityManager);
 		try {
 			fullTextEntityManager
@@ -93,10 +109,12 @@ public class IT_ProductEntitySearchIntegrationTest {
 		// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+        setUpIsDone = true;
 	}
 	
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchFruit_thenReturnFruitProducts() {
 		// when
 		Page<Product> 
@@ -119,6 +137,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchFruit_thenReturnFruitProductsZHHK() {
 		// when
 		Page<Product> 
@@ -143,6 +162,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 
 	@Test
+	@Rollback(false)
 	public void whenSearchVegetables_thenReturnVegetableProducts() {
 		
 		// when
@@ -167,6 +187,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchApple_thenReturnAppleProduct() {
 		// when
 		Page<Product> 
@@ -213,6 +234,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchAll_thenReturnAllProducts() {
 		// when
 		Page<Product> 
@@ -236,6 +258,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchNuts_thenReturnNuts() {
 		// when
 		Page<Product> 
@@ -259,6 +282,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchOrganic_thenReturnOrganicProducts() {
 		// when
 		Page<Product> 
@@ -282,6 +306,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchOrganic_thenReturnOrganicProductsZHHK() {
 		// when
 		Page<Product> 
@@ -305,6 +330,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchOrganic_thenReturnOrganicGlutenFreeZHHK() {
 		// when
 		Page<Product> 
@@ -328,6 +354,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchGlutenFree_thenReturnGlutenFreeProducts() {
 		// when
 		Page<Product> 
@@ -351,6 +378,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchGlorys_thenReturnGlorysProducts() {
 		// when
 		Page<Product> 
@@ -374,6 +402,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchEnza_thenReturnEnzaProducts() {
 		// when
 		Page<Product> 
@@ -397,6 +426,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchPlanters_thenReturnPlantersProducts() {
 		// when
 		Page<Product> 
@@ -420,6 +450,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchPlanters_thenReturnDoleProducts() {
 		// when
 		Page<Product> 
@@ -443,6 +474,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchDriscolls_thenReturnDriscollsProducts() {
 		// when
 		Page<Product> 
@@ -467,6 +499,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchCashews_thenReturnCashewsProducts() {
 		
 		// when
@@ -491,6 +524,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchForBrandGlorysFruit_thenReturnBrandGlorysFruitProducts() {
 		returnFacets.clear();
 		
@@ -530,6 +564,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchForBrandGlorysAndPlantersFruit_thenReturnBrandGlorysAndPlantersFruitProducts() {
 
 		// when
@@ -583,6 +618,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchForKeywordPrettyGirlWithBestMatch_thenReturnResultsInCorrectOrder() {
 
 		// when
@@ -612,6 +648,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	
 	@Test
+	@Rollback(false)
 	public void whenEnterSearchTermKor_thenReturnCorrectSuggestions() {
 		
 		// when
@@ -623,6 +660,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenEnterSearchTermPretty_thenReturnCorrectSuggestions() {
 		
 		// when
@@ -634,6 +672,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenEnterSearchTermApple_thenReturnCorrectSuggestions() {
 		
 		// when
@@ -645,9 +684,4 @@ public class IT_ProductEntitySearchIntegrationTest {
         .isEqualTo(1);
 	}
 	
-	
-	@After
-	public void closeConnection() {
-	 	entityManager.close();
-	}
 }
