@@ -71,6 +71,10 @@ public class IT_ProductEntitySearchIntegrationTest {
 		if (setUpIsDone) {
             return;
         }
+		
+		FullTextEntityManager fullTextEntityManager 
+		  = Search.getFullTextEntityManager(entityManager);
+		
     	try (Connection con = database.getConnection()) {
             ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
             ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
@@ -78,10 +82,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	FullTextEntityManager fullTextEntityManager 
-		  = Search.getFullTextEntityManager(entityManager);
-		try {
+		
+    	try {
 			fullTextEntityManager
 			.createIndexer( ProductEntity.class )
 			.batchSizeToLoadObjects( 25 )
@@ -90,7 +92,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 			.idFetchSize( 150 )
 			.transactionTimeout( 1800 )
 			.progressMonitor( new SimpleIndexingProgressMonitor() ) //a MassIndexerProgressMonitor implementation
-			.startAndWait();	
+			.startAndWait();
 		} catch (InterruptedException e) {
 		// TODO Auto-generated catch block
 			e.printStackTrace();
