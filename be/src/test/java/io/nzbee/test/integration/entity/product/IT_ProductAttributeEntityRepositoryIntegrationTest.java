@@ -19,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
@@ -85,6 +86,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenFindById_thenReturnProduct() {
 		 // when
     	ProductDTO found = productService.findById(  Constants.localeENGB, 
@@ -97,6 +99,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	
 	
 	@Test
+	@Rollback(false)
 	public void whenFindByCode_thenReturnProduct() {
 		 // when
 		ProductDTO found = productService.findByCode(Constants.localeENGB, 
