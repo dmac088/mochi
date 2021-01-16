@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
