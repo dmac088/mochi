@@ -201,6 +201,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	} 
 	
 	@Test
+	@Rollback(false)
 	public void whenSearchCauliflower_thenReturnCauliflowerProduct() {
 		// when
 		Page<Product> 
