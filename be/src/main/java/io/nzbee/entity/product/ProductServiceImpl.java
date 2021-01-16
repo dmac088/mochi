@@ -158,8 +158,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public void delete(ProductEntity t) {
-		// TODO Auto-generated method stub
-		
+		productRepository.delete(t);
 	}
 
 	@Override
