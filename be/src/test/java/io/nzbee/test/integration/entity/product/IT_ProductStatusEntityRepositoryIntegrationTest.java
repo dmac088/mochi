@@ -4,10 +4,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -61,7 +59,7 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	private static boolean setUpIsDone = false;
 
 	@Before
-	public void persistANewProduct() {
+	public void setUp() {
 		if (setUpIsDone) {
 			return;
 		}
@@ -74,11 +72,6 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 		}
 		productStatus = this.persistNewProductStatus();
 		setUpIsDone = true;
-	}
-
-	@Before
-	public void setUp() {
-
 	}
 
 	public ProductStatusEntity persistNewProductStatus() {
@@ -122,7 +115,7 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	}
 
 	@After
-	public void closeConnection() {
-		entityManager.close();
+	public void removeProductStatus() {
+		productStatusRepository.delete(productStatus);
 	}
 }

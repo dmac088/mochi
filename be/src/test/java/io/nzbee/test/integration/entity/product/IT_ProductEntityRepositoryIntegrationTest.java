@@ -81,7 +81,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	}
 	
     @Before
-	public void persistANewProduct() {
+	public void setUp() {
     	if (setUpIsDone) {
             return;
         }
