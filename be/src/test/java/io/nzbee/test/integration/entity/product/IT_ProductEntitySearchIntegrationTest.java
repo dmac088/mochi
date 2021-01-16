@@ -44,16 +44,6 @@ import io.nzbee.search.facet.IFacet;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
 public class IT_ProductEntitySearchIntegrationTest {
 
 	@TestConfiguration
