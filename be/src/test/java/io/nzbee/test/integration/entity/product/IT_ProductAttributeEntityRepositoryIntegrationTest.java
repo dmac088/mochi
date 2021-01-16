@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -134,11 +133,6 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     	assertThat(found.getProductDesc())
     	.isEqualTo("test product");
     }
-    
-    @After
-    public void removeProduct() {
-    	productService.delete(product);
-    }
-    
+  
     
 }

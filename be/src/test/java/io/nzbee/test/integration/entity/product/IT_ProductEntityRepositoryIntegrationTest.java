@@ -10,8 +10,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.sql.DataSource;
-
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -317,11 +315,5 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	
     //	assertThat(found.getTags().stream().filter(f -> f.getTagCode().equals("ORG01")).findFirst().isPresent()).isTrue();
     }
-    
-    @After
-    public void removeProduct() {
-    	productService.delete(product);
-    }
-    
     
 }
