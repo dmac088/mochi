@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -20,6 +19,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.status.IProductStatusRepository;
@@ -78,15 +78,14 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 
 		productStatus = productStatusEntityBeanFactory.getBean();
 
-		// persist a new transient test category
-		entityManager.persist(productStatus);
-		entityManager.flush();
-		entityManager.close();
+		// persist a new transient test product status
+		productStatusRepository.save(productStatus);
 
 		return productStatus;
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenFindById_thenReturnProductStatus() {
 
 		// when
@@ -97,6 +96,7 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenFindByCode_thenReturnProductStatus() {
 
 		// when
@@ -114,8 +114,4 @@ public class IT_ProductStatusEntityRepositoryIntegrationTest {
 
 	}
 
-	@After
-	public void removeProductStatus() {
-		productStatusRepository.delete(productStatus);
-	}
 }
