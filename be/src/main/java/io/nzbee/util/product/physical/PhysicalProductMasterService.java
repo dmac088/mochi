@@ -103,7 +103,7 @@ public class PhysicalProductMasterService {
 	public void persistProductMaster(PhysicalProductMasterSchema p) {
 		
 		//english with USD
-		PhysicalProductEntity pe = mapToAccessory(
+		PhysicalProductEntity pe = map(
 				 Constants.localeENGB, 
 				 Constants.currencyUSD,
 				 p.get_PRODUCT_UPC_CODE(),
@@ -127,7 +127,7 @@ public class PhysicalProductMasterService {
 		);
 		productService.save(Constants.localeENGB, Constants.currencyUSD, pe);
 		
-		pe = mapToAccessory(
+		pe = map(
 				 Constants.localeZHHK, 
 				 Constants.currencyHKD,
 				 p.get_PRODUCT_UPC_CODE(),
@@ -154,7 +154,7 @@ public class PhysicalProductMasterService {
 	}
 	
 	
-	private PhysicalProductEntity mapToAccessory(String locale, 
+	private PhysicalProductEntity map(String locale, 
 						 String currency,
 						 String upcCode,
 						 String brandCode,

@@ -79,7 +79,7 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 	}
 
 	@Test
-	@Rollback(false)
+	//@Rollback(false)
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ENGB_USD() {
 		// when
 		Optional<ProductDTO> found = productService.findByCode(Constants.localeENGB, Constants.currencyUSD, "12383658");
@@ -89,7 +89,7 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 	}
 
 	@Test
-	@Rollback(false)
+	//@Rollback(false)
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ZHHK_HKD() {
 		// when
 		Optional<ProductDTO> found = productService.findByCode(Constants.localeZHHK, Constants.currencyHKD, "12383658");
