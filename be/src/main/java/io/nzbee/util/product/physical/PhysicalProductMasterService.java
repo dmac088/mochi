@@ -205,6 +205,7 @@ public class PhysicalProductMasterService {
 		pe.setProductUPC(upcCode);
 		pe.setProductCreateDt(createdDate);
 		pe.setProductStatus(ops.get());
+		pe.getCategories();
 		pe.addCategory((CategoryProductEntity) opc.get());
 		
 		pe.setWidthDimension(Integer.parseInt(width));

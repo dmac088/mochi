@@ -14,7 +14,6 @@ import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
@@ -25,9 +24,7 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.tag.attribute.TagAttributeEntity;
 import io.nzbee.search.ISearchDimension;
 
@@ -66,10 +63,6 @@ public class TagEntity implements ISearchDimension, Serializable {
 	@NaturalId
 	@Column(name="tag_cd", unique = true, updatable = false)
 	private String tagCode;
-
-	@ManyToMany(mappedBy = "tags")
-	@JsonIgnore
-    private Set<ProductEntity> products = new HashSet<ProductEntity>();
 
 	@OneToMany(mappedBy="tag",
 			   cascade = CascadeType.ALL)
@@ -115,10 +108,6 @@ public class TagEntity implements ISearchDimension, Serializable {
 
 	public void setTagAttribute(TagAttributeEntity attribute) {
 		this.tagAttribute = attribute;
-	}
-
-	public Set<ProductEntity> getProducts() {
-		return products;
 	}
 
 	public Set<TagAttributeEntity> getAttributes() {
@@ -169,16 +158,6 @@ public class TagEntity implements ISearchDimension, Serializable {
 		return (ota.isPresent()) 
 				? ota.get().getTagDesc()
 				: "Empty"; 
-	}
-	
-	public void addProduct(ProductEntity product) {
-		this.getProducts().add(product);
-		product.addTag(this);
-	}
-	
-	public void removeProduct(ProductEntity product) {
-		this.getProducts().remove(product);
-		product.removeTag(this);
 	}
 	
 	public void addTagAttribute(TagAttributeEntity tagAttribute) {

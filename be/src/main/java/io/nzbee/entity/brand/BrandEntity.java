@@ -25,7 +25,9 @@ import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
@@ -68,7 +70,6 @@ public class BrandEntity implements Serializable {
 	private String brandCode;
 	
 	@ManyToMany(mappedBy = "brands")
-	@JsonIgnore
 	private Set<CategoryBrandEntity> categories = new HashSet<CategoryBrandEntity>();
 
 	@OneToMany(	mappedBy="brand",
@@ -97,23 +98,17 @@ public class BrandEntity implements Serializable {
 	}
 	
 	@Transient
+	@JsonIgnore
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getBrandDescENGB() {
-		Optional<BrandAttributeEntity> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeENGB)).findFirst();
-		if(pa.isPresent()) {
-			return pa.get().getBrandDesc();
-		}
-		return "Not Applicable"; 
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getBrandDesc();
 	}
 	
 	@Transient
+	@JsonIgnore
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getBrandDescZHHK() {
-		Optional<BrandAttributeEntity> pa = this.getAttributes().stream().filter(a -> a.getLclCd().equals(Constants.localeZHHK)).findFirst();
-		if(pa.isPresent()) {
-			return pa.get().getBrandDesc();
-		}
-		return "Not Applicable"; 
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getBrandDesc();
 	}
 	
 	

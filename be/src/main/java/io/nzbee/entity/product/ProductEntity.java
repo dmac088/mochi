@@ -472,22 +472,18 @@ public abstract class ProductEntity implements Serializable {
 	
 	public void addTag(TagEntity tag) {
 		this.getTags().add(tag);
-		tag.getProducts().add(this);
 	}
 	
 	public void removeTag(TagEntity tag) {
 		this.getTags().remove(tag);
-		tag.getProducts().remove(this);
 	}
 	
 	public void addProductCategory(CategoryProductEntity categoryProduct) {
 		this.getCategories().add(categoryProduct);
-		categoryProduct.getProducts().add(this);
 	}
 	
 	public void removeProductCategory(CategoryProductEntity categoryProduct) {
 		this.getCategories().remove(categoryProduct);
-		categoryProduct.getProducts().remove(this);
 	}
 	
 	public void addProductAttribute(ProductAttributeEntity productAttribute) {
@@ -511,13 +507,11 @@ public abstract class ProductEntity implements Serializable {
 	}
 	
 	public void addCategory(CategoryProductEntity category) {
-		this.getCategories().add(category);
-		category.getProducts().add(this);
+		this.categories.add(category);
 	}
 	
 	public void removeCategory(CategoryProductEntity category) {
-		this.getCategories().remove(category);
-		category.removeProduct(this);
+		this.categories.remove(category);
 	}
 	
     public String getTypeDiscriminator() {
