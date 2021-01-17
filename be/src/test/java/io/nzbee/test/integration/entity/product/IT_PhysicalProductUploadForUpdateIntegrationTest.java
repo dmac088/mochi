@@ -24,6 +24,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
+
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
@@ -67,11 +68,11 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	this.persistANewProduct();
+    	this.loadProducts();
         setUpIsDone = true;
 	}
 	
-	public void persistANewProduct() {
+	public void loadProducts() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
@@ -79,8 +80,9 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 	}
 
 	@Test
-	//@Rollback(false)
+	@Rollback(false)
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ENGB_USD() {
+		
 		// when
 		Optional<ProductDTO> found = productService.findByCode(Constants.localeENGB, Constants.currencyUSD, "12383658");
 
@@ -89,7 +91,7 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 	}
 
 	@Test
-	//@Rollback(false)
+	@Rollback(false)
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ZHHK_HKD() {
 		// when
 		Optional<ProductDTO> found = productService.findByCode(Constants.localeZHHK, Constants.currencyHKD, "12383658");

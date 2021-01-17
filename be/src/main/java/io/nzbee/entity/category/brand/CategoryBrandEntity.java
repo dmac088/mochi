@@ -1,6 +1,5 @@
 package io.nzbee.entity.category.brand;
 
-import java.io.Serializable;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
@@ -22,11 +21,8 @@ import io.nzbee.entity.category.product.CategoryProductEntity;
 @Table(name = "category_brand", schema = "mochi")
 @DiscriminatorValue("2")
 @JsonTypeName("categorybrand")
-public class CategoryBrandEntity extends CategoryEntity implements Serializable {
+public class CategoryBrandEntity extends CategoryEntity {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 7221370251309880198L;
 
 	@ManyToMany(fetch = FetchType.LAZY, 

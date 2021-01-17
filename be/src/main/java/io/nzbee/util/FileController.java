@@ -14,7 +14,7 @@ import io.nzbee.util.brand.BrandMasterService;
 import io.nzbee.util.category.CategoryMasterService;
 import io.nzbee.util.inventory.InventoryLocationMasterService;
 import io.nzbee.util.inventory.InventoryMasterService;
-import io.nzbee.util.product.ProductMasterService;
+import io.nzbee.util.product.physical.PhysicalProductMasterService;
 import io.nzbee.util.promotion.PromotionMasterService;
 import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
@@ -38,7 +38,7 @@ public class FileController {
     private FileStorageServiceUpload fileStorageServiceUpload;
     
     @Autowired
-    private ProductMasterService productMasterService;
+    private PhysicalProductMasterService productMasterService;
     
     @Autowired
     private CategoryMasterService categoryMasterService;

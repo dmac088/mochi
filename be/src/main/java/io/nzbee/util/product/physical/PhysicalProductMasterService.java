@@ -175,7 +175,7 @@ public class PhysicalProductMasterService {
 						 String length,
 						 String weight
 						 ) {
-		logger.debug("called mapToAccessory() ");
+		logger.debug("called map() ");
 		
 		Optional<ProductEntity> op = productService.findByCode(upcCode);
 		

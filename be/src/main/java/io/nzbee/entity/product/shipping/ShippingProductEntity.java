@@ -1,7 +1,5 @@
 package io.nzbee.entity.product.shipping;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -11,7 +9,7 @@ import io.nzbee.entity.product.ProductEntity;
 @Entity
 @Table(name = "product_shipping", schema = "mochi")
 @DiscriminatorValue("1")
-public class ShippingProductEntity extends ProductEntity implements Serializable {
+public class ShippingProductEntity extends ProductEntity {
 
 	private static final long serialVersionUID = -5894324320785215250L;
 
