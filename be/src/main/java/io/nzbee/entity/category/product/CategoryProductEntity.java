@@ -1,15 +1,11 @@
 package io.nzbee.entity.category.product;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import io.nzbee.entity.category.CategoryEntity;
-import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "category_product", schema = "mochi")
@@ -17,9 +13,6 @@ import io.nzbee.entity.product.ProductEntity;
 public class CategoryProductEntity extends CategoryEntity {
 
 	private static final long serialVersionUID = 8166164110478278072L;
-
-	@ManyToMany(mappedBy = "categories")
-    private Set<ProductEntity> products = new HashSet<ProductEntity>();
 	
 	@Transient
 	private Long productCount;
@@ -39,10 +32,6 @@ public class CategoryProductEntity extends CategoryEntity {
 		this.hasParent = hasParent;
 	}
 
-	public Set<ProductEntity> getProducts() {
-		return products;
-	}
-
 	@Override
 	public Long getObjectCount() {
 		return productCount;
@@ -51,16 +40,6 @@ public class CategoryProductEntity extends CategoryEntity {
 	@Override
 	public void setObjectCount(Long count) {
 		productCount = count;
-	}
-	
-	public void addProduct(ProductEntity product) {
-		this.getProducts().add(product);
-		product.getCategories().add(this);
-	}
-	
-	public void removeProduct(ProductEntity product) {
-		this.getProducts().remove(product);
-		product.removeProductCategory(this);
 	}
 
 	@Override
