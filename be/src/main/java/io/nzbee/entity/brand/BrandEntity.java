@@ -96,19 +96,19 @@ public class BrandEntity implements Serializable {
 		this.brandId = id;
 	}
 	
-	@Transient
-	@JsonIgnore
-	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
-	public String getBrandDescENGB() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getBrandDesc();
-	}
-	
-	@Transient
-	@JsonIgnore
-	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
-	public String getBrandDescZHHK() {
-		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getBrandDesc();
-	}
+//	@Transient
+//	@JsonIgnore
+//	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
+//	public String getBrandDescENGB() {
+//		return this.attributes.stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getBrandDesc();
+//	}
+//	
+//	@Transient
+//	@JsonIgnore
+//	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
+//	public String getBrandDescZHHK() {
+//		return this.attributes.stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getBrandDesc();
+//	}
 	
 	
 	@Field(analyze = Analyze.NO, store=Store.YES)
