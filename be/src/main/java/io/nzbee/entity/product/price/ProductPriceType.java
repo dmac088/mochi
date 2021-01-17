@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.price;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,8 +11,10 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "price_type", schema = "mochi")
-public class ProductPriceType {
+public class ProductPriceType implements Serializable {
 	
+	private static final long serialVersionUID = -7823446575108567222L;
+
 	@Id
 	@Column(name="prc_typ_id")
 	private Long Id;
