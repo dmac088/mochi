@@ -1,6 +1,5 @@
 package io.nzbee.entity.category.product;
 
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -9,22 +8,18 @@ import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "category_product", schema = "mochi")
 @DiscriminatorValue("1")
-@JsonTypeName("categoryproduct")
-public class CategoryProductEntity extends CategoryEntity implements Serializable  {
-	
-	private static final long serialVersionUID = 286345140667931120L;
+public class CategoryProductEntity extends CategoryEntity {
+
+	private static final long serialVersionUID = 8166164110478278072L;
 
 	@ManyToMany(mappedBy = "categories")
-    @JsonIgnore
-    private Set<ProductEntity> products = new HashSet<>();
+    private Set<ProductEntity> products = new HashSet<ProductEntity>();
 	
 	@Transient
 	private Long productCount;
@@ -69,7 +64,6 @@ public class CategoryProductEntity extends CategoryEntity implements Serializabl
 	}
 
 	@Override
-	@JsonIgnore
 	public String getType() {
 		return this.getClass().getSimpleName().toLowerCase();
 	}
@@ -85,7 +79,6 @@ public class CategoryProductEntity extends CategoryEntity implements Serializabl
 	}
 
 	@Override
-	@JsonIgnore
 	public String getDesc() {
 		return this.getCategoryAttribute().getCategoryDesc();
 	}

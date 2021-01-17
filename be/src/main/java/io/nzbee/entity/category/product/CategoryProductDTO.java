@@ -1,10 +1,9 @@
 package io.nzbee.entity.category.product;
 
-import java.io.Serializable;
 import java.util.Map;
 import io.nzbee.entity.category.CategoryDTO;
 
-public class CategoryProductDTO extends CategoryDTO implements Serializable {
+public class CategoryProductDTO extends CategoryDTO {
 
 	private static final long serialVersionUID = -2047877371295351601L;
 
