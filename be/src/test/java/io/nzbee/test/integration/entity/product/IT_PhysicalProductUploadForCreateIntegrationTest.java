@@ -7,9 +7,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -40,18 +38,14 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
     private JavaMailSender mailSender;
 	
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
 	
     @Autowired
     private PhysicalProductMasterService pms;
     
     @Autowired
     private IProductService productService;
-    
-	@Autowired
-	@Qualifier("mochiDataSourceOwner")
-	private DataSource database;
 	
 	private static boolean setUpIsDone = false;
 	
@@ -67,12 +61,12 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.persistANewProduct();
+		this.loadProducts();
 		setUpIsDone = true;
 	}
 	
 	
-	public void persistANewProduct() {
+	public void loadProducts() {
 		String path = "src/test/resources";
 		File file = new File(path);
 	
@@ -167,8 +161,4 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 		assertThat(found.get().getWeight()).isEqualTo(new Integer(0));
 	}
 	
-    @After
-    public void closeConnection() {
-    	entityManager.close();
-    }
 }
