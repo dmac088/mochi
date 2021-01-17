@@ -1,7 +1,6 @@
 package io.nzbee.test.integration.entity.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashSet;
@@ -67,7 +66,7 @@ public class IT_ProductEntitySearchIntegrationTest {
     private static boolean setUpIsDone = false;
 	
 	@Before
-	public void buildSearchIndex() {
+	public void setUp() {
 		if (setUpIsDone) {
             return;
         }
@@ -82,6 +81,8 @@ public class IT_ProductEntitySearchIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+    	
+    	entityManager.close();
 		
     	try {
 			fullTextEntityManager
