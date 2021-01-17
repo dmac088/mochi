@@ -2,31 +2,24 @@ package io.nzbee.entity.brand;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ColumnResult;
 import javax.persistence.Entity;
-import javax.persistence.EntityResult;
-import javax.persistence.FieldResult;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
-import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
@@ -34,27 +27,6 @@ import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "brand", schema = "mochi")
-@SqlResultSetMapping(
-	    name = "BrandMapping",
-	    columns = {
-	    		@ColumnResult(name = "object_count")
-	    },
-	    entities = {
-	            @EntityResult(
-	                    entityClass = BrandEntity.class,
-	                    fields = {
-	                        @FieldResult(name = "brandId", 			column = "bnd_id"),
-	                        @FieldResult(name = "brandCode", 		column = "bnd_cd")
-	                    }),
-	            @EntityResult(
-	                    entityClass = BrandAttributeEntity.class,
-	                    fields = {
-	                        @FieldResult(name = "brandAttributeId", column = "bnd_lcl_id"),
-	                        @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
-	                        @FieldResult(name = "lclCd", 			column = "lcl_cd"),
-	                        @FieldResult(name = "brand", 			column = "bnd_id")
-	                    })
-		    })
 public class BrandEntity implements Serializable {
 
 	private static final long serialVersionUID = -3493461048853968278L;
@@ -96,19 +68,17 @@ public class BrandEntity implements Serializable {
 		this.brandId = id;
 	}
 	
-//	@Transient
-//	@JsonIgnore
-//	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
-//	public String getBrandDescENGB() {
-//		return this.attributes.stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getBrandDesc();
-//	}
-//	
-//	@Transient
-//	@JsonIgnore
-//	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
-//	public String getBrandDescZHHK() {
-//		return this.attributes.stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getBrandDesc();
-//	}
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
+	public String getBrandDescENGB() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getBrandDesc();
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
+	public String getBrandDescZHHK() {
+		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getBrandDesc();
+	}
 	
 	
 	@Field(analyze = Analyze.NO, store=Store.YES)
@@ -167,16 +137,15 @@ public class BrandEntity implements Serializable {
 	
 	@Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof BrandEntity)) return false;
-        return brandCode != null && brandCode.equals(((BrandEntity) o).getBrandCode());
+		 if (this == o) return true;
+	     if (o == null || getClass() != o.getClass()) return false;
+	     BrandEntity pcDto = (BrandEntity) o;
+	     return this.getBrandCode() == pcDto.getBrandCode();
     }
  
     @Override
     public int hashCode() {
-    	HashCodeBuilder hcb = new HashCodeBuilder();
-        hcb.append(this.brandCode);
-        return hcb.toHashCode();
+    	return Objects.hash(this.getBrandCode());
     }
 
 }
