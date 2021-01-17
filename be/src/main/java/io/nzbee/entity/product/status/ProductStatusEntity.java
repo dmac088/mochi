@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.status;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +11,10 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "product_status", schema = "mochi")
-public class ProductStatusEntity {
+public class ProductStatusEntity implements Serializable {
 	
+	private static final long serialVersionUID = -3261140802795999392L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prd_sts_id")
