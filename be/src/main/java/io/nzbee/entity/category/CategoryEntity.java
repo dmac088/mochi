@@ -31,7 +31,6 @@ import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.IndexedEmbedded;
 import org.hibernate.search.annotations.Store;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
@@ -80,7 +79,6 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 				insertable = false)
 	private CategoryType categoryType;
 
-	@JsonIgnore
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
 	@JoinColumn(name="cat_prnt_id", nullable=false, insertable = false, updatable = false)
 	@IndexedEmbedded(depth = 10, includeEmbeddedObjectId=true)
@@ -92,30 +90,24 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 	private Set<CategoryAttributeEntity> attributes = new HashSet<CategoryAttributeEntity>();
 
 	@ManyToMany(mappedBy = "categories")
-    @JsonIgnore
     private Set<PromotionEntity> promotions = new HashSet<PromotionEntity>();
 	
 	@Transient 
 	private CategoryAttributeEntity categoryAttribute;
 
 	@Transient
-	@JsonIgnore
 	private Long childCount;
 	
 	@Transient
-	@JsonIgnore
 	private Long maxRetailPrice;
 	
 	@Transient
-	@JsonIgnore
 	private Long maxMarkdownPrice;
 	
 	@Transient
-	@JsonIgnore
 	private String locale;
 	
 	@Transient
-	@JsonIgnore
 	private String currency;
 
 	public abstract String getType();
@@ -123,7 +115,6 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 	public abstract void setType(String type);
 
 	@Transient
-	@JsonIgnore
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	public String getCategoryTokenField() {
 		String token = createCategoryToken(this, new ArrayList<String>());
@@ -133,7 +124,6 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 	
 	@Transient
 	@Field(analyze = Analyze.NO, store=Store.YES)
-	@JsonIgnore
 	@Facet
 	public String getCategoryToken() {
 		return this.getCategoryTokenField();
@@ -183,14 +173,12 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 	}
 	
 	@Transient
-	@JsonIgnore
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
 	public String getCategoryDescENGB() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeENGB)).findFirst().get().getCategoryDesc();
 	}
 	
 	@Transient
-	@JsonIgnore
 	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
 	public String getCategoryDescZHHK() {
 		return this.getAttributes().stream().filter(pa -> pa.getLclCd().equals(Constants.localeZHHK)).findFirst().get().getCategoryDesc();
@@ -300,7 +288,6 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 		promotion.removeCategory(this);
 	}
 	
-	@JsonIgnore
 	public String getTypeDiscriminator() {
 		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
 	}

@@ -1,11 +1,16 @@
 package io.nzbee.entity.category.product;
 
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import io.nzbee.entity.category.CategoryEntity;
+import io.nzbee.entity.product.ProductEntity;
 
 @Entity
 @Table(name = "category_product", schema = "mochi")
@@ -19,6 +24,9 @@ public class CategoryProductEntity extends CategoryEntity {
 	
 	@Transient
 	private boolean hasParent;
+	
+	@ManyToMany(mappedBy = "categories")
+    private Set<ProductEntity> products = new HashSet<ProductEntity>();
 	
 	public String getCategoryCode() {
 		return super.getCategoryCode();
