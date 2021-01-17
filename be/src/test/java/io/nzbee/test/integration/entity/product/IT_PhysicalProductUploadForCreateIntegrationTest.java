@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -23,6 +22,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
@@ -80,6 +80,7 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenProductUploadedForCreation_thenReturnCreatedProduct_ENGB_USD() {
 		 // when
     	Optional<ProductDTO> found = productService.findByCode( Constants.localeENGB, 
@@ -91,6 +92,7 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 	}
 	
 	@Test
+	@Rollback(false)
 	public void whenProductUploadedForCreation_thenReturnCreatedProduct_ZHHK_HKD() {
 		 // when
     	Optional<ProductDTO> found = productService.findByCode( Constants.localeZHHK, 

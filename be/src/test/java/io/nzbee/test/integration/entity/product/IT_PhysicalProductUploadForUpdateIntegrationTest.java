@@ -21,11 +21,8 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
@@ -36,9 +33,6 @@ import io.nzbee.util.product.physical.PhysicalProductMasterService;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
-		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
 public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 
 	@TestConfiguration
@@ -85,6 +79,7 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ENGB_USD() {
 		// when
 		Optional<ProductDTO> found = productService.findByCode(Constants.localeENGB, Constants.currencyUSD, "12383658");
@@ -94,6 +89,7 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 	}
 
 	@Test
+	@Rollback(false)
 	public void whenProductUploadedForUpdate_thenReturnCorrectlyUpdatedProduct_ZHHK_HKD() {
 		// when
 		Optional<ProductDTO> found = productService.findByCode(Constants.localeZHHK, Constants.currencyHKD, "12383658");
