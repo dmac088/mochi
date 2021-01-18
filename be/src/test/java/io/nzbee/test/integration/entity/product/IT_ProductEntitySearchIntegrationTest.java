@@ -609,36 +609,6 @@ public class IT_ProductEntitySearchIntegrationTest {
 	
 	@Test
 	@Rollback(false)
-	public void whenSearchForKeywordPrettyGirlWithBestMatch_thenReturnResultsInCorrectOrder() {
-
-		// when
-		Page<Product> pp = 
-		productService.search( 	"en-GB", 
-								"HKD", 
-								"Ignored",
-								  0,
-								  1,
-								  "bestMatch",
-								"Pretty Girl", 		
-								facetPayload,
-								returnFacets);
-		
-		// then
-		assertThat(pp.getTotalPages())
-		 .isEqualTo(7);
-		
-		assertThat(pp.getTotalElements())
-		.isEqualTo(new Long(7));
-		
-		assertThat(pp.stream().findFirst().get().getProductUPC()).isEqualTo("30833047");
-		
-		assertThat(pp.stream().findFirst().get().getProductDesc()).isEqualTo("Pretty Girl Hair Sticker ");
-		
-	}
-	
-	
-	@Test
-	@Rollback(false)
 	public void whenEnterSearchTermKor_thenReturnCorrectSuggestions() {
 		
 		// when
