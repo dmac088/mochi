@@ -167,7 +167,6 @@ public class ProductController {
 			  value = "/Product/Image/{imageFileName}",
 			  produces = MediaType.IMAGE_JPEG_VALUE
 			)
-	//@Cacheable(cacheNames="pictures", key = "#imageFileName")
 	public @ResponseBody ResponseEntity<byte[]> getImageWithMediaType(@PathVariable String imageFileName) {
 		LOGGER.debug("call ProductController.getImageWithMediaType with parameter {}", imageFileName);
 		InputStream in = getClass().getResourceAsStream("/public/images/" + imageFileName);
