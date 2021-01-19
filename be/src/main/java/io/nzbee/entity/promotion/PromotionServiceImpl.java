@@ -47,8 +47,8 @@ public class PromotionServiceImpl implements IPromotionService {
 	@Override
 	@Caching(evict = {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.promotionCode"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#promotion.locale, #promotion.promotionId}"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="{#promotion.locale, #promotion.promotionCode}"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.locale + \", \" + #promotion.promotionId"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.locale + \", \" + #promotion.promotionCode"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
 	public void save(PromotionEntity promotion) {

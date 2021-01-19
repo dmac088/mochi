@@ -32,6 +32,10 @@ public class CategoryProductEntity extends CategoryEntity {
 		return super.getCategoryCode();
 	}
 	
+	public Set<ProductEntity> getProducts() {
+		return products;
+	}
+
 	public boolean hasParent() {
 		return hasParent;
 	}
