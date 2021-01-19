@@ -1,5 +1,7 @@
 package io.nzbee.entity.promotion.attribute;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -13,8 +15,10 @@ import io.nzbee.entity.promotion.PromotionEntity;
 
 @Entity
 @Table(name = "promotion_attr_lcl", schema = "mochi")
-public class PromotionAttributeEntity {
+public class PromotionAttributeEntity implements Serializable {
 
+	private static final long serialVersionUID = 135607420831450963L;
+	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prm_lcl_id")
