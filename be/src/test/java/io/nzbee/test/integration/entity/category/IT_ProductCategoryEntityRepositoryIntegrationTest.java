@@ -1,13 +1,16 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -19,12 +22,12 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
@@ -39,16 +42,7 @@ import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class IT_ProductCategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
@@ -68,12 +62,32 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
  
     @Autowired
     private ICategoryService categoryService;
-   
     
-    private CategoryEntity category = null;
+	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
+   
+    private static CategoryEntity category = null;
+    
+    private static boolean setUpIsDone = false;
     
     @Before
-    public void setUp() { 
+	public void setUp() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.createCategory();
+		setUpIsDone = true;
+	}
+    
+    public void createCategory() { 
     	this.persistNewCategory();
     }
     
@@ -83,15 +97,14 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 		category = categoryEntityBeanFactory.getProductCategoryEntityBean();
 	    
 	    //persist a new transient test category
-	    entityManager.persist(category);
-	    entityManager.flush();
-	    entityManager.close();
+		categoryService.save(category);
 	    	
 	    return category;
 	}
    
     
     @Test
+    @Rollback(false)
     public void whenFindById_thenReturnProductCategoryEntity() {
     	
         // when
@@ -102,6 +115,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindByCode_thenReturnProductCategoryEntity() {
     	
         // when
@@ -113,6 +127,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
    
     
     @Test
+    @Rollback(false)
     public void whenFindByCode_thenReturnProductCategoryDTO() {
     	
         // when
@@ -123,6 +138,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindFruitCategory_thenReturnProductCategoryDTO() {
     	
         // when
@@ -152,6 +168,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindVegetableCategory_thenReturnProductCategoryDTO() {
     	
         // when
@@ -181,6 +198,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindRedAndOrangeVegetablesCategory_thenReturnProductCategoryDTO() {
     	
         // when
@@ -210,6 +228,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindPomesCategory_thenReturnProductCategoryDTO() {
     	
         // when
@@ -239,6 +258,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindAllWithNoFacets_thenReturnCorrectResultCount() {
     	
     	Set<String> categories = new HashSet<String>();
@@ -260,6 +280,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindAllWithBrandFacet_thenReturnCorrectResultCount() {
     	
     	Set<String> categories = new HashSet<String>();
@@ -282,6 +303,7 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
     public void whenFindAllWithTagFacet_thenReturnCorrectResultCount() {
     	
     	Set<String> categories = new HashSet<String>();
