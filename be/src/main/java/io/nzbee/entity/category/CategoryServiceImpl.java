@@ -98,7 +98,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<CategoryEntity> findAll() {
 		return categoryDAO.findAll();
 	}
