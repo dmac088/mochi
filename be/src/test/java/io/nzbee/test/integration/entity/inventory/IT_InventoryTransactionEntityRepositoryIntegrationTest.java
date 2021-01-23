@@ -3,11 +3,10 @@ package io.nzbee.test.integration.entity.inventory;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
-
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
-
-import javax.persistence.EntityManager;
-import org.junit.After;
+import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -17,12 +16,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.inventory.IInventoryTransactionService;
@@ -33,22 +31,7 @@ import io.nzbee.test.integration.entity.beans.inventory.InventoryTransactionEnti
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
 public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
- 
-	
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
 	
 	@Autowired
 	private InventoryTransactionEntityBeanFactory inventoryTransactionEntityBeanFactory;
@@ -59,22 +42,41 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	@MockBean
     private JavaMailSender mailSender;
 	
+	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
+    
 	private InventoryTransaction inventoryTransaction = null;
 	
-    @Before
-    public void setUp() { 
-    	this.persistNewInventoryTransaction();
-    }
+	private static boolean setUpIsDone = false;
+      
+	@Before
+	public void setUp() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.persistNewInventoryTransaction();
+		setUpIsDone = true;
+	}
+
     
 	public void persistNewInventoryTransaction() {
 	
 		inventoryTransaction = inventoryTransactionEntityBeanFactory.getBean();
 	    
-	    entityManager.persist(inventoryTransaction);
+		inventoryTransactionService.save(inventoryTransaction);
 	}
    
     
     @Test
+    @Rollback(false)
     public void whenFindById_thenReturnInventoryTransaction() {
     	
     	Optional<InventoryTransaction> found = inventoryTransactionService.findById(inventoryTransaction.getInventroyTransactionId());
@@ -106,9 +108,5 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	    .isEqualTo(new Double(15.20));
     }
     
-    @After
-    public void closeConnection() {
-    	entityManager.close();
-    }
  
 }

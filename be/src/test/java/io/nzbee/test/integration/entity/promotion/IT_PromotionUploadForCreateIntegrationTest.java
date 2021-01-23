@@ -42,10 +42,6 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
-
-	@Autowired
 	private PromotionMasterService pms;
 
 	@Autowired
@@ -136,8 +132,4 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		
 	}
 
-	@After
-	public void closeConnection() {
-		entityManager.close();
-	}
 }

@@ -40,10 +40,6 @@ public class IT_CategoryUploadForUpdateIntegrationTest {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
-
-	@Autowired
 	private CategoryMasterService pms;
 
 	@Autowired
@@ -135,8 +131,4 @@ public class IT_CategoryUploadForUpdateIntegrationTest {
 		.isEqualTo("PRM01");
 	}
 
-	@After
-	public void closeConnection() {
-		entityManager.close();
-	}
 }

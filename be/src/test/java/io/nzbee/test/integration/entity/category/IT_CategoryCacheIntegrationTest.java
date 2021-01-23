@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import java.util.Optional;
 import javax.persistence.EntityManager;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -174,9 +173,5 @@ public class IT_CategoryCacheIntegrationTest {
 //    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
     }
     
-	@After
-	public void closeConnection() {
-		entityManager.close();
-	}
 
 }

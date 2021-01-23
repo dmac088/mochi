@@ -153,9 +153,5 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	  
     }
     
-    @After
-    public void closeConnection() {
-    	entityManager.close();
-    }
  
 }

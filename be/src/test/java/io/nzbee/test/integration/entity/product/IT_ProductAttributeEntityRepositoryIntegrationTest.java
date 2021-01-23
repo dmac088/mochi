@@ -4,7 +4,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import java.sql.Connection;
 import java.sql.SQLException;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -41,10 +40,6 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
 	
 	@MockBean
     private JavaMailSender mailSender;
-	
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
 	
 	@Autowired
     @Qualifier("mochiDataSourceOwner")

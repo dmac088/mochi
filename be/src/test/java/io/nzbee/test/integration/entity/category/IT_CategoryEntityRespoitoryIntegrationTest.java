@@ -10,9 +10,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,10 +52,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
-
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
 
 	@Autowired
 	private ICategoryService categoryService;
@@ -476,11 +470,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		    .isEqualTo("test product category");
 		    
 	    }
-	
-	@After
-	public void closeConnection() {
-		entityManager.close();
-	}
 	
 	private boolean isOrdered(List<CategoryDTO> list) {
 		return Ordering.from(String.CASE_INSENSITIVE_ORDER).isOrdered(list.stream().map(c -> c.getCategoryDesc()).collect(Collectors.toList())); 

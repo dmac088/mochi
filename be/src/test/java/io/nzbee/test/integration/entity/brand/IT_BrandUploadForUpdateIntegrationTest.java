@@ -40,10 +40,6 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
-
-	@Autowired
 	private BrandMasterService pms;
 
 	@Autowired
@@ -120,8 +116,4 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 		.isEqualTo("Enza Update HK");
 	}
 
-	@After
-	public void closeConnection() {
-		entityManager.close();
-	}
 }

@@ -54,10 +54,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     private JavaMailSender mailSender;
 	
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
-	
-	@Autowired
 	private CategoryEntityBeanFactory categoryEntityBeanFactory;
  
     @Autowired
@@ -363,9 +359,4 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
 	    
     }
 
- 
-    @After
-    public void closeConnection() {
-    	entityManager.close();
-    }
 }
