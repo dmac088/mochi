@@ -73,7 +73,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     @Autowired
     private ICategoryService categoryService;
  
-	private io.nzbee.entity.category.CategoryEntity category = null;
+	private static CategoryEntity category = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
