@@ -26,6 +26,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -43,6 +44,7 @@ import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactor
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 	@TestConfiguration
