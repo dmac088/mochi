@@ -134,6 +134,9 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	
     	assertTrue(found.isPresent());
     	
+    	assertThat(found.get().getClass().getSimpleName())
+    	.isEqualTo(CategoryBrandEntity.class.getSimpleName());
+    	
     	CategoryBrandEntity cb = (CategoryBrandEntity) found.get();
     	
     	assertThat(cb.getCategoryCode())
