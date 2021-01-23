@@ -46,7 +46,7 @@ public class IT_InventoryTransactionEntityRepositoryIntegrationTest {
 	@Qualifier("mochiDataSourceOwner")
 	private DataSource database;
     
-	private InventoryTransaction inventoryTransaction = null;
+	private static InventoryTransaction inventoryTransaction = null;
 	
 	private static boolean setUpIsDone = false;
       
