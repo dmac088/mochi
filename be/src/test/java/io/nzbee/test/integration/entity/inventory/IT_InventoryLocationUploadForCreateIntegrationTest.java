@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.inventory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -23,10 +23,9 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
-import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.brand.BrandDTO;
-import io.nzbee.util.brand.BrandMasterService;
+import io.nzbee.entity.inventory.location.IInventoryLocationService;
+import io.nzbee.entity.inventory.location.InventoryLocation;
+import io.nzbee.util.inventory.InventoryLocationMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -35,7 +34,7 @@ import io.nzbee.util.brand.BrandMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_BrandUploadForUpdateIntegrationTest {
+public class IT_InventoryLocationUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -45,56 +44,43 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private BrandMasterService pms;
+	private InventoryLocationMasterService pms;
 
 	@Autowired
-	private IBrandService brandService;
+	private IInventoryLocationService inventoryLocationService;
 
 	@Before
-	public void persistANewBrand() {
+	public void persistANewInventoryLocation() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeBrandMaster(file.getAbsolutePath() + "/data/product/brand/update/brand_master.tsv");
+		pms.writeInventoryLocation(file.getAbsolutePath() + "/data/inventory/location/create/inventory_location.tsv");
 	}
 
 	@Test
-	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
+	public void whenInventoryLocationUploadedForCreate_thenReturnCorrectlyCreatedInventoryLocation_ENGB() {
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
+		Optional<InventoryLocation> found = inventoryLocationService.findByCode("TST01");
 
 		// then
-		assertFound_ENGB(found);
+		assertFound(found);
 	}
 
-	@Test
-	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
-		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeZHHK, "ENZ01");
-
-		// then
-		assertFound_ZHHK(found);
-	}
-
-	private void assertFound_ENGB(Optional<BrandDTO> found) {
+	private void assertFound(Optional<InventoryLocation> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getBrandDesc())
-		.isEqualTo("Enza Update EN");
+		assertThat(found.get().getLocationCode())
+		.isEqualTo("TST01");
 		
-	}
-
-	private void assertFound_ZHHK(Optional<BrandDTO> found) {
+		assertThat(found.get().getLocationDesc())
+		.isEqualTo("Test Create Location Description");
 		
-		assertNotNull(found);
+		assertThat(found.get().getLocationIsActive())
+		.isEqualTo(true);
 		
-		assertTrue(found.isPresent());
-		
-		assertThat(found.get().getBrandDesc())
-		.isEqualTo("Enza Update HK");
 	}
 
 	@After

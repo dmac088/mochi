@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.bag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -23,12 +23,18 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
+import io.nzbee.entity.bag.item.IBagItemService;
+import io.nzbee.entity.bag.status.BagItemStatus;
+import io.nzbee.entity.bag.status.IBagItemStatusService;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.test.integration.entity.beans.bag.IBagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -45,7 +51,7 @@ import io.nzbee.test.integration.entity.beans.bag.IBagEntityBeanFactory;
 			transactionManager = "mochiTransactionManager",
 			transactionMode = TransactionMode.ISOLATED))
 })
-public class IT_BagEntityRepositoryIntegrationTest {
+public class IT_BagItemEntityRepositoryIntegrationTest {
  
 	
 	@Autowired
@@ -54,77 +60,82 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	
 	@Autowired
 	private IBagEntityBeanFactory bagEntityBeanFactory;
- 
+
     @Autowired
     private IBagService bagService;
+	
+    @Autowired
+    private IBagItemService bagItemService;
+    
+    @Autowired
+    private IBagItemStatusService bagItemStatus;
+    
+    @Autowired
+    private IProductService productService;
     
 	@Autowired
     private IPersonService personService;
  
-	private BagEntity bag = null;
+	private BagItemEntity bagItem = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
     
     @Before
     public void setUp() { 
-    	this.persistNewBagEntity();
+    	this.persistNewBag();
     }
     
-	public BagEntity persistNewBagEntity() {
+	public BagItemEntity persistNewBag() {
 		
-		Optional<PersonEntity> p = personService.findByUsernameAndRole("bob@bob", Constants.partyRoleCustomer);
-		
-		bag = bagEntityBeanFactory.getBean(p.get());
+		Optional<PersonEntity> p = personService.findByUsernameAndRole("bob@bob", "Customer");
+    	
+		BagEntity bag = bagEntityBeanFactory.getBean(p.get());
 	    
-	    //persist a new transient test category
+	    ProductEntity product = productService.findByCode("76477789").get();
+	        
+	    Optional<BagItemStatus> bis = bagItemStatus.findByCode(Constants.bagStatusCodeNew);
+	    
+	    bagItem = new BagItemEntity(product);
+	    bagItem.setQuantity(2);
+	    bagItem.setBagItemStatus(bis.get());
+	    bag.addItem(bagItem);
+	    
 	    entityManager.persist(bag);
 	    
-	    return bag;
-	    
+	    return bagItem;
 	}
-     
+   
+    
     @Test
 	@WithUserDetails(value = "admin")
-    public void whenFindById_thenReturnBagEntity() {
+    public void whenFindById_thenReturnBagItem() {
     	
-    	//persist a bag and then make sure we can retrieve it by id
-    	Optional<BagEntity> found = bagService.findById(bag.getBagId());
+    	Long itemId = bagItem.getBagItemId();
+    	
+        // when
+    	BagItemEntity found = bagItemService.findById(itemId).get();
      
         // then
-    	assertEntityFound(found);
-    }
-    
-    @Test
-	@WithUserDetails(value = "admin")
-    public void whenFindByUsername_thenReturnBagEntity() {
-    	
-    	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<BagEntity> found = bagService.findByCode("bob@bob");
-    	
-    	//then
-    	assertEntityFound(found);
-    }
-    
-    @Test
-	@WithUserDetails(value = "admin")
-    public void whenFindByUsername_thenReturnBagDTO() {
-    	
-    	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
-    	
-    	//then
-    	assertDTOFound(found);
+    	assertFound(found);
     }
  
+    @Test
+ 	@WithUserDetails(value = "admin")
+     public void whenFindByUsername_thenReturnBagDTOWithCorrectItems() {
+     	
+     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
+     	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
+     	
+     	//then
+     	assertDTOFound(found);
+     }
     
-    private void assertEntityFound(Optional<BagEntity> bag) {
-    	assertNotNull(bag);
+    private void assertFound(final BagItemEntity found) {
+    	assertNotNull(found);
     	
-    	assertTrue(bag.isPresent());
-    	
-    	assertNotNull(bag.get().getBagCreatedDateTime());
-    	assertNotNull(bag.get().getBagUpdatedDateTime());
+    	assertThat(found.getQuantity())
+	    .isEqualTo(2);
     }
     
     private void assertDTOFound(Optional<BagDTO> bag) {
@@ -134,17 +145,21 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	
     	BagDTO bDto = bag.get();
     	
-    	assertThat(bDto.getCustomer().getCustomerNumber()).isEqualTo("1000000268");
+    	assertTrue(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("76477789")).findAny().isPresent());
     	
-    	assertThat(bDto.getCustomer().getGivenName()).isEqualTo("bob");
-    			
-    	assertThat(bDto.getCustomer().getFamilyName()).isEqualTo("bob");
-    			
-    	assertThat(bDto.getCustomer().getUserName()).isEqualTo("bob@bob");
+    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("76477789")).findAny().get().getQuantity()).isEqualTo(2);
     	
-    	assertThat(bDto.getBagItems().size()).isEqualTo(0);
+    	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("76477789"))
+				.findAny().get()
+				.getProduct().getPromotions()
+				.stream().filter(promo -> promo.getPromotionCode().equals("B2G50")).findAny().isPresent()).isTrue();
+    	
+    	
+				
+    	
     }
-    
+
+	
     @After
     public void closeConnection() {
     	entityManager.close();

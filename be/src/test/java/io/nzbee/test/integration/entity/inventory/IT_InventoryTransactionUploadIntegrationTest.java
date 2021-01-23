@@ -1,9 +1,10 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.inventory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.io.File;
+import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -23,10 +24,11 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.Constants;
-import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.util.brand.BrandMasterService;
+import io.nzbee.entity.inventory.IInventoryTransactionService;
+import io.nzbee.entity.inventory.InventoryTransaction;
+import io.nzbee.entity.stock.IStockOnHandService;
+import io.nzbee.entity.stock.StockOnHand;
+import io.nzbee.util.inventory.InventoryMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -35,7 +37,7 @@ import io.nzbee.util.brand.BrandMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_BrandUploadForCreateIntegrationTest {
+public class IT_InventoryTransactionUploadIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -45,58 +47,60 @@ public class IT_BrandUploadForCreateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private BrandMasterService pms;
+	private InventoryMasterService pms;
 
 	@Autowired
-	private IBrandService brandService;
+	private IInventoryTransactionService inventoryService;
+	
+	@Autowired
+	private IStockOnHandService sohService;
 
 	@Before
-	public void persistANewBrand() {
+	public void persistNewInventoryTransaction() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeBrandMaster(file.getAbsolutePath() + "/data/product/brand/create/brand_master.tsv");
+		pms.writeInventoryTransaction(file.getAbsolutePath() + "/data/inventory/inventory.tsv");
 	}
 
 	@Test
-	public void whenBrandUploadedForCreate_thenReturnCorrectlyCreatedBrand_ENGB() {
+	public void whenInventoryTransactionUploaded_thenReturnCorrectInventoryTransactionCount() {
+		
 		// when
-		Optional<BrandEntity> found = brandService.findByCode("TST01");
+		List<InventoryTransaction> found = inventoryService.findByProductCode("3577789");
 
-		// then
-		assertFound_ENGB(found);
+		//then
+		assertFound(found);
 	}
-
+	
 	@Test
-	public void whenBrandUploadedForCreate_thenReturnCorrectlyCreatedBrand_ZHHK() {
+	public void whenInventoryTransactionUploaded_thenReturnCorrectStockOnHand() {
+		
 		// when
-		Optional<BrandEntity> found = brandService.findByCode("TST01");
+		Optional<StockOnHand> found = sohService.findByProductCode("3577789");
 
-		// then
-		assertFound_ZHHK(found);
+		//then
+		assertFound(found);
+	}	
+	
+	private void assertFound(List<InventoryTransaction> found) {
+		
+		assertNotNull(found);
+		
+		assertThat(found.size()).isEqualTo(2);
+		
 	}
-
-	private void assertFound_ENGB(Optional<BrandEntity> found) {
+	
+	private void assertFound(Optional<StockOnHand> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getAttributes().stream().filter(b -> b.getLclCd().equals(Constants.localeENGB)).findAny().get().getBrandDesc())
-		.isEqualTo("test brand en");
+		assertThat(found.get().getStockOnHand()).isEqualTo(25);
 		
 	}
-
-	private void assertFound_ZHHK(Optional<BrandEntity> found) {
-		
-		assertNotNull(found);
-		
-		assertTrue(found.isPresent());
-		
-		assertThat(found.get().getAttributes().stream().filter(b -> b.getLclCd().equals(Constants.localeZHHK)).findAny().get().getBrandDesc())
-		.isEqualTo("test brand hk");
-	}
-
+	
 	@After
 	public void closeConnection() {
 		entityManager.close();

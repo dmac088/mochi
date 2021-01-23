@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.inventory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -34,7 +34,7 @@ import io.nzbee.util.inventory.InventoryLocationMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_InventoryLocationUploadForCreateIntegrationTest {
+public class IT_InventoryLocationUploadForUpdateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -54,13 +54,13 @@ public class IT_InventoryLocationUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeInventoryLocation(file.getAbsolutePath() + "/data/inventory/location/create/inventory_location.tsv");
+		pms.writeInventoryLocation(file.getAbsolutePath() + "/data/inventory/location/update/inventory_location.tsv");
 	}
 
 	@Test
 	public void whenInventoryLocationUploadedForCreate_thenReturnCorrectlyCreatedInventoryLocation_ENGB() {
 		// when
-		Optional<InventoryLocation> found = inventoryLocationService.findByCode("TST01");
+		Optional<InventoryLocation> found = inventoryLocationService.findByCode("LCK01");
 
 		// then
 		assertFound(found);
@@ -73,13 +73,13 @@ public class IT_InventoryLocationUploadForCreateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getLocationCode())
-		.isEqualTo("TST01");
+		.isEqualTo("LCK01");
 		
 		assertThat(found.get().getLocationDesc())
-		.isEqualTo("Test Create Location Description");
+		.isEqualTo("Test Update Location Description");
 		
 		assertThat(found.get().getLocationIsActive())
-		.isEqualTo(true);
+		.isEqualTo(false);
 		
 	}
 

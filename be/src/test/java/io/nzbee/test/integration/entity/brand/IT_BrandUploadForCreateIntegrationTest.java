@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.brand;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -24,9 +24,9 @@ import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.TagDTO;
-import io.nzbee.util.tag.TagMasterService;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.BrandEntity;
+import io.nzbee.util.brand.BrandMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -35,7 +35,7 @@ import io.nzbee.util.tag.TagMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_TagUploadForUpdateIntegrationTest {
+public class IT_BrandUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -45,56 +45,56 @@ public class IT_TagUploadForUpdateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private TagMasterService pms;
+	private BrandMasterService pms;
 
 	@Autowired
-	private ITagService tagService;
+	private IBrandService brandService;
 
 	@Before
-	public void persistANewTag() {
+	public void persistANewBrand() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeTagMaster(file.getAbsolutePath() + "/data/product/tag/update/tag_master.tsv");
+		pms.writeBrandMaster(file.getAbsolutePath() + "/data/product/brand/create/brand_master.tsv");
 	}
 
 	@Test
-	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ENGB() {
+	public void whenBrandUploadedForCreate_thenReturnCorrectlyCreatedBrand_ENGB() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeENGB, "GFR01");
+		Optional<BrandEntity> found = brandService.findByCode("TST01");
 
 		// then
 		assertFound_ENGB(found);
 	}
 
 	@Test
-	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ZHHK() {
+	public void whenBrandUploadedForCreate_thenReturnCorrectlyCreatedBrand_ZHHK() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeZHHK, "GFR01");
+		Optional<BrandEntity> found = brandService.findByCode("TST01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<TagDTO> found) {
+	private void assertFound_ENGB(Optional<BrandEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getTagDesc())
-		.isEqualTo("Gluten Free Test");
+		assertThat(found.get().getAttributes().stream().filter(b -> b.getLclCd().equals(Constants.localeENGB)).findAny().get().getBrandDesc())
+		.isEqualTo("test brand en");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<TagDTO> found) {
+	private void assertFound_ZHHK(Optional<BrandEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getTagDesc())
-		.isEqualTo("無麩質測試");
+		assertThat(found.get().getAttributes().stream().filter(b -> b.getLclCd().equals(Constants.localeZHHK)).findAny().get().getBrandDesc())
+		.isEqualTo("test brand hk");
 	}
 
 	@After
