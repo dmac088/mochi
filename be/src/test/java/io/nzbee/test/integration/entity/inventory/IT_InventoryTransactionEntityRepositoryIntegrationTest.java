@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.inventory;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;

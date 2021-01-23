@@ -62,7 +62,7 @@ function Dashboard(props) {
   const componentChoice = {
       [componentAlias.ORDERS]           : Orders,
       [componentAlias.PAYMENT]          : Payment,
-      [componentAlias.ADDRESS]     : AddressList,
+      [componentAlias.ADDRESS]          : AddressList,
       [componentAlias.EDIT_ADDRESS]     : AddressEdit,
       [componentAlias.DOWNLOAD]         : Download,
       [componentAlias.ACCOUNT_DETAILS]  : AccountDetails,

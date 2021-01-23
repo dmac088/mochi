@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.category;
+package io.nzbee.test.integration.entity.tag;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -25,16 +25,16 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProductEntity;
-import io.nzbee.entity.category.CategoryEntity;
-import io.nzbee.util.category.CategoryMasterService;
+import io.nzbee.Constants;
+import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.TagEntity;
+import io.nzbee.util.tag.TagMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-public class IT_CategoryUploadForUpdateIntegrationTest {
+public class IT_TagUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -44,11 +44,11 @@ public class IT_CategoryUploadForUpdateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private CategoryMasterService pms;
+	private TagMasterService pms;
 
 	@Autowired
-	private ICategoryService categoryService;
-	
+	private ITagService tagService;
+
 	@Autowired
     @Qualifier("mochiDataSourceOwner")
     private DataSource database;
@@ -67,23 +67,22 @@ public class IT_CategoryUploadForUpdateIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	this.createCategory();
+    	this.uploadTags();
         setUpIsDone = true;
 	}
-
-	
-	public void createCategory() {
+    
+	public void uploadTags() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeCategoryMaster(file.getAbsolutePath() + "/data/product/category/update/category_master.tsv");
+		pms.writeTagMaster(file.getAbsolutePath() + "/data/product/tag/create/tag_master.tsv");
 	}
 
 	@Test
 	@Rollback(false)
-	public void whenCategoryUploadedForUpdate_thenReturnCorrectlyUpdatedCategory_ENGB() {
+	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ENGB() {
 		// when
-		Optional<CategoryEntity> found = categoryService.findByCode("FET01");
+		Optional<TagEntity> found = tagService.findByCode("TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,48 +90,34 @@ public class IT_CategoryUploadForUpdateIntegrationTest {
 
 	@Test
 	@Rollback(false)
-	public void whenCategoryUploadedForUpdate_thenReturnCorrectlyUpdatedCategory_ZHHK() {
+	public void whenTagUploadedForCreate_thenReturnCorrectlyCreatedTag_ZHHK() {
 		// when
-		Optional<CategoryEntity> found = categoryService.findByCode( "FET01");
+		Optional<TagEntity> found = tagService.findByCode("TST01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<CategoryEntity> found) {
+	
+	private void assertFound_ENGB(Optional<TagEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		CategoryProductEntity cp = (CategoryProductEntity) found.get();
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getTagDesc())
+		.isEqualTo("test tag");
 		
-		assertThat(cp.getCategoryDescENGB())
-		.isEqualTo("Featured Test");
-		
-		assertThat(cp.getCategoryLevel())
-		.isEqualTo(2);
-		
-		assertThat(cp.getCategoryParentCode())
-		.isEqualTo("PRM01");
 	}
 
-	private void assertFound_ZHHK(Optional<CategoryEntity> found) {
+	private void assertFound_ZHHK(Optional<TagEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		CategoryProductEntity cp = (CategoryProductEntity) found.get();
-		
-		assertThat(cp.getCategoryDescZHHK())
-		.isEqualTo("特色測試");
-		
-		assertThat(cp.getCategoryLevel())
-		.isEqualTo(2);
-		
-		assertThat(cp.getCategoryParentCode())
-		.isEqualTo("PRM01");
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeZHHK)).findAny().get().getTagDesc())
+		.isEqualTo("測試標籤");
 	}
 
 	@After

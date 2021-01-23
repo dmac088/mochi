@@ -1,10 +1,9 @@
-package io.nzbee.test.integration.entity;
+package io.nzbee.test.integration.entity.brand;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.io.File;
-import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.After;
@@ -24,11 +23,10 @@ import org.springframework.test.context.jdbc.SqlConfig;
 import org.springframework.test.context.jdbc.SqlGroup;
 import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.inventory.IInventoryTransactionService;
-import io.nzbee.entity.inventory.InventoryTransaction;
-import io.nzbee.entity.stock.IStockOnHandService;
-import io.nzbee.entity.stock.StockOnHand;
-import io.nzbee.util.inventory.InventoryMasterService;
+import io.nzbee.Constants;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.BrandDTO;
+import io.nzbee.util.brand.BrandMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -37,7 +35,7 @@ import io.nzbee.util.inventory.InventoryMasterService;
 @SqlGroup({
 		@Sql(scripts = "/database/mochi_schema.sql", config = @SqlConfig(dataSource = "mochiDataSourceOwner", transactionManager = "mochiTransactionManagerOwner", transactionMode = TransactionMode.ISOLATED)),
 		@Sql(scripts = "/database/mochi_data.sql", config = @SqlConfig(dataSource = "mochiDataSource", transactionManager = "mochiTransactionManager", transactionMode = TransactionMode.ISOLATED)) })
-public class IT_InventoryTransactionUploadIntegrationTest {
+public class IT_BrandUploadForUpdateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
@@ -47,60 +45,58 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private InventoryMasterService pms;
+	private BrandMasterService pms;
 
 	@Autowired
-	private IInventoryTransactionService inventoryService;
-	
-	@Autowired
-	private IStockOnHandService sohService;
+	private IBrandService brandService;
 
 	@Before
-	public void persistNewInventoryTransaction() {
+	public void persistANewBrand() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeInventoryTransaction(file.getAbsolutePath() + "/data/inventory/inventory.tsv");
+		pms.writeBrandMaster(file.getAbsolutePath() + "/data/product/brand/update/brand_master.tsv");
 	}
 
 	@Test
-	public void whenInventoryTransactionUploaded_thenReturnCorrectInventoryTransactionCount() {
-		
+	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
 		// when
-		List<InventoryTransaction> found = inventoryService.findByProductCode("3577789");
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
 
-		//then
-		assertFound(found);
+		// then
+		assertFound_ENGB(found);
 	}
-	
+
 	@Test
-	public void whenInventoryTransactionUploaded_thenReturnCorrectStockOnHand() {
-		
+	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
 		// when
-		Optional<StockOnHand> found = sohService.findByProductCode("3577789");
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeZHHK, "ENZ01");
 
-		//then
-		assertFound(found);
-	}	
-	
-	private void assertFound(List<InventoryTransaction> found) {
-		
-		assertNotNull(found);
-		
-		assertThat(found.size()).isEqualTo(2);
-		
+		// then
+		assertFound_ZHHK(found);
 	}
-	
-	private void assertFound(Optional<StockOnHand> found) {
+
+	private void assertFound_ENGB(Optional<BrandDTO> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getStockOnHand()).isEqualTo(25);
+		assertThat(found.get().getBrandDesc())
+		.isEqualTo("Enza Update EN");
 		
 	}
-	
+
+	private void assertFound_ZHHK(Optional<BrandDTO> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
+		
+		assertThat(found.get().getBrandDesc())
+		.isEqualTo("Enza Update HK");
+	}
+
 	@After
 	public void closeConnection() {
 		entityManager.close();
