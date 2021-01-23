@@ -35,7 +35,7 @@ import io.nzbee.util.promotion.PromotionMasterService;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class IT_PromotionUploadForCreateIntegrationTest {
 
 	@MockBean

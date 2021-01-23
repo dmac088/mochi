@@ -42,7 +42,7 @@ import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactor
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class IT_CategoryEntityRespoitoryIntegrationTest {
 
 	@TestConfiguration
