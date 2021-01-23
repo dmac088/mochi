@@ -109,7 +109,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrandCategory() {
     	
         // when
-    	Optional<CategoryEntity> found = categoryService.findByCode("TST02");
+    	Optional<CategoryEntity> found = categoryService.findByCode("TST03");
      
         // then
     	assertFound(found);
@@ -125,7 +125,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     	CategoryBrandEntity cb = (CategoryBrandEntity) found.get();
     	
     	assertThat(cb.getCategoryCode())
-        .isEqualTo("TST02");
+        .isEqualTo("TST03");
     	
 //	    assertThat(cb.getCount())
 //	    .isEqualTo(new Long(2));

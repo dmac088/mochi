@@ -42,7 +42,7 @@ public class CategoryEntityBeanFactory implements ICategoryEntityBeanFactory {
 	public final CategoryEntity getBrandCategoryEntityBean() {
 		final CategoryEntity category = new CategoryBrandEntity();
 		
-		category.setCategoryCode("TST02");
+		category.setCategoryCode("TST03");
 		category.setCategoryLevel(new Long(2));
 
 		final CategoryAttributeEntity categoryAttribute = new CategoryAttributeEntity();
