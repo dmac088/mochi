@@ -52,23 +52,15 @@ public class IT_BrandEntityRepositoryIntegrationTest {
  
     @Autowired
     private IBrandService brandService;
-    
-	private static BrandEntity brand = null;
-	
-	private static boolean setUpIsDone = false;
-    
+   
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
 	private DataSource database;
     
-	public void persistNewBrand() {
-    	
-		brand = brandEntityBeanFactory.getBean();
-		
-	    //persist a new transient test brand
-		brandService.save(brand);
-	}
-   
+	private static BrandEntity brand = null;
+	
+	private static boolean setUpIsDone = false;
+      
 	@Before
 	public void persistANewBrand() {
 		if (setUpIsDone) {
@@ -85,6 +77,13 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		setUpIsDone = true;
 	}
 
+	public void persistNewBrand() {
+    	
+		brand = brandEntityBeanFactory.getBean();
+		
+	    //persist a new transient test brand
+		brandService.save(brand);
+	}
     
     @Test
     @Rollback(false)

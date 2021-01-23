@@ -3,8 +3,13 @@ package io.nzbee.test.integration.entity.brand;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -17,8 +22,11 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.web.PagedResourcesAssembler;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.jdbc.SqlConfig;
@@ -72,16 +80,34 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
  
     @Autowired
     private ICategoryService categoryService;
+    
+	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
  
 	private static CategoryEntity category = null;
+	
+	private static boolean setUpIsDone = false;
 	
 	@MockBean
     private JavaMailSender mailSender;
     
-    @Before
-    public void setUp() { 
-    	this.persistNewCategory();
-    }
+	@Before
+	public void setUp() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.persistNewCategory();
+		setUpIsDone = true;
+	}
+	
     
 	public io.nzbee.entity.category.CategoryEntity persistNewCategory() {
     	
@@ -95,6 +121,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
    
     
     @Test
+    @Rollback(false)
     public void whenFindById_thenReturnBrandCategory() {
     	
         // when
@@ -106,6 +133,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     
     // write test cases here
     @Test
+    @Rollback(false)
     public void whenFindByCode_thenReturnBrandCategory() {
     	
         // when
