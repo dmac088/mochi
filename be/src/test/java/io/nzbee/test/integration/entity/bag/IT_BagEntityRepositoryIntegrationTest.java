@@ -21,6 +21,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
@@ -89,6 +90,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 	}
      
     @Test
+    @Rollback(false)
 	@WithUserDetails(value = "admin")
     public void whenFindById_thenReturnBagEntity() {
     	
@@ -100,6 +102,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
 	@WithUserDetails(value = "admin")
     public void whenFindByUsername_thenReturnBagEntity() {
     	
@@ -111,6 +114,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     }
     
     @Test
+    @Rollback(false)
 	@WithUserDetails(value = "admin")
     public void whenFindByUsername_thenReturnBagDTO() {
     	
