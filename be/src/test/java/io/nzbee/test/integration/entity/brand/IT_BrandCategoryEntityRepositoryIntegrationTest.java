@@ -8,7 +8,6 @@ import java.sql.SQLException;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -39,7 +38,7 @@ import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class IT_BrandCategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
