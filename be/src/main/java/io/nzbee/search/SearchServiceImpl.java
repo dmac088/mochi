@@ -53,6 +53,8 @@ public class SearchServiceImpl implements ISearchService {
 	private static final String TITLE_EDGE_NGRAM_INDEX = "edgeNGramTitle";
 
 	private static final String TITLE_NGRAM_INDEX = "nGramTitle";
+	
+	private static final String EMPTY_STRING = "";
 
 	@Autowired
 	private ApplicationContext appContext;
@@ -318,8 +320,10 @@ public class SearchServiceImpl implements ISearchService {
 		
 
 		// this is a Lucene query using the Lucene api
-		Query searchQuery = queryBuilder.bool()
-				.must(queryBuilder.keyword().onFields(	"productDesc" + transLcl,
+		Query searchQuery = (searchTerm.trim().equals(EMPTY_STRING)) 
+				? queryBuilder.all().createQuery()
+				: queryBuilder.bool()
+				  .must(queryBuilder.keyword().onFields("productDesc" + transLcl,
 														"productLongDesc" + transLcl, 
 														"product.brand.brandDesc" + transLcl,
 														"product.categories.categoryDesc" + transLcl,
