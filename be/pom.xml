@@ -191,6 +191,16 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context-support</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.junit-toolbox</groupId>
+			<artifactId>junit-toolbox</artifactId>
+			<version>1.5</version>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.junit-toolbox</groupId>
+			<artifactId>junit-toolbox</artifactId>
+			<version>1.5</version>
+		</dependency>
 	</dependencies>
 	<properties>
 		<java.version>1.8</java.version>
