@@ -7,9 +7,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
-import javax.persistence.EntityManager;
 import javax.sql.DataSource;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -38,10 +36,6 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
-
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
 
 	@Autowired
 	private CategoryMasterService pms;
@@ -136,8 +130,4 @@ public class IT_CategoryUploadForCreateIntegrationTest {
 		.isEqualTo("PRM02");
 	}
 
-	@After
-	public void closeConnection() {
-		entityManager.close();
-	}
 }

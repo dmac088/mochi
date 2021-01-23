@@ -2,8 +2,12 @@ package io.nzbee.test.integration.entity.department;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-import javax.persistence.EntityManager;
-import org.junit.After;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import javax.sql.DataSource;
+
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -14,12 +18,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.test.integration.entity.beans.department.IDepartmentEntityBeanFactory;
@@ -31,16 +34,6 @@ import io.nzbee.entity.product.department.DepartmentEntity;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
 public class IT_DepartmentEntityRepositoryIntegrationTest {
 	
 	@TestConfiguration
@@ -52,33 +45,47 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
     private JavaMailSender mailSender;
 	
 	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
-	
-	@Autowired
 	private IDepartmentEntityBeanFactory departmentEntityBeanFactory;
 	
     @Autowired
     private IDepartmentService departmentService;
+    
+	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
 	
-    private DepartmentEntity department = null;
+	private static DepartmentEntity department = null;
+	
+	private static boolean setUpIsDone = false;
     
 	@Before
-    public void setUp() { 
-		department = this.persistNewProductType();
-    }
+	public void setUp() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.persistNewProductType();
+		setUpIsDone = true;
+	}
 	
 	public DepartmentEntity persistNewProductType() {
     	
 		department = departmentEntityBeanFactory.getBean();
 	   
 	    //persist a new transient test category
-	    entityManager.persist(department);
+		departmentService.save(department);
 	    	
 	    return department;
 	}
 
 	 @Test
+	 @Rollback(false)
 	 public void whenFindById_thenReturnDepartment() {
 	    	
 	        // when
@@ -90,6 +97,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 }
 	 
 	 @Test 
+	 @Rollback(false)
 	 public void whenFindByCode_thenReturnDepartment() {
 	    	
 	        // when
@@ -101,6 +109,7 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	 }
 	 
 	 @Test
+	 @Rollback(false)
 	 public void whenFindByDesc_thenReturnDepartment() {
 	    	
 	        // when
@@ -121,11 +130,6 @@ public class IT_DepartmentEntityRepositoryIntegrationTest {
 	    	assertThat(found.getDepartmentDesc())
 	        .isEqualTo("test department");
 	
-	 }
-	 
-	 @After
-	 public void closeConnection() {
-	  	entityManager.close();
 	 }
 	 
 }

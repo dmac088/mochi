@@ -3,9 +3,11 @@ package io.nzbee.test.integration.entity.bag;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
-import javax.persistence.EntityManager;
-import org.junit.After;
+import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +17,11 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.bag.BagDTO;
@@ -35,22 +35,8 @@ import io.nzbee.test.integration.entity.beans.bag.IBagEntityBeanFactory;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
 public class IT_BagEntityRepositoryIntegrationTest {
- 
-	
-	@Autowired
-	@Qualifier("mochiEntityManagerFactory")
-	private EntityManager entityManager;
+
 	
 	@Autowired
 	private IBagEntityBeanFactory bagEntityBeanFactory;
@@ -60,16 +46,34 @@ public class IT_BagEntityRepositoryIntegrationTest {
     
 	@Autowired
     private IPersonService personService;
- 
-	private BagEntity bag = null;
-	
+ 	
 	@MockBean
     private JavaMailSender mailSender;
+	
+	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
+ 
+	private static BagEntity bag = null;
+	
+	private static boolean setUpIsDone = false;
     
-    @Before
-    public void setUp() { 
-    	this.persistNewBagEntity();
-    }
+	@Before
+	public void setUp() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.persistNewBagEntity();
+		setUpIsDone = true;
+	}
+
     
 	public BagEntity persistNewBagEntity() {
 		
@@ -78,7 +82,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
 		bag = bagEntityBeanFactory.getBean(p.get());
 	    
 	    //persist a new transient test category
-	    entityManager.persist(bag);
+		bagService.save(bag);
 	    
 	    return bag;
 	    
@@ -143,11 +147,6 @@ public class IT_BagEntityRepositoryIntegrationTest {
     	assertThat(bDto.getCustomer().getUserName()).isEqualTo("bob@bob");
     	
     	assertThat(bDto.getBagItems().size()).isEqualTo(0);
-    }
-    
-    @After
-    public void closeConnection() {
-    	entityManager.close();
     }
  
 }
