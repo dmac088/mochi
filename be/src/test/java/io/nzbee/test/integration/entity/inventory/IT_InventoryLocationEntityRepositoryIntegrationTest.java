@@ -38,8 +38,6 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
  
     @Autowired
     private IInventoryLocationService inventoryLocationService;
-    
-	private InventoryLocation inventoryLocation = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -47,6 +45,8 @@ public class IT_InventoryLocationEntityRepositoryIntegrationTest {
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
 	private DataSource database;
+	
+	private static InventoryLocation inventoryLocation = null;
 	
 	private static boolean setUpIsDone = false;
     
