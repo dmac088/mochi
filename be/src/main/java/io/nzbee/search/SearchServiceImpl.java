@@ -301,6 +301,11 @@ public class SearchServiceImpl implements ISearchService {
 	public PageImpl<ProductDTO> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
 			int size, String sortBy, Set<io.nzbee.search.facet.IFacet> facetPayload,
 			Set<io.nzbee.search.facet.IFacet> returnFacets) {
+		
+		if (searchTerm.trim().equals(EMPTY_STRING)) {
+			return new PageImpl<ProductDTO>(new ArrayList<ProductDTO>(), PageRequest.of(page, size), 0);
+		}
+		
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -316,13 +321,12 @@ public class SearchServiceImpl implements ISearchService {
 														 .overridesForField("product.categories.parent.categoryDesc", lcl)
 														 .overridesForField("product.categories.parent.parent.categoryDesc", lcl)
 														 .overridesForField("product.tags.tagDesc", lcl)
-																 .get();
+														 .get();
 		
 
+		
 		// this is a Lucene query using the Lucene api
-		Query searchQuery = (searchTerm.trim().equals(EMPTY_STRING)) 
-				? queryBuilder.all().createQuery()
-				: queryBuilder.bool()
+		Query searchQuery = queryBuilder.bool()
 				  .must(queryBuilder.keyword().onFields("productDesc" + transLcl,
 														"productLongDesc" + transLcl, 
 														"product.brand.brandDesc" + transLcl,
