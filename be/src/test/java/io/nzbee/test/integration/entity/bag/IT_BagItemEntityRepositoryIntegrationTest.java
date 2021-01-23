@@ -60,8 +60,6 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     
 	@Autowired
     private IPersonService personService;
- 
-	private BagItemEntity bagItem = null;
 	
 	@MockBean
     private JavaMailSender mailSender;
@@ -69,6 +67,8 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
 	private DataSource database;
+	
+	private static BagItemEntity bagItem = null;
 	
 	private static boolean setUpIsDone = false;
     
