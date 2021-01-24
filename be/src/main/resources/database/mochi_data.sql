@@ -366,7 +366,7 @@ INSERT INTO address VALUES (2, 'Test Line 1', 'Test Line 2', 'Test Line 3', 'Tes
 
 INSERT INTO bag VALUES (234473, 232304, '2020-12-01 21:33:14.43+08', '2020-12-01 21:33:14.431+08');
 INSERT INTO bag VALUES (234476, 232304, '2020-12-01 21:40:31.98+08', '2020-12-01 21:40:31.98+08');
-INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2021-01-04 16:58:34.409+08');
+INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2021-01-23 19:39:07.921+08');
 
 
 --
@@ -389,7 +389,7 @@ INSERT INTO bag_item_status VALUES (3, 'PND01', 'Pending');
 -- Data for Name: bag_item; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag_item VALUES (234506, 234484, 17, 2, 1);
+INSERT INTO bag_item VALUES (234509, 234484, 18, 1, 1);
 
 
 --
@@ -1022,7 +1022,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234506, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234511, true);
 
 
 --
@@ -2384,6 +2384,7 @@ INSERT INTO tag VALUES (233263, 'TAG16');
 INSERT INTO tag VALUES (233266, 'TAG17');
 INSERT INTO tag VALUES (233269, 'TAG18');
 INSERT INTO tag VALUES (233272, 'TAG19');
+INSERT INTO tag VALUES (234507, 'TST02');
 
 
 --
@@ -2747,6 +2748,7 @@ INSERT INTO tag_attr_lcl VALUES (233273, 233272, 'SKATEBOARD', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (233274, 233272, '滑板風', NULL, 'zh-HK');
 INSERT INTO tag_attr_lcl VALUES (3, 17, 'GLUTEN FREE', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (1, 15, 'ORGANIC', NULL, 'en-GB');
+INSERT INTO tag_attr_lcl VALUES (234508, 234507, 'test tag', NULL, 'en-GB');
 
 
 --
