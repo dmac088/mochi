@@ -2996,7 +2996,7 @@ SET search_path = yahoo, pg_catalog;
 
 CREATE TABLE hk_post_air_parcel_costing (
     destination character varying(50),
-    zone_no numeric,
+    zone_no character(1),
     weight_limits numeric,
     size_limits character varying(2),
     multi_part character(1),
@@ -6274,88 +6274,6 @@ SET search_path = yahoo, pg_catalog;
 --
 
 COPY hk_post_air_parcel_costing (destination, zone_no, weight_limits, size_limits, multi_part, add_cust_frm, air_rate_to_1, air_rate_add_1_over_1_to_5, air_rate_add_500_over_5, insurance_air, insurance_surface) FROM stdin;
-Afghanistan	1	30	XP	✓	-	327	36	38		
-Albania	3	20	XP	✓	1C	315	42	40		
-Algeria	3	20	P	✓	-	310	36	38		
-Afghanistan	1	30	XP	✓	-	327	36	38		
-Albania	3	20	XP	✓	1C	315	42	40		
-Algeria	3	20	P	✓	-	310	36	38		
-Angola	3	20	XP	✓	-	321	52	52	LP	LP
-Anguilla	2	20	XP	✓	-	326	59	53		L
-Antigua and Barbuda	2	10	P	✓	-	299	53	56		LP
-Argentina	3	20	P	✓	1C	296	43	37		
-Armenia	2	20	XP	✓	1C	316	41	37	LP	LP
-Australia - Western	2	20	P	✓	-	278	29	28		P
-Australia - All other states	2	20	P	✓	-	278	29	28	P	P
-Austria	2	30	XP	✓	-	289	25	26	P	P
-Azerbaijan	2	30	XP	✓	1C	331	45	39	LP	LP
-Azores	2	20	XP	✓	-	314	40	32	LP	LP
-Bahamas	2	20	P	✓	-	323	41	41	LP	LP
-Bahrain (State of)	2	30	XP	✓	-	255	17	21	P	P
-Baleares Islands	2	20	XP	✓	-	300	23	28		
-Bangladesh	1	20	XP	✓	1C	249	16	17	LP	LP
-Barbados	2	20	P	✓	-	309	47	48	LP	LP
-Belarus	3	30	P	✓	1C	323	40	37		LP
-Belgium	2	30	XP	✓	1C	333	27	24	LP	LP
-Belize	2	25	XP	✓	-	314	46	45	LP	LP
-Benin	3	30	XP	✓	3C	294	41	45	LP	L
-Bermuda	2	20	XP	✓	-	344	74	56	LP	LP
-Bhutan	1	30	XP	✓	1C	272	19	18		
-Bolivia	3	20	P	✓	1C	319	50	47		
-Bosnia and Herzegovina	3	20	XP	✓	2C	302	50	43		
-Botswana	3	30	XP	✓	-	305	42	32	P	P
-Brazil	3	30	P	✓	-	324	48	43		
-Brunei Darussalam	1	30	XP	✓	-	353	75	74		
-(共和國) Bulgaria (Rep.)	3	30	XP	✓	-	268	26	30		
-Burkina Faso	3	30	XP	✓	1C	338	48	49	P	P
-Burundi	3	30	XP	✓	1C	298	44	38	LP	LP
-Cambodia	1	30	P	✓	1C	243	18	13		L
-Cameroon	3	30	XP	✓	1C	331	47	48		
-Canada	2	30	XP	✓	-	306	32	30	LP	LP
-Canary Islands	2	20	XP	✓	-	298	31	26		
-Afghanistan	1	30	XP	✓	-	327	36	38		
-Albania	3	20	XP	✓	1C	315	42	40		
-Algeria	3	20	P	✓	-	310	36	38		
-Angola	3	20	XP	✓	-	321	52	52	LP	LP
-Anguilla	2	20	XP	✓	-	326	59	53		L
-Antigua and Barbuda	2	10	P	✓	-	299	53	56		LP
-Argentina	3	20	P	✓	1C	296	43	37		
-Armenia	2	20	XP	✓	1C	316	41	37	LP	LP
-Australia - Western	2	20	P	✓	-	278	29	28		P
-Australia - All other states	2	20	P	✓	-	278	29	28	P	P
-Austria	2	30	XP	✓	-	289	25	26	P	P
-Azerbaijan	2	30	XP	✓	1C	331	45	39	LP	LP
-Azores	2	20	XP	✓	-	314	40	32	LP	LP
-Bahamas	2	20	P	✓	-	323	41	41	LP	LP
-Bahrain (State of)	2	30	XP	✓	-	255	17	21	P	P
-Baleares Islands	2	20	XP	✓	-	300	23	28		
-Bangladesh	1	20	XP	✓	1C	249	16	17	LP	LP
-Barbados	2	20	P	✓	-	309	47	48	LP	LP
-Belarus	3	30	P	✓	1C	323	40	37		LP
-Belgium	2	30	XP	✓	1C	333	27	24	LP	LP
-Belize	2	25	XP	✓	-	314	46	45	LP	LP
-Benin	3	30	XP	✓	3C	294	41	45	LP	L
-Bermuda	2	20	XP	✓	-	344	74	56	LP	LP
-Bhutan	1	30	XP	✓	1C	272	19	18		
-Bolivia	3	20	P	✓	1C	319	50	47		
-Bosnia and Herzegovina	3	20	XP	✓	2C	302	50	43		
-Botswana	3	30	XP	✓	-	305	42	32	P	P
-Brazil	3	30	P	✓	-	324	48	43		
-Brunei Darussalam	1	30	XP	✓	-	353	75	74		
-(共和國) Bulgaria (Rep.)	3	30	XP	✓	-	268	26	30		
-Burkina Faso	3	30	XP	✓	1C	338	48	49	P	P
-Burundi	3	30	XP	✓	1C	298	44	38	LP	LP
-Cambodia	1	30	P	✓	1C	243	18	13		L
-Cameroon	3	30	XP	✓	1C	331	47	48		
-Canada	2	30	XP	✓	-	306	32	30	LP	LP
-Canary Islands	2	20	XP	✓	-	298	31	26		
-Cape Verde	3	20	P	✓	3C	298	42	43	LP	LP
-Caroline Islands	2	10	P	✓	-	294	29	29	LP	L
-Cayman Islands	2	10	XP	✓	-	332	52	51		
-Central African Rep.	3	30	XP	✓	4C	340	44	48		
-Chad	3	30	XP	✓	-	292	26	26	LP	LP
-Chile	3	30	XP	✓	1C	307	52	47		LP
-Côte d'Ivoire (Rep.)	3	30	XP	✓	3C	330	44	44		
 \.
 
 
