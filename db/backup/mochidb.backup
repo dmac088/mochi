@@ -3000,7 +3000,7 @@ CREATE TABLE hk_post_air_parcel_costing (
     weight_limits numeric,
     size_limits character varying(2),
     multi_part character(1),
-    add_cust_frm character varying(2),
+    add_cust_frm character varying(5),
     air_rate_to_1 numeric,
     air_rate_add_1_over_1_to_5 numeric,
     air_rate_add_500_over_5 numeric,
