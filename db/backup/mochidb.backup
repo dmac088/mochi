@@ -3181,6 +3181,35 @@ CREATE VIEW vw_surface_parcel_costing AS
 
 ALTER TABLE vw_surface_parcel_costing OWNER TO mochidb_owner;
 
+--
+-- Name: vw_postage_destination; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_postage_destination AS
+ SELECT DISTINCT a.destination
+   FROM ( SELECT vw_air_parcel_costing.destination
+           FROM vw_air_parcel_costing
+        UNION ALL
+         SELECT vw_surface_parcel_costing.destination
+           FROM vw_surface_parcel_costing) a;
+
+
+ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
+
+--
+-- Name: vw_postage_type; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_postage_type AS
+ SELECT DISTINCT vw_air_parcel_costing.postage_type
+   FROM vw_air_parcel_costing
+UNION ALL
+ SELECT DISTINCT vw_surface_parcel_costing.postage_type
+   FROM vw_surface_parcel_costing;
+
+
+ALTER TABLE vw_postage_type OWNER TO mochidb_owner;
+
 SET search_path = mochi, pg_catalog;
 
 --
