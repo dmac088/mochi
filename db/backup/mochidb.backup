@@ -3186,12 +3186,15 @@ ALTER TABLE vw_surface_parcel_costing OWNER TO mochidb_owner;
 --
 
 CREATE VIEW vw_postage_destination AS
- SELECT DISTINCT a.destination
-   FROM ( SELECT vw_air_parcel_costing.destination
-           FROM vw_air_parcel_costing
-        UNION ALL
-         SELECT vw_surface_parcel_costing.destination
-           FROM vw_surface_parcel_costing) a;
+ SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_dst_id,
+    (upper("left"(btrim((b.destination)::text), 3)) || '01'::text) AS pst_dst_cd,
+    b.destination AS pst_dst_desc
+   FROM ( SELECT DISTINCT a.destination
+           FROM ( SELECT vw_air_parcel_costing.destination
+                   FROM vw_air_parcel_costing
+                UNION ALL
+                 SELECT vw_surface_parcel_costing.destination
+                   FROM vw_surface_parcel_costing) a) b;
 
 
 ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
@@ -3201,12 +3204,14 @@ ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
 --
 
 CREATE VIEW vw_postage_insurance AS
- SELECT DISTINCT a.insurance
-   FROM ( SELECT vw_air_parcel_costing.insurance
-           FROM vw_air_parcel_costing
-        UNION ALL
-         SELECT vw_surface_parcel_costing.insurance
-           FROM vw_surface_parcel_costing) a;
+ SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_ins_id,
+    b.insurance AS pst_ins_cd
+   FROM ( SELECT DISTINCT a.insurance
+           FROM ( SELECT vw_air_parcel_costing.insurance
+                   FROM vw_air_parcel_costing
+                UNION ALL
+                 SELECT vw_surface_parcel_costing.insurance
+                   FROM vw_surface_parcel_costing) a) b;
 
 
 ALTER TABLE vw_postage_insurance OWNER TO mochidb_owner;
