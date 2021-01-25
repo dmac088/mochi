@@ -3000,7 +3000,7 @@ CREATE TABLE hk_post_air_parcel_costing (
     weight_limits numeric,
     size_limits character varying(2),
     multi_part character(1),
-    add_cust_frm character varying(5),
+    add_cust_frm character varying(10),
     air_rate_to_1 numeric,
     air_rate_add_1_over_1_to_5 numeric,
     air_rate_add_500_over_5 numeric,
@@ -3031,6 +3031,47 @@ CREATE TABLE hk_post_surface_parcel_costing (
 
 
 ALTER TABLE hk_post_surface_parcel_costing OWNER TO mochidb_owner;
+
+--
+-- Name: vw_air_parcel_costing; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_air_parcel_costing AS
+ SELECT a.destination,
+    a.postage_type,
+    a.zone_no,
+    a.weight_limits,
+    a.size_limits,
+    a.multi_part,
+    a.add_cust_frm,
+    a.insurance,
+    a.weight,
+    a.total_cost
+   FROM ( SELECT pc.destination,
+            'AIR01'::character(3) AS postage_type,
+            pc.zone_no,
+            pc.weight_limits,
+            pc.size_limits,
+            pc.multi_part,
+            pc.add_cust_frm,
+            pc.insurance_air AS insurance,
+            s.weight,
+                CASE
+                    WHEN (s.weight = (1)::numeric) THEN pc.air_rate_to_1
+                    WHEN ((s.weight >= (2)::numeric) AND (s.weight <= (5)::numeric)) THEN (pc.air_rate_to_1 + ((s.weight - (1)::numeric) * pc.air_rate_add_1_over_1_to_5))
+                    WHEN ((s.weight > (5)::numeric) AND (s.weight <= pc.weight_limits)) THEN ((pc.air_rate_to_1 + ((5)::numeric * pc.air_rate_add_1_over_1_to_5)) + ((s.weight - (5)::numeric) * pc.air_rate_add_500_over_5))
+                    ELSE NULL::numeric
+                END AS total_cost
+           FROM (hk_post_air_parcel_costing pc
+             LEFT JOIN ( SELECT generate_series.generate_series AS weight
+                   FROM generate_series(1, 5, 1) generate_series(generate_series)
+                UNION ALL
+                 SELECT generate_series.generate_series
+                   FROM generate_series(5.5, (100)::numeric, 0.5) generate_series(generate_series)) s ON ((0 = 0)))) a
+  WHERE (a.total_cost IS NOT NULL);
+
+
+ALTER TABLE vw_air_parcel_costing OWNER TO mochidb_owner;
 
 SET search_path = mochi, pg_catalog;
 
@@ -6274,6 +6315,245 @@ SET search_path = yahoo, pg_catalog;
 --
 
 COPY hk_post_air_parcel_costing (destination, zone_no, weight_limits, size_limits, multi_part, add_cust_frm, air_rate_to_1, air_rate_add_1_over_1_to_5, air_rate_add_500_over_5, insurance_air, insurance_surface) FROM stdin;
+Afghanistan	1	30	XP	✓	-	327	36	38		
+Albania	3	20	XP	✓	1C	315	42	40		
+Algeria	3	20	P	✓	-	310	36	38		
+Angola	3	20	XP	✓	-	321	52	52	LP	LP
+Anguilla	2	20	XP	✓	-	326	59	53		L
+Antigua and Barbuda	2	10	P	✓	-	299	53	56		LP
+Argentina	3	20	P	✓	1C	296	43	37		
+Armenia	2	20	XP	✓	1C	316	41	37	LP	LP
+Australia - Western	2	20	P	✓	-	278	29	28		P
+Australia - All other states	2	20	P	✓	-	278	29	28	P	P
+Austria	2	30	XP	✓	-	289	25	26	P	P
+Azerbaijan	2	30	XP	✓	1C	331	45	39	LP	LP
+Azores	2	20	XP	✓	-	314	40	32	LP	LP
+Bahamas	2	20	P	✓	-	323	41	41	LP	LP
+Bahrain (State of)	2	30	XP	✓	-	255	17	21	P	P
+Baleares Islands	2	20	XP	✓	-	300	23	28		
+Bangladesh	1	20	XP	✓	1C	249	16	17	LP	LP
+Barbados	2	20	P	✓	-	309	47	48	LP	LP
+Belarus	3	30	P	✓	1C	323	40	37		LP
+Belgium	2	30	XP	✓	1C	333	27	24	LP	LP
+Belize	2	25	XP	✓	-	314	46	45	LP	LP
+Benin	3	30	XP	✓	3C	294	41	45	LP	L
+Bermuda	2	20	XP	✓	-	344	74	56	LP	LP
+Bhutan	1	30	XP	✓	1C	272	19	18		
+Bolivia	3	20	P	✓	1C	319	50	47		
+Bosnia and Herzegovina	3	20	XP	✓	2C	302	50	43		
+Botswana	3	30	XP	✓	-	305	42	32	P	P
+Brazil	3	30	P	✓	-	324	48	43		
+Brunei Darussalam	1	30	XP	✓	-	353	75	74		
+(共和國) Bulgaria (Rep.)	3	30	XP	✓	-	268	26	30		
+Burkina Faso	3	30	XP	✓	1C	338	48	49	P	P
+Burundi	3	30	XP	✓	1C	298	44	38	LP	LP
+Cambodia	1	30	P	✓	1C	243	18	13		L
+Cameroon	3	30	XP	✓	1C	331	47	48		
+Canada	2	30	XP	✓	-	306	32	30	LP	LP
+Canary Islands	2	20	XP	✓	-	298	31	26		
+Cape Verde	3	20	P	✓	3C	298	42	43	LP	LP
+Caroline Islands	2	10	P	✓	-	294	29	29	LP	L
+Cayman Islands	2	10	XP	✓	-	332	52	51		
+Central African Rep.	3	30	XP	✓	4C	340	44	48		
+Chad	3	30	XP	✓	-	292	26	26	LP	LP
+Chile	3	30	XP	✓	1C	307	52	47		LP
+China, Mainland	*	30	XP	✓	2C	215	10	10		
+Christmas Island	2	20	P	✓	-	279	20	24	LP	LP
+Cocos (Keeling) Islands	2	20	P	✓	-	279	20	24	P	P
+Colombia	3	30	XP	✓	1C	317	54	47	P	P
+Comoros	3	20	XP	✓	1C	341	59	59		
+Democratic Republic of the Congo	3	30	XP	✓	1C	309	56	43	P	LP
+(共和國) Congo (Rep.)	3	30	P	✓	4C	264	39	32		
+Corsica	2	20	XP	✓	1C	312	26	23	LP	LP
+Costa Rica	2	30	XP	✓	1C	309	48	44	LP	LP
+Côte d'Ivoire (Rep.)	3	30	XP	✓	3C	330	44	44		
+Croatia	3	30	P	✓	-	260	34	26	LP	LP
+Cuba - Guantanamo Bay	2	10	XP	✓	-	360	54	56	LP	L
+Cuba - All other places	2	10	XP	✓	1C	357	91	81		
+Cyprus	2	30	XP	✓	1C	291	28	29		
+Czech Rep.	2	30	XP	✓	-	271	35	25	LP	LP
+Denmark	2	20	XP	✓	-	299	28	28	LP	P
+Djibouti	2	30	XP	✓	-	289	47	45	LP	LP
+Dominica	2	10	P	✓	-	303	53	56	LP	LP
+Dominican Republic	2	20	XP	✓	2C	279	42	43		P
+Ecuador	2	30	P	✓	2C	310	51	51		
+Egypt	2	30	XP	✓	2C+1G	283	27	25		
+El Salvador	2	20	XP	✓	-	284	41	42	LP	LP
+Equatorial Guinea	2	10	P	✓	2C	310	41	46		
+Eritrea	2	20	P	✓	1C	302	30	32		
+Estonia	2	30	XP	✓	1C	297	47	36		
+Eswatini	3	20	P	✓	-	269	40	32	LP	LP
+Ethiopia	2	30	P	✓	1C	257	37	35	P	P
+Falkland Islands (Inc. Dependencies)	2	30	XP	✓	-	512	61	58		
+Faröe Islands	2	20	XP	✓	-	321	33	33		
+Fiji	2	20	P	✓	-	295	41	35	LP	LP
+Finland	2	30	P	✓	-	331	29	30	LP	LP
+France	2	30	P	✓	-	312	27	22	LP	LP
+French Guiana	2	20	XP	✓	-	385	48	52	LP	LP
+French Polynesia	2	30	XP	✓	-	325	45	34	P	LP
+French West Indies - Guadeloupe	2	20	XP	✓	-	382	49	51		
+French West Indies - Martinique	2	20	XP	✓	-	383	51	51	P	LP
+Gabon	2	20	XP	✓	-	360	49	49	P	LP
+Gambia	2	30	XP	✓	-	281	25	23	LP	LP
+Gaza and Khan Yunis	2	20	XP	✓	-	286	31	33		
+Georgia	2	20	P	✓	1C	357	35	40		
+Germany	2	30	P	✓	-	322	29	21	LP	LP
+Ghana	2	30	XP	✓	-	345	47	42	P	P
+Gibraltar	2	20	XP	✓	1C	302	27	35	LP	LP
+Greece	2	20	XP	✓	-	275	31	29	L	L
+Greenland	2	20	XP	✓	-	436	41	52	LP	LP
+Grenada	2	20	P	✓	-	313	54	57	LP	LP
+Guatemala	2	30	XP	✓	-	277	39	35		P
+Guinea	2	30	XP	✓	1C	369	54	54		
+Guinea-Bissau	2	20	P	✓	-	316	46	44		
+Guyana	2	20	XP	✓	-	353	45	47		L
+Haiti	2	30	P	✓	2C	331	43	46		LP
+Honduras (Rep.)	2	20	P	✓	2C	289	52	45		
+Hungary	2	20	XP	✓	-	301	36	30		
+Iceland	2	30	XP	✓	-	351	38	37	LP	LP
+India - Mumbai	1	20	P	✓	1C	280	15	21	LP	L
+India - All other places	1	20	P	✓	1C	280	15	21	P	
+Indonesia	1	30	XP	✓	2C	266	16	21	P	
+Iran	2	20	XP	✓	1C	325	34	28		
+Iraq	2	30	XP	✓	1C	246	32	29	LP	LP
+Ireland	2	30	XP	✓	-	268	27	27		
+Israel	2	20	XP	✓	-	286	39	34	LP	LP
+Italy	2	30	XP	✓	1C + 2G	285	22	26		
+Jamaica	2	20	XP	✓	-	354	47	51	LP	P
+Japan	2	30	XP	✓	-	252	11	10		
+Japan - Ryukyu Islands	2	30	XP	✓	-	252	11	10	LP	P
+Jordan	2	30	P	✓	2C	265	26	27	LP	P
+Kazakhstan	2	20	P	✓	2C	349	45	49		
+Kenya	3	30	P	✓	-	278	33	31	LP	LP
+Kiribati	2	30	XP	✓	-	312	50	45	LP	LP
+Korea, North	1	20	XP	✓	2C	276	21	22		P
+Korea, South	1	20	P	✓	1C	234	6	6		
+Kuwait	2	30	P	✓	-	263	21	24	LP	LP
+Kyrgyzstan	2	20	P	✓	2C	307	47	43	P	
+Lao People’s Dem. Rep.	1	30	P	✓	1C	257	14	16	LP	LP
+Latvia	3	30	P	✓	1C	275	47	38		
+Lebanon	2	30	P	✓	1C	276	28	28	LP	L
+Lesotho	3	20	XP	✓	-	284	42	32		
+Liberia	3	20	XP	✓	-	235	29	22		
+Libya	3	20	XP	✓	-	191	36	32		
+Liechtenstein	2	30	XP	✓	-	270	28	23		
+Lithuania	3	30	P	✓	1C	304	39	36	LP	LP
+Luxembourg	2	30	XP	✓	1C	279	28	24	P	
+Madagascar	3	20	P	✓	1C	339	57	49		LP
+Madeira	2	20	XP	✓	-	314	40	32	LP	LP
+Malawi	3	30	XP	✓	-	343	59	59	LP	LP
+Peninsular Malaysia	1	30	XP	✓	-	213	8	8		
+Malaysia - Sabah	1	30	XP	✓	-	214	7	11	LP	LP
+Malaysia - Sarawak	1	30	XP	✓	-	213	8	8	LP	LP
+Maldives	1	20	XP	✓	2C	253	17	22	LP	LP
+Mali	3	30	XP	✓	-	316	57	45		
+Malta	2	30	P	✓	-	292	31	29	LP	LP
+Mariana Islands	1	10	P	✓	-	292	39	35	P	LP
+Marshall Islands	2	10	P	✓	-	298	28	30	P	P
+Mauritania	3	30	P	✓	-	337	41	44	P	P
+Mauritius	3	30	P	✓	-	299	34	38	P	P
+Mexico	2	30	XP	✓	1C	271	36	38	LP	LP
+Moldova	3	20	XP	✓	1C	316	35	34		
+Monaco	2	20	XP	✓	-	311	25	24	LP	P
+Montenegro	3	30	P	✓	-	317	33	36	L	L
+Montserrat	2	20	P	✓	-	298	60	61	LP	LP
+Morocco	3	30	XP	✓	-	300	26	34		P
+Mozambique	3	30	XP	✓	-	313	48	46	P	LP
+Myanmar	1	20	P	✓	-	241	11	13		
+Namibia	3	20	XP	✓	-	286	42	35		
+Nauru	2	20	XP	✓	-	286	45	42	P	P
+Nepal	1	20	P	✓	1C	238	14	19	LP	LP
+Netherlands	2	30	XP	✓	1C	297	24	20		
+Netherlands Antilles	3	20	XP	✓	-	314	48	40	LP	LP
+Aruba	3	20	XP	✓	-	302	43	41	LP	
+New Caledonia	2	20	XP	✓	-	328	25	31	LP	
+New Zealand	2	30	XP	✓	-	277	35	25	LP	LP
+New Zealand Islands Territories	2	10	P	✓	-	278	33	28	LP	LP
+Nicaragua	2	30	XP	✓	2C	292	48	47	LP	
+Niger	3	30	XP	✓	1C	346	50	50		
+Nigeria	3	30	XP	✓	-	303	44	34	LP	LP
+Norfolk Island	2	20	P	✓	-	278	20	27	LP	LP
+North Macedonia	3	30	XP	✓	-	296	25	31	P	P
+Norway	3	30	XP	✓	-	344	31	29	LP	LP
+Oman	2	20	XP	✓	-	262	26	23	L	L
+Pakistan	1	30	XP	✓	-	263	19	25	LP	LP
+Panama (Rep.)	2	30	P	✓	-	272	57	42	LP	
+Papua New Guinea	2	20	P	✓	-	355	38	38		
+Paraguay	3	20	XP	✓	1C	284	54	45	P	P
+Peru	3	30	P	✓	-	301	53	45		
+Philippines	1	20	P	✓	-	228	11	10		
+Pitcairn Islands	2	10	XP	✓	-	355	48	45		
+Poland	3	20	XP	✓	-	297	30	30		
+Portugal	2	30	XP	✓	-	309	40	32	LP	LP
+Puerto Rico	2	30	P	✓	-	292	35	40	LP	LP
+Qatar	2	30	XP	✓	-	261	22	26	P	P
+Réunion	3	20	XP	✓	-	330	62	53		
+Romania	3	30	P	✓	-	322	37	31	L	
+Russia (Russian Federation)	3	20	P	✓	1C	347	43	38	LP	LP
+Rwanda (Rep.)	3	30	XP	✓	1C	276	47	33	LP	LP
+Samoa (U.S.A. Territory)	2	10	P	✓	-	333	51	50		
+Sao Tome and Principe	3	30	P	✓	-	287	56	51	P	
+Saudi Arabia	2	30	XP	✓	2C	266	31	29	P	P
+Senegal	3	20	XP	✓	1C	301	42	43		
+Serbia	3	30	XP	✓	-	295	36	28	P	LP
+Seychelles	3	30	P	✓	-	248	48	27	LP	P
+Sierra Leone	3	30	XP	✓	-	262	27	23	LP	LP
+Singapore	1	30	XP	✓	-	229	5	6	LP	LP
+Slovakia	3	20	XP	✓	-	291	42	35	LP	LP
+Slovenia	3	30	XP	✓	-	278	37	34	LP	LP
+Solomon Islands	2	20	P	✓	-	294	44	42	LP	LP
+Somalia	3	20	P	✓	-	232	60	54		
+South Africa	3	30	P	✓	-	283	43	32	P	LP
+Spain	2	30	P	✓	-	298	32	25	P	P
+Spanish Territories of North Africa	2	20	XP	✓	2C	300	26	28	LP	LP
+Spitsbergen	2	20	XP	✓	-	322	25	26	LP	LP
+Sri Lanka	1	30	XP	✓	-	244	13	17	L	L
+St. Christopher (St. Kitts) and Nevis	2	20	XP	✓	-	330	47	54	L	
+St. Helena	2	20	P	✓	-	273	42	38	LP	
+St. Lucia	2	20	XP	✓	-	312	54	54	LP	
+St. Pierre and Miquelon	2	20	XP	✓	-	313	26	27	LP	
+St. Vincent and the Grenadines	2	20	XP	✓	-	320	45	47	L	
+Sudan	3	30	XP	✓	1C	269	30	28	LP	
+Suriname	3	20	XP	✓	1C	299	54	51	P	
+Sweden	3	20	XP	✓	-	324	27	29	P	
+Switzerland	2	30	XP	✓	-	281	30	23	LP	LP
+Syrian Arab Rep.	2	30	XP	✓	2C	192	36	31	LP	LP
+Taiwan	*	20	XP	✓	1C	282	14	10	LP	
+Tajikstan	2	20	XP	✓	2C	305	45	49	P	P
+Tanzania (United Rep.)	3	30	P	✓	-	276	48	40	LP	LP
+Thailand	1	30	XP	✓	-	218	5	9	P	LP
+Timor-Leste (Dem. Rep.)	1	20	XP	✓	-	288	20	20	LP	LP
+Togo	3	30	XP	✓	1C	327	44	42		
+Tonga	2	20	P	✓	-	296	42	38	LP	P
+Tortola (British Virgin Islands)	2	20	P	✓	-	308	49	53	L	
+Trinidad and Tobago	2	20	XP	✓	-	386	84	87		
+Tristan da Cunha	2	10	P	✓	-	306	34	25	LP	
+Tunisia	3	30	XP	✓	-	331	24	31		
+Turkey	2	30	XP	✓	2C	313	32	33	LP	LP
+Turkmenistan	2	20	XP	✓	3C	266	44	38	LP	LP
+Turks and Caicos Islands	2	10	P	✓	-	302	45	52	LP	LP
+Tuvalu	2	20	P	✓	-	285	38	39		
+Uganda	3	30	XP	✓	-	272	37	32	P	
+Ukraine	3	30	P	✓	1C	347	30	30	LP	LP
+United Arab Emirates	2	30	XP	✓	-	237	15	21	LP	P
+United Kingdom	2	30	XP	✓	-	307	26	20	P	P
+United States of America - Hawaii	2	30	P	✓	-	294	32	36		
+United States of America - New York	2	30	P	✓	-	292	38	36	P	P
+United States of America - All other states	2	30	P	✓	-	292	38	36	P	P
+Uruguay	3	30	XP	✓	2C	341	50	47	P	P
+Uzbekistan	2	20	P	✓	3C	379	48	49		
+Vanuatu	2	25	P	✓	-	270	33	36	LP	LP
+Vatican	2	20	XP	✓	-	309	24	32		
+Venezuela (Bolivarian Rep.)	3	30	P	✓	1C	298	41	42	P	P
+Viet Nam	1	30	XP	✓	2C	237	12	13		
+Virgin Islands (U.S.A)	2	20	XP	✓	-	294	41	43		
+Wake Island	2	10	P	✓	-	294	29	29	P	P
+Wallis and Futuna Islands	2	20	XP	✓	-	315	43	38		
+Western Samoa	2	30	P	✓	-	302	43	45		
+Places in the former Yemen Arab Rep	2	30	XP	✓	2C	229	37	33	LP	LP
+All other places	2	30	XP	✓	1C	221	41	37		
+Zambia	3	30	XP	✓	-	267	44	34	LP	LP
+Zimbabwe	3	30	XP	✓	-	310	47	39	P	P
 \.
 
 
