@@ -3073,6 +3073,44 @@ CREATE VIEW vw_air_parcel_costing AS
 
 ALTER TABLE vw_air_parcel_costing OWNER TO mochidb_owner;
 
+--
+-- Name: vw_surface_parcel_costing; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_surface_parcel_costing AS
+ SELECT a.destination,
+    a.postage_type,
+    a.zone_no,
+    a.weight_limits,
+    a.size_limits,
+    a.multi_part,
+    a.add_cust_frm,
+    a.insurance,
+    a.weight,
+    a.total_cost
+   FROM ( SELECT pc.destination,
+            'SUR01'::character(3) AS postage_type,
+            pc.zone_no,
+            pc.weight_limits,
+            pc.size_limits,
+            pc.multi_part,
+            pc.add_cust_frm,
+            pc.insurance_surface AS insurance,
+            s.weight,
+                CASE
+                    WHEN (s.weight = 1) THEN pc.surface_rate_to_1
+                    WHEN ((s.weight >= 2) AND (s.weight <= 7)) THEN (pc.surface_rate_to_1 + (((s.weight - 1))::numeric * pc.surface_rate_add_1_over_1_to_7))
+                    WHEN ((s.weight > 7) AND ((s.weight)::numeric <= pc.weight_limits)) THEN ((pc.surface_rate_to_1 + ((7)::numeric * pc.surface_rate_add_1_over_1_to_7)) + (((s.weight - 7))::numeric * pc.surface_rate_add_1_over_7))
+                    ELSE NULL::numeric
+                END AS total_cost
+           FROM (hk_post_surface_parcel_costing pc
+             LEFT JOIN ( SELECT generate_series.generate_series AS weight
+                   FROM generate_series(1, 100, 1) generate_series(generate_series)) s ON ((0 = 0)))) a
+  WHERE (a.total_cost IS NOT NULL);
+
+
+ALTER TABLE vw_surface_parcel_costing OWNER TO mochidb_owner;
+
 SET search_path = mochi, pg_catalog;
 
 --
