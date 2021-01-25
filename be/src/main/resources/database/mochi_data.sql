@@ -1365,6 +1365,42 @@ SELECT pg_catalog.setval('person_id_seq', 6, false);
 
 
 --
+-- Data for Name: postage_customs_form; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: postage_destination; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: postage_insurance; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: postage_size_limit; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: postage_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
+-- Data for Name: postage_zone; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: price; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 

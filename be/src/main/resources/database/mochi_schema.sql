@@ -69,6 +69,12 @@ DROP INDEX mochi.fki_product_attr_lcl_prd_id_fkey;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
 ALTER TABLE ONLY mochi.tag DROP CONSTRAINT uc_tag_cd;
+ALTER TABLE ONLY mochi.postage_zone DROP CONSTRAINT uc_pst_zne_cd;
+ALTER TABLE ONLY mochi.postage_type DROP CONSTRAINT uc_pst_typ_cd;
+ALTER TABLE ONLY mochi.postage_size_limit DROP CONSTRAINT uc_pst_siz_cd;
+ALTER TABLE ONLY mochi.postage_insurance DROP CONSTRAINT uc_pst_ins_cd;
+ALTER TABLE ONLY mochi.postage_destination DROP CONSTRAINT uc_pst_dst_cd;
+ALTER TABLE ONLY mochi.postage_customs_form DROP CONSTRAINT uc_pst_cst_cd;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT uc_product_upc_cd;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT uc_product_tag;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT uc_product_category;
@@ -116,6 +122,12 @@ ALTER TABLE ONLY mochi.price_type DROP CONSTRAINT price_type_pkey;
 ALTER TABLE ONLY mochi.price DROP CONSTRAINT price_pkey;
 ALTER TABLE ONLY mochi.department_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_3;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_1;
+ALTER TABLE ONLY mochi.postage_zone DROP CONSTRAINT postage_zone_pkey;
+ALTER TABLE ONLY mochi.postage_type DROP CONSTRAINT postage_type_pkey;
+ALTER TABLE ONLY mochi.postage_size_limit DROP CONSTRAINT postage_size_limit_pkey;
+ALTER TABLE ONLY mochi.postage_insurance DROP CONSTRAINT postage_insurance_pkey;
+ALTER TABLE ONLY mochi.postage_destination DROP CONSTRAINT postage_destination_pkey;
+ALTER TABLE ONLY mochi.postage_customs_form DROP CONSTRAINT postage_customs_form_pkey;
 ALTER TABLE ONLY mochi.locale DROP CONSTRAINT pk_locale;
 ALTER TABLE ONLY mochi.person DROP CONSTRAINT person_psn_id_key;
 ALTER TABLE ONLY mochi.party_type DROP CONSTRAINT party_type_pty_typ_desc_key;
@@ -190,6 +202,12 @@ DROP TABLE mochi.product;
 DROP TABLE mochi.price_type;
 DROP TABLE mochi.price;
 DROP SEQUENCE mochi.price_prc_id_seq;
+DROP TABLE mochi.postage_zone;
+DROP TABLE mochi.postage_type;
+DROP TABLE mochi.postage_size_limit;
+DROP TABLE mochi.postage_insurance;
+DROP TABLE mochi.postage_destination;
+DROP TABLE mochi.postage_customs_form;
 DROP SEQUENCE mochi.person_id_seq;
 DROP TABLE mochi.person;
 DROP SEQUENCE mochi.party_type_pty_typ_id_seq;
@@ -2275,6 +2293,78 @@ CREATE SEQUENCE person_id_seq
 ALTER TABLE person_id_seq OWNER TO mochidb_owner;
 
 --
+-- Name: postage_customs_form; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE postage_customs_form (
+    pst_cst_id bigint NOT NULL,
+    pst_cst_cd character(5) NOT NULL
+);
+
+
+ALTER TABLE postage_customs_form OWNER TO mochidb_owner;
+
+--
+-- Name: postage_destination; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE postage_destination (
+    pst_dst_id bigint NOT NULL,
+    pst_dst_cd character(5) NOT NULL
+);
+
+
+ALTER TABLE postage_destination OWNER TO mochidb_owner;
+
+--
+-- Name: postage_insurance; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE postage_insurance (
+    pst_ins_id bigint NOT NULL,
+    pst_ins_cd character varying(2) NOT NULL
+);
+
+
+ALTER TABLE postage_insurance OWNER TO mochidb_owner;
+
+--
+-- Name: postage_size_limit; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE postage_size_limit (
+    pst_siz_id bigint NOT NULL,
+    pst_siz_cd character(1) NOT NULL
+);
+
+
+ALTER TABLE postage_size_limit OWNER TO mochidb_owner;
+
+--
+-- Name: postage_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE postage_type (
+    pst_typ_id bigint NOT NULL,
+    pst_typ_cd character(5) NOT NULL
+);
+
+
+ALTER TABLE postage_type OWNER TO mochidb_owner;
+
+--
+-- Name: postage_zone; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE postage_zone (
+    pst_zne_id bigint NOT NULL,
+    pst_zne_cd character(1) NOT NULL
+);
+
+
+ALTER TABLE postage_zone OWNER TO mochidb_owner;
+
+--
 -- Name: price_prc_id_seq; Type: SEQUENCE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3073,6 +3163,54 @@ ALTER TABLE ONLY locale
 
 
 --
+-- Name: postage_customs_form postage_customs_form_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_customs_form
+    ADD CONSTRAINT postage_customs_form_pkey PRIMARY KEY (pst_cst_id);
+
+
+--
+-- Name: postage_destination postage_destination_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_destination
+    ADD CONSTRAINT postage_destination_pkey PRIMARY KEY (pst_dst_id);
+
+
+--
+-- Name: postage_insurance postage_insurance_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_insurance
+    ADD CONSTRAINT postage_insurance_pkey PRIMARY KEY (pst_ins_id);
+
+
+--
+-- Name: postage_size_limit postage_size_limit_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_size_limit
+    ADD CONSTRAINT postage_size_limit_pkey PRIMARY KEY (pst_siz_id);
+
+
+--
+-- Name: postage_type postage_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_type
+    ADD CONSTRAINT postage_type_pkey PRIMARY KEY (pst_typ_id);
+
+
+--
+-- Name: postage_zone postage_zone_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_zone
+    ADD CONSTRAINT postage_zone_pkey PRIMARY KEY (pst_zne_id);
+
+
+--
 -- Name: accessories_attr_lcl prd_id_lcl_cd_1; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3446,6 +3584,54 @@ ALTER TABLE ONLY product_tag
 
 ALTER TABLE ONLY product
     ADD CONSTRAINT uc_product_upc_cd UNIQUE (upc_cd);
+
+
+--
+-- Name: postage_customs_form uc_pst_cst_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_customs_form
+    ADD CONSTRAINT uc_pst_cst_cd UNIQUE (pst_cst_cd);
+
+
+--
+-- Name: postage_destination uc_pst_dst_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_destination
+    ADD CONSTRAINT uc_pst_dst_cd UNIQUE (pst_dst_cd);
+
+
+--
+-- Name: postage_insurance uc_pst_ins_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_insurance
+    ADD CONSTRAINT uc_pst_ins_cd UNIQUE (pst_ins_cd);
+
+
+--
+-- Name: postage_size_limit uc_pst_siz_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_size_limit
+    ADD CONSTRAINT uc_pst_siz_cd UNIQUE (pst_siz_cd);
+
+
+--
+-- Name: postage_type uc_pst_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_type
+    ADD CONSTRAINT uc_pst_typ_cd UNIQUE (pst_typ_cd);
+
+
+--
+-- Name: postage_zone uc_pst_zne_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_zone
+    ADD CONSTRAINT uc_pst_zne_cd UNIQUE (pst_zne_cd);
 
 
 --
@@ -4238,6 +4424,48 @@ GRANT SELECT ON TABLE person TO security_app;
 --
 
 GRANT ALL ON SEQUENCE person_id_seq TO mochi_app;
+
+
+--
+-- Name: postage_customs_form; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_customs_form TO mochi_app;
+
+
+--
+-- Name: postage_destination; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_destination TO mochi_app;
+
+
+--
+-- Name: postage_insurance; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_insurance TO mochi_app;
+
+
+--
+-- Name: postage_size_limit; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_size_limit TO mochi_app;
+
+
+--
+-- Name: postage_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_type TO mochi_app;
+
+
+--
+-- Name: postage_zone; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_zone TO mochi_app;
 
 
 --
