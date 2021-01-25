@@ -3221,12 +3221,14 @@ ALTER TABLE vw_postage_insurance OWNER TO mochidb_owner;
 --
 
 CREATE VIEW vw_postage_size_limit AS
- SELECT DISTINCT a.size_limit
-   FROM ( SELECT vw_air_parcel_costing.size_limit
-           FROM vw_air_parcel_costing
-        UNION ALL
-         SELECT vw_surface_parcel_costing.size_limit
-           FROM vw_surface_parcel_costing) a;
+ SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_siz_id,
+    b.size_limit AS pst_siz_cd
+   FROM ( SELECT DISTINCT a.size_limit
+           FROM ( SELECT vw_air_parcel_costing.size_limit
+                   FROM vw_air_parcel_costing
+                UNION ALL
+                 SELECT vw_surface_parcel_costing.size_limit
+                   FROM vw_surface_parcel_costing) a) b;
 
 
 ALTER TABLE vw_postage_size_limit OWNER TO mochidb_owner;
@@ -3236,11 +3238,14 @@ ALTER TABLE vw_postage_size_limit OWNER TO mochidb_owner;
 --
 
 CREATE VIEW vw_postage_type AS
- SELECT DISTINCT vw_air_parcel_costing.postage_type
-   FROM vw_air_parcel_costing
-UNION ALL
- SELECT DISTINCT vw_surface_parcel_costing.postage_type
-   FROM vw_surface_parcel_costing;
+ SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_typ_id,
+    b.postage_type AS pst_typ_cd
+   FROM ( SELECT DISTINCT a.postage_type
+           FROM ( SELECT vw_air_parcel_costing.postage_type
+                   FROM vw_air_parcel_costing
+                UNION ALL
+                 SELECT vw_surface_parcel_costing.postage_type
+                   FROM vw_surface_parcel_costing) a) b;
 
 
 ALTER TABLE vw_postage_type OWNER TO mochidb_owner;
@@ -3250,12 +3255,14 @@ ALTER TABLE vw_postage_type OWNER TO mochidb_owner;
 --
 
 CREATE VIEW vw_postage_zone AS
- SELECT DISTINCT a.zone_no
-   FROM ( SELECT vw_air_parcel_costing.zone_no
-           FROM vw_air_parcel_costing
-        UNION ALL
-         SELECT vw_surface_parcel_costing.zone_no
-           FROM vw_surface_parcel_costing) a;
+ SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_zne_id,
+    b.zone_no AS pst_zne_cd
+   FROM ( SELECT DISTINCT a.zone_no
+           FROM ( SELECT vw_air_parcel_costing.zone_no
+                   FROM vw_air_parcel_costing
+                UNION ALL
+                 SELECT vw_surface_parcel_costing.zone_no
+                   FROM vw_surface_parcel_costing) a) b;
 
 
 ALTER TABLE vw_postage_zone OWNER TO mochidb_owner;
