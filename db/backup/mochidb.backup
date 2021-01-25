@@ -3047,7 +3047,7 @@ CREATE VIEW vw_air_parcel_costing AS
     a.weight,
     a.total_cost
    FROM ( SELECT pc.destination,
-            'AIR01'::character(3) AS postage_type,
+            'AIR01'::character(5) AS postage_type,
             pc.zone_no,
             pc.weight_limits,
             pc.size_limits,
@@ -3087,7 +3087,7 @@ CREATE VIEW vw_surface_parcel_costing AS
     a.weight,
     a.total_cost
    FROM ( SELECT pc.destination,
-            'SUR01'::character(3) AS postage_type,
+            'SUR01'::character(5) AS postage_type,
             pc.zone_no,
             pc.weight_limits,
             pc.size_limits,
