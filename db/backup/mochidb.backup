@@ -3197,6 +3197,36 @@ CREATE VIEW vw_postage_destination AS
 ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
 
 --
+-- Name: vw_postage_insurance; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_postage_insurance AS
+ SELECT DISTINCT a.insurance
+   FROM ( SELECT vw_air_parcel_costing.insurance
+           FROM vw_air_parcel_costing
+        UNION ALL
+         SELECT vw_surface_parcel_costing.insurance
+           FROM vw_surface_parcel_costing) a;
+
+
+ALTER TABLE vw_postage_insurance OWNER TO mochidb_owner;
+
+--
+-- Name: vw_postage_size_limit; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_postage_size_limit AS
+ SELECT DISTINCT a.size_limit
+   FROM ( SELECT vw_air_parcel_costing.size_limit
+           FROM vw_air_parcel_costing
+        UNION ALL
+         SELECT vw_surface_parcel_costing.size_limit
+           FROM vw_surface_parcel_costing) a;
+
+
+ALTER TABLE vw_postage_size_limit OWNER TO mochidb_owner;
+
+--
 -- Name: vw_postage_type; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
 --
 
@@ -3209,6 +3239,21 @@ UNION ALL
 
 
 ALTER TABLE vw_postage_type OWNER TO mochidb_owner;
+
+--
+-- Name: vw_postage_zone; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_postage_zone AS
+ SELECT DISTINCT a.zone_no
+   FROM ( SELECT vw_air_parcel_costing.zone_no
+           FROM vw_air_parcel_costing
+        UNION ALL
+         SELECT vw_surface_parcel_costing.zone_no
+           FROM vw_surface_parcel_costing) a;
+
+
+ALTER TABLE vw_postage_zone OWNER TO mochidb_owner;
 
 SET search_path = mochi, pg_catalog;
 
