@@ -1380,24 +1380,36 @@ SELECT pg_catalog.setval('person_id_seq', 6, false);
 -- Data for Name: postage_insurance; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO postage_insurance VALUES (1, 'L');
+INSERT INTO postage_insurance VALUES (2, 'LP');
+INSERT INTO postage_insurance VALUES (3, '');
+INSERT INTO postage_insurance VALUES (4, 'P');
 
 
 --
 -- Data for Name: postage_size_limit; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO postage_size_limit VALUES (1, 'P');
+INSERT INTO postage_size_limit VALUES (2, 'XP');
 
 
 --
 -- Data for Name: postage_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO postage_type VALUES (1, 'SUR01');
+INSERT INTO postage_type VALUES (2, 'AIR01');
 
 
 --
 -- Data for Name: postage_zone; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO postage_zone VALUES (1, '2');
+INSERT INTO postage_zone VALUES (2, '*');
+INSERT INTO postage_zone VALUES (3, '3');
+INSERT INTO postage_zone VALUES (4, '1');
 
 
 --

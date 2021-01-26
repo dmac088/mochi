@@ -2184,7 +2184,8 @@ ALTER TABLE postage_customs_form OWNER TO mochidb_owner;
 
 CREATE TABLE postage_destination (
     pst_dst_id bigint NOT NULL,
-    pst_dst_cd character(5) NOT NULL
+    pst_dst_cd character(5) NOT NULL,
+    pst_dst_desc character varying(50) NOT NULL
 );
 
 
@@ -2208,7 +2209,7 @@ ALTER TABLE postage_insurance OWNER TO mochidb_owner;
 
 CREATE TABLE postage_size_limit (
     pst_siz_id bigint NOT NULL,
-    pst_siz_cd character(1) NOT NULL
+    pst_siz_cd character varying(2) NOT NULL
 );
 
 
@@ -3187,14 +3188,15 @@ ALTER TABLE vw_surface_parcel_costing OWNER TO mochidb_owner;
 
 CREATE VIEW vw_postage_destination AS
  SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_dst_id,
-    (upper("left"(btrim((b.destination)::text), 3)) || '01'::text) AS pst_dst_cd,
+    (upper("left"(btrim((b.destination)::text), 3)) || "right"(('0'::text || dense_rank() OVER (PARTITION BY ("left"(btrim(upper((b.destination)::text)), 3)))), 2)) AS pst_dst_cd,
     b.destination AS pst_dst_desc
    FROM ( SELECT DISTINCT a.destination
            FROM ( SELECT vw_air_parcel_costing.destination
                    FROM vw_air_parcel_costing
                 UNION ALL
                  SELECT vw_surface_parcel_costing.destination
-                   FROM vw_surface_parcel_costing) a) b;
+                   FROM vw_surface_parcel_costing) a) b
+  ORDER BY (upper("left"(btrim((b.destination)::text), 3)) || "right"(('0'::text || dense_rank() OVER (PARTITION BY ("left"(btrim(upper((b.destination)::text)), 3)))), 2));
 
 
 ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
@@ -4571,7 +4573,7 @@ COPY postage_customs_form (pst_cst_id, pst_cst_cd) FROM stdin;
 -- Data for Name: postage_destination; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY postage_destination (pst_dst_id, pst_dst_cd) FROM stdin;
+COPY postage_destination (pst_dst_id, pst_dst_cd, pst_dst_desc) FROM stdin;
 \.
 
 
@@ -4580,6 +4582,10 @@ COPY postage_destination (pst_dst_id, pst_dst_cd) FROM stdin;
 --
 
 COPY postage_insurance (pst_ins_id, pst_ins_cd) FROM stdin;
+1	L
+2	LP
+3	
+4	P
 \.
 
 
@@ -4588,6 +4594,8 @@ COPY postage_insurance (pst_ins_id, pst_ins_cd) FROM stdin;
 --
 
 COPY postage_size_limit (pst_siz_id, pst_siz_cd) FROM stdin;
+1	P
+2	XP
 \.
 
 
@@ -4596,6 +4604,8 @@ COPY postage_size_limit (pst_siz_id, pst_siz_cd) FROM stdin;
 --
 
 COPY postage_type (pst_typ_id, pst_typ_cd) FROM stdin;
+1	SUR01
+2	AIR01
 \.
 
 
@@ -4604,6 +4614,10 @@ COPY postage_type (pst_typ_id, pst_typ_cd) FROM stdin;
 --
 
 COPY postage_zone (pst_zne_id, pst_zne_cd) FROM stdin;
+1	2
+2	*
+3	3
+4	1
 \.
 
 
