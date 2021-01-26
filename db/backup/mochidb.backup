@@ -2184,8 +2184,9 @@ ALTER TABLE postage_customs_form OWNER TO mochidb_owner;
 
 CREATE TABLE postage_destination (
     pst_dst_id bigint NOT NULL,
-    pst_dst_cd character(5) NOT NULL,
-    pst_dst_desc character varying(50) NOT NULL
+    pst_dst_cd character(6) NOT NULL,
+    pst_dst_desc character varying(50) NOT NULL,
+    pst_zne_id bigint NOT NULL
 );
 
 
@@ -3188,15 +3189,19 @@ ALTER TABLE vw_surface_parcel_costing OWNER TO mochidb_owner;
 
 CREATE VIEW vw_postage_destination AS
  SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_dst_id,
-    (upper("left"(btrim((b.destination)::text), 3)) || "right"(('0'::text || dense_rank() OVER (PARTITION BY ("left"(btrim(upper((b.destination)::text)), 3)))), 2)) AS pst_dst_cd,
-    b.destination AS pst_dst_desc
-   FROM ( SELECT DISTINCT a.destination
-           FROM ( SELECT vw_air_parcel_costing.destination
+    (upper("left"(btrim((b.destination)::text), 3)) || "right"(('00'::text || row_number() OVER (PARTITION BY NULL::text)), 3)) AS pst_dst_cd,
+    b.destination AS pst_dst_desc,
+    b.pst_zne_id
+   FROM ( SELECT DISTINCT a.destination,
+            z.pst_zne_id
+           FROM (( SELECT vw_air_parcel_costing.destination,
+                    vw_air_parcel_costing.zone_no
                    FROM vw_air_parcel_costing
                 UNION ALL
-                 SELECT vw_surface_parcel_costing.destination
-                   FROM vw_surface_parcel_costing) a) b
-  ORDER BY (upper("left"(btrim((b.destination)::text), 3)) || "right"(('0'::text || dense_rank() OVER (PARTITION BY ("left"(btrim(upper((b.destination)::text)), 3)))), 2));
+                 SELECT vw_surface_parcel_costing.destination,
+                    vw_surface_parcel_costing.zone_no
+                   FROM vw_surface_parcel_costing) a
+             LEFT JOIN mochi.postage_zone z ON ((a.zone_no = z.pst_zne_cd)))) b;
 
 
 ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
@@ -4573,7 +4578,249 @@ COPY postage_customs_form (pst_cst_id, pst_cst_cd) FROM stdin;
 -- Data for Name: postage_destination; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-COPY postage_destination (pst_dst_id, pst_dst_cd, pst_dst_desc) FROM stdin;
+COPY postage_destination (pst_dst_id, pst_dst_cd, pst_dst_desc, pst_zne_id) FROM stdin;
+1	(共和001	(共和國) Bulgaria (Rep.)	3
+2	(共和002	(共和國) Congo (Rep.)	3
+3	AFG003	Afghanistan	4
+4	ALB004	Albania	3
+5	ALG005	Algeria	3
+6	ALL006	All other places	1
+7	ANG007	Angola	3
+8	ANG008	Anguilla	1
+9	ANT009	Antigua and Barbuda	1
+10	ARG010	Argentina	3
+11	ARM011	Armenia	1
+12	ARU012	Aruba	3
+13	ASC013	Ascension	1
+14	AUS014	Australia - All other states	1
+15	AUS015	Australia - Western	1
+16	AUS016	Austria	1
+17	AZE017	Azerbaijan	1
+18	AZO018	Azores	1
+19	BAH019	Bahamas	1
+20	BAH020	Bahrain (State of)	1
+21	BAL021	Baleares Islands	1
+22	BAN022	Bangladesh	4
+23	BAR023	Barbados	1
+24	BEL024	Belarus	3
+25	BEL025	Belgium	1
+26	BEL026	Belize	1
+27	BEN027	Benin	3
+28	BER028	Bermuda	1
+29	BHU029	Bhutan	4
+30	BOL030	Bolivia	3
+31	BOS031	Bosnia and Herzegovina	3
+32	BOT032	Botswana	3
+33	BRA033	Brazil	3
+34	BRI034	British Indian Ocean Territory	1
+35	BRU035	Brunei Darussalam	4
+36	BUR036	Burkina Faso	3
+37	BUR037	Burundi	3
+38	CAM038	Cambodia	4
+39	CAM039	Cameroon	3
+40	CAN040	Canada	1
+41	CAN041	Canary Islands	1
+42	CAP042	Cape Verde	3
+43	CAR043	Caroline Islands	1
+44	CAY044	Cayman Islands	1
+45	CEN045	Central African Rep.	3
+46	CHA046	Chad	3
+47	CHI047	Chile	3
+48	CHI048	China, Mainland	2
+49	CHR049	Christmas Island	1
+50	COC050	Cocos (Keeling) Islands	1
+51	COL051	Colombia	3
+52	COM052	Comoros	3
+53	COR053	Corsica	1
+54	COS054	Costa Rica	1
+55	CRO055	Croatia	3
+56	CUB056	Cuba - All other places	1
+57	CUB057	Cuba - Guantanamo Bay	1
+58	CYP058	Cyprus	1
+59	CZE059	Czech Rep.	1
+60	CÔT060	Côte d'Ivoire (Rep.)	3
+61	DEM061	Democratic Republic of the Congo	3
+62	DEN062	Denmark	1
+63	DJI063	Djibouti	1
+64	DOM064	Dominica	1
+65	DOM065	Dominican Republic	1
+66	ECU066	Ecuador	1
+67	EGY067	Egypt	1
+68	EL 068	El Salvador	1
+69	EQU069	Equatorial Guinea	1
+70	ERI070	Eritrea	1
+71	EST071	Estonia	1
+72	ESW072	Eswatini	3
+73	ETH073	Ethiopia	1
+74	FAL074	Falkland Islands (Inc. Dependencies)	1
+75	FAR075	Faröe Islands	1
+76	FIJ076	Fiji	1
+77	FIN077	Finland	1
+78	FRA078	France	1
+79	FRE079	French Guiana	1
+80	FRE080	French Polynesia	1
+81	FRE081	French West Indies - Guadeloupe	1
+82	FRE082	French West Indies - Martinique	1
+83	GAB083	Gabon	1
+84	GAM084	Gambia	1
+85	GAZ085	Gaza and Khan Yunis	1
+86	GEO086	Georgia	1
+87	GER087	Germany	1
+88	GHA088	Ghana	1
+89	GIB089	Gibraltar	1
+90	GRE090	Greece	1
+91	GRE091	Greenland	1
+92	GRE092	Grenada	1
+93	GUA093	Guatemala	1
+94	GUI094	Guinea	1
+95	GUI095	Guinea-Bissau	1
+96	GUY096	Guyana	1
+97	HAI097	Haiti	1
+98	HON098	Honduras (Rep.)	1
+99	HUN099	Hungary	1
+100	ICE100	Iceland	1
+101	IND101	India - All other places	4
+102	IND102	India - Mumbai	4
+103	IND103	Indonesia	4
+104	IRA104	Iran	1
+105	IRA105	Iraq	1
+106	IRE106	Ireland	1
+107	ISR107	Israel	1
+108	ITA108	Italy	1
+109	JAM109	Jamaica	1
+110	JAP110	Japan	1
+111	JAP111	Japan - Ryukyu Islands	1
+112	JOR112	Jordan	1
+113	KAZ113	Kazakhstan	1
+114	KEN114	Kenya	3
+115	KIR115	Kiribati	1
+116	KOR116	Korea, North	4
+117	KOR117	Korea, South	4
+118	KUW118	Kuwait	1
+119	KYR119	Kyrgyzstan	1
+120	LAO120	Lao People’s Dem. Rep.	4
+121	LAT121	Latvia	3
+122	LEB122	Lebanon	1
+123	LES123	Lesotho	3
+124	LIB124	Liberia	3
+125	LIB125	Libya	3
+126	LIE126	Liechtenstein	1
+127	LIT127	Lithuania	3
+128	LUX128	Luxembourg	1
+129	MAC129	Macao	2
+130	MAD130	Madagascar	3
+131	MAD131	Madeira	1
+132	MAL132	Malawi	3
+133	MAL133	Malaysia - Sabah	4
+134	MAL134	Malaysia - Sarawak	4
+135	MAL135	Maldives	4
+136	MAL136	Mali	3
+137	MAL137	Malta	1
+138	MAR138	Mariana Islands	4
+139	MAR139	Marshall Islands	1
+140	MAU140	Mauritania	3
+141	MAU141	Mauritius	3
+142	MEX142	Mexico	1
+143	MOL143	Moldova	3
+144	MON144	Monaco	1
+145	MON145	Montenegro	3
+146	MON146	Montserrat	1
+147	MOR147	Morocco	3
+148	MOZ148	Mozambique	3
+149	MYA149	Myanmar	4
+150	NAM150	Namibia	3
+151	NAU151	Nauru	1
+152	NEP152	Nepal	4
+153	NET153	Netherlands	1
+154	NET154	Netherlands Antilles	3
+155	NEW155	New Caledonia	1
+156	NEW156	New Zealand	1
+157	NEW157	New Zealand Islands Territories	1
+158	NIC158	Nicaragua	1
+159	NIG159	Niger	3
+160	NIG160	Nigeria	3
+161	NOR161	Norfolk Island	1
+162	NOR162	North Macedonia	3
+163	NOR163	Norway	3
+164	OMA164	Oman	1
+165	PAK165	Pakistan	4
+166	PAN166	Panama (Rep.)	1
+167	PAP167	Papua New Guinea	1
+168	PAR168	Paraguay	3
+169	PEN169	Peninsular Malaysia	4
+170	PER170	Peru	3
+171	PHI171	Philippines	4
+172	PIT172	Pitcairn Islands	1
+173	PLA173	Places in the former Yemen Arab Rep	1
+174	POL174	Poland	3
+175	POR175	Portugal	1
+176	PUE176	Puerto Rico	1
+177	QAT177	Qatar	1
+178	ROM178	Romania	3
+179	RUS179	Russia (Russian Federation)	3
+180	RWA180	Rwanda (Rep.)	3
+181	RÉU181	Réunion	3
+182	SAM182	Samoa (U.S.A. Territory)	1
+183	SAO183	Sao Tome and Principe	3
+184	SAU184	Saudi Arabia	1
+185	SEN185	Senegal	3
+186	SER186	Serbia	3
+187	SEY187	Seychelles	3
+188	SIE188	Sierra Leone	3
+189	SIN189	Singapore	4
+190	SLO190	Slovakia	3
+191	SLO191	Slovenia	3
+192	SOL192	Solomon Islands	1
+193	SOM193	Somalia	3
+194	SOU194	South Africa	3
+195	SPA195	Spain	1
+196	SPA196	Spanish Territories of North Africa	1
+197	SPI197	Spitsbergen	1
+198	SRI198	Sri Lanka	4
+199	ST.199	St. Christopher (St. Kitts) and Nevis	1
+200	ST.200	St. Helena	1
+201	ST.201	St. Lucia	1
+202	ST.202	St. Pierre and Miquelon	1
+203	ST.203	St. Vincent and the Grenadines	1
+204	SUD204	Sudan	3
+205	SUR205	Suriname	3
+206	SWE206	Sweden	3
+207	SWI207	Switzerland	1
+208	SYR208	Syrian Arab Rep.	1
+209	TAI209	Taiwan	2
+210	TAJ210	Tajikstan	1
+211	TAN211	Tanzania (United Rep.)	3
+212	THA212	Thailand	4
+213	TIM213	Timor-Leste (Dem. Rep.)	4
+214	TOG214	Togo	3
+215	TON215	Tonga	1
+216	TOR216	Tortola (British Virgin Islands)	1
+217	TRI217	Trinidad and Tobago	1
+218	TRI218	Tristan da Cunha	1
+219	TUN219	Tunisia	3
+220	TUR220	Turkey	1
+221	TUR221	Turkmenistan	1
+222	TUR222	Turks and Caicos Islands	1
+223	TUV223	Tuvalu	1
+224	UGA224	Uganda	3
+225	UKR225	Ukraine	3
+226	UNI226	United Arab Emirates	1
+227	UNI227	United Kingdom	1
+228	UNI228	United States of America - All other states	1
+229	UNI229	United States of America - Hawaii	1
+230	UNI230	United States of America - New York	1
+231	URU231	Uruguay	3
+232	UZB232	Uzbekistan	1
+233	VAN233	Vanuatu	1
+234	VAT234	Vatican	1
+235	VEN235	Venezuela (Bolivarian Rep.)	3
+236	VIE236	Viet Nam	4
+237	VIR237	Virgin Islands (U.S.A)	1
+238	WAK238	Wake Island	1
+239	WAL239	Wallis and Futuna Islands	1
+240	WES240	Western Samoa	1
+241	ZAM241	Zambia	3
+242	ZIM242	Zimbabwe	3
 \.
 
 
