@@ -2310,8 +2310,9 @@ ALTER TABLE postage_customs_form OWNER TO mochidb_owner;
 
 CREATE TABLE postage_destination (
     pst_dst_id bigint NOT NULL,
-    pst_dst_cd character(5) NOT NULL,
-    pst_dst_desc character varying(50) NOT NULL
+    pst_dst_cd character(6) NOT NULL,
+    pst_dst_desc character varying(50) NOT NULL,
+    pst_zne_id bigint NOT NULL
 );
 
 
