@@ -6,7 +6,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(PostageSizeEntity.class)
-public abstract class PostageSize_ {
+public abstract class PostageSizeEntity_ {
 
 	public static volatile SingularAttribute<PostageSizeEntity, Long> postageSizeId;
 	public static volatile SingularAttribute<PostageSizeEntity, String> postageSizeCode;

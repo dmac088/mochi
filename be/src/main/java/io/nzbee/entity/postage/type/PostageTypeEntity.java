@@ -11,7 +11,7 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Immutable
 @Table(name="prostage_type")
-public class PostageType {
+public class PostageTypeEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
