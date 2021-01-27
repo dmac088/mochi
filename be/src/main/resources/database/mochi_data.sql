@@ -1368,6 +1368,14 @@ SELECT pg_catalog.setval('person_id_seq', 6, false);
 -- Data for Name: postage_customs_form; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO postage_customs_form VALUES (1, '1C + 2G');
+INSERT INTO postage_customs_form VALUES (2, '1G');
+INSERT INTO postage_customs_form VALUES (3, '4C');
+INSERT INTO postage_customs_form VALUES (4, '1C');
+INSERT INTO postage_customs_form VALUES (5, '-');
+INSERT INTO postage_customs_form VALUES (6, '2C+1G');
+INSERT INTO postage_customs_form VALUES (7, '2C');
+INSERT INTO postage_customs_form VALUES (8, '3C');
 
 
 --
