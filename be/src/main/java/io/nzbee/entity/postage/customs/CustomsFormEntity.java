@@ -11,7 +11,7 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Immutable
 @Table(name="prostage_customs_form")
-public class CustomsForm {
+public class CustomsFormEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

@@ -12,12 +12,12 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.Immutable;
 
-import io.nzbee.entity.postage.zone.PostageZone;
+import io.nzbee.entity.postage.zone.PostageZoneEntity;
 
 @Entity
 @Immutable
 @Table(name="prostage_destination")
-public class PostageDestination {
+public class PostageDestinationEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -32,7 +32,7 @@ public class PostageDestination {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pty_zne_id")
-	private PostageZone postageZone;
+	private PostageZoneEntity postageZone;
 
 	public Long getPostageDestinationId() {
 		return postageDestinationId;
@@ -46,7 +46,7 @@ public class PostageDestination {
 		return postageDestinationDesc;
 	}
 
-	public PostageZone getPostageZone() {
+	public PostageZoneEntity getPostageZone() {
 		return postageZone;
 	}
 }

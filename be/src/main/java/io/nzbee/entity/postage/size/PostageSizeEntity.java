@@ -11,7 +11,7 @@ import org.hibernate.annotations.Immutable;
 @Entity
 @Immutable
 @Table(name="prostage_size_limit")
-public class PostageSize {
+public class PostageSizeEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

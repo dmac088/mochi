@@ -7,7 +7,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(PostageDestinationEntity.class)
-public abstract class PostageDestination_ {
+public abstract class PostageDestinationEntity_ {
 
 	public static volatile SingularAttribute<PostageDestinationEntity, String> postageDestinationDesc;
 	public static volatile SingularAttribute<PostageDestinationEntity, Long> postageDestinationId;
