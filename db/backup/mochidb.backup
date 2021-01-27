@@ -1427,10 +1427,14 @@ SET search_path = public, pg_catalog;
 
 CREATE FUNCTION random_between(low integer, high integer) RETURNS integer
     LANGUAGE plpgsql STRICT
-    AS $$
-BEGIN
-   RETURN floor(random()* (high-low + 1) + low);
-END;
+    AS $$
+
+BEGIN
+
+   RETURN floor(random()* (high-low + 1) + low);
+
+END;
+
 $$;
 
 
