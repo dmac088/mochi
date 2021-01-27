@@ -3143,7 +3143,8 @@ CREATE VIEW vw_air_parcel_costing AS
                 UNION ALL
                  SELECT generate_series.generate_series
                    FROM generate_series(5.5, (100)::numeric, 0.5) generate_series(generate_series)) s ON ((0 = 0)))) a
-  WHERE (a.total_cost IS NOT NULL);
+  WHERE (a.total_cost IS NOT NULL)
+  GROUP BY a.destination, a.postage_type, a.zone_no, a.size_limits, a.multi_part, a.add_cust_frm, a.insurance, a.weight, a.total_cost;
 
 
 ALTER TABLE vw_air_parcel_costing OWNER TO mochidb_owner;
@@ -3180,7 +3181,8 @@ CREATE VIEW vw_surface_parcel_costing AS
            FROM (hk_post_surface_parcel_costing pc
              LEFT JOIN ( SELECT generate_series.generate_series AS weight
                    FROM generate_series(1, 100, 1) generate_series(generate_series)) s ON ((0 = 0)))) a
-  WHERE (a.total_cost IS NOT NULL);
+  WHERE (a.total_cost IS NOT NULL)
+  GROUP BY a.destination, a.postage_type, a.zone_no, a.size_limits, a.multi_part, a.add_cust_frm, a.insurance, a.weight, a.total_cost;
 
 
 ALTER TABLE vw_surface_parcel_costing OWNER TO mochidb_owner;
