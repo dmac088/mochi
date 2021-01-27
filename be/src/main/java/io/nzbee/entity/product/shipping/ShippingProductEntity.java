@@ -3,7 +3,13 @@ package io.nzbee.entity.product.shipping;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import io.nzbee.entity.postage.type.PostageTypeEntity;
+import io.nzbee.entity.postage.zone.PostageZoneEntity;
 import io.nzbee.entity.product.ProductEntity;
 
 @Entity
@@ -25,6 +31,15 @@ public class ShippingProductEntity extends ProductEntity {
 	@Column(name="post_cd")
 	private String postCode;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="pst_zne_id")
+	private PostageZoneEntity postageZone;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="pst_typ_id")
+	private PostageTypeEntity postageType;
+	
+	
 	public String getCountryCode() {
 		return countryCode;
 	}
