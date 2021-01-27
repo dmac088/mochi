@@ -42,10 +42,13 @@ spring:
   jpa:
     properties:
       hibernate:
+        show_sql: true
+        format_sql: true
         dialect: org.hibernate.dialect.PostgreSQLDialect
         driver_class: org.postgresql.Driver  
         jdbc:
           timezone: UTC  
+          
         
     
 logging:
@@ -53,11 +56,11 @@ logging:
     org:
       springframework:
         web: ERROR
-      hibernate: WARN
-        
+      hibernate: 
+        type: trace
     io:
       nzbee: DEBUG
-     
+
 
 file:
   upload-dir: data/uploads/
