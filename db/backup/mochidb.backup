@@ -3131,19 +3131,27 @@ CREATE VIEW vw_air_parcel_costing AS
             pc.add_cust_frm,
             pc.insurance_air AS insurance,
             s.weight,
+            ((max(
                 CASE
-                    WHEN (s.weight = (1)::numeric) THEN pc.air_rate_to_1
-                    WHEN ((s.weight >= (2)::numeric) AND (s.weight <= (5)::numeric)) THEN (pc.air_rate_to_1 + ((s.weight - (1)::numeric) * pc.air_rate_add_1_over_1_to_5))
-                    WHEN ((s.weight > (5)::numeric) AND (s.weight <= pc.weight_limits)) THEN ((pc.air_rate_to_1 + ((5)::numeric * pc.air_rate_add_1_over_1_to_5)) + ((s.weight - (5)::numeric) * pc.air_rate_add_500_over_5))
+                    WHEN (s.weight >= (1)::numeric) THEN pc.air_rate_to_1
                     ELSE NULL::numeric
-                END AS total_cost
+                END) + max(
+                CASE
+                    WHEN ((s.weight >= (2)::numeric) AND (s.weight <= (5)::numeric)) THEN (((s.weight - (1)::numeric) / 0.5) * pc.air_rate_add_1_over_1_to_5)
+                    ELSE (((4)::numeric / 0.5) * pc.air_rate_add_1_over_1_to_5)
+                END)) + max(
+                CASE
+                    WHEN ((s.weight > (5)::numeric) AND (s.weight <= pc.weight_limits)) THEN (((s.weight - (5)::numeric) / 0.5) * pc.air_rate_add_500_over_5)
+                    ELSE NULL::numeric
+                END)) AS total_cost
            FROM (hk_post_air_parcel_costing pc
              LEFT JOIN ( SELECT generate_series.generate_series AS weight
                    FROM generate_series(1, 5, 1) generate_series(generate_series)
                 UNION ALL
                  SELECT generate_series.generate_series
-                   FROM generate_series(5.5, (100)::numeric, 0.5) generate_series(generate_series)) s ON ((0 = 0)))) a
-  WHERE (a.total_cost IS NOT NULL)
+                   FROM generate_series(5.5, (100)::numeric, 0.5) generate_series(generate_series)) s ON ((0 = 0)))
+          GROUP BY pc.destination, pc.zone_no, pc.weight_limits, pc.size_limits, pc.multi_part, pc.add_cust_frm, pc.insurance_air, s.weight) a
+  WHERE ((0 = 0) AND (a.total_cost IS NOT NULL))
   GROUP BY a.destination, a.postage_type, a.zone_no, a.size_limits, a.multi_part, a.add_cust_frm, a.insurance, a.weight, a.total_cost;
 
 
@@ -3196,15 +3204,24 @@ CREATE VIEW vw_surface_parcel_costing AS
             pc.add_cust_frm,
             pc.insurance_surface AS insurance,
             s.weight,
+            ((max(
                 CASE
-                    WHEN (s.weight = 1) THEN pc.surface_rate_to_1
-                    WHEN ((s.weight >= 2) AND (s.weight <= 7)) THEN (pc.surface_rate_to_1 + (((s.weight - 1))::numeric * pc.surface_rate_add_1_over_1_to_7))
-                    WHEN ((s.weight > 7) AND ((s.weight)::numeric <= pc.weight_limits)) THEN ((pc.surface_rate_to_1 + ((6)::numeric * pc.surface_rate_add_1_over_1_to_7)) + (((s.weight - 7))::numeric * pc.surface_rate_add_1_over_7))
+                    WHEN ((s.weight)::numeric >= (1)::numeric) THEN pc.surface_rate_to_1
                     ELSE NULL::numeric
-                END AS total_cost
+                END) + max(
+                CASE
+                    WHEN (((s.weight)::numeric >= (2)::numeric) AND (s.weight <= 7)) THEN (((s.weight)::numeric - (1)::numeric) * pc.surface_rate_add_1_over_1_to_7)
+                    ELSE ((6)::numeric * pc.surface_rate_add_1_over_1_to_7)
+                END)) + max(
+                CASE
+                    WHEN (((s.weight)::numeric > (7)::numeric) AND ((s.weight)::numeric <= pc.weight_limits)) THEN (((s.weight)::numeric - (7)::numeric) * pc.surface_rate_add_1_over_7)
+                    ELSE (0)::numeric
+                END)) AS total_cost
            FROM (hk_post_surface_parcel_costing pc
              LEFT JOIN ( SELECT generate_series.generate_series AS weight
-                   FROM generate_series(1, 100, 1) generate_series(generate_series)) s ON ((0 = 0)))) a
+                   FROM generate_series(1, 100, 1) generate_series(generate_series)) s ON ((0 = 0)))
+          WHERE (((pc.destination)::text = 'Philippines'::text) AND (s.weight = 20))
+          GROUP BY pc.destination, pc.zone_no, pc.weight_limits, pc.size_limits, pc.multi_part, pc.add_cust_frm, pc.insurance_surface, s.weight) a
   WHERE (a.total_cost IS NOT NULL)
   GROUP BY a.destination, a.postage_type, a.zone_no, a.size_limits, a.multi_part, a.add_cust_frm, a.insurance, a.weight, a.total_cost;
 
