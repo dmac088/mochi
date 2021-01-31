@@ -3220,7 +3220,7 @@ CREATE VIEW vw_surface_parcel_costing AS
            FROM (hk_post_surface_parcel_costing pc
              LEFT JOIN ( SELECT generate_series.generate_series AS weight
                    FROM generate_series(1, 100, 1) generate_series(generate_series)) s ON ((0 = 0)))
-          WHERE (((pc.destination)::text = 'Philippines'::text) AND (s.weight = 20))
+          WHERE (0 = 0)
           GROUP BY pc.destination, pc.zone_no, pc.weight_limits, pc.size_limits, pc.multi_part, pc.add_cust_frm, pc.insurance_surface, s.weight) a
   WHERE (a.total_cost IS NOT NULL)
   GROUP BY a.destination, a.postage_type, a.zone_no, a.size_limits, a.multi_part, a.add_cust_frm, a.insurance, a.weight, a.total_cost;
