@@ -3150,6 +3150,30 @@ CREATE VIEW vw_air_parcel_costing AS
 ALTER TABLE vw_air_parcel_costing OWNER TO mochidb_owner;
 
 --
+-- Name: vw_export_air_parcel; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_export_air_parcel AS
+ SELECT pi.pst_ins_cd,
+    pcf.pst_cst_cd,
+    pt.pst_typ_cd,
+    psl.pst_siz_cd,
+    pz.pst_zne_cd,
+    pd.pst_dst_cd,
+    apc.total_cost AS total_cost_hkd,
+    apc.weight AS weight_kg
+   FROM ((((((vw_air_parcel_costing apc
+     JOIN mochi.postage_zone pz ON ((apc.zone_no = pz.pst_zne_cd)))
+     JOIN mochi.postage_insurance pi ON (((apc.insurance)::text = (pi.pst_ins_cd)::text)))
+     JOIN mochi.postage_destination pd ON (((apc.destination)::text = (pd.pst_dst_desc)::text)))
+     JOIN mochi.postage_customs_form pcf ON (((apc.add_cust_frm)::text = (pcf.pst_cst_cd)::text)))
+     JOIN mochi.postage_size_limit psl ON (((apc.size_limit)::text = (psl.pst_siz_cd)::text)))
+     JOIN mochi.postage_type pt ON ((apc.postage_type = pt.pst_typ_cd)));
+
+
+ALTER TABLE vw_export_air_parcel OWNER TO mochidb_owner;
+
+--
 -- Name: vw_surface_parcel_costing; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
 --
 
@@ -3186,6 +3210,30 @@ CREATE VIEW vw_surface_parcel_costing AS
 
 
 ALTER TABLE vw_surface_parcel_costing OWNER TO mochidb_owner;
+
+--
+-- Name: vw_export_surface_parcel; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_export_surface_parcel AS
+ SELECT pi.pst_ins_cd,
+    pcf.pst_cst_cd,
+    pt.pst_typ_cd,
+    psl.pst_siz_cd,
+    pz.pst_zne_cd,
+    pd.pst_dst_cd,
+    apc.total_cost AS total_cost_hkd,
+    apc.weight AS weight_kg
+   FROM ((((((vw_surface_parcel_costing apc
+     JOIN mochi.postage_zone pz ON ((apc.zone_no = pz.pst_zne_cd)))
+     JOIN mochi.postage_insurance pi ON (((apc.insurance)::text = (pi.pst_ins_cd)::text)))
+     JOIN mochi.postage_destination pd ON (((apc.destination)::text = (pd.pst_dst_desc)::text)))
+     JOIN mochi.postage_customs_form pcf ON (((apc.add_cust_frm)::text = (pcf.pst_cst_cd)::text)))
+     JOIN mochi.postage_size_limit psl ON (((apc.size_limit)::text = (psl.pst_siz_cd)::text)))
+     JOIN mochi.postage_type pt ON ((apc.postage_type = pt.pst_typ_cd)));
+
+
+ALTER TABLE vw_export_surface_parcel OWNER TO mochidb_owner;
 
 --
 -- Name: vw_postage_customs_form; Type: VIEW; Schema: yahoo; Owner: mochidb_owner
