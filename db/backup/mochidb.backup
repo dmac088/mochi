@@ -3322,7 +3322,7 @@ ALTER TABLE vw_int_eexp OWNER TO mochidb_owner;
 --
 
 CREATE VIEW vw_int_eexp_weight_step AS
- SELECT (postage.value ->> 'zoneCode'::text) AS zonecode,
+ SELECT DISTINCT (postage.value ->> 'zoneCode'::text) AS zonecode,
     (weightstep.value ->> 'weightFrom'::text) AS weightfrom,
     (weightstep.value ->> 'weightTo'::text) AS weightto,
     (weightstep.value ->> 'amount'::text) AS amount
