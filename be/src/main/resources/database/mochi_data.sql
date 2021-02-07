@@ -2154,35 +2154,81 @@ INSERT INTO postage_size_limit VALUES (2, 'XP');
 -- Data for Name: postage_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO postage_type VALUES (1, 'AIR_ORD_1');
-INSERT INTO postage_type VALUES (2, 'AIR_ORD_2');
-INSERT INTO postage_type VALUES (3, 'AIR_ORD_3');
-INSERT INTO postage_type VALUES (4, 'AIR_PAR_1');
-INSERT INTO postage_type VALUES (5, 'AIR_REG_1');
-INSERT INTO postage_type VALUES (6, 'AIR_REG_2');
-INSERT INTO postage_type VALUES (7, 'AIR_REG_3');
-INSERT INTO postage_type VALUES (8, 'EXP_1');
-INSERT INTO postage_type VALUES (9, 'LCP_STD_1');
-INSERT INTO postage_type VALUES (10, 'LOC_PAR_1');
-INSERT INTO postage_type VALUES (11, 'LOC_REG_1');
-INSERT INTO postage_type VALUES (12, 'LOC_REG_2');
-INSERT INTO postage_type VALUES (13, 'LOC_REG_3');
-INSERT INTO postage_type VALUES (14, 'SMP_1');
-INSERT INTO postage_type VALUES (15, 'SMP_2');
-INSERT INTO postage_type VALUES (16, 'SPT_STD_1');
-INSERT INTO postage_type VALUES (17, 'SUR_ORD_1');
-INSERT INTO postage_type VALUES (18, 'SUR_ORD_2');
-INSERT INTO postage_type VALUES (19, 'SUR_ORD_3');
-INSERT INTO postage_type VALUES (20, 'SUR_PAR_1');
-INSERT INTO postage_type VALUES (21, 'SUR_REG_1');
-INSERT INTO postage_type VALUES (22, 'SUR_REG_2');
-INSERT INTO postage_type VALUES (23, 'SUR_REG_3');
+INSERT INTO postage_type VALUES (1, 'AIR_REG_1');
+INSERT INTO postage_type VALUES (2, 'SUR_ORD_2');
+INSERT INTO postage_type VALUES (3, 'AIR_ORD_1');
+INSERT INTO postage_type VALUES (4, 'AIR_ORD_3');
+INSERT INTO postage_type VALUES (5, 'SUR_REG_3');
+INSERT INTO postage_type VALUES (6, 'SUR_PAR_1');
+INSERT INTO postage_type VALUES (7, 'LCP_STD_1');
+INSERT INTO postage_type VALUES (8, 'AIR_REG_2');
+INSERT INTO postage_type VALUES (9, 'SUR_ORD_1');
+INSERT INTO postage_type VALUES (10, 'SPT_STD_1');
+INSERT INTO postage_type VALUES (11, 'SUR_REG_1');
+INSERT INTO postage_type VALUES (12, 'LOC_REG_1');
+INSERT INTO postage_type VALUES (13, 'AIR_ORD_2');
+INSERT INTO postage_type VALUES (14, 'LOC_REG_3');
+INSERT INTO postage_type VALUES (15, 'AIR_REG_3');
+INSERT INTO postage_type VALUES (16, 'SUR_ORD_3');
+INSERT INTO postage_type VALUES (17, 'SUR_REG_2');
+INSERT INTO postage_type VALUES (18, 'LOC_REG_2');
+INSERT INTO postage_type VALUES (19, 'SMP_1');
+INSERT INTO postage_type VALUES (20, 'SMP_2');
+INSERT INTO postage_type VALUES (21, 'EXP_1');
+INSERT INTO postage_type VALUES (22, 'AIR_PAR_1');
+INSERT INTO postage_type VALUES (23, 'LOC_PAR_1');
 
 
 --
 -- Data for Name: postage_type_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO postage_type_attr_lcl VALUES (1, 17, 'Surface Registered Mail (Small Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (2, 10, 'Speedpost (Standard Service)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (3, 15, 'Air Registered Mail (Packet)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (4, 21, 'e-Express Service', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (5, 8, 'Air Registered Mail (Small Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (6, 6, 'Surface Parcel', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (7, 23, 'Local Parcels', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (8, 7, 'Local CourierPost', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (9, 20, 'Smart Post (Mail Delivery)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (10, 11, 'Surface Registered Mail (Large Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (11, 12, 'Local Registered Mail (Large Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (12, 18, 'Local Registered Mail (Small Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (13, 2, 'Surface Mail (Small Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (14, 13, 'Air Mail (Small Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (15, 5, 'Surface Registered Mail (Packet)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (16, 19, 'Smart Post (Counter Collection)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (17, 16, 'Surface Mail (Packet)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (18, 4, 'Air Mail (Packet)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (19, 1, 'Air Registered Mail (Large Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (20, 22, 'Air Parcel', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (21, 3, 'Air Mail (Large Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (22, 14, 'Local Registered Mail (Packet)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (23, 9, 'Surface Mail (Large Letter)', 'en-GB');
+INSERT INTO postage_type_attr_lcl VALUES (24, 17, '平郵掛號（小型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (25, 10, '特快專遞（標準服務）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (26, 15, '空郵掛號（郵包）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (27, 21, '易網遞 (e-Express)', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (28, 8, '空郵掛號（小型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (29, 6, '平郵包裹', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (30, 23, '本地包裹', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (31, 7, '本地郵政速遞', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (32, 20, '易送遞 (郵件派遞)', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (33, 11, '平郵掛號（大型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (34, 12, '本地掛號（大型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (35, 18, '本地掛號（小型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (36, 2, '平郵（小型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (37, 13, '空郵（小型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (38, 5, '平郵掛號（郵包）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (39, 19, '易送遞 (櫃位領件)', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (40, 16, '平郵（郵包）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (41, 4, '空郵（郵包）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (42, 1, '空郵掛號（大型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (43, 22, '空郵包裹', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (44, 3, '空郵（大型信件）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (45, 14, '本地掛號（郵包）', 'zh-HK');
+INSERT INTO postage_type_attr_lcl VALUES (46, 9, '平郵（大型信件）', 'zh-HK');
 
 
 --

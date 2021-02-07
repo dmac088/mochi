@@ -177,6 +177,7 @@ ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl
 ALTER TABLE mochi.role_type ALTER COLUMN rle_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party_type ALTER COLUMN pty_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party ALTER COLUMN pty_id DROP DEFAULT;
+DROP VIEW mochi.vw_postage_type_attr_lcl;
 DROP VIEW mochi.vw_postage_type;
 DROP VIEW mochi.vw_postage_destination_attr_lcl;
 DROP VIEW mochi.vw_postage_destination;
@@ -273,6 +274,7 @@ DROP SEQUENCE mochi.bag_bag_id_seq;
 DROP TABLE mochi.address_type;
 DROP TABLE mochi.address;
 DROP TABLE mochi.accessories_attr_lcl;
+DROP FUNCTION mochi.load_postage_type();
 DROP FUNCTION mochi.load_postage_destination();
 DROP FUNCTION mochi.ft_product_categories(text, text);
 DROP FUNCTION mochi.ft_categories(text);
@@ -1625,6 +1627,53 @@ end;
 
 ALTER FUNCTION mochi.load_postage_destination() OWNER TO mochidb_owner;
 
+--
+-- Name: load_postage_type(); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE FUNCTION load_postage_type() RETURNS integer
+    LANGUAGE plpgsql
+    AS '
+declare 
+record_count integer = 0;
+begin
+	ALTER TABLE mochi.postage_type_attr_lcl
+    DROP CONSTRAINT IF EXISTS postage_type_attr_lcl_pst_typ_id_fkey;
+
+	ALTER TABLE mochi.product_shipping
+    DROP CONSTRAINT IF EXISTS  product_shipping_postage_type_pst_typ_id_fkey;
+
+	TRUNCATE TABLE mochi.postage_type_attr_lcl;
+
+	TRUNCATE TABLE mochi.postage_type;
+
+	INSERT INTO mochi.postage_type(pst_typ_id, pst_typ_cd)
+	SELECT pst_typ_id, pst_typ_cd
+	FROM mochi.vw_postage_type;
+	
+	INSERT INTO mochi.postage_type_attr_lcl(pst_typ_lcl_id, pst_typ_id, pst_typ_desc, lcl_cd)
+	SELECT pst_typ_lcl_id, pst_typ_id, pst_typ_desc, lcl_cd
+	FROM mochi.vw_postage_type_attr_lcl;
+
+	ALTER TABLE mochi.product_shipping
+    ADD CONSTRAINT product_shipping_postage_type_pst_typ_id_fkey FOREIGN KEY (pst_typ_id)
+    REFERENCES mochi.postage_type (pst_typ_id) MATCH SIMPLE
+    ON UPDATE RESTRICT
+    ON DELETE RESTRICT;
+	
+	ALTER TABLE mochi.postage_type_attr_lcl
+    ADD CONSTRAINT postage_type_attr_lcl_pst_typ_id_fkey FOREIGN KEY (pst_typ_id)
+    REFERENCES mochi.postage_type (pst_typ_id) MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION;
+
+	RETURN 1;
+end;
+';
+
+
+ALTER FUNCTION mochi.load_postage_type() OWNER TO mochidb_owner;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -2974,7 +3023,7 @@ ALTER TABLE vw_postage_destination_attr_lcl OWNER TO mochidb_owner;
 
 CREATE VIEW vw_postage_type AS
  SELECT a.dimension_id AS pst_typ_id,
-    ((a.servicecode || '_'::text) || a.ordinal) AS pst_typ_cd
+    a.servicecode AS pst_typ_cd
    FROM ( SELECT vw_shipping.servicecode,
             vw_shipping.servicenameen,
             vw_shipping.servicenametc,
@@ -2986,6 +3035,34 @@ CREATE VIEW vw_postage_type AS
 
 
 ALTER TABLE vw_postage_type OWNER TO mochidb_owner;
+
+--
+-- Name: vw_postage_type_attr_lcl; Type: VIEW; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_postage_type_attr_lcl AS
+ SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_typ_lcl_id,
+    a.pst_typ_id,
+    a.pst_typ_desc,
+    a.lcl_cd
+   FROM ( SELECT pt.pst_typ_id,
+            max(s.servicenameen) AS pst_typ_desc,
+            'en-GB'::text AS lcl_cd
+           FROM (yahoo.vw_shipping s
+             LEFT JOIN postage_type pt ON ((s.servicecode = (pt.pst_typ_cd)::text)))
+          WHERE (pt.pst_typ_id IS NOT NULL)
+          GROUP BY pt.pst_typ_id
+        UNION ALL
+         SELECT pt.pst_typ_id,
+            max(s.servicenametc) AS pst_typ_desc,
+            'zh-HK'::text AS lcl_cd
+           FROM (yahoo.vw_shipping s
+             LEFT JOIN postage_type pt ON ((s.servicecode = (pt.pst_typ_cd)::text)))
+          WHERE (pt.pst_typ_id IS NOT NULL)
+          GROUP BY pt.pst_typ_id) a;
+
+
+ALTER TABLE vw_postage_type_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: party pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
@@ -4948,6 +5025,13 @@ GRANT SELECT ON TABLE vw_postage_destination_attr_lcl TO mochi_app;
 --
 
 GRANT SELECT ON TABLE vw_postage_type TO mochi_app;
+
+
+--
+-- Name: vw_postage_type_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE vw_postage_type_attr_lcl TO mochi_app;
 
 
 --
