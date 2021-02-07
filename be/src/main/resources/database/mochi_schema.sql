@@ -175,6 +175,7 @@ ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl
 ALTER TABLE mochi.role_type ALTER COLUMN rle_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party_type ALTER COLUMN pty_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party ALTER COLUMN pty_id DROP DEFAULT;
+DROP VIEW mochi.vw_postage_destination;
 DROP TABLE mochi.tag_attr_lcl;
 DROP SEQUENCE mochi.tag_attr_lcl_tag_id_seq;
 DROP TABLE mochi.tag;
@@ -2318,9 +2319,7 @@ ALTER TABLE postage_customs_form OWNER TO mochidb_owner;
 
 CREATE TABLE postage_destination (
     pst_dst_id bigint NOT NULL,
-    pst_dst_cd character(6) NOT NULL,
-    pst_dst_desc character varying(50) NOT NULL,
-    pst_zne_id bigint NOT NULL
+    pst_dst_cd character(2) NOT NULL
 );
 
 
@@ -2864,6 +2863,19 @@ CREATE TABLE tag_attr_lcl (
 
 
 ALTER TABLE tag_attr_lcl OWNER TO mochidb_owner;
+
+--
+-- Name: vw_postage_destination; Type: VIEW; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE VIEW vw_postage_destination AS
+ SELECT row_number() OVER (PARTITION BY NULL::text ORDER BY vw_shipping.destinationcode) AS pst_dst_id,
+    vw_shipping.destinationcode
+   FROM yahoo.vw_shipping
+  GROUP BY vw_shipping.destinationcode;
+
+
+ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
 
 --
 -- Name: party pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
@@ -4789,6 +4801,13 @@ GRANT ALL ON SEQUENCE tag_attr_lcl_tag_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE tag_attr_lcl TO mochi_app;
+
+
+--
+-- Name: vw_postage_destination; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT ON TABLE vw_postage_destination TO mochi_app;
 
 
 --
