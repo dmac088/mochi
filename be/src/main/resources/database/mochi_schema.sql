@@ -33,6 +33,7 @@ ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_type_pst_typ_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_size_limit_pst_siz_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_insurance_pst_ins_id_fkey;
+ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_destination_pst_dst_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_customs_form_pst_cst_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_cat_id_category_cat_id_fkey;
@@ -41,6 +42,7 @@ ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_prd_id_
 ALTER TABLE ONLY mochi.product_attr_lcl DROP CONSTRAINT product_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.price DROP CONSTRAINT price_product_id_fkey;
 ALTER TABLE ONLY mochi.price DROP CONSTRAINT price_currency_id_fkey;
+ALTER TABLE ONLY mochi.postage_destination_attr_lcl DROP CONSTRAINT postage_destination_attr_lcl_pst_dst_id_fkey;
 ALTER TABLE ONLY mochi.postage_destination_attr_lcl DROP CONSTRAINT postage_destination_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.person DROP CONSTRAINT person_person_id_fkey;
 ALTER TABLE ONLY mochi.party DROP CONSTRAINT party_pty_typ_id_fkey;
@@ -1589,10 +1591,10 @@ declare
 record_count integer = 0;
 begin
 	ALTER TABLE mochi.postage_destination_attr_lcl
-    DROP CONSTRAINT postage_destination_attr_lcl_pst_dst_id_fkey;
+    DROP CONSTRAINT IF EXISTS postage_destination_attr_lcl_pst_dst_id_fkey;
 
 	ALTER TABLE mochi.product_shipping
-    DROP CONSTRAINT product_shipping_postage_destination_pst_dst_id_fkey;
+    DROP CONSTRAINT IF EXISTS  product_shipping_postage_destination_pst_dst_id_fkey;
 
 	TRUNCATE TABLE mochi.postage_destination_attr_lcl;
 
@@ -2956,22 +2958,24 @@ CREATE VIEW vw_postage_destination_attr_lcl AS
     a.lcl_cd,
     a.zonecode
    FROM ( SELECT pd.pst_dst_id,
-            s.destinationnameen AS pst_dst_desc,
+            max(s.destinationnameen) AS pst_dst_desc,
+            s.destinationcode,
             s.zonecode,
             'en-GB'::text AS lcl_cd
            FROM (yahoo.vw_shipping s
              LEFT JOIN postage_destination pd ON (((s.destinationcode = (pd.pst_dst_cd)::text) AND (s.zonecode = (pd.pst_zne_cd)::text))))
           WHERE (pd.pst_dst_id IS NOT NULL)
-          GROUP BY pd.pst_dst_id, s.destinationcode, s.destinationnameen, s.zonecode
+          GROUP BY pd.pst_dst_id, s.destinationcode, s.zonecode
         UNION ALL
          SELECT pd.pst_dst_id,
-            s.destinationnametc AS pst_dst_desc,
+            max(s.destinationnametc) AS pst_dst_desc,
+            s.destinationcode,
             s.zonecode,
             'zh-HK'::text AS lcl_cd
            FROM (yahoo.vw_shipping s
              LEFT JOIN postage_destination pd ON (((s.destinationcode = (pd.pst_dst_cd)::text) AND (s.zonecode = (pd.pst_zne_cd)::text))))
           WHERE (pd.pst_dst_id IS NOT NULL)
-          GROUP BY pd.pst_dst_id, s.destinationcode, s.destinationnametc, s.zonecode) a;
+          GROUP BY pd.pst_dst_id, s.destinationcode, s.zonecode) a;
 
 
 ALTER TABLE vw_postage_destination_attr_lcl OWNER TO mochidb_owner;
@@ -4059,6 +4063,14 @@ ALTER TABLE ONLY postage_destination_attr_lcl
 
 
 --
+-- Name: postage_destination_attr_lcl postage_destination_attr_lcl_pst_dst_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY postage_destination_attr_lcl
+    ADD CONSTRAINT postage_destination_attr_lcl_pst_dst_id_fkey FOREIGN KEY (pst_dst_id) REFERENCES postage_destination(pst_dst_id);
+
+
+--
 -- Name: price price_currency_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4120,6 +4132,14 @@ ALTER TABLE ONLY product_category
 
 ALTER TABLE ONLY product_shipping
     ADD CONSTRAINT product_shipping_postage_customs_form_pst_cst_id_fkey FOREIGN KEY (pst_cst_id) REFERENCES postage_customs_form(pst_cst_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+
+
+--
+-- Name: product_shipping product_shipping_postage_destination_pst_dst_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY product_shipping
+    ADD CONSTRAINT product_shipping_postage_destination_pst_dst_id_fkey FOREIGN KEY (pst_dst_id) REFERENCES postage_destination(pst_dst_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
