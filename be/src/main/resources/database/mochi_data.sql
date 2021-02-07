@@ -1365,20 +1365,6 @@ SELECT pg_catalog.setval('person_id_seq', 6, false);
 
 
 --
--- Data for Name: postage_customs_form; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO postage_customs_form VALUES (1, '1C + 2G');
-INSERT INTO postage_customs_form VALUES (2, '1G');
-INSERT INTO postage_customs_form VALUES (3, '4C');
-INSERT INTO postage_customs_form VALUES (4, '1C');
-INSERT INTO postage_customs_form VALUES (5, '-');
-INSERT INTO postage_customs_form VALUES (6, '2C+1G');
-INSERT INTO postage_customs_form VALUES (7, '2C');
-INSERT INTO postage_customs_form VALUES (8, '3C');
-
-
---
 -- Data for Name: postage_destination; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -2168,18 +2154,35 @@ INSERT INTO postage_size_limit VALUES (2, 'XP');
 -- Data for Name: postage_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO postage_type VALUES (1, 'SUR01');
-INSERT INTO postage_type VALUES (2, 'AIR01');
+INSERT INTO postage_type VALUES (1, 'AIR_ORD_1');
+INSERT INTO postage_type VALUES (2, 'AIR_ORD_2');
+INSERT INTO postage_type VALUES (3, 'AIR_ORD_3');
+INSERT INTO postage_type VALUES (4, 'AIR_PAR_1');
+INSERT INTO postage_type VALUES (5, 'AIR_REG_1');
+INSERT INTO postage_type VALUES (6, 'AIR_REG_2');
+INSERT INTO postage_type VALUES (7, 'AIR_REG_3');
+INSERT INTO postage_type VALUES (8, 'EXP_1');
+INSERT INTO postage_type VALUES (9, 'LCP_STD_1');
+INSERT INTO postage_type VALUES (10, 'LOC_PAR_1');
+INSERT INTO postage_type VALUES (11, 'LOC_REG_1');
+INSERT INTO postage_type VALUES (12, 'LOC_REG_2');
+INSERT INTO postage_type VALUES (13, 'LOC_REG_3');
+INSERT INTO postage_type VALUES (14, 'SMP_1');
+INSERT INTO postage_type VALUES (15, 'SMP_2');
+INSERT INTO postage_type VALUES (16, 'SPT_STD_1');
+INSERT INTO postage_type VALUES (17, 'SUR_ORD_1');
+INSERT INTO postage_type VALUES (18, 'SUR_ORD_2');
+INSERT INTO postage_type VALUES (19, 'SUR_ORD_3');
+INSERT INTO postage_type VALUES (20, 'SUR_PAR_1');
+INSERT INTO postage_type VALUES (21, 'SUR_REG_1');
+INSERT INTO postage_type VALUES (22, 'SUR_REG_2');
+INSERT INTO postage_type VALUES (23, 'SUR_REG_3');
 
 
 --
--- Data for Name: postage_zone; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+-- Data for Name: postage_type_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO postage_zone VALUES (1, '2');
-INSERT INTO postage_zone VALUES (2, '*');
-INSERT INTO postage_zone VALUES (3, '3');
-INSERT INTO postage_zone VALUES (4, '1');
 
 
 --
