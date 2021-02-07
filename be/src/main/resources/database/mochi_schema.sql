@@ -30,8 +30,6 @@ ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_pr
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_sts_id_product_status_sts_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_type_pst_typ_id_fkey;
-ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_size_limit_pst_siz_id_fkey;
-ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_insurance_pst_ins_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_destination_pst_dst_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_cat_id_category_cat_id_fkey;
@@ -80,8 +78,6 @@ ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_lcl;
 ALTER TABLE ONLY mochi.tag_attr_lcl DROP CONSTRAINT uc_tag_desc;
 ALTER TABLE ONLY mochi.tag DROP CONSTRAINT uc_tag_cd;
 ALTER TABLE ONLY mochi.postage_type DROP CONSTRAINT uc_pst_typ_cd;
-ALTER TABLE ONLY mochi.postage_size_limit DROP CONSTRAINT uc_pst_siz_cd;
-ALTER TABLE ONLY mochi.postage_insurance DROP CONSTRAINT uc_pst_ins_cd;
 ALTER TABLE ONLY mochi.postage_destination DROP CONSTRAINT uc_pst_dst_cd;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT uc_product_upc_cd;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT uc_product_tag;
@@ -134,8 +130,6 @@ ALTER TABLE ONLY mochi.department_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_3;
 ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT prd_id_lcl_cd_1;
 ALTER TABLE ONLY mochi.postage_type DROP CONSTRAINT postage_type_pkey;
 ALTER TABLE ONLY mochi.postage_type_attr_lcl DROP CONSTRAINT postage_type_attr_lcl_pkey;
-ALTER TABLE ONLY mochi.postage_size_limit DROP CONSTRAINT postage_size_limit_pkey;
-ALTER TABLE ONLY mochi.postage_insurance DROP CONSTRAINT postage_insurance_pkey;
 ALTER TABLE ONLY mochi.postage_destination DROP CONSTRAINT postage_destination_pkey;
 ALTER TABLE ONLY mochi.postage_destination_attr_lcl DROP CONSTRAINT postage_destination_attr_lcl_pkey;
 ALTER TABLE ONLY mochi.locale DROP CONSTRAINT pk_locale;
@@ -218,8 +212,6 @@ DROP TABLE mochi.price;
 DROP SEQUENCE mochi.price_prc_id_seq;
 DROP TABLE mochi.postage_type_attr_lcl;
 DROP TABLE mochi.postage_type;
-DROP TABLE mochi.postage_size_limit;
-DROP TABLE mochi.postage_insurance;
 DROP TABLE mochi.postage_destination_attr_lcl;
 DROP TABLE mochi.postage_destination;
 DROP SEQUENCE mochi.person_id_seq;
@@ -2430,30 +2422,6 @@ CREATE TABLE postage_destination_attr_lcl (
 ALTER TABLE postage_destination_attr_lcl OWNER TO mochidb_owner;
 
 --
--- Name: postage_insurance; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE postage_insurance (
-    pst_ins_id bigint NOT NULL,
-    pst_ins_cd character varying(2) NOT NULL
-);
-
-
-ALTER TABLE postage_insurance OWNER TO mochidb_owner;
-
---
--- Name: postage_size_limit; Type: TABLE; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE TABLE postage_size_limit (
-    pst_siz_id bigint NOT NULL,
-    pst_siz_cd character varying(2) NOT NULL
-);
-
-
-ALTER TABLE postage_size_limit OWNER TO mochidb_owner;
-
---
 -- Name: postage_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3390,22 +3358,6 @@ ALTER TABLE ONLY postage_destination
 
 
 --
--- Name: postage_insurance postage_insurance_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY postage_insurance
-    ADD CONSTRAINT postage_insurance_pkey PRIMARY KEY (pst_ins_id);
-
-
---
--- Name: postage_size_limit postage_size_limit_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY postage_size_limit
-    ADD CONSTRAINT postage_size_limit_pkey PRIMARY KEY (pst_siz_id);
-
-
---
 -- Name: postage_type_attr_lcl postage_type_attr_lcl_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3822,22 +3774,6 @@ ALTER TABLE ONLY postage_destination
 
 
 --
--- Name: postage_insurance uc_pst_ins_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY postage_insurance
-    ADD CONSTRAINT uc_pst_ins_cd UNIQUE (pst_ins_cd);
-
-
---
--- Name: postage_size_limit uc_pst_siz_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY postage_size_limit
-    ADD CONSTRAINT uc_pst_siz_cd UNIQUE (pst_siz_cd);
-
-
---
 -- Name: postage_type uc_pst_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -4216,22 +4152,6 @@ ALTER TABLE ONLY product_category
 
 ALTER TABLE ONLY product_shipping
     ADD CONSTRAINT product_shipping_postage_destination_pst_dst_id_fkey FOREIGN KEY (pst_dst_id) REFERENCES postage_destination(pst_dst_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: product_shipping product_shipping_postage_insurance_pst_ins_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY product_shipping
-    ADD CONSTRAINT product_shipping_postage_insurance_pst_ins_id_fkey FOREIGN KEY (pst_ins_id) REFERENCES postage_insurance(pst_ins_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
-
-
---
--- Name: product_shipping product_shipping_postage_size_limit_pst_siz_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
---
-
-ALTER TABLE ONLY product_shipping
-    ADD CONSTRAINT product_shipping_postage_size_limit_pst_siz_id_fkey FOREIGN KEY (pst_siz_id) REFERENCES postage_size_limit(pst_siz_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
@@ -4729,20 +4649,6 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_destination TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_destination_attr_lcl TO mochi_app;
-
-
---
--- Name: postage_insurance; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_insurance TO mochi_app;
-
-
---
--- Name: postage_size_limit; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE postage_size_limit TO mochi_app;
 
 
 --

@@ -2133,24 +2133,6 @@ INSERT INTO postage_destination_attr_lcl VALUES (504, 252, '津巴布韋', 'zh-H
 
 
 --
--- Data for Name: postage_insurance; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO postage_insurance VALUES (1, 'L');
-INSERT INTO postage_insurance VALUES (2, 'LP');
-INSERT INTO postage_insurance VALUES (3, '');
-INSERT INTO postage_insurance VALUES (4, 'P');
-
-
---
--- Data for Name: postage_size_limit; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO postage_size_limit VALUES (1, 'P');
-INSERT INTO postage_size_limit VALUES (2, 'XP');
-
-
---
 -- Data for Name: postage_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
