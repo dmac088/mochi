@@ -1,0 +1,24 @@
+pst_typ	pst_typ_desc
+AIR_ORD_1	Air Mail (Large Letter)
+AIR_ORD_2	Air Mail (Small Letter)
+AIR_ORD_3	Air Mail (Packet)
+AIR_PAR_1	Air Parcel
+AIR_REG_1	Air Registered Mail (Large Letter)
+AIR_REG_2	Air Registered Mail (Small Letter)
+AIR_REG_3	Air Registered Mail (Packet)
+EXP_1	e-Express Service
+LCP_STD_1	Local CourierPost
+LOC_PAR_1	Local Parcels
+LOC_REG_1	Local Registered Mail (Large Letter)
+LOC_REG_2	Local Registered Mail (Small Letter)
+LOC_REG_3	Local Registered Mail (Packet)
+SMP_1	Smart Post (Counter Collection)
+SMP_2	Smart Post (Mail Delivery)
+SPT_STD_1	Speedpost (Standard Service)
+SUR_ORD_1	Surface Mail (Large Letter)
+SUR_ORD_2	Surface Mail (Small Letter)
+SUR_ORD_3	Surface Mail (Packet)
+SUR_PAR_1	Surface Parcel
+SUR_REG_1	Surface Registered Mail (Large Letter)
+SUR_REG_2	Surface Registered Mail (Small Letter)
+SUR_REG_3	Surface Registered Mail (Packet)
