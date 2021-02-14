@@ -8,8 +8,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.shipping.destination.PostageDestinationEntity;
-import io.nzbee.entity.product.shipping.type.PostageTypeEntity;
+import io.nzbee.entity.product.shipping.destination.ShippingDestinationEntity;
+import io.nzbee.entity.product.shipping.type.ShippingTypeEntity;
 
 @Entity
 @Table(name = "product_shipping", schema = "mochi")
@@ -20,26 +20,26 @@ public class ShippingProductEntity extends ProductEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pst_typ_id")
-	private PostageTypeEntity postageType;
+	private ShippingTypeEntity postageType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pst_dst_id")
-	private PostageDestinationEntity postageDestination;
+	private ShippingDestinationEntity postageDestination;
 
 
-	public PostageTypeEntity getPostageType() {
+	public ShippingTypeEntity getPostageType() {
 		return postageType;
 	}
 
-	public void setPostageType(PostageTypeEntity postageType) {
+	public void setPostageType(ShippingTypeEntity postageType) {
 		this.postageType = postageType;
 	}
 
-	public PostageDestinationEntity getPostageDestination() {
+	public ShippingDestinationEntity getPostageDestination() {
 		return postageDestination;
 	}
 
-	public void setPostageDestination(PostageDestinationEntity postageDestination) {
+	public void setPostageDestination(ShippingDestinationEntity postageDestination) {
 		this.postageDestination = postageDestination;
 	}
 

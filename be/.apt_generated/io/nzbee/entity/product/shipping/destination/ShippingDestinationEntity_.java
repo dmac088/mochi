@@ -1,14 +1,12 @@
-package io.nzbee.entity.postage.destination;
+package io.nzbee.entity.product.shipping.destination;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import io.nzbee.entity.product.shipping.destination.ShippingDestinationEntity;
-
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(ShippingDestinationEntity.class)
-public abstract class PostageDestinationEntity_ {
+public abstract class ShippingDestinationEntity_ {
 
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> postageZoneCode;
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> postageDestinationDesc;
