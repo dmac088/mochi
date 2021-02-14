@@ -6,12 +6,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import io.nzbee.entity.postage.customs.CustomsFormEntity;
 import io.nzbee.entity.postage.destination.PostageDestinationEntity;
-import io.nzbee.entity.postage.insurance.PostageInsuranceEntity;
-import io.nzbee.entity.postage.size.PostageSizeEntity;
 import io.nzbee.entity.postage.type.PostageTypeEntity;
-import io.nzbee.entity.postage.zone.PostageZoneEntity;
 import io.nzbee.entity.product.ProductEntity;
 
 @Entity
@@ -20,38 +16,15 @@ import io.nzbee.entity.product.ProductEntity;
 public class ShippingProductEntity extends ProductEntity {
 
 	private static final long serialVersionUID = -5894324320785215250L;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="pst_zne_id")
-	private PostageZoneEntity postageZone;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pst_typ_id")
 	private PostageTypeEntity postageType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="pst_cst_id")
-	private CustomsFormEntity customsForm;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pst_dst_id")
 	private PostageDestinationEntity postageDestination;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="pst_siz_id")
-	private PostageSizeEntity postageSize;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="pst_ins_id")
-	private PostageInsuranceEntity postageInsurance;
 
-	public PostageZoneEntity getPostageZone() {
-		return postageZone;
-	}
-
-	public void setPostageZone(PostageZoneEntity postageZone) {
-		this.postageZone = postageZone;
-	}
 
 	public PostageTypeEntity getPostageType() {
 		return postageType;
@@ -59,14 +32,6 @@ public class ShippingProductEntity extends ProductEntity {
 
 	public void setPostageType(PostageTypeEntity postageType) {
 		this.postageType = postageType;
-	}
-
-	public CustomsFormEntity getCustomsForm() {
-		return customsForm;
-	}
-
-	public void setCustomsForm(CustomsFormEntity customsForm) {
-		this.customsForm = customsForm;
 	}
 
 	public PostageDestinationEntity getPostageDestination() {
@@ -77,20 +42,4 @@ public class ShippingProductEntity extends ProductEntity {
 		this.postageDestination = postageDestination;
 	}
 
-	public PostageSizeEntity getPostageSize() {
-		return postageSize;
-	}
-
-	public void setPostageSize(PostageSizeEntity postageSize) {
-		this.postageSize = postageSize;
-	}
-
-	public PostageInsuranceEntity getPostageInsurance() {
-		return postageInsurance;
-	}
-
-	public void setPostageInsurance(PostageInsuranceEntity postageInsurance) {
-		this.postageInsurance = postageInsurance;
-	}
-	
 }

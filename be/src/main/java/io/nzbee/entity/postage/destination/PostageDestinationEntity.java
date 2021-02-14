@@ -2,20 +2,12 @@ package io.nzbee.entity.postage.destination;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.Immutable;
-
-import io.nzbee.entity.postage.zone.PostageZoneEntity;
-
 @Entity
-@Immutable
 @Table(name="prostage_destination")
 public class PostageDestinationEntity {
 
@@ -30,9 +22,8 @@ public class PostageDestinationEntity {
 	@Column(name="pst_dst_desc")
 	private String postageDestinationDesc;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="pty_zne_id")
-	private PostageZoneEntity postageZone;
+	@Column(name="pst_zne_cd")
+	private String postageZoneCode;
 
 	public Long getPostageDestinationId() {
 		return postageDestinationId;
@@ -41,12 +32,25 @@ public class PostageDestinationEntity {
 	public String getPostageDestinationCode() {
 		return postageDestinationCode;
 	}
+	
+	public void setPostageDestinationCode(String postageDestinationCode) {
+		this.postageDestinationCode = postageDestinationCode;
+	}
 
 	public String getPostageDestinationDesc() {
 		return postageDestinationDesc;
 	}
 
-	public PostageZoneEntity getPostageZone() {
-		return postageZone;
+	public void setPostageDestinationDesc(String postageDestinationDesc) {
+		this.postageDestinationDesc = postageDestinationDesc;
 	}
+
+	public String getPostageZoneCode() {
+		return postageZoneCode;
+	}
+
+	public void setPostageZoneCode(String postageZoneCode) {
+		this.postageZoneCode = postageZoneCode;
+	}
+
 }
