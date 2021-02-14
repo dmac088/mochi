@@ -1,14 +1,12 @@
-package io.nzbee.entity.postage.type;
+package io.nzbee.entity.product.shipping.type;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
-import io.nzbee.entity.product.shipping.type.ShippingTypeEntity;
-
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(ShippingTypeEntity.class)
-public abstract class PostageTypeEntity_ {
+public abstract class ShippingTypeEntity_ {
 
 	public static volatile SingularAttribute<ShippingTypeEntity, Long> postageTypeId;
 	public static volatile SingularAttribute<ShippingTypeEntity, String> postageTypeCode;

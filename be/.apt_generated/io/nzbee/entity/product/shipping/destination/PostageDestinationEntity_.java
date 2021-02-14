@@ -5,13 +5,13 @@ import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
-@StaticMetamodel(PostageDestinationEntity.class)
+@StaticMetamodel(ShippingDestinationEntity.class)
 public abstract class PostageDestinationEntity_ {
 
-	public static volatile SingularAttribute<PostageDestinationEntity, String> postageZoneCode;
-	public static volatile SingularAttribute<PostageDestinationEntity, String> postageDestinationDesc;
-	public static volatile SingularAttribute<PostageDestinationEntity, Long> postageDestinationId;
-	public static volatile SingularAttribute<PostageDestinationEntity, String> postageDestinationCode;
+	public static volatile SingularAttribute<ShippingDestinationEntity, String> postageZoneCode;
+	public static volatile SingularAttribute<ShippingDestinationEntity, String> postageDestinationDesc;
+	public static volatile SingularAttribute<ShippingDestinationEntity, Long> postageDestinationId;
+	public static volatile SingularAttribute<ShippingDestinationEntity, String> postageDestinationCode;
 
 	public static final String POSTAGE_ZONE_CODE = "postageZoneCode";
 	public static final String POSTAGE_DESTINATION_DESC = "postageDestinationDesc";
