@@ -1,7 +1,7 @@
 package io.nzbee.entity.product.shipping;
 
-import io.nzbee.entity.postage.destination.PostageDestinationEntity;
-import io.nzbee.entity.postage.type.PostageTypeEntity;
+import io.nzbee.entity.product.shipping.destination.PostageDestinationEntity;
+import io.nzbee.entity.product.shipping.type.PostageTypeEntity;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;

@@ -6,9 +6,10 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import io.nzbee.entity.postage.destination.PostageDestinationEntity;
-import io.nzbee.entity.postage.type.PostageTypeEntity;
+
 import io.nzbee.entity.product.ProductEntity;
+import io.nzbee.entity.product.shipping.destination.PostageDestinationEntity;
+import io.nzbee.entity.product.shipping.type.PostageTypeEntity;
 
 @Entity
 @Table(name = "product_shipping", schema = "mochi")
