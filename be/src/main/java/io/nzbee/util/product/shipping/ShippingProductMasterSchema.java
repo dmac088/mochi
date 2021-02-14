@@ -4,68 +4,71 @@ import io.nzbee.util.product.ProductMasterSchema;
 
 public class ShippingProductMasterSchema extends ProductMasterSchema {
 
-	private String COUNTRY_CODE;
+	private String SERVICE_TYPE_CODE;
 	
-	private String COUNTRY_NAME;
+	private String ZONE_CODE;
 	
-	private String CITY_NAME;
+	private String DESTINATION_CODE;
 	
-	private String POST_CODE;
+	private String WEIGHT_LIMIT;
 	
+	private String TRACKING_LEVEL;
 	
+	private String AMOUNT_HKD;
 	
-	public String get_COUNTRY_CODE() {
-		return COUNTRY_CODE;
+
+	public String get_SERVICE_TYPE_CODE() {
+		return SERVICE_TYPE_CODE;
 	}
 
-
-
-	public void set_COUNTRY_CODE(String cOUNTRY_CODE) {
-		COUNTRY_CODE = cOUNTRY_CODE;
+	public void set_SERVICE_TYPE_CODE(String sERVICE_TYPE_CODE) {
+		SERVICE_TYPE_CODE = sERVICE_TYPE_CODE;
 	}
 
-
-
-	public String get_COUNTRY_NAME() {
-		return COUNTRY_NAME;
+	public String get_ZONE_CODE() {
+		return ZONE_CODE;
 	}
 
-
-
-	public void set_COUNTRY_NAME(String cOUNTRY_NAME) {
-		COUNTRY_NAME = cOUNTRY_NAME;
+	public void set_ZONE_CODE(String zONE_CODE) {
+		ZONE_CODE = zONE_CODE;
 	}
 
-
-
-	public String get_CITY_NAME() {
-		return CITY_NAME;
+	public String get_DESTINATION_CODE() {
+		return DESTINATION_CODE;
 	}
 
-
-
-	public void set_CITY_NAME(String cITY_NAME) {
-		CITY_NAME = cITY_NAME;
+	public void set_DESTINATION_CODE(String dESTINATION_CODE) {
+		DESTINATION_CODE = dESTINATION_CODE;
 	}
 
-
-
-	public String get_POST_CODE() {
-		return POST_CODE;
+	public String get_WEIGHT_LIMIT() {
+		return WEIGHT_LIMIT;
 	}
 
-
-
-	public void set_POST_CODE(String pOST_CODE) {
-		POST_CODE = pOST_CODE;
+	public void set_WEIGHT_LIMIT(String wEIGHT_LIMIT) {
+		WEIGHT_LIMIT = wEIGHT_LIMIT;
 	}
 
+	public String get_TRACKING_LEVEL() {
+		return TRACKING_LEVEL;
+	}
 
+	public void set_TRACKING_LEVEL(String tRACKING_LEVEL) {
+		TRACKING_LEVEL = tRACKING_LEVEL;
+	}
+
+	public String get_AMOUNT_HKD() {
+		return AMOUNT_HKD;
+	}
+
+	public void set_AMOUNT_HKD(String aMOUNT_HKD) {
+		AMOUNT_HKD = aMOUNT_HKD;
+	}
 
 	@Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
-        builder.append("ProductMasterSchema [PRODUCT_UPC_CODE=").append(PRODUCT_UPC_CODE)
+        builder.append("ShippingProductMasterSchema [PRODUCT_UPC_CODE=").append(PRODUCT_UPC_CODE)
         	   .append(", PRODUCT_CREATED_DATE=").append(PRODUCT_CREATED_DATE)
         	   .append(", PRODUCT_DESCRIPTION_EN=").append(PRODUCT_DESCRIPTION_EN)
         	   .append(", PRODUCT_DESCRIPTION_HK=").append(PRODUCT_DESCRIPTION_HK)
@@ -79,6 +82,12 @@ public class ShippingProductMasterSchema extends ProductMasterSchema {
         	   .append(", PRODUCT_IMAGE_EN=").append(PRODUCT_IMAGE_EN)
         	   .append(", PRODUCT_IMAGE_HK=").append(PRODUCT_IMAGE_HK)
         	   .append(", PRIMARY_CATEGORY_CODE=").append(PRIMARY_CATEGORY_CODE)
+        	   .append(", SERVICE_TYPE_CODE=").append(SERVICE_TYPE_CODE)
+        	   .append(", ZONE_CODE=").append(ZONE_CODE)
+        	   .append(", DESTINATION_CODE=").append(DESTINATION_CODE)
+        	   .append(", WEIGHT_LIMIT=").append(WEIGHT_LIMIT)
+        	   .append(", TRACKING_LEVEL=").append(TRACKING_LEVEL)
+        	   .append(", AMOUNT_HKD=").append(AMOUNT_HKD)
                .append("]");
         return builder.toString();
         
