@@ -1,4 +1,4 @@
-package io.nzbee.entity.postage.type;
+package io.nzbee.entity.product.shipping.type;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
