@@ -15,6 +15,9 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 	@Autowired
 	private IShippingDestinationRepository shippingDestinationRepository;
 	
+	@Autowired
+	private IShippingDestinationDao shippingDestinationDao;
+	
 	@Override
 	public List<ShippingDestinationDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
@@ -70,8 +73,7 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 
 	@Override
 	public Optional<ShippingDestinationEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return shippingDestinationDao.findByCode(code);
 	}
 
 	@Override
