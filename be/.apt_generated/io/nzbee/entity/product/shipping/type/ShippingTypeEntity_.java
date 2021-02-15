@@ -1,6 +1,8 @@
 package io.nzbee.entity.product.shipping.type;
 
+import io.nzbee.entity.product.shipping.type.attribute.ShippingTypeAttributeEntity;
 import javax.annotation.Generated;
+import javax.persistence.metamodel.ListAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -8,11 +10,13 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ShippingTypeEntity.class)
 public abstract class ShippingTypeEntity_ {
 
-	public static volatile SingularAttribute<ShippingTypeEntity, Long> postageTypeId;
-	public static volatile SingularAttribute<ShippingTypeEntity, String> postageTypeCode;
+	public static volatile SingularAttribute<ShippingTypeEntity, Long> shippingTypeId;
+	public static volatile SingularAttribute<ShippingTypeEntity, String> shippingTypeCode;
+	public static volatile ListAttribute<ShippingTypeEntity, ShippingTypeAttributeEntity> attributes;
 
-	public static final String POSTAGE_TYPE_ID = "postageTypeId";
-	public static final String POSTAGE_TYPE_CODE = "postageTypeCode";
+	public static final String SHIPPING_TYPE_ID = "shippingTypeId";
+	public static final String SHIPPING_TYPE_CODE = "shippingTypeCode";
+	public static final String ATTRIBUTES = "attributes";
 
 }
 
