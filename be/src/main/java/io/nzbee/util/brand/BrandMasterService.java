@@ -70,9 +70,9 @@ public class BrandMasterService {
 	}
 	
 	
-	private BrandEntity mapToBrand(String brandCode,
-							 String brandDesc,
-							 String locale) {
+	private BrandEntity mapToBrand(	 String brandCode,
+									 String brandDesc,
+									 String locale) {
 		
 		Optional<BrandEntity> ob = brandService.findByCode(brandCode);
 						

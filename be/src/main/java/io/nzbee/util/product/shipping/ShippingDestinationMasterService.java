@@ -65,18 +65,17 @@ public class ShippingDestinationMasterService {
 				: new ShippingDestinationEntity();
 		
 		Optional<ShippingDestinationAttributeEntity> osdaen = shippingDestinationAttributeService.findByCode( Constants.localeENGB, sdms.getDESTINATION_CODE());
-		
-		ShippingDestinationAttributeEntity sdaen = (osd.isPresent()) 
-				? osdaen.get()
-				: (new ShippingDestinationAttributeEntity());
-				
 				
 		sd.setShippingDestinationCode(sdms.getDESTINATION_CODE());
 		sd.setShippingDestinationDesc(sdms.getDESTINATION_DESC_EN());
 		sd.setShippingZoneCode(sdms.getDESTINATION_ZONE_CODE());
 		sd.setShippingDestinationShortCode(sdms.getDESTINATION_SHORT_CODE());
 		
-		
+	}
+	
+	
+	private ShippingDestinationEntity mapToShippingDestination() {
+		return null;
 		
 	}
 }
