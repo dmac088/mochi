@@ -1,31 +1,22 @@
 package io.nzbee.entity.product.shipping.destination;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Query;
 import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
-import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-
-import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.brand.BrandDTO;
-import io.nzbee.entity.brand.BrandDTOResultTransformer;
 
 public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
 
@@ -48,38 +39,12 @@ public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
 	public Optional<ShippingDestinationDTO> findByCode(String locale, String code) {
 		LOGGER.debug("call ShippingDestinationDaoImpl.findByCode parameters : {}, {}, {}", locale, code);
 		
-		Session session = em.unwrap(Session.class);
-		
-		List<String> lbc = Arrays.asList(code);
-		
-		Query query = session.createNativeQuery(constructSQL(
-															 false,
-															 false,
-															 false,
-															 false,
-															 true,
-															 false,
-															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
-				 .setParameter("locale", locale)
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("brandCodes", lbc);
-		
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
-		
-		try {
-			BrandDTO result = (BrandDTO) query.getSingleResult();
-			return Optional.ofNullable(result);
-		} catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		return null;
 	}
 	
 	@Override
 	public Optional<ShippingDestinationEntity> findByCode(String code) {
-		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}", code);
+		LOGGER.debug("call ShippingDestinationDaoImpl.findByCode parameters : {}", code);
 		
 		CriteriaBuilder cb = em.getCriteriaBuilder();
 		
@@ -209,6 +174,7 @@ public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
 		return null;
 	}
 
+	
 
 
 }

@@ -40,24 +40,12 @@ public class DepartmentDTO implements Serializable {
 		return departmentId;
 	}
 
-	public void setDepartmentId(Long departmentId) {
-		this.departmentId = departmentId;
-	}
-
 	public String getDepartmentCode() {
 		return departmentCode;
 	}
 
-	public void setDepartmentCode(String departmentCode) {
-		this.departmentCode = departmentCode;
-	}
-
 	public String getDepartmentDesc() {
 		return departmentDesc;
-	}
-
-	public void setDepartmentDesc(String departmentDesc) {
-		this.departmentDesc = departmentDesc;
 	}
 
 	public String getLocale() {

@@ -1,11 +1,16 @@
 package io.nzbee.entity.product.shipping.destination;
 
+import java.util.ArrayList;
+import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import io.nzbee.entity.product.shipping.destination.attribute.ShippingDestinationAttributeEntity;
 
 @Entity
 @Table(name="prostage_destination")
@@ -24,6 +29,11 @@ public class ShippingDestinationEntity {
 	
 	@Column(name="pst_zne_cd")
 	private String postageZoneCode;
+	
+	@OneToMany(	mappedBy="shippingDestination",  
+			cascade = CascadeType.ALL,
+			orphanRemoval = true)
+	private List<ShippingDestinationAttributeEntity> attributes = new ArrayList<ShippingDestinationAttributeEntity>();
 
 	public Long getPostageDestinationId() {
 		return postageDestinationId;
