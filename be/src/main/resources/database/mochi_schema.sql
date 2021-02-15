@@ -171,10 +171,6 @@ ALTER TABLE ONLY mochi.accessories_attr_lcl DROP CONSTRAINT accessories_attr_lcl
 ALTER TABLE mochi.role_type ALTER COLUMN rle_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party_type ALTER COLUMN pty_typ_id DROP DEFAULT;
 ALTER TABLE mochi.party ALTER COLUMN pty_id DROP DEFAULT;
-DROP VIEW mochi.vw_postage_type_attr_lcl;
-DROP VIEW mochi.vw_postage_type;
-DROP VIEW mochi.vw_postage_destination_attr_lcl;
-DROP VIEW mochi.vw_postage_destination;
 DROP TABLE mochi.tag_attr_lcl;
 DROP SEQUENCE mochi.tag_attr_lcl_tag_id_seq;
 DROP TABLE mochi.tag;
@@ -2797,8 +2793,8 @@ ALTER TABLE role_type_role_typ_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE shipping_destination (
     shp_dst_id bigint NOT NULL,
-    pst_dst_cd character(2) NOT NULL,
-    pst_zne_cd character(2) NOT NULL
+    shp_dst_cd character(2) NOT NULL,
+    shp_zne_cd character(2) NOT NULL
 );
 
 
@@ -2809,9 +2805,9 @@ ALTER TABLE shipping_destination OWNER TO mochidb_owner;
 --
 
 CREATE TABLE shipping_destination_attr_lcl (
-    pst_dst_lcl_id bigint NOT NULL,
-    pst_dst_id bigint NOT NULL,
-    pst_dst_desc character varying(100),
+    shp_dst_lcl_id bigint NOT NULL,
+    shp_dst_id bigint NOT NULL,
+    shp_dst_desc character varying(100),
     lcl_cd character varying(5) NOT NULL
 );
 
@@ -2823,8 +2819,8 @@ ALTER TABLE shipping_destination_attr_lcl OWNER TO mochidb_owner;
 --
 
 CREATE TABLE shipping_type (
-    pst_typ_id bigint NOT NULL,
-    pst_typ_cd character varying(9) NOT NULL
+    shp_typ_id bigint NOT NULL,
+    shp_typ_cd character varying(9) NOT NULL
 );
 
 
@@ -2835,9 +2831,9 @@ ALTER TABLE shipping_type OWNER TO mochidb_owner;
 --
 
 CREATE TABLE shipping_type_attr_lcl (
-    pst_typ_lcl_id bigint NOT NULL,
-    pst_typ_id bigint NOT NULL,
-    pst_typ_desc character varying(100),
+    shp_typ_lcl_id bigint NOT NULL,
+    shp_typ_id bigint NOT NULL,
+    shp_typ_desc character varying(100),
     lcl_cd character varying(5) NOT NULL
 );
 
@@ -2937,100 +2933,6 @@ CREATE TABLE tag_attr_lcl (
 
 
 ALTER TABLE tag_attr_lcl OWNER TO mochidb_owner;
-
---
--- Name: vw_postage_destination; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_postage_destination AS
- SELECT row_number() OVER (PARTITION BY NULL::text ORDER BY s.destinationcode, s.zonecode) AS pst_dst_id,
-    s.destinationcode,
-    s.zonecode
-   FROM yahoo.vw_international_shipping s
-  GROUP BY s.destinationcode, s.zonecode;
-
-
-ALTER TABLE vw_postage_destination OWNER TO mochidb_owner;
-
---
--- Name: vw_postage_destination_attr_lcl; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_postage_destination_attr_lcl AS
- SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_dst_lcl_id,
-    a.pst_dst_id,
-    a.pst_dst_desc,
-    a.lcl_cd,
-    a.zonecode
-   FROM ( SELECT pd.shp_dst_id AS pst_dst_id,
-            max(s.destinationnameen) AS pst_dst_desc,
-            s.destinationcode,
-            s.zonecode,
-            'en-GB'::text AS lcl_cd
-           FROM (yahoo.vw_shipping s
-             LEFT JOIN shipping_destination pd ON (((s.destinationcode = (pd.pst_dst_cd)::text) AND (s.zonecode = (pd.pst_zne_cd)::text))))
-          WHERE (pd.shp_dst_id IS NOT NULL)
-          GROUP BY pd.shp_dst_id, s.destinationcode, s.zonecode
-        UNION ALL
-         SELECT pd.shp_dst_id AS pst_dst_id,
-            max(s.destinationnametc) AS pst_dst_desc,
-            s.destinationcode,
-            s.zonecode,
-            'zh-HK'::text AS lcl_cd
-           FROM (yahoo.vw_shipping s
-             LEFT JOIN shipping_destination pd ON (((s.destinationcode = (pd.pst_dst_cd)::text) AND (s.zonecode = (pd.pst_zne_cd)::text))))
-          WHERE (pd.shp_dst_id IS NOT NULL)
-          GROUP BY pd.shp_dst_id, s.destinationcode, s.zonecode) a;
-
-
-ALTER TABLE vw_postage_destination_attr_lcl OWNER TO mochidb_owner;
-
---
--- Name: vw_postage_type; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_postage_type AS
- SELECT a.dimension_id AS pst_typ_id,
-    a.servicecode AS pst_typ_cd
-   FROM ( SELECT vw_shipping.servicecode,
-            vw_shipping.servicenameen,
-            vw_shipping.servicenametc,
-            vw_shipping.servicenamesc,
-            row_number() OVER (PARTITION BY vw_shipping.servicecode ORDER BY vw_shipping.servicenameen) AS ordinal,
-            row_number() OVER (PARTITION BY NULL::text) AS dimension_id
-           FROM yahoo.vw_shipping
-          GROUP BY vw_shipping.servicecode, vw_shipping.servicenameen, vw_shipping.servicenametc, vw_shipping.servicenamesc) a;
-
-
-ALTER TABLE vw_postage_type OWNER TO mochidb_owner;
-
---
--- Name: vw_postage_type_attr_lcl; Type: VIEW; Schema: mochi; Owner: mochidb_owner
---
-
-CREATE VIEW vw_postage_type_attr_lcl AS
- SELECT row_number() OVER (PARTITION BY NULL::text) AS pst_typ_lcl_id,
-    a.pst_typ_id,
-    a.pst_typ_desc,
-    a.lcl_cd
-   FROM ( SELECT pt.pst_typ_id,
-            max(s.servicenameen) AS pst_typ_desc,
-            'en-GB'::text AS lcl_cd
-           FROM (yahoo.vw_shipping s
-             LEFT JOIN shipping_type pt ON ((s.servicecode = (pt.pst_typ_cd)::text)))
-          WHERE (pt.pst_typ_id IS NOT NULL)
-          GROUP BY pt.pst_typ_id
-        UNION ALL
-         SELECT pt.pst_typ_id,
-            max(s.servicenametc) AS pst_typ_desc,
-            'zh-HK'::text AS lcl_cd
-           FROM (yahoo.vw_shipping s
-             LEFT JOIN shipping_type pt ON ((s.servicecode = (pt.pst_typ_cd)::text)))
-          WHERE (pt.pst_typ_id IS NOT NULL)
-          GROUP BY pt.pst_typ_id) a;
-
-
-ALTER TABLE vw_postage_type_attr_lcl OWNER TO mochidb_owner;
 
 --
 -- Name: party pty_id; Type: DEFAULT; Schema: mochi; Owner: mochidb_owner
@@ -3346,7 +3248,7 @@ ALTER TABLE ONLY locale
 --
 
 ALTER TABLE ONLY shipping_destination_attr_lcl
-    ADD CONSTRAINT postage_destination_attr_lcl_pkey PRIMARY KEY (pst_dst_lcl_id);
+    ADD CONSTRAINT postage_destination_attr_lcl_pkey PRIMARY KEY (shp_dst_lcl_id);
 
 
 --
@@ -3362,7 +3264,7 @@ ALTER TABLE ONLY shipping_destination
 --
 
 ALTER TABLE ONLY shipping_type_attr_lcl
-    ADD CONSTRAINT postage_type_attr_lcl_pkey PRIMARY KEY (pst_typ_lcl_id);
+    ADD CONSTRAINT postage_type_attr_lcl_pkey PRIMARY KEY (shp_typ_lcl_id);
 
 
 --
@@ -3370,7 +3272,7 @@ ALTER TABLE ONLY shipping_type_attr_lcl
 --
 
 ALTER TABLE ONLY shipping_type
-    ADD CONSTRAINT postage_type_pkey PRIMARY KEY (pst_typ_id);
+    ADD CONSTRAINT postage_type_pkey PRIMARY KEY (shp_typ_id);
 
 
 --
@@ -3514,7 +3416,7 @@ ALTER TABLE ONLY promotion
 --
 
 ALTER TABLE ONLY shipping_destination_attr_lcl
-    ADD CONSTRAINT pst_dst_id_lcl_cd UNIQUE (pst_dst_id, lcl_cd);
+    ADD CONSTRAINT pst_dst_id_lcl_cd UNIQUE (shp_dst_id, lcl_cd);
 
 
 --
@@ -3522,7 +3424,7 @@ ALTER TABLE ONLY shipping_destination_attr_lcl
 --
 
 ALTER TABLE ONLY shipping_type_attr_lcl
-    ADD CONSTRAINT pst_typ_id_lcl_cd UNIQUE (pst_typ_id, lcl_cd);
+    ADD CONSTRAINT pst_typ_id_lcl_cd UNIQUE (shp_typ_id, lcl_cd);
 
 
 --
@@ -3770,7 +3672,7 @@ ALTER TABLE ONLY product
 --
 
 ALTER TABLE ONLY shipping_destination
-    ADD CONSTRAINT uc_pst_dst_cd UNIQUE (pst_dst_cd, pst_zne_cd);
+    ADD CONSTRAINT uc_pst_dst_cd UNIQUE (shp_dst_cd, shp_zne_cd);
 
 
 --
@@ -3778,7 +3680,7 @@ ALTER TABLE ONLY shipping_destination
 --
 
 ALTER TABLE ONLY shipping_type
-    ADD CONSTRAINT uc_pst_typ_cd UNIQUE (pst_typ_cd);
+    ADD CONSTRAINT uc_pst_typ_cd UNIQUE (shp_typ_cd);
 
 
 --
@@ -4071,7 +3973,7 @@ ALTER TABLE ONLY shipping_destination_attr_lcl
 --
 
 ALTER TABLE ONLY shipping_destination_attr_lcl
-    ADD CONSTRAINT postage_destination_attr_lcl_pst_dst_id_fkey FOREIGN KEY (pst_dst_id) REFERENCES shipping_destination(shp_dst_id);
+    ADD CONSTRAINT postage_destination_attr_lcl_pst_dst_id_fkey FOREIGN KEY (shp_dst_id) REFERENCES shipping_destination(shp_dst_id);
 
 
 --
@@ -4087,7 +3989,7 @@ ALTER TABLE ONLY shipping_type_attr_lcl
 --
 
 ALTER TABLE ONLY shipping_type_attr_lcl
-    ADD CONSTRAINT postage_type_attr_lcl_pst_typ_id_fkey FOREIGN KEY (pst_typ_id) REFERENCES shipping_type(pst_typ_id);
+    ADD CONSTRAINT postage_type_attr_lcl_pst_typ_id_fkey FOREIGN KEY (shp_typ_id) REFERENCES shipping_type(shp_typ_id);
 
 
 --
@@ -4159,7 +4061,7 @@ ALTER TABLE ONLY product_shipping
 --
 
 ALTER TABLE ONLY product_shipping
-    ADD CONSTRAINT product_shipping_postage_type_pst_typ_id_fkey FOREIGN KEY (pst_typ_id) REFERENCES shipping_type(pst_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+    ADD CONSTRAINT product_shipping_postage_type_pst_typ_id_fkey FOREIGN KEY (pst_typ_id) REFERENCES shipping_type(shp_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
@@ -4910,34 +4812,6 @@ GRANT ALL ON SEQUENCE tag_attr_lcl_tag_id_seq TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE tag_attr_lcl TO mochi_app;
-
-
---
--- Name: vw_postage_destination; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT ON TABLE vw_postage_destination TO mochi_app;
-
-
---
--- Name: vw_postage_destination_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT ON TABLE vw_postage_destination_attr_lcl TO mochi_app;
-
-
---
--- Name: vw_postage_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT ON TABLE vw_postage_type TO mochi_app;
-
-
---
--- Name: vw_postage_type_attr_lcl; Type: ACL; Schema: mochi; Owner: mochidb_owner
---
-
-GRANT SELECT ON TABLE vw_postage_type_attr_lcl TO mochi_app;
 
 
 --
