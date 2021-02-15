@@ -1,17 +1,10 @@
 package io.nzbee.entity.product.shipping.destination;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Tuple;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,39 +30,14 @@ public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
 
 	@Override
 	public Optional<ShippingDestinationDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call ShippingDestinationDaoImpl.findByCode parameters : {}, {}, {}", locale, code);
-		
-		return null;
+		LOGGER.debug("call ShippingDestinationDaoImpl.findByCode parameters : {}, {}", locale, code);
+		return shippingDestinationRepository.findByCode(locale, code);
 	}
 	
 	@Override
 	public Optional<ShippingDestinationEntity> findByCode(String code) {
 		LOGGER.debug("call ShippingDestinationDaoImpl.findByCode parameters : {}", code);
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<ShippingDestinationEntity> cq = cb.createQuery(ShippingDestinationEntity.class);
-		
-		Root<ShippingDestinationEntity> root = cq.from(ShippingDestinationEntity.class);
-
-		List<Predicate> conditions = new ArrayList<Predicate>();
-
-		conditions.add(
-				cb.equal(root.get(ShippingDestinationEntity_.POSTAGE_DESTINATION_CODE), code)
-		);
-		
-		TypedQuery<ShippingDestinationEntity> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		try {
-			ShippingDestinationEntity destination = query.getSingleResult();
-			return Optional.ofNullable(destination);
-		} catch(NoResultException nre) {
-			return Optional.empty();
-		}
+		return shippingDestinationRepository.findByShippingDestinationCode(code);
 	}
 
 	@Override
