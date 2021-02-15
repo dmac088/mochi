@@ -11,12 +11,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 public abstract class ShippingDestinationEntity_ {
 
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationDesc;
+	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationShortCode;
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingZoneCode;
 	public static volatile ListAttribute<ShippingDestinationEntity, ShippingDestinationAttributeEntity> attributes;
 	public static volatile SingularAttribute<ShippingDestinationEntity, Long> shippingDestinationId;
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationCode;
 
 	public static final String SHIPPING_DESTINATION_DESC = "shippingDestinationDesc";
+	public static final String SHIPPING_DESTINATION_SHORT_CODE = "shippingDestinationShortCode";
 	public static final String SHIPPING_ZONE_CODE = "shippingZoneCode";
 	public static final String ATTRIBUTES = "attributes";
 	public static final String SHIPPING_DESTINATION_ID = "shippingDestinationId";

@@ -1,10 +1,9 @@
 package io.nzbee.entity.product.attribute;
 
 import java.util.Optional;
+import io.nzbee.entity.IService;
 
-import io.nzbee.entity.IDao;
-
-public interface IProductAttributeService extends IDao<ProductAttributeEntity> {
+public interface IProductAttributeService extends IService<ProductAttributeEntity> {
 	
 	Optional<ProductAttributeEntity> findByCode(String locale, String code);
 	

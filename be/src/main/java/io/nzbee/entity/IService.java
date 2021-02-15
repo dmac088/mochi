@@ -5,16 +5,16 @@ import java.util.Optional;
 
 public interface IService<T> {
 
-	public List<T> findAll();
+	 List<T> findAll();
 	
-	public Optional<T> findById(Long id);
+	 Optional<T> findById(Long id);
 	
-	public Optional<T> findByCode(String code);
+	 Optional<T> findByCode(String code);
 	
-	public void save(T t);
+	 void save(T t);
 	
-	public void update(T t);
+	 void update(T t);
 	
-	public void delete(T t);
-	
+	 void delete(T t);
+
 }
