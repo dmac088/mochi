@@ -22,7 +22,10 @@ public class ShippingDestinationEntity {
 	private Long shippingDestinationId;
 	
 	@Column(name="shp_dst_cd")
-	private String shippingDestinationCode; 
+	private String shippingDestinationCode;
+	
+	@Column(name="shp_dst_sht_cd")
+	private String shippingDestinationShortCode; 
 	
 	@Column(name="shp_dst_desc")
 	private String shippingDestinationDesc;
@@ -45,6 +48,14 @@ public class ShippingDestinationEntity {
 	
 	public void setShippingDestinationCode(String shippingDestinationCode) {
 		this.shippingDestinationCode = shippingDestinationCode;
+	}
+	
+	public String getShippingDestinationShortCode() {
+		return shippingDestinationShortCode;
+	}
+
+	public void setShippingDestinationShortCode(String shippingDestinationShortCode) {
+		this.shippingDestinationShortCode = shippingDestinationShortCode;
 	}
 
 	public String getShippingDestinationDesc() {
