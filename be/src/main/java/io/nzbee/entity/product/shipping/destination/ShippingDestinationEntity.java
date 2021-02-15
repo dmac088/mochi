@@ -13,54 +13,54 @@ import javax.persistence.Table;
 import io.nzbee.entity.product.shipping.destination.attribute.ShippingDestinationAttributeEntity;
 
 @Entity
-@Table(name="prostage_destination")
+@Table(name="shipping_destination")
 public class ShippingDestinationEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="pst_dst_id")
-	private Long postageDestinationId;
+	@Column(name="shp_dst_id")
+	private Long shippingDestinationId;
 	
-	@Column(name="pst_dst_cd")
-	private String postageDestinationCode; 
+	@Column(name="shp_dst_cd")
+	private String shippingDestinationCode; 
 	
-	@Column(name="pst_dst_desc")
-	private String postageDestinationDesc;
+	@Column(name="shp_dst_desc")
+	private String shippingDestinationDesc;
 	
-	@Column(name="pst_zne_cd")
-	private String postageZoneCode;
+	@Column(name="shp_zne_cd")
+	private String shippingZoneCode;
 	
 	@OneToMany(	mappedBy="shippingDestination",  
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
 	private List<ShippingDestinationAttributeEntity> attributes = new ArrayList<ShippingDestinationAttributeEntity>();
 
-	public Long getPostageDestinationId() {
-		return postageDestinationId;
+	public Long getShippingDestinationId() {
+		return shippingDestinationId;
 	}
 
-	public String getPostageDestinationCode() {
-		return postageDestinationCode;
+	public String getShippingDestinationCode() {
+		return shippingDestinationCode;
 	}
 	
-	public void setPostageDestinationCode(String postageDestinationCode) {
-		this.postageDestinationCode = postageDestinationCode;
+	public void setShippingDestinationCode(String shippingDestinationCode) {
+		this.shippingDestinationCode = shippingDestinationCode;
 	}
 
-	public String getPostageDestinationDesc() {
-		return postageDestinationDesc;
+	public String getShippingDestinationDesc() {
+		return shippingDestinationDesc;
 	}
 
-	public void setPostageDestinationDesc(String postageDestinationDesc) {
-		this.postageDestinationDesc = postageDestinationDesc;
+	public void setShippingDestinationDesc(String shippingDestinationDesc) {
+		this.shippingDestinationDesc = shippingDestinationDesc;
 	}
 
-	public String getPostageZoneCode() {
-		return postageZoneCode;
+	public String getShippingZoneCode() {
+		return shippingZoneCode;
 	}
 
-	public void setPostageZoneCode(String postageZoneCode) {
-		this.postageZoneCode = postageZoneCode;
+	public void setShippingZoneCode(String shippingZoneCode) {
+		this.shippingZoneCode = shippingZoneCode;
 	}
 
 }

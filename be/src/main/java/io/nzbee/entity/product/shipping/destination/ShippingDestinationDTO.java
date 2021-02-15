@@ -29,6 +29,19 @@ public class ShippingDestinationDTO {
 		this.shippingDestinationCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.shippingDestinationZoneCode 	= tuple[aliasToIndexMap.get(ZONE_ALIAS)].toString();
 		this.shippingDestinationDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
+		this.locale							= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
+	}
+	
+	public ShippingDestinationDTO(Long 		shippingDestinationId,
+								  String 	shippingDestinationCode, 
+								  String 	shippingDestinationZoneCode,
+								  String 	shippingDestinationDesc,
+								  String 	locale) {
+		this.shippingDestinationId 			= shippingDestinationId;
+		this.shippingDestinationCode 		= shippingDestinationCode;
+		this.shippingDestinationZoneCode 	= shippingDestinationZoneCode;
+		this.shippingDestinationDesc 		= shippingDestinationDesc;
+		this.locale 						= locale; 
 	}
 
 	public Long getShippingDestinationId() {
