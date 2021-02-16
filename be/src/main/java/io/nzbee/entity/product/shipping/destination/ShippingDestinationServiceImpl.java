@@ -44,14 +44,12 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 
 	@Override
 	public Optional<ShippingDestinationDTO> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
+		return shippingDestinationRepository.findByDesc(locale, desc);
 	}
 
 	@Override
 	public Optional<ShippingDestinationDTO> findByCode(String locale, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return shippingDestinationRepository.findByCode(locale, code);
 	}
 
 	@Override

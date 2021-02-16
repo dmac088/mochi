@@ -19,10 +19,10 @@ public class ShippingTypeAttributeEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="shp_lcl_id")
+	@Column(name="shp_typ_lcl_id")
 	private Long Id;
 	
-	@Column(name="shp_desc")
+	@Column(name="shp_typ_desc")
 	private String shippingTypeDesc;
 
 	@Column(name="lcl_cd")

@@ -99,7 +99,7 @@ public class ShippingDestinationMasterService {
 		sd.setShippingDestinationCode(shippingDestinationCode);
 		sd.setShippingDestinationDesc(shippingDestinationDescription);
 		sd.setShippingDestinationShortCode(shippingDestinationShortCode);
-		sd.setShippingZoneCode(shippingDestinationZoneCode);
+		sd.setShippingDestinationZoneCode(shippingDestinationZoneCode);
 		
 		Optional<ShippingDestinationAttributeEntity> osdaen = shippingDestinationAttributeService.findByCode(locale, shippingDestinationCode);
 		
