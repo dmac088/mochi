@@ -99,6 +99,8 @@ public class ShippingTypeMasterService {
 		sda.setShippingType(sd);
 		sda.setShippingTypeDesc(shippingTypeDescription);
 		sda.setLclCd(locale);
+		
+		System.out.println("printing - " + sda.getShippingTypeDesc());
 	
 		sd.getAttributes().add(sda);
 		
