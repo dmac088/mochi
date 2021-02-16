@@ -83,7 +83,7 @@ public class IT_ShippingTypeUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingTypeUploadedForCreate_thenReturnCorrectlyCreatedShippingType_ENGB() {
 		// when
-		Optional<ShippingTypeEntity> found = shippingTypeService.findByCode("TST01");
+		Optional<ShippingTypeEntity> found = shippingTypeService.findByCode("TST_000_1");
 
 		// then
 		assertFound_ENGB(found);
@@ -93,7 +93,7 @@ public class IT_ShippingTypeUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingTypeUploadedForCreate_thenReturnCorrectlyCreatedShippingType_ZHHK() {
 		// when
-		Optional<ShippingTypeEntity> found = shippingTypeService.findByCode("TST01");
+		Optional<ShippingTypeEntity> found = shippingTypeService.findByCode("TST_000_1");
 
 		// then
 		assertFound_ZHHK(found);
