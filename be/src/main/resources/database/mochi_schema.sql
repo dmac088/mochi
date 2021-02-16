@@ -2795,7 +2795,8 @@ CREATE TABLE shipping_destination (
     shp_dst_id bigint NOT NULL,
     shp_dst_cd character(2) NOT NULL,
     shp_zne_cd character(2) NOT NULL,
-    shp_dst_desc character varying(100) NOT NULL
+    shp_dst_desc character varying(100) NOT NULL,
+    shp_dst_sht_cd character(2) NOT NULL
 );
 
 
