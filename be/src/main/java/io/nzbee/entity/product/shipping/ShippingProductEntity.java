@@ -20,27 +20,27 @@ public class ShippingProductEntity extends ProductEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pst_typ_id")
-	private ShippingTypeEntity postageType;
+	private ShippingTypeEntity shippingType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="pst_dst_id")
-	private ShippingDestinationEntity postageDestination;
+	private ShippingDestinationEntity shippingDestination;
 
 
-	public ShippingTypeEntity getPostageType() {
-		return postageType;
+	public ShippingTypeEntity getShippingType() {
+		return shippingType;
 	}
 
-	public void setPostageType(ShippingTypeEntity postageType) {
-		this.postageType = postageType;
+	public void setShippingType(ShippingTypeEntity shippingType) {
+		this.shippingType = shippingType;
 	}
 
-	public ShippingDestinationEntity getPostageDestination() {
-		return postageDestination;
+	public ShippingDestinationEntity getShippingDestination() {
+		return shippingDestination;
 	}
 
-	public void setPostageDestination(ShippingDestinationEntity postageDestination) {
-		this.postageDestination = postageDestination;
+	public void setShippingDestination(ShippingDestinationEntity shippingDestination) {
+		this.shippingDestination = shippingDestination;
 	}
 
 }

@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.beans.product;
+package io.nzbee.test.integration.entity.beans.product.shipping;
 
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ import io.nzbee.entity.tag.TagEntity;
 
 @Service
 @Profile(value = "it")
-public class ProductEntityBeanFactory implements IProductEntityBeanFactory {
+public class ShippingProductEntityBeanFactory implements IShippingProductEntityBeanFactory {
 	
 	@Autowired
 	private ICurrencyService currencyService;

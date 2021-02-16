@@ -10,11 +10,11 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ShippingProductEntity.class)
 public abstract class ShippingProductEntity_ extends io.nzbee.entity.product.ProductEntity_ {
 
-	public static volatile SingularAttribute<ShippingProductEntity, ShippingTypeEntity> postageType;
-	public static volatile SingularAttribute<ShippingProductEntity, ShippingDestinationEntity> postageDestination;
+	public static volatile SingularAttribute<ShippingProductEntity, ShippingDestinationEntity> shippingDestination;
+	public static volatile SingularAttribute<ShippingProductEntity, ShippingTypeEntity> shippingType;
 
-	public static final String POSTAGE_TYPE = "postageType";
-	public static final String POSTAGE_DESTINATION = "postageDestination";
+	public static final String SHIPPING_DESTINATION = "shippingDestination";
+	public static final String SHIPPING_TYPE = "shippingType";
 
 }
 
