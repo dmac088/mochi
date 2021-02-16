@@ -107,7 +107,7 @@ public class IT_ShippingTypeUploadForCreateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getShippingTypeDesc())
-		.isEqualTo("Test localized shipping type update");
+		.isEqualTo("Test localized shipping type create");
 		
 	}
 
