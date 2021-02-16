@@ -78,7 +78,7 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 
 	@Override
 	public void save(ShippingDestinationEntity t) {
-		// TODO Auto-generated method stub
+		shippingDestinationRepository.save(t);
 		
 	}
 

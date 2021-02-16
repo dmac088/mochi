@@ -74,4 +74,12 @@ public class ShippingDestinationEntity {
 		this.shippingZoneCode = shippingZoneCode;
 	}
 
+	public List<ShippingDestinationAttributeEntity> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(List<ShippingDestinationAttributeEntity> attributes) {
+		this.attributes = attributes;
+	}
+
 }
