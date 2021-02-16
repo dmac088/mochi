@@ -29,8 +29,8 @@ ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_tag_id_tag_tag_id
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT product_tag_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT product_sts_id_product_status_sts_id_fkey;
 ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_prd_id_fkey;
-ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_type_pst_typ_id_fkey;
-ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_destination_pst_dst_id_fkey;
+ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_type_shp_typ_id_fkey;
+ALTER TABLE ONLY mochi.product_shipping DROP CONSTRAINT product_shipping_postage_destination_shp_dst_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_prd_id_product_prd_id_fkey;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT product_category_cat_id_category_cat_id_fkey;
 ALTER TABLE ONLY mochi.product_basic DROP CONSTRAINT product_basic_prd_id_fkey;
@@ -2553,12 +2553,8 @@ ALTER TABLE product_rating OWNER TO mochidb_owner;
 
 CREATE TABLE product_shipping (
     prd_id bigint NOT NULL,
-    pst_zne_id bigint NOT NULL,
-    pst_dst_id bigint NOT NULL,
-    pst_cst_id bigint NOT NULL,
-    pst_typ_id bigint NOT NULL,
-    pst_siz_id bigint NOT NULL,
-    pst_ins_id bigint NOT NULL
+    shp_dst_id bigint NOT NULL,
+    shp_typ_id bigint NOT NULL
 );
 
 
@@ -4051,19 +4047,19 @@ ALTER TABLE ONLY product_category
 
 
 --
--- Name: product_shipping product_shipping_postage_destination_pst_dst_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_shipping product_shipping_postage_destination_shp_dst_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY product_shipping
-    ADD CONSTRAINT product_shipping_postage_destination_pst_dst_id_fkey FOREIGN KEY (pst_dst_id) REFERENCES shipping_destination(shp_dst_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+    ADD CONSTRAINT product_shipping_postage_destination_shp_dst_id_fkey FOREIGN KEY (shp_dst_id) REFERENCES shipping_destination(shp_dst_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
--- Name: product_shipping product_shipping_postage_type_pst_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+-- Name: product_shipping product_shipping_postage_type_shp_typ_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
 ALTER TABLE ONLY product_shipping
-    ADD CONSTRAINT product_shipping_postage_type_pst_typ_id_fkey FOREIGN KEY (pst_typ_id) REFERENCES shipping_type(shp_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
+    ADD CONSTRAINT product_shipping_postage_type_shp_typ_id_fkey FOREIGN KEY (shp_typ_id) REFERENCES shipping_type(shp_typ_id) ON UPDATE RESTRICT ON DELETE RESTRICT;
 
 
 --
