@@ -15,9 +15,6 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 	@Autowired
 	private IShippingTypeRepository shippingTypeRepository;
 	
-	@Autowired
-	private IShippingTypeDao shippingTypeDao;
-	
 	@Override
 	public List<ShippingTypeDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
