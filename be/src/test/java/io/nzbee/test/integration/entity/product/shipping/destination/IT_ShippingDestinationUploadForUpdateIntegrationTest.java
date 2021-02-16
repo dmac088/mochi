@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.promotion;
+package io.nzbee.test.integration.entity.product.shipping.destination;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -7,6 +7,7 @@ import java.io.File;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.Optional;
+import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,36 +21,38 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.promotion.IPromotionService;
-import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.PromotionMasterService;
+import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
+import io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO;
+import io.nzbee.util.product.shipping.ShippingDestinationMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class IT_PromotionUploadForCreateIntegrationTest {
+public class IT_ShippingDestinationUploadForUpdateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private PromotionMasterService pms;
+	@Qualifier("mochiEntityManagerFactory")
+	private EntityManager entityManager;
 
 	@Autowired
-	private IPromotionService promotionService;
+	private ShippingDestinationMasterService pms;
+
+	@Autowired
+	private IShippingDestinationService shippingDestinationService;
 	
-    @Autowired
+	@Autowired
     @Qualifier("mochiDataSourceOwner")
     private DataSource database;
 	
-    private static boolean setUpIsDone = false;
+	private static boolean setUpIsDone = false;
 
     @Before
 	public void setUp() {
@@ -63,22 +66,22 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	this.loadPromotions();
+    	this.uploadShippingDestinations();
         setUpIsDone = true;
 	}
-	
-	public void loadPromotions() {
+
+	public void uploadShippingDestinations() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writePromotionMaster(file.getAbsolutePath() + "/data/promotion/create/promotion.tsv");
+		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shippingDestination/update/shippingDestination_master.tsv");
 	}
 
 	@Test
 	@Rollback(false)
-	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
+	public void whenShippingDestinationUploadedForUpdate_thenReturnCorrectlyUpdatedShippingDestination_ENGB() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B1G1F");
+		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByCode(Constants.localeENGB, "GFR01");
 
 		// then
 		assertFound_ENGB(found);
@@ -86,48 +89,33 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 
 	@Test
 	@Rollback(false)
-	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
+	public void whenShippingDestinationUploadedForUpdate_thenReturnCorrectlyUpdatedShippingDestination_ZHHK() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B2G1F");
+		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByCode(Constants.localeZHHK, "GFR01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<PromotionEntity> found) {
+	private void assertFound_ENGB(Optional<ShippingDestinationDTO> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		PromotionEntity cp = (PromotionEntity) found.get();
-		
-		assertThat(cp.getPromotionCode())
-		.isEqualTo("B1G1F");
-		
-		assertThat(cp.getAttributes().size()).isEqualTo(2);
-		
-		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeENGB)).findAny().get().getPromotionDesc())
-		.isEqualTo("Buy 1 get 1 free");
+		assertThat(found.get().getShippingDestinationDesc())
+		.isEqualTo("Gluten Free Test");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<PromotionEntity> found) {
+	private void assertFound_ZHHK(Optional<ShippingDestinationDTO> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		PromotionEntity cp = (PromotionEntity) found.get();
-		
-		assertThat(cp.getPromotionCode())
-		.isEqualTo("B2G1F");
-		
-		assertThat(cp.getAttributes().size()).isEqualTo(2);
-		
-		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
-		.isEqualTo("買二送一");
-		
+		assertThat(found.get().getShippingDestinationDesc())
+		.isEqualTo("無麩質測試");
 	}
 
 }
