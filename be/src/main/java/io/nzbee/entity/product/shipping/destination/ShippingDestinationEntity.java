@@ -31,7 +31,7 @@ public class ShippingDestinationEntity {
 	private String shippingDestinationDesc;
 	
 	@Column(name="shp_zne_cd")
-	private String shippingZoneCode;
+	private String shippingDestinationZoneCode;
 	
 	@OneToMany(	mappedBy="shippingDestination",  
 			cascade = CascadeType.ALL,
@@ -67,11 +67,11 @@ public class ShippingDestinationEntity {
 	}
 
 	public String getShippingZoneCode() {
-		return shippingZoneCode;
+		return shippingDestinationZoneCode;
 	}
 
-	public void setShippingZoneCode(String shippingZoneCode) {
-		this.shippingZoneCode = shippingZoneCode;
+	public void setShippingDestinationZoneCode(String shippingDestinationZoneCode) {
+		this.shippingDestinationZoneCode = shippingDestinationZoneCode;
 	}
 
 	public List<ShippingDestinationAttributeEntity> getAttributes() {

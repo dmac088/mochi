@@ -22,7 +22,7 @@ public class BrandEntityBeanFactory implements IBrandEntityBeanFactory {
 		brandAttributeEN.setBrand(brand);
 		brand.addAttribute(brandAttributeEN);
 		
-		final BrandAttributeEntity brandAttributeZH = new BrandAttributeEntity();
+		BrandAttributeEntity brandAttributeZH = new BrandAttributeEntity();
 		brandAttributeZH.setBrand(brand);
 		brandAttributeZH.setBrandDesc("測試品牌");
 		brandAttributeZH.setLclCd(Constants.localeZHHK);
