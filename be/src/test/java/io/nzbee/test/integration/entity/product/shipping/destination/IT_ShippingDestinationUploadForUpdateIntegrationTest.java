@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
 import io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO;
-import io.nzbee.util.product.shipping.ShippingDestinationMasterService;
+import io.nzbee.util.product.shipping.destination.ShippingDestinationMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
