@@ -25,7 +25,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.test.integration.entity.beans.product.IProductEntityBeanFactory;
+import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -46,7 +46,7 @@ public class IT_ProductAttributeEntityRepositoryIntegrationTest {
     private DataSource database;
 
 	@Autowired
-	private IProductEntityBeanFactory productEntityBeanFactory;
+	private IPhysicalProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
     private IProductService productService;
