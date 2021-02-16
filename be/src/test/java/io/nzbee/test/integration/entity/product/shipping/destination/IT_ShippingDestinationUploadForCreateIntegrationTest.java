@@ -118,7 +118,7 @@ public class IT_ShippingDestinationUploadForCreateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeZHHK)).findAny().get().getShippingDestinationDesc())
-		.isEqualTo("測試標籤");
+		.isEqualTo("測試本地化的送貨目的地更新");
 	}
 
 }
