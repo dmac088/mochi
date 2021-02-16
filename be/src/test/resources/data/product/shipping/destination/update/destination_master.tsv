@@ -1,2 +1,2 @@
-shp_dst_cd	shp_dst_sht_cd	shp_dst_desc_en	shp_dst_desc_hk	shp_dst_desc_cn	shp_zne_cd
+_DESTINATION_CODE	_DESTINATION_SHORT_CODE	_DESTINATION_DESC_EN	_DESTINATION_DESC_HK	_DESTINATION_DESC_CN	_DESTINATION_ZONE_CODE
 TST01	ZZ	Test localized shipping destination create	測試本地化的送貨目的地創建	测试本地化的送货目的地创建	TZ
