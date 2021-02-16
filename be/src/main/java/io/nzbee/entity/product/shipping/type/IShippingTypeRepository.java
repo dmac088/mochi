@@ -10,10 +10,9 @@ public interface IShippingTypeRepository extends CrudRepository<ShippingTypeEnti
 	
 	Optional<ShippingTypeEntity> findByShippingTypeCode(String code); 
 	
-	@Query(	  " SELECT new io.nzbee.entity.product.shipping.ShippingTypeDTO("
+	@Query(	  " SELECT new io.nzbee.entity.product.shipping.type.ShippingTypeDTO("
 			+ "															 sd.shippingTypeId, "
 			+ "															 sd.shippingTypeCode, "
-			+ "															 sd.shippingTypeZoneCode, "
 			+ "															 at.shippingTypeDesc, "
 			+ "															 at.lclCd "		
 			+ ") "
