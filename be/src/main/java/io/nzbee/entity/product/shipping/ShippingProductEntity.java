@@ -19,11 +19,11 @@ public class ShippingProductEntity extends ProductEntity {
 	private static final long serialVersionUID = -5894324320785215250L;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="pst_typ_id")
+	@JoinColumn(name="shp_typ_id")
 	private ShippingTypeEntity shippingType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="pst_dst_id")
+	@JoinColumn(name="shp_dst_id")
 	private ShippingDestinationEntity shippingDestination;
 
 
