@@ -10,7 +10,7 @@ public interface IShippingDestinationRepository extends CrudRepository<ShippingD
 	
 	Optional<ShippingDestinationEntity> findByShippingDestinationCode(String code);
 	
-	@Query(	  " SELECT new io.nzbee.entity.product.shipping.ShippingDestinationDTO("
+	@Query(	  " SELECT new io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO("
 			+ "															 sd.shippingDestinationId, "
 			+ "															 sd.shippingDestinationCode, "
 			+ "															 sd.shippingDestinationZoneCode, "
