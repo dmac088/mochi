@@ -71,7 +71,7 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 
 	@Override
 	public Optional<ShippingTypeEntity> findByCode(String code) {
-		return shippingTypeDao.findByCode(code);
+		return shippingTypeRepository.findByShippingTypeCode(code);
 	}
 
 	@Override
