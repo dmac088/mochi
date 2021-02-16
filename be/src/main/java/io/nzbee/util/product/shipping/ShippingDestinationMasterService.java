@@ -75,7 +75,7 @@ public class ShippingDestinationMasterService {
 				sdms.getDESTINATION_DESC_HK(),
 				sdms.getDESTINATION_SHORT_CODE(),
 				sdms.getDESTINATION_ZONE_CODE(),
-				Constants.localeENGB
+				Constants.localeZHHK
 		);
 		
 		shippingDestinationService.save(tTc);
