@@ -76,7 +76,7 @@ public class IT_ShippingDestinationUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shippingDestination/create/shippingDestination_master.tsv");
+		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shipping/destination/create/destination_master.tsv");
 	}
 
 	@Test
@@ -107,7 +107,7 @@ public class IT_ShippingDestinationUploadForCreateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getShippingDestinationDesc())
-		.isEqualTo("test shippingDestination");
+		.isEqualTo("Test localized shipping destination update");
 		
 	}
 

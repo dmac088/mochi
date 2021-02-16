@@ -61,22 +61,22 @@ public class ShippingDestinationMasterService {
 		logger.debug("called persistShippingDestinationMaster");
 		
 		ShippingDestinationEntity tEn = mapToShippingDestination(
-											sdms.getDESTINATION_CODE(),
-											sdms.getDESTINATION_DESC_EN(),
-											sdms.getDESTINATION_DESC_EN(),
-											sdms.getDESTINATION_SHORT_CODE(),
-											sdms.getDESTINATION_ZONE_CODE(),
+											sdms.get_DESTINATION_CODE(),
+											sdms.get_DESTINATION_DESC_EN(),
+											sdms.get_DESTINATION_DESC_EN(),
+											sdms.get_DESTINATION_SHORT_CODE(),
+											sdms.get_DESTINATION_ZONE_CODE(),
 											Constants.localeENGB
 										);
 		
 		shippingDestinationService.save(tEn);
 		
 		ShippingDestinationEntity tTc = mapToShippingDestination(
-				sdms.getDESTINATION_CODE(),
-				sdms.getDESTINATION_DESC_EN(),
-				sdms.getDESTINATION_DESC_HK(),
-				sdms.getDESTINATION_SHORT_CODE(),
-				sdms.getDESTINATION_ZONE_CODE(),
+				sdms.get_DESTINATION_CODE(),
+				sdms.get_DESTINATION_DESC_EN(),
+				sdms.get_DESTINATION_DESC_HK(),
+				sdms.get_DESTINATION_SHORT_CODE(),
+				sdms.get_DESTINATION_ZONE_CODE(),
 				Constants.localeZHHK
 		);
 		
@@ -105,7 +105,7 @@ public class ShippingDestinationMasterService {
 		
 		Optional<ShippingDestinationAttributeEntity> osdaen = shippingDestinationAttributeService.findByCode(locale, shippingDestinationCode);
 		
-		ShippingDestinationAttributeEntity sda = (osd.isPresent()) 
+		ShippingDestinationAttributeEntity sda = (osdaen.isPresent()) 
 				? (ShippingDestinationAttributeEntity) osdaen.get() 
 				: new ShippingDestinationAttributeEntity();
 		
