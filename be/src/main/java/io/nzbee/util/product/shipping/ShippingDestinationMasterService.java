@@ -58,24 +58,62 @@ public class ShippingDestinationMasterService {
 	public void persistShippingDestinationMaster(ShippingDestinationMasterSchema sdms) {
 		logger.debug("called persistShippingDestinationMaster");
 		
-		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode(sdms.getDESTINATION_CODE());
+		ShippingDestinationEntity tEn = mapToShippingDestination(
+											sdms.getDESTINATION_CODE(),
+											sdms.getDESTINATION_DESC_EN(),
+											sdms.getDESTINATION_DESC_EN(),
+											sdms.getDESTINATION_SHORT_CODE(),
+											sdms.getDESTINATION_ZONE_CODE(),
+											Constants.localeENGB
+										);
+		
+		shippingDestinationService.save(tEn);
+		
+		ShippingDestinationEntity tTc = mapToShippingDestination(
+				sdms.getDESTINATION_CODE(),
+				sdms.getDESTINATION_DESC_EN(),
+				sdms.getDESTINATION_DESC_HK(),
+				sdms.getDESTINATION_SHORT_CODE(),
+				sdms.getDESTINATION_ZONE_CODE(),
+				Constants.localeENGB
+		);
+		
+		shippingDestinationService.save(tTc);
+
+	}
+	
+	
+	private ShippingDestinationEntity mapToShippingDestination(	 String shippingDestinationCode,
+																 String shippingDestinationDescription,
+																 String shippingDestinationAttributeDescription,
+																 String shippingDestinationShortCode,
+																 String shippingDestinationZoneCode,
+																 String locale) {
+		
+		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode(shippingDestinationCode);
 		
 		ShippingDestinationEntity sd = 	(osd.isPresent()) 
 				? (ShippingDestinationEntity) osd.get() 
 				: new ShippingDestinationEntity();
+						
+		sd.setShippingDestinationCode(shippingDestinationCode);
+		sd.setShippingDestinationDesc(shippingDestinationDescription);
+		sd.setShippingDestinationShortCode(shippingDestinationShortCode);
+		sd.setShippingZoneCode(shippingDestinationZoneCode);
 		
-		Optional<ShippingDestinationAttributeEntity> osdaen = shippingDestinationAttributeService.findByCode( Constants.localeENGB, sdms.getDESTINATION_CODE());
-				
-		sd.setShippingDestinationCode(sdms.getDESTINATION_CODE());
-		sd.setShippingDestinationDesc(sdms.getDESTINATION_DESC_EN());
-		sd.setShippingZoneCode(sdms.getDESTINATION_ZONE_CODE());
-		sd.setShippingDestinationShortCode(sdms.getDESTINATION_SHORT_CODE());
+		Optional<ShippingDestinationAttributeEntity> osdaen = shippingDestinationAttributeService.findByCode(locale, shippingDestinationCode);
 		
-	}
-	
-	
-	private ShippingDestinationEntity mapToShippingDestination() {
-		return null;
+		ShippingDestinationAttributeEntity sda = (osd.isPresent()) 
+				? (ShippingDestinationAttributeEntity) osdaen.get() 
+				: new ShippingDestinationAttributeEntity();
+		
+		sda.setShippingDestination(sd);
+		sda.setShippingDestinationDesc(shippingDestinationAttributeDescription);
+		sda.setLclCd(locale);
+		
+		sd.getAttributes().add(sda);
+		
+		return sd;
 		
 	}
 }
