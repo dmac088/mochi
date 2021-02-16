@@ -68,10 +68,10 @@ public class ShippingTypeMasterService {
 		shippingTypeService.save(tEn);
 		
 		ShippingTypeEntity tTc = mapToShippingType(
-				sdms.get_TYPE_CODE(),
-				sdms.get_TYPE_DESC_HK(),
-				Constants.localeZHHK
-		);
+											sdms.get_TYPE_CODE(),
+											sdms.get_TYPE_DESC_HK(),
+											Constants.localeZHHK
+										);
 		
 		shippingTypeService.save(tTc);
 
@@ -85,21 +85,21 @@ public class ShippingTypeMasterService {
 		Optional<ShippingTypeEntity> osd = shippingTypeService.findByCode(shippingTypeCode);
 		
 		ShippingTypeEntity sd = 	(osd.isPresent()) 
-				? (ShippingTypeEntity) osd.get() 
-				: new ShippingTypeEntity();
+									? (ShippingTypeEntity) osd.get() 
+									: new ShippingTypeEntity();
 						
 		sd.setShippingTypeCode(shippingTypeCode);
 		
 		Optional<ShippingTypeAttributeEntity> osdaen = shippingTypeAttributeService.findByCode(locale, shippingTypeCode);
 		
-		ShippingTypeAttributeEntity sda = (osdaen.isPresent()) 
-				? (ShippingTypeAttributeEntity) osdaen.get() 
-				: new ShippingTypeAttributeEntity();
+		ShippingTypeAttributeEntity sda = 	(osdaen.isPresent()) 
+											? (ShippingTypeAttributeEntity) osdaen.get() 
+											: new ShippingTypeAttributeEntity();
 		
 		sda.setShippingType(sd);
 		sda.setShippingTypeDesc(shippingTypeDescription);
 		sda.setLclCd(locale);
-		
+	
 		sd.getAttributes().add(sda);
 		
 		return sd;

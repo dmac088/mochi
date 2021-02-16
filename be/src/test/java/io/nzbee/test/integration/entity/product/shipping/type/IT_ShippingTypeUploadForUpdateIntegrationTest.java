@@ -81,7 +81,7 @@ public class IT_ShippingTypeUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingTypeUploadedForUpdate_thenReturnCorrectlyUpdatedShippingType_ENGB() {
 		// when
-		Optional<ShippingTypeDTO> found = shippingTypeService.findByCode(Constants.localeENGB, "TST01");
+		Optional<ShippingTypeDTO> found = shippingTypeService.findByCode(Constants.localeENGB, "AIR_ORD_1");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,7 +91,7 @@ public class IT_ShippingTypeUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingTypeUploadedForUpdate_thenReturnCorrectlyUpdatedShippingType_ZHHK() {
 		// when
-		Optional<ShippingTypeDTO> found = shippingTypeService.findByCode(Constants.localeZHHK, "TST01");
+		Optional<ShippingTypeDTO> found = shippingTypeService.findByCode(Constants.localeZHHK, "AIR_ORD_1");
 
 		// then
 		assertFound_ZHHK(found);
@@ -104,7 +104,7 @@ public class IT_ShippingTypeUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getShippingTypeDesc())
-		.isEqualTo("Test localized shipping type create");
+		.isEqualTo("Test localized shipping type update");
 		
 	}
 
@@ -115,7 +115,7 @@ public class IT_ShippingTypeUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getShippingTypeDesc())
-		.isEqualTo("測試本地化的送貨目的地創建");
+		.isEqualTo("測試本地化的運輸類型更新");
 	}
 
 }
