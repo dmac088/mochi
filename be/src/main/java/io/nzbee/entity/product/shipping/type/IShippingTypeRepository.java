@@ -22,6 +22,18 @@ public interface IShippingTypeRepository extends CrudRepository<ShippingTypeEnti
 			+ " AND at.lclCd = :locale")
 	Optional<ShippingTypeDTO> findByCode(String locale, String shippingTypeCode);
 	
+	@Query(	  " SELECT new io.nzbee.entity.product.shipping.type.ShippingTypeDTO("
+			+ "															 sd.shippingTypeId, "
+			+ "															 sd.shippingTypeCode, "
+			+ "															 at.shippingTypeDesc, "
+			+ "															 at.lclCd "		
+			+ ") "
+			+ " FROM ShippingTypeEntity sd "
+			+ " JOIN sd.attributes at "
+			+ " WHERE at.shippingTypeDesc = :shippingTypeDesc "
+			+ " AND at.lclCd = :locale")
+	Optional<ShippingTypeDTO> findByDesc(String locale, String shippingTypeDesc);
+	
 }
 
  

@@ -36,5 +36,21 @@ public class ShippingTypeEntity {
 	public String getShippingTypeCode() {
 		return shippingTypeCode;
 	}
+
+	public void setShippingTypeId(Long shippingTypeId) {
+		this.shippingTypeId = shippingTypeId;
+	}
+
+	public void setAttributes(List<ShippingTypeAttributeEntity> attributes) {
+		this.attributes = attributes;
+	}
+
+	public void setShippingTypeCode(String shippingTypeCode) {
+		this.shippingTypeCode = shippingTypeCode;
+	}
+
+	public List<ShippingTypeAttributeEntity> getAttributes() {
+		return attributes;
+	}
 	
 }
