@@ -72,7 +72,7 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 	
-		pms.writeProductMaster(file.getAbsolutePath() + "/data/product/create/product_master.tsv");
+		pms.writeProductMaster(file.getAbsolutePath() + "/data/product/physical/create/product_master.tsv");
 	}
 	
 	@Test
