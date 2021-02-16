@@ -74,14 +74,14 @@ public class IT_ShippingDestinationUploadForUpdateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shippingDestination/update/shippingDestination_master.tsv");
+		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shipping/destination/update/destination_master.tsv");
 	}
 
 	@Test
 	@Rollback(false)
 	public void whenShippingDestinationUploadedForUpdate_thenReturnCorrectlyUpdatedShippingDestination_ENGB() {
 		// when
-		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByCode(Constants.localeENGB, "GFR01");
+		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByCode(Constants.localeENGB, "TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,7 +91,7 @@ public class IT_ShippingDestinationUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingDestinationUploadedForUpdate_thenReturnCorrectlyUpdatedShippingDestination_ZHHK() {
 		// when
-		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByCode(Constants.localeZHHK, "GFR01");
+		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByCode(Constants.localeZHHK, "TST01");
 
 		// then
 		assertFound_ZHHK(found);
@@ -104,7 +104,7 @@ public class IT_ShippingDestinationUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getShippingDestinationDesc())
-		.isEqualTo("Gluten Free Test");
+		.isEqualTo("test shippingDestination");
 		
 	}
 
@@ -115,7 +115,7 @@ public class IT_ShippingDestinationUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getShippingDestinationDesc())
-		.isEqualTo("無麩質測試");
+		.isEqualTo("測試標籤");
 	}
 
 }
