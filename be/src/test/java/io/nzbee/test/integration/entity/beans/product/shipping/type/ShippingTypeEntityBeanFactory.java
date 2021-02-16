@@ -18,7 +18,7 @@ public class ShippingTypeEntityBeanFactory implements IShippingTypeEntityBeanFac
 		sd.setShippingTypeCode("TST01");
 		ShippingTypeAttributeEntity sdaEn = new ShippingTypeAttributeEntity();
 		sdaEn.setShippingType(sd);
-		sdaEn.setShippingTypeDesc("Test localized shipping destination description");
+		sdaEn.setShippingTypeDesc("Test localized shipping type description");
 		sdaEn.setLclCd(Constants.localeENGB);
 		sd.getAttributes().add(sdaEn);
 		
