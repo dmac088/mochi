@@ -29,7 +29,7 @@ public class ShippingTypeAttributeEntity {
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="shp_id")
+	@JoinColumn(name="shp_typ_id")
 	private ShippingTypeEntity shippingType;
 	
 	public Long getId() {
