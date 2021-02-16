@@ -1022,7 +1022,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234528, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234530, true);
 
 
 --
@@ -2671,6 +2671,7 @@ INSERT INTO tag VALUES (233263, 'TAG16');
 INSERT INTO tag VALUES (233266, 'TAG17');
 INSERT INTO tag VALUES (233269, 'TAG18');
 INSERT INTO tag VALUES (233272, 'TAG19');
+INSERT INTO tag VALUES (234529, 'TST02');
 
 
 --
@@ -3596,6 +3597,7 @@ INSERT INTO tag_attr_lcl VALUES (233273, 233272, 'SKATEBOARD', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (233274, 233272, '滑板風', NULL, 'zh-HK');
 INSERT INTO tag_attr_lcl VALUES (3, 17, 'GLUTEN FREE', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (1, 15, 'ORGANIC', NULL, 'en-GB');
+INSERT INTO tag_attr_lcl VALUES (234530, 234529, 'test tag', NULL, 'en-GB');
 
 
 --
