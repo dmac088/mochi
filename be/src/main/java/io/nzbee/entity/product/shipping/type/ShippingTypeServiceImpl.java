@@ -74,7 +74,6 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 	@Override
 	public void save(ShippingTypeEntity t) {
 		shippingTypeRepository.save(t);
-		
 	}
 
 	@Override

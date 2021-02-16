@@ -2,12 +2,15 @@ package io.nzbee.entity.product.shipping.type.attribute;
 
 import java.util.List;
 import java.util.Optional;
-
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ShippingTypeAttributeServiceImpl implements IShippingTypeAttributeService {
 
+	@Autowired
+	private IShippingTypeAttributeRepository shippingTypeAttributeRepository;
+	
 	@Override
 	public List<ShippingTypeAttributeEntity> findAll() {
 		// TODO Auto-generated method stub
@@ -28,8 +31,7 @@ public class ShippingTypeAttributeServiceImpl implements IShippingTypeAttributeS
 
 	@Override
 	public void save(ShippingTypeAttributeEntity t) {
-		// TODO Auto-generated method stub
-		
+		shippingTypeAttributeRepository.save(t);
 	}
 
 	@Override
@@ -46,8 +48,7 @@ public class ShippingTypeAttributeServiceImpl implements IShippingTypeAttributeS
 
 	@Override
 	public Optional<ShippingTypeAttributeEntity> findByCode(String locale, String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return shippingTypeAttributeRepository.findByLclCdAndShippingTypeShippingTypeCode(locale, code);
 	}
 
 }

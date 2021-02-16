@@ -35,8 +35,7 @@ public class ShippingDestinationAttributeServiceImpl implements IShippingDestina
 
 	@Override
 	public void save(ShippingDestinationAttributeEntity t) {
-		// TODO Auto-generated method stub
-		
+		shippingDestinationAttributeRepository.save(t);
 	}
 
 	@Override
