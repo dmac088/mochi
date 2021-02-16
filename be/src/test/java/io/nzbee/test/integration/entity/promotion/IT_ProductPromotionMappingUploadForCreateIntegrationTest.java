@@ -48,7 +48,7 @@ public class IT_ProductPromotionMappingUploadForCreateIntegrationTest {
     @Qualifier("mochiDataSourceOwner")
     private DataSource database;
     
-private static boolean setUpIsDone = false;
+    private static boolean setUpIsDone = false;
 	
     @Before
 	public void setUp() {

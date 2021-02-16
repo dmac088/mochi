@@ -119,33 +119,5 @@ public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
 		// TODO Auto-generated method stub
 		
 	}
-
-	@Override
-	public List<ShippingDestinationDTO> findAll(String locale, Set<String> PromotionCodes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ShippingDestinationDTO> findByProductCode(String locale, String productCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ShippingDestinationDTO> findAll(String locale, String currency, String categoryCode,
-			Set<String> categoryCodes, Set<String> tagCodes, Double maxPrice) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ShippingDestinationDTO> findAllByCategory(String locale, String categoryCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
-
-
 }
