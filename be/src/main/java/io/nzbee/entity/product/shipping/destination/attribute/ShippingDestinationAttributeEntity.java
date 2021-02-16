@@ -19,17 +19,17 @@ public class ShippingDestinationAttributeEntity {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	@Column(name="shp_lcl_id")
+	@Column(name="shp_dst_lcl_id")
 	private Long Id;
 	
-	@Column(name="shp_desc")
+	@Column(name="shp_dst_desc")
 	private String shippingDestinationDesc;
 
 	@Column(name="lcl_cd")
 	private String lclCd;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional=false)
-	@JoinColumn(name="shp_id")
+	@JoinColumn(name="shp_dst_id")
 	private ShippingDestinationEntity shippingDestination;
 	
 	public Long getId() {

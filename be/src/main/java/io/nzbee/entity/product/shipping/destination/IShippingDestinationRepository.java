@@ -23,6 +23,19 @@ public interface IShippingDestinationRepository extends CrudRepository<ShippingD
 			+ " AND at.lclCd = :locale")
 	Optional<ShippingDestinationDTO> findByCode(String locale, String shippingDestinationCode);
 	
+	@Query(	  " SELECT new io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO("
+			+ "															 sd.shippingDestinationId, "
+			+ "															 sd.shippingDestinationCode, "
+			+ "															 sd.shippingDestinationZoneCode, "
+			+ "															 at.shippingDestinationDesc, "
+			+ "															 at.lclCd "		
+			+ ") "
+			+ " FROM ShippingDestinationEntity sd "
+			+ " JOIN sd.attributes at "
+			+ " WHERE sd.shippingDestinationDesc = :shippingDestinationDesc "
+			+ " AND at.lclCd = :locale")
+	Optional<ShippingDestinationDTO> findByDesc(String locale, String shippingDestinationDesc);
+	
 }
 
  

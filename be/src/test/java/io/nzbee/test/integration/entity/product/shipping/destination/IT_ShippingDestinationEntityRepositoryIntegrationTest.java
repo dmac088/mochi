@@ -5,10 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -123,27 +120,12 @@ public class IT_ShippingDestinationEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnShippingDestinationDTO() {
 
 		// when
-		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByDesc(Constants.localeENGB, "Test localized shipping destination description");
+		Optional<ShippingDestinationDTO> found = shippingDestinationService.findByDesc(Constants.localeENGB, "Test shipping destination description");
 
 		// then
 		assertFoundDTO(found);
 	}
 
-	@Test
-	@Rollback(false)
-	public void whenFindAllForTestShippingDestination_thenReturnShippingDestinationDTO() {
-
-		Set<String> shippingDestinationCodes = new HashSet<String>();
-
-		shippingDestinationCodes.add("TST01");
-
-		// when
-		List<ShippingDestinationDTO> lb = shippingDestinationService.findAll(Constants.localeENGB, new StringCollectionWrapper(shippingDestinationCodes));
-
-		// then
-		assertNotNull(lb);
-		assertThat(lb.size()).isEqualTo(1);
-	}
 
 	private void assertFoundEntity(Optional<ShippingDestinationEntity> found) {
 
