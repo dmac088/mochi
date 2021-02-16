@@ -104,7 +104,7 @@ public class IT_ShippingDestinationUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getShippingDestinationDesc())
-		.isEqualTo("test shippingDestination");
+		.isEqualTo("Test localized shipping destination create");
 		
 	}
 
@@ -115,7 +115,7 @@ public class IT_ShippingDestinationUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getShippingDestinationDesc())
-		.isEqualTo("測試標籤");
+		.isEqualTo("測試本地化的送貨目的地創建");
 	}
 
 }
