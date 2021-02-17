@@ -2438,7 +2438,7 @@ ALTER TABLE price_type OWNER TO mochidb_owner;
 
 CREATE TABLE product (
     prd_id bigint NOT NULL,
-    upc_cd character varying(12) NOT NULL,
+    upc_cd character varying(30) NOT NULL,
     prd_crtd_dt timestamp(4) with time zone NOT NULL,
     bnd_id bigint NOT NULL,
     dept_id bigint NOT NULL,
