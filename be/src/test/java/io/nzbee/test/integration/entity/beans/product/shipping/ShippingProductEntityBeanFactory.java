@@ -1,6 +1,8 @@
 package io.nzbee.test.integration.entity.beans.product.shipping;
 
 import java.time.LocalDateTime;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
@@ -11,6 +13,10 @@ import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
+import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
+import io.nzbee.entity.product.shipping.destination.ShippingDestinationEntity;
+import io.nzbee.entity.product.shipping.type.IShippingTypeService;
+import io.nzbee.entity.product.shipping.type.ShippingTypeEntity;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
@@ -34,6 +40,13 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 	    
 	@Autowired
 	private IProductStatusRepository productStatusRepository;
+	
+	@Autowired
+	private IShippingDestinationService shippingDestinationService;
+	
+	@Autowired
+	private IShippingTypeService shippingTypeService;
+	
 	   
 	@Override
 	public ShippingProductEntity getBean() {
@@ -97,6 +110,16 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 				
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
+		
+		product.setWeightLimit(new Double(5));
+		product.setWeightFrom(new Double(2));
+		product.setWeightTo(new Double(3));
+		
+		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode("AD");
+		Optional<ShippingTypeEntity> ost = shippingTypeService.findByCode("AIR_REG_1");
+		
+		product.setShippingDestination(osd.get());
+		product.setShippingType(ost.get());
 		
 		return product;
 	}

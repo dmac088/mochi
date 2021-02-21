@@ -24,7 +24,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.shipping.IShippingProductService;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductDTO;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.test.integration.entity.beans.product.shipping.IShippingProductEntityBeanFactory;
@@ -47,7 +49,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	private IShippingProductEntityBeanFactory shippingProductEntityBeanFactory;
 
 	@Autowired
-	private IShippingProductService shippingProductService;
+	private IProductService shippingProductService;
 
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
@@ -86,7 +88,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindById_thenReturnShippingProductEntity() {
 
 		// when
-		Optional<ShippingProductEntity> found = shippingProductService.findById(shippingProduct.getProductId());
+		Optional<ProductEntity> found = shippingProductService.findById(shippingProduct.getProductId());
 
 		// then
 		assertFoundEntity(found);
@@ -97,7 +99,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnShippingProductEntity() {
 
 		// when
-		Optional<ShippingProductEntity> found = shippingProductService.findByCode("123456789");
+		Optional<ProductEntity> found = shippingProductService.findByCode("123456789");
 
 		// then
 		assertFoundEntity(found);
@@ -108,7 +110,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnShippingProductDTO() {
 
 		// when
-		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "123456789");
+		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "123456789");
 
 		// then
 		assertFoundDTO(found);
@@ -119,32 +121,34 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnShippingProductDTO() {
 
 		// when
-		Optional<ShippingProductDTO> found = shippingProductService.findByDesc(Constants.localeENGB, "Test shipping destination description");
+		Optional<ProductDTO> found = shippingProductService.findByDesc(Constants.localeENGB, "Test shipping destination description");
 
 		// then
 		assertFoundDTO(found);
 	}
 
 
-	private void assertFoundEntity(Optional<ShippingProductEntity> found) {
+	private void assertFoundEntity(Optional<ProductEntity> found) {
 
 		assertNotNull(found);
 
 		assertTrue(found.isPresent());
 
-		assertThat(found.get().getProductUPC()).isEqualTo("TST01");
+		assertThat(found.get().getProductUPC()).isEqualTo("123456789");
 		assertThat(found.get().getAttributes().stream().filter(t -> t.getLclCd().equals(Constants.localeENGB)).findAny()
-				.get().getProductDesc()).isEqualTo("Test localized shipping destination description");
+				.get().getProductDesc()).isEqualTo("Test shipping destination description");
 	}
 
-	private void assertFoundDTO(Optional<ShippingProductDTO> found) {
+	private void assertFoundDTO(Optional<ProductDTO> found) {
 
 		assertNotNull(found);
 
 		assertTrue(found.isPresent());
 
-		assertThat(found.get().getProductUPC()).isEqualTo("TST01");
-		assertThat(found.get().getProductDesc()).isEqualTo("Test localized shipping destination description");
+		ShippingProductDTO spDto = (ShippingProductDTO) found.get();
+		
+		assertThat(spDto.getProductUPC()).isEqualTo("TST01");
+		assertThat(spDto.getProductDesc()).isEqualTo("Test localized shipping destination description");
 
 	}
 
