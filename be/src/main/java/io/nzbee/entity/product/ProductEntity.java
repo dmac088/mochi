@@ -156,7 +156,7 @@ filters = {
 )
 public abstract class ProductEntity implements Serializable { 
 	
-	private static final long serialVersionUID = 8330041694804054991L;
+	private static final long serialVersionUID = 8330041694804054992L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

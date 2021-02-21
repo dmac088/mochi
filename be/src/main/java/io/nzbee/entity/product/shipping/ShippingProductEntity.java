@@ -16,7 +16,7 @@ import io.nzbee.entity.product.shipping.type.ShippingTypeEntity;
 @DiscriminatorValue("1")
 public class ShippingProductEntity extends ProductEntity {
 
-	private static final long serialVersionUID = -5894324320785215250L;
+	private static final long serialVersionUID = -5894324320785215252L;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="shp_typ_id")

@@ -34,7 +34,8 @@ import io.nzbee.entity.StringCollectionWrapper;
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
  
-	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	private final Logger LOGGER = LoggerFactory.getLogger(ProductDaoPostgresImpl.class);
+	
 	private static final String CACHE_NAME = "productCache";   
 	
 	@Autowired
