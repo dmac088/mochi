@@ -49,7 +49,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	private IShippingProductEntityBeanFactory shippingProductEntityBeanFactory;
 
 	@Autowired
-	private IProductService shippingProductService;
+	private IProductService productService;
 
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
@@ -64,7 +64,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 		shippingProduct = shippingProductEntityBeanFactory.getBean();
 
 		// persist a new transient test shippingProduct
-		shippingProductService.save(shippingProduct);
+		productService.save(shippingProduct);
 	}
 
 	@Before
@@ -88,7 +88,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindById_thenReturnShippingProductEntity() {
 
 		// when
-		Optional<ProductEntity> found = shippingProductService.findById(shippingProduct.getProductId());
+		Optional<ProductEntity> found = productService.findById(shippingProduct.getProductId());
 
 		// then
 		assertFoundEntity(found);
@@ -99,7 +99,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnShippingProductEntity() {
 
 		// when
-		Optional<ProductEntity> found = shippingProductService.findByCode("123456789");
+		Optional<ProductEntity> found = productService.findByCode("123456789");
 
 		// then
 		assertFoundEntity(found);
@@ -110,7 +110,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnShippingProductDTO() {
 
 		// when
-		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "123456789");
+		Optional<ProductDTO> found = productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "123456789");
 
 		// then
 		assertFoundDTO(found);
@@ -121,7 +121,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnShippingProductDTO() {
 
 		// when
-		Optional<ProductDTO> found = shippingProductService.findByDesc(Constants.localeENGB, "Test shipping destination description");
+		Optional<ProductDTO> found = productService.findByDesc(Constants.localeENGB, Constants.currencyHKD, "Test shipping destination description");
 
 		// then
 		assertFoundDTO(found);
