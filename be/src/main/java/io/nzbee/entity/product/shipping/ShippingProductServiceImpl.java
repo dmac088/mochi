@@ -4,8 +4,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import org.springframework.stereotype.Service;
+
 import io.nzbee.entity.StringCollectionWrapper;
 
+@Service
 public class ShippingProductServiceImpl implements IShippingProductService {
 
 	@Override
