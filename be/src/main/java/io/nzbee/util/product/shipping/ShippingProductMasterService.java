@@ -29,6 +29,10 @@ import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
+import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
+import io.nzbee.entity.product.shipping.destination.ShippingDestinationEntity;
+import io.nzbee.entity.product.shipping.type.IShippingTypeService;
+import io.nzbee.entity.product.shipping.type.ShippingTypeEntity;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -64,6 +68,12 @@ public class ShippingProductMasterService {
 	
 	@Autowired
 	private IProductPriceTypeService productPriceTypeService;
+	
+	@Autowired 
+	private IShippingTypeService shippingTypeService;
+	
+	@Autowired
+	private IShippingDestinationService shippingDestinationService;
     
 	@Transactional
 	public void writeShippingProductMaster(String fileName) {
@@ -102,17 +112,14 @@ public class ShippingProductMasterService {
 															  sdms.get_PRODUCT_DESCRIPTION_EN(),
 															  sdms.get_PRODUCT_LONG_DESCRIPTION_EN(),
 															  sdms.get_PRODUCT_RETAIL_PRICE_HKD(),
-															  sdms.get_PRODUCT_MARKDOWN_PRICE_HKD(),
+															  sdms.get_PRODUCT_RETAIL_PRICE_HKD(),
 															  sdms.get_SERVICE_TYPE_CODE(), 
-															  sdms.get_SERVICE_TYPE_NAME_EN(), 
 															  sdms.get_ZONE_CODE(),
 															  sdms.get_DESTINATION_CODE(),
-															  sdms.get_DESTINATION_NAME_EN(), 
 															  sdms.get_WEIGHT_LIMIT(),
 															  sdms.get_WEIGHT_FROM(), 
 															  sdms.get_WEIGHT_TO(), 
-															  sdms.get_TRACKING_LEVEL(), 
-															  sdms.get_AMOUNT_HKD());
+															  sdms.get_TRACKING_LEVEL());
 
 		productService.save(spEn);
 		
@@ -134,15 +141,12 @@ public class ShippingProductMasterService {
 														Double retailPrice,
 														Double markdownPrice,
 														String serviceCode,
-														String serviceName,
 														String zoneCode,
 														String destinationCode,
-														String destinationName, 
 														String maxWeight,
 														String weightFrom,
 														String weightTo,
-														String trackingLevel,
-														String amount) {
+														String trackingLevel) {
 		
 		
 		Optional<ProductEntity> op = productService.findByCode(upcCode);
@@ -214,6 +218,18 @@ public class ShippingProductMasterService {
 		sp.setProductStatus(ps);
 		sp.addProductPrice(prcr);
 		sp.addProductPrice(prcm);
+		
+		
+		sp.setInStock(true);
+		
+		
+		Optional<ShippingTypeEntity> ost = shippingTypeService.findByCode(serviceCode);
+		sp.setShippingType(ost.get());
+		
+		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode(destinationCode);
+		sp.setShippingDestination(osd.get());
+		
+		sp.
 		
 		return sp;
 		

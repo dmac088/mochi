@@ -2554,7 +2554,10 @@ ALTER TABLE product_rating OWNER TO mochidb_owner;
 CREATE TABLE product_shipping (
     prd_id bigint NOT NULL,
     shp_dst_id bigint NOT NULL,
-    shp_typ_id bigint NOT NULL
+    shp_typ_id bigint NOT NULL,
+    shp_wgt_lim numeric NOT NULL,
+    shp_wgt_frm numeric NOT NULL,
+    shp_wgt_to numeric NOT NULL
 );
 
 
