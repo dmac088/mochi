@@ -428,6 +428,7 @@ INSERT INTO brand VALUES (233206, 'LBS  ');
 INSERT INTO brand VALUES (233209, 'LINSY');
 INSERT INTO brand VALUES (233212, 'PHONY');
 INSERT INTO brand VALUES (233215, 'HLEAF');
+INSERT INTO brand VALUES (42, 'HKP01');
 
 
 --
@@ -472,6 +473,8 @@ INSERT INTO brand_attr_lcl VALUES (233213, 233212, 'Phoney ', NULL, 'en-GB');
 INSERT INTO brand_attr_lcl VALUES (233214, 233212, 'Phoney ', NULL, 'zh-HK');
 INSERT INTO brand_attr_lcl VALUES (233216, 233215, 'HAPPYLEAF', NULL, 'en-GB');
 INSERT INTO brand_attr_lcl VALUES (233217, 233215, '開心葉', NULL, 'zh-HK');
+INSERT INTO brand_attr_lcl VALUES (79, 42, 'Hong Kong Post', NULL, 'en-GB');
+INSERT INTO brand_attr_lcl VALUES (80, 42, '香港郵政', NULL, 'zh-HK');
 
 
 --

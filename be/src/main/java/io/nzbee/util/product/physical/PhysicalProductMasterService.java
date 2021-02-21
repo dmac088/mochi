@@ -154,26 +154,26 @@ public class PhysicalProductMasterService {
 	}
 	
 	
-	private PhysicalProductEntity map(String locale, 
-						 String currency,
-						 String upcCode,
-						 String brandCode,
-						 String categoryCode,
-						 String templateCode,
-						 String productCreateDate,
-						 String productDesc,
-						 String productLongDesc,
-						 Double retailPrice,
-						 Double markdownPrice,
-						 String tagCodeA,
-						 String tagCodeB,
-						 String tagCodeC,
-						 String tagCodeD,
-						 String tagCodeE,
-						 String width,
-						 String height,
-						 String length,
-						 String weight
+	private PhysicalProductEntity map(	 String locale, 
+										 String currency,
+										 String upcCode,
+										 String brandCode,
+										 String categoryCode,
+										 String templateCode,
+										 String productCreateDate,
+										 String productDesc,
+										 String productLongDesc,
+										 Double retailPrice,
+										 Double markdownPrice,
+										 String tagCodeA,
+										 String tagCodeB,
+										 String tagCodeC,
+										 String tagCodeD,
+										 String tagCodeE,
+										 String width,
+										 String height,
+										 String length,
+										 String weight
 						 ) {
 		logger.debug("called map() ");
 		
@@ -192,7 +192,6 @@ public class PhysicalProductMasterService {
 		ProductAttributeEntity pa = (opa.isPresent()) 
 		? opa.get()
 		: (new ProductAttributeEntity());
-		
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
