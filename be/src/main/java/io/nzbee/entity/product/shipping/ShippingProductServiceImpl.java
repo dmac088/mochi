@@ -2,6 +2,9 @@ package io.nzbee.entity.product.shipping;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
+import io.nzbee.entity.StringCollectionWrapper;
 
 public class ShippingProductServiceImpl implements IShippingProductService {
 
@@ -39,6 +42,48 @@ public class ShippingProductServiceImpl implements IShippingProductService {
 	public void delete(ShippingProductEntity t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<ShippingProductDTO> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ShippingProductDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ShippingProductEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ShippingProductDTO> findById(String locale, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ShippingProductDTO> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<ShippingProductDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ShippingProductDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
