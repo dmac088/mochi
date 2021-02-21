@@ -29,7 +29,7 @@ import io.nzbee.entity.party.Party;
 	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property = "@class")
-public class Role {
+public abstract class Role {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)	

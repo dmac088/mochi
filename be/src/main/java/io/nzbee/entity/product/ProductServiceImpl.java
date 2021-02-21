@@ -3,6 +3,9 @@ package io.nzbee.entity.product;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
@@ -16,6 +19,8 @@ import io.nzbee.entity.category.ICategoryService;
 
 @Service(value = "productEntityService")
 public class ProductServiceImpl implements IProductService {
+	
+	private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 	
 	private static final String CACHE_NAME = "productCache";      
 	
@@ -31,6 +36,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public Optional<ProductDTO> findByCode(String locale, String code) {
+		LOGGER.debug("call ProductServiceImpl.findByCode parameters : {}, {}", locale, code);
 		return productDAO.findByCode(locale, code);
 	}
 	
@@ -46,6 +52,7 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public Optional<ProductDTO> findById(String locale, Long id) {
+		LOGGER.debug("call ProductServiceImpl.findById parameters : {}, {}", locale, id);
 		return productDAO.findById(locale, id);
 	}
 
@@ -61,17 +68,20 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public Optional<ProductEntity> findById(Long id) {
+		LOGGER.debug("call ProductServiceImpl.findById parameters : {}", id);
 		return productRepository.findById(id);
 	}
 	
 	@Override
 	public Optional<ProductEntity> findByCode(String productUPC) {
+		LOGGER.debug("call ProductServiceImpl.findByCode parameters : {}", productUPC);
 		return productDAO.findByCode(productUPC);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productId.toString()")
 	public Optional<ProductDTO> findById(String locale, String currency, Long productId) {
+		LOGGER.debug("call ProductServiceImpl.findById parameters : {}, {}, {}", locale, currency, productId);
 		return productDAO.findById(locale, currency, productId);
 	}
 

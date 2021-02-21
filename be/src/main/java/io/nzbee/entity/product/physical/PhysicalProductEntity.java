@@ -13,7 +13,7 @@ import io.nzbee.entity.product.ProductEntity;
 @DiscriminatorValue("2")
 public class PhysicalProductEntity extends ProductEntity {
 
-	private static final long serialVersionUID = -2844690299028235683L;
+	private static final long serialVersionUID = -2844690299028235684L;
 
 	@Column(name="width")
 	private Integer widthDimension;
