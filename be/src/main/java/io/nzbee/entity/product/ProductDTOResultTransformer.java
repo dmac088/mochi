@@ -5,9 +5,13 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
+import io.nzbee.entity.product.physical.PhysicalProductDTO;
+import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
@@ -33,12 +37,24 @@ public class ProductDTOResultTransformer implements ResultTransformer {
         }
 		
         Long productId = ((Number) tuple[aliasToIndexMap.get(ProductDTO.ID_ALIAS)]).longValue();
+        
+        DepartmentDTO pd = new DepartmentDTO(tuple, aliasToIndexMap);
+        
+        BrandDTO pb = new BrandDTO(tuple, aliasToIndexMap);
  
         ProductDTO productDTO = productDTOMap.computeIfAbsent(
             productId,
             id -> {
-            	ProductDTO pDto = new ProductDTO(tuple, aliasToIndexMap);
-            	
+            	ProductDTO pDto = null;  
+            	switch(pd.getDepartmentCode()) {
+            		case Constants.physicalProductDepartmentCode:
+            			pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+            		case Constants.shippingProductDepartmentCode:
+            			pDto = new ShippingProductDTO(tuple, aliasToIndexMap);
+            		default:
+            			pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+            	}
+            			
             	if(!( tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)] == null)) {
                 	
                 	Long promotionId = ((Number) tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)]).longValue();
@@ -69,9 +85,9 @@ public class ProductDTOResultTransformer implements ResultTransformer {
 
                 }
             	
-            	pDto.setBrand(new BrandDTO(tuple, aliasToIndexMap));
+            	pDto.setBrand(pb);
                 
-            	pDto.setDepartment(new DepartmentDTO(tuple, aliasToIndexMap));
+            	pDto.setDepartment(pd);
                  
             	return pDto;
             }
