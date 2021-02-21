@@ -49,10 +49,13 @@ public class ProductDTOResultTransformer implements ResultTransformer {
             	switch(pd.getDepartmentCode()) {
             		case Constants.physicalProductDepartmentCode:
             			pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+            			break;
             		case Constants.shippingProductDepartmentCode:
             			pDto = new ShippingProductDTO(tuple, aliasToIndexMap);
+            			break;
             		default:
             			pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+            			break;
             	}
             			
             	if(!( tuple[aliasToIndexMap.get(PromotionDTO.ID_ALIAS)] == null)) {
