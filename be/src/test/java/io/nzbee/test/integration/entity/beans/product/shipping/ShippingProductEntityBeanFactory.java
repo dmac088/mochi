@@ -4,24 +4,17 @@ import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProductEntity;
-import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.IDepartmentService;
-import io.nzbee.entity.product.physical.PhysicalProductEntity;
+import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
-import io.nzbee.entity.promotion.IPromotionService;
-import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.TagEntity;
 
 @Service
 @Profile(value = "it")
@@ -41,33 +34,24 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 	    
 	@Autowired
 	private IProductStatusRepository productStatusRepository;
-	    
-	@Autowired
-	private ICategoryService categoryService;
-	
-	@Autowired
-	private IPromotionService promotionService;
-	
-	@Autowired
-	private ITagService tagService;
-
+	   
 	@Override
-	public ProductEntity getBean() {
-		PhysicalProductEntity product = new PhysicalProductEntity();
+	public ShippingProductEntity getBean() {
+		ShippingProductEntity product = new ShippingProductEntity();
 		product.setProductCreateDt(LocalDateTime.now());
 		product.setUPC("123456789");
 		
 		ProductAttributeEntity paEng = new ProductAttributeEntity();
 		paEng.setProductDesc("test product");
 		paEng.setProductImage("testpath/");
-		paEng.setLclCd("en-GB");
+		paEng.setLclCd(Constants.localeENGB);
 		paEng.setProduct(product);
 		product.addProductAttribute(paEng);
 		
 		ProductAttributeEntity paCn = new ProductAttributeEntity();
 		paCn.setProductDesc("測試產品");
 		paEng.setProductImage("testpath/");
-		paCn.setLclCd("zh-HK");
+		paCn.setLclCd(Constants.localeZHHK);
 		paCn.setProduct(product);
 		product.addProductAttribute(paCn);
 
@@ -106,30 +90,13 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 		markdownPriceUSD.setProduct(product);
 		
 		//we need a brand
-		product.setBrand(brandService.findByCode("PLA01").get());
+		product.setBrand(brandService.findByCode("HKP01").get());
 				
 		//we need a type
-		product.setDepartment(departmentService.findByCode("ACC01").get());
+		product.setDepartment(departmentService.findByCode("SHP01").get());
 				
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
-				
-		//we need a category
-		CategoryProductEntity cpf = (CategoryProductEntity) categoryService.findByCode("POM01").get();
-				
-		CategoryProductEntity cpv = (CategoryProductEntity) categoryService.findByCode("CIT01").get();
-		
-		//add the category to the product
-		product.addProductCategory(cpf);
-		product.addProductCategory(cpv);
-		
-		//we should add a tag
-		TagEntity t = tagService.findByCode("ORG01").get();
-		
-		product.addTag(t);
-		
-		//we should add a promotion 
-		product.addPromotion(promotionService.findByCode("B2G50").get());
 		
 		return product;
 	}

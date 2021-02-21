@@ -111,8 +111,8 @@ public class ShippingProductMasterService {
 															  sdms.get_PRODUCT_CREATED_DATE(),
 															  sdms.get_PRODUCT_DESCRIPTION_EN(),
 															  sdms.get_PRODUCT_LONG_DESCRIPTION_EN(),
-															  sdms.get_PRODUCT_RETAIL_PRICE_HKD(),
-															  sdms.get_PRODUCT_RETAIL_PRICE_HKD(),
+															  sdms.get_PRODUCT_RETAIL_PRICE_USD(),
+															  sdms.get_PRODUCT_RETAIL_PRICE_USD(),
 															  sdms.get_SERVICE_TYPE_CODE(), 
 															  sdms.get_ZONE_CODE(),
 															  sdms.get_DESTINATION_CODE(),
@@ -123,7 +123,26 @@ public class ShippingProductMasterService {
 
 		productService.save(spEn);
 		
-		
+		ShippingProductEntity spHk = this.mapToShippingProduct(
+				  Constants.localeZHHK,
+				  Constants.currencyHKD,
+				  sdms.get_PRODUCT_UPC_CODE(),
+				  sdms.get_BRAND_CODE(),
+				  sdms.get_PRODUCT_TEMPLATE_CODE(),
+				  sdms.get_PRODUCT_CREATED_DATE(),
+				  sdms.get_PRODUCT_DESCRIPTION_HK(),
+				  sdms.get_PRODUCT_LONG_DESCRIPTION_HK(),
+				  sdms.get_PRODUCT_RETAIL_PRICE_HKD(),
+				  sdms.get_PRODUCT_RETAIL_PRICE_HKD(),
+				  sdms.get_SERVICE_TYPE_CODE(), 
+				  sdms.get_ZONE_CODE(),
+				  sdms.get_DESTINATION_CODE(),
+				  sdms.get_WEIGHT_LIMIT(),
+				  sdms.get_WEIGHT_FROM(), 
+				  sdms.get_WEIGHT_TO(), 
+				  sdms.get_TRACKING_LEVEL());
+
+		productService.save(spHk);
 		
 		
 	}
@@ -221,7 +240,6 @@ public class ShippingProductMasterService {
 		
 		
 		sp.setInStock(true);
-		
 		
 		Optional<ShippingTypeEntity> ost = shippingTypeService.findByCode(serviceCode);
 		sp.setShippingType(ost.get());
