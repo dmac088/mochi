@@ -97,7 +97,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnShippingProductEntity() {
 
 		// when
-		Optional<ShippingProductEntity> found = shippingProductService.findByCode("TST01");
+		Optional<ShippingProductEntity> found = shippingProductService.findByCode("123456789");
 
 		// then
 		assertFoundEntity(found);
@@ -108,7 +108,7 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnShippingProductDTO() {
 
 		// when
-		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "TST01");
+		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "123456789");
 
 		// then
 		assertFoundDTO(found);

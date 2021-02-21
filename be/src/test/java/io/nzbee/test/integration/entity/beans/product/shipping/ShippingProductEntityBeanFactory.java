@@ -42,7 +42,7 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 		product.setUPC("123456789");
 		
 		ProductAttributeEntity paEng = new ProductAttributeEntity();
-		paEng.setProductDesc("test product");
+		paEng.setProductDesc( "Test shipping destination description");
 		paEng.setProductImage("testpath/");
 		paEng.setLclCd(Constants.localeENGB);
 		paEng.setProduct(product);
