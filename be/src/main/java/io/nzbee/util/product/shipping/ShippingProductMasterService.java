@@ -2,6 +2,8 @@ package io.nzbee.util.product.shipping;
 
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
@@ -12,7 +14,23 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
+import io.nzbee.entity.brand.BrandEntity;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductEntity;
+import io.nzbee.entity.product.attribute.IProductAttributeService;
+import io.nzbee.entity.product.attribute.ProductAttributeEntity;
+import io.nzbee.entity.product.currency.Currency;
+import io.nzbee.entity.product.currency.ICurrencyService;
+import io.nzbee.entity.product.department.DepartmentEntity;
+import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.entity.product.price.IProductPriceService;
+import io.nzbee.entity.product.price.IProductPriceTypeService;
+import io.nzbee.entity.product.price.ProductPriceEntity;
+import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
+import io.nzbee.entity.product.status.IProductStatusRepository;
+import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
@@ -24,7 +42,28 @@ public class ShippingProductMasterService {
     private FileStorageServiceUpload fileStorageServiceUpload;
     
     @Autowired
-    private IShippingProductService ShippingProductService;
+    private IProductService productService;
+    
+	@Autowired
+	private IProductAttributeService productAttributeService;
+
+	@Autowired
+	private IBrandService brandService; 
+	
+	@Autowired
+	private IDepartmentService departmentService; 
+
+	@Autowired
+	private IProductStatusRepository productStatusService;
+	
+	@Autowired
+	private IProductPriceService productPriceService;
+	
+	@Autowired
+	private ICurrencyService currencyService;
+	
+	@Autowired
+	private IProductPriceTypeService productPriceTypeService;
     
 	@Transactional
 	public void writeShippingProductMaster(String fileName) {
@@ -52,13 +91,131 @@ public class ShippingProductMasterService {
 	
 	public void persistShippingProductMaster(ShippingProductMasterSchema sdms) {
 		logger.debug("called persistShippingProductMaster");
+		
+		ShippingProductEntity spEn = this.mapToShippingProduct(
+															  Constants.localeENGB,
+															  Constants.currencyUSD,
+															  sdms.get_PRODUCT_UPC_CODE(),
+															  sdms.get_BRAND_CODE(),
+															  sdms.get_PRODUCT_TEMPLATE_CODE(),
+															  sdms.get_PRODUCT_CREATED_DATE(),
+															  sdms.get_PRODUCT_DESCRIPTION_HK(),
+															  sdms.get_PRODUCT_LONG_DESCRIPTION_HK(),
+															  sdms.get_PRODUCT_RETAIL_PRICE_HKD(),
+															  sdms.get_PRODUCT_MARKDOWN_PRICE_HKD(),
+															  sdms.get_SERVICE_TYPE_CODE(), 
+															  sdms.get_SERVICE_TYPE_NAME_EN(), 
+															  sdms.get_ZONE_CODE(),
+															  sdms.get_DESTINATION_CODE(),
+															  sdms.get_DESTINATION_NAME_EN(), 
+															  sdms.get_WEIGHT_LIMIT(),
+															  sdms.get_WEIGHT_FROM(), 
+															  sdms.get_WEIGHT_TO(), 
+															  sdms.get_TRACKING_LEVEL(), 
+															  sdms.get_AMOUNT_HKD());
 
+		productService.save(spEn);
+		
+		
+		
+		
 	}
 	
 	
-	private ShippingProductEntity mapToShippingProduct() {
+	private ShippingProductEntity mapToShippingProduct(
+														String locale, 
+														String currency,
+														String upcCode,
+														String brandCode,
+														String templateCode,
+														String productCreateDate,
+														String productDesc,
+														String productLongDesc,
+														Double retailPrice,
+														Double markdownPrice,
+														String serviceCode,
+														String serviceName,
+														String zoneCode,
+														String destinationCode,
+														String destinationName, 
+														String maxWeight,
+														String weightFrom,
+														String weightTo,
+														String trackingLevel,
+														String amount) {
 		
-		return null;
+		
+		Optional<ProductEntity> op = productService.findByCode(upcCode);
+		
+		Optional<BrandEntity> ob = brandService.findByCode(brandCode);
+		
+		Optional<DepartmentEntity> od = departmentService.findByCode(templateCode);
+		
+		Optional<ProductStatusEntity> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
+		
+		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
+		
+		ShippingProductEntity sp = 	op.isPresent() 
+						  			? (ShippingProductEntity) op.get()
+						  			: new ShippingProductEntity();
+		
+		
+		ProductAttributeEntity pa = opa.isPresent()
+									? opa.get()
+									: (new ProductAttributeEntity());
+						  
+									
+		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));							
+							
+		sp.setBrand(ob.get());
+		sp.setDepartment(od.get());
+		sp.setProductUPC(upcCode);
+		sp.setProductCreateDt(createdDate);
+		sp.setProductStatus(ops.get());
+		
+		pa.setProductDesc(productDesc);
+		pa.setProductLongDesc(productLongDesc);
+		pa.setLclCd(locale);
+		
+		Currency curr = currencyService.findByCode(currency).get();
+		ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
+		ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
+
+		ProductStatusEntity ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
+
+		Optional<ProductPriceEntity> oprcr = 
+				productPriceService.findOne(upcCode, 
+											Constants.retailPriceCode, 
+											currency);
+
+		//retail price
+		ProductPriceEntity prcr = (	oprcr.isPresent()) 
+									? oprcr.get()
+									: new ProductPriceEntity();
+
+		prcr.setType(ptr);
+		prcr.setCurrency(curr);
+		prcr.setPriceValue(retailPrice);
+
+		Optional<ProductPriceEntity> oprcm = 
+				productPriceService.findOne(upcCode, 
+											Constants.markdownPriceCode, 
+											currency);
+
+		//markdown price
+		ProductPriceEntity prcm = (oprcm.isPresent()) 
+							? oprcm.get()
+							: new ProductPriceEntity();
+
+		prcm.setType(ptm);
+		prcm.setCurrency(curr);
+		prcm.setPriceValue(markdownPrice);
+		
+		sp.setProductStatus(ps);
+		sp.addProductPrice(prcr);
+		sp.addProductPrice(prcm);
+		
+		return sp;
 		
 	}
 }
