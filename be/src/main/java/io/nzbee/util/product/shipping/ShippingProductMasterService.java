@@ -143,7 +143,7 @@ public class ShippingProductMasterService {
 														String serviceCode,
 														String zoneCode,
 														String destinationCode,
-														String maxWeight,
+														String weightLimit,
 														String weightFrom,
 														String weightTo,
 														String trackingLevel) {
@@ -229,7 +229,9 @@ public class ShippingProductMasterService {
 		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode(destinationCode);
 		sp.setShippingDestination(osd.get());
 		
-		sp.
+		sp.setWeightLimit(Double.parseDouble(weightLimit));
+		sp.setWeightFrom(Double.parseDouble(weightFrom));
+		sp.setWeightTo(Double.parseDouble(weightTo));
 		
 		return sp;
 		
