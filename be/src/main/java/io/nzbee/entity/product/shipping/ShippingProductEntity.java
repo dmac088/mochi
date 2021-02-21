@@ -26,6 +26,14 @@ public class ShippingProductEntity extends ProductEntity {
 	@JoinColumn(name="shp_dst_id")
 	private ShippingDestinationEntity shippingDestination;
 
+	@JoinColumn(name="shp_wgt_lim")
+	private Double weightLimit;
+	
+	@JoinColumn(name="shp_wgt_frm")
+	private Double weightFrom;
+	
+	@JoinColumn(name="shp_wgt_to")
+	private Double weightTo;
 
 	public ShippingTypeEntity getShippingType() {
 		return shippingType;
@@ -41,6 +49,30 @@ public class ShippingProductEntity extends ProductEntity {
 
 	public void setShippingDestination(ShippingDestinationEntity shippingDestination) {
 		this.shippingDestination = shippingDestination;
+	}
+
+	public Double getWeightLimit() {
+		return weightLimit;
+	}
+
+	public void setWeightLimit(Double weightLimit) {
+		this.weightLimit = weightLimit;
+	}
+
+	public Double getWeightFrom() {
+		return weightFrom;
+	}
+
+	public void setWeightFrom(Double weightFrom) {
+		this.weightFrom = weightFrom;
+	}
+
+	public Double getWeightTo() {
+		return weightTo;
+	}
+
+	public void setWeightTo(Double weightTo) {
+		this.weightTo = weightTo;
 	}
 
 }
