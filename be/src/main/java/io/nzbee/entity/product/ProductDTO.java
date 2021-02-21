@@ -12,7 +12,7 @@ import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
 
-public class ProductDTO implements Serializable {
+public abstract class ProductDTO implements Serializable {
 	
 	private static final long serialVersionUID = -2313168523583827407L;
 
