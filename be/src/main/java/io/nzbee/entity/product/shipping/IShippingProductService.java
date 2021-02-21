@@ -1,7 +1,7 @@
 package io.nzbee.entity.product.shipping;
 
-import io.nzbee.entity.IService;
+import io.nzbee.entity.ILocalizedService;
 
-public interface IShippingProductService  extends IService<ShippingProductEntity> {
+public interface IShippingProductService  extends ILocalizedService<ShippingProductDTO, ShippingProductEntity> {
 
 }
