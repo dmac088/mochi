@@ -1,5 +1,6 @@
 package io.nzbee.entity.product.shipping;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,8 +17,8 @@ import io.nzbee.entity.product.shipping.type.ShippingTypeEntity;
 @DiscriminatorValue("1")
 public class ShippingProductEntity extends ProductEntity {
 
-	private static final long serialVersionUID = -5894324320785215252L;
-	
+	private static final long serialVersionUID = -2982247105587439319L;
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="shp_typ_id")
 	private ShippingTypeEntity shippingType;
@@ -26,13 +27,13 @@ public class ShippingProductEntity extends ProductEntity {
 	@JoinColumn(name="shp_dst_id")
 	private ShippingDestinationEntity shippingDestination;
 
-	@JoinColumn(name="shp_wgt_lim")
+	@Column(name="shp_wgt_lim")
 	private Double weightLimit;
 	
-	@JoinColumn(name="shp_wgt_frm")
+	@Column(name="shp_wgt_frm")
 	private Double weightFrom;
 	
-	@JoinColumn(name="shp_wgt_to")
+	@Column(name="shp_wgt_to")
 	private Double weightTo;
 
 	public ShippingTypeEntity getShippingType() {
