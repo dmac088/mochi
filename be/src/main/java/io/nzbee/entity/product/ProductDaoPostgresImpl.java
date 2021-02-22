@@ -693,6 +693,16 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   coalesce(rprc.prc_val,0) as retail_price,  " + 
 						"	   coalesce(mprc.prc_val,0) as markdown_price,  " + 
 						"	   coalesce(soh.soh_qty, 0) > 0 as prd_in_stock, " +
+						"	   coalesce(ship.shp_wgt_lim, 0) as shp_wgt_lim, " +
+						"	   coalesce(ship.shp_wgt_frm, 0) as shp_wgt_frm, " +
+						"	   coalesce(ship.shp_wgt_to, 0) as shp_wgt_to, " +
+						"	   ship.shp_dst_id, " +
+						"	   sd.shp_dst_cd, " +
+						"	   sd.shp_zne_cd, " +
+						"	   sd.shp_dst_desc, " +
+						"	   sd.shp_dst_sht_cd, " +
+						"	   ship.shp_typ_id, " +
+						"	   st.shp_typ_cd, " +
 						"      :currency as ccy_cd, " +
 						"	   :locale as lcl_cd ") + 
 		
@@ -791,7 +801,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
 		((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 	: "") +
 		
-		"		) mprc  " +
+		"	) mprc  " +
 		"	ON prd.prd_id = mprc.prd_id  " +
 	
 		"	LEFT JOIN mochi.product_basic acc " + 
@@ -823,6 +833,15 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	LEFT JOIN mochi.promotion_mechanic promomec " +
 		"	ON promo.prm_mec_id =  promomec.prm_mec_id " +
+		
+		"	LEFT JOIN mochi.product_shipping ship " +
+		"	ON prd.prd_id =  ship.prd_id " +
+		
+		"	LEFT JOIN mochi.shipping_destination sd " +
+		"	ON ship.shp_dst_id = sd.shp_dst_id " +
+		
+		"	LEFT JOIN mochi.shipping_type st " +
+		"	ON ship.shp_typ_id = st.shp_typ_id " +
 		
 		"WHERE 0=0 " +
 		"AND prd_sts_cd = 			:activeProductCode  " + 
