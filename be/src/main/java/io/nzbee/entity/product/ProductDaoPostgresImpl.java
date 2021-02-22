@@ -703,6 +703,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 						"	   sd.shp_dst_sht_cd, " +
 						"	   ship.shp_typ_id, " +
 						"	   st.shp_typ_cd, " +
+						"	   sta.shp_typ_desc, " +
 						"      :currency as ccy_cd, " +
 						"	   :locale as lcl_cd ") + 
 		
@@ -842,6 +843,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		"	LEFT JOIN mochi.shipping_type st " +
 		"	ON ship.shp_typ_id = st.shp_typ_id " +
+		
+		"	LEFT JOIN mochi.shipping_type_attr_lcl sta " +
+		"	ON st.shp_typ_id = sta.shp_typ_id " +
+		"	AND sta.lcl_cd = :locale " +
 		
 		"WHERE 0=0 " +
 		"AND prd_sts_cd = 			:activeProductCode  " + 
