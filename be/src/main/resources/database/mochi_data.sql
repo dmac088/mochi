@@ -574,6 +574,7 @@ INSERT INTO category VALUES (233083, 'AJNEC', 1, 3, 'AJEW1', 233065);
 INSERT INTO category VALUES (233182, 'HFLO1', 1, 2, 'HOM01', 233179);
 INSERT INTO category VALUES (233086, 'AJRIN', 1, 3, 'AJEW1', 233065);
 INSERT INTO category VALUES (233149, 'FWWAT', 1, 3, 'FWAT1', 233113);
+INSERT INTO category VALUES (46, 'SHP01', 1, 0, NULL, NULL);
 
 
 --
@@ -761,6 +762,8 @@ INSERT INTO category_attr_lcl VALUES (233186, 233185, 'Carpets', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (233187, 233185, '地毯', NULL, 'zh-HK');
 INSERT INTO category_attr_lcl VALUES (233189, 233188, 'Cupboards', NULL, 'en-GB');
 INSERT INTO category_attr_lcl VALUES (233190, 233188, '收納', NULL, 'zh-HK');
+INSERT INTO category_attr_lcl VALUES (106, 46, 'Shipping', NULL, 'en-GB');
+INSERT INTO category_attr_lcl VALUES (107, 46, '船運', NULL, 'zh-HK');
 
 
 --
@@ -1025,7 +1028,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234537, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234544, true);
 
 
 --
@@ -1158,6 +1161,7 @@ INSERT INTO product VALUES (19, '10760430', '2020-03-16 00:00:00+08', 33, 2, 1);
 INSERT INTO product VALUES (8, '25556789', '2020-03-17 00:00:00+08', 41, 2, 1);
 INSERT INTO product VALUES (1, '12345678', '2020-03-18 00:00:00+08', 38, 2, 1);
 INSERT INTO product VALUES (5, '12383658', '2020-03-19 00:00:00+08', 34, 2, 1);
+INSERT INTO product VALUES (234538, '123456789', '2021-02-22 17:44:28.018+08', 42, 1, 1);
 
 
 --
@@ -1755,6 +1759,10 @@ INSERT INTO price VALUES (79, 2, 19, 6.9, 2);
 INSERT INTO price VALUES (68, 2, 8, 1.8, 2);
 INSERT INTO price VALUES (61, 2, 1, 8.7, 2);
 INSERT INTO price VALUES (65, 2, 5, 5.5, 2);
+INSERT INTO price VALUES (234541, 1, 234538, 60.48, 1);
+INSERT INTO price VALUES (234542, 1, 234538, 7.8, 2);
+INSERT INTO price VALUES (234543, 2, 234538, 50, 1);
+INSERT INTO price VALUES (234544, 2, 234538, 6.45, 2);
 
 
 --
@@ -1968,6 +1976,8 @@ INSERT INTO product_attr_lcl VALUES (1, 1, 'mango', 'mango.jpg', 'en-GB', 'mango
 INSERT INTO product_attr_lcl VALUES (2, 1, '芒果', 'mango.jpg', 'zh-HK', '芒果');
 INSERT INTO product_attr_lcl VALUES (9, 5, 'cucumber', 'cucumber.jpg', 'en-GB', 'cucumber');
 INSERT INTO product_attr_lcl VALUES (10, 5, '黄瓜', 'cucumber.jpg', 'zh-HK', '黄瓜');
+INSERT INTO product_attr_lcl VALUES (234539, 234538, 'Test shipping destination description', 'testpath/', 'en-GB', NULL);
+INSERT INTO product_attr_lcl VALUES (234540, 234538, '測試產品', NULL, 'zh-HK', NULL);
 
 
 --
@@ -2634,6 +2644,7 @@ INSERT INTO shipping_type VALUES (23, 'LOC_PAR_1');
 -- Data for Name: product_shipping; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO product_shipping VALUES (234538, 1, 1, 5, 2, 3);
 
 
 --
