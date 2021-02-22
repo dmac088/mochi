@@ -102,7 +102,7 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 
 	@Override
-	public List<PromotionDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+	public List<PromotionDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

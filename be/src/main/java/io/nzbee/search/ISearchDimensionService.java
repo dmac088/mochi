@@ -8,6 +8,6 @@ public interface ISearchDimensionService<T> {
 
 	String tokenToCode(String token);
 
-	List<T> findAll(String lcl, String currency, StringCollectionWrapper codes);
+	List<T> findAll(String lcl, String currency, String rootCategory, StringCollectionWrapper codes);
 
 } 

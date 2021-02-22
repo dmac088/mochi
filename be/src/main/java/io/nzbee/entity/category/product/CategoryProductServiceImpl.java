@@ -109,7 +109,7 @@ public class CategoryProductServiceImpl implements ICategoryProductService {
 	}
 
 	@Override
-	public List<CategoryProductDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+	public List<CategoryProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

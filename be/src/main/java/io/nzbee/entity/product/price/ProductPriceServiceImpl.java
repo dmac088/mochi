@@ -124,7 +124,7 @@ public class ProductPriceServiceImpl implements IProductPriceService {
 	}
 
 	@Override
-	public List<ProductPriceDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+	public List<ProductPriceDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
