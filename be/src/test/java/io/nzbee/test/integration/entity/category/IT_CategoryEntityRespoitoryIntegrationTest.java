@@ -161,6 +161,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// when
 		List<CategoryDTO> found = categoryService.findAll(	Constants.localeENGB,
 													  		Constants.currencyHKD, 
+													  		Constants.primaryRootCategoryCode,
 													  		new StringCollectionWrapper(ls));
 
 		// then
