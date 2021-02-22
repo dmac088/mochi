@@ -91,7 +91,6 @@ public class ProductServiceImpl implements IProductService {
 		return productDAO.findByCode(locale, currency, productUPC);
 	}
 	
-
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productDesc")
 	public Optional<ProductDTO> findByDesc(String locale, String currency, String productDesc) {
@@ -99,20 +98,20 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public List<ProductDTO> findAll(String locale, String currency) {
-		return productDAO.findAll(locale, currency);
+	public List<ProductDTO> findAll(String locale, String currency, String rootCategory) {
+		return productDAO.findAll(locale, currency, rootCategory);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #productCodes.getCacheKey()")
-	public List<ProductDTO> findAll(String locale, String currency, StringCollectionWrapper productCodes) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #productCodes.getCacheKey()")
+	public List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes) {
 		return productDAO.findAll(locale, currency, productCodes);
 	}
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public <T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls) {
-		return productDAO.findAllByType(locale, currency, cls);
+	public <T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls) {
+		return productDAO.findAllByType(locale, currency, rootCategory, cls);
 	}
 	
 	@Override
@@ -122,13 +121,13 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
-	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
+	public Page<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page, String size, String sort) {
 		return productDAO.findAll(
 								  locale,
 						 		  currency,
-						 		  categoryCode,
+						 		  rootCategory,
 						 		  categoryCodes,
 						 		  brandCodes, 
 						 		  tagCodes,
@@ -173,6 +172,12 @@ public class ProductServiceImpl implements IProductService {
 
 	@Override
 	public List<ProductEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ProductDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

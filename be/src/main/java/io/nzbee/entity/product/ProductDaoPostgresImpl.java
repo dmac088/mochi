@@ -86,8 +86,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
-	public <T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findAllByType parameters : {}, {}, {}", locale, currency, cls.getSimpleName());
+	public <T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findAllByType parameters : {}, {}, {}, {}", locale, currency, rootCategory, cls.getSimpleName());
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -103,7 +103,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				.setParameter("categoryCode", rootCategory)
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
 				.setParameter("activeProductCode", Constants.activeSKUCode)
@@ -141,7 +141,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-		.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productId", productId)
@@ -185,7 +185,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
 				.setParameter("activeProductCode", Constants.activeSKUCode)
@@ -229,7 +229,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-				.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
 				.setParameter("productDesc", productDesc)
@@ -250,7 +250,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
-	public List<ProductDTO> findAll(String locale, String currency) {
+	public List<ProductDTO> findAll(String locale, String currency, String rootCategory) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
@@ -265,7 +265,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -280,7 +280,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 	
 	@Override
-	public List<ProductDTO> findAll(String locale, StringCollectionWrapper codes) {
+	public List<ProductDTO> findAll(String locale, String rootCategory,StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -291,11 +291,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #codes.getCacheKey()")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<ProductDTO> findAll(	String locale, 
 										String currency, 
+										String rootCategory,
 										StringCollectionWrapper codes) {
 		
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes.getCodes(), ','));
@@ -312,7 +313,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 ""))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -337,6 +338,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	public Page<ProductDTO> findAll(	String locale, 
 										String currency, 
+										String rootCategory,
 										Pageable pageable, 
 										String orderby) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}, {}", locale, currency, pageable, orderby);
@@ -354,11 +356,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 true,
 															 false,
 															 ""))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", 		rootCategory)
 				 .setParameter("locale", 			locale)
 				 .setParameter("currency", 			currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
+				 .setParameter("retailPriceCode", 	Constants.retailPriceCode)
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		Object result = query.getSingleResult();
@@ -377,7 +379,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  false,
 													  true,
 													  ""))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("currency", currency)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
@@ -550,7 +552,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"          WHERE     0=0 " +
 				((hasCategory) 
 				? " AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " 
-				: " AND t.cat_cd = :categoryCode ") + 
+				: " AND t.cat_lvl = 0 ") + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
 				"                 t.cat_cd, " + 
@@ -942,5 +944,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public List<ProductDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

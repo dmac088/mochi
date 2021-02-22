@@ -8,7 +8,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 
 public interface IProductService extends ILocalizedService<ProductDTO, ProductEntity> {
 	
-	<T> List<ProductDTO> findAllByType(String locale, String currency, Class<T> cls);
+	<T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls);
 
 	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page, String size, String sort);
@@ -17,9 +17,9 @@ public interface IProductService extends ILocalizedService<ProductDTO, ProductEn
 
 	Optional<ProductDTO> findByDesc(String locale, String currency, String desc);
 
-	List<ProductDTO> findAll(String locale, String currency);
+	List<ProductDTO> findAll(String locale, String currency, String rootCategory);
 
-	List<ProductDTO> findAll(String locale, String currency, StringCollectionWrapper productCodes);
+	List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes);
 
 	Optional<ProductEntity> findByCode(String productUPC);
 
