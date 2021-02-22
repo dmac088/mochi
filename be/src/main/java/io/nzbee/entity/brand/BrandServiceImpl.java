@@ -85,7 +85,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #brandCodes.getCacheKey()")
-	public List<BrandDTO> findAll(String locale, String currency, StringCollectionWrapper brandCodes) {
+	public List<BrandDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper brandCodes) {
 		return brandDao.findAll(locale, brandCodes);
 	}
 

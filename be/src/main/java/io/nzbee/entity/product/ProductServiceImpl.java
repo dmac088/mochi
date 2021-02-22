@@ -176,10 +176,4 @@ public class ProductServiceImpl implements IProductService {
 		return null;
 	}
 
-	@Override
-	public List<ProductDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

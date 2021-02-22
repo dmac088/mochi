@@ -94,8 +94,8 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #codes.getCacheKey()")
-	public List<TagDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
+	public List<TagDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}, {}", locale, currency, codes.getCodes());
 		return tagDao.findAll(locale, codes);
 	}

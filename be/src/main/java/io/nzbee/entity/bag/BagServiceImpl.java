@@ -100,7 +100,7 @@ public class BagServiceImpl implements IBagService {
 	}
 
 	@Override
-	public List<BagDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+	public List<BagDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -88,7 +88,7 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	}
 
 	@Override
-	public List<DepartmentDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+	public List<DepartmentDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

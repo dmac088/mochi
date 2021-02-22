@@ -18,6 +18,6 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	
 	Optional<T> findByCode(String locale, String code);
 
-	List<T> findAll(String locale, String currency, StringCollectionWrapper codes);
+	List<T> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes);
 	
 }

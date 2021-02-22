@@ -53,7 +53,7 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 	}
 
 	@Override
-	public List<ShippingDestinationDTO> findAll(String locale, String currency, StringCollectionWrapper codes) {
+	public List<ShippingDestinationDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
