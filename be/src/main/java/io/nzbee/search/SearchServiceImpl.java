@@ -405,7 +405,7 @@ public class SearchServiceImpl implements ISearchService {
 			
 			System.out.println(service.getClass().getSimpleName());
 			
-			List<ISearchDimension> lc = service.findAll(lcl, currency, Constants.physicalProductDepartmentCode, new StringCollectionWrapper(sfh.getCodes()));
+			List<ISearchDimension> lc = service.findAll(lcl, currency, Constants.primaryRootCategoryCode, new StringCollectionWrapper(sfh.getCodes()));
 			
 			lc.stream().forEach(f -> {
 				System.out.println(f.getClass().getSimpleName() + " - " + f.getCode() + " - " + f.getDesc());
@@ -455,7 +455,7 @@ public class SearchServiceImpl implements ISearchService {
 		List<String> orderedIds = result.stream().map(o -> o[0].toString()).collect(Collectors.toList());
 		List<ProductDTO> lp = productService.findAll( lcl, 
 													 currency, 
-													 Constants.physicalProductDepartmentCode,
+													 Constants.primaryRootCategoryCode,
 													 new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
 		
 		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((ProductDTO) item).getProductUPC())));		
@@ -485,7 +485,7 @@ public class SearchServiceImpl implements ISearchService {
 		LOGGER.debug("***********Searching for the following UPC*****************");
 		LOGGER.debug((StringUtils.join(",", result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))));
 		LOGGER.debug("***********************************************************");
-		List<ProductDTO> lp = productService.findAll(locale, currency, Constants.physicalProductDepartmentCode, new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
+		List<ProductDTO> lp = productService.findAll(locale, currency, Constants.primaryRootCategoryCode, new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
 
 		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
 
