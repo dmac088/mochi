@@ -1008,6 +1008,8 @@ INSERT INTO department VALUES (2, 'ACC01', 'ProductBasic');
 
 INSERT INTO department_attr_lcl VALUES (1, 2, 'Jewellery', 'en-GB');
 INSERT INTO department_attr_lcl VALUES (2, 2, '首飾', 'zh-HK');
+INSERT INTO department_attr_lcl VALUES (3, 1, 'Shipping', 'en-GB');
+INSERT INTO department_attr_lcl VALUES (4, 1, '船運', 'zh-HK');
 
 
 --
