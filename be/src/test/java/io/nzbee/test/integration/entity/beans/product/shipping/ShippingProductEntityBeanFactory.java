@@ -8,6 +8,8 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
@@ -47,6 +49,8 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 	@Autowired
 	private IShippingTypeService shippingTypeService;
 	
+	@Autowired
+	private ICategoryService categoryService;
 	   
 	@Override
 	public ShippingProductEntity getBean() {
@@ -101,6 +105,12 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 		
 		markdownPriceHKD.setProduct(product);    
 		markdownPriceUSD.setProduct(product);
+		
+		//we need a category
+		CategoryProductEntity cp = (CategoryProductEntity) categoryService.findByCode("SHP01").get();
+				
+		//add the category to the product
+		product.addProductCategory(cp);
 		
 		//we need a brand
 		product.setBrand(brandService.findByCode("HKP01").get());
