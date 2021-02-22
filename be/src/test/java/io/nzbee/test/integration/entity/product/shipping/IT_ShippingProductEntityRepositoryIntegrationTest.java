@@ -147,8 +147,8 @@ public class IT_ShippingProductEntityRepositoryIntegrationTest {
 
 		ShippingProductDTO spDto = (ShippingProductDTO) found.get();
 		
-		assertThat(spDto.getProductUPC()).isEqualTo("TST01");
-		assertThat(spDto.getProductDesc()).isEqualTo("Test localized shipping destination description");
+		assertThat(spDto.getProductUPC()).isEqualTo("123456789");
+		assertThat(spDto.getProductDesc()).isEqualTo("Test shipping destination description");
 
 	}
 
