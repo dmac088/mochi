@@ -208,7 +208,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Product> findAll(String locale, String currency) {
-		List<ProductDTO> sp = productService.findAll(locale, currency);
+		List<ProductDTO> sp = productService.findAll(locale, currency, Constants.primaryRootCategoryCode);
 		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 
@@ -218,7 +218,7 @@ public class PostgresProductAdapter implements IProductPortService {
 		// we need a type mapper here
 		Class<?> clazz = PhysicalProductEntity.class;
 
-		List<ProductDTO> lp = productService.findAllByType(locale, currency, clazz);
+		List<ProductDTO> lp = productService.findAllByType(locale, currency, Constants.primaryRootCategoryCode, clazz);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 
