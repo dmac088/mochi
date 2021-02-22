@@ -105,7 +105,7 @@ public class ProductServiceImpl implements IProductService {
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #productCodes.getCacheKey()")
 	public List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes) {
-		return productDAO.findAll(locale, currency, productCodes);
+		return productDAO.findAll(locale, currency, rootCategory, productCodes);
 	}
 	
 	@Override
