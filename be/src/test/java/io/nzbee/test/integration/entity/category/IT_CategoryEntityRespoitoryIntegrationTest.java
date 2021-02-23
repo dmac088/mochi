@@ -262,7 +262,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
 
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryBrandEntity.class);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryRootCategoryCode, CategoryBrandEntity.class);
 
 		// then
 		assertNotNull(found);
@@ -276,7 +276,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
 
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, CategoryProductEntity.class);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryRootCategoryCode, CategoryProductEntity.class);
 
 		// then
 		assertNotNull(found);
