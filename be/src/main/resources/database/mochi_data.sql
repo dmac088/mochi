@@ -998,8 +998,8 @@ SELECT pg_catalog.setval('customer_cst_num_seq', 3, true);
 -- Data for Name: department; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO department VALUES (1, 'SHP01', 'Shipping');
-INSERT INTO department VALUES (2, 'ACC01', 'ProductBasic');
+INSERT INTO department VALUES (1, 'SHP01', 'ShippingProductDTO');
+INSERT INTO department VALUES (2, 'ACC01', 'PhysicalProductDTO');
 
 
 --
@@ -1030,7 +1030,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 234551, true);
+SELECT pg_catalog.setval('hibernate_sequence', 234553, true);
 
 
 --
@@ -2679,6 +2679,7 @@ INSERT INTO tag VALUES (233263, 'TAG16');
 INSERT INTO tag VALUES (233266, 'TAG17');
 INSERT INTO tag VALUES (233269, 'TAG18');
 INSERT INTO tag VALUES (233272, 'TAG19');
+INSERT INTO tag VALUES (234552, 'TST02');
 
 
 --
@@ -3604,6 +3605,7 @@ INSERT INTO tag_attr_lcl VALUES (233273, 233272, 'SKATEBOARD', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (233274, 233272, '滑板風', NULL, 'zh-HK');
 INSERT INTO tag_attr_lcl VALUES (3, 17, 'GLUTEN FREE', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (1, 15, 'ORGANIC', NULL, 'en-GB');
+INSERT INTO tag_attr_lcl VALUES (234553, 234552, 'test tag', NULL, 'en-GB');
 
 
 --

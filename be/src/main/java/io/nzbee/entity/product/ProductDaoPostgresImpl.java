@@ -15,6 +15,8 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
+
+import org.apache.poi.ss.formula.functions.T;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
@@ -84,7 +86,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 	}
 	
-	@SuppressWarnings({ "unchecked", "deprecation" })
+	@SuppressWarnings({ "unchecked", "deprecation", "hiding" })
 	@Override
 	public <T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAllByType parameters : {}, {}, {}, {}", locale, currency, rootCategory, cls.getSimpleName());
@@ -408,7 +410,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			}
 	)
 	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
-			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page, String size, String sort) {
+			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, Class<T> cls, String page, String size, String sort) {
 		
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: locale = {}, "
 				+ "														   currency = {}, "
@@ -417,6 +419,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				+ "														   brand codes = {},	"
 				+ "														   tag codes = {},	"
 				+ "														   max price = {},	"
+				+ "														   type = {},	"
 				+ "														   page = {},	"
 				+ "														   size = {},	"
 				+ "														   sort = {},	",
@@ -427,6 +430,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 																							 brandCodes.getCodes(),
 																							 tagCodes.getCodes(),
 																							 maxPrice,
+																							 cls.getName(),
 																							 page,
 																							 size,
 																							 sort);
