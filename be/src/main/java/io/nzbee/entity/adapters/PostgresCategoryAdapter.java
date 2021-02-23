@@ -10,6 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import io.nzbee.Constants;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.category.ProductCategory;
@@ -118,14 +120,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductCategory> findAllProductCategories(String locale) {
-		return categoryService.findAll(locale, CategoryProductEntity.class)
+		return categoryService.findAll(locale, Constants.primaryRootCategoryCode, CategoryProductEntity.class)
 				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public List<BrandCategory> findAllBrandCategories(String locale) {
-		return categoryService.findAll(locale, CategoryBrandEntity.class)
+		return categoryService.findAll(locale, Constants.primaryRootCategoryCode, CategoryBrandEntity.class)
 				.stream().map(c -> (BrandCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	
