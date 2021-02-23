@@ -272,6 +272,14 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	   	    p.prm_mec_id, " +
 		"	   	    p.prm_mec_cd, " +
 		"	  	    p.prm_mec_desc, " +
+		"		    COALESCE(sp.shp_wgt_lim, 0)  AS shp_wgt_lim, " +
+		"		    COALESCE(sp.shp_wgt_frm, 0)  AS shp_wgt_frm, " +
+		"		    COALESCE(sp.shp_wgt_to, 0)  	AS shp_wgt_to, " +
+		"			sd.shp_dst_cd, " +
+		"			sd.shp_zne_cd, " +
+		"			sd.shp_dst_desc, " +
+		"			sd.shp_dst_sht_cd, " +
+		"			sp.shp_dst_desc, " +
 		"      		:currency as ccy_cd, " +
 		"	   		:locale as lcl_cd " + 
 		
@@ -349,6 +357,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	  	   promomec.prm_mec_desc, " +
 		"		   COALESCE(rprc.prc_val,0)     AS retail_price, " +
 		"	       COALESCE(mprc.prc_val,0)     AS markdown_price " +
+		
 		
 		"	FROM bag_items bi " +
 		
@@ -457,6 +466,19 @@ public class BagDaoPostgresImpl implements IBagDao {
 		
 		"	LEFT JOIN mochi.stock_on_hand soh 								" +
 		"	ON p.prd_id = soh.soh_prd_id 									" +
+		
+		"	LEFT JOIN mochi.product_shipping sp 							" +
+		"	ON p.prd_id = sp.prd_id 										" +
+		
+		"	LEFT JOIN mochi.shipping_destination sd 						" +
+		"	ON sd.shp_dst_id = sd.shp_dst_id 								" +
+		
+		"	LEFT JOIN mochi.shipping_destination_attr_lcl sda 				" +
+		"	ON sd.shp_dst_id = sda.shp_dst_id 								" +
+		"	AND sda.lcl_cd = :locale 										" +
+		
+		"	LEFT JOIN mochi.shipping_type st		 						" +
+		"	ON sp.shp_typ_id = st.shp_typ_id 								" +
 		
 		"WHERE 0=0 															" +
 		"AND usr.user_name = 		:userName 								" + 
