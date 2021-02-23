@@ -364,7 +364,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public <T> List<CategoryDTO> findAllByType(String locale, Class<T> cls) {
+	public <T> List<CategoryDTO> findAllByType(String locale, String rootCategory, Class<T> cls) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAllByType parameters : {}, {}, {}", locale, cls.getSimpleName(), cls.getAnnotation(DiscriminatorValue.class).value());
 		
@@ -382,7 +382,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 															 true,
 															 false))
 				 .setParameter("locale", locale)
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("parentCategoryCode", "-1")
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));

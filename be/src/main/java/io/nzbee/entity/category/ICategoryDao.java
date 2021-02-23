@@ -15,7 +15,7 @@ public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity>
 	
 	List<CategoryEntity> findAllByProductCode(String locale, String productCode);
 
-	<T> List<CategoryDTO> findAllByType(String locale, Class<T> cls);
+	<T> List<CategoryDTO> findAllByType(String locale, String rootCategory, Class<T> cls);
 
 	List<CategoryEntity> findAll();
 
@@ -27,5 +27,6 @@ public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity>
 
 	Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes);
+
 	
 }

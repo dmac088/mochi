@@ -80,9 +80,9 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #classType.getName()")
-	public <T> List<CategoryDTO> findAll(String locale, Class<T> classType) {
-		return categoryDAO.findAllByType(locale, classType);
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + rootCategory + \", \" + #classType.getName()")
+	public <T> List<CategoryDTO> findAll(String locale, String rootCategory, Class<T> classType) {
+		return categoryDAO.findAllByType(locale, rootCategory, classType);
 	}
 
 	@Override

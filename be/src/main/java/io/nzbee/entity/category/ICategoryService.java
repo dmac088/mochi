@@ -12,7 +12,7 @@ public interface ICategoryService extends ILocalizedService<CategoryDTO, Categor
 
 	List<CategoryEntity> findAllForLevel(String locale, Long level);
 	
-	<T> List<CategoryDTO> findAll(String locale, Class<T> classType);
+	<T> List<CategoryDTO> findAll(String locale, String rootCategory, Class<T> classType);
 
 	List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brands, StringCollectionWrapper tags, Double maxPrice);
@@ -21,6 +21,6 @@ public interface ICategoryService extends ILocalizedService<CategoryDTO, Categor
 			StringCollectionWrapper brands, StringCollectionWrapper tags);
 
 	List<CategoryEntity> findAll();
-	
+
 
 }
