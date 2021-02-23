@@ -402,14 +402,14 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return new PageImpl<ProductDTO>(results, pageable, total);
 	}
 	
-	@SuppressWarnings({"deprecation","unchecked"})
+	@SuppressWarnings({"deprecation","unchecked", "hiding"})
 	@Override
 	@Caching(
 			put = {
 					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
 			}
 	)
-	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+	public <T> Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, Class<T> cls, String page, String size, String sort) {
 		
 		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: locale = {}, "
@@ -443,7 +443,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 brandCodes.getCodes().size()>=1,
   				 											 tagCodes.getCodes().size()>=1,
   				 											 !(maxPrice == null),
-  				 											 false,
+  				 											 true,
   				 											 true,
   				 											 false,
   				 											 ""))
@@ -452,7 +452,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
-		.setParameter("categoryCode", categoryCode);
+		.setParameter("categoryCode", categoryCode)
+		.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
 		if(!categoryCodes.getCodes().isEmpty()) {
 			query.setParameter("categoryCodes", categoryCodes.getCodes());
@@ -485,7 +486,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 														!brandCodes.getCodes().isEmpty(),
 					   									!tagCodes.getCodes().isEmpty(),
 					   									!(maxPrice == null),
-					   									false,
+					   									true,
 					   									false,
 					   									true,
 					   									sort))
@@ -494,7 +495,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("activeProductCode", 	Constants.activeSKUCode)
 		.setParameter("retailPriceCode", 	Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", 	Constants.markdownPriceCode)
-		.setParameter("categoryCode", categoryCode);
+		.setParameter("categoryCode", categoryCode)
+		.setParameter("typeDiscriminator", Long.parseLong(cls.getAnnotation(DiscriminatorValue.class).value()));
 		
 		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
 		//these should contain default values for these parameters
@@ -814,6 +816,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 			 
 		"	INNER JOIN mochi.product_status ps    " + 
 		"	ON prd.prd_sts_id = ps.prd_sts_id   " + 
+		
 		
 		((hasTags) ? 
 						"	INNER JOIN mochi.product_tag ptags	 " +

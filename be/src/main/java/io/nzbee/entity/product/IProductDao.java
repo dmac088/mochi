@@ -31,9 +31,9 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 
 	List<ProductDTO> findAll(String locale, String currency, String rootCategory);
 
-	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+	<T> Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice,
-			Class<org.apache.poi.ss.formula.functions.T> cls, String page, String size, String sort);
+			Class<T> cls, String page, String size, String sort);
 
 
 	

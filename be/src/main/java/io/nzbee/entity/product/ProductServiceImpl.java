@@ -15,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.product.physical.PhysicalProductEntity;
 
 
 @Service(value = "productEntityService")
@@ -132,6 +133,7 @@ public class ProductServiceImpl implements IProductService {
 						 		  brandCodes, 
 						 		  tagCodes,
 						 		  maxPrice,
+						 		  PhysicalProductEntity.class,
 						 		  page,
 						 		  size,
 						 		  sort
