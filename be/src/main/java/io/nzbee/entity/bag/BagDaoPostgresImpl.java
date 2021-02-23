@@ -274,12 +274,14 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"	  	    p.prm_mec_desc, " +
 		"		    COALESCE(sp.shp_wgt_lim, 0)  AS shp_wgt_lim, " +
 		"		    COALESCE(sp.shp_wgt_frm, 0)  AS shp_wgt_frm, " +
-		"		    COALESCE(sp.shp_wgt_to, 0)  	AS shp_wgt_to, " +
+		"		    COALESCE(sp.shp_wgt_to, 0)   AS shp_wgt_to, " +
+		"			sp.shp_dst_id, " +
 		"			sd.shp_dst_cd, " +
 		"			sd.shp_zne_cd, " +
-		"			sd.shp_dst_desc, " +
 		"			sd.shp_dst_sht_cd, " +
-		"			sp.shp_dst_desc, " +
+		"			sda.shp_dst_desc, " +
+		"			sp.shp_typ_id, " + 
+		"			st.shp_typ_cd, " +
 		"      		:currency as ccy_cd, " +
 		"	   		:locale as lcl_cd " + 
 		
