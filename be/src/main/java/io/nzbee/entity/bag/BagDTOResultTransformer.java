@@ -91,10 +91,13 @@ public class BagDTOResultTransformer implements ResultTransformer {
 					switch (departmentDTO.getDepartmentCode()) {
 					case Constants.physicalProductDepartmentCode:
 						pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+						break;
 					case Constants.shippingProductDepartmentCode:
 						pDto = new ShippingProductDTO(tuple, aliasToIndexMap);
+						break;
 					default:
 						pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+						break;
 					}
 
 					pDto.setBrand(brandDTO);
