@@ -3,8 +3,11 @@ package io.nzbee.test.integration.entity.party;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,13 +18,13 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.person.IPersonService;
@@ -34,26 +37,8 @@ import io.nzbee.test.integration.entity.beans.party.IPartyEntityBeanFactory;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED)),
-	@Sql(scripts = "/database/security_schema.sql",
-			config = @SqlConfig(dataSource = "securityDataSourceOwner", 
-			transactionManager = "securityTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/security_data.sql",
-			config = @SqlConfig(dataSource = "securityDataSource", 
-			transactionManager = "securityTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class IT_PartyPersonEntityRepositoryIntegrationTest {
-
 	
 	@TestConfiguration
     static class PartyServiceImplIntegrationTestConfiguration {
@@ -70,23 +55,51 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 	private EntityManager entityManager;
 	
 	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
+	
+	@Autowired
     private IPersonService personService;
 	
 	@Autowired
 	private IPartyEntityBeanFactory partyEntityBeanFactory;
 	
-
+	private static Party customer = null;
+	
+	private static boolean setUpIsDone = false;
+	
 	@Before
-    public void setUp() { 
+	public void setUp() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.persistNewCustomer();
+		setUpIsDone = true;
+	}
+	
 
-		Party customer = partyEntityBeanFactory.getBean();
+    public void persistNewCustomer() { 
+		if (setUpIsDone) {
+            return;
+        }
+		
+		customer = partyEntityBeanFactory.getBean();
 	    	
    	    entityManager.persist(customer);
    
+   	    setUpIsDone = false;
     }
 	
     //as long as the admin account can fetch the new user, we know that it was persisted properly by hibernate
 	@Test
+	@Rollback(false)
 	@WithUserDetails(value = "admin")
     public void whenFindByUsernameAndRole_thenReturnParty() {
 		
