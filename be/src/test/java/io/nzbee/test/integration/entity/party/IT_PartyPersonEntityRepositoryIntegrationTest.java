@@ -94,7 +94,7 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 	    	
    	    entityManager.persist(customer);
    
-   	    setUpIsDone = false;
+   	    setUpIsDone = true;
     }
 	
     //as long as the admin account can fetch the new user, we know that it was persisted properly by hibernate
