@@ -146,7 +146,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(80);
+		assertThat(found.size()).isEqualTo(81);
 		assertTrue(isOrdered(found));
 	}
 	
@@ -262,7 +262,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
 
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryRootCategoryCode, CategoryBrandEntity.class);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.secondaryRootCategoryCode, CategoryBrandEntity.class);
 
 		// then
 		assertNotNull(found);
