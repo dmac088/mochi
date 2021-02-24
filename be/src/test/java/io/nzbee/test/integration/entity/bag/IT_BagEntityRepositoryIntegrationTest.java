@@ -119,7 +119,7 @@ public class IT_BagEntityRepositoryIntegrationTest {
     public void whenFindByUsername_thenReturnBagDTO() {
     	
     	//persist a bag and then make sure we can retrieve it by username which is the natural key of the bag
-    	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, "bob@bob");
+    	Optional<BagDTO> found = bagService.findByCode(Constants.localeENGB, Constants.currencyHKD, Constants.primaryProductRootCategoryCode, "bob@bob");
     	
     	//then
     	assertDTOFound(found);

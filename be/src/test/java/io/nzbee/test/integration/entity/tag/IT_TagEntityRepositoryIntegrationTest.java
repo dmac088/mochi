@@ -138,7 +138,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		tagCodes.add("ORG01");
 
 		// when
-		List<TagDTO> lb = tagService.findAll(Constants.localeENGB, new StringCollectionWrapper(tagCodes));
+		List<TagDTO> lb = tagService.findAll(Constants.localeENGB, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(tagCodes));
 
 		// then
 		assertNotNull(lb);

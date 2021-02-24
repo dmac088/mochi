@@ -88,8 +88,8 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #codes.getCacheKey()")
-	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
+	public List<TagDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, StringUtils.join(codes.getCodes()));
 		return tagDao.findAll(locale, codes);
 	}
@@ -156,5 +156,10 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Override
 	public Optional<TagDTO> findByDesc(String locale, String desc) {
 		return this.findByDesc(locale, Constants.defaultProductRootCategoryCode, desc);
+	}
+
+	@Override
+	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
+		return this.findAll(locale, Constants.defaultProductRootCategoryCode, codes);
 	}
 }

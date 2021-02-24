@@ -58,7 +58,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #desc")
 	public Optional<BrandDTO> findByDesc(String locale, String rootCategory, String desc) {
-		return brandDao.findByDesc(locale, desc);
+		return brandDao.findByDesc(locale, rootCategory, desc);
 	}
 	
 	@Override
