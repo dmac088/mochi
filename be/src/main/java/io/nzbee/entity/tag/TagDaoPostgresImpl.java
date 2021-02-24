@@ -62,8 +62,8 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = CACHE_NAME, key="{#locale, #id}")
 			}
 	)
-	public Optional<TagDTO> findById(String locale, Long id) {
-		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, id);
+	public Optional<TagDTO> findById(String locale, String rootCategory, Long id) {
+		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, rootCategory, id);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -76,7 +76,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 true))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("tagIDs", ltids)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -135,7 +135,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #code")
 			}
 	)
-	public Optional<TagDTO> findByCode(String locale, String code) {
+	public Optional<TagDTO> findByCode(String locale, String rootCategory, String code) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}", locale, code);
 		
 		Session session = em.unwrap(Session.class);
@@ -149,7 +149,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 !ltc.isEmpty(),
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("tagCodes", ltc)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -173,10 +173,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #desc")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #desc")
 			}
 	)
-	public Optional<TagDTO> findByDesc(String locale, String desc) {
+	public Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}", locale, desc);
 		
 		Session session = em.unwrap(Session.class);
@@ -190,7 +190,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 true,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("tagDescriptions", ltd)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -212,10 +212,10 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
-	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
+	public List<TagDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
 		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
 
 		Session session = em.unwrap(Session.class);
@@ -227,7 +227,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 !codes.getCodes().isEmpty(),
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -244,7 +244,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<TagDTO> findAll(String locale) {
+	public List<TagDTO> findAll(String locale, String rootCategory) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale);
 
 		Session session = em.unwrap(Session.class);
@@ -256,7 +256,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				
@@ -438,6 +438,36 @@ public class TagDaoPostgresImpl implements ITagDao {
 				"			order by lcl.tag_desc ";
 		
 	return sql;
+	}
+
+	@Override
+	public Optional<TagDTO> findById(String locale, Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<TagDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<TagDTO> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TagDTO> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

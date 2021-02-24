@@ -34,14 +34,6 @@ public class PostgresBrandAdapter implements IBrandPortService {
 				.orElseThrow(() -> new BrandNotFoundException("Brand not found for code " + code));
 		return DTOToDo(b);
 	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public Brand findByProductCode(String locale, String productCode) {
-		BrandDTO b = brandService.findByProductCode(locale, productCode)
-				.orElseThrow(() -> new BrandNotFoundException("Brand not found for product code " + productCode));
-		return DTOToDo(b);
-	}
 
 	@Override
 	@Transactional(readOnly = true)
@@ -66,8 +58,8 @@ public class PostgresBrandAdapter implements IBrandPortService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Brand> findAll(String locale, String category) {
-		return brandService.findAll(locale, category)
+	public List<Brand> findAll(String locale, String rootCategory, String category) {
+		return brandService.findAll(locale, rootCategory, category)
 				.stream().map(b -> (Brand) this.DTOToDo(b)).collect(Collectors.toList());
 	}
 	

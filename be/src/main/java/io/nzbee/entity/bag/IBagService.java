@@ -8,6 +8,6 @@ import io.nzbee.entity.ILocalizedService;
 @Service
 public interface IBagService extends ILocalizedService<BagDTO, BagEntity> {
 
-	Optional<BagDTO> findByCode(String locale, String currency, String userName);
+	Optional<BagDTO> findByCode(String locale, String currency, String rootCategory, String userName);
 
 }

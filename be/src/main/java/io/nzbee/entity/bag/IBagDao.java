@@ -5,6 +5,6 @@ import io.nzbee.entity.ILocalizedDao;
 
 public interface IBagDao extends ILocalizedDao<BagDTO, BagEntity> {
 
-	Optional<BagDTO> findByCode(String locale, String currency, String userName);
+	Optional<BagDTO> findByCode(String locale, String currency, String rootCategory, String userName);
 	
 }

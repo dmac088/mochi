@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.IFacetService;
 
@@ -49,14 +50,14 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	//DTO Fetch
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #code")
-	public Optional<BrandDTO> findByCode(String locale, String code) {
-		return brandDao.findByCode(locale, code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #code")
+	public Optional<BrandDTO> findByCode(String locale, String rootCategory, String code) {
+		return brandDao.findByCode(locale, rootCategory,code);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #desc")
-	public Optional<BrandDTO> findByDesc(String locale, String desc) {
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #desc")
+	public Optional<BrandDTO> findByDesc(String locale, String rootCategory, String desc) {
 		return brandDao.findByDesc(locale, desc);
 	}
 	
@@ -73,20 +74,14 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	public List<BrandDTO> findAll(String locale, String categoryCode) {
-		return brandDao.findAllByCategory(locale, categoryCode);
+	public List<BrandDTO> findAll(String locale, String rootCategory, String categoryCode) {
+		return brandDao.findAllByCategory(locale, rootCategory, categoryCode);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #productCode")
-	public Optional<BrandDTO> findByProductCode(String locale, String productCode) {
-		return brandDao.findByProductCode(locale, productCode);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #brandCodes.getCacheKey()")
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #brandCodes.getCacheKey()")
 	public List<BrandDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper brandCodes) {
-		return brandDao.findAll(locale, brandCodes);
+		return brandDao.findAll(locale, rootCategory, brandCodes);
 	}
 
 	@Override
@@ -139,6 +134,16 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Optional<BrandDTO> findByCode(String locale, String code) {
+		return this.findByCode(locale, Constants.defaultProductRootCategoryCode, code);
+	}
+
+	@Override
+	public Optional<BrandDTO> findByDesc(String locale, String desc) {
+		return this.findByDesc(locale, Constants.defaultProductRootCategoryCode, desc);
 	}
 
 }

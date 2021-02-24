@@ -113,7 +113,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnBrandDTO() {
 
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, "DRI01");
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "DRI01");
 
 		// then
 		assertFoundDTO(found);
@@ -124,7 +124,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnBrandDTO() {
 
 		// when
-		Optional<BrandDTO> found = brandService.findByDesc(Constants.localeENGB, "Driscolls");
+		Optional<BrandDTO> found = brandService.findByDesc(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "Driscolls");
 
 		// then
 		assertFoundDTO(found);

@@ -123,7 +123,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnTagDTO() {
 
 		// when
-		Optional<TagDTO> found = tagService.findByDesc(Constants.localeENGB, "ORGANIC");
+		Optional<TagDTO> found = tagService.findByDesc(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ORGANIC");
 
 		// then
 		assertFoundDTO(found);

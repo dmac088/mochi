@@ -13,5 +13,9 @@ public interface ITagService  extends ILocalizedService<TagDTO, TagEntity>, ISea
 
 	Optional<TagEntity> findByCode(String tagCode);
 
+	Optional<TagDTO> findByCode(String locale, String rootCategory, String code);
+
+	Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc);
+
 	
 }

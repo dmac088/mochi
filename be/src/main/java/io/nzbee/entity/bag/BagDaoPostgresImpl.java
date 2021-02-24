@@ -38,11 +38,11 @@ public class BagDaoPostgresImpl implements IBagDao {
 	
 	@SuppressWarnings("deprecation")
 	@Override
-	public Optional<BagDTO> findByCode(String locale, String currency, String userName) {
+	public Optional<BagDTO> findByCode(String locale, String currency, String rootCategory, String userName) {
 		LOGGER.debug("call BagDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, currency, userName);
 		
 		Query query = em.createNativeQuery(this.getSQL())
-						.setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+						.setParameter("categoryCode", rootCategory)
 						.setParameter("userName", userName)
 						.setParameter("locale", locale)
 						.setParameter("currency", currency)

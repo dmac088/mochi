@@ -13,6 +13,7 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
+import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.IFacetService;
 
@@ -67,16 +68,16 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #code")
-	public Optional<TagDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}", locale, code);
-		return tagDao.findByCode(locale, code);
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #code")
+	public Optional<TagDTO> findByCode(String locale, String rootCategory, String code) {
+		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}, {}", locale, rootCategory, code);
+		return tagDao.findByCode(locale, rootCategory, code);
 	}
 	
 	@Override
-	public Optional<TagDTO> findByDesc(String locale, String desc) {
-		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, desc);
-		return tagDao.findByDesc(locale, desc);
+	public Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc) {
+		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, rootCategory, desc);
+		return tagDao.findByDesc(locale, rootCategory, desc);
 	}
 	
 	@Override
@@ -97,7 +98,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 	public List<TagDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}, {}", locale, currency, codes.getCodes());
-		return tagDao.findAll(locale, codes);
+		return tagDao.findAll(locale, rootCategory, codes);
 	}
 	
 	@Override
@@ -145,5 +146,15 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public void delete(TagEntity t) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Optional<TagDTO> findByCode(String locale, String code) {
+		return this.findByCode(locale, Constants.defaultProductRootCategoryCode, code);
+	}
+
+	@Override
+	public Optional<TagDTO> findByDesc(String locale, String desc) {
+		return this.findByDesc(locale, Constants.defaultProductRootCategoryCode, desc);
 	}
 }

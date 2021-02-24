@@ -81,7 +81,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ENGB() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeENGB, "GFR01");
+		Optional<TagDTO> found = tagService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "GFR01");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,7 +91,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ZHHK() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeZHHK, "GFR01");
+		Optional<TagDTO> found = tagService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "GFR01");
 
 		// then
 		assertFound_ZHHK(found);

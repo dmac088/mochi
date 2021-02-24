@@ -79,7 +79,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, "ENZ01");
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ENZ01");
 
 		// then
 		assertFound_ENGB(found);
@@ -89,7 +89,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeZHHK, "ENZ01");
+		Optional<BrandDTO> found = brandService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "ENZ01");
 
 		// then
 		assertFound_ZHHK(found);

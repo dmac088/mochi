@@ -12,4 +12,14 @@ public interface ITagDao  extends ILocalizedDao<TagDTO, TagEntity> {
 	List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, Double maxPrice);
 
+	Optional<TagDTO> findById(String locale, String rootCategory, Long id);
+
+	Optional<TagDTO> findByCode(String locale, String rootCategory, String code);
+
+	Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc);
+
+	List<TagDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes);
+
+	List<TagDTO> findAll(String locale, String rootCategory);
+
 }

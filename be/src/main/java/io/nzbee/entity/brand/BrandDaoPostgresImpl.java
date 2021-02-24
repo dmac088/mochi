@@ -41,10 +41,10 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #id.toString()")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #id.toString()")
 			}
 	)
-	public Optional<BrandDTO> findById(String locale, Long id) {
+	public Optional<BrandDTO> findById(String locale, String rootCategory, Long id) {
 		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}", locale, id);
 		
 		Session session = em.unwrap(Session.class);
@@ -59,7 +59,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 true))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandIds", lbid);
@@ -115,11 +115,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #code")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #code")
 			}
 	)
-	public Optional<BrandDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, code);
+	public Optional<BrandDTO> findByCode(String locale, String rootCategory, String code) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, rootCategory, code);
 		
 		Session session = em.unwrap(Session.class);
 		
@@ -133,7 +133,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 true,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandCodes", lbc);
@@ -155,11 +155,11 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
-	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
-		LOGGER.debug("pop call BrandDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
+	public List<BrandDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
+		LOGGER.debug("call BrandDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, StringUtil.join(codes));
 
 		Session session = em.unwrap(Session.class);
 		
@@ -170,7 +170,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 !codes.getCodes().isEmpty(),
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -189,10 +189,10 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #desc")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #desc")
 			}
 	)
-	public Optional<BrandDTO> findByDesc(String locale, String desc) {
+	public Optional<BrandDTO> findByDesc(String locale, String rootCategory, String desc) {
 		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}", locale, desc);
 		
 		Session session = em.unwrap(Session.class);
@@ -207,7 +207,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 true,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandDescriptions", lbd);
@@ -227,7 +227,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<BrandDTO> findAllByCategory(String locale, String categoryCode) {
+	public List<BrandDTO> findAllByCategory(String locale, String rootCategory, String categoryCode) {
 		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}", locale, categoryCode);
 		
 		Session session = em.unwrap(Session.class);
@@ -242,7 +242,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("categoryCodes", lc);
@@ -260,10 +260,10 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #productCode")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #productCode")
 			}
 	)
-	public Optional<BrandDTO> findByProductCode(String locale, String productCode) {
+	public Optional<BrandDTO> findByProductCode(String locale, String rootCategory, String productCode) {
 		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}", locale, productCode);
 		
 		Session session = em.unwrap(Session.class);
@@ -278,7 +278,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("productCodes", lpc);
@@ -293,7 +293,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<BrandDTO> findAll(String locale) {
+	public List<BrandDTO> findAll(String locale, String rootCategory) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}", locale);
 				
 		Session session = em.unwrap(Session.class);
@@ -306,7 +306,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
+				 .setParameter("categoryCode", rootCategory)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -510,6 +510,36 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 
 	@Override
 	public List<BrandEntity> findAll(Set<String> codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BrandDTO> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BrandDTO> findByCode(String locale, String code) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BrandDTO> findByDesc(String locale, String desc) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<BrandDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

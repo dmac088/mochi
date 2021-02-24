@@ -6,6 +6,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import io.nzbee.Constants;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.entity.bag.BagDTO;
@@ -29,7 +31,7 @@ public class PostgresBagAdapter implements IBagPortService {
 	public Bag findByCode(String locale, String currency, String userName) {
 		LOGGER.debug("call PostgresBagAdapter.findByCode with parameter {}, {}, {}", locale, currency, userName);
 		
-		Optional<BagDTO> ob = bagService.findByCode(locale, currency, userName);
+		Optional<BagDTO> ob = bagService.findByCode(locale, currency, Constants.primaryProductRootCategoryCode, userName);
 		
 		//if there is no current bag, get a new one
 		BagDTO b = 	ob.get();
