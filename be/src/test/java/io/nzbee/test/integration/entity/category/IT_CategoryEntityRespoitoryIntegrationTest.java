@@ -161,7 +161,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// when
 		List<CategoryDTO> found = categoryService.findAll(	Constants.localeENGB,
 													  		Constants.currencyHKD, 
-													  		Constants.primaryRootCategoryCode,
+													  		Constants.primaryProductRootCategoryCode,
 													  		new StringCollectionWrapper(ls));
 
 		// then
@@ -262,7 +262,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
 
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.secondaryRootCategoryCode, CategoryBrandEntity.class);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryBrandRootCategoryCode, CategoryBrandEntity.class);
 
 		// then
 		assertNotNull(found);
@@ -276,7 +276,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
 
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryRootCategoryCode, CategoryProductEntity.class);
+		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryProductRootCategoryCode, CategoryProductEntity.class);
 
 		// then
 		assertNotNull(found);
@@ -346,7 +346,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// when
 		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
 													Constants.currencyHKD, 
-													Constants.primaryRootCategoryCode,
+													Constants.primaryProductRootCategoryCode,
 													new StringCollectionWrapper(new HashSet<String>()), 
 													new StringCollectionWrapper(new HashSet<String>()), 
 													new StringCollectionWrapper(new HashSet<String>()));
@@ -414,7 +414,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// when
 		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
 													Constants.currencyUSD, 
-													Constants.primaryRootCategoryCode,
+													Constants.primaryProductRootCategoryCode,
 													new StringCollectionWrapper(new HashSet<String>()), 
 													new StringCollectionWrapper(new HashSet<String>()), 
 													new StringCollectionWrapper(new HashSet<String>()));

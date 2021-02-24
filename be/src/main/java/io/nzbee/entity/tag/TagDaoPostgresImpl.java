@@ -76,7 +76,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 true))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("tagIDs", ltids)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -149,7 +149,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 !ltc.isEmpty(),
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("tagCodes", ltc)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -190,7 +190,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 true,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("tagDescriptions", ltd)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
@@ -227,7 +227,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 !codes.getCodes().isEmpty(),
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -256,7 +256,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 				

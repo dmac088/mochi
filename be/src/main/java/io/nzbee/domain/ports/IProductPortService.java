@@ -10,8 +10,6 @@ public interface IProductPortService extends IPortService<Product> {
 
 	List<Product> findAll(String locale, String currency);
 
-	String[] getSuggestion(String searchTerm, String locale, String currency);
-
 	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
 
 	Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,
@@ -25,5 +23,7 @@ public interface IProductPortService extends IPortService<Product> {
 	Product findByDesc(String locale, String currency, String desc);
 
 	Product findByCode(String locale, String currency, String code);
+
+	String[] getSuggestion(String searchTerm, String rootCategory, String locale, String currency);
 
 }

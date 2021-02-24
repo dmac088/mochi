@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.dto.product.IProductDTOLightMapper;
 import io.nzbee.resources.product.ProductLightResource;
@@ -90,7 +92,7 @@ public class SearchController {
 		
 		LOGGER.debug("Searching for suggestions with patameters: {}, {}", locale, term);
 		
-		return new ResponseEntity< >(productService.getSuggestion(term, locale, currency), HttpStatus.OK);
+		return new ResponseEntity< >(productService.getSuggestion(term, Constants.primaryProductRootCategoryCode,locale, currency), HttpStatus.OK);
 	}
 	
 }

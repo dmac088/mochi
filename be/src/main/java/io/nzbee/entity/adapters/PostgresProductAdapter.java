@@ -208,7 +208,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Product> findAll(String locale, String currency) {
-		List<ProductDTO> sp = productService.findAll(locale, currency, Constants.primaryRootCategoryCode);
+		List<ProductDTO> sp = productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode);
 		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 
@@ -218,7 +218,7 @@ public class PostgresProductAdapter implements IProductPortService {
 		// we need a type mapper here
 		Class<?> clazz = PhysicalProductEntity.class;
 
-		List<ProductDTO> lp = productService.findAllByType(locale, currency, Constants.primaryRootCategoryCode, clazz);
+		List<ProductDTO> lp = productService.findAllByType(locale, currency, Constants.primaryProductRootCategoryCode, clazz);
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 
@@ -236,7 +236,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Product> findAll(String locale, String currency, Set<String> codes) {
-		List<ProductDTO> lp =  productService.findAll(locale, currency, Constants.primaryRootCategoryCode, new StringCollectionWrapper(codes));
+		List<ProductDTO> lp =  productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(codes));
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 	
@@ -251,8 +251,9 @@ public class PostgresProductAdapter implements IProductPortService {
 															categoryCode, 
 															new StringCollectionWrapper(categoryCodes), 
 															new StringCollectionWrapper(brandCodes), 
-															new StringCollectionWrapper(tagCodes), 
-															maxPrice, 
+															new StringCollectionWrapper(tagCodes),
+															maxPrice,
+															PhysicalProductEntity.class,
 															page, 
 															size, 
 															sort);
@@ -275,8 +276,8 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public String[] getSuggestion(String searchTerm, String locale, String currency) {
-		return searchService.getSuggestions(searchTerm, locale, currency);
+	public String[] getSuggestion(String searchTerm, String rootCategory, String locale, String currency) {
+		return searchService.getSuggestions(searchTerm, rootCategory, locale, currency);
 	}
 
 	@Override

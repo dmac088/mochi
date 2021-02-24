@@ -15,7 +15,7 @@ public class Globals {
 	private String unknownProductDesc;
 	private String unknownProductImage;
 	private String activeSKUCode;
-	private String primaryRootCategoryCode;
+	private String primaryProductRootCategoryCode;
 	private int	   defaultPage;
 	private int	   defaultPageSize;
 	
@@ -82,10 +82,10 @@ public class Globals {
 		this.activeSKUCode = activeSKUCode;
 	}
 	public String getPrimaryRootCategoryCode() {
-		return primaryRootCategoryCode;
+		return primaryProductRootCategoryCode;
 	}
-	public void setPrimaryRootCategoryCode(String primaryRootCategoryCode) {
-		this.primaryRootCategoryCode = primaryRootCategoryCode;
+	public void setPrimaryRootCategoryCode(String primaryProductRootCategoryCode) {
+		this.primaryProductRootCategoryCode = primaryProductRootCategoryCode;
 	}
 	public int getDefaultPage() {
 		return defaultPage;

@@ -59,7 +59,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 true))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandIds", lbid);
@@ -133,7 +133,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 true,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandCodes", lbc);
@@ -170,7 +170,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 !codes.getCodes().isEmpty(),
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -207,7 +207,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 true,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("brandDescriptions", lbd);
@@ -242,7 +242,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("categoryCodes", lc);
@@ -278,7 +278,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode)
 				 .setParameter("productCodes", lpc);
@@ -306,7 +306,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 															 false,
 															 false,
 															 false))
-				 .setParameter("categoryCode", Constants.primaryRootCategoryCode)
+				 .setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 				 .setParameter("locale", locale)
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		

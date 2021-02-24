@@ -42,7 +42,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		LOGGER.debug("call BagDaoPostgresImpl.findByCode parameters : {}, {}, {}", locale, currency, userName);
 		
 		Query query = em.createNativeQuery(this.getSQL())
-						.setParameter("categoryCode", Constants.primaryRootCategoryCode)
+						.setParameter("categoryCode", Constants.primaryProductRootCategoryCode)
 						.setParameter("userName", userName)
 						.setParameter("locale", locale)
 						.setParameter("currency", currency)

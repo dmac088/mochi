@@ -612,7 +612,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenEnterSearchTermKor_thenReturnCorrectSuggestions() {
 		
 		// when
-		String[] sp = productService.getSuggestion("kor", Constants.localeENGB, Constants.currencyUSD);
+		String[] sp = productService.getSuggestion("kor", Constants.secondaryProductRootCategoryCode, Constants.localeENGB, Constants.currencyUSD);
 		
         // then
 		assertThat(sp.length)
@@ -624,7 +624,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenEnterSearchTermPretty_thenReturnCorrectSuggestions() {
 		
 		// when
-		String[] sp = productService.getSuggestion("pretty", Constants.localeENGB, Constants.currencyUSD);
+		String[] sp = productService.getSuggestion("pretty", Constants.secondaryProductRootCategoryCode, Constants.localeENGB, Constants.currencyUSD);
 		
         // then
 		assertThat(sp.length)
@@ -636,7 +636,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenEnterSearchTermApple_thenReturnCorrectSuggestions() {
 		
 		// when
-		String[] sp = productService.getSuggestion("apple", Constants.localeENGB, Constants.currencyUSD);
+		String[] sp = productService.getSuggestion("apple", Constants.primaryProductRootCategoryCode, Constants.localeENGB, Constants.currencyUSD);
 		
 		System.out.println("results = " + String.join(",", sp));
         // then
