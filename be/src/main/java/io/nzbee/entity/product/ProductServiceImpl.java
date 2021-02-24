@@ -3,7 +3,6 @@ package io.nzbee.entity.product;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.product.physical.PhysicalProductEntity;
 
 
 @Service(value = "productEntityService")
@@ -122,9 +120,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
-	public Page<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper categoryCodes,
-			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page, String size, String sort) {
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #cls.getSimpleName() + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
+	public <T> Page<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, Class<T> cls, String page, String size, String sort) {
 		return productDAO.findAll(
 								  locale,
 						 		  currency,
@@ -133,7 +131,7 @@ public class ProductServiceImpl implements IProductService {
 						 		  brandCodes, 
 						 		  tagCodes,
 						 		  maxPrice,
-						 		  PhysicalProductEntity.class,
+						 		  cls,
 						 		  page,
 						 		  size,
 						 		  sort

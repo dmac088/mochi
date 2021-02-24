@@ -404,7 +404,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #cls.getSimpleName() + \", \" + #size.toString() + \", \" + #sort.toString()")
 			}
 	)
 	public <T> Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
@@ -428,7 +428,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 																							 brandCodes.getCodes(),
 																							 tagCodes.getCodes(),
 																							 maxPrice,
-																							 cls.getName(),
+																							 cls.getSimpleName(),
 																							 page,
 																							 size,
 																							 sort);

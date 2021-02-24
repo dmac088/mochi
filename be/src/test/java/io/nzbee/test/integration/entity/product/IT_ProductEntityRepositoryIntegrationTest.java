@@ -31,6 +31,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
+import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -140,6 +141,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new Double(10000), 
+	    														 PhysicalProductEntity.class,
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
@@ -161,6 +163,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 null, 
+	    														 PhysicalProductEntity.class,
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
@@ -183,6 +186,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new Double(10000), 
+	    														 PhysicalProductEntity.class,
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
@@ -206,7 +210,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(tags), 
-	    														 new Double(10000), 
+	    														 new Double(10000),
+	    														 PhysicalProductEntity.class,
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
@@ -230,7 +235,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(brands), 
 	    														 new StringCollectionWrapper(new HashSet<String>()),
-	    														 new Double(10000), 
+	    														 new Double(10000),
+	    														 PhysicalProductEntity.class,
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
@@ -255,6 +261,7 @@ public class IT_ProductEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(brands), 
 	    														 new StringCollectionWrapper(new HashSet<String>()),
 	    														 new Double(10000), 
+	    														 PhysicalProductEntity.class,
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
