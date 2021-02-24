@@ -3,7 +3,6 @@ package io.nzbee.entity.product.shipping.type;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.Tuple;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
 
@@ -30,30 +29,6 @@ public class ShippingTypeDaoImpl implements IShippingTypeDao {
 
 	@Override
 	public List<ShippingTypeDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ShippingTypeDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ShippingTypeDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ShippingTypeDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ShippingTypeDTO objectToDTO(Object[] o, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}

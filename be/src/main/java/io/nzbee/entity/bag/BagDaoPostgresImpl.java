@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.Tuple;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,29 +77,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 		return null;
 	}
 
-	@Override
-	public BagDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BagDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BagDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public BagDTO objectToDTO(Object[] o, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Optional<BagEntity> findById(long id) {

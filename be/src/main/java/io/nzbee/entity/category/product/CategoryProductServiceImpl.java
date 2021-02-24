@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +14,9 @@ import io.nzbee.entity.category.CategoryServiceImpl;
 @Service
 public class CategoryProductServiceImpl implements ICategoryProductService {
 
-	private static final String CACHE_NAME = "productCategoryCache";
 	
 	@Autowired
 	private ICategoryProductDao productCategoryDao;
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key="#locale + \", \" + #productUPC")
-	public List<CategoryProductDTO> findAllByProductCode(String locale, String productUPC) {
-		return productCategoryDao.findAllByProductCode(locale, productUPC);
-	}
-	
-	@Override
-	public Optional<CategoryProductDTO> findPrimaryByProductCode(String locale, String productUPC) {
-		return productCategoryDao.findPrimaryByProductCode(locale, productUPC);
-	}
 
 	@Override
 	public List<CategoryProductDTO> findAll(String locale) {

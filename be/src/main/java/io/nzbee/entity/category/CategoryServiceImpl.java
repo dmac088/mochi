@@ -32,6 +32,12 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryCode")
+	public Optional<CategoryEntity> findByCode(String categoryCode) {
+		return categoryDAO.findByCode(categoryCode);
+	}
+	
+	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryId.toString()")
 	public Optional<CategoryDTO> findById(String locale, Long categoryId) {
 		return categoryDAO.findById(locale, categoryId);
@@ -41,12 +47,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryCode")
 	public Optional<CategoryDTO> findByCode(String locale, String categoryCode) {
 		return categoryDAO.findByCode(locale, categoryCode);
-	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryCode")
-	public Optional<CategoryEntity> findByCode(String categoryCode) {
-		return categoryDAO.findByCode(categoryCode);
 	}
 	
 	@Override

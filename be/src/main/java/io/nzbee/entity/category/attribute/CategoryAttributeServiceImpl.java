@@ -3,7 +3,6 @@ package io.nzbee.entity.category.attribute;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
@@ -90,30 +89,6 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 	@Override
 	public Optional<CategoryAttributeEntity> getCategoryAttributeHK(Long id) {
 		return categoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeZHHK, id);
-	}
-
-	@Override
-	public CategoryAttributeDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryAttributeDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryAttributeDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryAttributeDTO objectToDTO(Object[] o, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

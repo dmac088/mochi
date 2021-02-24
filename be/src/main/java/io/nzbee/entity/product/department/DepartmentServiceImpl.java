@@ -58,12 +58,6 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	public Optional<DepartmentDTO> findByDesc(String locale, String desc) {
 		return departmentDao.findByDesc(locale, desc);
 	}
-	
-	@Override
-	public Optional<DepartmentDTO> findByProductCode(String locale, String productCode) {
-		return departmentDao.findByProductCode(locale, productCode);
-	}
-
 
 	@Override
 	public void save(DepartmentEntity t) {

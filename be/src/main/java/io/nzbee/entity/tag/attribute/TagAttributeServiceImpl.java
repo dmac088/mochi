@@ -3,7 +3,6 @@ package io.nzbee.entity.tag.attribute;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import javax.persistence.Tuple;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
@@ -99,32 +98,5 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	public Optional<TagAttributeEntity> getTagAttributeHK(Long id) {
 		return tagAttributeRepository.findByLclCdAndTagTagId(Constants.localeZHHK, id);
 	}
-
-	@Override
-	public TagAttributeDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public TagAttributeDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public TagAttributeDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public TagAttributeDTO objectToDTO(Object[] o, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	
 	
 }

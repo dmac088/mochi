@@ -9,7 +9,6 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -844,30 +843,5 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			
 		return sql;
 	}
-
-	@Override
-	public CategoryDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public CategoryDTO objectToDTO(Object[] o, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 
 }

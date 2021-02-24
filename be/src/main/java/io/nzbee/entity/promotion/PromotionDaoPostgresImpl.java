@@ -6,7 +6,6 @@ import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.Tuple;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -62,30 +61,6 @@ public class PromotionDaoPostgresImpl implements IPromotionDao {
 
 	@Override
 	public List<PromotionDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PromotionDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PromotionDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PromotionDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public PromotionDTO objectToDTO(Object[] o, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}

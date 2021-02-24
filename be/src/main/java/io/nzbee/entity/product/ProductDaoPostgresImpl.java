@@ -9,13 +9,11 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.Tuple;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
-
 import org.apache.poi.ss.formula.functions.T;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
@@ -941,24 +939,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 
 	@Override
-	public ProductDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ProductDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ProductDTO objectToDTO(Tuple t, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<ProductEntity> findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
@@ -966,12 +946,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 	@Override
 	public List<ProductEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ProductDTO objectToDTO(Object[] o, String locale, String currency) {
 		// TODO Auto-generated method stub
 		return null;
 	}

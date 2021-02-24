@@ -5,8 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
-import javax.persistence.Tuple;
-import javax.persistence.TypedQuery;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Join;
@@ -16,10 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.ProductEntity_;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute_;
 
@@ -153,44 +148,6 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	}
 	
 	@Override
-	public Optional<DepartmentDTO> findByProductCode(String locale, String productCode) {
-		
-		LOGGER.debug("call DepartmentDaoImpl.findByProductCode parameters : {}, {}, {}", locale, productCode);
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<Tuple> cq = cb.createQuery(Tuple.class);
-		
-		Root<ProductEntity> root = cq.from(ProductEntity.class);
-		Join<ProductEntity, DepartmentEntity> dept = root.join(ProductEntity_.department);
-		Join<DepartmentEntity, DepartmentAttribute> attribute = dept.join(DepartmentEntity_.attributes);
-		
-		cq.multiselect(	dept.get(DepartmentEntity_.departmentId).alias("departmentId"),
-						dept.get(DepartmentEntity_.departmentCode).alias("departmentCode"),
-						attribute.get(DepartmentAttribute_.Id).alias("departmentAttributeId"),
-						attribute.get(DepartmentAttribute_.departmentDesc).alias("departmentDesc")
-		);
-		
-		cq.where(cb.and(
-				cb.equal(root.get(ProductEntity_.productUPC), productCode),
-				cb.equal(attribute.get(DepartmentAttribute_.lclCd), locale)
-				)
-		);
-		
-		TypedQuery<Tuple> query = em.createQuery(cq);
-		
-		try {
-			Tuple tuple = query.getSingleResult();
-			
-			DepartmentDTO department = this.objectToDTO(tuple, locale);
-			return Optional.ofNullable(department);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
-	}
-	
-	@Override
 	public void save(DepartmentEntity t) {
 		em.persist(t);
 	}
@@ -205,30 +162,6 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 	public void delete(DepartmentEntity t) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public DepartmentDTO objectToDTO(Tuple t, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public DepartmentDTO objectToDTO(Object[] o, String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public DepartmentDTO objectToDTO(Tuple t, String locale) {
-		return null;
-		
-	}
-
-	@Override
-	public DepartmentDTO objectToDTO(Object[] o, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
