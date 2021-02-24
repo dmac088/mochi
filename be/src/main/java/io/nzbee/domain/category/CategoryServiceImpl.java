@@ -46,11 +46,6 @@ public class CategoryServiceImpl implements ICategoryService {
   	}	
     
     @Override
-  	public List<ProductCategory> findAllByProductCode(String locale, String code) {
-     	return categoryService.findAllByProductCode(locale, code);
-  	}	
-    
-    @Override
 	public List<Category> findAll(String locale, Set<String> codes) {
 		return categoryService.findAll(locale, codes);
 	}

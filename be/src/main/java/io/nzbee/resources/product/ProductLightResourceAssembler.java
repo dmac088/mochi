@@ -4,7 +4,6 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.dto.product.ProductDTOLight;
-import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
 
 @Component
@@ -21,9 +20,6 @@ public class ProductLightResourceAssembler extends RepresentationModelAssemblerS
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,
 				product.getProductUPC())).withSelfRel(),
 
-				linkTo(methodOn(CategoryController.class).getCategories(null, product.getProductUPC()))
-						.withRel("categories"),
-						
 				linkTo(methodOn(ProductController.class).getImageWithMediaType(product.getProductUPC() + "_1.jpg"))
 						.withRel("defaultImage"),
 						

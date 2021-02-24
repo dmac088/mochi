@@ -12,11 +12,7 @@ public interface ICategoryPortService  extends IProductDimensionService<Category
 
 	List<Category> findByParent(String parentCategoryCode, String locale);
 
-	List<ProductCategory> findAllByProductCode(String locale, String productCode);
-
 	void save(Category domainObject);
-
-	ProductCategory findPrimaryByProductCode(String locale, String productCode);
 
 	List<BrandCategory> findAllBrandCategories(String locale);
 

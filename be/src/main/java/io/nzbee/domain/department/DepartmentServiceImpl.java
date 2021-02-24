@@ -22,11 +22,6 @@ public class DepartmentServiceImpl implements IDepartmentService {
 	}
 
 	@Override
-	public Department findByProductCode(String locale, String currency, String departmentCode) {
-		return departmentService.findByProductCode(locale, currency, departmentCode);
-	}
-	
-	@Override
 	public List<Department> findAll(String locale) {
 		return departmentService.findAll(locale);
 	}

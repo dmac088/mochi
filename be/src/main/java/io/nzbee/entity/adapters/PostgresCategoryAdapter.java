@@ -10,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.Category;
@@ -25,7 +24,6 @@ import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
-import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.category.CategoryNotFoundException;
 
@@ -81,21 +79,6 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 		CategoryDTO cp = categoryService.findByDesc(locale, desc)
 				.orElseThrow(() -> new CategoryNotFoundException("Primary category for desc " + desc + " not found!"));
 		return categoryMapper.DTOToDo(cp);
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public List<ProductCategory> findAllByProductCode(String locale, String productCode) {
-		return categoryProductService.findAllByProductCode(locale, productCode)
-				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public ProductCategory findPrimaryByProductCode(String locale, String productCode) {
-		CategoryProductDTO cp = categoryProductService.findPrimaryByProductCode(locale, productCode)
-				.orElseThrow(() -> new CategoryNotFoundException("Primary category for product code " + productCode + " not found!"));
-		return (ProductCategory) categoryMapper.DTOToDo(cp);		
 	}
 
 	@Override

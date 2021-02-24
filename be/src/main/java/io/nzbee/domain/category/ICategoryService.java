@@ -11,8 +11,6 @@ public interface ICategoryService extends ILocalizedService<Category> {
 	
 	List<Category> findAllForLevel(String locale, Long level);
 
-	List<ProductCategory> findAllByProductCode(String locale, String code);
-
 	List<ProductCategory> findAllProductCategories(String localey);
 
 	List<Category> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,

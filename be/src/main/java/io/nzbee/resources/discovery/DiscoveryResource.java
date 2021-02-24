@@ -15,7 +15,6 @@ public class DiscoveryResource extends RepresentationModel<DiscoveryResource>{
 
 	public DiscoveryResource(String rootURL) {
 		this.add(linkTo(methodOn(BrandController.class).getBrands(null)).withRel(						"getAllBrands"));
-		this.add(linkTo(methodOn(CategoryController.class).getCategories(null, null)).withRel(			"getAllCategories"));
 		this.add(linkTo(methodOn(CategoryController.class).getProductCategories(null)).withRel(			"getAllProductCategories"));
 		this.add(linkTo(methodOn(CategoryController.class).getBrandCategories(null)).withRel(			"getAllBrandCategories"));
 		this.add(linkTo(methodOn(CustomerController.class).getCustomer(null)).withRel(					"getCustomer"));
