@@ -94,7 +94,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	}
 	
     
-	public io.nzbee.entity.category.CategoryEntity persistNewCategory() {
+	public CategoryEntity persistNewCategory() {
     	
 		category = categoryEntityBeanFactory.getBrandCategoryEntityBean();
 	    	
