@@ -15,6 +15,9 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	@Autowired
 	private ICategoryBrandDao brandCategoryDao;
 	
+	@Autowired
+	private ICategoryBrandRepository brandCategoryRepository;
+	
 	@Override
 	public List<CategoryBrandDTO> findAllByBrandCode(String locale, String currency, String brandCode) {
 		// TODO Auto-generated method stub
@@ -75,14 +78,12 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 
 	@Override
 	public Optional<CategoryBrandEntity> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return brandCategoryRepository.findById(id);
 	}
 
 	@Override
 	public Optional<CategoryBrandEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
+		return brandCategoryRepository.findByCategoryCode(code);
 	}
 
 	@Override

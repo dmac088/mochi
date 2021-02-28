@@ -31,6 +31,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
+import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory;
 
@@ -64,7 +65,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
 	private CategoryEntityBeanFactory categoryEntityBeanFactory;
  
     @Autowired
-    private ICategoryService categoryService;
+    private ICategoryBrandService categoryBrandService;
     
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
@@ -110,7 +111,7 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindById_thenReturnBrandCategory() {
     	
         // when
-    	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
+    	Optional<CategoryBrandEntity> found = categoryBrandService.findById(category.getCategoryId());
      
         // then
     	assertFound(found);
@@ -122,14 +123,14 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
     public void whenFindByCode_thenReturnBrandCategory() {
     	
         // when
-    	Optional<CategoryEntity> found = categoryService.findByCode("TST03");
+    	Optional<CategoryBrandEntity> found = categoryBrandService.findByCode("TST03");
      
         // then
     	assertFound(found);
     }
     
     
-    private void assertFound(Optional<CategoryEntity> found) {
+    private void assertFound(Optional<CategoryBrandEntity> found) {
     	
     	assertNotNull(found);
     	
