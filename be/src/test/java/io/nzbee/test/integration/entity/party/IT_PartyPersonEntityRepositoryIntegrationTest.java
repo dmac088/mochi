@@ -22,6 +22,7 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -36,6 +37,7 @@ import io.nzbee.test.integration.entity.beans.party.IPartyEntityBeanFactory;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
+@DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
 public class IT_PartyPersonEntityRepositoryIntegrationTest {
 	
 	@TestConfiguration
@@ -72,6 +74,8 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 			return;
 		}
 		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/security_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/security_data.sql"));
 			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
 			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
 		} catch (SQLException e) {
@@ -83,12 +87,13 @@ public class IT_PartyPersonEntityRepositoryIntegrationTest {
 	}
 	
 
-    public void persistNewCustomer() { 
+    public Party persistNewCustomer() { 
 		
 		customer = partyEntityBeanFactory.getBean();
 	    	
    	    entityManager.persist(customer);
    
+   	    return customer;
     }
 	
     //as long as the admin account can fetch the new user, we know that it was persisted properly by hibernate
