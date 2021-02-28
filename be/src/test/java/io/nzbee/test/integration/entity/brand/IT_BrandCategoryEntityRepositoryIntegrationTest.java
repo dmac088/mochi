@@ -29,7 +29,6 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.CategoryEntity;
-import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
 import io.nzbee.resources.product.ProductLightResource;
