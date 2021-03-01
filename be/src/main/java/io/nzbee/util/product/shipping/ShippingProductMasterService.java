@@ -75,7 +75,7 @@ public class ShippingProductMasterService {
 	@Autowired
 	private IShippingDestinationService shippingDestinationService;
     
-	@Transactional
+	//@Transactional
 	public void writeShippingProductMaster(String fileName) {
 		logger.debug("called writeShippingProductMaster with parameter {} ", fileName);
 		try {
