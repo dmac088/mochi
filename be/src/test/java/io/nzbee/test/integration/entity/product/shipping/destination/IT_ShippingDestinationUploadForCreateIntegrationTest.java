@@ -76,7 +76,7 @@ public class IT_ShippingDestinationUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shipping/destination/create/destination_master.tsv");
+		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shipping/create/shipping_product_master.tsv");
 	}
 
 	@Test

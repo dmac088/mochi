@@ -1,7 +1,10 @@
 package io.nzbee.util.product.shipping;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import io.nzbee.util.product.ProductMasterSchema;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ShippingProductMasterSchema extends ProductMasterSchema {
 
 	private String SERVICE_TYPE_CODE;

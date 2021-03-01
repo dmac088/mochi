@@ -74,7 +74,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeShippingProductMaster(file.getAbsolutePath() + "/data/product/shipping/Product/update/shipping_product_master.tsv");
+		pms.writeShippingProductMaster(file.getAbsolutePath() + "/data/product/shipping/update/shipping_product_master.tsv");
 	}
 
 	@Test

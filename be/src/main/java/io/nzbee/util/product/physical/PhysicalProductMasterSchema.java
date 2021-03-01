@@ -37,7 +37,6 @@ public class PhysicalProductMasterSchema extends ProductMasterSchema {
 		LENGTH = lENGTH;
 	}
 
-
 	public String get_WEIGHT() {
 		return WEIGHT;
 	}
