@@ -15,7 +15,9 @@ import io.nzbee.util.category.CategoryMasterService;
 import io.nzbee.util.inventory.InventoryLocationMasterService;
 import io.nzbee.util.inventory.InventoryMasterService;
 import io.nzbee.util.product.physical.PhysicalProductMasterService;
+import io.nzbee.util.product.shipping.ShippingProductMasterService;
 import io.nzbee.util.product.shipping.destination.ShippingDestinationMasterService;
+import io.nzbee.util.product.shipping.type.ShippingTypeMasterService;
 import io.nzbee.util.promotion.PromotionMasterService;
 import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
@@ -52,6 +54,12 @@ public class FileController {
     
     @Autowired
     private ShippingDestinationMasterService shippingDestinationMasterService;
+    
+    @Autowired
+    private ShippingTypeMasterService shippingTypeMasterService;
+    
+    @Autowired
+    private ShippingProductMasterService shippingProductMasterService;
 
     @Autowired
     private PromotionMasterService promotionMasterService;
@@ -425,6 +433,42 @@ public class FileController {
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
         shippingDestinationMasterService.writeShippingDestinationMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
+    @PostMapping("/ShippingType/Upload/")
+    public UploadFileResponse uploadShippingTypeFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadShippingTypeFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        shippingTypeMasterService.writeShippingTypeMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
+    @PostMapping("/ShippingProduct/Upload/")
+    public UploadFileResponse uploadShippingProductFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadShippingProductFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        shippingProductMasterService.writeShippingProductMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	

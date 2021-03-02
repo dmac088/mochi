@@ -1,0 +1,24 @@
+_TYPE_CODE	_TYPE_DESC_EN	_TYPE_DESC_HK	_TYPE_DESC_CN
+AIR_ORD_1	Air Mail (Large Letter)	空郵（大型信件）	空邮（大型信件）
+AIR_ORD_2	Air Mail (Small Letter)	空郵（小型信件）	空邮（小型信件）
+AIR_ORD_3	Air Mail (Packet)	空郵（郵包）	空邮（邮包）
+AIR_PAR_1	Air Parcel	空郵包裹	空邮包裹
+AIR_REG_1	Air Registered Mail (Large Letter)	空郵掛號（大型信件）	空邮挂号（大型信件）
+AIR_REG_2	Air Registered Mail (Small Letter)	空郵掛號（小型信件）	空邮挂号（小型信件）
+AIR_REG_3	Air Registered Mail (Packet)	空郵掛號（郵包）	空邮挂号（邮包）
+EXP_1	e-Express Service	易網遞 (e-Express)	易网递 (e-Express)
+LCP_STD_1	Local CourierPost	本地郵政速遞	本地邮政速递
+LOC_PAR_1	Local Parcels	本地包裹	本地包裹
+LOC_REG_1	Local Registered Mail (Large Letter)	本地掛號（大型信件）	本地掛號（大型信件）
+LOC_REG_2	Local Registered Mail (Small Letter)	本地掛號（小型信件）	本地掛號（小型信件）
+LOC_REG_3	Local Registered Mail (Packet)	本地掛號（郵包）	本地掛號（邮包）
+SMP_1	Smart Post (Counter Collection)	易送遞 (櫃位領件)	易送递 (柜位领件)
+SMP_2	Smart Post (Mail Delivery)	易送遞 (郵件派遞)	易送递 (邮件派递)
+SPT_STD_1	Speedpost (Standard Service)	特快專遞（標準服務）	特快专递（标准服务）
+SUR_ORD_1	Surface Mail (Large Letter)	平郵（大型信件）	平邮（大型信件）
+SUR_ORD_2	Surface Mail (Small Letter)	平郵（小型信件）	平邮（小型信件）
+SUR_ORD_3	Surface Mail (Packet)	平郵（郵包）	平邮（邮包）
+SUR_PAR_1	Surface Parcel	平郵包裹	平邮包裹
+SUR_REG_1	Surface Registered Mail (Large Letter)	平郵掛號（大型信件）	平邮挂号（大型信件）
+SUR_REG_2	Surface Registered Mail (Small Letter)	平郵掛號（小型信件）	平邮挂号（小型信件）
+SUR_REG_3	Surface Registered Mail (Packet)	平郵掛號（郵包）	平邮挂号（邮包）
