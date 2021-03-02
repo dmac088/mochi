@@ -15,6 +15,7 @@ import io.nzbee.util.category.CategoryMasterService;
 import io.nzbee.util.inventory.InventoryLocationMasterService;
 import io.nzbee.util.inventory.InventoryMasterService;
 import io.nzbee.util.product.physical.PhysicalProductMasterService;
+import io.nzbee.util.product.shipping.destination.ShippingDestinationMasterService;
 import io.nzbee.util.promotion.PromotionMasterService;
 import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
@@ -48,6 +49,9 @@ public class FileController {
     
     @Autowired
     private TagMasterService tagMasterService;
+    
+    @Autowired
+    private ShippingDestinationMasterService shippingDestinationMasterService;
 
     @Autowired
     private PromotionMasterService promotionMasterService;
@@ -403,6 +407,24 @@ public class FileController {
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
         inventoryLocationMasterService.writeInventoryLocation(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
+    @PostMapping("/ShippingDestination/Upload/")
+    public UploadFileResponse uploadShippingDestinationFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadShippingDestinationFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        shippingDestinationMasterService.writeShippingDestinationMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	
