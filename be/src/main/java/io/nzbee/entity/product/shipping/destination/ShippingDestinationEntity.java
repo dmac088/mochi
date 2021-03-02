@@ -1,5 +1,6 @@
 package io.nzbee.entity.product.shipping.destination;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.CascadeType;
@@ -14,7 +15,9 @@ import io.nzbee.entity.product.shipping.destination.attribute.ShippingDestinatio
 
 @Entity
 @Table(name="shipping_destination")
-public class ShippingDestinationEntity {
+public class ShippingDestinationEntity implements Serializable {
+
+	private static final long serialVersionUID = 6452388121663774849L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
