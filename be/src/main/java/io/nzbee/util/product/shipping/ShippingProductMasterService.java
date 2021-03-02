@@ -5,6 +5,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,7 +77,7 @@ public class ShippingProductMasterService {
 	@Autowired
 	private IShippingDestinationService shippingDestinationService;
     
-	//@Transactional
+	@Transactional
 	public void writeShippingProductMaster(String fileName) {
 		logger.debug("called writeShippingProductMaster with parameter {} ", fileName);
 		try {
