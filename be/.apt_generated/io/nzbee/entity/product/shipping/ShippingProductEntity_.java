@@ -10,12 +10,14 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ShippingProductEntity.class)
 public abstract class ShippingProductEntity_ extends io.nzbee.entity.product.ProductEntity_ {
 
+	public static volatile SingularAttribute<ShippingProductEntity, Integer> trackingLevel;
 	public static volatile SingularAttribute<ShippingProductEntity, ShippingDestinationEntity> shippingDestination;
 	public static volatile SingularAttribute<ShippingProductEntity, ShippingTypeEntity> shippingType;
 	public static volatile SingularAttribute<ShippingProductEntity, Double> weightTo;
 	public static volatile SingularAttribute<ShippingProductEntity, Double> weightLimit;
 	public static volatile SingularAttribute<ShippingProductEntity, Double> weightFrom;
 
+	public static final String TRACKING_LEVEL = "trackingLevel";
 	public static final String SHIPPING_DESTINATION = "shippingDestination";
 	public static final String SHIPPING_TYPE = "shippingType";
 	public static final String WEIGHT_TO = "weightTo";

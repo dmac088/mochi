@@ -124,6 +124,7 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 		product.setWeightLimit(new Double(5));
 		product.setWeightFrom(new Double(2));
 		product.setWeightTo(new Double(3));
+		product.setTrackingLevel(1);
 		
 		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode("ADAD1");
 		Optional<ShippingTypeEntity> ost = shippingTypeService.findByCode("AIR_REG_1");

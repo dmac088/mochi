@@ -35,6 +35,9 @@ public class ShippingProductEntity extends ProductEntity {
 	
 	@Column(name="shp_wgt_to")
 	private Double weightTo;
+	
+	@Column(name="shp_trk_lvl")
+	private Integer trackingLevel;
 
 	public ShippingTypeEntity getShippingType() {
 		return shippingType;
@@ -74,6 +77,14 @@ public class ShippingProductEntity extends ProductEntity {
 
 	public void setWeightTo(Double weightTo) {
 		this.weightTo = weightTo;
+	}
+
+	public Integer getTrackingLevel() {
+		return trackingLevel;
+	}
+
+	public void setTrackingLevel(Integer trackingLevel) {
+		this.trackingLevel = trackingLevel;
 	}
 
 }
