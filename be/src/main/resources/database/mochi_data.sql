@@ -1030,7 +1030,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 1403208, true);
+SELECT pg_catalog.setval('hibernate_sequence', 1403210, true);
 
 
 --
@@ -3029,6 +3029,7 @@ INSERT INTO tag VALUES (233263, 'TAG16');
 INSERT INTO tag VALUES (233266, 'TAG17');
 INSERT INTO tag VALUES (233269, 'TAG18');
 INSERT INTO tag VALUES (233272, 'TAG19');
+INSERT INTO tag VALUES (1403209, 'TST02');
 
 
 --
@@ -3354,6 +3355,7 @@ INSERT INTO shipping_destination_attr_lcl VALUES (234739, 234737, '哥倫比亞'
 INSERT INTO shipping_destination_attr_lcl VALUES (234741, 234740, 'COSTA RICA', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234742, 234740, '哥斯達黎加', 'zh-HK');
 INSERT INTO shipping_destination_attr_lcl VALUES (234747, 234746, 'CUBA (ALL OTHER PLACES)', 'en-GB');
+INSERT INTO shipping_destination_attr_lcl VALUES (234933, 234932, 'INDIA', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234748, 234746, '古巴 (其他地方)', 'zh-HK');
 INSERT INTO shipping_destination_attr_lcl VALUES (234750, 234749, 'CUBA (GUANTANAMO BAY)', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234751, 234749, '古巴 (關塔那摩灣)', 'zh-HK');
@@ -3476,7 +3478,6 @@ INSERT INTO shipping_destination_attr_lcl VALUES (234927, 234926, 'IRELAND', 'en
 INSERT INTO shipping_destination_attr_lcl VALUES (234928, 234926, '愛爾蘭', 'zh-HK');
 INSERT INTO shipping_destination_attr_lcl VALUES (234930, 234929, 'ISRAEL', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234931, 234929, '以色列', 'zh-HK');
-INSERT INTO shipping_destination_attr_lcl VALUES (234933, 234932, 'INDIA', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234934, 234932, '印度', 'zh-HK');
 INSERT INTO shipping_destination_attr_lcl VALUES (234936, 234935, 'INDIA (ALL OTHER PLACES)', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234937, 234935, '印度 (其他地方)', 'zh-HK');
@@ -4654,6 +4655,7 @@ INSERT INTO tag_attr_lcl VALUES (233273, 233272, 'SKATEBOARD', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (233274, 233272, '滑板風', NULL, 'zh-HK');
 INSERT INTO tag_attr_lcl VALUES (3, 17, 'GLUTEN FREE', NULL, 'en-GB');
 INSERT INTO tag_attr_lcl VALUES (1, 15, 'ORGANIC', NULL, 'en-GB');
+INSERT INTO tag_attr_lcl VALUES (1403210, 1403209, 'test tag', NULL, 'en-GB');
 
 
 --
