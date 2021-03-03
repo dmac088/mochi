@@ -25,8 +25,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.shipping.IShippingProductService;
-import io.nzbee.entity.product.shipping.ShippingProductDTO;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.util.product.shipping.ShippingProductMasterService;
 
 @RunWith(SpringRunner.class)
@@ -46,7 +46,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 	private ShippingProductMasterService pms;
 
 	@Autowired
-	private IShippingProductService shippingProductService;
+	private IProductService shippingProductService;
 	
 	@Autowired
     @Qualifier("mochiDataSourceOwner")
@@ -81,7 +81,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForUpdate_thenReturnCorrectlyUpdatedShippingProduct_ENGB() {
 		// when
-		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "AIR_PAR_1_AF_AF_0.001_1.000");
+		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,13 +91,13 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForUpdate_thenReturnCorrectlyUpdatedShippingProduct_ZHHK() {
 		// when
-		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeZHHK, "AIR_PAR_1_AF_AF_0.001_1.000");
+		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeZHHK, "AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<ShippingProductDTO> found) {
+	private void assertFound_ENGB(Optional<ProductDTO> found) {
 		
 		assertNotNull(found);
 		
@@ -108,7 +108,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<ShippingProductDTO> found) {
+	private void assertFound_ZHHK(Optional<ProductDTO> found) {
 		
 		assertNotNull(found);
 		

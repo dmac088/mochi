@@ -26,9 +26,9 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
-import io.nzbee.entity.product.shipping.destination.ShippingDestinationEntity;
-import io.nzbee.util.product.shipping.destination.ShippingDestinationMasterService;
+import io.nzbee.entity.product.shipping.IShippingProductService;
+import io.nzbee.entity.product.shipping.ShippingProductEntity;
+import io.nzbee.util.product.shipping.ShippingProductMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -45,10 +45,10 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private ShippingDestinationMasterService pms;
+	private ShippingProductMasterService pms;
 
 	@Autowired
-	private IShippingDestinationService shippingDestinationService;
+	private IShippingProductService shippingProductService;
 
 	@Autowired
     @Qualifier("mochiDataSourceOwner")
@@ -68,22 +68,22 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	this.uploadShippingDestinations();
+    	this.uploadShippingProducts();
         setUpIsDone = true;
 	}
     
-	public void uploadShippingDestinations() {
+	public void uploadShippingProducts() {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writeShippingDestinationMaster(file.getAbsolutePath() + "/data/product/shipping/destination/create/destination_master.tsv");
+		pms.writeShippingProductMaster(file.getAbsolutePath() + "/data/product/shipping/create/shipping_product_master.tsv");
 	}
 
 	@Test
 	@Rollback(false)
-	public void whenShippingDestinationUploadedForCreate_thenReturnCorrectlyCreatedShippingDestination_ENGB() {
+	public void whenShippingProductUploadedForCreate_thenReturnCorrectlyCreatedShippingProduct_ENGB() {
 		// when
-		Optional<ShippingDestinationEntity> found = shippingDestinationService.findByCode("TST01");
+		Optional<ShippingProductEntity> found = shippingProductService.findByCode("TST01");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,33 +91,33 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 
 	@Test
 	@Rollback(false)
-	public void whenShippingDestinationUploadedForCreate_thenReturnCorrectlyCreatedShippingDestination_ZHHK() {
+	public void whenShippingProductUploadedForCreate_thenReturnCorrectlyCreatedShippingProduct_ZHHK() {
 		// when
-		Optional<ShippingDestinationEntity> found = shippingDestinationService.findByCode("TST01");
+		Optional<ShippingProductEntity> found = shippingProductService.findByCode("TST01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
 	
-	private void assertFound_ENGB(Optional<ShippingDestinationEntity> found) {
+	private void assertFound_ENGB(Optional<ShippingProductEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getShippingDestinationDesc())
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getProductDesc())
 		.isEqualTo("Test localized shipping destination update");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<ShippingDestinationEntity> found) {
+	private void assertFound_ZHHK(Optional<ShippingProductEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeZHHK)).findAny().get().getShippingDestinationDesc())
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeZHHK)).findAny().get().getProductDesc())
 		.isEqualTo("測試本地化的送貨目的地更新");
 	}
 
