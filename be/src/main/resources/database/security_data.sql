@@ -77,7 +77,6 @@ INSERT INTO user_ VALUES (233024, false, false, false, true, '$2a$08$4DTKA9aghc3
 INSERT INTO user_ VALUES (233054, false, false, false, false, '$2a$08$qi9xsyMckwVhNG0k1C0m8.zBV5NgPhDnJ5zqAGhqV6ddrF62cwdFi', 'dmac1119', false, NULL);
 INSERT INTO user_ VALUES (234477, false, false, false, true, '$2a$08$lMh8Za9pdp4TU/a0q3SUSe9cj9/BNZYxJ37uerWn6Pp9Q0v0rRnIS', 'rob@rob', false, NULL);
 INSERT INTO user_ VALUES (234482, false, false, false, true, '$2a$08$QDQfUEzVtkaILBRHdkVUquBq/ylLqS.DESfiNAvW0N11mw2a1kn0K', 'nob@nob', false, NULL);
-INSERT INTO user_ VALUES (1403211, false, false, false, true, '$2a$08$Fiwm3lzWTBT8k5h4jHS0au2egFUqV2UBfPO3jp.XGVDo/4gcs8Zvi', 'mackdad', false, NULL);
 
 
 --

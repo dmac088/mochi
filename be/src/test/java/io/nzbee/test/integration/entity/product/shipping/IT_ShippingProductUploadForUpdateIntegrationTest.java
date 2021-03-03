@@ -81,7 +81,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForUpdate_thenReturnCorrectlyUpdatedShippingProduct_ENGB() {
 		// when
-		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "TST01");
+		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,7 +91,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForUpdate_thenReturnCorrectlyUpdatedShippingProduct_ZHHK() {
 		// when
-		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeZHHK, "TST01");
+		Optional<ShippingProductDTO> found = shippingProductService.findByCode(Constants.localeZHHK, "AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ZHHK(found);
@@ -104,7 +104,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getProductDesc())
-		.isEqualTo("Test localized shipping Product create");
+		.isEqualTo("Air Parcel to AFGHANISTAN");
 		
 	}
 
@@ -115,7 +115,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getProductDesc())
-		.isEqualTo("測試本地化的送貨目的地創建");
+		.isEqualTo("空郵包裹 至 阿富汗");
 	}
 
 }
