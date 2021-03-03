@@ -252,6 +252,7 @@ public class ShippingProductMasterService {
 		sp.setWeightLimit(Double.parseDouble(weightLimit));
 		sp.setWeightFrom(Double.parseDouble(weightFrom));
 		sp.setWeightTo(Double.parseDouble(weightTo));
+		sp.setTrackingLevel(Integer.parseInt(trackingLevel));
 		
 		return sp;
 		
