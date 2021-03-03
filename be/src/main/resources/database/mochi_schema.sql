@@ -2629,7 +2629,7 @@ CREATE TABLE product_shipping (
     prd_id bigint NOT NULL,
     shp_dst_id bigint NOT NULL,
     shp_typ_id bigint NOT NULL,
-    shp_wgt_lim numeric NOT NULL,
+    shp_wgt_lim numeric,
     shp_wgt_frm numeric NOT NULL,
     shp_wgt_to numeric NOT NULL,
     shp_trk_lvl smallint NOT NULL

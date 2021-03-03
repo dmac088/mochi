@@ -26,6 +26,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
+import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.shipping.IShippingProductService;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.util.product.shipping.ShippingProductMasterService;
@@ -48,7 +50,7 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 	private ShippingProductMasterService pms;
 
 	@Autowired
-	private IShippingProductService shippingProductService;
+	private IProductService shippingProductService;
 
 	@Autowired
     @Qualifier("mochiDataSourceOwner")
@@ -83,7 +85,7 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForCreate_thenReturnCorrectlyCreatedShippingProduct_ENGB() {
 		// when
-		Optional<ShippingProductEntity> found = shippingProductService.findByCode("TST01");
+		Optional<ProductEntity> found = shippingProductService.findByCode("AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ENGB(found);
@@ -93,14 +95,14 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForCreate_thenReturnCorrectlyCreatedShippingProduct_ZHHK() {
 		// when
-		Optional<ShippingProductEntity> found = shippingProductService.findByCode("TST01");
+		Optional<ProductEntity> found = shippingProductService.findByCode("AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
 	
-	private void assertFound_ENGB(Optional<ShippingProductEntity> found) {
+	private void assertFound_ENGB(Optional<ProductEntity> found) {
 		
 		assertNotNull(found);
 		
@@ -111,7 +113,7 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<ShippingProductEntity> found) {
+	private void assertFound_ZHHK(Optional<ProductEntity> found) {
 		
 		assertNotNull(found);
 		
