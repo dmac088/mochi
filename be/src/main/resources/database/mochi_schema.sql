@@ -262,6 +262,7 @@ DROP SEQUENCE mochi.bag_bag_id_seq;
 DROP TABLE mochi.address_type;
 DROP TABLE mochi.address;
 DROP TABLE mochi.accessories_attr_lcl;
+DROP FUNCTION mochi.load_shipping_products();
 DROP FUNCTION mochi.load_postage_type();
 DROP FUNCTION mochi.load_postage_destination();
 DROP FUNCTION mochi.ft_product_categories(text, text);
@@ -1662,6 +1663,79 @@ end;
 
 ALTER FUNCTION mochi.load_postage_type() OWNER TO mochidb_owner;
 
+--
+-- Name: load_shipping_products(); Type: FUNCTION; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE FUNCTION load_shipping_products() RETURNS integer
+    LANGUAGE plpgsql
+    AS '
+declare 
+record_count integer = 0;
+begin
+
+INSERT INTO mochi.product(prd_id, upc_cd, prd_crtd_dt, bnd_id, dept_id, prd_sts_id)
+SELECT 	
+		nextval(''mochi."hibernate_sequence"''),
+		_product_upc_code, 
+		to_date(_product_created_date, ''YYYY-MM-DD HH:MM:SS'') as _product_created_date,
+		42 as bnd_id,
+		1 dept_id,
+		1 prd_sts_id
+FROM yahoo.vw_export_shipping_master m;
+
+insert into mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd, prd_lng_desc)
+select nextval(''mochi."hibernate_sequence"''),
+		p.prd_id,
+		trim(m._product_description_en),
+		null,
+		''en-GB'',
+		trim(m._product_description_en)
+from mochi.product p
+	left join yahoo.vw_export_shipping_master m
+		on p.upc_cd = m._product_upc_code
+where p.dept_id = 1;
+
+
+
+insert into mochi.product_attr_lcl(prd_lcl_id, prd_id, prd_desc, prd_img_pth, lcl_cd, prd_lng_desc)
+select nextval(''mochi."hibernate_sequence"''),
+		p.prd_id,
+		trim(m._product_description_hk),
+		null,
+		''zh-HK'',
+		trim(m._product_description_hk)
+from mochi.product p
+	left join yahoo.vw_export_shipping_master m
+		on p.upc_cd = m._product_upc_code
+where p.dept_id = 1;
+
+insert into mochi.product_shipping (prd_id, shp_dst_id, shp_typ_id, shp_wgt_lim, shp_wgt_frm, shp_wgt_to, shp_trk_lvl)
+select prd_id,
+	   sd.shp_dst_id,
+	   st.shp_typ_id,
+	   m._weight_limit, 
+	   m._weight_from,
+	   m._weight_to, 
+	   m._tracking_level::smallint
+from mochi.product p
+	left join yahoo.vw_export_shipping_master m
+		on p.upc_cd = m._product_upc_code
+		
+	left join mochi.shipping_destination sd
+		on m._destination_code = sd.shp_dst_cd
+		
+	left join mochi.shipping_type st 
+		on m._service_type_code = st.shp_typ_cd
+where p.dept_id = 1;
+
+	RETURN 1;
+end;
+';
+
+
+ALTER FUNCTION mochi.load_shipping_products() OWNER TO mochidb_owner;
+
 SET default_tablespace = '';
 
 SET default_with_oids = false;
@@ -2455,7 +2529,7 @@ ALTER TABLE product OWNER TO mochidb_owner;
 CREATE TABLE product_attr_lcl (
     prd_lcl_id bigint NOT NULL,
     prd_id bigint NOT NULL,
-    prd_desc character varying(100),
+    prd_desc character varying(200),
     prd_img_pth character varying(100),
     lcl_cd character varying(5) NOT NULL,
     prd_lng_desc character varying(500)
@@ -2557,7 +2631,8 @@ CREATE TABLE product_shipping (
     shp_typ_id bigint NOT NULL,
     shp_wgt_lim numeric NOT NULL,
     shp_wgt_frm numeric NOT NULL,
-    shp_wgt_to numeric NOT NULL
+    shp_wgt_to numeric NOT NULL,
+    shp_trk_lvl smallint NOT NULL
 );
 
 
@@ -4173,9 +4248,9 @@ ALTER TABLE ONLY tag_attr_lcl
 -- Name: mochi; Type: ACL; Schema: -; Owner: mochidb_owner
 --
 
+GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT ALL ON SCHEMA mochi TO security_owner;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
-GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --
@@ -4364,8 +4439,8 @@ GRANT ALL ON SEQUENCE customer_cst_num_seq TO mochi_app;
 -- Name: customer; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 GRANT SELECT ON TABLE customer TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE customer TO mochi_app;
 
 
 --
@@ -4484,16 +4559,16 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE order_line TO mochi_app;
 -- Name: organisation; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 GRANT SELECT ON TABLE organisation TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE organisation TO mochi_app;
 
 
 --
 -- Name: party; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 GRANT SELECT ON TABLE party TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party TO mochi_app;
 
 
 --
@@ -4514,8 +4589,8 @@ GRANT ALL ON SEQUENCE party_pty_id_seq TO mochi_app;
 -- Name: party_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 GRANT SELECT ON TABLE party_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE party_type TO mochi_app;
 
 
 --
@@ -4529,8 +4604,8 @@ GRANT ALL ON SEQUENCE party_type_pty_typ_id_seq TO mochi_app;
 -- Name: person; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 GRANT SELECT ON TABLE person TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE person TO mochi_app;
 
 
 --
@@ -4712,16 +4787,16 @@ GRANT ALL ON SEQUENCE role_rle_id_seq TO mochi_app;
 -- Name: role; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 GRANT SELECT ON TABLE role TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role TO mochi_app;
 
 
 --
 -- Name: role_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
 --
 
-GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 GRANT SELECT ON TABLE role_type TO security_app;
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE role_type TO mochi_app;
 
 
 --
