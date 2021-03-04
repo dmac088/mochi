@@ -202,6 +202,9 @@ public class ShippingProductMasterService {
 		pa.setProductLongDesc(productLongDesc);
 		pa.setLclCd(locale);
 		
+		sp.addProductAttribute(pa);
+		pa.setProduct(sp);
+		
 		Currency curr = currencyService.findByCode(currency).get();
 		ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
 		ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();

@@ -28,8 +28,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.shipping.IShippingProductService;
-import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.util.product.shipping.ShippingProductMasterService;
 
 @RunWith(SpringRunner.class)
@@ -108,8 +106,10 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 		
 		assertTrue(found.isPresent());
 		
+		assertNotNull(found.get().getAttributes());
+		
 		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getProductDesc())
-		.isEqualTo("Test localized shipping destination update");
+		.isEqualTo("Test localized shipping destination create");
 		
 	}
 
