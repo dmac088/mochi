@@ -104,7 +104,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getProductDesc())
-		.isEqualTo("Air Parcel to AFGHANISTAN");
+		.isEqualTo("Air Parcel to AFGHANISTAN update");
 		
 	}
 
@@ -115,7 +115,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 		assertTrue(found.isPresent());
 		
 		assertThat(found.get().getProductDesc())
-		.isEqualTo("空郵包裹 至 阿富汗");
+		.isEqualTo("飛往阿富汗的航空包裹更新");
 	}
 
 }
