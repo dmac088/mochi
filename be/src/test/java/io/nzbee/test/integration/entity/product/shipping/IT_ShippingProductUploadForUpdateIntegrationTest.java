@@ -26,9 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.ProductDTO;
-import io.nzbee.entity.product.shipping.IShippingProductService;
-import io.nzbee.entity.product.shipping.ShippingProductDTO;
+import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.util.product.shipping.ShippingProductMasterService;
 
 @RunWith(SpringRunner.class)
@@ -83,7 +81,7 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForUpdate_thenReturnCorrectlyUpdatedShippingProduct_ENGB() {
 		// when
-		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, "AIR_PAR_1_AF_AF_0.001_1.000");
+		Optional<ProductEntity> found = shippingProductService.findByCode("AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ENGB(found);
@@ -93,31 +91,31 @@ public class IT_ShippingProductUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenShippingProductUploadedForUpdate_thenReturnCorrectlyUpdatedShippingProduct_ZHHK() {
 		// when
-		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeZHHK, "AIR_PAR_1_AF_AF_0.001_1.000");
+		Optional<ProductEntity> found = shippingProductService.findByCode("AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<ProductDTO> found) {
+	private void assertFound_ENGB(Optional<ProductEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getProductDesc())
-		.isEqualTo("Air Parcel to AFGHANISTAN update");
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeENGB)).findAny().get().getProductDesc())
+		.isEqualTo("Test localized shipping destination update");
 		
 	}
 
-	private void assertFound_ZHHK(Optional<ProductDTO> found) {
+	private void assertFound_ZHHK(Optional<ProductEntity> found) {
 		
 		assertNotNull(found);
 		
 		assertTrue(found.isPresent());
 		
-		assertThat(found.get().getProductDesc())
-		.isEqualTo("飛往阿富汗的航空包裹更新");
+		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeZHHK)).findAny().get().getProductDesc())
+		.isEqualTo("測試本地化的送貨目的地更新");
 	}
 
 }
