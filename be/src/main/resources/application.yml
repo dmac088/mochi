@@ -1,5 +1,10 @@
 spring:
 
+  output:
+    ansi:
+      enabled: ALWAYS
+    
+
   main:
     allow-bean-definition-overriding: true
 
