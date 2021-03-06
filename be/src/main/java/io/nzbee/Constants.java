@@ -15,6 +15,7 @@ public class Constants {
 	public static final String primaryProductRootCategoryCode = "PRM01";
 	public static final String secondaryProductRootCategoryCode = "PRM05";
 	public static final String primaryBrandRootCategoryCode = "FBR01";
+	public static final String shippingRootCategoryCode = "SHP01";
 	public static final String TOKEN_INVALID = "invalidToken";
 	public static final String TOKEN_EXPIRED = "expired";
 	public static final String TOKEN_VALID = "valid";

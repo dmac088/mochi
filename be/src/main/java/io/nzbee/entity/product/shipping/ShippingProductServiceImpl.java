@@ -11,6 +11,8 @@ import io.nzbee.entity.StringCollectionWrapper;
 @Service
 public class ShippingProductServiceImpl implements IShippingProductService {
 	
+	
+	
 	@Override
 	public List<ShippingProductEntity> findAll() {
 		// TODO Auto-generated method stub

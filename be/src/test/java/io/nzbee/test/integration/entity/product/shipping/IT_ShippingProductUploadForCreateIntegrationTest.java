@@ -27,6 +27,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
+import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.util.product.shipping.ShippingProductMasterService;
 
@@ -86,7 +87,7 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 		Optional<ProductEntity> found = shippingProductService.findByCode("AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
-		assertFound_ENGB(found);
+		assertEntityFound_ENGB(found);
 	}
 
 	@Test
@@ -96,11 +97,31 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 		Optional<ProductEntity> found = shippingProductService.findByCode("AIR_PAR_1_AF_AF_0.001_1.000");
 
 		// then
-		assertFound_ZHHK(found);
+		assertEntityFound_ZHHK(found);
+	}
+	
+	@Test
+	@Rollback(false)
+	public void whenShippingProductUploadedForCreate_thenReturnCorrectlyCreatedShippingProductDTO_ENGB() {
+		// when
+		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeENGB, Constants.currencyUSD, "AIR_PAR_1_AF_AF_0.001_1.000");
+
+		// then
+		assertDTOFound_ENGB(found);
+	}
+
+	@Test
+	@Rollback(false)
+	public void whenShippingProductUploadedForCreate_thenReturnCorrectlyCreatedShippingProductDTO_ZHHK() {
+		// when
+		Optional<ProductDTO> found = shippingProductService.findByCode(Constants.localeZHHK, Constants.currencyHKD, "AIR_PAR_1_AF_AF_0.001_1.000");
+
+		// then
+		assertDTOFound_ZHHK(found);
 	}
 
 	
-	private void assertFound_ENGB(Optional<ProductEntity> found) {
+	private void assertEntityFound_ENGB(Optional<ProductEntity> found) {
 		
 		assertNotNull(found);
 		
@@ -113,7 +134,7 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<ProductEntity> found) {
+	private void assertEntityFound_ZHHK(Optional<ProductEntity> found) {
 		
 		assertNotNull(found);
 		
@@ -121,6 +142,29 @@ public class IT_ShippingProductUploadForCreateIntegrationTest {
 		
 		assertThat(found.get().getAttributes().stream().filter(f -> f.getLclCd().equals(Constants.localeZHHK)).findAny().get().getProductDesc())
 		.isEqualTo("測試本地化的送貨目的地更新");
+		
+	}
+	
+	private void assertDTOFound_ENGB(Optional<ProductDTO> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
+		
+		assertThat(found.get().getProductDesc())
+		.isEqualTo("Test localized shipping destination create");
+		
+	}
+	
+	private void assertDTOFound_ZHHK(Optional<ProductDTO> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
+		
+		assertThat(found.get().getProductDesc())
+		.isEqualTo("測試本地化的送貨目的地更新");
+		
 	}
 
 }

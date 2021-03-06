@@ -18,6 +18,9 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.CategoryEntity;
+import io.nzbee.entity.category.ICategoryService;
+import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -53,6 +56,9 @@ public class ShippingProductMasterService {
 	@Autowired
 	private IProductAttributeService productAttributeService;
 
+	@Autowired
+	private ICategoryService categoryService; 
+	
 	@Autowired
 	private IBrandService brandService; 
 	
@@ -180,6 +186,8 @@ public class ShippingProductMasterService {
 		
 		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
 		
+		Optional<CategoryEntity> oca = categoryService.findByCode(Constants.shippingRootCategoryCode);
+		
 		ShippingProductEntity sp = 	op.isPresent() 
 						  			? (ShippingProductEntity) op.get()
 						  			: new ShippingProductEntity();
@@ -191,7 +199,8 @@ public class ShippingProductMasterService {
 						  
 									
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));							
-							
+		
+		sp.addCategory((CategoryProductEntity) oca.get());
 		sp.setBrand(ob.get());
 		sp.setDepartment(od.get());
 		sp.setProductUPC(upcCode);
