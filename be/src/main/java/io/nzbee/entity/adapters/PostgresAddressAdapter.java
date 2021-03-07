@@ -8,10 +8,14 @@ import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.domain.customer.address.Address;
 import io.nzbee.domain.ports.IAddressPortService;
+import io.nzbee.entity.party.IPartyService;
+import io.nzbee.entity.party.Party;
 import io.nzbee.entity.party.address.IAddressMapper;
 import io.nzbee.entity.party.address.IPartyAddressService;
 import io.nzbee.entity.party.address.PartyAddressDTO;
 import io.nzbee.entity.party.address.PartyAddressEntity;
+import io.nzbee.entity.party.address.type.AddressTypeEntity;
+import io.nzbee.entity.party.address.type.IAddressTypeService;
 
 @Service
 public class PostgresAddressAdapter implements IAddressPortService {
@@ -20,6 +24,12 @@ public class PostgresAddressAdapter implements IAddressPortService {
 	
 	@Autowired
 	private IPartyAddressService addressService;
+	
+	@Autowired
+	private IPartyService partyService;
+	
+	@Autowired
+	private IAddressTypeService addressTypeService;
 	
 	@Autowired 
 	private IAddressMapper addressMapper;
@@ -40,6 +50,10 @@ public class PostgresAddressAdapter implements IAddressPortService {
 		LOGGER.debug("call PostgresAddressAdapter.save()");
 		Optional<PartyAddressEntity> opa = addressService.findByUsernameAndType(domainObject.getCustomer().getUserName(), domainObject.getAddressTypeCode());
 		
+		Optional<AddressTypeEntity> oat = addressTypeService.findByCode(domainObject.getAddressTypeCode());
+		
+		Optional<Party> op = partyService.findByUsername(domainObject.getCustomer().getUserName());
+		
 		PartyAddressEntity pa = opa.isPresent() 
 		? opa.get()
 		: new PartyAddressEntity();
@@ -49,6 +63,8 @@ public class PostgresAddressAdapter implements IAddressPortService {
 		pa.setAddressLine3(domainObject.getAddressLine3());
 		pa.setAddressCountry(domainObject.getCountry());
 		pa.setAddressPostCode(domainObject.getPostCode());
+		pa.setParty(op.get());
+		pa.setType(oat.get());
 		
 		addressService.save(pa);
 	}

@@ -8,6 +8,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.entity.brand.IBrandMapper;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.product.department.IDepartmentMapper;
+import io.nzbee.entity.product.physical.PhysicalProductDTO;
 import io.nzbee.entity.promotion.IPromotionMapper;
 
 @Component(value="productMapper")
@@ -28,7 +29,7 @@ public class ProductMapperImpl implements IProductMapper {
 	@Override
 	public Product DTOToDo(ProductDTO dto) {
 		
-		if(dto instanceof ProductDTO) {
+		if(dto instanceof PhysicalProductDTO) {
 			Product pO = new PhysicalProduct(
 					dto.getProductUPC(),
 				   	dto.getProductCreateDt(),
