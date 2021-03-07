@@ -57,7 +57,7 @@ public class IT_CategoryDoServiceImplIntegrationTest {
 
 		assertThat(found).isNotNull();
 		
-		assertThat(found).size().isEqualTo(87);
+		assertThat(found).size().isEqualTo(80);
 		
 	}
 
