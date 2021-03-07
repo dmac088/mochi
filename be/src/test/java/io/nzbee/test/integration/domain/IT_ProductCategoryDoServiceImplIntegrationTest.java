@@ -2,23 +2,25 @@ package io.nzbee.test.integration.domain;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-
+import java.sql.Connection;
+import java.sql.SQLException;
+import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
-import org.springframework.test.context.jdbc.Sql;
-import org.springframework.test.context.jdbc.SqlConfig;
-import org.springframework.test.context.jdbc.SqlGroup;
-import org.springframework.test.context.jdbc.SqlConfig.TransactionMode;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.test.integration.domain.beans.category.CategoryDoBeanFactory;
@@ -30,16 +32,6 @@ import io.nzbee.domain.category.Category;
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles("it")
-@SqlGroup({
-	@Sql(scripts = "/database/mochi_schema.sql",
-			config = @SqlConfig(dataSource = "mochiDataSourceOwner", 
-			transactionManager = "mochiTransactionManagerOwner",
-			transactionMode = TransactionMode.ISOLATED)), 
-	@Sql(scripts = "/database/mochi_data.sql",
-			config = @SqlConfig(dataSource = "mochiDataSource", 
-			transactionManager = "mochiTransactionManager",
-			transactionMode = TransactionMode.ISOLATED))
-})
 public class IT_ProductCategoryDoServiceImplIntegrationTest {
 	
 	@TestConfiguration
@@ -60,8 +52,30 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
 	
 	@Autowired
 	private ICategoryDoBeanFactory categoryDoBeanFactory;
+		
+	@Autowired
+	@Qualifier("mochiDataSourceOwner")
+	private DataSource database;
 	
-	private Category category = null;
+	private static boolean setUpIsDone = false;
+	
+	private static Category category = null;
+	
+	@Before
+	public void setUp() {
+		if (setUpIsDone) {
+			return;
+		}
+		try (Connection con = database.getConnection()) {
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+			ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		this.persistNewCategory();
+		setUpIsDone = true;
+	}
 	
 	public Category persistNewCategory() {
     	
@@ -71,14 +85,10 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
 	    	
 	    return category;
 	}
-	
-    @Before
-    public void setUp() {
-    	this.persistNewCategory();
-    }
    
     
     @Test
+    @Rollback(false)
     public void whenValidCode_thenProductCategoryShouldBeFound() {
         Category found = categoryService.findByCode(Constants.localeENGB, "TST01");
       
@@ -87,6 +97,7 @@ public class IT_ProductCategoryDoServiceImplIntegrationTest {
     
     
     @Test
+    @Rollback(false)
     public void whenValidDesc_thenProductCategoryShouldBeFound() {
         Category found = categoryService.findByDesc(Constants.localeENGB, "test product category");
       
