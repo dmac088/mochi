@@ -204,7 +204,7 @@ public class ShippingProductMasterService {
 									
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));							
 		
-		sp.getCategories().add(sc);
+		sp.addCategory(sc);
 		sp.setBrand(ob.get());
 		sp.setDepartment(od.get());
 		sp.setProductUPC(upcCode);

@@ -64,14 +64,6 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 	@Column(name="cat_prnt_id")
 	private Long categoryParentId;
 
-	public Long getCategoryParentId() {
-		return categoryParentId;
-	}
-
-	public void setCategoryParentId(Long categoryParentId) {
-		this.categoryParentId = categoryParentId;
-	}
-
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="cat_typ_id",
 				nullable = false,  
@@ -147,6 +139,15 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 	public abstract Long getObjectCount();
 	
 	public abstract void setObjectCount(Long count);
+	
+
+	public Long getCategoryParentId() {
+		return categoryParentId;
+	}
+
+	public void setCategoryParentId(Long categoryParentId) {
+		this.categoryParentId = categoryParentId;
+	}
 	
 	public Long getChildCount() {
 		return childCount;

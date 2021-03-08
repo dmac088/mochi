@@ -1164,7 +1164,6 @@ INSERT INTO product VALUES (19, '10760430', '2020-03-16 00:00:00+08', 33, 2, 1);
 INSERT INTO product VALUES (8, '25556789', '2020-03-17 00:00:00+08', 41, 2, 1);
 INSERT INTO product VALUES (1, '12345678', '2020-03-18 00:00:00+08', 38, 2, 1);
 INSERT INTO product VALUES (5, '12383658', '2020-03-19 00:00:00+08', 34, 2, 1);
-INSERT INTO product VALUES (2023452, 'SMP_1_HK_HK_0.000_0.100', '2021-03-08 10:03:07+08', 42, 1, 1);
 
 
 --
@@ -1762,10 +1761,6 @@ INSERT INTO price VALUES (79, 2, 19, 6.9, 2);
 INSERT INTO price VALUES (68, 2, 8, 1.8, 2);
 INSERT INTO price VALUES (61, 2, 1, 8.7, 2);
 INSERT INTO price VALUES (65, 2, 5, 5.5, 2);
-INSERT INTO price VALUES (2023454, 1, 2023452, 0.641025641025641, 2);
-INSERT INTO price VALUES (2023455, 2, 2023452, 0.641025641025641, 2);
-INSERT INTO price VALUES (2023457, 1, 2023452, 5, 1);
-INSERT INTO price VALUES (2023458, 2, 2023452, 5, 1);
 
 
 --
@@ -1979,8 +1974,6 @@ INSERT INTO product_attr_lcl VALUES (1, 1, 'mango', 'mango.jpg', 'en-GB', 'mango
 INSERT INTO product_attr_lcl VALUES (2, 1, '芒果', 'mango.jpg', 'zh-HK', '芒果');
 INSERT INTO product_attr_lcl VALUES (9, 5, 'cucumber', 'cucumber.jpg', 'en-GB', 'cucumber');
 INSERT INTO product_attr_lcl VALUES (10, 5, '黄瓜', 'cucumber.jpg', 'zh-HK', '黄瓜');
-INSERT INTO product_attr_lcl VALUES (2023453, 2023452, 'Smart Post (Counter Collection) to LOCAL (HONG KONG)', NULL, 'en-GB', 'Smart Post (Counter Collection) to LOCAL (HONG KONG), weight from 0.000kg to 0.100kg');
-INSERT INTO product_attr_lcl VALUES (2023456, 2023452, '易送遞 (櫃位領件) 至 本地（香港）', NULL, 'zh-HK', '易送遞 (櫃位領件) 至 本地（香港）, 0.000kg 至 0.100kg 重');
 
 
 --
@@ -2206,7 +2199,6 @@ INSERT INTO product_category VALUES (186, 233716, 233134);
 INSERT INTO product_category VALUES (187, 233723, 233167);
 INSERT INTO product_category VALUES (188, 233730, 233167);
 INSERT INTO product_category VALUES (44, 6, 36);
-INSERT INTO product_category VALUES (191, 2023452, 46);
 
 
 --
@@ -2992,13 +2984,6 @@ INSERT INTO shipping_type VALUES (20, 'SMP_2');
 INSERT INTO shipping_type VALUES (21, 'EXP_1');
 INSERT INTO shipping_type VALUES (22, 'AIR_PAR_1');
 INSERT INTO shipping_type VALUES (23, 'LOC_PAR_1');
-
-
---
--- Data for Name: product_shipping; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO product_shipping VALUES (2023452, 1402669, 19, 2, 0, 0.1, 1);
 
 
 --
