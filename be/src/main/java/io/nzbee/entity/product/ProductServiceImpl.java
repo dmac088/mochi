@@ -21,7 +21,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
 	
-	private static final String CACHE_NAME = "productCache";      
+	public static final String CACHE_NAME = "productCache";      
 	
 	@Autowired
 	private IProductDao productDAO;
@@ -91,7 +91,7 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productDesc")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #currency + \", \" + #productDesc")
 	public Optional<ProductDTO> findByDesc(String locale, String currency, String productDesc) {
 		return productDAO.findByDesc(locale, currency, productDesc);
 	}

@@ -22,7 +22,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
-	private static final String CACHE_NAME = "tagCache";
+	public static final String CACHE_NAME = "tagCache";
 	
 	@Autowired
 	private ITagDao tagDao;
@@ -71,6 +71,7 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #rootCategory + \", \" + #desc")
 	public Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc) {
 		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, rootCategory, desc);
 		return tagDao.findByDesc(locale, rootCategory, desc);

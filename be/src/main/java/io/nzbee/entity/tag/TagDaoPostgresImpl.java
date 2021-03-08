@@ -30,8 +30,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
-	private static final String CACHE_NAME = "tagCache";
-	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
@@ -59,7 +57,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="{#locale, #id}")
+					@CachePut(value = TagServiceImpl.CACHE_NAME, key="{#locale, #id}")
 			}
 	)
 	public Optional<TagDTO> findById(String locale, String rootCategory, Long id) {
@@ -127,7 +125,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #code")
+					@CachePut(value = TagServiceImpl.CACHE_NAME, key="#locale + \", \" + #code")
 			}
 	)
 	public Optional<TagDTO> findByCode(String locale, String rootCategory, String code) {
@@ -168,7 +166,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #desc")
+					@CachePut(value = TagServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #desc")
 			}
 	)
 	public Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc) {
@@ -207,7 +205,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
+					@CachePut(value = TagServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<TagDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
@@ -265,7 +263,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
+					@CachePut(value = TagServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
 	public List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {

@@ -31,8 +31,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
-	private static final String CACHE_NAME = "brandCache";
-
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
@@ -41,7 +39,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #id.toString()")
+					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #id.toString()")
 			}
 	)
 	public Optional<BrandDTO> findById(String locale, String rootCategory, Long id) {
@@ -110,7 +108,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #code")
+					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #code")
 			}
 	)
 	public Optional<BrandDTO> findByCode(String locale, String rootCategory, String code) {
@@ -150,7 +148,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
+					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<BrandDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
@@ -184,7 +182,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #desc")
+					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #desc")
 			}
 	)
 	public Optional<BrandDTO> findByDesc(String locale, String rootCategory, String desc) {
@@ -255,7 +253,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #productCode")
+					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #productCode")
 			}
 	)
 	public Optional<BrandDTO> findByProductCode(String locale, String rootCategory, String productCode) {
@@ -317,7 +315,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
+					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
 	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {

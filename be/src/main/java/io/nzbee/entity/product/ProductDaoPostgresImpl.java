@@ -34,9 +34,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
  
-	private final Logger LOGGER = LoggerFactory.getLogger(ProductDaoPostgresImpl.class);
-	
-	private static final String CACHE_NAME = "productCache";   
+	private final Logger LOGGER = LoggerFactory.getLogger(ProductDaoPostgresImpl.class);   
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -118,7 +116,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #productId.toString()")
+					@CachePut(value = ProductServiceImpl.CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #productId.toString()")
 			}
 	)
 	public Optional<ProductDTO> findById(String locale, String currency, Long productId) {
@@ -159,7 +157,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productUPC")
+					@CachePut(value = ProductServiceImpl.CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productUPC")
 			}
 	)
 	public Optional<ProductDTO> findByCode(String locale, String currency, String productUPC) {
@@ -206,7 +204,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #productDesc")
+					@CachePut(value = ProductServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #productDesc")
 			}
 	)
 	public Optional<ProductDTO> findByDesc(String locale, String currency, String productDesc) {
@@ -286,7 +284,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
+					@CachePut(value = ProductServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<ProductDTO> findAll(	String locale, 
@@ -399,7 +397,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #cls.getSimpleName() + \", \" + #size.toString() + \", \" + #sort.toString()")
+					@CachePut(value = ProductServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #cls.getSimpleName() + \", \" + #size.toString() + \", \" + #sort.toString()")
 			}
 	)
 	public <T> Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,

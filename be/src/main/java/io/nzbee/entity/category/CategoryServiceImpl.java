@@ -45,7 +45,7 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #categoryDesc")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #categoryDesc")
 	public Optional<CategoryDTO> findByDesc(String locale, String categoryDesc) {
 		return categoryDAO.findByDesc(locale, categoryDesc);
 	}

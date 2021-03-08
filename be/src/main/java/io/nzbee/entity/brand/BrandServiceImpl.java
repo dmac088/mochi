@@ -16,7 +16,7 @@ import io.nzbee.search.IFacetService;
 @Service(value="brandEntityService")
 public class BrandServiceImpl implements IBrandService, IFacetService {
 
-	private static final String CACHE_NAME = "brandCache";
+	public static final String CACHE_NAME = "brandCache";
 	
 	@Autowired
 	private IBrandDao brandDao; 
@@ -52,7 +52,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #desc")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #rootCategory + \", \" + #desc")
 	public Optional<BrandDTO> findByDesc(String locale, String rootCategory, String desc) {
 		return brandDao.findByDesc(locale, rootCategory, desc);
 	}
