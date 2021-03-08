@@ -2,7 +2,6 @@ package io.nzbee.test.integration.entity.category;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
-import java.util.Optional;
 import javax.persistence.EntityManager;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,7 +29,6 @@ import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductDTO;
-import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
