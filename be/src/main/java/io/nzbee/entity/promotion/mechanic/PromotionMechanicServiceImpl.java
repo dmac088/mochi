@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 @Service(value="promotionMechanicEntityService")
 public class PromotionMechanicServiceImpl implements IPromotionMechanicService {
 
-	private static final String CACHE_NAME = "promotionMechanicCache";
-	
 	@Autowired
 	private IPromotionMechanicRepository promotionMechanicRepository; 
 
