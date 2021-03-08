@@ -146,14 +146,14 @@ public class ProductServiceImpl implements IProductService {
 			@CacheEvict(cacheNames = CACHE_NAME, allEntries = true)
 	})
 	public void save(ProductEntity product) {
-		productDAO.save(product);
+		productRepository.save(product);
 	}
 
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", 	allEntries = true),
-			@CacheEvict(cacheNames = CACHE_NAME, key="#product.productUPC + \", \" + #locale + \", \" + #currency"),
-			@CacheEvict(cacheNames = CACHE_NAME, key="#product.productId.toString() + \", \" + #locale + \", \" + #currency")
+			@CacheEvict(cacheNames = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #product.productUPC"),
+			@CacheEvict(cacheNames = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #product.productId.toString()")
 	})
 	public void save(String locale, String currency, ProductEntity product) {
 		productRepository.save(product);

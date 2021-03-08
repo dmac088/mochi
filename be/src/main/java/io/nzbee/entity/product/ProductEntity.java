@@ -165,7 +165,7 @@ public abstract class ProductEntity implements Serializable {
 
 	@NaturalId
 	@Column(name="upc_cd", unique = true, updatable = false)
-	@Field(store=Store.YES,analyze=Analyze.NO)
+	@Field(store=Store.YES, analyze=Analyze.NO)
 	private String productUPC;
 	
 	@Column(name="prd_crtd_dt")
@@ -173,8 +173,7 @@ public abstract class ProductEntity implements Serializable {
 
 	@ManyToMany(fetch = FetchType.LAZY, 
 				cascade = {
-						CascadeType.PERSIST,
-			            CascadeType.MERGE
+						CascadeType.ALL
 			    })
 	@JoinTable(		name 				= "product_category", 
 					schema				= "mochi", 
@@ -186,7 +185,7 @@ public abstract class ProductEntity implements Serializable {
 	
 	@ManyToMany(fetch = FetchType.LAZY,
 				cascade = {
-						CascadeType.MERGE
+						CascadeType.ALL
 		        }) 
 	@JoinTable(name = "product_tag", schema="mochi", 
 	   joinColumns 			= @JoinColumn(name = "prd_id"), 

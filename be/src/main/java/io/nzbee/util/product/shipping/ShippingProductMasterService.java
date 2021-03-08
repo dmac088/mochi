@@ -129,7 +129,9 @@ public class ShippingProductMasterService {
 															  sdms.get_WEIGHT_TO(), 
 															  sdms.get_TRACKING_LEVEL());
 
-		productService.save(spEn);
+		productService.save(Constants.localeENGB,
+							Constants.currencyUSD,
+							spEn);
 		
 		ShippingProductEntity spHk = this.mapToShippingProduct(
 				  Constants.localeZHHK,
@@ -150,7 +152,9 @@ public class ShippingProductMasterService {
 				  sdms.get_WEIGHT_TO(), 
 				  sdms.get_TRACKING_LEVEL());
 
-		productService.save(spHk);
+		productService.save(Constants.localeZHHK,
+				  			Constants.currencyHKD,
+				  			spHk);
 		
 		
 	}
