@@ -61,8 +61,7 @@ public class PromotionEntity implements Serializable {
 	
 	@ManyToMany(fetch = FetchType.LAZY, 
 				cascade = {
-						CascadeType.PERSIST,
-			            CascadeType.MERGE
+						CascadeType.ALL
 			    })
 	@JoinTable(		name 				= "category_promotion", 
 					schema				= "mochi", 
@@ -73,8 +72,7 @@ public class PromotionEntity implements Serializable {
 	
 	@ManyToMany(fetch = FetchType.LAZY, 
 			cascade = {
-					CascadeType.PERSIST,
-		            CascadeType.MERGE
+					CascadeType.ALL
 		    })
 	@JoinTable(		name 				= "product_promotion", 
 					schema				= "mochi", 

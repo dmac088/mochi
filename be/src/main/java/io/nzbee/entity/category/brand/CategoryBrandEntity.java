@@ -26,7 +26,7 @@ public class CategoryBrandEntity extends CategoryEntity {
 	private static final long serialVersionUID = 7221370251309880198L;
 
 	@ManyToMany(fetch = FetchType.LAZY, 
-				cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+				cascade = {CascadeType.ALL})
     @JoinTable(name = "brand_category", schema="mochi", 
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))

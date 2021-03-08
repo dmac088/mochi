@@ -506,10 +506,12 @@ public abstract class ProductEntity implements Serializable {
 	
 	public void addCategory(CategoryProductEntity category) {
 		this.categories.add(category);
+		category.getProducts().add(this);
 	}
 	
 	public void removeCategory(CategoryProductEntity category) {
 		this.categories.remove(category);
+		category.getProducts().remove(this);
 	}
 	
     public String getTypeDiscriminator() {
