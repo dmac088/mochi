@@ -43,6 +43,7 @@ public class IT_RefreshSchema {
 			e.printStackTrace();
 		}
     	ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_schema.sql"));
+    	ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/security_schema.sql"));
 		System.out.println("Schema Refreshed!");
     }
     
@@ -57,6 +58,7 @@ public class IT_RefreshSchema {
 			e.printStackTrace();
 		}
     	ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/mochi_data.sql"));
+    	ScriptUtils.executeSqlScript(con, new ClassPathResource("/database/security_data.sql"));
     	System.out.println("Data Refreshed!");
     }
 }

@@ -488,7 +488,6 @@ public abstract class ProductEntity implements Serializable {
 	
 	public void addProductAttribute(ProductAttributeEntity productAttribute) {
 		this.getAttributes().add(productAttribute);
-		productAttribute.setProduct(this);
 	}
 	
 	public void removeProductAttribute(ProductAttributeEntity productAttribute) {

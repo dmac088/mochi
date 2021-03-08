@@ -188,19 +188,19 @@ public class ShippingProductMasterService {
 		
 		Optional<CategoryEntity> oca = categoryService.findByCode(Constants.shippingRootCategoryCode);
 		
+		CategoryProductEntity sc = (CategoryProductEntity) oca.get();
+		
 		ShippingProductEntity sp = 	op.isPresent() 
 						  			? (ShippingProductEntity) op.get()
 						  			: new ShippingProductEntity();
 		
-		
 		ProductAttributeEntity pa = opa.isPresent()
 									? opa.get()
 									: (new ProductAttributeEntity());
-						  
 									
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));							
 		
-		sp.addCategory((CategoryProductEntity) oca.get());
+		sp.getCategories().add(sc);
 		sp.setBrand(ob.get());
 		sp.setDepartment(od.get());
 		sp.setProductUPC(upcCode);
