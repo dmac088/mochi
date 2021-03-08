@@ -39,27 +39,23 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	
 	//Entity fetch
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#id.toString()")
 	public Optional<TagEntity> findById(Long id) {
 		LOGGER.debug("call TagServiceImpl.findById with parameters : {}", id);
 		return tagRepository.findById(id);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#code")
 	public Optional<TagEntity> findByCode(String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}", code);
 		return tagDao.findByCode(code);
 	}
 	
 	@Override
-	//@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<TagEntity> findAll(Set<String> codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}", StringUtils.join(codes));
 		return tagDao.findAll(codes);
 	}
 	
-	//DTO Fetch
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #id.toString()")
 	public Optional<TagDTO> findById(String locale, Long id) {

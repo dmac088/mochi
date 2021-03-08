@@ -92,11 +92,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 	
 	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CACHE_NAME, key="#code")
-			}
-	)
 	public Optional<TagEntity> findByCode(String code) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}", code);
 		

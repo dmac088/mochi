@@ -49,11 +49,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	}
 	
 	@Override
-	@Caching(
-		put = {
-				@CachePut(value = CACHE_NAME, key="#productUPC")
-		}
-	)
 	public Optional<ProductEntity> findByCode(String productUPC) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findByCode parameters : {}", productUPC);
 		

@@ -3,7 +3,6 @@ package io.nzbee.entity.promotion.mechanic;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 @Service(value="promotionMechanicEntityService")
@@ -15,25 +14,21 @@ public class PromotionMechanicServiceImpl implements IPromotionMechanicService {
 	private IPromotionMechanicRepository promotionMechanicRepository; 
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionMechanicId")
 	public Optional<PromotionMechanicEntity> findById(Long promotionMechanicId) {
 		return promotionMechanicRepository.findById(promotionMechanicId);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionMechanicCode")
 	public Optional<PromotionMechanicEntity> findByCode(String promotionMechanicCode) {
 		return promotionMechanicRepository.findByPromotionMechanicCode(promotionMechanicCode);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionMechanicDesc")
 	public Optional<PromotionMechanicEntity> findByDesc(String promotionMechanicDesc) {
 		return promotionMechanicRepository.findByPromotionMechanicDesc(promotionMechanicDesc);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<PromotionMechanicEntity> findAll() {
 		return promotionMechanicRepository.findAll();
 	}

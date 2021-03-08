@@ -24,14 +24,12 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Autowired
 	private IBrandRepository brandRepository;
 
-	//Entity fetch
 	@Override
 	public List<BrandEntity> findAll() {
 		return brandRepository.findAll();
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#id.toString()")
 	public Optional<BrandEntity> findById(Long id) {
 		return brandRepository.findById(id);
 	}	
@@ -43,12 +41,10 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#code")
 	public Optional<BrandEntity> findByCode(String code) {
 		return brandDao.findByCode(code);
 	}
 
-	//DTO Fetch
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #code")
 	public Optional<BrandDTO> findByCode(String locale, String rootCategory, String code) {

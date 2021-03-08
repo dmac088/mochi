@@ -9,14 +9,11 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.search.IFacetService;
 
 @Service(value = "categoryEntityService")
-@Transactional
 public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	
 	public static final String CACHE_NAME = "categoryCache";
@@ -26,13 +23,11 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	private ICategoryDao categoryDAO;
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryId.toString()")
 	public Optional<CategoryEntity> findById(Long categoryId) {
 		return categoryDAO.findById(categoryId);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#categoryCode")
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
 		return categoryDAO.findByCode(categoryCode);
 	}
@@ -86,13 +81,11 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "\"findByParent\" + #locale + \", \" + #parentCategoryCode")
 	public List<CategoryEntity> findByParent(String locale, String parentCategoryCode) {
 		return categoryDAO.findByParent(locale, parentCategoryCode);
 	}
 
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #level.toString()")
 	public List<CategoryEntity> findAllForLevel(String locale, Long level) {
 		return categoryDAO.findByLevel(locale, level);
 	}

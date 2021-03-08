@@ -77,11 +77,6 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 	
 	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CACHE_NAME, key="#code")
-			}
-	)
 	public Optional<BrandEntity> findByCode(String code) {
 		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}", code);
 		

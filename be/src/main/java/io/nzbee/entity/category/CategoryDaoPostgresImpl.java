@@ -50,11 +50,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 
 	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#id.toString()")
-			}
-	)
 	public Optional<CategoryEntity> findById(long id) {
 		return categoryRepository.findById(id);
 	}
@@ -148,11 +143,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 	}
 	
 	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#categoryCode")
-			}
-	)
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findByCode with parameter {} ", categoryCode);
