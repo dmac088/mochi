@@ -79,41 +79,6 @@ public class IT_CategoryCacheIntegrationTest {
 	}
 	
 	@Test
-    public void whenFindEntityById_thenReturnCategoryEntityFromCache() {
-    	
-        // when
-    	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
-     
-        // then
-    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
-    	
-    	assertNotNull(cache);
-    	JCacheCache jCache = (JCacheCache) cache;
-    	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(found.get().getCategoryId().toString());
-    	
-    	assertNotNull(ob.get());
-    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
-    }
-	
-	@Test
-    public void whenFindEntityByCode_thenReturnCategoryEntityFromCache() {
-    	
-        // when
-    	Optional<CategoryEntity> found = categoryService.findByCode(category.getCategoryCode());
-     
-        // then
-    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
-    	
-    	assertNotNull(cache);
-    	
-    	JCacheCache jCache = (JCacheCache) cache;
-    	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(found.get().getCategoryCode());
-    	
-    	assertNotNull(ob.get());
-    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductEntity.class.getSimpleName());
-    }
-	
-	@Test
     public void whenFindDTOByIdAndLocale_thenReturnCategoryDTOFromCache() {
     	
         // when
