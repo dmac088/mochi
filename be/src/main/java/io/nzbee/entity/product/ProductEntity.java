@@ -470,7 +470,7 @@ public abstract class ProductEntity implements Serializable {
 	}
 	
 	public void addTag(TagEntity tag) {
-		this.getTags().add(tag);
+		this.tags.add(tag);
 	}
 	
 	public void removeTag(TagEntity tag) {
