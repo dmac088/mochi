@@ -176,9 +176,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			product.addProductAttribute(pa);
 			
 			List<Promotion> lp = domainObject.getPromotions();
-			System.out.println(lp.size());
 			lp.forEach(p -> {
-				System.out.println(p.getPromotionCode());
 				Optional<PromotionEntity> promoe = promotionService.findByCode(p.getPromotionCode());
 				product.addPromotion(promoe.get());
 			});
