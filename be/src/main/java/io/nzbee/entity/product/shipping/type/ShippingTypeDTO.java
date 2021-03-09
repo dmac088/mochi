@@ -1,8 +1,11 @@
 package io.nzbee.entity.product.shipping.type;
 
+import java.io.Serializable;
 import java.util.Map;
 
-public class ShippingTypeDTO {
+public class ShippingTypeDTO implements Serializable {
+
+	private static final long serialVersionUID = 8789098400131215884L;
 
 	public static final String ID_ALIAS = "shp_typ_id";
 	
