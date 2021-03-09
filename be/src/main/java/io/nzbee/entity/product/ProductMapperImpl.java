@@ -63,7 +63,7 @@ public class ProductMapperImpl implements IProductMapper {
 				   	dto.getProductImage(),
 				   	dto.getLocale(),
 				   	dto.getCurrency(),
-				   	dto.isInStock(),
+				   	true,
 				   	brandMapper.DTOToDo(dto.getBrand()),
 				   	departmentMapper.DTOToDo(dto.getDepartment()),
 				   	dto.getCategories().stream().map(c -> categoryProductMapper.DTOToDo(c)).collect(Collectors.toList()),
