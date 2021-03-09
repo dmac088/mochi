@@ -34,7 +34,6 @@ public class ProductServiceImpl implements IProductService {
 		return productService.findAll(locale, currency, codes);	
 	}
 
-
 	@Override
 	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {

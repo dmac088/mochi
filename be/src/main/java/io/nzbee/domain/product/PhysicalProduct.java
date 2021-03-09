@@ -12,21 +12,23 @@ import io.nzbee.domain.promotion.Promotion;
 @JsonTypeName("product")
 public class PhysicalProduct extends Product {
 
-	public PhysicalProduct( String productUPC,
-						 LocalDateTime   productCreateDt,
-					   	 String productStatus,
-					   	 String productDesc,
-					   	 String productLongDesc,
-					   	 Double productRetail,
-					   	 Double productMarkdown,
-					   	 String productImage,
-					   	 String lclCd,
-					   	 String currency,
-					   	 boolean inStock,
-					   	 Brand brand,
-					   	 Department department,
-					   	 List<ProductCategory> productCategories,
-					   	 List<Promotion> productPromotions) {
+	private boolean inStock;
+	
+	public PhysicalProduct(  String productUPC,
+							 LocalDateTime   productCreateDt,
+						   	 String productStatus,
+						   	 String productDesc,
+						   	 String productLongDesc,
+						   	 Double productRetail,
+						   	 Double productMarkdown,
+						   	 String productImage,
+						   	 String lclCd,
+						   	 String currency,
+						   	 boolean inStock,
+						   	 Brand brand,
+						   	 Department department,
+						   	 List<ProductCategory> productCategories,
+						   	 List<Promotion> productPromotions) {
 	
 		super(productUPC,
 			  productCreateDt,
@@ -38,13 +40,19 @@ public class PhysicalProduct extends Product {
 			  productImage,
 			  lclCd,
 			  currency,
-			  inStock,
 			  brand,
 			  department,
 			  productCategories,
 			  productPromotions);
 		
 		this.productType = this.getClass().getSimpleName().toString().toLowerCase();
+		this.inStock 	 = inStock;
+	}
+	
+	
+	
+	public boolean isInStock() {
+		return inStock;
 	}
 
 }

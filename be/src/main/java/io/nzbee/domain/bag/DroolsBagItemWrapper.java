@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.nzbee.domain.bag.discount.Discount;
+import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.promotion.Promotion;
 
 public class DroolsBagItemWrapper {
@@ -47,7 +48,7 @@ public class DroolsBagItemWrapper {
 	}
 	
 	public Boolean isInStock() {
-		return this.bagItem.getProduct().isInStock();
+		return ((PhysicalProduct) this.bagItem.getProduct()).isInStock();
 	}
 	
 	public Boolean isErrors() {

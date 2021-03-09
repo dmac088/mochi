@@ -3,6 +3,8 @@ package io.nzbee.dto.product;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Component;
+
+import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 
 @Component
@@ -24,7 +26,11 @@ public class ProductDTOLightMapperImpl implements IProductDTOLightMapper {
 		pdto.setLocale(d.getLclCd());
 		pdto.setCurrency(d.getCurrency());
 		pdto.setProductType(d.getProductType());
-		pdto.setInStock(d.isInStock());
+		
+		if(d instanceof PhysicalProduct) {
+			pdto.setInStock(((PhysicalProduct) d).isInStock());
+		}
+		
 		String categories = String.join(",", d.getCategories().stream().map(c -> c.getCategoryDesc()).collect(Collectors.toList()));
 		pdto.setCategoriesList(categories);
 		

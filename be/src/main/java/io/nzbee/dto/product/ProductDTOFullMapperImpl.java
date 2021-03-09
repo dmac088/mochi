@@ -1,6 +1,8 @@
 package io.nzbee.dto.product;
 
 import org.springframework.stereotype.Component;
+
+import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 
 @Component
@@ -23,7 +25,10 @@ public class ProductDTOFullMapperImpl implements IProductDTOFullMapper {
 		pdto.setLocale(d.getLclCd());
 		pdto.setCurrency(d.getCurrency());
 		pdto.setProductType(d.getProductType());
-		pdto.setInStock(d.isInStock());
+		
+		if(d instanceof PhysicalProduct) {
+			pdto.setInStock(((PhysicalProduct) d).isInStock());
+		}
 		
 		return pdto;
 	}
