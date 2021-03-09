@@ -9,7 +9,7 @@ import io.nzbee.domain.department.Department;
 import io.nzbee.domain.promotion.Promotion;
 
 
-@JsonTypeName("product")
+@JsonTypeName("physicalproduct")
 public class PhysicalProduct extends Product {
 
 	private boolean inStock;
@@ -47,9 +47,8 @@ public class PhysicalProduct extends Product {
 		
 		this.productType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.inStock 	 = inStock;
+		this.productType = this.getClass().getSimpleName().toString().toLowerCase();
 	}
-	
-	
 	
 	public boolean isInStock() {
 		return inStock;

@@ -17,7 +17,8 @@ import io.nzbee.domain.tag.Tag;
 	    use = JsonTypeInfo.Id.NAME,
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property="type")
-@JsonSubTypes( {@JsonSubTypes.Type(value = PhysicalProduct.class, 	name = "accessories")})
+@JsonSubTypes( {@JsonSubTypes.Type(value = PhysicalProduct.class, 	name = "physicalproduct"),
+				@JsonSubTypes.Type(value = ShippingProduct.class, 	name = "shippingproduct")} )
 public abstract class Product {
 
 	private String productUPC;

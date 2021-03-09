@@ -2,11 +2,15 @@ package io.nzbee.domain.product;
 
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.promotion.Promotion;
 
+@JsonTypeName("shippingproduct")
 public class ShippingProduct extends Product {
 	
     private Double weightLimit;
@@ -69,6 +73,7 @@ public class ShippingProduct extends Product {
 		this.shippingDestinationDesc	= 	shippingDestinationDesc;
 		this.shippingTypeCode			=	shippingTypeCode;
 		this.shippingTypeDesc			=	shippingTypeDesc;
+		this.productType 				= this.getClass().getSimpleName().toString().toLowerCase();
 	}
 
 	public Double getWeightLimit() {

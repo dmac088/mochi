@@ -13,11 +13,15 @@ import io.nzbee.domain.ILocalizedDomainObject;
 				@JsonSubTypes.Type(value = BrandCategory.class, 	name = "brandcategory")})
 public abstract class Category implements ILocalizedDomainObject {
 
-	private String categoryCode;
-	private String categoryDesc;
+	protected String categoryCode;
+	
+	protected String categoryDesc;
+	
 	protected String categoryType;
-	private Long objectCount;
-	private String locale;
+	
+	protected Long objectCount;
+	
+	protected String locale;
 	
 
 	public Category(		String categoryCode, 
