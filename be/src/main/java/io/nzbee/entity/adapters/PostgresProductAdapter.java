@@ -15,6 +15,7 @@ import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.product.ShippingProduct;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandEntity;
@@ -38,6 +39,7 @@ import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.entity.tag.ITagService;
@@ -213,11 +215,21 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
-		// we need a type mapper here
-		Class<?> clazz = PhysicalProductEntity.class;
-
-		List<ProductDTO> lp = productService.findAllByType(locale, currency, Constants.primaryProductRootCategoryCode, clazz);
+		List<ProductDTO> lp = productService.findAllByType(locale, 
+														   currency, 
+														   Constants.primaryProductRootCategoryCode, 
+														   mapDomainClassToEntityClass(cls)
+														   );
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
+	}
+	
+	private Class<?> mapDomainClassToEntityClass(Class<?> cls) {
+		if(cls.equals(PhysicalProduct.class)) {
+			return PhysicalProductEntity.class;
+		} else if (cls.equals(ShippingProduct.class)) {
+			return ShippingProductEntity.class;
+		}
+		return PhysicalProductEntity.class;
 	}
 
 	@Override
