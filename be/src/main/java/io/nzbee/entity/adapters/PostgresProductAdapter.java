@@ -41,6 +41,7 @@ import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.shipping.IShippingProductService;
 import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.status.IProductStatusRepository;
@@ -59,6 +60,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IPhysicalProductService physicalProductService;
+	
+	@Autowired
+	private IShippingProductService shippingProductService;
 
 	@Autowired
 	private IProductAttributeService productAttributeService;
@@ -185,8 +189,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	public Page<PhysicalProduct> findAllPhysicalProducts(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
 		
+		
 		//cannot downcast here, 
-		Page<ProductDTO> pp = productService.findAll(
+		Page<PhysicalProductDTO> pp = physicalProductService.findAll(
 															locale, 
 															currency,
 															categoryCode, 
@@ -200,7 +205,7 @@ public class PostgresProductAdapter implements IProductPortService {
 				
 		return new PageImpl<PhysicalProduct>(
 						// receive a list of entities and map to domain objects
-						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
+						pp.stream().map(pe -> (PhysicalProduct) mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
 						pp.getTotalElements());		
 	}
 	
@@ -210,7 +215,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page,
 			String size, String sort) {
 
-		Page<ProductDTO> pp = productService.findAll(
+		Page<ShippingProductDTO> pp = shippingProductService.findAll(
 															locale, 
 															currency,
 															categoryCode, 
@@ -224,7 +229,7 @@ public class PostgresProductAdapter implements IProductPortService {
 
 		return new PageImpl<ShippingProduct>(
 						// receive a list of entities and map to domain objects
-						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
+						pp.stream().map(pe -> (ShippingProduct) mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
 						pp.getTotalElements());		
 		
 	}
