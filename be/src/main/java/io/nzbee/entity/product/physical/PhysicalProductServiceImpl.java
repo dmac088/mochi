@@ -2,9 +2,12 @@ package io.nzbee.entity.product.physical;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.stereotype.Service;
+
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductDao;
 
+@Service
 public class PhysicalProductServiceImpl implements IPhysicalProductService {
 
 	@Autowired
