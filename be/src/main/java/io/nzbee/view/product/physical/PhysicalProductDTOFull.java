@@ -18,10 +18,6 @@ public class PhysicalProductDTOFull {
 	private Double productMarkdown;
 	
 	private String productType;
-
-	private String primaryCategoryCode;
-
-	private String primaryCategoryDesc;
 	
 	private String brandCode;
 	
@@ -79,22 +75,6 @@ public class PhysicalProductDTOFull {
 
 	public void setProductType(String productType) {
 		this.productType = productType;
-	}
-
-	public String getPrimaryCategoryCode() {
-		return primaryCategoryCode;
-	}
-
-	public void setPrimaryCategoryCode(String primaryCategoryCode) {
-		this.primaryCategoryCode = primaryCategoryCode;
-	}
-	
-	public String getPrimaryCategoryDesc() {
-		return primaryCategoryDesc;
-	}
-
-	public void setPrimaryCategoryDesc(String primaryCategoryDesc) {
-		this.primaryCategoryDesc = primaryCategoryDesc;
 	}
 
 	public String getBrandCode() {
