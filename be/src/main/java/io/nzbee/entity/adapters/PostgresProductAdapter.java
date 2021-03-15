@@ -91,6 +91,90 @@ public class PostgresProductAdapter implements IProductPortService {
 	private IProductMapper productMapper;
 
 	@Override
+	@Transactional(readOnly = true)
+	public Product findByCode(String locale, String currency, String code) {
+		ProductDTO dto = productService.findByCode(locale, currency, code)
+				.orElseThrow(() -> new ProductNotFoundException("Product for code " + code + " not found!"));
+		return mapHelper(dto);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public Product findByDesc(String locale, String currency, String desc) {
+		ProductDTO dto = productService.findByDesc(locale, currency, desc)
+				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));;
+		return mapHelper(dto);
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Product> findAll(String locale, String currency) {
+		List<ProductDTO> sp = productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode);
+		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
+		List<ProductDTO> lp = productService.findAllByType(locale, 
+														   currency, 
+														   Constants.primaryProductRootCategoryCode, 
+														   mapDomainClassToEntityClass(cls)
+														   );
+		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
+	}
+	
+	private Class<?> mapDomainClassToEntityClass(Class<?> cls) {
+		if(cls.equals(PhysicalProduct.class)) {
+			return PhysicalProductEntity.class;
+		} else if (cls.equals(ShippingProduct.class)) {
+			return ShippingProductEntity.class;
+		}
+		return PhysicalProductEntity.class;
+	}
+
+	@Override
+	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,
+			Set<IFacet> selectedFacets, Set<IFacet> returnFacets) {
+
+		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
+					size, sort, selectedFacets, returnFacets).map(p -> {
+					Product pDo = productMapper.DTOToDo(p);
+					return pDo;
+				});
+	}
+
+	@Override
+	@Transactional(readOnly = true)
+	public List<Product> findAll(String locale, String currency, Set<String> codes) {
+		List<ProductDTO> lp =  productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(codes));
+		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
+		
+		Page<ProductDTO> pp = productService.findAll(
+															locale, 
+															currency,
+															categoryCode, 
+															new StringCollectionWrapper(categoryCodes), 
+															new StringCollectionWrapper(brandCodes), 
+															new StringCollectionWrapper(tagCodes),
+															maxPrice,
+															page, 
+															size, 
+															sort);
+				
+		return new PageImpl<Product>(
+						// receive a list of entities and map to domain objects
+						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
+						pp.getTotalElements());		
+	}
+	
+	@Override
 	@Transactional
 	public void save(Product domainObject) {
 		if (domainObject instanceof PhysicalProduct) {
@@ -187,91 +271,6 @@ public class PostgresProductAdapter implements IProductPortService {
 
 		}
 
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Product findByCode(String locale, String currency, String code) {
-		ProductDTO dto = productService.findByCode(locale, currency, code)
-				.orElseThrow(() -> new ProductNotFoundException("Product for code " + code + " not found!"));
-		return mapHelper(dto);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public Product findByDesc(String locale, String currency, String desc) {
-		ProductDTO dto = productService.findByDesc(locale, currency, desc)
-				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));;
-		return mapHelper(dto);
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Product> findAll(String locale, String currency) {
-		List<ProductDTO> sp = productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode);
-		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
-		List<ProductDTO> lp = productService.findAllByType(locale, 
-														   currency, 
-														   Constants.primaryProductRootCategoryCode, 
-														   mapDomainClassToEntityClass(cls)
-														   );
-		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
-	}
-	
-	private Class<?> mapDomainClassToEntityClass(Class<?> cls) {
-		if(cls.equals(PhysicalProduct.class)) {
-			return PhysicalProductEntity.class;
-		} else if (cls.equals(ShippingProduct.class)) {
-			return ShippingProductEntity.class;
-		}
-		return PhysicalProductEntity.class;
-	}
-
-	@Override
-	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,
-			Set<IFacet> selectedFacets, Set<IFacet> returnFacets) {
-
-		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
-					size, sort, selectedFacets, returnFacets).map(p -> {
-					Product pDo = productMapper.DTOToDo(p);
-					return pDo;
-				});
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Product> findAll(String locale, String currency, Set<String> codes) {
-		List<ProductDTO> lp =  productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(codes));
-		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
-		
-		Page<ProductDTO> pp = productService.findAll(
-															locale, 
-															currency,
-															categoryCode, 
-															new StringCollectionWrapper(categoryCodes), 
-															new StringCollectionWrapper(brandCodes), 
-															new StringCollectionWrapper(tagCodes),
-															maxPrice,
-															PhysicalProductEntity.class,
-															page, 
-															size, 
-															sort);
-				
-		return new PageImpl<Product>(
-						// receive a list of entities and map to domain objects
-						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
-						pp.getTotalElements());		
 	}
 	
 	

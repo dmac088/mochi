@@ -138,8 +138,26 @@ public class ProductServiceImpl implements IProductService {
 				 		  	);
 	
 	}
-
-
+	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
+	public Page<ProductDTO> findAll(String locale, String currency, String rootCategory,
+			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
+			Double maxPrice, String page, String size, String sort) {
+		return productDAO.findAll(
+				  locale,
+		 		  currency,
+		 		  rootCategory,
+		 		  categoryCodes,
+		 		  brandCodes, 
+		 		  tagCodes,
+		 		  maxPrice,
+		 		  page,
+		 		  size,
+		 		  sort
+		  	);
+	}
+	
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true),
@@ -175,5 +193,7 @@ public class ProductServiceImpl implements IProductService {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 }

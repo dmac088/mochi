@@ -4,9 +4,10 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-import io.nzbee.dto.customer.CustomerDTOOut;
+
 import io.nzbee.resources.controllers.BagController;
 import io.nzbee.resources.controllers.CustomerController;
+import io.nzbee.view.customer.CustomerDTOOut;
 
 @Component
 public class CustomerResourceAssembler extends RepresentationModelAssemblerSupport<CustomerDTOOut, CustomerResource> {

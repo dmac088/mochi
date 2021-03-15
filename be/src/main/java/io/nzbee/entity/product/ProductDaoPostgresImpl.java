@@ -520,6 +520,128 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		return new PageImpl<ProductDTO>(results, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
 	}
 	
+	@SuppressWarnings({"deprecation","unchecked"})
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = ProductServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
+			}
+	)
+	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode,
+			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
+			Double maxPrice, String page, String size, String sort) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: locale = {}, "
+				+ "														   currency = {}, "
+				+ "														   category code = {}, "
+				+ "														   category codes = {},	"
+				+ "														   brand codes = {},	"
+				+ "														   tag codes = {},	"
+				+ "														   max price = {},	"
+				+ "														   page = {},	"
+				+ "														   size = {},	"
+				+ "														   sort = {},	",
+																							 locale, 
+																							 currency, 
+																							 categoryCode, 
+																							 categoryCodes.getCodes(),
+																							 brandCodes.getCodes(),
+																							 tagCodes.getCodes(),
+																							 maxPrice,
+																							 page,
+																							 size,
+																							 sort);
+
+		Query query = em.createNativeQuery(this.constructSQL(false,
+	 														 false,
+															 false,
+															 !(categoryCode == null),
+															 categoryCodes.getCodes().size()>=1, 
+															 brandCodes.getCodes().size()>=1,
+  				 											 tagCodes.getCodes().size()>=1,
+  				 											 !(maxPrice == null),
+  				 											 false,
+  				 											 true,
+  				 											 false,
+  				 											 ""))
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+		.setParameter("categoryCode", categoryCode);
+		
+		if(!categoryCodes.getCodes().isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes.getCodes());
+		}
+		
+		if(!brandCodes.getCodes().isEmpty()) {
+			query.setParameter("brandCodes", brandCodes.getCodes());
+		}
+		
+		if(!tagCodes.getCodes().isEmpty()) {
+			query.setParameter("tagCodes", tagCodes.getCodes());
+		}
+		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
+		}
+		
+		if(!(categoryCode == null)) {
+			query.setParameter("categoryCode", categoryCode);
+		}
+		
+		Object result = query.getSingleResult();
+		long total = ((Number) result).longValue();
+		
+		query = em.createNativeQuery(this.constructSQL(	false,
+														false,
+														false,
+														!(categoryCode == null),
+														!categoryCodes.getCodes().isEmpty(), 
+														!brandCodes.getCodes().isEmpty(),
+					   									!tagCodes.getCodes().isEmpty(),
+					   									!(maxPrice == null),
+					   									false,
+					   									false,
+					   									true,
+					   									sort))
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("activeProductCode", 	Constants.activeSKUCode)
+		.setParameter("retailPriceCode", 	Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", 	Constants.markdownPriceCode)
+		.setParameter("categoryCode", categoryCode);
+		
+		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
+		//these should contain default values for these parameters
+		query
+		//.setParameter("orderby", getOrderby(sort))
+		.setParameter("limit", pageable.getPageSize())
+		.setParameter("offset", pageable.getOffset());
+		
+		if(!categoryCodes.getCodes().isEmpty()) {
+			query.setParameter("categoryCodes", categoryCodes.getCodes());
+		}
+		
+		if(!brandCodes.getCodes().isEmpty()) {
+			query.setParameter("brandCodes", brandCodes.getCodes());
+		}
+		
+		if(!tagCodes.getCodes().isEmpty()) {
+			query.setParameter("tagCodes", tagCodes.getCodes());
+		}
+		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
+		}
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
+		
+		List<ProductDTO> results = query.getResultList();
+		
+		return new PageImpl<ProductDTO>(results, PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)), total);
+	}
 	
 	private String constructSQL(boolean hasProductCodes,
 								boolean hasProductDesc,
@@ -532,7 +654,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								boolean hasType,
 								boolean countOnly,
 								boolean offset,
-								String sort) {
+								String 	sort) {
 		
 		String sql = "WITH recursive descendants AS " + 
 				"( " + 
@@ -948,6 +1070,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	
 
 
 }

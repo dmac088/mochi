@@ -2,7 +2,8 @@ package io.nzbee.resources.customer.address;
 
 import org.springframework.hateoas.RepresentationModel;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import io.nzbee.dto.customer.address.CustomerAddressDTOOut;
+
+import io.nzbee.view.customer.address.CustomerAddressDTOOut;
 
 public class CustomerAddressResource  extends RepresentationModel<CustomerAddressResource> {
 

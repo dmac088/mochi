@@ -18,7 +18,6 @@ import io.nzbee.Constants;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.ICustomerPortService;
-import io.nzbee.dto.customer.CustomerDTOIn;
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.bag.IBagService;
 import io.nzbee.entity.party.person.IPersonService;
@@ -40,6 +39,7 @@ import io.nzbee.security.user.role.IUserRoleService;
 import io.nzbee.security.user.role.UserRole;
 import io.nzbee.security.user.verificationtoken.VerificationToken;
 import io.nzbee.security.user.verificationtoken.VerificationTokenRepository;
+import io.nzbee.view.customer.CustomerDTOIn;
 import io.nzbee.entity.party.person.ICustomerMapper;
 
 @Component

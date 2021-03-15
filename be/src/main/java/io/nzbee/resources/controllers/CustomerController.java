@@ -22,15 +22,15 @@ import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.customer.address.Address;
 import io.nzbee.domain.customer.address.IAddressService;
 import io.nzbee.domain.services.GenericResponse;
-import io.nzbee.dto.customer.CustomerDTOIn;
-import io.nzbee.dto.customer.ICustomerDTOMapper;
-import io.nzbee.dto.customer.address.CustomerAddressDTOIn;
-import io.nzbee.dto.customer.address.ICustomerAddressDTOMapper;
 import io.nzbee.resources.customer.CustomerResource;
 import io.nzbee.resources.customer.CustomerResourceAssembler;
 import io.nzbee.resources.customer.address.CustomerAddressResource;
 import io.nzbee.resources.customer.address.CustomerAddressResourceAssembler;
 import io.nzbee.security.events.OnRegistrationCompleteEvent;
+import io.nzbee.view.customer.CustomerDTOIn;
+import io.nzbee.view.customer.ICustomerDTOMapper;
+import io.nzbee.view.customer.address.CustomerAddressDTOIn;
+import io.nzbee.view.customer.address.ICustomerAddressDTOMapper;
 
 
 @RestController

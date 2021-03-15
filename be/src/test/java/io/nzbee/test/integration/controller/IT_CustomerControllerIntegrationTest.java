@@ -35,8 +35,9 @@ import org.springframework.web.client.HttpServerErrorException;
 import org.springframework.web.client.RestTemplate;
 import org.json.JSONException;
 import org.json.JSONObject;
-import io.nzbee.dto.customer.CustomerDTOIn;
+
 import io.nzbee.test.LoggingRequestInterceptor;
+import io.nzbee.view.customer.CustomerDTOIn;
 
 
 @RunWith(SpringRunner.class)

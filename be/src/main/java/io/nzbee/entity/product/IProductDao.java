@@ -35,6 +35,10 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice,
 			Class<T> cls, String page, String size, String sort);
 
+	Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page,
+			String size, String sort);
+
 
 	
 }

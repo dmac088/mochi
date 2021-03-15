@@ -2,7 +2,7 @@ package io.nzbee.domain.customer;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.ports.ICustomerPortService;
-import io.nzbee.dto.customer.CustomerDTOIn;
+import io.nzbee.view.customer.CustomerDTOIn;
 
 public class CustomerServiceImpl implements ICustomerService {
 

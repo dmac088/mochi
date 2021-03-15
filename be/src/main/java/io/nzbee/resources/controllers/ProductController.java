@@ -26,15 +26,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.product.physical.IPhysicalProductDTOFullMapper;
-import io.nzbee.dto.product.physical.IPhysicalProductDTOLightMapper;
-import io.nzbee.dto.product.physical.PhysicalProductDTOLight;
 import io.nzbee.resources.dto.BrowseResultDto;
 import io.nzbee.resources.product.ProductFullResource;
 import io.nzbee.resources.product.ProductFullResourceAssembler;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.resources.product.ProductLightResourceAssembler;
 import io.nzbee.search.facet.IFacet;
+import io.nzbee.view.product.physical.IPhysicalProductDTOFullMapper;
+import io.nzbee.view.product.physical.IPhysicalProductDTOLightMapper;
+import io.nzbee.view.product.physical.PhysicalProductDTOLight;
 
 @RestController
 @RequestMapping("/api")

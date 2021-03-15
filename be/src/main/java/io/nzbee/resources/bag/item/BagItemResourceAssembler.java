@@ -3,9 +3,10 @@ package io.nzbee.resources.bag.item;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-import io.nzbee.dto.bag.item.BagItemDTOOut;
+
 import io.nzbee.resources.controllers.BagController;
 import io.nzbee.resources.controllers.ProductController;
+import io.nzbee.view.bag.item.BagItemDTOOut;
 
 @Component
 public class BagItemResourceAssembler extends RepresentationModelAssemblerSupport<BagItemDTOOut, BagItemResource> {

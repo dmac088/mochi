@@ -1,7 +1,7 @@
 package io.nzbee.domain.customer;
 
 import io.nzbee.domain.IService;
-import io.nzbee.dto.customer.CustomerDTOIn;
+import io.nzbee.view.customer.CustomerDTOIn;
 
 public interface ICustomerService extends IService<Customer> {
 

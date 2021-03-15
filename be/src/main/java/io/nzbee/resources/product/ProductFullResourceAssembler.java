@@ -4,8 +4,8 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
-import io.nzbee.dto.product.physical.PhysicalProductDTOFull;
 import io.nzbee.resources.controllers.ProductController;
+import io.nzbee.view.product.physical.PhysicalProductDTOFull;
 
 @Component
 public class ProductFullResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductDTOFull, ProductFullResource> {

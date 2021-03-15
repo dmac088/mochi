@@ -2,7 +2,7 @@ package io.nzbee.domain.ports;
 
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
-import io.nzbee.dto.customer.CustomerDTOIn;
+import io.nzbee.view.customer.CustomerDTOIn;
 
 public interface ICustomerPortService extends IPortService<Customer> {
 

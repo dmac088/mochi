@@ -37,9 +37,9 @@ import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.ports.IBagPortService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.ProductServiceImpl;
-import io.nzbee.dto.bag.item.BagItemDTOMapperImpl;
-import io.nzbee.dto.bag.item.IBagItemDTOMapper;
 import io.nzbee.test.integration.domain.beans.bag.IBagDoBeanFactory;
+import io.nzbee.view.bag.item.BagItemDTOMapperImpl;
+import io.nzbee.view.bag.item.IBagItemDTOMapper;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

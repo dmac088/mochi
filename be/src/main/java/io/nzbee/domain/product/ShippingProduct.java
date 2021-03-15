@@ -12,13 +12,7 @@ import io.nzbee.domain.promotion.Promotion;
 
 @JsonTypeName("shippingproduct")
 public class ShippingProduct extends Product {
-	
-    private Double weightLimit;
-    
-    private Double weightFrom;
-    
-    private Double weightTo;
-    
+	 
     private String shippingDestinationCode;
     
     private String shippingDestinationDesc;
@@ -27,7 +21,12 @@ public class ShippingProduct extends Product {
     
     private String shippingTypeDesc;
    
-
+    private Double weightLimit;
+    
+    private Double weightFrom;
+    
+    private Double weightTo;
+    
 	public ShippingProduct(	String productUPC, 
 							LocalDateTime productCreateDt, 
 							String productStatus, 

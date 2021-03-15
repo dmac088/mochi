@@ -2,7 +2,7 @@ package io.nzbee.resources.product;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import io.nzbee.dto.product.physical.PhysicalProductDTOFull;
+import io.nzbee.view.product.physical.PhysicalProductDTOFull;
 
 public class ProductFullResource  extends RepresentationModel<ProductFullResource> {
 

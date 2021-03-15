@@ -4,7 +4,8 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nzbee.dto.bag.BagDTO;
+
+import io.nzbee.view.bag.BagDTO;
 
 public class BagResource extends RepresentationModel<BagResource> {
 
