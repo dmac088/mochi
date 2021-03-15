@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.dto.product.IProductDTOLightMapper;
+import io.nzbee.dto.product.physical.IPhysicalProductDTOLightMapper;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.resources.product.ProductLightResourceAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
@@ -34,7 +34,7 @@ public class SearchController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private IProductDTOLightMapper productDTOLightMapper;
+	private IPhysicalProductDTOLightMapper productDTOLightMapper;
 	
 	@Autowired
     private IProductPortService productService;

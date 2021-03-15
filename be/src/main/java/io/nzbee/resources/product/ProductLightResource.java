@@ -1,17 +1,18 @@
 package io.nzbee.resources.product;
 
 import org.springframework.hateoas.RepresentationModel;
-import io.nzbee.dto.product.ProductDTOLight;
+
+import io.nzbee.dto.product.physical.PhysicalProductDTOLight;
 
 public class ProductLightResource  extends RepresentationModel<ProductLightResource> {
 
-	private final ProductDTOLight data;
+	private final PhysicalProductDTOLight data;
 	
-	public ProductLightResource(final ProductDTOLight product) {
+	public ProductLightResource(final PhysicalProductDTOLight product) {
 		this.data = product;
 	}
 	
-	public ProductDTOLight getData() {
+	public PhysicalProductDTOLight getData() {
 		return data;
 	}
 	

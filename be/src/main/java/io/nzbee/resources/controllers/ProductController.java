@@ -26,9 +26,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.dto.product.IProductDTOFullMapper;
-import io.nzbee.dto.product.IProductDTOLightMapper;
-import io.nzbee.dto.product.ProductDTOLight;
+import io.nzbee.dto.product.physical.IPhysicalProductDTOFullMapper;
+import io.nzbee.dto.product.physical.IPhysicalProductDTOLightMapper;
+import io.nzbee.dto.product.physical.PhysicalProductDTOLight;
 import io.nzbee.resources.dto.BrowseResultDto;
 import io.nzbee.resources.product.ProductFullResource;
 import io.nzbee.resources.product.ProductFullResourceAssembler;
@@ -46,10 +46,10 @@ public class ProductController {
     private IProductService productService;
     
     @Autowired
-    private IProductDTOFullMapper productDTOFullMapper;
+    private IPhysicalProductDTOFullMapper productDTOFullMapper;
     
     @Autowired
-    private IProductDTOLightMapper productDTOLightMapper;
+    private IPhysicalProductDTOLightMapper productDTOLightMapper;
     
     @Autowired
     private ProductLightResourceAssembler prodLightResourceAssembler;
@@ -71,7 +71,7 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final Page<ProductDTOLight> sp = productService.findAll(	locale, 
+    	final Page<PhysicalProductDTOLight> sp = productService.findAll(	locale, 
 															currency, 
 															categoryCode, 
 															new HashSet<String>(), 
@@ -112,7 +112,7 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching product for parameters : {}, {}, {}}", locale, currency, productCodes);
     	
-    	final Set<ProductDTOLight> collection = productService.findAll(locale, currency, productCodes)
+    	final Set<PhysicalProductDTOLight> collection = productService.findAll(locale, currency, productCodes)
     													 .stream()
     													 .map(p -> productDTOLightMapper.doToDto(p))
     													 .collect(Collectors.toSet());

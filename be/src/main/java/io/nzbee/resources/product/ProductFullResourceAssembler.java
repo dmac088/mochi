@@ -3,18 +3,19 @@ package io.nzbee.resources.product;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-import io.nzbee.dto.product.ProductDTOFull;
+
+import io.nzbee.dto.product.physical.PhysicalProductDTOFull;
 import io.nzbee.resources.controllers.ProductController;
 
 @Component
-public class ProductFullResourceAssembler extends RepresentationModelAssemblerSupport<ProductDTOFull, ProductFullResource> {
+public class ProductFullResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductDTOFull, ProductFullResource> {
 	
 	public ProductFullResourceAssembler() {
 		super(ProductController.class, ProductFullResource.class);
 	}
 
 	@Override
-	public ProductFullResource toModel(ProductDTOFull product) {
+	public ProductFullResource toModel(PhysicalProductDTOFull product) {
 		ProductFullResource pr = new ProductFullResource(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,

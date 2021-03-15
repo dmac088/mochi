@@ -1,4 +1,4 @@
-package io.nzbee.dto.product;
+package io.nzbee.dto.product.physical;
 
 import org.springframework.stereotype.Component;
 
@@ -6,11 +6,11 @@ import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
 
 @Component
-public class ProductDTOFullMapperImpl implements IProductDTOFullMapper {
+public class PhysicalProductDTOFullMapperImpl implements IPhysicalProductDTOFullMapper {
 
 	@Override
-	public ProductDTOFull doToDto(Product d) {
-		ProductDTOFull pdto = new ProductDTOFull();
+	public PhysicalProductDTOFull doToDto(Product d) {
+		PhysicalProductDTOFull pdto = new PhysicalProductDTOFull();
 		
 		//brand
 		pdto.setBrandCode(d.getBrand().getBrandCode());
@@ -34,7 +34,7 @@ public class ProductDTOFullMapperImpl implements IProductDTOFullMapper {
 	}
 
 	@Override
-	public Product dtoToDo(ProductDTOFull dto) {
+	public Product dtoToDo(PhysicalProductDTOFull dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}
