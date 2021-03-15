@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.product.physical.PhysicalProduct;
+import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.search.facet.IFacet;
 
 public interface IProductPortService extends IPortService<Product> {
@@ -16,6 +18,12 @@ public interface IProductPortService extends IPortService<Product> {
 			Set<IFacet> selectedFacets, Set<IFacet> returnFacets);
 
 	Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
+	
+	Page<PhysicalProduct> findAllPhysicalProducts(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
+	
+	Page<ShippingProduct> findAllShippingProducts(String locale, String currency, String categoryCode, Set<String> categoryCodes,
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort);
 
 	List<Product> findAll(String locale, String currency, Set<String> codes);

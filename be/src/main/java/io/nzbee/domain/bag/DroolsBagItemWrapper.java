@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import io.nzbee.domain.bag.discount.Discount;
-import io.nzbee.domain.product.PhysicalProduct;
+import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.promotion.Promotion;
 
 public class DroolsBagItemWrapper {

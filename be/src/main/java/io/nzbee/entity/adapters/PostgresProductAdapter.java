@@ -13,9 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
-import io.nzbee.domain.product.ShippingProduct;
+import io.nzbee.domain.product.physical.PhysicalProduct;
+import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandEntity;
@@ -34,11 +34,14 @@ import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentService;
+import io.nzbee.entity.product.physical.IPhysicalProductService;
+import io.nzbee.entity.product.physical.PhysicalProductDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
+import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatusEntity;
@@ -53,6 +56,9 @@ public class PostgresProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IProductService productService;
+	
+	@Autowired
+	private IPhysicalProductService physicalProductService;
 
 	@Autowired
 	private IProductAttributeService productAttributeService;
@@ -175,6 +181,55 @@ public class PostgresProductAdapter implements IProductPortService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
+	public Page<PhysicalProduct> findAllPhysicalProducts(String locale, String currency, String categoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
+		
+		//cannot downcast here, 
+		Page<ProductDTO> pp = productService.findAll(
+															locale, 
+															currency,
+															categoryCode, 
+															new StringCollectionWrapper(categoryCodes), 
+															new StringCollectionWrapper(brandCodes), 
+															new StringCollectionWrapper(tagCodes),
+															maxPrice,
+															page, 
+															size, 
+															sort);
+				
+		return new PageImpl<PhysicalProduct>(
+						// receive a list of entities and map to domain objects
+						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
+						pp.getTotalElements());		
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<ShippingProduct> findAllShippingProducts(String locale, String currency, String categoryCode,
+			Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page,
+			String size, String sort) {
+
+		Page<ProductDTO> pp = productService.findAll(
+															locale, 
+															currency,
+															categoryCode, 
+															new StringCollectionWrapper(categoryCodes), 
+															new StringCollectionWrapper(brandCodes), 
+															new StringCollectionWrapper(tagCodes),
+															maxPrice,
+															page, 
+															size, 
+															sort);
+
+		return new PageImpl<ShippingProduct>(
+						// receive a list of entities and map to domain objects
+						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
+						pp.getTotalElements());		
+		
+	}
+	
+	@Override
 	@Transactional
 	public void save(Product domainObject) {
 		if (domainObject instanceof PhysicalProduct) {
@@ -294,4 +349,5 @@ public class PostgresProductAdapter implements IProductPortService {
 		// TODO Auto-generated method stub
 		
 	}
+
 }

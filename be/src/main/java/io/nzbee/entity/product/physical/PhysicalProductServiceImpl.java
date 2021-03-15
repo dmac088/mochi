@@ -1,5 +1,34 @@
 package io.nzbee.entity.product.physical;
 
-public class PhysicalProductServiceImpl {
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.product.IProductDao;
+
+public class PhysicalProductServiceImpl implements IPhysicalProductService {
+
+	@Autowired
+	private IProductDao productDAO;
+
+	@Override
+	public Page<PhysicalProductDTO> findAll(String locale, String currency, String rootCategory,
+			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
+			Double maxPrice, String page, String size, String sort) {
+		return productDAO.findAll(
+				  locale,
+		 		  currency,
+		 		  rootCategory,
+		 		  categoryCodes,
+		 		  brandCodes, 
+		 		  tagCodes,
+		 		  maxPrice,
+		 		  PhysicalProductEntity.class,
+		 		  page,
+		 		  size,
+		 		  sort
+		  	).map(p -> (PhysicalProductDTO) p);
+	}
+	
+	
 
 }

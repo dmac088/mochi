@@ -86,6 +86,33 @@ public class ProductController {
     			
     	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
     }
+	
+	@GetMapping(value = "/PhysicalProduct/{locale}/{currency}/category/{categoryCode}")
+    public ResponseEntity<BrowseResultDto> getPhysicalProducts(	@PathVariable String locale, 
+														@PathVariable String currency, 
+														@PathVariable String categoryCode,
+														@RequestParam(value = "page", defaultValue = "0") String page,
+														@RequestParam(value = "size", defaultValue = "10") String size,
+														@RequestParam(value = "sort", defaultValue = "10") String sort) {
+    	
+    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	
+    	final Page<PhysicalProductDTOLight> sp = productService.findAll(	locale, 
+															currency, 
+															categoryCode, 
+															new HashSet<String>(), 
+															new HashSet<String>(),
+															new HashSet<String>(),
+															null,
+															page, 
+															size, 
+															sort).map(d -> productDTOLightMapper.doToDto(d));
+    	
+    	final Page<ProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
+    			
+    	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
+    }
+	
     
 	@GetMapping(value = "/Product/{locale}/{currency}/brand/code/{brandCode}", 
     			params = { "page", "size" })

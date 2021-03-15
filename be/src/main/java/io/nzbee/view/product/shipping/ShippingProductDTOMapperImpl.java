@@ -2,7 +2,7 @@ package io.nzbee.view.product.shipping;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.product.Product;
-import io.nzbee.domain.product.ShippingProduct;
+import io.nzbee.domain.product.shipping.ShippingProduct;
 
 @Component
 public class ShippingProductDTOMapperImpl implements IShippingProductDTOMapper {

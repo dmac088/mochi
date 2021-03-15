@@ -2,8 +2,8 @@ package io.nzbee.view.product.physical;
 
 import org.springframework.stereotype.Component;
 
-import io.nzbee.domain.product.PhysicalProduct;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.product.physical.PhysicalProduct;
 
 @Component
 public class PhysicalProductDTOFullMapperImpl implements IPhysicalProductDTOFullMapper {
