@@ -1,27 +1,25 @@
-package io.nzbee.resources.product;
+package io.nzbee.resources.product.shipping;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.resources.controllers.ProductController;
-import io.nzbee.resources.product.physical.PhysicalProductFullResource;
-import io.nzbee.view.product.physical.PhysicalProductDTOFull;
+import io.nzbee.view.product.shipping.ShippingProductDTO;
 
 @Component
-public class ProductFullResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductDTOFull, PhysicalProductFullResource> {
+public class ShippingProductResourceAssembler extends RepresentationModelAssemblerSupport<ShippingProductDTO, ShippingProductResource> {
 	
-	public ProductFullResourceAssembler() {
-		super(ProductController.class, PhysicalProductFullResource.class);
+	public ShippingProductResourceAssembler() {
+		super(ProductController.class, ShippingProductResource.class);
 	}
 
 	@Override
-	public PhysicalProductFullResource toModel(PhysicalProductDTOFull product) {
-		PhysicalProductFullResource pr = new PhysicalProductFullResource(product);
+	public ShippingProductResource toModel(ShippingProductDTO product) {
+		ShippingProductResource pr = new ShippingProductResource(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,
 				product.getProductUPC())).withSelfRel(),
-						
+
 				linkTo(methodOn(ProductController.class).getImageWithMediaType(product.getProductUPC() + "_1.jpg"))
 						.withRel("defaultImage"),
 						

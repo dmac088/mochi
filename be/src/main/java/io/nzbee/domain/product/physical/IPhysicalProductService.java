@@ -2,9 +2,8 @@ package io.nzbee.domain.product.physical;
 
 import java.util.Set;
 import org.springframework.data.domain.Page;
-import io.nzbee.domain.ILocalizedService;
 
-public interface IPhysicalProductService extends ILocalizedService<PhysicalProduct> {
+public interface IPhysicalProductService {
 
 
 	Page<PhysicalProduct> findAll(	String locale, 

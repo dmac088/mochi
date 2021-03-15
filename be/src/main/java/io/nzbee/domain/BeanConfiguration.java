@@ -19,6 +19,10 @@ import io.nzbee.domain.department.DepartmentServiceImpl;
 import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.ProductServiceImpl;
+import io.nzbee.domain.product.physical.IPhysicalProductService;
+import io.nzbee.domain.product.physical.PhysicalProductServiceImpl;
+import io.nzbee.domain.product.shipping.IShippingProductService;
+import io.nzbee.domain.product.shipping.ShippingProductServiceImpl;
 import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
@@ -34,6 +38,16 @@ public class BeanConfiguration {
     @Bean
     public IProductService productService() {
         return new ProductServiceImpl();
+    }
+    
+    @Bean
+    public IPhysicalProductService physicalProductService() {
+        return new PhysicalProductServiceImpl();
+    }
+    
+    @Bean
+    public IShippingProductService shippingProductService() {
+        return new ShippingProductServiceImpl();
     }
     
     @Bean

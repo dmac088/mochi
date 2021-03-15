@@ -26,15 +26,22 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.resources.dto.BrowseResultDto;
-import io.nzbee.resources.product.ProductFullResource;
+import io.nzbee.domain.product.physical.IPhysicalProductService;
+import io.nzbee.domain.product.shipping.IShippingProductService;
+import io.nzbee.resources.dto.BrowsePhysicalProductResultDto;
+import io.nzbee.resources.dto.BrowseShippingProductResultDto;
 import io.nzbee.resources.product.ProductFullResourceAssembler;
 import io.nzbee.resources.product.ProductLightResource;
 import io.nzbee.resources.product.ProductLightResourceAssembler;
+import io.nzbee.resources.product.physical.PhysicalProductFullResource;
+import io.nzbee.resources.product.shipping.ShippingProductResource;
+import io.nzbee.resources.product.shipping.ShippingProductResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.product.physical.IPhysicalProductDTOFullMapper;
 import io.nzbee.view.product.physical.IPhysicalProductDTOLightMapper;
 import io.nzbee.view.product.physical.PhysicalProductDTOLight;
+import io.nzbee.view.product.shipping.IShippingProductDTOMapper;
+import io.nzbee.view.product.shipping.ShippingProductDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -46,10 +53,22 @@ public class ProductController {
     private IProductService productService;
     
     @Autowired
+    private IPhysicalProductService physicalProductService;
+    
+    @Autowired
+    private IShippingProductService shippingProductService;
+    
+    @Autowired
     private IPhysicalProductDTOFullMapper productDTOFullMapper;
     
     @Autowired
     private IPhysicalProductDTOLightMapper productDTOLightMapper;
+    
+    @Autowired
+    private IShippingProductDTOMapper shippingDTOMapper;
+    
+    @Autowired
+    private ShippingProductResourceAssembler shippingProductResourceAssembler;
     
     @Autowired
     private ProductLightResourceAssembler prodLightResourceAssembler;
@@ -60,9 +79,12 @@ public class ProductController {
     @Autowired
     private PagedResourcesAssembler<ProductLightResource> prodPagedAssembler;
     
+    @Autowired
+    private PagedResourcesAssembler<ShippingProductResource> shippingProductPagedAssembler;
+    
     
 	@GetMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<BrowseResultDto> getProducts(	@PathVariable String locale, 
+    public ResponseEntity<BrowsePhysicalProductResultDto> getProducts(	@PathVariable String locale, 
 														@PathVariable String currency, 
 														@PathVariable String categoryCode,
 														@RequestParam(value = "page", defaultValue = "0") String page,
@@ -84,11 +106,11 @@ public class ProductController {
     	
     	final Page<ProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
     			
-    	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
+    	return ResponseEntity.ok(new BrowsePhysicalProductResultDto(prodPagedAssembler.toModel(pages)));
     }
 	
-	@GetMapping(value = "/PhysicalProduct/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<BrowseResultDto> getPhysicalProducts(	@PathVariable String locale, 
+	@GetMapping(value = "/Product/Physical/{locale}/{currency}/category/{categoryCode}")
+    public ResponseEntity<BrowsePhysicalProductResultDto> getPhysicalProducts(	@PathVariable String locale, 
 														@PathVariable String currency, 
 														@PathVariable String categoryCode,
 														@RequestParam(value = "page", defaultValue = "0") String page,
@@ -97,7 +119,8 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final Page<PhysicalProductDTOLight> sp = productService.findAll(	locale, 
+    	final Page<PhysicalProductDTOLight> sp = physicalProductService.findAll(	
+    														locale, 
 															currency, 
 															categoryCode, 
 															new HashSet<String>(), 
@@ -110,7 +133,34 @@ public class ProductController {
     	
     	final Page<ProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
     			
-    	return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
+    	return ResponseEntity.ok(new BrowsePhysicalProductResultDto(prodPagedAssembler.toModel(pages)));
+    }
+	
+	
+	@GetMapping(value = "/Product/Shipping/{locale}/{currency}/category/{categoryCode}")
+    public ResponseEntity<BrowseShippingProductResultDto> getShippingProducts(	@PathVariable String locale, 
+																@PathVariable String currency, 
+																@PathVariable String categoryCode,
+																@RequestParam(value = "page", defaultValue = "0") String page,
+																@RequestParam(value = "size", defaultValue = "10") String size,
+																@RequestParam(value = "sort", defaultValue = "10") String sort) {
+    	
+    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	
+    	final Page<ShippingProductDTO> sp = shippingProductService.findAll(	locale, 
+															currency, 
+															categoryCode, 
+															new HashSet<String>(), 
+															new HashSet<String>(),
+															new HashSet<String>(),
+															null,
+															page, 
+															size, 
+															sort).map(d -> shippingDTOMapper.doToDto(d));
+    	
+    	final Page<ShippingProductResource> pages = sp.map(p -> shippingProductResourceAssembler.toModel(p));
+    			
+    	return ResponseEntity.ok(new BrowseShippingProductResultDto(shippingProductPagedAssembler.toModel(pages)));
     }
 	
     
@@ -125,10 +175,10 @@ public class ProductController {
     }
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
-    public ResponseEntity<ProductFullResource> get(	@PathVariable String locale, 
+    public ResponseEntity<PhysicalProductFullResource> get(	@PathVariable String locale, 
     											@PathVariable String currency, 
     											@PathVariable String code) {
-    	ProductFullResource pr = prodFullResourceAssembler.toModel(productDTOFullMapper.doToDto(productService.findByCode(locale, currency, code)));
+    	PhysicalProductFullResource pr = prodFullResourceAssembler.toModel(productDTOFullMapper.doToDto(productService.findByCode(locale, currency, code)));
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
@@ -150,7 +200,7 @@ public class ProductController {
   
 	@PostMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}",
 			 	 params = { "page", "size", "sort" })
-	public ResponseEntity<BrowseResultDto> getProducts(	
+	public ResponseEntity<BrowsePhysicalProductResultDto> getProducts(	
 										@PathVariable String 			locale, 
 										@PathVariable String 			currency, 
 										@PathVariable 					String 	categoryCode,
@@ -185,7 +235,7 @@ public class ProductController {
 		
 		final Page<ProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(productDTOLightMapper.doToDto(p)));
 		
-		return ResponseEntity.ok(new BrowseResultDto(prodPagedAssembler.toModel(pages)));
+		return ResponseEntity.ok(new BrowsePhysicalProductResultDto(prodPagedAssembler.toModel(pages)));
 	}
 	
 	@GetMapping(

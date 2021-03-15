@@ -2,9 +2,8 @@ package io.nzbee.domain.product.shipping;
 
 import java.util.Set;
 import org.springframework.data.domain.Page;
-import io.nzbee.domain.ILocalizedService;
 
-public interface IShippingProductService extends ILocalizedService<ShippingProduct> {
+public interface IShippingProductService {
 
 
 	Page<ShippingProduct> findAll(	String locale, 
