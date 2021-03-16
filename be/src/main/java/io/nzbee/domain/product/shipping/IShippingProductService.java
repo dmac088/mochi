@@ -5,7 +5,6 @@ import org.springframework.data.domain.Page;
 
 public interface IShippingProductService {
 
-
 	Page<ShippingProduct> findAll(	String locale, 
 									String currency, 
 									String categoryCode,

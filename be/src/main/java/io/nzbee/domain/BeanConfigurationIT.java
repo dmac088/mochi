@@ -35,8 +35,8 @@ import io.nzbee.resources.product.shipping.ShippingProductResource;
 
 
 @Configuration
-@Profile("dev | it")
-public class BeanConfiguration {
+@Profile("it")
+public class BeanConfigurationIT {
  
 	@Bean
     public PagedResourcesAssembler<ProductLightResource> pagedProductResourceAssembler() {
