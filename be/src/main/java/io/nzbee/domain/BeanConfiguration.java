@@ -1,8 +1,11 @@
 package io.nzbee.domain;
 
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
+import org.springframework.data.web.PagedResourcesAssembler;
+
 import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.BagServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
@@ -27,12 +30,24 @@ import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
+import io.nzbee.resources.product.ProductLightResource;
+import io.nzbee.resources.product.shipping.ShippingProductResource;
 
 
 @Configuration
-@Profile("dev")
+@Profile("dev | it")
 public class BeanConfiguration {
  
+	@Bean
+    public PagedResourcesAssembler<ProductLightResource> pagedProductResourceAssembler() {
+    	return new PagedResourcesAssembler<ProductLightResource>(null, null);
+    }
+	
+	@Bean
+    public PagedResourcesAssembler<ShippingProductResource> pagedShippingProductResourceAssembler() {
+    	return new PagedResourcesAssembler<ShippingProductResource>(null, null);
+    }
+	
     @Bean
     public IProductService productService() {
         return new ProductServiceImpl();
