@@ -1,7 +1,10 @@
 package io.nzbee.view.bag.item;
 
+import org.springframework.stereotype.Component;
+
 import io.nzbee.domain.bag.BagItem;
 
+@Component
 public class BagItemDTOMapperImpl implements IBagItemDTOMapper {
 
 	@Override

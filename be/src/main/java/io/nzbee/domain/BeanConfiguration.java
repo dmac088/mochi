@@ -27,8 +27,6 @@ import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
-import io.nzbee.view.bag.item.BagItemDTOMapperImpl;
-import io.nzbee.view.bag.item.IBagItemDTOMapper;
 
 
 @Configuration
@@ -88,11 +86,6 @@ public class BeanConfiguration {
     @Bean
     public IBagItemService bagItemService() {
         return new BagItemServiceImpl();
-    }
-    
-    @Bean
-    public IBagItemDTOMapper bagItemDtoMapper() {
-		return new BagItemDTOMapperImpl();
     }
     
     @Bean

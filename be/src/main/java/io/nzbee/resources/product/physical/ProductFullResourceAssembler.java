@@ -1,11 +1,10 @@
-package io.nzbee.resources.product;
+package io.nzbee.resources.product.physical;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import io.nzbee.resources.controllers.ProductController;
-import io.nzbee.resources.product.physical.PhysicalProductFullResource;
 import io.nzbee.view.product.physical.PhysicalProductDTOFull;
 
 @Component
