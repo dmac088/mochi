@@ -8,15 +8,15 @@ import io.nzbee.resources.controllers.ProductController;
 import io.nzbee.view.product.physical.PhysicalProductDTO;
 
 @Component
-public class ProductFullResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductDTO, PhysicalProductFullResource> {
+public class PhysicalProductResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductDTO, PhysicalProductResource> {
 	
-	public ProductFullResourceAssembler() {
-		super(ProductController.class, PhysicalProductFullResource.class);
+	public PhysicalProductResourceAssembler() {
+		super(ProductController.class, PhysicalProductResource.class);
 	}
 
 	@Override
-	public PhysicalProductFullResource toModel(PhysicalProductDTO product) {
-		PhysicalProductFullResource pr = new PhysicalProductFullResource(product);
+	public PhysicalProductResource toModel(PhysicalProductDTO product) {
+		PhysicalProductResource pr = new PhysicalProductResource(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,
 				product.getProductUPC())).withSelfRel(),

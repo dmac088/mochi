@@ -4,11 +4,11 @@ import org.springframework.hateoas.RepresentationModel;
 
 import io.nzbee.view.product.physical.PhysicalProductDTO;
 
-public class PhysicalProductFullResource  extends RepresentationModel<PhysicalProductFullResource> {
+public class PhysicalProductResource  extends RepresentationModel<PhysicalProductResource> {
 
 	private final PhysicalProductDTO data;
 	
-	public PhysicalProductFullResource(final PhysicalProductDTO product) {
+	public PhysicalProductResource(final PhysicalProductDTO product) {
 		this.data = product;
 	}
 	

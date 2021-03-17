@@ -31,8 +31,8 @@ import io.nzbee.resources.dto.BrowseProductResultDto;
 import io.nzbee.resources.dto.BrowseShippingProductResultDto;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
-import io.nzbee.resources.product.physical.PhysicalProductFullResource;
-import io.nzbee.resources.product.physical.ProductFullResourceAssembler;
+import io.nzbee.resources.product.physical.PhysicalProductResource;
+import io.nzbee.resources.product.physical.PhysicalProductResourceAssembler;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.resources.product.shipping.ShippingProductResourceAssembler;
 import io.nzbee.search.facet.IFacet;
@@ -73,7 +73,7 @@ public class ProductController {
     private ProductResourceAssembler prodResourceAssembler;
     
     @Autowired
-    private ProductFullResourceAssembler prodFullResourceAssembler;
+    private PhysicalProductResourceAssembler prodFullResourceAssembler;
     
     @Autowired
     private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
@@ -163,10 +163,10 @@ public class ProductController {
 	
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
-    public ResponseEntity<PhysicalProductFullResource> get(	@PathVariable String locale, 
+    public ResponseEntity<PhysicalProductResource> get(	@PathVariable String locale, 
     											@PathVariable String currency, 
     											@PathVariable String code) {
-    	PhysicalProductFullResource pr = prodFullResourceAssembler.toModel(physicalProductDTOMapper.doToDto(productService.findByCode(locale, currency, code)));
+    	PhysicalProductResource pr = prodFullResourceAssembler.toModel(physicalProductDTOMapper.doToDto(productService.findByCode(locale, currency, code)));
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     

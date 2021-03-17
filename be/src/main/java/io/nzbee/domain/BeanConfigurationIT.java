@@ -5,7 +5,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.data.web.PagedResourcesAssembler;
-
 import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.BagServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
@@ -30,7 +29,8 @@ import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
-import io.nzbee.resources.product.physical.ProductLightResource;
+import io.nzbee.resources.product.ProductResource;
+import io.nzbee.resources.product.physical.PhysicalProductResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 
 
@@ -39,8 +39,13 @@ import io.nzbee.resources.product.shipping.ShippingProductResource;
 public class BeanConfigurationIT {
  
 	@Bean
-    public PagedResourcesAssembler<ProductLightResource> pagedProductResourceAssembler() {
-    	return new PagedResourcesAssembler<ProductLightResource>(null, null);
+    public PagedResourcesAssembler<ProductResource> pagedProductResourceAssembler() {
+    	return new PagedResourcesAssembler<ProductResource>(null, null);
+    }
+	
+	@Bean
+    public PagedResourcesAssembler<PhysicalProductResource> pagedPhysicalProductResourceAssembler() {
+    	return new PagedResourcesAssembler<PhysicalProductResource>(null, null);
     }
 	
 	@Bean
