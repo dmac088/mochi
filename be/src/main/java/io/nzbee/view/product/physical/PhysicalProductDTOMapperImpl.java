@@ -6,7 +6,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 
 @Component
-public class PhysicalProductDTOMapperImpl implements IPhysicalProductDTO {
+public class PhysicalProductDTOMapperImpl implements IPhysicalProductDTOMapper {
 
 	@Override
 	public PhysicalProductDTO doToDto(Product d) {
