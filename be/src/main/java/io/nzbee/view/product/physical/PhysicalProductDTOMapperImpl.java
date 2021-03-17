@@ -6,11 +6,11 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 
 @Component
-public class PhysicalProductDTOFullMapperImpl implements IPhysicalProductDTOFullMapper {
+public class PhysicalProductDTOMapperImpl implements IPhysicalProductDTO {
 
 	@Override
-	public PhysicalProductDTOFull doToDto(Product d) {
-		PhysicalProductDTOFull pdto = new PhysicalProductDTOFull();
+	public PhysicalProductDTO doToDto(Product d) {
+		PhysicalProductDTO pdto = new PhysicalProductDTO();
 		
 		//brand
 		pdto.setBrandCode(d.getBrand().getBrandCode());
@@ -34,7 +34,7 @@ public class PhysicalProductDTOFullMapperImpl implements IPhysicalProductDTOFull
 	}
 
 	@Override
-	public Product dtoToDo(PhysicalProductDTOFull dto) {
+	public Product dtoToDo(PhysicalProductDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

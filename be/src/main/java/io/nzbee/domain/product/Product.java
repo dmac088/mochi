@@ -5,22 +5,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonSubTypes;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
-import io.nzbee.domain.product.physical.PhysicalProduct;
-import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.tag.Tag;
 
-@JsonTypeInfo(
-	    use = JsonTypeInfo.Id.NAME,
-	    include = JsonTypeInfo.As.PROPERTY,
-	    property="type")
-@JsonSubTypes( {@JsonSubTypes.Type(value = PhysicalProduct.class, 	name = "physicalproduct"),
-				@JsonSubTypes.Type(value = ShippingProduct.class, 	name = "shippingproduct")} )
 public abstract class Product {
 
 	private String productUPC;

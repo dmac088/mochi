@@ -37,7 +37,7 @@ import io.nzbee.resources.product.physical.ProductFullResourceAssembler;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.resources.product.shipping.ShippingProductResourceAssembler;
 import io.nzbee.search.facet.IFacet;
-import io.nzbee.view.product.physical.IPhysicalProductDTOFullMapper;
+import io.nzbee.view.product.physical.IPhysicalProductDTO;
 import io.nzbee.view.product.physical.IPhysicalProductDTOLightMapper;
 import io.nzbee.view.product.physical.PhysicalProductDTOLight;
 import io.nzbee.view.product.shipping.IShippingProductDTOMapper;
@@ -59,7 +59,7 @@ public class ProductController {
     private IShippingProductService shippingProductService;
     
     @Autowired
-    private IPhysicalProductDTOFullMapper productDTOFullMapper;
+    private IPhysicalProductDTO productDTOFullMapper;
     
     @Autowired
     private IPhysicalProductDTOLightMapper productDTOLightMapper;

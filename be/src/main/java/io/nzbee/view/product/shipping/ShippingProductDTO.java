@@ -1,11 +1,14 @@
 package io.nzbee.view.product.shipping;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import io.nzbee.view.product.ProductDTO;
 
 //the DTO exposes the bits or the slice of the domain model that we want to expose to the 
 //application UI, stitching the UI directly over the domain model results in verbosity in the 
 //domain model in terms of Jackson annotations (i.e. Ignore that we typically want to avoid)
 
+@JsonTypeName("shippingproduct")
 public class ShippingProductDTO extends ProductDTO {
 	
 	private String shippingDestinationCode;

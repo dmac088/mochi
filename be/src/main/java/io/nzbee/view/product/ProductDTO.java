@@ -1,5 +1,17 @@
 package io.nzbee.view.product;
 
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+import io.nzbee.domain.product.physical.PhysicalProduct;
+import io.nzbee.domain.product.shipping.ShippingProduct;
+
+@JsonTypeInfo(
+	    use = JsonTypeInfo.Id.NAME,
+	    include = JsonTypeInfo.As.PROPERTY,
+	    property="type")
+@JsonSubTypes( {@JsonSubTypes.Type(value = PhysicalProduct.class, 	name = "physicalproduct"),
+				@JsonSubTypes.Type(value = ShippingProduct.class, 	name = "shippingproduct")} )
 public abstract class ProductDTO {
 
 	protected String productUPC;
