@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.resources.product.ProductLightResource;
-import io.nzbee.resources.product.ProductLightResourceAssembler;
+import io.nzbee.resources.product.physical.ProductLightResource;
+import io.nzbee.resources.product.physical.ProductLightResourceAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
 import io.nzbee.resources.search.SearchFacetResourceAssembler;
 import io.nzbee.resources.search.SearchResultResource;

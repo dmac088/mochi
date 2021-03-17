@@ -31,7 +31,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
-import io.nzbee.resources.product.ProductLightResource;
+import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)

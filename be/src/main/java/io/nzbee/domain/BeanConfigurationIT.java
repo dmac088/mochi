@@ -30,7 +30,7 @@ import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
-import io.nzbee.resources.product.ProductLightResource;
+import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 
 

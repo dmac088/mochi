@@ -4,7 +4,7 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 
-import io.nzbee.resources.product.ProductLightResource;
+import io.nzbee.resources.product.physical.ProductLightResource;
 
 public class BrowsePhysicalProductResultDto  extends RepresentationModel<ProductLightResource> {
 

@@ -1,6 +1,7 @@
 package io.nzbee.view.product;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
@@ -8,6 +9,7 @@ import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
 import io.nzbee.view.product.shipping.IShippingProductDTOMapper;
 
+@Component
 public class ProductDTOMapperImpl implements IProductDTOMapper {
 
 	@Autowired

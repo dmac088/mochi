@@ -3,7 +3,8 @@ package io.nzbee.search;
 import java.util.Set;
 
 import org.springframework.hateoas.PagedModel;
-import io.nzbee.resources.product.ProductLightResource;
+
+import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.search.facet.IFacet;
 
 public class Search {

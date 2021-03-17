@@ -3,7 +3,9 @@ package io.nzbee.resources.search;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
-import io.nzbee.resources.product.ProductLightResource;
+
+import io.nzbee.resources.product.physical.ProductLightResource;
+
 import java.util.Set;
 
 

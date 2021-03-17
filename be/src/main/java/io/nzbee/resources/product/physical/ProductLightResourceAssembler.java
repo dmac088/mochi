@@ -1,4 +1,4 @@
-package io.nzbee.resources.product;
+package io.nzbee.resources.product.physical;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;

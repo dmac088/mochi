@@ -1,4 +1,4 @@
-package io.nzbee.resources.product;
+package io.nzbee.resources.product.physical;
 
 import org.springframework.hateoas.RepresentationModel;
 
