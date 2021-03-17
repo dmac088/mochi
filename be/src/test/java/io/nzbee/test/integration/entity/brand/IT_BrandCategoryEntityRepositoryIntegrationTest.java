@@ -27,10 +27,10 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.domain.product.Product;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
+import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory;
 
@@ -43,16 +43,6 @@ public class IT_BrandCategoryEntityRepositoryIntegrationTest {
  
 	@TestConfiguration
     static class BrandCategoryEntityRepositoryIntegrationTest {
-            
-        @Bean(value = "pagedProductResourceAssembler")
-        public PagedResourcesAssembler<ProductLightResource> pagedProductResourceAssembler() {
-        	return new PagedResourcesAssembler<ProductLightResource>(null, null);
-        }
-        
-        @Bean(value = "pagedProductAssembler")
-        public PagedResourcesAssembler<Product> pagedProductAssembler() {
-        	return new PagedResourcesAssembler<Product>(null, null);
-        }
         
     }
 	

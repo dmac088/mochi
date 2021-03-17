@@ -31,6 +31,7 @@ import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.physical.PhysicalProductResource;
+import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 
 
@@ -51,6 +52,11 @@ public class BeanConfigurationIT {
 	@Bean
     public PagedResourcesAssembler<ShippingProductResource> pagedShippingProductResourceAssembler() {
     	return new PagedResourcesAssembler<ShippingProductResource>(null, null);
+    }
+	
+	@Bean
+    public PagedResourcesAssembler<ProductLightResource> pagedPhysicalProductLightResourceAssembler() {
+    	return new PagedResourcesAssembler<ProductLightResource>(null, null);
     }
 	
     @Bean
