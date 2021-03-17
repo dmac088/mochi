@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.category.Category;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.resources.controllers.CategoryController;
+import io.nzbee.resources.controllers.ProductController;
 //import io.nzbee.resources.controllers.ProductController;
 import io.nzbee.resources.controllers.TagController;
 
@@ -29,8 +30,8 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 		}
 
 		if (category.getCategoryType().equals("productcategory")) {
-//			cr.add(linkTo(methodOn(ProductController.class).getProducts(null, null, category.getCategoryCode(), null,
-//					null, null, null)).withRel("products"));
+			cr.add(linkTo(methodOn(ProductController.class).getProducts(null, null, category.getCategoryCode(), null,
+					null, null, null)).withRel("products"));
 
 			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), null,
 					category.getCategoryCode(), null)).withRel("brands"));

@@ -120,7 +120,7 @@ function Products(props) {
                             ...prevState,
                             page: response.data.products.page,
                             products: (response.data.products._embedded) 
-                                        ? response.data.products._embedded.productLightResources
+                                        ? response.data.products._embedded.productResources
                                         : [],
                             facets: response.data.facets || [],
                             loading: false,
