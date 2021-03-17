@@ -18,9 +18,7 @@ import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabas
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.DirtiesContext;
@@ -30,8 +28,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.brand.CategoryBrandEntity;
 import io.nzbee.entity.category.brand.ICategoryBrandService;
-import io.nzbee.resources.product.ProductResource;
-import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
