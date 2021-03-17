@@ -78,7 +78,7 @@ function Category(props) {
         if (isSubscribed) {
           setObjectState((prevState) => ({
             ...prevState,
-            products: (response.data.products._embedded) ? response.data.products._embedded.productLightResources
+            products: (response.data.products._embedded) ? response.data.products._embedded.productResources
               : [],
           }));
         }
