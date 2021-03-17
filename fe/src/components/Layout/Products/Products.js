@@ -99,7 +99,8 @@ function Products(props) {
         let isSubscribed = true;
         const currentCategory = findByCode(categories.list, categoryCode);
         const rootNode = findRootNode(categories.list);
-        
+        console.log(rootNode);
+
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||
             categoriesLoading !== prevCategoriesLoading ||
@@ -120,7 +121,7 @@ function Products(props) {
                             ...prevState,
                             page: response.data.products.page,
                             products: (response.data.products._embedded) 
-                                        ? response.data.products._embedded.productLightResources
+                                        ? response.data.products._embedded.productResources
                                         : [],
                             facets: response.data.facets || [],
                             loading: false,
