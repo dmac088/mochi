@@ -12,7 +12,6 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.User;
 
@@ -27,7 +26,6 @@ public class UserRole implements Serializable {
     								name = "ROLE_PERMISSION", schema="security", 
     								joinColumns 		= @JoinColumn(name = "role_id"), 
     								inverseJoinColumns 	= @JoinColumn(name = "permission_id"))
-    @JsonIgnore
     private Set<Authority> authorities = new HashSet<Authority>();
 
 	@Id
