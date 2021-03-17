@@ -16,18 +16,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.ProductResourceAssembler;
-import io.nzbee.resources.product.physical.ProductLightResource;
-import io.nzbee.resources.product.physical.ProductLightResourceAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
 import io.nzbee.resources.search.SearchFacetResourceAssembler;
 import io.nzbee.resources.search.SearchResultResource;
 import io.nzbee.search.facet.IFacet;
-import io.nzbee.view.product.physical.IPhysicalProductDTOLightMapper;
 import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
 
 @RestController

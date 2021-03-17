@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
@@ -35,18 +34,14 @@ public abstract class Product {
 	
 	protected String productType;
 
-	@JsonIgnore
 	private List<ProductCategory> categories;
 	
-	@JsonIgnore
 	private List<Promotion> promotions;
 
-	@JsonIgnore
 	private Department department;
 	
 	private Brand brand;
 	
-	@JsonIgnore
 	private List<Tag> tags;
 	
 	public Product(	String 			productUPC,

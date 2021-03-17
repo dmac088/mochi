@@ -18,8 +18,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import io.nzbee.entity.bag.BagEntity;
 import io.nzbee.entity.role.Role;
@@ -29,10 +27,6 @@ import io.nzbee.security.user.User;
 @Table(name = "party", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="pty_typ_id")
-@JsonTypeInfo(
-	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
-	    include = JsonTypeInfo.As.PROPERTY,
-	    property = "@class")
 public abstract class Party {
 	
 	@Id
@@ -53,14 +47,12 @@ public abstract class Party {
 				cascade = CascadeType.ALL,
 				orphanRemoval = true
 			  )
-	@JsonManagedReference
 	private Set<Role> partyRoles = new HashSet<Role>();
 	
 	@OneToOne(	mappedBy="userParty", 
 				fetch = FetchType.LAZY, 
 				cascade = CascadeType.ALL,
 				optional = false)
-	@JsonManagedReference
     private User partyUser;
 	
 	

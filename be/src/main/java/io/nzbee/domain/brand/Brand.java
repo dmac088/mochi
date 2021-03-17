@@ -3,13 +3,10 @@ package io.nzbee.domain.brand;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.product.Product;
 
-@JsonTypeName("brand")
 public class Brand implements ILocalizedDomainObject {
 
 	private String brandCode;
@@ -20,10 +17,8 @@ public class Brand implements ILocalizedDomainObject {
 	
 	private Long objectCount;
 	
-	@JsonIgnore
 	private List<Product> products;
 	
-	@JsonIgnore
 	private List<BrandCategory> categories;
 	
 	public Brand(String brandCode,
@@ -69,6 +64,10 @@ public class Brand implements ILocalizedDomainObject {
 		return this.locale;
 	}
 	
+	public List<BrandCategory> getCategories() {
+		return categories;
+	}
+
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;

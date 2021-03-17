@@ -15,8 +15,6 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
 import io.nzbee.entity.party.Party;
 
@@ -25,10 +23,6 @@ import io.nzbee.entity.party.Party;
 @Table(name = "role", schema = "mochi") 
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="rle_typ_id")
-@JsonTypeInfo(
-	    use = JsonTypeInfo.Id.MINIMAL_CLASS,
-	    include = JsonTypeInfo.As.PROPERTY,
-	    property = "@class")
 public abstract class Role {
 
 	@Id
@@ -46,7 +40,6 @@ public abstract class Role {
 			    insertable = false)
 	private RoleType roleType;
 
-	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL, optional=false)
 	@JoinColumn(name="pty_id", nullable=false)
 	private Party roleParty;

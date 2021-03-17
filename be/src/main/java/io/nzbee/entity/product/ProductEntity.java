@@ -52,7 +52,6 @@ import org.hibernate.search.annotations.SortableField;
 import org.hibernate.search.annotations.Store;
 import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.category.product.CategoryProductEntity;
@@ -224,7 +223,6 @@ public abstract class ProductEntity implements Serializable {
 	Set<ProductPriceEntity> prices = new HashSet<ProductPriceEntity>();
 
 	@ManyToMany(mappedBy = "products")
-    @JsonIgnore
     private Set<PromotionEntity> promotions = new HashSet<PromotionEntity>();
 	
 	@Transient

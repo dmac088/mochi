@@ -3,13 +3,9 @@ package io.nzbee.domain.tag;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.product.Product;
 
-@JsonTypeName("tag")
 public class Tag implements ILocalizedDomainObject {
 
 	private String tagCode;
@@ -20,7 +16,6 @@ public class Tag implements ILocalizedDomainObject {
 	
 	private Long objectCount;
 
-	@JsonIgnore
 	private List<Product> products;
 
 	public Tag(	String tagCode,

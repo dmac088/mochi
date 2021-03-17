@@ -11,8 +11,6 @@ import javax.persistence.OrderBy;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.JoinColumn;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.product.CategoryProductEntity;
@@ -20,7 +18,6 @@ import io.nzbee.entity.category.product.CategoryProductEntity;
 @Entity
 @Table(name = "category_brand", schema = "mochi")
 @DiscriminatorValue("2")
-@JsonTypeName("categorybrand")
 public class CategoryBrandEntity extends CategoryEntity {
 
 	private static final long serialVersionUID = 7221370251309880198L;
@@ -31,7 +28,6 @@ public class CategoryBrandEntity extends CategoryEntity {
     		   joinColumns 			= @JoinColumn(name = "cat_id"), 
     		   inverseJoinColumns 	= @JoinColumn(name = "bnd_id"))
     @OrderBy
-    @JsonIgnore
     private Set<BrandEntity> brands;
 	
 	@Transient
@@ -62,7 +58,6 @@ public class CategoryBrandEntity extends CategoryEntity {
 	}
 
 	@Override
-	@JsonIgnore
 	public String getType() {
 		return this.getClass().getSimpleName().toLowerCase();
 	}

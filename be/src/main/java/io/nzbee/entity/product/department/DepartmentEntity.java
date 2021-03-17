@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,15 +13,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.annotations.NaturalId;
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Facet;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 
@@ -47,7 +43,6 @@ public class DepartmentEntity implements Serializable {
 	@OneToMany(	mappedBy="department",  
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
-	@JsonManagedReference
 	private List<DepartmentAttribute> attributes = new ArrayList<DepartmentAttribute>();
 
 	@Transient
