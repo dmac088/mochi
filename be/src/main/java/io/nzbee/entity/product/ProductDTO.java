@@ -36,6 +36,8 @@ public abstract class ProductDTO implements Serializable {
     
     public static final String CURRENCY_ALIAS = "ccy_cd";
     
+    public static final String LOCALE_ALIAS = "lcl_cd";
+    
     public static final String HEIGHT_ALIAS = "height";
     
     public static final String WIDTH_ALIAS = "width";
@@ -112,6 +114,7 @@ public abstract class ProductDTO implements Serializable {
 			  : tuple[aliasToIndexMap.get(IMAGE_ALIAS)].toString();
 		this.productStatusCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.currency				= tuple[aliasToIndexMap.get(CURRENCY_ALIAS)].toString();
+		this.locale					= tuple[aliasToIndexMap.get(LOCALE_ALIAS)].toString();
 		this.retailPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(RETAIL_PRICE_ALIAS)]).doubleValue();
 		this.markdownPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(MARKDOWN_PRICE_ALIAS)]).doubleValue();
 		
