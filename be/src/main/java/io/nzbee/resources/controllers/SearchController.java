@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.resources.product.ProductResource;
+import io.nzbee.resources.product.ProductResourceAssembler;
 import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.resources.product.physical.ProductLightResourceAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
@@ -26,6 +28,7 @@ import io.nzbee.resources.search.SearchFacetResourceAssembler;
 import io.nzbee.resources.search.SearchResultResource;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.product.physical.IPhysicalProductDTOLightMapper;
+import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")
@@ -34,16 +37,16 @@ public class SearchController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private IPhysicalProductDTOLightMapper productDTOLightMapper;
+	private IPhysicalProductDTOMapper productDTOMapper;
 	
 	@Autowired
     private IProductPortService productService;
 	
 	@Autowired
-    private ProductLightResourceAssembler prodLightResourceAssembler;
+    private ProductResourceAssembler prodResourceAssembler;
 	
 	@Autowired
-    private PagedResourcesAssembler<ProductLightResource> prodPagedAssembler;
+    private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
 	
 	@Autowired
 	private SearchFacetResourceAssembler searchFacetResourceAssembler;
@@ -69,7 +72,7 @@ public class SearchController {
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
     	//get the resulting pages of product
-    	final Page<ProductLightResource> pages = ipps.search(locale, 
+    	final Page<ProductResource> pages = ipps.search(locale, 
 		    												currency,
 		    												category, 
 		    												Integer.parseInt(page), 
@@ -77,7 +80,7 @@ public class SearchController {
 		    												sort,
 		    												term, 
 		    												selectedFacets,
-		    												returnFacets).map(p -> prodLightResourceAssembler.toModel(productDTOLightMapper.doToDto(p)));
+		    												returnFacets).map(p -> prodResourceAssembler.toModel(productDTOMapper.doToDto(p)));
     	
     	Set<SearchFacetResource> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
     	
