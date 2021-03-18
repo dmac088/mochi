@@ -35,6 +35,11 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public List<ShippingDestinationDTO> findAllActive(String locale) {
+		return shippingDestinationRepository.findAllActive(locale);
+	}
 
 	@Override
 	public Optional<ShippingDestinationDTO> findById(String locale, Long id) {

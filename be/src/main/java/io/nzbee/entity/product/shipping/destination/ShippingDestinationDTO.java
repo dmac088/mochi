@@ -27,8 +27,6 @@ public class ShippingDestinationDTO implements Serializable {
 	
 	private String shippingDestinationDesc;
 	
-	private Boolean shippingDestinationAct;
-	
 	private String locale;
     
 	public ShippingDestinationDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
@@ -36,7 +34,6 @@ public class ShippingDestinationDTO implements Serializable {
 		this.shippingDestinationCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.shippingDestinationZoneCode 	= tuple[aliasToIndexMap.get(ZONE_ALIAS)].toString();
 		this.shippingDestinationDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
-		this.shippingDestinationAct			= tuple[aliasToIndexMap.get(ACTIVE_ALIAS)].toString().equals("Y");
 		this.locale							= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 	}
 	
@@ -66,10 +63,6 @@ public class ShippingDestinationDTO implements Serializable {
 
 	public String getShippingDestinationDesc() {
 		return shippingDestinationDesc;
-	}
-
-	public Boolean getShippingDestinationAct() {
-		return shippingDestinationAct;
 	}
 
 	public String getLocale() {
