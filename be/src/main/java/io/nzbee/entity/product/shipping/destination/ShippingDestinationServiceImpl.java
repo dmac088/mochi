@@ -20,7 +20,7 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 	
 	@Override
 	public List<ShippingDestinationDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 

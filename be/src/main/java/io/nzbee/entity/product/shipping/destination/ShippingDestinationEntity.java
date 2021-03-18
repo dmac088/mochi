@@ -36,6 +36,9 @@ public class ShippingDestinationEntity implements Serializable {
 	@Column(name="shp_zne_cd")
 	private String shippingDestinationZoneCode;
 	
+	@Column(name="shp_dst_act")
+	private Boolean shippingDestinationActive;
+	
 	@OneToMany(	mappedBy="shippingDestination",  
 			cascade = CascadeType.ALL,
 			orphanRemoval = true)
@@ -83,6 +86,14 @@ public class ShippingDestinationEntity implements Serializable {
 
 	public void setAttributes(List<ShippingDestinationAttributeEntity> attributes) {
 		this.attributes = attributes;
+	}
+
+	public Boolean getShippingDestinationActive() {
+		return shippingDestinationActive;
+	}
+
+	public void setShippingDestinationActive(Boolean shippingDestinationActive) {
+		this.shippingDestinationActive = shippingDestinationActive;
 	}
 
 }
