@@ -28,8 +28,12 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.physical.IPhysicalProductService;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.IShippingProductService;
+import io.nzbee.entity.brand.BrandDTO;
+import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
 import io.nzbee.entity.product.shipping.type.IShippingTypeService;
+import io.nzbee.resources.brand.BrandResource;
+import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.resources.dto.BrowseProductResultDto;
 import io.nzbee.resources.dto.BrowseShippingProductResultDto;
 import io.nzbee.resources.product.ProductResource;
@@ -45,6 +49,7 @@ import io.nzbee.resources.product.shipping.type.ShippingTypeResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.product.IProductDTOMapper;
 import io.nzbee.view.product.ProductDTO;
+import io.nzbee.view.product.brand.IBrandDTOMapper;
 import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
 import io.nzbee.view.product.shipping.IShippingProductDTOMapper;
 import io.nzbee.view.product.shipping.ShippingProductDTO;
@@ -75,6 +80,12 @@ public class ProductController {
     private IShippingTypeService shippingTypeService;
     
     @Autowired
+    private IBrandService brandService;
+    
+    @Autowired
+    private IBrandDTOMapper brandDTOMapper;
+    
+    @Autowired
     private IProductDTOMapper productDTOMapper;
     
     @Autowired
@@ -100,6 +111,9 @@ public class ProductController {
     
     @Autowired
     private ProductResourceAssembler prodResourceAssembler;
+    
+    @Autowired
+    private BrandResourceAssembler brandResourceAssembler;
     
     @Autowired
     private PhysicalProductResourceAssembler prodFullResourceAssembler;
@@ -228,7 +242,7 @@ public class ProductController {
     }
 	
 	@GetMapping(value = "/Product/Shipping/Brand/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingBrand(	@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<BrandResource>> getShippingBrand(	@PathVariable String locale, 
 																							@PathVariable String currency, 
 																							@PathVariable String categoryCode,
 																							@RequestParam(value = "page", defaultValue = "0") String page,
@@ -237,12 +251,12 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final List<ShippingTypeDTO> sp = shippingTypeService.findAll(locale) 
-															.stream().map(d -> shippingTypeDTOMapper.doToDto(d))
-															.collect(Collectors.toList());
+    	final List<BrandDTO> sp = brandService.findAll(locale) 
+											  .stream().map(d -> brandDTOMapper.doToDto(d))
+											  .collect(Collectors.toList());
     	
     	
-    	return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
+    	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(sp));
     }
 	
     
