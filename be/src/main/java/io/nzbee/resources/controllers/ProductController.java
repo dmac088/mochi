@@ -2,6 +2,7 @@ package io.nzbee.resources.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -27,6 +28,7 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.physical.IPhysicalProductService;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.IShippingProductService;
+import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
 import io.nzbee.resources.dto.BrowseProductResultDto;
 import io.nzbee.resources.dto.BrowseShippingProductResultDto;
 import io.nzbee.resources.product.ProductResource;
@@ -35,12 +37,16 @@ import io.nzbee.resources.product.physical.PhysicalProductResource;
 import io.nzbee.resources.product.physical.PhysicalProductResourceAssembler;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.resources.product.shipping.ShippingProductResourceAssembler;
+import io.nzbee.resources.product.shipping.destination.ShippingDestinationResource;
+import io.nzbee.resources.product.shipping.destination.ShippingDestinationResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.product.IProductDTOMapper;
 import io.nzbee.view.product.ProductDTO;
 import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
 import io.nzbee.view.product.shipping.IShippingProductDTOMapper;
 import io.nzbee.view.product.shipping.ShippingProductDTO;
+import io.nzbee.view.product.shipping.destination.IShippingDestinationDTOMapper;
+import io.nzbee.view.product.shipping.destination.ShippingDestinationDTO;
 
 @RestController
 @RequestMapping("/api")
@@ -58,6 +64,9 @@ public class ProductController {
     private IShippingProductService shippingProductService;
     
     @Autowired
+    private IShippingDestinationService shippingDestinationService;
+    
+    @Autowired
     private IProductDTOMapper productDTOMapper;
     
     @Autowired
@@ -65,6 +74,12 @@ public class ProductController {
     
     @Autowired
     private IShippingProductDTOMapper shippingDTOMapper;
+    
+    @Autowired
+    private IShippingDestinationDTOMapper shippingDestinationDTOMapper;
+    
+    @Autowired
+    private ShippingDestinationResourceAssembler shippingDestinationResourceAssembler;
     
     @Autowired
     private ShippingProductResourceAssembler shippingProductResourceAssembler;
@@ -159,6 +174,24 @@ public class ProductController {
     	final Page<ShippingProductResource> pages = sp.map(p -> shippingProductResourceAssembler.toModel(p));
     			
     	return ResponseEntity.ok(new BrowseShippingProductResultDto(shippingProductPagedAssembler.toModel(pages)));
+    }
+	
+	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/category/{categoryCode}")
+    public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingProductDestination(	@PathVariable String locale, 
+																							@PathVariable String currency, 
+																							@PathVariable String categoryCode,
+																							@RequestParam(value = "page", defaultValue = "0") String page,
+																							@RequestParam(value = "size", defaultValue = "10") String size,
+																							@RequestParam(value = "sort", defaultValue = "10") String sort) {
+    	
+    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	
+    	final List<ShippingDestinationDTO> sp = shippingDestinationService.findAllActive(locale) 
+															.stream().map(d -> shippingDestinationDTOMapper.doToDto(d))
+															.collect(Collectors.toList());
+    	
+    	
+    	return ResponseEntity.ok(shippingDestinationResourceAssembler.toCollectionModel(sp));
     }
 	
     

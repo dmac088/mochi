@@ -2657,7 +2657,6 @@ SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
 -- Data for Name: shipping_destination; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO shipping_destination VALUES (234905, 'HKHK6', 'HK', 'LOCAL (HONG KONG)', 'HK', 'Y');
 INSERT INTO shipping_destination VALUES (1402669, 'HKHK1', 'HK', 'LOCAL (HONG KONG)', 'HK', 'Y');
 INSERT INTO shipping_destination VALUES (234899, 'GWGW4', 'GW', 'GUINEA-BISSAU', 'GW', 'N');
 INSERT INTO shipping_destination VALUES (1402459, 'BJBJ1', 'BJ', 'BENIN', 'BJ', 'N');
@@ -3802,8 +3801,6 @@ INSERT INTO shipping_destination_attr_lcl VALUES (234900, 234899, 'GUINEA-BISSAU
 INSERT INTO shipping_destination_attr_lcl VALUES (234901, 234899, '幾內亞比紹', 'zh-HK');
 INSERT INTO shipping_destination_attr_lcl VALUES (234903, 234902, 'GUYANA', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234904, 234902, '圭亞那', 'zh-HK');
-INSERT INTO shipping_destination_attr_lcl VALUES (234906, 234905, 'LOCAL (HONG KONG)', 'en-GB');
-INSERT INTO shipping_destination_attr_lcl VALUES (234907, 234905, '本地（香港）', 'zh-HK');
 INSERT INTO shipping_destination_attr_lcl VALUES (234909, 234908, 'HONDURAS (REP.)', 'en-GB');
 INSERT INTO shipping_destination_attr_lcl VALUES (234910, 234908, '洪都拉斯(共和國)', 'zh-HK');
 INSERT INTO shipping_destination_attr_lcl VALUES (234912, 234911, 'HONDURAS (REPUBLIC OF)', 'en-GB');
