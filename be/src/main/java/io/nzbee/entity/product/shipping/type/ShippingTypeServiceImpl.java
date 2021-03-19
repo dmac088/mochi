@@ -17,8 +17,7 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 	
 	@Override
 	public List<ShippingTypeDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
+		return shippingTypeRepository.findAll(locale);
 	}
 
 	@Override
