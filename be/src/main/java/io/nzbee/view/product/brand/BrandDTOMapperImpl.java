@@ -20,6 +20,4 @@ public class BrandDTOMapperImpl implements IBrandDTOMapper {
 		return null;
 	}
 
-	
-
 }
