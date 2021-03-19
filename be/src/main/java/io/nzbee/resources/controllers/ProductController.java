@@ -227,6 +227,24 @@ public class ProductController {
     	return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
     }
 	
+	@GetMapping(value = "/Product/Shipping/Brand/{locale}/{currency}/category/{categoryCode}")
+    public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingBrand(	@PathVariable String locale, 
+																							@PathVariable String currency, 
+																							@PathVariable String categoryCode,
+																							@RequestParam(value = "page", defaultValue = "0") String page,
+																							@RequestParam(value = "size", defaultValue = "10") String size,
+																							@RequestParam(value = "sort", defaultValue = "10") String sort) {
+    	
+    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	
+    	final List<ShippingTypeDTO> sp = shippingTypeService.findAll(locale) 
+															.stream().map(d -> shippingTypeDTOMapper.doToDto(d))
+															.collect(Collectors.toList());
+    	
+    	
+    	return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
+    }
+	
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
     public ResponseEntity<PhysicalProductResource> get(	@PathVariable String locale, 
