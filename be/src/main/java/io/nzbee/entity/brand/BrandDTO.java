@@ -39,6 +39,16 @@ public class BrandDTO implements ISearchDimension, Serializable {
 						  : new Long(0);
 	}
 
+	public BrandDTO(Long brandId, String brandCode, String brandDesc, String locale) {
+		super();
+		this.brandId = brandId;
+		this.brandCode = brandCode;
+		this.brandDesc = brandDesc;
+		this.locale = locale;
+	}
+
+
+
 	public static String getIdAlias() {
 		return ID_ALIAS;
 	}

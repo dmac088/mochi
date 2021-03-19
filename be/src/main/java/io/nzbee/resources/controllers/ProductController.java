@@ -28,8 +28,7 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.physical.IPhysicalProductService;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.IShippingProductService;
-import io.nzbee.entity.brand.BrandDTO;
-import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
 import io.nzbee.entity.product.shipping.type.IShippingTypeService;
 import io.nzbee.resources.brand.BrandResource;
@@ -49,6 +48,7 @@ import io.nzbee.resources.product.shipping.type.ShippingTypeResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.product.IProductDTOMapper;
 import io.nzbee.view.product.ProductDTO;
+import io.nzbee.view.product.brand.BrandDTO;
 import io.nzbee.view.product.brand.IBrandDTOMapper;
 import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
 import io.nzbee.view.product.shipping.IShippingProductDTOMapper;
@@ -251,12 +251,12 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final List<BrandDTO> sp = brandService.findAll(locale) 
-											  .stream().map(d -> brandDTOMapper.doToDto(d))
-											  .collect(Collectors.toList());
+    	final List<BrandDTO> lb = brandService.findAll(locale)
+    							  .stream()
+    							  .map(b -> brandDTOMapper.doToDto(b))
+    							  .collect(Collectors.toList());
     	
-    	
-    	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(sp));
+    	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(lb));
     }
 	
     

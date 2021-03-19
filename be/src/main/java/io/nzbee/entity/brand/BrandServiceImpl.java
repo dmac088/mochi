@@ -21,7 +21,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Autowired
 	private IBrandDao brandDao; 
 	
-	@Autowired
+	@Autowired 
 	private IBrandRepository brandRepository;
 
 	@Override
@@ -60,7 +60,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<BrandDTO> findAll(String locale) {
-		return brandDao.findAll(locale);
+		return brandRepository.findAll(locale);
 	}
 	
 	@Override
