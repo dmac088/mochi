@@ -11,6 +11,7 @@ public class BrandDTOMapperImpl implements IBrandDTOMapper {
 		io.nzbee.view.product.brand.BrandDTO sp = new io.nzbee.view.product.brand.BrandDTO();
 		sp.setBrandCode(d.getBrandCode());
 		sp.setBrandDesc(d.getBrandDesc());
+		sp.setLocale(d.getLocale());
 		return sp;
 	}
 
