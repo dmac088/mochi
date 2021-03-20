@@ -5,8 +5,6 @@ public class BrandDTO {
 	private String brandCode;
 	
 	private String brandDesc;
-	
-	private String locale;
 
 	public String getBrandCode() {
 		return brandCode;
@@ -22,14 +20,6 @@ public class BrandDTO {
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
-	}
-
-	public String getLocale() {
-		return locale;
-	}
-
-	public void setLocale(String locale) {
-		this.locale = locale;
 	}
 
 }
