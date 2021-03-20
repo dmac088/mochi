@@ -396,7 +396,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@SuppressWarnings({"deprecation","unchecked", "hiding"})
 	@Override
 	@Caching(
-			put = {
+			put = {															   
 					@CachePut(value = ProductServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #cls.getSimpleName() + \", \" + #size.toString() + \", \" + #sort.toString()")
 			}
 	)
