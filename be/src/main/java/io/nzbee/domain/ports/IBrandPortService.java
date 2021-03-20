@@ -11,5 +11,7 @@ public interface IBrandPortService extends IProductDimensionService<Brand> {
 
 	List<Brand> findAll(String locale, String rootCategory, String category);
 
+	List<Brand> findAllByProductType(String locale, Class<?> cls);
+
 
 }

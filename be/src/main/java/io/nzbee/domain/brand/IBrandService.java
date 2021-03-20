@@ -12,5 +12,7 @@ public interface IBrandService extends ILocalizedService<Brand> {
 	Brand findByCode(String locale, String brandCode);
 
 	Brand findByProductCode(String locale, String productCode);
+
+	List<Brand> findByAllProductType(String locale, Class<?> cls);
 	
 }

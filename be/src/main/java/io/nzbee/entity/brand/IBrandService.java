@@ -18,4 +18,6 @@ public interface IBrandService extends ILocalizedService<BrandDTO, BrandEntity>,
 
 	Optional<BrandDTO> findByDesc(String locale, String rootCategory, String desc);
 
+	List<BrandDTO> findAllByProductType(String locale, Class<?> cls);
+
 }

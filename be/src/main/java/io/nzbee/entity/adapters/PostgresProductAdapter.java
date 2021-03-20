@@ -134,13 +134,22 @@ public class PostgresProductAdapter implements IProductPortService {
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
 	}
 	
-	private Class<?> mapDomainClassToEntityClass(Class<?> cls) {
+	public static Class<?> mapDomainClassToEntityClass(Class<?> cls) {
 		if(cls.equals(PhysicalProduct.class)) {
 			return PhysicalProductEntity.class;
 		} else if (cls.equals(ShippingProduct.class)) {
 			return ShippingProductEntity.class;
 		}
 		return PhysicalProductEntity.class;
+	}
+	
+	public static Class<?> mapDomainClassToDTOClass(Class<?> cls) {
+		if(cls.equals(PhysicalProduct.class)) {
+			return PhysicalProductDTO.class;
+		} else if (cls.equals(ShippingProduct.class)) {
+			return ShippingProductDTO.class;
+		}
+		return PhysicalProductDTO.class;
 	}
 
 	@Override

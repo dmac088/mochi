@@ -28,6 +28,7 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.physical.IPhysicalProductService;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.IShippingProductService;
+import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
 import io.nzbee.entity.product.shipping.type.IShippingTypeService;
@@ -251,7 +252,7 @@ public class ProductController {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
     	
-    	final List<BrandDTO> lb = brandService.findAll(locale)
+    	final List<BrandDTO> lb = brandService.findByAllProductType(locale, ShippingProduct.class)
     							  .stream()
     							  .map(b -> brandDTOMapper.doToDto(b))
     							  .collect(Collectors.toList());

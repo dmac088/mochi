@@ -26,6 +26,13 @@ public class PostgresBrandAdapter implements IBrandPortService {
 		return brandService.findAll(locale)
 				.stream().map(b -> this.DTOToDo(b)).collect(Collectors.toList());
 	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Brand> findAllByProductType(String locale, Class<?> cls) {
+		return brandService.findAllByProductType(locale, PostgresProductAdapter.mapDomainClassToDTOClass(cls))
+				.stream().map(b -> this.DTOToDo(b)).collect(Collectors.toList());
+	}
 
 	@Override
 	@Transactional(readOnly = true)

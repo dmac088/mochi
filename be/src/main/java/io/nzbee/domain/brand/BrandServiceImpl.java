@@ -22,6 +22,11 @@ public class BrandServiceImpl implements IBrandService {
     @Override
 	public List<Brand> findAll(String locale) {
     	return brandService.findAll(locale);
+	}
+    
+    @Override
+	public List<Brand> findByAllProductType(String locale, Class<?> cls) {
+    	return brandService.findAllByProductType(locale, cls);
 	}	
     
     @Override
