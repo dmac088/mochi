@@ -64,6 +64,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	}
 	
 	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #cls.getSimpleName()")
 	public List<BrandDTO> findAllByProductType(String locale, Class<?> cls) {
 		return brandRepository.findAllByProductType(locale, cls.getSimpleName());
 	}
