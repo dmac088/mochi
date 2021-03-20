@@ -65,7 +65,6 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	
 	@Override
 	public List<BrandDTO> findAllByProductType(String locale, Class<?> cls) {
-		System.out.println(cls.getSimpleName());
 		return brandRepository.findAllByProductType(locale, cls.getSimpleName());
 	}
 	
