@@ -184,12 +184,12 @@ public class PromotionEntity implements Serializable {
 	}
 	
 	public void addProduct(ProductEntity product) {
-		this.getProducts().add(product);
+		this.products.add(product);
 		product.getPromotions().add(this);
 	}
 	
 	public void removeProduct(ProductEntity product) {
-		this.getProducts().remove(product);
+		this.products.remove(product);
 		product.removePromotion(this);
 	}
 

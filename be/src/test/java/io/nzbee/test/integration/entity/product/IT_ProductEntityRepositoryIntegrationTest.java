@@ -55,7 +55,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     @Autowired
     private IProductService productService;
 
-    
     @Autowired
     @Qualifier("mochiDataSourceOwner")
     private DataSource database;
