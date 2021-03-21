@@ -235,7 +235,7 @@ public class IT_ProductCacheIntegrationTest {
 	
 	@Test
 	@Rollback(false)
-    public void whenFindDTOByBrowseCriteria_thenReturnCurrectBrowseResultFromCache() {
+    public void whenFindDTOByBrowseCriteriaWithoutClass_thenReturnCurrectBrowseResultFromCache() {
 		
 		productService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
@@ -275,7 +275,7 @@ public class IT_ProductCacheIntegrationTest {
 	
 	@Test
 	@Rollback(false)
-    public void whenFindDTOByBrowseCriteriaForVeg_thenReturnCurrectBrowseResultFromCache() {
+    public void whenFindDTOByBrowseCriteriaWithoutClassForVeg_thenReturnCurrectBrowseResultFromCache() {
 		
 		String cc = "VEG01";
 		
@@ -304,6 +304,52 @@ public class IT_ProductCacheIntegrationTest {
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
 	    			 "" + ", " + 
+					 "0" + ", " +
+					 "10" + ", " + 
+					 "nameAsc";
+	    
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+    	
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
+	    assertThat(((PageImpl) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    
+	}
+	
+	
+	@Test
+	@Rollback(false)
+    public void whenFindDTOByBrowseCriteriaWithClassForVeg_thenReturnCurrectBrowseResultFromCache() {
+		
+		String cc = "VEG01";
+		
+		productService.findAll(	Constants.localeENGB, 
+								Constants.currencyHKD, 
+								cc, 
+								new StringCollectionWrapper(new HashSet<String>()),  
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								null, 
+								PhysicalProductEntity.class,
+								"0", 
+								"10", 
+								"nameAsc");
+		
+		// then
+	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+		
+	    assertNotNull(cache);
+    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    
+	    String key = Constants.localeENGB + ", " + 
+	    			 Constants.currencyHKD + ", " + 
+	    			 cc + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 "" + ", " + 
+	    			 PhysicalProductEntity.class.getSimpleName() + ", " +
 					 "0" + ", " +
 					 "10" + ", " + 
 					 "nameAsc";
