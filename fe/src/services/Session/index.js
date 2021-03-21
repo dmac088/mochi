@@ -84,6 +84,6 @@ export const authenticate = (discovery, username, password) => {
       //clear tokens from local storage
       localStorageService.clearToken();
       //clear session state in redux
-      dispatch(clearSession());
+      return dispatch(clearSession());
     }
   }

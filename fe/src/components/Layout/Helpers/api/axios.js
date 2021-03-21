@@ -120,7 +120,10 @@ instance.interceptors.response.use((response) => {
 
         if (!refreshToken) {
             console.log("No refresh token found in session state, redirecting to login...");
-            history.push(getAccountPath(match));
+            store.dispatch(logoutSession())
+                .then(() => {
+                    history.push(getAccountPath(match));
+                });
             return Promise.reject(error);
         }
 

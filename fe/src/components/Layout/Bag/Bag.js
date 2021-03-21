@@ -1,4 +1,5 @@
 import React from 'react';
+import Shipping from './Shipping';
 import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
 import { useDispatch } from 'react-redux';
@@ -62,7 +63,6 @@ function Bag() {
           });
       }
 
-      console.log(bag);
     return (
         <React.Fragment>
             {(bagContents.loading) 
@@ -93,37 +93,7 @@ function Bag() {
                             </form>
                             <div className="row">
                                 <div className="col-lg-6 col-12">
-                                    <div className="calculate-shipping">
-                                        <h4>Calculate Shipping</h4>
-                                        <form action="#">
-                                            <div className="row">
-                                                <div className="col-md-6 col-12 mb-25">
-                                                    <select className="nice-select">
-                                                        <option>Bangladesh</option>
-                                                        <option>China</option>
-                                                        <option>country</option>
-                                                        <option>India</option>
-                                                        <option>Japan</option>
-                                                    </select>
-                                                </div>
-                                                <div className="col-md-6 col-12 mb-25">
-                                                    <select className="nice-select">
-                                                        <option>Dhaka</option>
-                                                        <option>Barisal</option>
-                                                        <option>Khulna</option>
-                                                        <option>Comilla</option>
-                                                        <option>Chittagong</option>
-                                                    </select>
-                                                </div>
-                                                <div className="col-md-6 col-12 mb-25">
-                                                    <input type="text" placeholder="Postcode / Zip" />
-                                                </div>
-                                                <div className="col-md-6 col-12 mb-25">
-                                                    <input type="submit" defaultValue="Estimate" />
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    <Shipping />
                                     <div className="discount-coupon">
                                         <h4>Discount Coupon Code</h4>
                                         <form action="#">
