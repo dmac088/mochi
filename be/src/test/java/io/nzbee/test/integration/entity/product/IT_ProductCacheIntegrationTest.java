@@ -34,6 +34,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.ProductServiceImpl;
+import io.nzbee.entity.product.physical.IPhysicalProductService;
 import io.nzbee.entity.product.physical.PhysicalProductDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.StringCollectionWrapper;
@@ -66,6 +67,9 @@ public class IT_ProductCacheIntegrationTest {
  
     @Autowired
     private IProductService productService;
+    
+    @Autowired
+    private IPhysicalProductService physicalProductService;
     
     @Autowired
     @Qualifier("mochiDataSourceOwner")
@@ -193,7 +197,7 @@ public class IT_ProductCacheIntegrationTest {
 	
 	@Test
 	@Rollback(false)
-    public void whenFindDTOByBrowseCriteriaWithClass_thenReturnCurrectBrowseResultFromCache() {
+    public void whenFindProductDTOByBrowseCriteriaWithClass_thenReturnCurrectBrowseResultFromCache() {
 		
 		productService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
@@ -235,7 +239,7 @@ public class IT_ProductCacheIntegrationTest {
 	
 	@Test
 	@Rollback(false)
-    public void whenFindDTOByBrowseCriteriaWithoutClass_thenReturnCurrectBrowseResultFromCache() {
+    public void whenFindProductDTOByBrowseCriteriaWithoutClass_thenReturnCurrectBrowseResultFromCache() {
 		
 		productService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
@@ -266,6 +270,8 @@ public class IT_ProductCacheIntegrationTest {
 					 "10" + ", " + 
 					 "nameAsc";
 	    
+	    
+	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
 	    assertNotNull(ob.get());
@@ -273,9 +279,10 @@ public class IT_ProductCacheIntegrationTest {
 	    
 	}
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback(false)
-    public void whenFindDTOByBrowseCriteriaWithoutClassForVeg_thenReturnCurrectBrowseResultFromCache() {
+    public void whenFindProductDTOByBrowseCriteriaWithoutClassForVeg_thenReturnCurrectBrowseResultFromCache() {
 		
 		String cc = "VEG01";
 		
@@ -312,14 +319,15 @@ public class IT_ProductCacheIntegrationTest {
     	
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
-	    assertThat(((PageImpl) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    assertThat(((PageImpl<PhysicalProductDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
 	    
 	}
 	
 	
+	@SuppressWarnings("unchecked")
 	@Test
 	@Rollback(false)
-    public void whenFindDTOByBrowseCriteriaWithClassForVeg_thenReturnCurrectBrowseResultFromCache() {
+    public void whenFindProductDTOByBrowseCriteriaWithClassForVeg_thenReturnCurrectBrowseResultFromCache() {
 		
 		String cc = "VEG01";
 		
@@ -355,10 +363,56 @@ public class IT_ProductCacheIntegrationTest {
 					 "nameAsc";
 	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
-    	
+	    
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
-	    assertThat(((PageImpl) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    assertThat(((PageImpl<PhysicalProductDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    
+	}
+	
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	@Rollback(false)
+    public void whenFindPhysicalProductDTOByBrowseCriteriaWithoutClassForVeg_thenReturnCurrectBrowseResultFromCache() {
+		
+		String cc = "VEG01";
+		
+		physicalProductService.findAll(	Constants.localeENGB, 
+								Constants.currencyHKD, 
+								cc, 
+								new StringCollectionWrapper(new HashSet<String>()),  
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								null, 
+								"0", 
+								"10", 
+								"nameAsc");
+		
+		// then
+	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+		
+	    assertNotNull(cache);
+    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    
+	    String key = Constants.localeENGB + ", " + 
+	    			 Constants.currencyHKD + ", " + 
+	    			 cc + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 "" + ", " + 
+	    			 PhysicalProductEntity.class.getSimpleName() + ", " +
+					 "0" + ", " +
+					 "10" + ", " + 
+					 "nameAsc";
+	    
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+	    
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
+	    assertThat(((PageImpl<PhysicalProductDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
 	    
 	}
 

@@ -403,17 +403,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public <T> Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, Class<T> cls, String page, String size, String sort) {
 		
-		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: locale = {}, "
-				+ "														   currency = {}, "
-				+ "														   category code = {}, "
-				+ "														   category codes = {},	"
-				+ "														   brand codes = {},	"
-				+ "														   tag codes = {},	"
-				+ "														   max price = {},	"
-				+ "														   type = {},	"
-				+ "														   page = {},	"
-				+ "														   size = {},	"
-				+ "														   sort = {},	",
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
 																							 locale, 
 																							 currency, 
 																							 categoryCode, 
@@ -530,16 +520,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	public Page<ProductDTO> findAll(String locale, String currency, String categoryCode,
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
 			Double maxPrice, String page, String size, String sort) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: locale = {}, "
-				+ "														   currency = {}, "
-				+ "														   category code = {}, "
-				+ "														   category codes = {},	"
-				+ "														   brand codes = {},	"
-				+ "														   tag codes = {},	"
-				+ "														   max price = {},	"
-				+ "														   page = {},	"
-				+ "														   size = {},	"
-				+ "														   sort = {},	",
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
 																							 locale, 
 																							 currency, 
 																							 categoryCode, 
