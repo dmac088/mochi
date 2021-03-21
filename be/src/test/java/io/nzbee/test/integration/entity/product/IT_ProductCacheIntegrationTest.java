@@ -4,6 +4,10 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.junit.Before;
@@ -21,6 +25,7 @@ import org.springframework.cache.jcache.JCacheCache;
 import org.springframework.cache.jcache.JCacheCacheManager;
 import org.springframework.cache.support.SimpleValueWrapper;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.Rollback;
@@ -30,6 +35,8 @@ import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.ProductServiceImpl;
 import io.nzbee.entity.product.physical.PhysicalProductDTO;
+import io.nzbee.entity.product.physical.PhysicalProductEntity;
+import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductEntityBeanFactory;
 
@@ -154,10 +161,78 @@ public class IT_ProductCacheIntegrationTest {
 	
 	@Test
 	@Rollback(false)
+    public void whenFindAllForListOfProductCodes_thenReturnCorrectResultFromCache() {
+		
+		Set<String> ss = new HashSet<String>();
+		
+		ss.add(product.getProductUPC());
+		
+		 // when
+		productService.findAll(Constants.localeENGB, Constants.currencyHKD, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(ss));
+		
+		// then
+	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+		
+		assertNotNull(cache);
+    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + Constants.primaryProductRootCategoryCode + ", " + new StringCollectionWrapper(ss).getCacheKey();
+		
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+    	
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(ArrayList.class.getSimpleName());
+		
+	}
+	
+	@Test
+	@Rollback(false)
+    public void whenFindAllDTOForClassType_thenReturnCorrectResultFromCache() {
+		
+	}
+	
+	@Test
+	@Rollback(false)
     public void whenFindDTOByBrowseCriteria_thenReturnCurrectBrowseResultFromCache() {
 		
+		productService.findAll(	Constants.localeENGB, 
+								Constants.currencyHKD, 
+								Constants.primaryProductRootCategoryCode, 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new Double(1000000), 
+								PhysicalProductEntity.class, 
+								"0", 
+								"10", 
+								"nameAsc");
 		
+		// then
+	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
 		
+	    assertNotNull(cache);
+    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    
+	    String key = Constants.localeENGB + ", " + 
+	    			 Constants.currencyHKD + ", " + 
+	    			 Constants.primaryProductRootCategoryCode + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new Double(1000000)) + ", " + 
+					 PhysicalProductEntity.class.getSimpleName() + ", " +
+					 "0" + ", " +
+					 "10" + ", " + 
+					 "nameAsc";
+	    
+	    //key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #cls.getSimpleName() + \", \" + #size.toString() + \", \" + #sort.toString()")
+	    
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+    	
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
+	    
 	}
 
 }
