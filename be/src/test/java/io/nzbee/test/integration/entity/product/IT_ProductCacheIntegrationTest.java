@@ -193,7 +193,7 @@ public class IT_ProductCacheIntegrationTest {
 	
 	@Test
 	@Rollback(false)
-    public void whenFindDTOByBrowseCriteria_thenReturnCurrectBrowseResultFromCache() {
+    public void whenFindDTOByBrowseCriteriaWithClass_thenReturnCurrectBrowseResultFromCache() {
 		
 		productService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
@@ -201,7 +201,7 @@ public class IT_ProductCacheIntegrationTest {
 								new StringCollectionWrapper(new HashSet<String>()), 
 								new StringCollectionWrapper(new HashSet<String>()), 
 								new StringCollectionWrapper(new HashSet<String>()), 
-								new Double(1000000), 
+								null, 
 								PhysicalProductEntity.class, 
 								"0", 
 								"10", 
@@ -220,18 +220,99 @@ public class IT_ProductCacheIntegrationTest {
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
-	    			 (new Double(1000000)) + ", " + 
+	    			 "" + ", " + 
 					 PhysicalProductEntity.class.getSimpleName() + ", " +
 					 "0" + ", " +
 					 "10" + ", " + 
 					 "nameAsc";
 	    
-	    //key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #cls.getSimpleName() + \", \" + #size.toString() + \", \" + #sort.toString()")
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+    	
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
+	    
+	}
+	
+	@Test
+	@Rollback(false)
+    public void whenFindDTOByBrowseCriteria_thenReturnCurrectBrowseResultFromCache() {
+		
+		productService.findAll(	Constants.localeENGB, 
+								Constants.currencyHKD, 
+								Constants.primaryProductRootCategoryCode, 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								null, 
+								"0", 
+								"10", 
+								"nameAsc");
+		
+		// then
+	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+		
+	    assertNotNull(cache);
+    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    
+	    String key = Constants.localeENGB + ", " + 
+	    			 Constants.currencyHKD + ", " + 
+	    			 Constants.primaryProductRootCategoryCode + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 "" + ", " + 
+					 "0" + ", " +
+					 "10" + ", " + 
+					 "nameAsc";
 	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
+	    
+	}
+	
+	@Test
+	@Rollback(false)
+    public void whenFindDTOByBrowseCriteriaForVeg_thenReturnCurrectBrowseResultFromCache() {
+		
+		String cc = "VEG01";
+		
+		productService.findAll(	Constants.localeENGB, 
+								Constants.currencyHKD, 
+								cc, 
+								new StringCollectionWrapper(new HashSet<String>()),  
+								new StringCollectionWrapper(new HashSet<String>()), 
+								new StringCollectionWrapper(new HashSet<String>()), 
+								null, 
+								"0", 
+								"10", 
+								"nameAsc");
+		
+		// then
+	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+		
+	    assertNotNull(cache);
+    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    
+	    String key = Constants.localeENGB + ", " + 
+	    			 Constants.currencyHKD + ", " + 
+	    			 cc + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
+	    			 "" + ", " + 
+					 "0" + ", " +
+					 "10" + ", " + 
+					 "nameAsc";
+	    
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+    	
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
+	    assertThat(((PageImpl) ob.get()).getTotalElements()).isEqualTo(new Long(12));
 	    
 	}
 
