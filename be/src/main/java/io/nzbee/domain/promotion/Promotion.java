@@ -2,6 +2,7 @@ package io.nzbee.domain.promotion;
 
 import java.time.LocalDateTime;
 
+//Anemic
 public class Promotion {
 	
 	private String promotionCode;

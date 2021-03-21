@@ -27,7 +27,6 @@ export const getAddress = (customer, addressTypeCode) => {
 export const updateAddress = (address, payload) => {
     return (dispatch) => {
         dispatch(updateShippingAddressStarted());
-        console.log(address);
         return axios.post(  address._links.updateAddress.href,
                             payload)
         .then((payload) => {

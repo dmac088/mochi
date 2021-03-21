@@ -7,6 +7,8 @@ import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.product.Product;
 
+
+//Anemic
 public class Brand implements ILocalizedDomainObject {
 
 	private String brandCode;

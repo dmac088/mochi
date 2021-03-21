@@ -8,11 +8,7 @@ function Shipping() {
                 <div className="row">
                     <div className="col-md-6 col-12 mb-25">
                         <select className="nice-select">
-                            <option>Bangladesh</option>
-                            <option>China</option>
-                            <option>country</option>
-                            <option>India</option>
-                            <option>Japan</option>
+                            <option>Hong Kong Post</option>
                         </select>
                     </div>
                     <div className="col-md-6 col-12 mb-25">

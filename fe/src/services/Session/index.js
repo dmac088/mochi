@@ -49,7 +49,7 @@ export const authenticate = (discovery, username, password) => {
   
       if (!refreshToken) {
         console.log("No refresh token found in localstorage");
-        return new Promise(function(resolve, reject) { return resolve(); });
+        return new Promise((resolve) => { return resolve(); });
       }
   
       return axios.post(
@@ -80,10 +80,12 @@ export const authenticate = (discovery, username, password) => {
   
   export const logoutSession = () => {
     return (dispatch) => {
-      const localStorageService = LocalStorageService.getService();
-      //clear tokens from local storage
-      localStorageService.clearToken();
-      //clear session state in redux
-      return dispatch(clearSession());
-    }
+      return new Promise((resolve) => {
+        const localStorageService = LocalStorageService.getService();
+        //clear tokens from local storage
+        localStorageService.clearToken();
+        //clear session state in redux
+        resolve(dispatch(clearSession())); 
+      });
+    };
   }

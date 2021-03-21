@@ -99,7 +99,6 @@ function Products(props) {
         let isSubscribed = true;
         const currentCategory = findByCode(categories.list, categoryCode);
         const rootNode = findRootNode(categories.list);
-        console.log(rootNode);
 
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||
@@ -114,7 +113,7 @@ function Products(props) {
                 (type === 'browse') 
                 ? currentCategory._links.products.href
                 : discovery.links.searchProduct.href.replace('{category}', rootNode.data.categoryCode).replace('{q}', query.q),
-                stateObject.selectedFacets.map(f => f.data) )
+                stateObject.selectedFacets.map(f => f.data))
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
