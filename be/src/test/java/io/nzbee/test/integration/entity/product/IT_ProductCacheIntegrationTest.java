@@ -134,7 +134,29 @@ public class IT_ProductCacheIntegrationTest {
 	
 	@Test
 	@Rollback(false)
+    public void whenFindDTOByDescAndLocale_thenReturnProductDTOFromCache() {
+    	
+	    // when
+	    productService.findByDesc(Constants.localeENGB, Constants.currencyHKD, product.getProductDescENGB());
+	     
+	    // then
+	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+	    	
+	    assertNotNull(cache);
+	    	
+	    JCacheCache jCache = (JCacheCache) cache;
+	    String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + product.getProductDescENGB();
+	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+	    	
+	    assertNotNull(ob.get());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDTO.class.getSimpleName());
+    }
+	
+	@Test
+	@Rollback(false)
     public void whenFindDTOByBrowseCriteria_thenReturnCurrectBrowseResultFromCache() {
+		
+		
 		
 	}
 
