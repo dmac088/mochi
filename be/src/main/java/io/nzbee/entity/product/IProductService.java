@@ -14,13 +14,9 @@ public interface IProductService extends ILocalizedService<ProductDTO, ProductEn
 
 	Optional<ProductDTO> findByDesc(String locale, String currency, String desc);
 
-	List<ProductDTO> findAll(String locale, String currency, String rootCategory);
-
 	List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes);
 
 	Optional<ProductEntity> findByCode(String productUPC);
-
-	<T> List<ProductEntity> findAllByType(Class<T> cls);
  
 	void save(String locale, String currency, ProductEntity product);
 

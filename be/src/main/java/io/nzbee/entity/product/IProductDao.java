@@ -15,6 +15,8 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 								Pageable pageable,
 								String orderby);
 
+	Optional<ProductEntity> findByCode(String productUPC);
+	
 	<T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls);
 
 	Optional<ProductDTO> findByCode(String locale, String currency, String code);
@@ -25,11 +27,7 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 
 	List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes);
 
-	Optional<ProductEntity> findByCode(String productUPC);
-
 	Optional<ProductDTO> findById(String locale, String currency, Long productId);
-
-	List<ProductDTO> findAll(String locale, String currency, String rootCategory);
 
 	<T> Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice,

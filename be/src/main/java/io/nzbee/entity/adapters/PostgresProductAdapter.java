@@ -118,13 +118,6 @@ public class PostgresProductAdapter implements IProductPortService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Product> findAll(String locale, String currency) {
-		List<ProductDTO> sp = productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode);
-		return sp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
-	}
-
-	@Override
-	@Transactional(readOnly = true)
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		List<ProductDTO> lp = productService.findAllByType(locale, 
 														   currency, 

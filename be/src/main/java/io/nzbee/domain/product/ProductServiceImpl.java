@@ -25,11 +25,6 @@ public class ProductServiceImpl implements IProductService {
 	}
 
 	@Override
-	public List<Product> findAll(String locale, String currency) {
-		return productService.findAll(locale, currency);
-	}
-	
-	@Override
 	public List<Product> findAll(String locale, String currency, Set<String> codes) {
 		return productService.findAll(locale, currency, codes);	
 	}

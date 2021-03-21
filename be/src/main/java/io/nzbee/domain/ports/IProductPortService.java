@@ -10,8 +10,6 @@ import io.nzbee.search.facet.IFacet;
 
 public interface IProductPortService extends IPortService<Product> {
 
-	List<Product> findAll(String locale, String currency);
-
 	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
 
 	Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,

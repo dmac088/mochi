@@ -99,26 +99,17 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public List<ProductDTO> findAll(String locale, String currency, String rootCategory) {
-		return productDAO.findAll(locale, currency, rootCategory);
-	}
-	
-	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #productCodes.getCacheKey()")
 	public List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes) {
-		LOGGER.debug("call ProductServiceImpl.findAll parameters : {}, {}, {}, []", locale, currency, rootCategory, productCodes.getCacheKey());
+		LOGGER.debug("call ProductServiceImpl.findAll parameters : {}, {}, {}, {}", locale, currency, rootCategory, productCodes.getCacheKey());
 		return productDAO.findAll(locale, currency, rootCategory, productCodes);
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #cls.getSimpleName()")
 	public <T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls) {
+		LOGGER.debug("call ProductServiceImpl.findAllByType parameters : {}, {}, {}, {}", locale, currency, rootCategory, cls.getSimpleName());
 		return productDAO.findAllByType(locale, currency, rootCategory, cls);
-	}
-	
-	@Override
-	public <T> List<ProductEntity> findAllByType(Class<T> cls) {
-		return null;
 	}
 
 	@Override

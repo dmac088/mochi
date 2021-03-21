@@ -79,21 +79,5 @@ public class IT_ProductUploadDownloadRestControllerTest {
         //Assert.assertEquals("food_master.txt", result.getResponse().get("fileName"));
         //{"fileName":"food_master.txt","fileUri":"http://localhost/data/uploads/food_master.txt","fileType":"multipart/form-data","size":0}
     }
-    
-    
-    @Test
-    public void testDownloadFile() throws Exception {
-        Mockito.when(productService.findAll("en-GB", "HKD"))
-        						   .thenReturn(new ArrayList<>());
-        
-        
-        MvcResult result = mockMvc.perform(MockMvcRequestBuilders.get("/api/Product/Download/food_master.txt")
-        						  .contentType(MediaType.APPLICATION_JSON))
-        						  .andExpect(MockMvcResultMatchers.status().is(200)).andReturn();
-        
-        Assert.assertEquals(200, result.getResponse().getStatus());
-        Assert.assertEquals(5011, result.getResponse().getContentAsByteArray().length);
-        Assert.assertEquals("text/plain", result.getResponse().getContentType());
-    }
 	
 }

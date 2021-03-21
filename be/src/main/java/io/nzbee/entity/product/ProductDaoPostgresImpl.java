@@ -15,7 +15,6 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.apache.poi.ss.formula.functions.T;
-import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -79,6 +78,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({ "unchecked", "deprecation", "hiding" })
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = ProductServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #cls.getSimpleName()")
+			}
+	)
 	public <T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findAllByType parameters : {}, {}, {}, {}", locale, currency, rootCategory, cls.getSimpleName());
 		
@@ -106,7 +110,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		
 		.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());
-		
 		
 		return query.getResultList();
 	}
@@ -241,39 +244,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		}
 	}
 	
-	@SuppressWarnings({"deprecation","unchecked"})
 	@Override
-	public List<ProductDTO> findAll(String locale, String currency, String rootCategory) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}", locale, currency);
-		
-		Query query = em.createNativeQuery(this.constructSQL(false,
-															 false,
-															 false,
-															 !(rootCategory == null),
-															 false, 
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 ""))
-				 .setParameter("categoryCode", rootCategory)
-				 .setParameter("locale", locale)
-				 .setParameter("currency", currency)
-				 .setParameter("activeProductCode", Constants.activeSKUCode)
-				 .setParameter("retailPriceCode", Constants.retailPriceCode)
-				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
-				 
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new ProductDTOResultTransformer());
-		
-		return query.getResultList();
-		
-	}
-	
-	@Override
-	public List<ProductDTO> findAll(String locale, String rootCategory,StringCollectionWrapper codes) {
+	public List<ProductDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -292,7 +264,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 										String rootCategory,
 										StringCollectionWrapper codes) {
 		
-		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, StringUtils.join(codes.getCodes(), ','));
+		LOGGER.debug("call ProductDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, currency, codes.getCacheKey());
 		
 		Query query = em.createNativeQuery(this.constructSQL(true,
 															 false,
