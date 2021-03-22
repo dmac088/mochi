@@ -1,5 +1,6 @@
 import React from "react";
 import ShippingProvider from './Provider/ShippingProvider';
+import ShippingDestination from './Destination/ShippingDestination';
 
 function Shipping() {
 
@@ -9,15 +10,7 @@ function Shipping() {
             <form action="#">
                 <div className="row">
                     <ShippingProvider />
-                    <div className="col-md-6 col-12 mb-25">
-                        <select className="nice-select">
-                            <option>Dhaka</option>
-                            <option>Barisal</option>
-                            <option>Khulna</option>
-                            <option>Comilla</option>
-                            <option>Chittagong</option>
-                        </select>
-                    </div>
+                    <ShippingDestination />
                     <div className="col-md-6 col-12 mb-25">
                         <input type="text" placeholder="Postcode / Zip" />
                     </div>

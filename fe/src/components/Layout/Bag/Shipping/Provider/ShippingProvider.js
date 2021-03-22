@@ -3,7 +3,7 @@ import { Spinner } from '../../../../Layout/Helpers/Animation/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShippingProviders } from '../../../../../services/Shipping/Provider/index';
 
-function Shipping() {
+function ShippingProvider() {
 
     const dispatch = useDispatch();
     const discovery = useSelector(state => state.discovery);
@@ -26,7 +26,6 @@ function Shipping() {
     }, [discovery.loading,
         discovery.isDone]);
 
-    console.log(shippingProviders);
     return (
         ((!shippingProviders.isDone || shippingProviders.loading))
         ? <Spinner />
@@ -39,4 +38,4 @@ function Shipping() {
     );
 }
 
-export default Shipping;
+export default ShippingProvider;

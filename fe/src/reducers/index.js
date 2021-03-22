@@ -8,6 +8,7 @@ import bagContentsReducer from "./bagContentsReducer";
 import billingAddressReducer from "./billingAddressReducer";
 import shippingAddressReducer from "./shippingAddressReducer";
 import shippingProviderReducer from "./shippingProviderReducer";
+import shippingDestinationReducer from "./shippingDestinationReducer";
 
 export default combineReducers({
   categories:         categoryReducer,
@@ -18,5 +19,6 @@ export default combineReducers({
   bagContents:        bagContentsReducer,
   billingAddress:     billingAddressReducer,
   shippingAddress:    shippingAddressReducer,
-  shippingProviders:  shippingProviderReducer,
+  shippingProviders:    shippingProviderReducer,
+  shippingDestinations:  shippingDestinationReducer,
 });
