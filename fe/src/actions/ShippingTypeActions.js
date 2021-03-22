@@ -1,18 +1,18 @@
 import {
-    GET_SHIPPING_TYPE_STARTED,
-    GET_SHIPPING_TYPE_SUCCESS,
-    GET_SHIPPING_TYPE_FAILURE,
+    GET_SHIPPING_TYPES_STARTED,
+    GET_SHIPPING_TYPES_SUCCESS,
+    GET_SHIPPING_TYPES_FAILURE,
 } from "./ActionTypes";
 
 export const getShippingTypeStarted = () => ({
-    type: GET_SHIPPING_TYPE_STARTED,
+    type: GET_SHIPPING_TYPES_STARTED,
     payload: {
         loading: true,
     }
 });
 
 export const getShippingTypeSuccess = addressType => ({
-    type: GET_SHIPPING_TYPE_SUCCESS,
+    type: GET_SHIPPING_TYPES_SUCCESS,
     payload: {
         loading: false,
         isDone: true,
@@ -21,7 +21,7 @@ export const getShippingTypeSuccess = addressType => ({
 });
 
 export const getShippingTypeFailure = error => ({
-    type: GET_SHIPPING_TYPE_FAILURE,
+    type: GET_SHIPPING_TYPES_FAILURE,
     payload: {
         error,
         loading: false,

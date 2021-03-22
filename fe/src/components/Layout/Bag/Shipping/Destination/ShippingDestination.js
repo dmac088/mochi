@@ -26,7 +26,6 @@ function ShippingDestination() {
     }, [discovery.loading,
         discovery.isDone]);
 
-    console.log(shippingDestinations);
     return (
         ((!shippingDestinations.isDone || shippingDestinations.loading))
         ? <Spinner />
