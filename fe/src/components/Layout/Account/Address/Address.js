@@ -5,7 +5,7 @@ import AddressView from "./AddressView";
 import AddressEdit from "./AddressEdit";
 
 function Address(props) {
-    const { type, address, getAddress, updateAddress } = props;
+    const { type, address, getAddress } = props;
     const dispatch = useDispatch();
     const customer = useSelector(state => state.customer);
 

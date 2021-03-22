@@ -1,18 +1,26 @@
-import React from 'react';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from 'react-redux';
+import { getShippingProviders } from '../../../../services/Shipping/Provider/index';
 
 function Shipping() {
 
+    const dispatch = useDispatch();
+    const discovery = useSelector(state => state.discovery);
+    const shippingProviders = useSelector(state => state.shippingProviders);
 
     useEffect(() => {
         let isSubscribed = true;
         if (isSubscribed) {
-            
-
-
+            if (!discovery.loading && discovery.isDone) {
+                console.log(discovery);
+                dispatch(getShippingProviders(discovery));
+            }
         }
         return () => (isSubscribed = false);
-    }, []);
+    }, [discovery.loading,
+        discovery.isDone]);
 
+    console.log(shippingProviders);
     return (
         <div className="calculate-shipping">
             <h4>Calculate Shipping</h4>

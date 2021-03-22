@@ -205,15 +205,11 @@ public class ProductController {
     	return ResponseEntity.ok(new BrowseShippingProductResultDto(shippingProductPagedAssembler.toModel(pages)));
     }
 	
-	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingProductDestination(	@PathVariable String locale, 
-																							@PathVariable String currency, 
-																							@PathVariable String categoryCode,
-																							@RequestParam(value = "page", defaultValue = "0") String page,
-																							@RequestParam(value = "size", defaultValue = "10") String size,
-																							@RequestParam(value = "sort", defaultValue = "10") String sort) {
+	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}")
+    public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingDestinations(	@PathVariable String locale, 
+																							   	@PathVariable String currency) {
     	
-    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
     	
     	final List<ShippingDestinationDTO> sp = shippingDestinationService.findAllActive(locale) 
 															.stream().map(d -> shippingDestinationDTOMapper.doToDto(d))
@@ -225,14 +221,10 @@ public class ProductController {
 	
 	
 	@GetMapping(value = "/Product/Shipping/Type/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingProductType(	@PathVariable String locale, 
-																							@PathVariable String currency, 
-																							@PathVariable String categoryCode,
-																							@RequestParam(value = "page", defaultValue = "0") String page,
-																							@RequestParam(value = "size", defaultValue = "10") String size,
-																							@RequestParam(value = "sort", defaultValue = "10") String sort) {
+    public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypes(	@PathVariable String locale, 
+																					@PathVariable String currency) {
     	
-    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
     	
     	final List<ShippingTypeDTO> sp = shippingTypeService.findAll(locale) 
 															.stream().map(d -> shippingTypeDTOMapper.doToDto(d))
@@ -242,15 +234,11 @@ public class ProductController {
     	return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
     }
 	
-	@GetMapping(value = "/Product/Shipping/Brand/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandResource>> getShippingBrand(	@PathVariable String locale, 
-																							@PathVariable String currency, 
-																							@PathVariable String categoryCode,
-																							@RequestParam(value = "page", defaultValue = "0") String page,
-																							@RequestParam(value = "size", defaultValue = "10") String size,
-																							@RequestParam(value = "sort", defaultValue = "10") String sort) {
+	@GetMapping(value = "/Product/Shipping/Provider/{locale}/{currency}")
+    public ResponseEntity<CollectionModel<BrandResource>> getShippingProviders(@PathVariable String locale, 
+																			  @PathVariable String currency) {
     	
-    	LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page, size);
+    	LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
     	
     	final List<BrandDTO> lb = brandService.findByAllProductType(locale, ShippingProduct.class)
     							  .stream()

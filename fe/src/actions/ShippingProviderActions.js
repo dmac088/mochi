@@ -1,18 +1,18 @@
 import {
-    GET_SHIPPING_PROVIDER_STARTED,
-    GET_SHIPPING_PROVIDER_SUCCESS,
-    GET_SHIPPING_PROVIDER_FAILURE,
-} from "./ActionProviders";
+    GET_SHIPPING_PROVIDERS_STARTED,
+    GET_SHIPPING_PROVIDERS_SUCCESS,
+    GET_SHIPPING_PROVIDERS_FAILURE,
+} from "./ActionTypes";
 
 export const getShippingProviderStarted = () => ({
-    type: GET_SHIPPING_PROVIDER_STARTED,
+    type: GET_SHIPPING_PROVIDERS_STARTED,
     payload: {
         loading: true,
     }
 });
 
 export const getShippingProviderSuccess = addressProvider => ({
-    type: GET_SHIPPING_PROVIDER_SUCCESS,
+    type: GET_SHIPPING_PROVIDERS_SUCCESS,
     payload: {
         loading: false,
         isDone: true,
@@ -21,7 +21,7 @@ export const getShippingProviderSuccess = addressProvider => ({
 });
 
 export const getShippingProviderFailure = error => ({
-    type: GET_SHIPPING_PROVIDER_FAILURE,
+    type: GET_SHIPPING_PROVIDERS_FAILURE,
     payload: {
         error,
         loading: false,

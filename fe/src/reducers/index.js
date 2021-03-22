@@ -7,14 +7,16 @@ import bagReducer from "./bagReducer";
 import bagContentsReducer from "./bagContentsReducer";
 import billingAddressReducer from "./billingAddressReducer";
 import shippingAddressReducer from "./shippingAddressReducer";
+import shippingProviderReducer from "./shippingProviderReducer";
 
 export default combineReducers({
-  categories:       categoryReducer,
-  discovery:        discoveryReducer,
-  session:          sessionReducer,
-  customer:         customerReducer,
-  bag:              bagReducer,
-  bagContents:      bagContentsReducer,
-  billingAddress:   billingAddressReducer,
-  shippingAddress:  shippingAddressReducer,
+  categories:         categoryReducer,
+  discovery:          discoveryReducer,
+  session:            sessionReducer,
+  customer:           customerReducer,
+  bag:                bagReducer,
+  bagContents:        bagContentsReducer,
+  billingAddress:     billingAddressReducer,
+  shippingAddress:    shippingAddressReducer,
+  shippingProviders:  shippingProviderReducer,
 });

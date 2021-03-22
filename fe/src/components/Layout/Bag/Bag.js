@@ -1,5 +1,5 @@
 import React from 'react';
-import Shipping from './Shipping';
+import Shipping from './Shipping/Shipping';
 import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
 import { useDispatch } from 'react-redux';

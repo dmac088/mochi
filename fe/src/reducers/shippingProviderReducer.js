@@ -1,7 +1,7 @@
 import {
-    GET_SHIPPING_PROVIDER_STARTED,
-    GET_SHIPPING_PROVIDER_SUCCESS,
-    GET_SHIPPING_PROVIDER_FAILURE,
+    GET_SHIPPING_PROVIDERS_STARTED,
+    GET_SHIPPING_PROVIDERS_SUCCESS,
+    GET_SHIPPING_PROVIDERS_FAILURE,
 } from "../actions/ActionTypes";
 
 const initialState = {
@@ -14,19 +14,19 @@ export default function (state = initialState, action) {
   
     switch (action.type) {
 
-      case GET_SHIPPING_PROVIDER_STARTED:
+      case GET_SHIPPING_PROVIDERS_STARTED:
         return {
           ...state,
           ...action.payload,
       }
   
-      case GET_SHIPPING_PROVIDER_SUCCESS:
+      case GET_SHIPPING_PROVIDERS_SUCCESS:
         return {
           ...state,
           ...action.payload,
       }
   
-      case GET_SHIPPING_PROVIDER_FAILURE:
+      case GET_SHIPPING_PROVIDERS_FAILURE:
         return {
           ...state,
           error: action.payload.error
