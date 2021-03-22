@@ -2,7 +2,9 @@ package io.nzbee.entity.product.shipping.type;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.shipping.type.attribute.ShippingTypeAttributeEntity;
 
 @Entity
@@ -23,6 +26,11 @@ public class ShippingTypeEntity implements Serializable {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="shp_typ_id")
 	private Long shippingTypeId;
+	
+	@OneToMany(	mappedBy="shippingType",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true)
+	private Set<ShippingProductEntity> products = new HashSet<ShippingProductEntity>();
 	
 	@OneToMany(	mappedBy="shippingType",  
 			cascade = CascadeType.ALL,
@@ -54,6 +62,14 @@ public class ShippingTypeEntity implements Serializable {
 
 	public List<ShippingTypeAttributeEntity> getAttributes() {
 		return attributes;
+	}
+
+	public Set<ShippingProductEntity> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<ShippingProductEntity> products) {
+		this.products = products;
 	}
 	
 }
