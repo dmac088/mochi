@@ -1,6 +1,18 @@
 import React from 'react';
 
 function Shipping() {
+
+
+    useEffect(() => {
+        let isSubscribed = true;
+        if (isSubscribed) {
+            
+
+
+        }
+        return () => (isSubscribed = false);
+    }, []);
+
     return (
         <div className="calculate-shipping">
             <h4>Calculate Shipping</h4>
