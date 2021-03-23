@@ -210,7 +210,7 @@ public class PhysicalProductMasterService {
 		pe.setWidthDimension(Integer.parseInt(width));
 		pe.setHeightDimension(Integer.parseInt(height));
 		pe.setLengthDimension(Integer.parseInt(length));
-		pe.setWeightDimension(Integer.parseInt(weight));
+		pe.setWeightDimension(Double.parseDouble(weight));
 
 		pa.setProductDesc(productDesc);
 		pa.setProductLongDesc(productLongDesc);

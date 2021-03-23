@@ -25,7 +25,7 @@ public class PhysicalProductEntity extends ProductEntity {
 	private Integer heightDimension;
 	
 	@Column(name="weight")
-	private Integer weightDimension;
+	private Double weightDimension;
 
 
 	public Integer getWidthDimension() {
@@ -52,11 +52,11 @@ public class PhysicalProductEntity extends ProductEntity {
 		this.heightDimension = heightDimension;
 	}
 
-	public Integer getWeightDimension() {
+	public Double getWeightDimension() {
 		return weightDimension;
 	}
 
-	public void setWeightDimension(Integer weightDimension) {
+	public void setWeightDimension(Double weightDimension) {
 		this.weightDimension = weightDimension;
 	}
 	

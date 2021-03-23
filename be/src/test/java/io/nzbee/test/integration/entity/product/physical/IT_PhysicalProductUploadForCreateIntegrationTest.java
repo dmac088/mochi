@@ -27,6 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
+import io.nzbee.entity.product.physical.PhysicalProductDTO;
 import io.nzbee.util.product.physical.PhysicalProductMasterService;
 
 @RunWith(SpringRunner.class)
@@ -122,13 +123,13 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7.0));
 
-		assertThat(found.get().getHeight()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getHeight()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getWidth()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getWidth()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getLength()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getLength()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getWeight()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Integer(0));
 	}
 
 	private void assertFound_ZHHK_HKD(Optional<ProductDTO> found) {
@@ -154,13 +155,13 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 
 		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55.00));
 		
-		assertThat(found.get().getHeight()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getHeight()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getWidth()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getWidth()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getLength()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getLength()).isEqualTo(new Integer(0));
 		
-		assertThat(found.get().getWeight()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Integer(0));
 	}
 	
 }

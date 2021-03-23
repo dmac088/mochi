@@ -10,7 +10,7 @@ public abstract class PhysicalProductEntity_ extends io.nzbee.entity.product.Pro
 
 	public static volatile SingularAttribute<PhysicalProductEntity, Integer> heightDimension;
 	public static volatile SingularAttribute<PhysicalProductEntity, Integer> lengthDimension;
-	public static volatile SingularAttribute<PhysicalProductEntity, Integer> weightDimension;
+	public static volatile SingularAttribute<PhysicalProductEntity, Double> weightDimension;
 	public static volatile SingularAttribute<PhysicalProductEntity, Integer> widthDimension;
 
 	public static final String HEIGHT_DIMENSION = "heightDimension";

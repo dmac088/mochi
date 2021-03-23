@@ -2,7 +2,6 @@ package io.nzbee.entity.product;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
@@ -37,14 +36,7 @@ public abstract class ProductDTO implements Serializable {
     public static final String CURRENCY_ALIAS = "ccy_cd";
     
     public static final String LOCALE_ALIAS = "lcl_cd";
-    
-    public static final String HEIGHT_ALIAS = "height";
-    
-    public static final String WIDTH_ALIAS = "width";
-    
-    public static final String LENGTH_ALIAS = "length";
-    
-    public static final String WEIGHT_ALIAS = "weight";
+ 
     
     protected Long productId;
 
@@ -72,15 +64,6 @@ public abstract class ProductDTO implements Serializable {
 	protected Double retailPrice;
 	
 	protected Double markdownPrice;
-	
-	//physical dimensions
-	protected Integer height;
-	
-	protected Integer width;
-	
-	protected Integer length;
-	
-	protected Integer weight;
 	
 	
 	//localization
@@ -117,11 +100,6 @@ public abstract class ProductDTO implements Serializable {
 		this.locale					= tuple[aliasToIndexMap.get(LOCALE_ALIAS)].toString();
 		this.retailPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(RETAIL_PRICE_ALIAS)]).doubleValue();
 		this.markdownPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(MARKDOWN_PRICE_ALIAS)]).doubleValue();
-		
-		this.height					= ((BigInteger) tuple[aliasToIndexMap.get(HEIGHT_ALIAS)]).intValue();
-		this.width					= ((BigInteger) tuple[aliasToIndexMap.get(WIDTH_ALIAS)]).intValue();
-		this.length					= ((BigInteger) tuple[aliasToIndexMap.get(LENGTH_ALIAS)]).intValue();
-		this.weight					= ((BigInteger) tuple[aliasToIndexMap.get(WEIGHT_ALIAS)]).intValue();
 		
 
 	}
@@ -236,38 +214,6 @@ public abstract class ProductDTO implements Serializable {
 
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
-	}
-
-	public Integer getHeight() {
-		return height;
-	}
-
-	public void setHeight(Integer height) {
-		this.height = height;
-	}
-
-	public Integer getWidth() {
-		return width;
-	}
-
-	public void setWidth(Integer width) {
-		this.width = width;
-	}
-
-	public Integer getLength() {
-		return length;
-	}
-
-	public void setLength(Integer length) {
-		this.length = length;
-	}
-
-	public Integer getWeight() {
-		return weight;
-	}
-
-	public void setWeight(Integer weight) {
-		this.weight = weight;
 	}
 
 }
