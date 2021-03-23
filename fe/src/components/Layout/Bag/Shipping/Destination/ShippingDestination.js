@@ -1,39 +1,24 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Spinner } from '../../../../Layout/Helpers/Animation/Spinner';
-import { useDispatch, useSelector } from 'react-redux';
-import { getShippingDestinations } from '../../../../../services/Shipping/Destination/index';
 
 function ShippingDestination(props) {
 
-    const { setDestination } = props;
-
-    const dispatch = useDispatch();
-    const discovery = useSelector(state => state.discovery);
-    const shippingDestinations = useSelector(state => state.shippingDestinations);
+    const { shippingDestinations, setDestination, currentDestinationCode } = props;
 
     const renderDestinations = (providers) => {
         return providers.map((p, index) => {
-          return <option key={index} value={p.data.productDestinationCode}>{p.data.productDestinationDesc}</option>
+          return <option  
+                         key={index} 
+                         value={p.data.productDestinationCode}>{p.data.productDestinationDesc}</option>
         })
     }
-
-    useEffect(() => {
-        let isSubscribed = true;
-        if (isSubscribed) {
-            if (!discovery.loading && discovery.isDone) {
-                dispatch(getShippingDestinations(discovery));
-            }
-        }
-        return () => (isSubscribed = false);
-    }, [discovery.loading,
-        discovery.isDone]);
 
     return (
         ((!shippingDestinations.isDone || shippingDestinations.loading))
         ? <Spinner />
         :
             <div className="col-md-6 col-12 mb-25">
-                <select onChange={setDestination} className="nice-select">
+                <select defaultValue={currentDestinationCode} onChange={setDestination} className="nice-select">
                     {renderDestinations(shippingDestinations._embedded.shippingDestinationResources)}
                 </select>
             </div>

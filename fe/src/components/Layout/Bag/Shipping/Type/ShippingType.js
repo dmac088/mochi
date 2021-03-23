@@ -3,8 +3,8 @@ import { Spinner } from '../../../../Layout/Helpers/Animation/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShippingType } from '../../../../../services/Shipping/Type/index';
 
-function ShippingType() {
-
+function ShippingType(props) {
+    const { currentDestination } = props;
     const dispatch = useDispatch();
     const discovery = useSelector(state => state.discovery);
     const shippingTypes = useSelector(state => state.shippingTypes);
@@ -19,13 +19,13 @@ function ShippingType() {
         let isSubscribed = true;
         if (isSubscribed) {
             if (!discovery.loading && discovery.isDone) {
-                dispatch(getShippingType(discovery));
+                dispatch(getShippingType(currentDestination));
             }
         }
         return () => (isSubscribed = false);
     }, [discovery.loading,
         discovery.isDone]);
-        
+
     return (
         ((!shippingTypes.isDone || shippingTypes.loading))
         ? <Spinner />

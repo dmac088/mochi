@@ -19,3 +19,9 @@ export const getShippingDestinations = (discovery) => {
         });
     }
 }
+
+export const findByCode = (destinations, code) => {
+    if (!destinations) { return; }
+    if(!code) { return; }
+    return destinations.filter(o => o.data.productDestinationCode === code)[0];
+}
