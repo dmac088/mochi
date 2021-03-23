@@ -55,6 +55,10 @@ public class SearchServiceImpl implements ISearchService {
 	private static final String TITLE_NGRAM_INDEX = "nGramTitle";
 	
 	private static final String EMPTY_STRING = "";
+	
+	private static final String SIMPLE_FACET = "SimpleFacet";
+	
+	private static final String RANGE_FACET = "RangeFacetImpl";
 
 	@Autowired
 	private ApplicationContext appContext;
@@ -93,7 +97,7 @@ public class SearchServiceImpl implements ISearchService {
 
 		//aggregate the codes of the discrete facets
 		lf.stream()
-		  .filter(f -> f.getType().equals("SimpleFacet"))
+		  .filter(f -> f.getType().equals(SIMPLE_FACET))
 		  .map(f -> f.getFacetingName()).collect(Collectors.toSet()).stream().forEach(s -> {
 
 			Set<String> ss = new HashSet<String>();
@@ -112,12 +116,12 @@ public class SearchServiceImpl implements ISearchService {
 			});
 			sfh.setFacetingName(s);
 			sfh.setCodes(ss);
-			sfh.setType("SimpleFacet");
+			sfh.setType(SIMPLE_FACET);
 			setSearchFacetHelper.add(sfh);
 		});
 		
 		//for range facets there is no need to aggregate
-		lf.stream().filter(f -> f.getType().equals("RangeFacetImpl")).forEach(f -> {
+		lf.stream().filter(f -> f.getType().equals(RANGE_FACET)).forEach(f -> {
 			SearchFacetHelper sfh = new SearchFacetHelper();
 			sfh.setCodes(null);
 			sfh.setFacetingName(f.getFacetingName());
@@ -394,8 +398,8 @@ public class SearchServiceImpl implements ISearchService {
 		// we need to aggregate the codes of each helper of type SimpleFacet
 		Set<SearchFacetHelper> aggLsfh = aggregateFacetHelpers(	lsfh
 																.stream()
-																.filter(f -> f.getType().equals("SimpleFacet"))
-																.collect(Collectors.toSet()), 	"SimpleFacet");
+																.filter(f -> f.getType().equals(SIMPLE_FACET))
+																.collect(Collectors.toSet()), 	SIMPLE_FACET);
 
 		// select the object from DB for each of the aggregated facet helpers
 		aggLsfh.stream().forEach(sfh -> {
@@ -429,7 +433,7 @@ public class SearchServiceImpl implements ISearchService {
 		returnFacets.addAll(facets.stream().filter(x -> !selectedFacets.stream().filter(y -> (x.getValue().equals(y.getValue())))
 				.findFirst().isPresent()).collect(Collectors.toSet())
 				.stream()
-				.filter(f -> f.getClass().getSimpleName().equals("RangeFacetImpl"))
+				.filter(f -> f.getClass().getSimpleName().equals(RANGE_FACET))
 				.map(f -> new SearchFacetRange(f)).collect(Collectors.toSet()));
 		
 		
