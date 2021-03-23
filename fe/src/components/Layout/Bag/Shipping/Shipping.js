@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { Spinner } from '../../../Layout/Helpers/Animation/Spinner';
 import ShippingProvider from './Provider/ShippingProvider';
 import ShippingDestination from './Destination/ShippingDestination';
 import ShippingType from './Type/ShippingType';
@@ -17,8 +18,6 @@ function Shipping() {
         currentDestination: null,
     });
 
-    const prevDestinationCode = usePrevious(stateObject.currentDestinationCode);
-
     function setDestinationCode(e) {
         e.preventDefault();
         const value = e.target.value;
@@ -26,14 +25,6 @@ function Shipping() {
           ...prevState, 
           currentDestinationCode: value,
         }));
-    }
-
-    function usePrevious(value) {
-        const ref = useRef();
-        useEffect(() => {
-            ref.current = value;
-        });
-        return ref.current;
     }
 
     useEffect(() => {
@@ -47,23 +38,12 @@ function Shipping() {
     }, [discovery.loading,
         discovery.isDone]);
 
-    useEffect(() => {
-        let isSubscribed = true;
-        if (isSubscribed) {    
-            if (!shippingDestinations.loading && shippingDestinations.isDone && prevDestinationCode !== stateObject.currentDestinationCode) {
-                setObjectState((prevState) => ({ 
-                    ...prevState, 
-                    currentDestination: findByCode(shippingDestinations._embedded.shippingDestinationResources, stateObject.currentDestinationCode),
-                  }));
-            }    
-        }
-        return () => (isSubscribed = false);
-    }, [discovery.loading,
-        discovery.isDone,
-        setObjectState.currentDestinationCode]);
-
-        console.log( 'previous = ' + prevDestinationCode);
+    const destinationsReady = ((!shippingDestinations.isDone || shippingDestinations.loading));
+     
     return (
+        ((destinationsReady))
+        ? <Spinner />
+        :
         <div className="calculate-shipping">
             <h4>Calculate Shipping</h4>
             <form action="#">
@@ -74,7 +54,8 @@ function Shipping() {
                         currentDestinationCode={stateObject.currentDestinationCode}
                         setDestination={setDestinationCode} />
                     <ShippingType 
-                        destination={stateObject.currentDestination} />
+                        destinationCode={stateObject.currentDestinationCode}
+                        destination={findByCode(shippingDestinations._embedded.shippingDestinationResources, stateObject.currentDestinationCode)}/>
                     <div className="col-md-6 col-12 mb-25">
                         <input type="submit" defaultValue="Estimate" />
                     </div>

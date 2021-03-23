@@ -1,13 +1,22 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import { Spinner } from '../../../../Layout/Helpers/Animation/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShippingType } from '../../../../../services/Shipping/Type/index';
 
 function ShippingType(props) {
-    const { currentDestination } = props;
+    const { destination, destinationCode } = props;
     const dispatch = useDispatch();
     const discovery = useSelector(state => state.discovery);
     const shippingTypes = useSelector(state => state.shippingTypes);
+    const prevDestinationCode = usePrevious(destinationCode);
+
+    function usePrevious(value) {
+        const ref = useRef();
+        useEffect(() => {
+            ref.current = value;
+        });
+        return ref.current;
+    }
 
     const renderTypes = (types) => {
         return types.map((p, index) => {
@@ -18,16 +27,20 @@ function ShippingType(props) {
     useEffect(() => {
         let isSubscribed = true;
         if (isSubscribed) {
-            if (!discovery.loading && discovery.isDone) {
-                dispatch(getShippingType(currentDestination));
+           
+            if (!discovery.loading && discovery.isDone && prevDestinationCode !== destinationCode && destination) {
+                dispatch(getShippingType(destination));
             }
         }
         return () => (isSubscribed = false);
     }, [discovery.loading,
-        discovery.isDone]);
+        discovery.isDone,
+        destinationCode]);
 
+    const shippingTypesReady = (!shippingTypes.isDone || shippingTypes.loading);
+        
     return (
-        ((!shippingTypes.isDone || shippingTypes.loading))
+        (shippingTypesReady)
         ? <Spinner />
         :
             <div className="col-md-6 col-12 mb-25">
