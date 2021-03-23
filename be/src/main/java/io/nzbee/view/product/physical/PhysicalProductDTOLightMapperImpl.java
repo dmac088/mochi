@@ -11,7 +11,7 @@ import io.nzbee.domain.product.physical.PhysicalProduct;
 public class PhysicalProductDTOLightMapperImpl implements IPhysicalProductDTOLightMapper {
 
 	@Override
-	public PhysicalProductDTOLight doToDto(Product d) {
+	public PhysicalProductDTOLight toDto(Product d) {
 		PhysicalProductDTOLight pdto = new PhysicalProductDTOLight();
 		
 		//brand
@@ -38,7 +38,7 @@ public class PhysicalProductDTOLightMapperImpl implements IPhysicalProductDTOLig
 	}
 
 	@Override
-	public Product dtoToDo(PhysicalProductDTOLight dto) {
+	public Product toDo(PhysicalProductDTOLight dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -19,6 +19,11 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 	public List<ShippingTypeDTO> findAll(String locale) {
 		return shippingTypeRepository.findAll(locale);
 	}
+	
+	@Override
+	public List<ShippingTypeDTO> findAll(String locale, String destinationCode) {
+		return shippingTypeRepository.findAllByDestinationCode(locale, destinationCode);
+	}
 
 	@Override
 	public List<ShippingTypeDTO> findAll(String locale, StringCollectionWrapper codes) {

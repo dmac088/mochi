@@ -8,7 +8,7 @@ public class BagDTOMapperImpl implements IBagDTOMapper {
 
 
 	@Override
-	public BagDTO doToDto(Bag d) {
+	public BagDTO toDto(Bag d) {
 		BagDTO dto = new BagDTO();
 		dto.setTotalItems(d.getTotalItems());
 		dto.setTotalQuantity(d.getTotalQuantity());
@@ -17,7 +17,7 @@ public class BagDTOMapperImpl implements IBagDTOMapper {
 	}
 
 	@Override
-	public Bag dtoToDo(BagDTO dto) {
+	public Bag toDo(BagDTO dto) {
 		return null;
 	}
 

@@ -7,7 +7,7 @@ import io.nzbee.domain.customer.Customer;
 public class CustomerDTOMapperImpl implements ICustomerDTOMapper {
 
 	@Override
-	public CustomerDTOOut doToDto(Customer d) {
+	public CustomerDTOOut toDto(Customer d) {
 		CustomerDTOOut cdo = new CustomerDTOOut();
 		cdo.setCustomerId(d.getCustomerID());
 		cdo.setGivenName(d.getGivenName());
@@ -16,7 +16,7 @@ public class CustomerDTOMapperImpl implements ICustomerDTOMapper {
 	}
 
 	@Override
-	public Customer dtoToDo(CustomerDTOIn dto) {
+	public Customer toDo(CustomerDTOIn dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

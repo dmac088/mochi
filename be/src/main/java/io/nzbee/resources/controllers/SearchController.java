@@ -76,7 +76,7 @@ public class SearchController {
 		    												sort,
 		    												term, 
 		    												selectedFacets,
-		    												returnFacets).map(p -> prodResourceAssembler.toModel(productDTOMapper.doToDto(p)));
+		    												returnFacets).map(p -> prodResourceAssembler.toModel(productDTOMapper.toDto(p)));
     	
     	Set<SearchFacetResource> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
     	

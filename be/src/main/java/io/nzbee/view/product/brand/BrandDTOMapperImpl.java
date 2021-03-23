@@ -7,7 +7,7 @@ import io.nzbee.domain.brand.Brand;
 public class BrandDTOMapperImpl implements IBrandDTOMapper {
 
 	@Override
-	public io.nzbee.view.product.brand.BrandDTO doToDto(Brand d) {
+	public io.nzbee.view.product.brand.BrandDTO toDto(Brand d) {
 		io.nzbee.view.product.brand.BrandDTO sp = new io.nzbee.view.product.brand.BrandDTO();
 		sp.setBrandCode(d.getBrandCode());
 		sp.setBrandDesc(d.getBrandDesc());
@@ -16,7 +16,7 @@ public class BrandDTOMapperImpl implements IBrandDTOMapper {
 	}
 
 	@Override
-	public Brand dtoToDo(io.nzbee.view.product.brand.BrandDTO dto) {
+	public Brand toDo(io.nzbee.view.product.brand.BrandDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

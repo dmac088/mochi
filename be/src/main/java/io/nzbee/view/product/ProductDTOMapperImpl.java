@@ -19,18 +19,18 @@ public class ProductDTOMapperImpl implements IProductDTOMapper {
 	private IShippingProductDTOMapper shippingProductDTOMapper;
 	
 	@Override
-	public ProductDTO doToDto(Product d) {
+	public ProductDTO toDto(Product d) {
 		
 		if(d instanceof PhysicalProduct) {
-			return physicalProductDTOMapper.doToDto(d);
+			return physicalProductDTOMapper.toDto(d);
 		} else if (d instanceof ShippingProduct) {
-			return shippingProductDTOMapper.doToDto(d);
+			return shippingProductDTOMapper.toDto(d);
 		}
 		return  null;
 	}
 
 	@Override
-	public Product dtoToDo(ProductDTO dto) {
+	public Product toDo(ProductDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

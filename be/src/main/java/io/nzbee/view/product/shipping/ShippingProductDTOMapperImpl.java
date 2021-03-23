@@ -8,7 +8,7 @@ import io.nzbee.domain.product.shipping.ShippingProduct;
 public class ShippingProductDTOMapperImpl implements IShippingProductDTOMapper {
 
 	@Override
-	public ShippingProductDTO doToDto(Product d) {
+	public ShippingProductDTO toDto(Product d) {
 		ShippingProductDTO pdto = new ShippingProductDTO();
 		
 		//downcast to a shipping product
@@ -41,7 +41,7 @@ public class ShippingProductDTOMapperImpl implements IShippingProductDTOMapper {
 	}
 
 	@Override
-	public Product dtoToDo(ShippingProductDTO dto) {
+	public Product toDo(ShippingProductDTO dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

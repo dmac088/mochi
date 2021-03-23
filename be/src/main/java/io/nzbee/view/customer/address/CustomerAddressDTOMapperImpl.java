@@ -7,7 +7,7 @@ import io.nzbee.domain.customer.address.Address;
 public class CustomerAddressDTOMapperImpl implements ICustomerAddressDTOMapper {
 
 	@Override
-	public CustomerAddressDTOOut doToDto(Address d) {
+	public CustomerAddressDTOOut toDto(Address d) {
 		CustomerAddressDTOOut cdo = new CustomerAddressDTOOut();
 		cdo.setAddressLine1(d.getAddressLine1());
 		cdo.setAddressLine2(d.getAddressLine2());
@@ -20,7 +20,7 @@ public class CustomerAddressDTOMapperImpl implements ICustomerAddressDTOMapper {
 	}
 
 	@Override
-	public Address dtoToDo(CustomerAddressDTOIn dto) {
+	public Address toDo(CustomerAddressDTOIn dto) {
 		return null;
 	
 	}

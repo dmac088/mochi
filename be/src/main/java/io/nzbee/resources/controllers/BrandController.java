@@ -74,7 +74,7 @@ public class BrandController {
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice
-    			).stream().map(b -> brandDTOMapper.doToDto(b)).collect(Collectors.toList());
+    			).stream().map(b -> brandDTOMapper.toDto(b)).collect(Collectors.toList());
 
         return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
     }
@@ -83,7 +83,7 @@ public class BrandController {
     public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale) {
     	LOGGER.debug("call BrandController.getBrands with parameters: {}, {}", locale);
     	final List<BrandDTO> collection = 
-    			 brandService.findAll(locale).stream().map(b -> brandDTOMapper.doToDto(b)).collect(Collectors.toList());;
+    			 brandService.findAll(locale).stream().map(b -> brandDTOMapper.toDto(b)).collect(Collectors.toList());;
     	
     	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
     }
@@ -118,7 +118,7 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
 	public ResponseEntity<BrandResource> get(String locale, String brandCode) {
     	LOGGER.debug("call BrandController.get with parameters: {}, {}, {}", locale, brandCode);
-    	BrandDTO b = brandDTOMapper.doToDto(brandService.findByCode(locale, brandCode));
+    	BrandDTO b = brandDTOMapper.toDto(brandService.findByCode(locale, brandCode));
     	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
 	}
 }
