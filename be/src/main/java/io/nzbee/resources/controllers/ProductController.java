@@ -237,7 +237,7 @@ public class ProductController {
     public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypes(	@PathVariable String locale, 
 																					@PathVariable String currency) {
     	
-    	LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
+    	LOGGER.debug("call ProductController.getShippingTypes : {}, {}", locale, currency);
     	
     	final List<ShippingTypeDTO> sp = shippingTypeService.findAll(locale) 
 															.stream().map(d -> shippingTypeDTOMapper.toDto(d))
@@ -261,6 +261,19 @@ public class ProductController {
     	
     	return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
     }
+	
+	@GetMapping(value = "/Product/Shipping/Provider/{locale}/{currency}/Code/{providerCode}")
+	public ResponseEntity<ShippingTypeResource> getShippingType(	  	  @PathVariable String locale, 
+																		  @PathVariable String currency,
+																		  @PathVariable String providerCode) {
+		LOGGER.debug("Fetching shipping destination for parameters : {}, {}, {}", locale, currency, providerCode);
+		
+		ShippingTypeResource sd = shippingTypeResourceAssembler.toModel(
+				shippingTypeDTOMapper.toDto(shippingTypeService.findByCode(locale, providerCode).get()));
+		
+		return new ResponseEntity<ShippingTypeResource>(sd, HttpStatus.OK);
+		
+	}
 	
 	@GetMapping(value = "/Product/Shipping/Provider/{locale}/{currency}")
     public ResponseEntity<CollectionModel<BrandResource>> getShippingProviders(@PathVariable String locale, 

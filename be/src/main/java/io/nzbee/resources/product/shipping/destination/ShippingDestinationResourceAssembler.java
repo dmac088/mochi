@@ -22,8 +22,6 @@ public class ShippingDestinationResourceAssembler extends RepresentationModelAss
 		sdr.add(linkTo(methodOn(ProductController.class).getShippingDestination(null, null,
 				product.getProductDestinationCode())).withSelfRel());
 		
-		
-
 		return sdr;
 	}
 }
