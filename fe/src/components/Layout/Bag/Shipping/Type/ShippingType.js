@@ -25,8 +25,7 @@ function ShippingType() {
         return () => (isSubscribed = false);
     }, [discovery.loading,
         discovery.isDone]);
-
-        console.log(shippingTypes);
+        
     return (
         ((!shippingTypes.isDone || shippingTypes.loading))
         ? <Spinner />

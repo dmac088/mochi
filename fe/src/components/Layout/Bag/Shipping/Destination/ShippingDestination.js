@@ -3,7 +3,9 @@ import { Spinner } from '../../../../Layout/Helpers/Animation/Spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import { getShippingDestinations } from '../../../../../services/Shipping/Destination/index';
 
-function ShippingDestination() {
+function ShippingDestination(props) {
+
+    const { setDestination } = props;
 
     const dispatch = useDispatch();
     const discovery = useSelector(state => state.discovery);
@@ -11,7 +13,7 @@ function ShippingDestination() {
 
     const renderDestinations = (providers) => {
         return providers.map((p, index) => {
-          return <option key={index}>{p.data.productDestinationDesc}</option>
+          return <option key={index} value={p.data.productDestinationCode}>{p.data.productDestinationDesc}</option>
         })
     }
 
@@ -31,7 +33,7 @@ function ShippingDestination() {
         ? <Spinner />
         :
             <div className="col-md-6 col-12 mb-25">
-                <select className="nice-select">
+                <select onChange={setDestination} className="nice-select">
                     {renderDestinations(shippingDestinations._embedded.shippingDestinationResources)}
                 </select>
             </div>
