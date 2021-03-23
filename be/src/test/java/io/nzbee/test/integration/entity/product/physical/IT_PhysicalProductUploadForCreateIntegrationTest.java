@@ -129,7 +129,7 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 		
 		assertThat(((PhysicalProductDTO) found.get()).getLength()).isEqualTo(new Integer(0));
 		
-		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Double(0.0));
 	}
 
 	private void assertFound_ZHHK_HKD(Optional<ProductDTO> found) {
@@ -161,7 +161,7 @@ public class IT_PhysicalProductUploadForCreateIntegrationTest {
 		
 		assertThat(((PhysicalProductDTO) found.get()).getLength()).isEqualTo(new Integer(0));
 		
-		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Integer(0));
+		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Double(0.0));
 	}
 	
 }
