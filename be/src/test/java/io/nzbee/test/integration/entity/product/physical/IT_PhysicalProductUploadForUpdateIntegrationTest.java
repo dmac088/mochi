@@ -133,7 +133,7 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 		
 		assertThat(((PhysicalProductDTO) found.get()).getLength()).isEqualTo(new Integer(1));
 		
-		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Double(1.0));
 		
 	}
 
@@ -167,7 +167,7 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 		
 		assertThat(((PhysicalProductDTO) found.get()).getLength()).isEqualTo(new Integer(1));
 		
-		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDTO) found.get()).getWeight()).isEqualTo(new Double(1.0));
 	}
 
 }

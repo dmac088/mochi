@@ -2547,7 +2547,7 @@ CREATE TABLE product_basic (
     width bigint,
     height bigint,
     length bigint,
-    weight bigint
+    weight numeric(8,0)
 );
 
 
