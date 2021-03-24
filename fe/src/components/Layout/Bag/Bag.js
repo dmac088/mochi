@@ -51,10 +51,10 @@ function Bag() {
                   </div>
                 </td>
                 <td className="pro-quantity">
-                    <span>{product.data.bagItemWeight}</span>
+                    <span>{product.data.bagItemWeight} kg</span>
                 </td>
                 <td className="pro-subtotal">
-                  <span>${product.data.itemQty * product.data.markdownPrice}kg</span>
+                  <span>${product.data.itemQty * product.data.markdownPrice}</span>
                 </td>
                 <td className="pro-remove">
                   <a id={product.data.itemUPC} onClick={removeItem} href="#">
