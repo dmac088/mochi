@@ -29,7 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.product.shipping.ShippingProductDTO;
+import io.nzbee.entity.product.shipping.ShippingProductEntity;
 
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
@@ -191,8 +191,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
-		.setParameter("typeDiscriminator", destinationCode)
-		.setParameter("shippingDestinationCode", ShippingProductDTO.class)
+		.setParameter("typeDiscriminator", Long.parseLong(ShippingProductEntity.class.getAnnotation(DiscriminatorValue.class).value()))
+		.setParameter("shippingDestinationCode", destinationCode)
 		.setParameter("shippingTypeCode", type)
 		.setParameter("shippingWeight", weightKg)
 		
