@@ -19,7 +19,7 @@ public class ShippingDestinationEntityBeanFactory implements IShippingDestinatio
 		sd.setShippingDestinationDesc("Test shipping destination description");
 		sd.setShippingDestinationShortCode("ZZ");
 		sd.setShippingDestinationZoneCode("TZ");
-		sd.setShippingDestinationActive(true);
+		sd.setShippingDestinationActive("Y");
 		
 		ShippingDestinationAttributeEntity sdaEn = new ShippingDestinationAttributeEntity();
 		sdaEn.setShippingDestination(sd);

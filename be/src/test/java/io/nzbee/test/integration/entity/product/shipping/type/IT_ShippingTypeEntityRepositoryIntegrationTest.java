@@ -65,7 +65,7 @@ public class IT_ShippingTypeEntityRepositoryIntegrationTest {
 		shippingTypeService.save(shippingType);
 	}
 
-	@Before
+	@Before	
 	public void persistANewShippingType() {
 		if (setUpIsDone) {
 			return;
