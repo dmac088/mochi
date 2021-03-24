@@ -24,6 +24,7 @@ public interface IShippingDestinationRepository extends CrudRepository<ShippingD
 			+ " AND at.lclCd = :locale")
 	Optional<ShippingDestinationDTO> findByCode(String locale, String shippingDestinationCode);
 	
+	
 	@Query(	  " SELECT new io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO("
 			+ "															 sd.shippingDestinationId, "
 			+ "															 sd.shippingDestinationCode, "
@@ -51,7 +52,22 @@ public interface IShippingDestinationRepository extends CrudRepository<ShippingD
 			+ " AND sd.shippingDestinationActive = 'Y'")
 	List<ShippingDestinationDTO> findAllActive(String locale);
 	
-	
+	@Query(	  " SELECT new io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO("
+			+ "															 sd.shippingDestinationId, "
+			+ "															 sd.shippingDestinationCode, "
+			+ "															 sd.shippingDestinationZoneCode, "
+			+ "															 at.shippingDestinationDesc, "
+			+ "															 at.lclCd "		
+			+ ") "
+			+ " FROM ShippingDestinationEntity sd "
+			+ " JOIN sd.attributes at "
+			+ " JOIN sd.products p "
+			+ " WHERE 0=0 "
+			+ " AND at.lclCd = :locale"
+			+ " AND sd.shippingDestinationActive = 'Y'"
+			+ " AND :bagWeight > p.weightFrom "
+			+ " AND :bagWeight <= p.weightTo ")
+	List<ShippingDestinationDTO> findAllActiveByBagWeight(String locale, Double weight);
 	
 }
 

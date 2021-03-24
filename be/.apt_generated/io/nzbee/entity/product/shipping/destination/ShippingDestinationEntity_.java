@@ -1,8 +1,10 @@
 package io.nzbee.entity.product.shipping.destination;
 
+import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.shipping.destination.attribute.ShippingDestinationAttributeEntity;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.ListAttribute;
+import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
 
@@ -17,6 +19,7 @@ public abstract class ShippingDestinationEntity_ {
 	public static volatile ListAttribute<ShippingDestinationEntity, ShippingDestinationAttributeEntity> attributes;
 	public static volatile SingularAttribute<ShippingDestinationEntity, Long> shippingDestinationId;
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationCode;
+	public static volatile SetAttribute<ShippingDestinationEntity, ShippingProductEntity> products;
 
 	public static final String SHIPPING_DESTINATION_DESC = "shippingDestinationDesc";
 	public static final String SHIPPING_DESTINATION_ZONE_CODE = "shippingDestinationZoneCode";
@@ -25,6 +28,7 @@ public abstract class ShippingDestinationEntity_ {
 	public static final String ATTRIBUTES = "attributes";
 	public static final String SHIPPING_DESTINATION_ID = "shippingDestinationId";
 	public static final String SHIPPING_DESTINATION_CODE = "shippingDestinationCode";
+	public static final String PRODUCTS = "products";
 
 }
 

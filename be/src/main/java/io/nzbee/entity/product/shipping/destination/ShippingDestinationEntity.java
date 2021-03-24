@@ -2,7 +2,10 @@ package io.nzbee.entity.product.shipping.destination;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,6 +14,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.shipping.destination.attribute.ShippingDestinationAttributeEntity;
 
 @Entity
@@ -44,6 +49,11 @@ public class ShippingDestinationEntity implements Serializable {
 			orphanRemoval = true)
 	private List<ShippingDestinationAttributeEntity> attributes = new ArrayList<ShippingDestinationAttributeEntity>();
 
+	@OneToMany(	mappedBy="shippingType",
+			cascade = CascadeType.ALL,
+			orphanRemoval = true)
+	private Set<ShippingProductEntity> products = new HashSet<ShippingProductEntity>();
+	
 	public Long getShippingDestinationId() {
 		return shippingDestinationId;
 	}
@@ -94,6 +104,14 @@ public class ShippingDestinationEntity implements Serializable {
 
 	public void setShippingDestinationActive(String shippingDestinationActive) {
 		this.shippingDestinationActive = shippingDestinationActive;
+	}
+
+	public Set<ShippingProductEntity> getProducts() {
+		return products;
+	}
+
+	public void setProducts(Set<ShippingProductEntity> products) {
+		this.products = products;
 	}
 
 }
