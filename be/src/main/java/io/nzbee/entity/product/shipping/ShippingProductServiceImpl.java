@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.shipping;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -33,10 +35,9 @@ public class ShippingProductServiceImpl implements IShippingProductService {
 	}
 
 	@Override
-	public ProductDTO findByDestinationAndTypeAndBagWeight(String locale, String shippingDestinationCode,
+	public Optional<ProductDTO> findByDestinationAndTypeAndBagWeight(String locale, String currency, String shippingDestinationCode,
 			String shippingTypeCode, Double bagWeightKg) {
-		// TODO Auto-generated method stub
-		return null;
+		return productDAO.findShippingProductByDestinationAndTypeAndWeight(locale, currency, shippingDestinationCode, shippingTypeCode, bagWeightKg);
 	}
 	
 	

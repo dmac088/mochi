@@ -29,6 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.product.shipping.ShippingProductDTO;
 
 @Component(value = "productEntityDao")
 public class ProductDaoPostgresImpl implements IProductDao {
@@ -168,11 +169,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = ProductServiceImpl.CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #productId.toString()")
+					@CachePut(value = ProductServiceImpl.CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #destinationCode + \", \" + type + \", \" + #weightKg.toString()")
 			}
 	)
-	public Optional<ProductDTO> findByShippingProductByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
-		LOGGER.debug("call ProductDaoPostgresImpl.findById parameters : {}, {}, {}, {}, {}", locale, currency, destinationCode, type, weightKg);
+	public Optional<ProductDTO> findShippingProductByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findByShippingProductByDestinationAndTypeAndWeight parameters : {}, {}, {}, {}, {}", locale, currency, destinationCode, type, weightKg);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
 															 false,
@@ -182,10 +183,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
-															 false,
-							   								 false,
-							   								 false,
-							   								 false,
+															 true, //hasType
+							   								 true, //hasShippingDestiantion
+							   								 true, //hasShippingType
+							   								 true, //hasWeight
 															 false,
 															 false,
 															 ""))
@@ -195,6 +196,10 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+		.setParameter("typeDiscriminator", destinationCode)
+		.setParameter("shippingDestinationCode", ShippingProductDTO.class)
+		.setParameter("shippingTypeCode", type)
+		.setParameter("shippingWeight", weightKg)
 		
 		.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new ProductDTOResultTransformer());

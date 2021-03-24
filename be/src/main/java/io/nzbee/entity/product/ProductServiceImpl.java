@@ -130,8 +130,6 @@ public class ProductServiceImpl implements IProductService {
 																							 size,
 																							 sort);
 		
-		System.out.println("cache key = ");
-		System.out.println(locale + ", " + currency + ", " + rootCategory + ", " + categoryCodes.getCacheKey() + ", " + brandCodes.getCacheKey() + ", " + tagCodes.getCacheKey() + ", " + ((maxPrice == null) ? "" : maxPrice.toString()) + ", " + cls.getSimpleName() + ", " + page.toString() + ", " + size.toString() + ", " + sort.toString());
 		return productDAO.findAll(
 								  locale,
 						 		  currency,

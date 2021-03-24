@@ -211,6 +211,8 @@ public class PostgresProductAdapter implements IProductPortService {
 						pp.getTotalElements());		
 	}
 	
+	
+	
 	@Override
 	@Transactional(readOnly = true)
 	public Page<ShippingProduct> findAllShippingProducts(String locale, String currency, String categoryCode,
