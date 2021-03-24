@@ -50,8 +50,11 @@ function Bag() {
                     <a id={product.data.itemUPC} onClick={decrementQty} href="#" className="dec qty-btn">-</a>
                   </div>
                 </td>
+                <td className="pro-quantity">
+                    <span>{product.data.bagItemWeight}</span>
+                </td>
                 <td className="pro-subtotal">
-                  <span>${product.data.itemQty * product.data.markdownPrice}</span>
+                  <span>${product.data.itemQty * product.data.markdownPrice}kg</span>
                 </td>
                 <td className="pro-remove">
                   <a id={product.data.itemUPC} onClick={removeItem} href="#">
