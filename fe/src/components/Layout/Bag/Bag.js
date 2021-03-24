@@ -81,6 +81,7 @@ function Bag() {
                                                 <th className="pro-title">Product</th>
                                                 <th className="pro-price">Price</th>
                                                 <th className="pro-quantity">Quantity</th>
+                                                <th className="pro-quantity">Weight</th>
                                                 <th className="pro-subtotal">Total</th>
                                                 <th className="pro-remove">Remove</th>
                                             </tr>

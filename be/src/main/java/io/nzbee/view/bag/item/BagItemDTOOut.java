@@ -12,9 +12,12 @@ public class BagItemDTOOut {
 	
 	private String currency;
 	
-	private double markdownPrice;
+	private Double markdownPrice;
 	
-	private double bagItemTotal;
+	private Double bagItemTotal;
+	
+	private Double bagItemWeight;
+	
 
 	public BagItemDTOOut() {
 		
@@ -64,7 +67,7 @@ public class BagItemDTOOut {
 		return markdownPrice;
 	}
 
-	public void setMarkdownPrice(double markdownPrice) {
+	public void setMarkdownPrice(Double markdownPrice) {
 		this.markdownPrice = markdownPrice;
 	}
 
@@ -72,7 +75,16 @@ public class BagItemDTOOut {
 		return bagItemTotal;
 	}
 
-	public void setBagItemTotal(double bagItemTotal) {
+	public void setBagItemTotal(Double bagItemTotal) {
 		this.bagItemTotal = bagItemTotal;
 	}
+
+	public Double getBagItemWeight() {
+		return bagItemWeight;
+	}
+
+	public void setBagItemWeight(Double bagItemWeight) {
+		this.bagItemWeight = bagItemWeight;
+	}
+	
 }

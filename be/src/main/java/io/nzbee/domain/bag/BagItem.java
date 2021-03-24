@@ -6,6 +6,7 @@ import java.util.List;
 import io.nzbee.Constants;
 import io.nzbee.domain.bag.discount.Discount;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.product.physical.PhysicalProduct;
 
 public class BagItem {
 
@@ -67,6 +68,13 @@ public class BagItem {
 		return (this.quantity * this.product.getProductMarkdown()) 
 				-
 				this.getBagItemDiscount();
+	}
+	
+	public Double getBagItemWeight() {
+		if(this.product instanceof PhysicalProduct) {
+			return (this.quantity * ((PhysicalProduct) this.product).getWeight());
+		}
+		return new Double(0.0);
 	}
 
 	public boolean isErrors() {
