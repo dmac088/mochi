@@ -71,8 +71,8 @@ public interface IShippingTypeRepository extends CrudRepository<ShippingTypeEnti
 			+ " JOIN p.shippingDestination sd "
 			+ " JOIN st.attributes at "
 			+ " WHERE at.lclCd = :locale "
-			+ " AND :bagWeight > st.weightFrom "
-			+ " AND :bagWeight <= st.weightTo "
+			+ " AND :bagWeight > p.weightFrom "
+			+ " AND :bagWeight <= p.weightTo "
 			+ " AND sd.shippingDestinationCode = :destinationCode")
 	List<ShippingTypeDTO> findAllByDestinationCodeAndBagWeight(String locale, String destinationCode, Double bagWeight);
 	
