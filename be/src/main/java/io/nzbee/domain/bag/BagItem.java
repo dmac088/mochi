@@ -65,9 +65,7 @@ public class BagItem {
 	}
 	
 	public Double getBagItemTotal() {
-		return (this.quantity * this.product.getProductMarkdown()) 
-				-
-				this.getBagItemDiscount();
+		return (this.quantity * this.product.getProductMarkdown()) - this.getBagItemDiscount();
 	}
 	
 	public Double getBagItemWeight() {
