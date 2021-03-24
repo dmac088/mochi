@@ -9,4 +9,6 @@ public interface IPhysicalProductService {
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
 			Double maxPrice, String page, String size, String sort);
 	
+	
+	
 }

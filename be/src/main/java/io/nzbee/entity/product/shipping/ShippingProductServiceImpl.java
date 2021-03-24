@@ -5,6 +5,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductDao;
+import io.nzbee.entity.product.ProductDTO;
 
 @Service
 public class ShippingProductServiceImpl implements IShippingProductService {
@@ -29,6 +30,13 @@ public class ShippingProductServiceImpl implements IShippingProductService {
 		 		  size,
 		 		  sort
 		  	).map(p -> (ShippingProductDTO) p);
+	}
+
+	@Override
+	public ProductDTO findByDestinationAndTypeAndBagWeight(String locale, String shippingDestinationCode,
+			String shippingTypeCode, Double bagWeightKg) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

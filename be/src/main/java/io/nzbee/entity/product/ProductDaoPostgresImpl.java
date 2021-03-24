@@ -97,6 +97,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 true,
+							   								 false,
+							   								 false,
+							   								 false,
 															 false,
 															 false,
 															 ""))
@@ -134,6 +137,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+							   								 false,
+							   								 false,
+							   								 false,
 															 false,
 															 false,
 															 ""))
@@ -141,6 +147,51 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setParameter("locale", locale)
 		.setParameter("currency", currency)
 		.setParameter("productId", productId)
+		.setParameter("activeProductCode", Constants.activeSKUCode)
+		.setParameter("retailPriceCode", Constants.retailPriceCode)
+		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
+		
+		.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductDTOResultTransformer());
+		
+		try {
+			return Optional.ofNullable((ProductDTO) query.getSingleResult());
+		} 
+		catch(NoResultException nre) {
+			return Optional.empty();
+		}
+	}
+	
+	
+	
+	@SuppressWarnings({"deprecation" })
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = ProductServiceImpl.CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #productId.toString()")
+			}
+	)
+	public Optional<ProductDTO> findByShippingProductByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
+		LOGGER.debug("call ProductDaoPostgresImpl.findById parameters : {}, {}, {}, {}, {}", locale, currency, destinationCode, type, weightKg);
+		
+		Query query = em.createNativeQuery(this.constructSQL(false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+							   								 false,
+							   								 false,
+							   								 false,
+															 false,
+															 false,
+															 ""))
+				
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
 		.setParameter("activeProductCode", Constants.activeSKUCode)
 		.setParameter("retailPriceCode", Constants.retailPriceCode)
 		.setParameter("markdownPriceCode", Constants.markdownPriceCode)
@@ -178,6 +229,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+							   								 false,
+							   								 false,
+							   								 false,
 															 false,
 															 false,
 															 ""))
@@ -222,6 +276,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+							   								 false,
+							   								 false,
+							   								 false,
 															 false,
 															 false,
 															 ""))
@@ -275,6 +332,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+							   								 false,
+							   								 false,
+							   								 false,
 															 false,
 															 false,
 															 ""))
@@ -318,6 +378,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 															 false,
 															 false,
 															 false,
+							   								 false,
+							   								 false,
+							   								 false,
 															 true,
 															 false,
 															 ""))
@@ -341,6 +404,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 													  false,
 													  false,
 													  false,
+					   								  false,
+					   							      false,
+					   								  false,
 													  false,
 													  true,
 													  ""))
@@ -397,6 +463,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
   				 											 tagCodes.getCodes().size()>=1,
   				 											 !(maxPrice == null),
   				 											 true,
+  						   									 false,
+  						   									 false,
+  						   									 false,
   				 											 true,
   				 											 false,
   				 											 ""))
@@ -440,6 +509,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 					   									!tagCodes.getCodes().isEmpty(),
 					   									!(maxPrice == null),
 					   									true,
+					   									false,
+					   									false,
+					   									false,
 					   									false,
 					   									true,
 					   									sort))
@@ -513,6 +585,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
   				 											 tagCodes.getCodes().size()>=1,
   				 											 !(maxPrice == null),
   				 											 false,
+  						   									 false,
+  						   									 false,
+  						   									 false,
   				 											 true,
   				 											 false,
   				 											 ""))
@@ -554,6 +629,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 														!brandCodes.getCodes().isEmpty(),
 					   									!tagCodes.getCodes().isEmpty(),
 					   									!(maxPrice == null),
+					   									false,
+					   									false,
+					   									false,
 					   									false,
 					   									false,
 					   									true,
@@ -605,6 +683,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 								boolean hasTags,
 								boolean hasPrice,
 								boolean hasType,
+								boolean hasShippingDestination,
+								boolean hasShippingType,
+								boolean hasShippingWeight,
 								boolean countOnly,
 								boolean offset,
 								String 	sort) {
@@ -934,9 +1015,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		((hasPrice) 
 					? " AND coalesce(mprc.prc_val, rprc.prc_val,0) <= :maxPrice " 
 					: "") +
-		((hasProductCodes) 	? 	" 	AND prd.upc_cd 		in :productCodes" 	: "") +
-		((hasProductDesc) 	? 	" 	AND attr.prd_desc 	=  :productDesc " 	: "") +
-		((hasProductId) 	? 	" 	AND prd.prd_id 		=  :productId " 		: "") +
+		((hasProductCodes) 				? 	" 	AND prd.upc_cd 		in :productCodes " 								: "") +
+		((hasProductDesc) 				? 	" 	AND attr.prd_desc 	=  :productDesc " 								: "") +
+		((hasProductId) 				? 	" 	AND prd.prd_id 		=  :productId " 								: "") +
+		((hasShippingDestination) 		? 	" 	AND sd.shp_dst_cd 	=  :shippingDestinationCode " 					: "") +
+		((hasShippingType) 				? 	" 	AND st.shp_typ_cd 	=  :shippingTypeCode " 							: "") +
+		((hasShippingWeight) 			? 	" 	AND :shippingWeight between ship.shp_wgt_frm and ship.shp_wgt_to " 	: "") +
 			
 		((countOnly || !offset) 
 		? 	""

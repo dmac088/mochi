@@ -38,5 +38,9 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 			String size, String sort);
 
 
+	Optional<ProductDTO> findByShippingProductByDestinationAndTypeAndWeight(String locale, String currency,
+			String destinationCode, String type, Double weightKg);
+
+
 	
 }

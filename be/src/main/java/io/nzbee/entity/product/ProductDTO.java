@@ -100,8 +100,6 @@ public abstract class ProductDTO implements Serializable {
 		this.locale					= tuple[aliasToIndexMap.get(LOCALE_ALIAS)].toString();
 		this.retailPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(RETAIL_PRICE_ALIAS)]).doubleValue();
 		this.markdownPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(MARKDOWN_PRICE_ALIAS)]).doubleValue();
-		
-
 	}
 
 	public String getProductUPC() {

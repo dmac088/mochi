@@ -8,9 +8,9 @@ import io.nzbee.entity.product.shipping.type.ShippingTypeDTO;
 
 public class ShippingProductDTO extends ProductDTO  implements Serializable {
 
+	
 	private static final long serialVersionUID = 2891040207798692399L;
 
-    
     public static final String WEIGHT_LIMIT_ALIAS = "shp_wgt_lim";
     
     public static final String WEIGHT_FROM_ALIAS = "shp_wgt_frm";
@@ -31,7 +31,6 @@ public class ShippingProductDTO extends ProductDTO  implements Serializable {
     
     private String locale;
     
-    
 
 	public ShippingProductDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);
@@ -45,8 +44,7 @@ public class ShippingProductDTO extends ProductDTO  implements Serializable {
 		this.shippingtype = new ShippingTypeDTO(tuple, aliasToIndexMap);
 		
 	}
-
-
+	
 	public String getWeightLimit() {
 		return weightLimit;
 	}
