@@ -13,7 +13,7 @@ public abstract class ShippingDestinationEntity_ {
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationDesc;
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationZoneCode;
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationShortCode;
-	public static volatile SingularAttribute<ShippingDestinationEntity, Boolean> shippingDestinationActive;
+	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationActive;
 	public static volatile ListAttribute<ShippingDestinationEntity, ShippingDestinationAttributeEntity> attributes;
 	public static volatile SingularAttribute<ShippingDestinationEntity, Long> shippingDestinationId;
 	public static volatile SingularAttribute<ShippingDestinationEntity, String> shippingDestinationCode;

@@ -9524,7 +9524,6 @@ SELECT pg_catalog.setval('product_rating_prd_rat_id_seq', 120, true);
 INSERT INTO shipping_destination VALUES (1402669, 'HKHK1', 'HK', 'LOCAL (HONG KONG)', 'HK', 'Y');
 INSERT INTO shipping_destination VALUES (234899, 'GWGW4', 'GW', 'GUINEA-BISSAU', 'GW', 'N');
 INSERT INTO shipping_destination VALUES (1402459, 'BJBJ1', 'BJ', 'BENIN', 'BJ', 'N');
-INSERT INTO shipping_destination VALUES (234560, 'ADAD1', 'AD', 'ANDORRA', 'AD', 'N');
 INSERT INTO shipping_destination VALUES (1402540, 'CVCV1', 'CV', 'CAPE VERDE', 'CV', 'N');
 INSERT INTO shipping_destination VALUES (234563, 'AEAE2', 'AE', 'UNITED ARAB EMIRATES', 'AE', 'N');
 INSERT INTO shipping_destination VALUES (234566, 'AFAF3', 'AF', 'AFGHANISTAN', 'AF', 'N');
@@ -10122,6 +10121,7 @@ INSERT INTO shipping_destination VALUES (1403200, 'ZAZA2', 'ZA', 'SOUTH AFRICA (
 INSERT INTO shipping_destination VALUES (1403203, 'ZMZM1', 'ZM', 'ZAMBIA', 'ZM', 'N');
 INSERT INTO shipping_destination VALUES (1403206, 'ZWZW1', 'ZW', 'ZIMBABWE', 'ZW', 'N');
 INSERT INTO shipping_destination VALUES (1402903, 'NZNZ1', 'NZ', 'NEW ZEALAND', 'NZ', 'Y');
+INSERT INTO shipping_destination VALUES (234560, 'ADAD1', 'AD', 'ANDORRA', 'AD', 'Y');
 
 
 --
