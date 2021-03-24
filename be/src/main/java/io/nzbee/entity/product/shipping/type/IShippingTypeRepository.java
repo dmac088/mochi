@@ -18,7 +18,6 @@ public interface IShippingTypeRepository extends CrudRepository<ShippingTypeEnti
 			+ "															 at.lclCd "		
 			+ ") "
 			+ " FROM ShippingTypeEntity sd "
-			//+ " JOIN sd.products p"
 			+ " JOIN sd.attributes at "
 			+ " WHERE sd.shippingTypeCode = :shippingTypeCode "
 			+ " AND at.lclCd = :locale")
@@ -31,7 +30,6 @@ public interface IShippingTypeRepository extends CrudRepository<ShippingTypeEnti
 			+ "															 at.lclCd "		
 			+ ") "
 			+ " FROM ShippingTypeEntity sd "
-			//+ " JOIN sd.products p"
 			+ " JOIN sd.attributes at "
 			+ " WHERE at.shippingTypeDesc = :shippingTypeDesc "
 			+ " AND at.lclCd = :locale")
@@ -44,7 +42,6 @@ public interface IShippingTypeRepository extends CrudRepository<ShippingTypeEnti
 			+ "															 at.lclCd "		
 			+ ") "
 			+ " FROM ShippingTypeEntity sd "
-			//+ " JOIN sd.products p"
 			+ " JOIN sd.attributes at "
 			+ " WHERE at.lclCd = :locale")
 	List<ShippingTypeDTO> findAll(String locale);
