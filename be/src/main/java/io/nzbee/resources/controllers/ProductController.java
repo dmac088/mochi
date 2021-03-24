@@ -93,6 +93,9 @@ public class ProductController {
     private IPhysicalProductDTOMapper physicalProductDTOMapper;
     
     @Autowired
+    private IShippingProductDTOMapper shippingProductDTOMapper;
+    
+    @Autowired
     private IShippingProductDTOMapper shippingDTOMapper;
     
     @Autowired
@@ -118,6 +121,9 @@ public class ProductController {
     
     @Autowired
     private PhysicalProductResourceAssembler prodFullResourceAssembler;
+    
+    @Autowired
+    private ShippingProductResourceAssembler prodShippingResourceAssembler;
     
     @Autowired
     private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
@@ -295,6 +301,18 @@ public class ProductController {
     											@PathVariable String currency, 
     											@PathVariable String code) {
     	PhysicalProductResource pr = prodFullResourceAssembler.toModel(physicalProductDTOMapper.toDto(productService.findByCode(locale, currency, code)));
+    	return new ResponseEntity< >(pr, HttpStatus.OK);
+    }
+    
+    @GetMapping("/Product/{locale}/{currency}/Destination/{code}/Type/{type}/Weight/{weight}")
+    public ResponseEntity<ShippingProductResource> getByDestinationAndTypeAndWeight(	@PathVariable String locale, 
+										    											@PathVariable String currency, 
+										    											@PathVariable String code,
+										    											@PathVariable String type,
+										    											@PathVariable Double weight) {
+    	ShippingProductResource pr = prodShippingResourceAssembler.toModel(shippingProductDTOMapper.toDto(
+    							shippingProductService.findByDestinationAndTypeAndWeight(locale, currency, code, type, weight)));
+    	
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     

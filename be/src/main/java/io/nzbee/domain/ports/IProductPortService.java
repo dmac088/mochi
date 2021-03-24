@@ -32,4 +32,7 @@ public interface IProductPortService extends IPortService<Product> {
 
 	String[] getSuggestion(String searchTerm, String rootCategory, String locale, String currency);
 
+	Product findByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode,
+			String type, Double weightKg);
+
 }

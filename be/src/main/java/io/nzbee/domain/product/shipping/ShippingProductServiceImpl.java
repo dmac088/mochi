@@ -17,5 +17,10 @@ public class ShippingProductServiceImpl implements IShippingProductService {
 
 		return productService.findAllShippingProducts(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice, page, size, sort);
 	}
+	
+	@Override
+	public ShippingProduct findByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
+		return (ShippingProduct) productService.findByDestinationAndTypeAndWeight(locale, currency, destinationCode, type, weightKg);
+	}
 
 }

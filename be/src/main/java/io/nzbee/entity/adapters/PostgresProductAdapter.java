@@ -112,8 +112,16 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional(readOnly = true)
 	public Product findByDesc(String locale, String currency, String desc) {
 		ProductDTO dto = productService.findByDesc(locale, currency, desc)
-				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));;
+				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));
 		return mapHelper(dto);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public ShippingProduct findByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
+		ProductDTO dto = shippingProductService.findByDestinationAndTypeAndBagWeight(locale, currency, destinationCode, type, weightKg)
+				.orElseThrow(() -> new ProductNotFoundException("Shipping product not found!"));
+		return (ShippingProduct) mapHelper(dto);
 	}
 
 	@Override

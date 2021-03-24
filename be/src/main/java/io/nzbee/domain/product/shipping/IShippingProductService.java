@@ -16,4 +16,7 @@ public interface IShippingProductService {
 									String size, 
 									String sort);
 
+	ShippingProduct findByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode,
+			String type, Double weightKg);
+
 }
