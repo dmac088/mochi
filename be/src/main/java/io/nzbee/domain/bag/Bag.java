@@ -3,9 +3,11 @@ package io.nzbee.domain.bag;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.product.physical.PhysicalProduct;
 
 public class Bag {
 	
@@ -25,6 +27,10 @@ public class Bag {
 	
 	public Set<BagItem> getBagItems() {
 		return bagItems;
+	}
+	
+	public Set<BagItem> getBagItemsByType(Class<?> type) {
+		return bagItems.stream().filter(i -> i.getClass().equals(type)).collect(Collectors.toSet());
 	}
 	
 	public void addItem(Product p, int qty) {
@@ -66,8 +72,13 @@ public class Bag {
 		return this.getBagItems().size();
 	}
 	
+	
 	public int getTotalQuantity() {
 		return this.getBagItems().stream().mapToInt(BagItem::getQuantity).sum();
+	}
+	
+	public Double getTotalWeight() {
+		return this.getBagItemsByType(PhysicalProduct.class).stream().mapToDouble(bi -> bi.getQuantity() * ((PhysicalProduct) bi.getProduct()).getWeight()).sum();
 	}
 	
 	public Double getTotalAmount() {

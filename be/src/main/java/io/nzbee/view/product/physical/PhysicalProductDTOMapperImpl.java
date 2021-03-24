@@ -26,8 +26,10 @@ public class PhysicalProductDTOMapperImpl implements IPhysicalProductDTOMapper {
 		pdto.setCurrency(d.getCurrency());
 		pdto.setProductType(d.getProductType());
 		
+		
 		if(d instanceof PhysicalProduct) {
 			pdto.setInStock(((PhysicalProduct) d).isInStock());
+			pdto.setWeight(((PhysicalProduct) d).getWeight());
 		}
 		
 		return pdto;

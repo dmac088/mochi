@@ -12,6 +12,8 @@ import io.nzbee.view.product.ProductDTO;
 public class PhysicalProductDTO extends ProductDTO {
 	
 	private boolean inStock;
+	
+	private Double weight;
 
 	public boolean isInStock() {
 		return inStock;
@@ -20,6 +22,15 @@ public class PhysicalProductDTO extends ProductDTO {
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
 	}
+
+	public Double getWeight() {
+		return weight;
+	}
+
+	public void setWeight(Double weight) {
+		this.weight = weight;
+	}
+	
 	
 }
 
