@@ -1020,7 +1020,8 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		((hasProductId) 				? 	" 	AND prd.prd_id 		=  :productId " 								: "") +
 		((hasShippingDestination) 		? 	" 	AND sd.shp_dst_cd 	=  :shippingDestinationCode " 					: "") +
 		((hasShippingType) 				? 	" 	AND st.shp_typ_cd 	=  :shippingTypeCode " 							: "") +
-		((hasShippingWeight) 			? 	" 	AND :shippingWeight between ship.shp_wgt_frm and ship.shp_wgt_to " 	: "") +
+		((hasShippingWeight) 			? 	" 	AND :shippingWeight > ship.shp_wgt_frm " +
+											"	AND :shippingWeight <= ship.shp_wgt_to " 	: "") +
 			
 		((countOnly || !offset) 
 		? 	""
