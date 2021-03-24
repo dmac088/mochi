@@ -167,11 +167,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({"deprecation" })
 	@Override
-	@Caching(
-			put = {
-					@CachePut(value = ProductServiceImpl.CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #destinationCode + \", \" + type + \", \" + #weightKg.toString()")
-			}
-	)
 	public Optional<ProductDTO> findShippingProductByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findByShippingProductByDestinationAndTypeAndWeight parameters : {}, {}, {}, {}, {}", locale, currency, destinationCode, type, weightKg);
 		
