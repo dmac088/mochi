@@ -13,6 +13,8 @@ public class ShippingDestinationMasterSchema {
 	private String DESTINATION_DESC_CN;
 	
 	private String DESTINATION_ZONE_CODE;
+	
+	private String DESTINATION_IS_ACTIVE;
 
 	public String get_DESTINATION_CODE() {
 		return DESTINATION_CODE;
@@ -61,5 +63,14 @@ public class ShippingDestinationMasterSchema {
 	public void set_DESTINATION_ZONE_CODE(String dESTINATION_ZONE_CODE) {
 		DESTINATION_ZONE_CODE = dESTINATION_ZONE_CODE;
 	}
+
+	public String get_DESTINATION_IS_ACTIVE() {
+		return DESTINATION_IS_ACTIVE;
+	}
+
+	public void set_DESTINATION_IS_ACTIVE(String dESTINATION_IS_ACTIVE) {
+		DESTINATION_IS_ACTIVE = dESTINATION_IS_ACTIVE;
+	}
+	
 	
 }

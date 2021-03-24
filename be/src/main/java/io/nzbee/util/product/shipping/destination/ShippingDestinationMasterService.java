@@ -66,6 +66,7 @@ public class ShippingDestinationMasterService {
 											sdms.get_DESTINATION_DESC_EN(),
 											sdms.get_DESTINATION_SHORT_CODE(),
 											sdms.get_DESTINATION_ZONE_CODE(),
+											sdms.get_DESTINATION_IS_ACTIVE(),
 											Constants.localeENGB
 										);
 		
@@ -77,6 +78,7 @@ public class ShippingDestinationMasterService {
 				sdms.get_DESTINATION_DESC_HK(),
 				sdms.get_DESTINATION_SHORT_CODE(),
 				sdms.get_DESTINATION_ZONE_CODE(),
+				sdms.get_DESTINATION_IS_ACTIVE(),
 				Constants.localeZHHK
 		);
 		
@@ -90,6 +92,7 @@ public class ShippingDestinationMasterService {
 																 String shippingDestinationAttributeDescription,
 																 String shippingDestinationShortCode,
 																 String shippingDestinationZoneCode,
+																 String isActive,
 																 String locale) {
 		
 		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode(shippingDestinationCode);
@@ -102,6 +105,7 @@ public class ShippingDestinationMasterService {
 		sd.setShippingDestinationDesc(shippingDestinationDescription);
 		sd.setShippingDestinationShortCode(shippingDestinationShortCode);
 		sd.setShippingDestinationZoneCode(shippingDestinationZoneCode);
+		sd.setShippingDestinationActive(isActive);
 		
 		Optional<ShippingDestinationAttributeEntity> osdaen = shippingDestinationAttributeService.findByCode(locale, shippingDestinationCode);
 		

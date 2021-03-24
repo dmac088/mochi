@@ -41,6 +41,7 @@ public class PhysicalProductMapperImpl implements IPhysicalProductMapper {
 			   	dto.getLocale(),
 			   	dto.getCurrency(),
 			   	dto.isInStock(),
+			   	dto.getWeight(),
 			   	brandMapper.DTOToDo(dto.getBrand()),
 			   	departmentMapper.DTOToDo(dto.getDepartment()),
 			   	dto.getCategories().stream().map(c -> categoryProductMapper.DTOToDo(c)).collect(Collectors.toList()),

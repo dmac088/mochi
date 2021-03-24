@@ -12,6 +12,8 @@ public class PhysicalProduct extends Product {
 
 	private boolean inStock;
 	
+	private Double weight;
+	
 	public PhysicalProduct(  String productUPC,
 							 LocalDateTime   productCreateDt,
 						   	 String productStatus,
@@ -22,7 +24,8 @@ public class PhysicalProduct extends Product {
 						   	 String productImage,
 						   	 String lclCd,
 						   	 String currency,
-						   	 boolean inStock,
+						   	 Boolean inStock,
+						   	 Double weight,
 						   	 Brand brand,
 						   	 Department department,
 						   	 List<ProductCategory> productCategories,
@@ -45,11 +48,17 @@ public class PhysicalProduct extends Product {
 		
 		this.productType = this.getClass().getSimpleName().toString().toLowerCase();
 		this.inStock 	 = inStock;
+		this.weight 	 = weight;
 		this.productType = this.getClass().getSimpleName().toString().toLowerCase();
+		
 	}
 	
 	public boolean isInStock() {
 		return inStock;
+	}
+
+	public Double getWeight() {
+		return weight;
 	}
 
 }

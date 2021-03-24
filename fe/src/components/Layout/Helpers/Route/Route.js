@@ -5,8 +5,11 @@ export const isHomePath = (path) => {
 }
 
 export const getHomePath = (match) => {
+    if(!match) {
+        return `/en-GB/HKD`;
+    }
     const {curr, lang} = match.params;
-    return '/' + lang + '/' + curr;
+    return `/${lang}/${curr}`;
 }
 
 export const getCategoryPath = (categoryCode, match) => {

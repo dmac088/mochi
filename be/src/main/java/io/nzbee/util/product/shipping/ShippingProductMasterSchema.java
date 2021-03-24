@@ -30,7 +30,6 @@ public class ShippingProductMasterSchema extends ProductMasterSchema {
 	private String TRACKING_LEVEL;
 	
 	private String AMOUNT_HKD;
-	
 
 	public String get_SERVICE_TYPE_CODE() {
 		return SERVICE_TYPE_CODE;

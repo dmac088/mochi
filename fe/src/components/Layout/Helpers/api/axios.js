@@ -83,14 +83,12 @@ instance.interceptors.response.use((response) => {
     const originalRequest = error.config;
 
     //mock a match object for our params
-    console.log(history.location.pathname);
     const match = matchPath(history.location.pathname, {
         path: "/:lang/:curr",
         exact: true,
         strict: true
     });
-    console.log(match);
-
+    
     //get the token link
     const tokenLink = 'https://localhost:8090/oauth/token';
 
