@@ -52,7 +52,7 @@ public interface IShippingDestinationRepository extends CrudRepository<ShippingD
 			+ " AND sd.shippingDestinationActive = 'Y'")
 	List<ShippingDestinationDTO> findAllActive(String locale);
 	
-	@Query(	  " SELECT new io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO("
+	@Query(	  " SELECT DISTINCT new io.nzbee.entity.product.shipping.destination.ShippingDestinationDTO("
 			+ "															 sd.shippingDestinationId, "
 			+ "															 sd.shippingDestinationCode, "
 			+ "															 sd.shippingDestinationZoneCode, "
