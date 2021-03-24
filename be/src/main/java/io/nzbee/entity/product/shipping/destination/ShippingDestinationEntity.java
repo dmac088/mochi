@@ -45,13 +45,13 @@ public class ShippingDestinationEntity implements Serializable {
 	private String shippingDestinationActive;
 	
 	@OneToMany(	mappedBy="shippingDestination",  
-			cascade = CascadeType.ALL,
-			orphanRemoval = true)
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	private List<ShippingDestinationAttributeEntity> attributes = new ArrayList<ShippingDestinationAttributeEntity>();
 
-	@OneToMany(	mappedBy="shippingType",
-			cascade = CascadeType.ALL,
-			orphanRemoval = true)
+	@OneToMany(	mappedBy="shippingDestination",
+				cascade = CascadeType.ALL,
+				orphanRemoval = true)
 	private Set<ShippingProductEntity> products = new HashSet<ShippingProductEntity>();
 	
 	public Long getShippingDestinationId() {

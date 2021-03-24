@@ -225,6 +225,21 @@ public class ProductController {
     	return ResponseEntity.ok(shippingDestinationResourceAssembler.toCollectionModel(sp));
     }
 	
+	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/Weight/{bagWeight}")
+    public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingDestinations(	@PathVariable String locale, 
+																							   		@PathVariable String currency,
+																							   		@PathVariable Double bagWeight) {
+    	
+    	LOGGER.debug("Fetching products for parameters : {}, {}, {}", locale, currency, bagWeight);
+    	
+    	final List<ShippingDestinationDTO> sp = shippingDestinationService.findAllActiveByBagWeight(locale, bagWeight) 
+															.stream().map(d -> shippingDestinationDTOMapper.toDto(d))
+															.collect(Collectors.toList());
+    	
+    	
+    	return ResponseEntity.ok(shippingDestinationResourceAssembler.toCollectionModel(sp));
+    }
+	
 	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/Code/{destinationCode}")
 	public ResponseEntity<ShippingDestinationResource> getShippingDestination(@PathVariable String locale, 
 																			  @PathVariable String currency,

@@ -3,7 +3,6 @@ package io.nzbee.entity.product.shipping.destination;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,6 +38,11 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 	@Override
 	public List<ShippingDestinationDTO> findAllActive(String locale) {
 		return shippingDestinationRepository.findAllActive(locale);
+	}
+	
+	@Override
+	public List<ShippingDestinationDTO> findAllActiveByBagWeight(String locale, Double bagWeight) {
+		return shippingDestinationRepository.findAllActiveByBagWeight(locale, bagWeight);
 	}
 
 	@Override
@@ -96,5 +100,7 @@ public class ShippingDestinationServiceImpl implements IShippingDestinationServi
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 
 }

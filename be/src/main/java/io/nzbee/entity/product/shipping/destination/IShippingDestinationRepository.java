@@ -67,7 +67,7 @@ public interface IShippingDestinationRepository extends CrudRepository<ShippingD
 			+ " AND sd.shippingDestinationActive = 'Y'"
 			+ " AND :bagWeight > p.weightFrom "
 			+ " AND :bagWeight <= p.weightTo ")
-	List<ShippingDestinationDTO> findAllActiveByBagWeight(String locale, Double weight);
+	List<ShippingDestinationDTO> findAllActiveByBagWeight(String locale, Double bagWeight);
 	
 }
 
