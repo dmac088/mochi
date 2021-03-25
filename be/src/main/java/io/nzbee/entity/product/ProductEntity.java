@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
@@ -178,8 +180,6 @@ public abstract class ProductEntity implements Serializable {
 					schema				= "mochi", 
 		   			joinColumns 		= @JoinColumn(name = "prd_id"), 
 		   			inverseJoinColumns 	= @JoinColumn(name = "cat_id"))
-	@IndexedEmbedded(	prefix="product.categories.", 
-						includeEmbeddedObjectId=true)
 	private Set<CategoryProductEntity> categories = new HashSet<CategoryProductEntity>();
 	
 	@ManyToMany(fetch = FetchType.LAZY,
@@ -397,6 +397,12 @@ public abstract class ProductEntity implements Serializable {
 
 	public Set<CategoryProductEntity> getCategories() {
 		return this.categories;
+	}
+	
+	@IndexedEmbedded(	prefix="product.categories.", 
+						includeEmbeddedObjectId=true)
+	public Set<CategoryProductEntity> getCategoriesForIndex() {
+		return this.categories.stream().filter(c -> c.getRootNode(c).getCategoryCode().equals(Constants.defaultProductRootCategoryCode)).collect(Collectors.toSet());
 	}
 	
 	public void setCategories(Set<CategoryProductEntity> categories) {

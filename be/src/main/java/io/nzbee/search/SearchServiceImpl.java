@@ -409,7 +409,7 @@ public class SearchServiceImpl implements ISearchService {
 			
 			System.out.println(service.getClass().getSimpleName());
 			
-			List<ISearchDimension> lc = service.findAll(lcl, currency, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(sfh.getCodes()));
+			List<ISearchDimension> lc = service.findAll(lcl, currency, Constants.defaultProductRootCategoryCode, new StringCollectionWrapper(sfh.getCodes()));
 			
 			lc.stream().forEach(f -> {
 				System.out.println(f.getClass().getSimpleName() + " - " + f.getCode() + " - " + f.getDesc());
@@ -459,7 +459,7 @@ public class SearchServiceImpl implements ISearchService {
 		List<String> orderedIds = result.stream().map(o -> o[0].toString()).collect(Collectors.toList());
 		List<ProductDTO> lp = productService.findAll( lcl, 
 													 currency, 
-													 Constants.primaryProductRootCategoryCode,
+													 Constants.defaultProductRootCategoryCode,
 													 new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
 		
 		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((ProductDTO) item).getProductUPC())));		

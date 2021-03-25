@@ -293,6 +293,14 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 		return this.getClass().getAnnotation(DiscriminatorValue.class).value();
 	}
 	
+	public CategoryEntity getRootNode(CategoryEntity node) {
+		if(!node.getParent().isPresent()) {
+			return node;
+		}
+		return getRootNode(node.getParent().get());
+		
+	}
+	
 	@Override
 	public boolean equals(Object o) {
 		 if (this == o) return true;

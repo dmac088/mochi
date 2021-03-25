@@ -31,7 +31,7 @@ public class PostgresBagAdapter implements IBagPortService {
 	public Bag findByCode(String locale, String currency, String userName) {
 		LOGGER.debug("call PostgresBagAdapter.findByCode with parameter {}, {}, {}", locale, currency, userName);
 		
-		Optional<BagDTO> ob = bagService.findByCode(locale, currency, Constants.primaryProductRootCategoryCode, userName);
+		Optional<BagDTO> ob = bagService.findByCode(locale, currency, Constants.defaultProductRootCategoryCode, userName);
 		
 		//if there is no current bag, get a new one
 		BagDTO b = 	ob.get();

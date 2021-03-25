@@ -103,14 +103,14 @@ public class PostgresCategoryAdapter implements ICategoryPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<ProductCategory> findAllProductCategories(String locale) {
-		return categoryService.findAll(locale, Constants.primaryProductRootCategoryCode, CategoryProductEntity.class)
+		return categoryService.findAll(locale, Constants.defaultProductRootCategoryCode, CategoryProductEntity.class)
 				.stream().map(c -> (ProductCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	
 	@Override
 	@Transactional(readOnly = true)
 	public List<BrandCategory> findAllBrandCategories(String locale) {
-		return categoryService.findAll(locale, Constants.primaryProductRootCategoryCode, CategoryBrandEntity.class)
+		return categoryService.findAll(locale, Constants.defaultProductRootCategoryCode, CategoryBrandEntity.class)
 				.stream().map(c -> (BrandCategory) categoryMapper.DTOToDo(c)).collect(Collectors.toList());
 	}
 	

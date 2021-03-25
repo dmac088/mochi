@@ -129,7 +129,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	public <T> List<Product> findAllByType(String locale, String currency, Class<T> cls) {
 		List<ProductDTO> lp = productService.findAllByType(locale, 
 														   currency, 
-														   Constants.primaryProductRootCategoryCode, 
+														   Constants.defaultProductRootCategoryCode, 
 														   mapDomainClassToEntityClass(cls)
 														   );
 		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());

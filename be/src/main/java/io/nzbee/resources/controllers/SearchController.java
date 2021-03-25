@@ -91,7 +91,7 @@ public class SearchController {
 		
 		LOGGER.debug("Searching for suggestions with patameters: {}, {}", locale, term);
 		
-		return new ResponseEntity< >(productService.getSuggestion(term, Constants.primaryProductRootCategoryCode,locale, currency), HttpStatus.OK);
+		return new ResponseEntity< >(productService.getSuggestion(term, Constants.defaultProductRootCategoryCode,locale, currency), HttpStatus.OK);
 	}
 	
 }
