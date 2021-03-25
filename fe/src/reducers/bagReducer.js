@@ -28,7 +28,7 @@ export default function (state = initialState, action) {
         case GET_BAG_SUCCESS:
             return {
                 ...state,
-                ...action.payload.bag,
+                ...action.payload,
             }
 
         case GET_BAG_FAILURE:

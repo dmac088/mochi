@@ -66,6 +66,8 @@ function Bag() {
           });
       }
 
+      console.log(bag);
+      console.log(bagContents);
     return (
         <React.Fragment>
             {(bagContents.loading) 
