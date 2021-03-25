@@ -27,7 +27,6 @@ function Accordion(props) {
     }
   }, [bag.loading, bag.isDone, session.authenticated]);
   
-
   const renderItems = (items = []) => {
     return items.map((item, index) => {    
       return (

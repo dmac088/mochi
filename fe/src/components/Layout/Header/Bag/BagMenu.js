@@ -7,6 +7,8 @@ import { getBagPath } from '../../Helpers/Route/Route';
 import { localization } from '../../Localization/Localization';
 import { useSelector, useDispatch } from 'react-redux';
 import * as bagService from '../../../../services/Bag/index';
+import { Spinner } from '../../Helpers/Animation/Spinner';
+
 
 function BagMenu(props) {
 
@@ -42,9 +44,11 @@ function BagMenu(props) {
     }, 500);
   }
 
+  const readyToGetBag = !discovery.loading && discovery.isDone && session.authenticated;
+  const bagIsFetched = !bag.loading && bag.isDone;
 
   useEffect(() => {
-    if(!discovery.loading && discovery.isDone && session.authenticated ) {
+    if(readyToGetBag) {
         dispatch(bagService.getBag());
     }
   }, [discovery.loading, discovery.isDone, session.authenticated]);
@@ -54,8 +58,11 @@ function BagMenu(props) {
   const setContainer = (c) => {
       container = c;
   }
-  
+
   return (
+    (!bagIsFetched)
+    ? <Spinner />
+    : 
     <React.Fragment>
     <div 
         onMouseEnter={setIn}
@@ -68,7 +75,7 @@ function BagMenu(props) {
         </div>
         <div className="cart-info d-inline-block">
           <p>{localization[lang]['mybag']}
-          <span>{bag.totalItems} {localization[lang]['items']} - ${bag.totalAmount}</span>
+          <span>{bag.bag.totalItems} {localization[lang]['items']} - ${bag.bag.totalAmount}</span>
           </p>
         </div>
         </Link>
