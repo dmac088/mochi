@@ -6,13 +6,9 @@ import {
 } from "../actions/ActionTypes";
 
 const initialState = {
-    bagStatusCode: null,
-    totalItems: 0,
-    totalQuantity: 0,
-    totalAmount: 0,
-    links: null,
     loading: false,
     isDone: false,
+    error: null,
 };
 
 export default function (state = initialState, action) {
@@ -33,7 +29,6 @@ export default function (state = initialState, action) {
             return {
                 ...state,
                 ...action.payload.bag,
-                ...action.payload,
             }
 
         case GET_BAG_FAILURE:
