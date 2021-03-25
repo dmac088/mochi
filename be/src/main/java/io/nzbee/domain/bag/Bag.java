@@ -78,6 +78,12 @@ public class Bag {
 	}
 	
 	public Double getTotalWeight() {
+		bagItems.forEach(bi -> {
+			System.out.println(bi.getQuantity());
+			System.out.println(((PhysicalProduct) bi.getProduct()).getWeight());
+			System.out.println(((PhysicalProduct) bi.getProduct()).getWeight() * bi.getQuantity());
+		});
+		System.out.println(this.getBagItemsByType(PhysicalProduct.class).stream().mapToDouble(i -> i.getQuantity() * ((PhysicalProduct) i.getProduct()).getWeight()).reduce(0.0, Double::sum));
 		return this.getBagItemsByType(PhysicalProduct.class).stream().mapToDouble(bi -> bi.getQuantity() * ((PhysicalProduct) bi.getProduct()).getWeight()).sum();
 	}
 	

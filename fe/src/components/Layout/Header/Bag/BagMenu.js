@@ -44,14 +44,16 @@ function BagMenu(props) {
     }, 500);
   }
 
-  const readyToGetBag = !discovery.loading && discovery.isDone && session.authenticated;
-  const bagIsFetched = !bag.loading && bag.isDone;
+  const discoveryReady  = !discovery.loading && discovery.isDone && session.authenticated;
+  const bagReady        = !bag.loading && bag.isDone;
 
   useEffect(() => {
-    if(readyToGetBag) {
+    if(discoveryReady) {
         dispatch(bagService.getBag());
     }
-  }, [discovery.loading, discovery.isDone, session.authenticated]);
+  }, [discovery.loading, 
+      discovery.isDone, 
+      session.authenticated]);
   
   let container = null;
 
@@ -60,7 +62,7 @@ function BagMenu(props) {
   }
 
   return (
-    (!bagIsFetched)
+    (!bagReady)
     ? <Spinner />
     : 
     <React.Fragment>

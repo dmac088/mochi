@@ -402,7 +402,7 @@ public abstract class ProductEntity implements Serializable {
 	@IndexedEmbedded(	prefix="product.categories.", 
 						includeEmbeddedObjectId=true)
 	public Set<CategoryProductEntity> getCategoriesForIndex() {
-		return this.categories.stream().filter(c -> c.getRootNode(c).getCategoryCode().equals(Constants.defaultProductRootCategoryCode)).collect(Collectors.toSet());
+		return this.categories.stream().filter(c -> c.getRootNode(c).getCategoryCode().equals(Constants.indexCategoryHierarchyRootNode)).collect(Collectors.toSet());
 	}
 	
 	public void setCategories(Set<CategoryProductEntity> categories) {

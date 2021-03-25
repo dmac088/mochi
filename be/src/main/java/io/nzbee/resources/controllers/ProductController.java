@@ -213,7 +213,7 @@ public class ProductController {
 	
 	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}")
     public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingDestinations(	@PathVariable String locale, 
-																							   	@PathVariable String currency) {
+																							   		@PathVariable String currency) {
     	
     	LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
     	

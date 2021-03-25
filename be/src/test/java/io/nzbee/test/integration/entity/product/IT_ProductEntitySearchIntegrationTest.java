@@ -582,7 +582,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalElements())
 		.isEqualTo(new Long(12));
 		assertThat(returnFacets.size())
-		.isEqualTo(23);
+		.isEqualTo(20);
 		
 		returnFacets.clear();
 		
@@ -604,7 +604,7 @@ public class IT_ProductEntitySearchIntegrationTest {
     	assertThat(pp.getTotalElements())
         .isEqualTo(new Long(4));
     	assertThat(returnFacets.size())
-		.isEqualTo(13);
+		.isEqualTo(10);
 	}
 	
 	@Test

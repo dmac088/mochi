@@ -11,6 +11,8 @@ public class BagDTO {
 	private int totalQuantity;
 	
 	private Double totalAmount;
+	
+	private Double totalWeight;
 
 	public String getBagStatusCode() {
 		return bagStatusCode;
@@ -51,6 +53,13 @@ public class BagDTO {
 	public void setTotalAmount(Double totalAmount) {
 		this.totalAmount = totalAmount;
 	}
-	
+
+	public Double getTotalWeight() {
+		return totalWeight;
+	}
+
+	public void setTotalWeight(Double totalWeight) {
+		this.totalWeight = totalWeight;
+	}
 	
 }

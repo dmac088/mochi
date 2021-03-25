@@ -57,7 +57,7 @@ function Bag() {
                   <span>${product.data.itemQty * product.data.markdownPrice}</span>
                 </td>
                 <td className="pro-remove">
-                  <a id={product.data.itemUPC} onClick={removeItem} href="#">
+                    <a id={product.data.itemUPC} onClick={removeItem} href="#">
                     <i id={product.data.itemUPC} onClick={removeItem} className="fa fa-trash-o"></i>
                   </a>
                 </td>

@@ -8,9 +8,10 @@ import { getShippingDestinations, findByCode } from '../../../../services/Shippi
 
 function Shipping() {
 
-    const dispatch = useDispatch();
-    const discovery = useSelector(state => state.discovery);
-    const shippingDestinations = useSelector(state => state.shippingDestinations);
+    const dispatch              = useDispatch();
+    const discovery             = useSelector(state => state.discovery);
+    const bag                   = useSelector(state => state.bag);
+    const shippingDestinations  = useSelector(state => state.shippingDestinations);
 
     //selected shipping destination stored in local state
     const [stateObject, setObjectState] = useState({
@@ -31,17 +32,25 @@ function Shipping() {
         let isSubscribed = true;
         if (isSubscribed) {
             if (!discovery.loading && discovery.isDone) {
-                dispatch(getShippingDestinations(discovery));
+                if(!bag.loading && bag.isDone) {
+                    console.log(bag);
+                    dispatch(getShippingDestinations(discovery, 0.5));
+                }
             }
         }
         return () => (isSubscribed = false);
     }, [discovery.loading,
-        discovery.isDone]);
+        discovery.isDone,
+        bag.loading,
+        bag.isDone]);
 
-    const destinationsReady = ((!shippingDestinations.isDone || shippingDestinations.loading));
+
+    const bagReady          = ((bag.isDone && !bag.loading));
+    const destinationsReady = ((shippingDestinations.isDone && !shippingDestinations.loading));
+    
      
     return (
-        ((destinationsReady))
+        (!(destinationsReady && bagReady))
         ? <Spinner />
         :
         <div className="calculate-shipping">
