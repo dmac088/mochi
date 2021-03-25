@@ -65,10 +65,13 @@ function Bag() {
             ) 
           });
       }
-      
+
+      const bagIsFetched = !bag.loading && bag.isDone;
+      const bagContentsAreFetched = !bagContents.loading && bagContents.isDone;
+      console.log(bag);
     return (
         <React.Fragment>
-            {(bagContents.loading) 
+            {(!(bagIsFetched && bagContentsAreFetched)) 
             ? <Spinner />
             :
             <div className="page-section section mb-50">
@@ -116,7 +119,7 @@ function Bag() {
                                     <div className="cart-summary">
                                         <div className="cart-summary-wrap">
                                             <h4>Bag Summary</h4>
-                                            <p>Sub Total <span>${bag.totalAmount}</span></p>
+                                            <p>Sub Total <span>${bag.bag.totalAmount}</span></p>
                                             <p>Shipping Cost <span>$00.00</span></p>
                                             <h2>Grand Total <span>$00.00</span></h2>
                                         </div>
