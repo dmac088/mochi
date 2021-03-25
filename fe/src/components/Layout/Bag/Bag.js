@@ -66,9 +66,9 @@ function Bag() {
           });
       }
 
-      const bagIsFetched = !bag.loading && bag.isDone;
-      const bagContentsAreFetched = !bagContents.loading && bagContents.isDone;
-      console.log(bag);
+    const bagIsFetched = !bag.loading && bag.isDone;
+    const bagContentsAreFetched = !bagContents.loading && bagContents.isDone;
+      
     return (
         <React.Fragment>
             {(!(bagIsFetched && bagContentsAreFetched)) 
