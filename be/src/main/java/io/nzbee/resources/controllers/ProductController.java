@@ -267,11 +267,16 @@ public class ProductController {
 	@GetMapping(value = "/Product/Shipping/Type/{locale}/{currency}/Destination/Code/{destinationCode}")
     public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypesByDestination(	@PathVariable String locale, 
 																								@PathVariable String currency,
-																								@PathVariable String destinationCode) {
+																								@PathVariable String destinationCode,
+																								Principal principal) {
     	
     	LOGGER.debug("call ProductController.getShippingTypesByDestination : {}, {}, {}", locale, currency, destinationCode);
     	
-    	final List<ShippingTypeDTO> sp = shippingTypeService.findAll(locale, destinationCode) 
+    	Bag b = bagService.findByCode(	locale, 
+										currency, 
+										principal.getName());
+    	
+    	final List<ShippingTypeDTO> sp = shippingTypeService.findAll(locale, destinationCode, b.getTotalWeight())
 															.stream().map(d -> shippingTypeDTOMapper.toDto(d))
 															.collect(Collectors.toList());
     	
@@ -309,8 +314,8 @@ public class ProductController {
     
     @GetMapping("/Product/{locale}/{currency}/code/{code}")
     public ResponseEntity<PhysicalProductResource> get(	@PathVariable String locale, 
-    											@PathVariable String currency, 
-    											@PathVariable String code) {
+    													@PathVariable String currency, 
+    													@PathVariable String code) {
     	PhysicalProductResource pr = prodFullResourceAssembler.toModel(physicalProductDTOMapper.toDto(productService.findByCode(locale, currency, code)));
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
