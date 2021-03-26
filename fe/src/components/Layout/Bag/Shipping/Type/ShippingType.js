@@ -8,7 +8,6 @@ function ShippingType(props) {
     const dispatch = useDispatch();
     const discovery = useSelector(state => state.discovery);
     const shippingTypes = useSelector(state => state.shippingTypes);
-    const bag = useSelector(state => state.bag);
     const prevDestinationCode = usePrevious(destinationCode);
 
     function usePrevious(value) {
@@ -29,9 +28,7 @@ function ShippingType(props) {
         let isSubscribed = true;
         if (isSubscribed) {
             if (!discovery.loading && discovery.isDone && prevDestinationCode !== destinationCode && destination) {
-                if(!bag.loading && bag.isDone ) {
-                    dispatch(getShippingType(destination, bag.bag.totalWeight));
-                }
+                dispatch(getShippingType(destination));
             }
         }
         return () => (isSubscribed = false);

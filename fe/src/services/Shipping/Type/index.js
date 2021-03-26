@@ -5,12 +5,12 @@ import {
     getShippingTypeFailure,
 } from "../../../actions/ShippingTypeActions";
 
-export const getShippingType = (destination, weight) => {
+export const getShippingType = (destination) => {
     
      return (dispatch) => {
          dispatch(getShippingTypeStarted());
 
-        return axios.get(destination._links.shippingTypes.href.replace('{bagWeight}', weight))
+        return axios.get(destination._links.shippingTypes.href)
         .then((payload) => {
             return payload.data;
         }).then((Types) => {

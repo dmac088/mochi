@@ -5,10 +5,10 @@ import {
     getShippingDestinationsFailure,
 } from "../../../actions/ShippingDesinationActions";
 
-export const getShippingDestinations = (discovery, weight) => {
+export const getShippingDestinations = (discovery) => {
     return (dispatch) => {
         dispatch(getShippingDestinationsStarted());
-        return axios.get(discovery.links.getShippingDestinations.href.replace('{bagWeight}', weight))
+        return axios.get(discovery.links.getShippingDestinations.href)
         .then((payload) => {
             return payload.data;
         }).then((providers) => {
