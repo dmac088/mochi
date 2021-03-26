@@ -120,7 +120,7 @@ function Bag() {
                                     <div className="cart-summary">
                                         <div className="cart-summary-wrap">
                                             <h4>Bag Summary</h4>
-                                            <p>Total Weight<span>${round(bag.bag.totalWeight)} kg</span></p>
+                                            <p>Total Weight<span>{round(bag.bag.totalWeight)} kg</span></p>
                                             <p>Sub Total <span>${round(bag.bag.totalAmount)}</span></p>
                                             <p>Shipping Cost <span>$00.00</span></p>
                                             <h2>Grand Total <span>$00.00</span></h2>
