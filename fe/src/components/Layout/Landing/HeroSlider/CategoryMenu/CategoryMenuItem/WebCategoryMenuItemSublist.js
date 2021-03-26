@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { Transition } from 'react-transition-group';
 import { slide } from '../../../../Helpers/Animation/Slide';
 

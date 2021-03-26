@@ -17,7 +17,7 @@ const changeCurr = (e, props) => {
 } 
 
 export const Currency = (props) => {
-    const { match, history , location } = props;
+    const { match } = props;
     const { curr } = match.params;
 
     return (
