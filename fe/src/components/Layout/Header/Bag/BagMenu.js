@@ -8,6 +8,7 @@ import { localization } from '../../Localization/Localization';
 import { useSelector, useDispatch } from 'react-redux';
 import * as bagService from '../../../../services/Bag/index';
 import { Spinner } from '../../Helpers/Animation/Spinner';
+import { round } from '../../Helpers/Math/Math';
 
 
 function BagMenu(props) {
@@ -77,7 +78,7 @@ function BagMenu(props) {
         </div>
         <div className="cart-info d-inline-block">
           <p>{localization[lang]['mybag']}
-          <span>{bag.bag.totalItems} {localization[lang]['items']} - ${bag.bag.totalAmount}</span>
+          <span>{bag.bag.totalItems} {localization[lang]['items']} - ${round(bag.bag.totalAmount)}</span>
           </p>
         </div>
         </Link>

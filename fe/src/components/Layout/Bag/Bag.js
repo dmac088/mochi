@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import * as bagService from '../../../services/Bag/index';
 import { useDispatch } from 'react-redux';
 import { Spinner } from '../../Layout/Helpers/Animation/Spinner';
+import { round } from '../Helpers/Math/Math';
 
 function Bag() {
 
@@ -51,10 +52,10 @@ function Bag() {
                   </div>
                 </td>
                 <td className="pro-quantity">
-                    <span>{product.data.bagItemWeight} kg</span>
+                    <span>{round(product.data.bagItemWeight)} kg</span>
                 </td>
                 <td className="pro-subtotal">
-                  <span>${product.data.itemQty * product.data.markdownPrice}</span>
+                  <span>${round(product.data.itemQty * product.data.markdownPrice)}</span>
                 </td>
                 <td className="pro-remove">
                     <a id={product.data.itemUPC} onClick={removeItem} href="#">
@@ -119,8 +120,8 @@ function Bag() {
                                     <div className="cart-summary">
                                         <div className="cart-summary-wrap">
                                             <h4>Bag Summary</h4>
-                                            <p>Total Weight<span>${bag.bag.totalWeight} kg</span></p>
-                                            <p>Sub Total <span>${bag.bag.totalAmount}</span></p>
+                                            <p>Total Weight<span>${round(bag.bag.totalWeight)} kg</span></p>
+                                            <p>Sub Total <span>${round(bag.bag.totalAmount)}</span></p>
                                             <p>Shipping Cost <span>$00.00</span></p>
                                             <h2>Grand Total <span>$00.00</span></h2>
                                         </div>
