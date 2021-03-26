@@ -33,7 +33,6 @@ function Shipping() {
         if (isSubscribed) {
             if (!discovery.loading && discovery.isDone) {
                 if(!bag.loading && bag.isDone) {
-                    console.log(bag);
                     dispatch(getShippingDestinations(discovery, 0.5));
                 }
             }
@@ -48,7 +47,7 @@ function Shipping() {
     const bagReady          = ((bag.isDone && !bag.loading));
     const destinationsReady = ((shippingDestinations.isDone && !shippingDestinations.loading));
     
-     
+    console.log(bag);
     return (
         (!(destinationsReady && bagReady))
         ? <Spinner />

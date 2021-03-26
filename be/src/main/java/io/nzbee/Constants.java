@@ -26,5 +26,6 @@ public class Constants {
 	public static final String billingAddressCode = "BIL01";
 	public static final String physicalProductDepartmentCode = "ACC01";
 	public static final String shippingProductDepartmentCode = "SHP01";
+	public static final String indexCategoryHierarchyRootNode = "PRM01";
 	
 }

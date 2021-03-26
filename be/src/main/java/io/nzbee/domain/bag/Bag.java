@@ -1,10 +1,10 @@
 package io.nzbee.domain.bag;
 
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
@@ -30,7 +30,7 @@ public class Bag {
 	}
 	
 	public Set<BagItem> getBagItemsByType(Class<?> type) {
-		return bagItems.stream().filter(i -> i.getClass().equals(type)).collect(Collectors.toSet());
+		return bagItems.stream().filter(i -> i.getProduct().getClass().equals(type)).collect(Collectors.toSet());
 	}
 	
 	public void addItem(Product p, int qty) {
@@ -72,19 +72,17 @@ public class Bag {
 		return this.getBagItems().size();
 	}
 	
-	
 	public int getTotalQuantity() {
 		return this.getBagItems().stream().mapToInt(BagItem::getQuantity).sum();
 	}
 	
 	public Double getTotalWeight() {
-		bagItems.forEach(bi -> {
-			System.out.println(bi.getQuantity());
-			System.out.println(((PhysicalProduct) bi.getProduct()).getWeight());
-			System.out.println(((PhysicalProduct) bi.getProduct()).getWeight() * bi.getQuantity());
-		});
-		System.out.println(this.getBagItemsByType(PhysicalProduct.class).stream().mapToDouble(i -> i.getQuantity() * ((PhysicalProduct) i.getProduct()).getWeight()).reduce(0.0, Double::sum));
-		return this.getBagItemsByType(PhysicalProduct.class).stream().mapToDouble(bi -> bi.getQuantity() * ((PhysicalProduct) bi.getProduct()).getWeight()).sum();
+		BigDecimal sum = BigDecimal.ZERO;
+        for (BagItem bi : this.getBagItemsByType(PhysicalProduct.class)) {
+        	BigDecimal amt = new BigDecimal(((PhysicalProduct) bi.getProduct()).getWeight() * bi.getQuantity());
+            sum = sum.add(amt);
+        }
+		return sum.doubleValue();
 	}
 	
 	public Double getTotalAmount() {
