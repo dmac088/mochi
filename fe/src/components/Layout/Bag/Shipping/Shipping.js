@@ -46,8 +46,7 @@ function Shipping() {
 
     const bagReady          = ((bag.isDone && !bag.loading));
     const destinationsReady = ((shippingDestinations.isDone && !shippingDestinations.loading));
-    
-    console.log(bag);
+
     return (
         (!(destinationsReady && bagReady))
         ? <Spinner />
