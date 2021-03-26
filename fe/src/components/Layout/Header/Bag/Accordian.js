@@ -54,7 +54,7 @@ function Accordion(props) {
       </div>
       <div className="cart-calculation">
         <div className="calculation-details">
-          <p className="total">{localization[lang]['subtotal']}<span>${bag.totalAmount}</span></p>
+          <p className="total">{localization[lang]['subtotal']}<span>${bag.bag.totalAmount}</span></p>
         </div>
         <div className="floating-cart-btn text-center">
           <Link to={getCheckoutPath(match)}>
