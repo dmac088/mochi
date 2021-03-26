@@ -1,6 +1,7 @@
 package io.nzbee.resources.controllers;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -29,6 +30,8 @@ import io.nzbee.domain.product.physical.IPhysicalProductService;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.IShippingProductService;
 import io.nzbee.domain.product.shipping.ShippingProduct;
+import io.nzbee.domain.bag.Bag;
+import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
 import io.nzbee.entity.product.shipping.type.IShippingTypeService;
@@ -64,6 +67,9 @@ import io.nzbee.view.product.shipping.type.ShippingTypeDTO;
 public class ProductController {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+    @Autowired
+    private IBagService bagService;
 	
     @Autowired
     private IProductService productService;
@@ -213,26 +219,16 @@ public class ProductController {
 	
 	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}")
     public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingDestinations(	@PathVariable String locale, 
-																							   		@PathVariable String currency) {
-    	
-    	LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
-    	
-    	final List<ShippingDestinationDTO> sp = shippingDestinationService.findAllActive(locale) 
-															.stream().map(d -> shippingDestinationDTOMapper.toDto(d))
-															.collect(Collectors.toList());
-    	
-    	
-    	return ResponseEntity.ok(shippingDestinationResourceAssembler.toCollectionModel(sp));
-    }
-	
-	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/Weight/{bagWeight}")
-    public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingDestinations(	@PathVariable String locale, 
 																							   		@PathVariable String currency,
-																							   		@PathVariable Double bagWeight) {
+																							   		Principal principal) {
     	
-    	LOGGER.debug("Fetching products for parameters : {}, {}, {}", locale, currency, bagWeight);
+    	LOGGER.debug("call ProductController.getShippingDestinations : {}, {}", locale, currency);
     	
-    	final List<ShippingDestinationDTO> sp = shippingDestinationService.findAllActiveByBagWeight(locale, bagWeight) 
+    	Bag b = bagService.findByCode(	locale, 
+										currency, 
+										principal.getName());
+    	
+    	final List<ShippingDestinationDTO> sp = shippingDestinationService.findAllActiveByBagWeight(locale, b.getTotalWeight()) 
 															.stream().map(d -> shippingDestinationDTOMapper.toDto(d))
 															.collect(Collectors.toList());
     	
@@ -283,22 +279,6 @@ public class ProductController {
     	return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
     }
 	
-	@GetMapping(value = "/Product/Shipping/Type/{locale}/{currency}/Destination/Code/{destinationCode}/Weight/{bagWeight}")
-    public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypesByDestinationAndBagWeight(	@PathVariable String locale, 
-																											@PathVariable String currency,
-																											@PathVariable String destinationCode,
-																											@PathVariable Double bagWeight) {
-    	
-    	LOGGER.debug("call ProductController.getShippingTypesByDestination : {}, {}, {}, {}", locale, currency, destinationCode, bagWeight);
-    	
-    	final List<ShippingTypeDTO> sp = shippingTypeService.findAll(locale, destinationCode, bagWeight) 
-															.stream().map(d -> shippingTypeDTOMapper.toDto(d))
-															.collect(Collectors.toList());
-    	
-    	
-    	return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
-    }
-	
 	@GetMapping(value = "/Product/Shipping/Provider/{locale}/{currency}/Code/{providerCode}")
 	public ResponseEntity<ShippingTypeResource> getShippingType(	  	  @PathVariable String locale, 
 																		  @PathVariable String currency,
@@ -335,14 +315,18 @@ public class ProductController {
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
     
-    @GetMapping("/Product/{locale}/{currency}/Destination/{code}/Type/{type}/Weight/{weight}")
-    public ResponseEntity<ShippingProductResource> getByDestinationAndTypeAndWeight(	@PathVariable String locale, 
+    @GetMapping("/Product/{locale}/{currency}/Destination/{code}/Type/{type}")
+    public ResponseEntity<ShippingProductResource> getByDestinationAndType(				@PathVariable String locale, 
 										    											@PathVariable String currency, 
 										    											@PathVariable String code,
 										    											@PathVariable String type,
-										    											@PathVariable Double weight) {
+										    											Principal principal) {
+    	Bag b = bagService.findByCode(	locale, 
+				currency, 
+				principal.getName());
+    	
     	ShippingProductResource pr = prodShippingResourceAssembler.toModel(shippingProductDTOMapper.toDto(
-    							shippingProductService.findByDestinationAndTypeAndWeight(locale, currency, code, type, weight)));
+    							shippingProductService.findByDestinationAndTypeAndWeight(locale, currency, code, type, b.getTotalWeight())));
     	
     	return new ResponseEntity< >(pr, HttpStatus.OK);
     }
