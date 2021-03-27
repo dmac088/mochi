@@ -11255,11 +11255,23 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 
 
 --
+-- Data for Name: promotion_coupon; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+
+
+--
 -- Data for Name: promotion_mechanic; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
 INSERT INTO promotion_mechanic VALUES (1, 'BNGNPCT', 'Buy N Get X Percent Off');
 INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
+
+
+--
+-- Data for Name: promotion_regular; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
 
 
 --
