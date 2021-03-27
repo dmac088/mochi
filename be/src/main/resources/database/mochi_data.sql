@@ -11233,8 +11233,8 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 -- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO promotion VALUES (234464, 'B2G50', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 1, true);
-INSERT INTO promotion VALUES (234467, 'B3G33', '2020-03-08 00:00:00+08', '2021-02-01 00:00:00+08', 1, true);
+INSERT INTO promotion VALUES (234464, 'B2G50', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 1, true, 1);
+INSERT INTO promotion VALUES (234467, 'B3G33', '2020-03-08 00:00:00+08', '2021-02-01 00:00:00+08', 1, true, 1);
 
 
 --
@@ -11272,6 +11272,14 @@ INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
 -- Data for Name: promotion_regular; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+
+
+--
+-- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO promotion_type VALUES (1, 'REG01', 'PromotionRegularDTO');
+INSERT INTO promotion_type VALUES (2, 'CPN01', 'PromotionCouponDTO');
 
 
 --

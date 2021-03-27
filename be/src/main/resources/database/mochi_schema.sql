@@ -84,6 +84,7 @@ ALTER TABLE ONLY mochi.shipping_destination DROP CONSTRAINT uc_pst_dst_cd;
 ALTER TABLE ONLY mochi.product DROP CONSTRAINT uc_product_upc_cd;
 ALTER TABLE ONLY mochi.product_tag DROP CONSTRAINT uc_product_tag;
 ALTER TABLE ONLY mochi.product_category DROP CONSTRAINT uc_product_category;
+ALTER TABLE ONLY mochi.promotion_type DROP CONSTRAINT uc_prm_typ_cd;
 ALTER TABLE ONLY mochi.promotion_mechanic DROP CONSTRAINT uc_prm_mec_cd;
 ALTER TABLE ONLY mochi.promotion_attr_lcl DROP CONSTRAINT uc_prm_lcl_1;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT uc_prm_cd;
@@ -113,6 +114,7 @@ ALTER TABLE ONLY mochi.role DROP CONSTRAINT role_pkey;
 ALTER TABLE ONLY mochi.rating DROP CONSTRAINT rating_pkey;
 ALTER TABLE ONLY mochi.shipping_type_attr_lcl DROP CONSTRAINT pst_typ_id_lcl_cd;
 ALTER TABLE ONLY mochi.shipping_destination_attr_lcl DROP CONSTRAINT pst_dst_id_lcl_cd;
+ALTER TABLE ONLY mochi.promotion_type DROP CONSTRAINT promotion_type_pkey;
 ALTER TABLE ONLY mochi.promotion_regular DROP CONSTRAINT promotion_regular_pkey;
 ALTER TABLE ONLY mochi.promotion DROP CONSTRAINT promotion_pkey;
 ALTER TABLE ONLY mochi.promotion_mechanic DROP CONSTRAINT promotion_mechanic_pkey;
@@ -192,6 +194,7 @@ DROP TABLE mochi.role_type;
 DROP TABLE mochi.role;
 DROP SEQUENCE mochi.role_rle_id_seq;
 DROP TABLE mochi.rating;
+DROP TABLE mochi.promotion_type;
 DROP TABLE mochi.promotion_regular;
 DROP TABLE mochi.promotion_mechanic;
 DROP TABLE mochi.promotion_coupon;
@@ -2732,7 +2735,8 @@ CREATE TABLE promotion (
     prm_st_dt timestamp(4) with time zone NOT NULL,
     prm_en_dt timestamp(4) with time zone NOT NULL,
     prm_mec_id bigint NOT NULL,
-    prm_act boolean NOT NULL
+    prm_act boolean NOT NULL,
+    prm_typ_id bigint NOT NULL
 );
 
 
@@ -2801,6 +2805,19 @@ CREATE TABLE promotion_regular (
 
 
 ALTER TABLE promotion_regular OWNER TO mochidb_owner;
+
+--
+-- Name: promotion_type; Type: TABLE; Schema: mochi; Owner: mochidb_owner
+--
+
+CREATE TABLE promotion_type (
+    prm_typ_id bigint NOT NULL,
+    prm_typ_cd character varying(5) NOT NULL,
+    prm_class character varying(20)
+);
+
+
+ALTER TABLE promotion_type OWNER TO mochidb_owner;
 
 --
 -- Name: rating; Type: TABLE; Schema: mochi; Owner: mochidb_owner
@@ -3534,6 +3551,14 @@ ALTER TABLE ONLY promotion_regular
 
 
 --
+-- Name: promotion_type promotion_type_pkey; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_type
+    ADD CONSTRAINT promotion_type_pkey PRIMARY KEY (prm_typ_id);
+
+
+--
 -- Name: shipping_destination_attr_lcl pst_dst_id_lcl_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -3763,6 +3788,14 @@ ALTER TABLE ONLY promotion_attr_lcl
 
 ALTER TABLE ONLY promotion_mechanic
     ADD CONSTRAINT uc_prm_mec_cd UNIQUE (prm_mec_cd);
+
+
+--
+-- Name: promotion_type uc_prm_typ_cd; Type: CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY promotion_type
+    ADD CONSTRAINT uc_prm_typ_cd UNIQUE (prm_typ_cd);
 
 
 --
@@ -4843,6 +4876,13 @@ GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_mechanic TO mochi_app;
 --
 
 GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_regular TO mochi_app;
+
+
+--
+-- Name: promotion_type; Type: ACL; Schema: mochi; Owner: mochidb_owner
+--
+
+GRANT SELECT,INSERT,DELETE,UPDATE ON TABLE promotion_type TO mochi_app;
 
 
 --
