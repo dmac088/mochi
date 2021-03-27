@@ -5,6 +5,7 @@ import { localization } from '../../Localization/Localization';
 import { useDispatch, useSelector } from 'react-redux';
 import { Spinner } from '../../Helpers/Animation/Spinner';
 import * as bagService from '../../../../services/Bag/index';
+import { round } from '../../Helpers/Math/Math';
 const $ = window.$;
 
 function Accordion(props) {
@@ -54,7 +55,7 @@ function Accordion(props) {
       </div>
       <div className="cart-calculation">
         <div className="calculation-details">
-          <p className="total">{localization[lang]['subtotal']}<span>${bag.bag.totalAmount}</span></p>
+          <p className="total">{localization[lang]['subtotal']}<span>${round(bag.bag.totalAmount)}</span></p>
         </div>
         <div className="floating-cart-btn text-center">
           <Link to={getCheckoutPath(match)}>
@@ -62,7 +63,7 @@ function Accordion(props) {
           </Link>
           <Link to={getBagPath(match)}>
             {localization[lang]['viewbag']}
-          </Link>
+          </Link> 
         </div>
       </div>
     </React.Fragment>
