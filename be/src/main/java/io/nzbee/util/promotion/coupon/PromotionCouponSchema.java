@@ -1,4 +1,6 @@
-package io.nzbee.util.promotion;
+package io.nzbee.util.promotion.coupon;
+
+import io.nzbee.util.promotion.PromotionSchema;
 
 public class PromotionCouponSchema extends PromotionSchema {
 
