@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.promotion.type;
+package io.nzbee.test.integration.entity.promotion.level;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -23,18 +23,18 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import io.nzbee.entity.promotion.type.IPromotionTypeService;
-import io.nzbee.entity.promotion.type.PromotionTypeEntity;
-import io.nzbee.test.integration.entity.beans.promotion.type.IPromotionTypeEntityBeanFactory;
+import io.nzbee.entity.promotion.level.IPromotionLevelService;
+import io.nzbee.entity.promotion.level.PromotionLevelEntity;
+import io.nzbee.test.integration.entity.beans.promotion.level.IPromotionLevelEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-public class IT_PromotionTypeEntityRepositoryIntegrationTest {
+public class IT_PromotionLevelEntityRepositoryIntegrationTest {
 
 	@TestConfiguration
-	static class PromotionTypeEntityRepositoryIntegrationTest {
+	static class PromotionLevelEntityRepositoryIntegrationTest {
 
 	}
 
@@ -42,29 +42,29 @@ public class IT_PromotionTypeEntityRepositoryIntegrationTest {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private IPromotionTypeEntityBeanFactory promotionTypeEntityBeanFactory;
+	private IPromotionLevelEntityBeanFactory promotionLevelEntityBeanFactory;
 
 	@Autowired
-	private IPromotionTypeService promotionTypeService;
+	private IPromotionLevelService promotionLevelService;
 
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
 	private DataSource database;
 
-	private static PromotionTypeEntity promotionType = null;
+	private static PromotionLevelEntity promotionLevel = null;
 
 	private static boolean setUpIsDone = false;
 
-	public void persistNewPromotionType() {
+	public void persistNewPromotionLevel() {
 
-		promotionType = promotionTypeEntityBeanFactory.getBean();
+		promotionLevel = promotionLevelEntityBeanFactory.getBean();
 
-		// persist a new transient test promotionType
-		promotionTypeService.save(promotionType);
+		// persist a new transient test promotionLevel
+		promotionLevelService.save(promotionLevel);
 	}
 
 	@Before
-	public void persistANewPromotionType() {
+	public void persistANewPromotionLevel() {
 		if (setUpIsDone) {
 			return;
 		}
@@ -75,16 +75,16 @@ public class IT_PromotionTypeEntityRepositoryIntegrationTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.persistNewPromotionType();
+		this.persistNewPromotionLevel();
 		setUpIsDone = true;
 	}
 
 	@Test
 	@Rollback(false)
-	public void whenFindById_thenReturnPromotionTypeEntity() {
+	public void whenFindById_thenReturnPromotionLevelEntity() {
 
 		// when
-		Optional<PromotionTypeEntity> found = promotionTypeService.findById(promotionType.getPromotionTypeId());
+		Optional<PromotionLevelEntity> found = promotionLevelService.findById(promotionLevel.getPromotionLevelId());
 
 		// then
 		assertFoundEntity(found);
@@ -92,23 +92,23 @@ public class IT_PromotionTypeEntityRepositoryIntegrationTest {
 
 	@Test
 	@Rollback(false)
-	public void whenFindByCode_thenReturnPromotionTypeEntity() {
+	public void whenFindByCode_thenReturnPromotionLevelEntity() {
 
 		// when
-		Optional<PromotionTypeEntity> found = promotionTypeService.findByCode("TST02");
+		Optional<PromotionLevelEntity> found = promotionLevelService.findByCode("TST02");
 
 		// then
 		assertFoundEntity(found);
 	}
      
-	private void assertFoundEntity(Optional<PromotionTypeEntity> found) {
+	private void assertFoundEntity(Optional<PromotionLevelEntity> found) {
 
 		assertNotNull(found);
 
 		assertTrue(found.isPresent());
 
-		assertThat(found.get().getPromotionTypeCode()).isEqualTo("TST01");
-		assertThat(found.get().getPromotionTypeDesc()).isEqualTo("test promotion type");
+		assertThat(found.get().getPromotionLevelCode()).isEqualTo("TST01");
+		assertThat(found.get().getPromotionLevelDesc()).isEqualTo("test promotion level");
 	}
 
 
