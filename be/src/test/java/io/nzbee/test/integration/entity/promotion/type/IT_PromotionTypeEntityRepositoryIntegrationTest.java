@@ -95,7 +95,7 @@ public class IT_PromotionTypeEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnPromotionTypeEntity() {
 
 		// when
-		Optional<PromotionTypeEntity> found = promotionTypeService.findByCode("TST02");
+		Optional<PromotionTypeEntity> found = promotionTypeService.findByCode("TST01");
 
 		// then
 		assertFoundEntity(found);
@@ -109,7 +109,7 @@ public class IT_PromotionTypeEntityRepositoryIntegrationTest {
 
 		assertThat(found.get().getPromotionTypeCode()).isEqualTo("TST01");
 		assertThat(found.get().getPromotionTypeDesc()).isEqualTo("test promotion type");
-		assertThat(found.get().getPromotionTypeDesc()).isEqualTo("TestPromotionType");
+		assertThat(found.get().getPromotionClass()).isEqualTo("TestPromotionType");
 	}
 
 
