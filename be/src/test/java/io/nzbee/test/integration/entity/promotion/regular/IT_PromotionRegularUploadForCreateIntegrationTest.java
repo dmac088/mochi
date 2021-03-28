@@ -78,7 +78,7 @@ public class IT_PromotionRegularUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B1G1F");
+		Optional<PromotionEntity> found = promotionService.findByCode("RB1G1F");
 
 		// then
 		assertFound_ENGB(found);
@@ -88,7 +88,7 @@ public class IT_PromotionRegularUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B2G1F");
+		Optional<PromotionEntity> found = promotionService.findByCode("RB2G1F");
 
 		// then
 		assertFound_ZHHK(found);
@@ -103,7 +103,7 @@ public class IT_PromotionRegularUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("B1G1F");
+		.isEqualTo("RB1G1F");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
@@ -121,7 +121,7 @@ public class IT_PromotionRegularUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("B2G1F");
+		.isEqualTo("RB2G1F");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
