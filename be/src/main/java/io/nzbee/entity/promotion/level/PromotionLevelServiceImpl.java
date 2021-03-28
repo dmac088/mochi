@@ -3,7 +3,9 @@ package io.nzbee.entity.promotion.level;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service(value="promotionLevelService")
 public class PromotionLevelServiceImpl implements IPromotionLevelService {
 	
 	@Autowired
