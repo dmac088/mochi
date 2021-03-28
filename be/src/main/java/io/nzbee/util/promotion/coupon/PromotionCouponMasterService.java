@@ -91,7 +91,7 @@ public class PromotionCouponMasterService {
 		p.setPromotionMechanic(pm.get());
 		p.setPromotionLevel(pl.get());
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
-		p.setPromotionCode(pms.get_PROMOTION_COUPON_CODE());
+		p.setPromotionCouponCode(pms.get_PROMOTION_COUPON_CODE());
 		
 
 		promotionService.save(p);

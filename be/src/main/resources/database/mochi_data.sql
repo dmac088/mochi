@@ -1031,7 +1031,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 2030854, true);
+SELECT pg_catalog.setval('hibernate_sequence', 2030863, true);
 
 
 --
@@ -11233,8 +11233,8 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 -- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO promotion VALUES (234464, 'B2G50', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 1, true, 1, 1);
-INSERT INTO promotion VALUES (234467, 'B3G33', '2020-03-08 00:00:00+08', '2021-02-01 00:00:00+08', 1, true, 1, 1);
+INSERT INTO promotion VALUES (234464, 'B2G50 ', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 1, true, 1, 1);
+INSERT INTO promotion VALUES (234467, 'B3G33 ', '2020-03-08 00:00:00+08', '2021-02-01 00:00:00+08', 1, true, 1, 1);
 
 
 --

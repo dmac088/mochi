@@ -2734,7 +2734,7 @@ ALTER TABLE product_tag_attr_lcl_tag_id_seq OWNER TO mochidb_owner;
 
 CREATE TABLE promotion (
     prm_id bigint NOT NULL,
-    prm_cd character(5) NOT NULL,
+    prm_cd character(6) NOT NULL,
     prm_st_dt timestamp(4) with time zone NOT NULL,
     prm_en_dt timestamp(4) with time zone NOT NULL,
     prm_mec_id bigint NOT NULL,
