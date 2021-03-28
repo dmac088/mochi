@@ -11,10 +11,12 @@ public abstract class PromotionTypeEntity_ {
 	public static volatile SingularAttribute<PromotionTypeEntity, Long> promotionTypeId;
 	public static volatile SingularAttribute<PromotionTypeEntity, String> promotionTypeDesc;
 	public static volatile SingularAttribute<PromotionTypeEntity, String> promotionTypeCode;
+	public static volatile SingularAttribute<PromotionTypeEntity, String> promotionClass;
 
 	public static final String PROMOTION_TYPE_ID = "promotionTypeId";
 	public static final String PROMOTION_TYPE_DESC = "promotionTypeDesc";
 	public static final String PROMOTION_TYPE_CODE = "promotionTypeCode";
+	public static final String PROMOTION_CLASS = "promotionClass";
 
 }
 

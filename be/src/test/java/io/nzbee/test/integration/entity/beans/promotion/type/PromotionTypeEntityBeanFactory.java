@@ -13,6 +13,7 @@ public class PromotionTypeEntityBeanFactory implements IPromotionTypeEntityBeanF
 		PromotionTypeEntity promotionType = new PromotionTypeEntity();
 		promotionType.setPromotionTypeCode("TST01");
 		promotionType.setPromotionTypeDesc("test promotion type");
+		promotionType.setPromotionClass("TestPromotionType");
 		return promotionType;
 	}
 	

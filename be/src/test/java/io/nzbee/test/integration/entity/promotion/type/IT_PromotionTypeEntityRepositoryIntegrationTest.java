@@ -109,6 +109,7 @@ public class IT_PromotionTypeEntityRepositoryIntegrationTest {
 
 		assertThat(found.get().getPromotionTypeCode()).isEqualTo("TST01");
 		assertThat(found.get().getPromotionTypeDesc()).isEqualTo("test promotion type");
+		assertThat(found.get().getPromotionTypeDesc()).isEqualTo("TestPromotionType");
 	}
 
 

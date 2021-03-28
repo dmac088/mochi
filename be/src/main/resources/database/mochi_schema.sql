@@ -2830,7 +2830,8 @@ ALTER TABLE promotion_regular OWNER TO mochidb_owner;
 CREATE TABLE promotion_type (
     prm_typ_id bigint NOT NULL,
     prm_typ_cd character varying(5) NOT NULL,
-    prm_class character varying(20)
+    prm_class character varying(20) NOT NULL,
+    prm_typ_desc character varying(50) NOT NULL
 );
 
 
@@ -4376,9 +4377,9 @@ ALTER TABLE ONLY tag_attr_lcl
 -- Name: mochi; Type: ACL; Schema: -; Owner: mochidb_owner
 --
 
-GRANT USAGE ON SCHEMA mochi TO security_app;
 GRANT USAGE ON SCHEMA mochi TO mochi_app;
 GRANT ALL ON SCHEMA mochi TO security_owner;
+GRANT USAGE ON SCHEMA mochi TO security_app;
 
 
 --

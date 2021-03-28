@@ -24,6 +24,9 @@ public class PromotionTypeEntity {
 	
 	@Column(name="prm_typ_desc")
 	private String promotionTypeDesc;
+	
+	@Column(name="prm_class")
+	private String promotionClass;
 
 	public Long getPromotionTypeId() {
 		return promotionTypeId;
@@ -47,6 +50,14 @@ public class PromotionTypeEntity {
 
 	public void setPromotionTypeDesc(String promotionTypeDesc) {
 		this.promotionTypeDesc = promotionTypeDesc;
+	}
+
+	public String getPromotionClass() {
+		return promotionClass;
+	}
+
+	public void setPromotionClass(String promotionClass) {
+		this.promotionClass = promotionClass;
 	}
 
 }
