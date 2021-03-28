@@ -77,7 +77,7 @@ public class IT_CategoryPromotionMappingUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("B3G33");
+		Optional<PromotionEntity> found = promotionService.findByCode("RB3G33");
 
 		// then
 		assertFound(found);
