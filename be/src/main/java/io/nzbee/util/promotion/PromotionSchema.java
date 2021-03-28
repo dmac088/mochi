@@ -1,23 +1,25 @@
 package io.nzbee.util.promotion;
 
 
-public class PromotionSchema {
+public abstract class PromotionSchema {
 	
-	protected String PROMOTION_CODE;
+	private String PROMOTION_CODE;
 	
-	protected String PROMOTION_DESC_HK;
+	private String PROMOTION_DESC_HK;
 	
-	protected String PROMOTION_DESC_EN;
+	private String PROMOTION_DESC_EN;
 	
-	protected String PROMOTION_START_DATE;
+	private String PROMOTION_START_DATE;
 	
-	protected String PROMOTION_END_DATE;
+	private String PROMOTION_END_DATE;
 	
-	protected Boolean PROMOTION_ACTIVE;
+	private Boolean PROMOTION_ACTIVE;
 	
-	protected String PROMOTION_MECHANIC_CODE;
+	private String PROMOTION_MECHANIC_CODE;
 	
-	protected String PROMOTION_TYPE_CODE;
+	private String PROMOTION_TYPE_CODE;
+	
+	private String PROMOTION_LEVEL_CODE;
 	
 	
 	public String get_PROMOTION_CODE() {
@@ -76,6 +78,22 @@ public class PromotionSchema {
 		this.PROMOTION_TYPE_CODE = PROMOTION_TYPE_CODE;
 	}
 	
+	public String get_PROMOTION_LEVEL_CODE() {
+		return PROMOTION_LEVEL_CODE;
+	}
+
+	public void set_PROMOTION_LEVEL_CODE(String pROMOTION_LEVEL_CODE) {
+		PROMOTION_LEVEL_CODE = pROMOTION_LEVEL_CODE;
+	}
+
+	public String getPROMOTION_TYPE_CODE() {
+		return PROMOTION_TYPE_CODE;
+	}
+
+	public void setPROMOTION_TYPE_CODE(String pROMOTION_TYPE_CODE) {
+		PROMOTION_TYPE_CODE = pROMOTION_TYPE_CODE;
+	}
+
 	public Boolean get_PROMOTION_ACTIVE() {
 		return PROMOTION_ACTIVE;
 	}

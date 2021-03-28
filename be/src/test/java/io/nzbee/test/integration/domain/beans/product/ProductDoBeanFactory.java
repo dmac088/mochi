@@ -63,9 +63,11 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   "en-GB",
 								   "HKD",
 								   true,
+								   new Double(0.24),
 								   brand,
 								   department,
 								   new ArrayList<ProductCategory>(Arrays.asList(pc1,pc2)),
 								   promos);
+
 	}
 }
