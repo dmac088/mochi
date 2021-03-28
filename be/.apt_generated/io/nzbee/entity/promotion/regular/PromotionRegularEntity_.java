@@ -5,7 +5,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(PromotionRegularEntity.class)
-public abstract class PromotionRegularEntity_ {
+public abstract class PromotionRegularEntity_ extends io.nzbee.entity.promotion.PromotionEntity_ {
 
 
 
