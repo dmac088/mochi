@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.promotion;
+package io.nzbee.test.integration.entity.promotion.coupon;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -27,20 +27,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.PromotionMasterService;
+import io.nzbee.util.promotion.coupon.PromotionCouponMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class IT_PromotionUploadForCreateIntegrationTest {
+public class IT_PromotionCouponUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private PromotionMasterService pms;
+	private PromotionCouponMasterService pms;
 
 	@Autowired
 	private IPromotionService promotionService;
@@ -71,7 +71,7 @@ public class IT_PromotionUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writePromotionMaster(file.getAbsolutePath() + "/data/promotion/create/promotion.tsv");
+		pms.writePromotionCouponMaster(file.getAbsolutePath() + "/data/promotion/coupon/create/promotion.tsv");
 	}
 
 	@Test

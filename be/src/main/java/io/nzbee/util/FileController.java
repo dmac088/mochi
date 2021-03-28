@@ -18,10 +18,10 @@ import io.nzbee.util.product.physical.PhysicalProductMasterService;
 import io.nzbee.util.product.shipping.ShippingProductMasterService;
 import io.nzbee.util.product.shipping.destination.ShippingDestinationMasterService;
 import io.nzbee.util.product.shipping.type.ShippingTypeMasterService;
-import io.nzbee.util.promotion.PromotionMasterService;
 import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
 import io.nzbee.util.promotion.product.ProductPromotionMasterService;
+import io.nzbee.util.promotion.regular.PromotionRegularMasterService;
 import io.nzbee.util.tag.TagMasterService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -62,7 +62,7 @@ public class FileController {
     private ShippingProductMasterService shippingProductMasterService;
 
     @Autowired
-    private PromotionMasterService promotionMasterService;
+    private PromotionRegularMasterService promotionRegularMasterService;
     
     @Autowired
     private CategoryPromotionMasterService categoryPromotionMasterService;
@@ -301,7 +301,7 @@ public class FileController {
 
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        promotionMasterService.writePromotionMaster(fileName);
+        promotionRegularMasterService.writePromotionRegularMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	

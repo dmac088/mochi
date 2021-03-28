@@ -16,8 +16,12 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.entity.promotion.PromotionEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.coupon.PromotionCouponEntity;
+import io.nzbee.entity.promotion.level.IPromotionLevelService;
+import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
+import io.nzbee.entity.promotion.type.IPromotionTypeService;
+import io.nzbee.entity.promotion.type.PromotionTypeEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -32,6 +36,13 @@ public class PromotionCouponMasterService {
 
 	@Autowired
 	private IPromotionMechanicService promotionMechanicService;
+	
+	@Autowired
+	private IPromotionTypeService promotionTypeService;
+	
+	@Autowired
+	private IPromotionLevelService promotionLevelService;
+	
 
 	@Autowired
 	private FileStorageServiceUpload fileStorageServiceUpload;
@@ -70,6 +81,10 @@ public class PromotionCouponMasterService {
 		LocalDateTime ped = LocalDateTime.parse(pms.get_PROMOTION_END_DATE(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 
 		Optional<PromotionMechanicEntity> pm = promotionMechanicService.findByCode(pms.get_PROMOTION_MECHANIC_CODE());
+		
+		Optional<PromotionTypeEntity> pt = promotionTypeService.findByCode(pms.get_PROMOTION_TYPE_CODE());
+		
+		Optional<PromotionLevelEntity> pl = promotionLevelService.findByCode(pms.get_PROMOTION_LEVEL_CODE()); 
 
 		p.setPromotionCode(pms.get_PROMOTION_CODE());
 		PromotionAttributeEntity paEN = mapAttribute(p, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB);
@@ -83,6 +98,8 @@ public class PromotionCouponMasterService {
 		p.setPromotionMechanic(pm.get());
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
 		p.setPromotionCode(pms.get_PROMOTION_COUPON_CODE());
+		p.setPromotionLevel(pl.get());
+		p.setPromotionType(pt.get());
 
 		promotionService.save(p);
 	}

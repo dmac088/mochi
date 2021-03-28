@@ -69,14 +69,6 @@ public abstract class PromotionSchema {
 	public void set_PROMOTION_MECHANIC_CODE(String PROMOTION_MECHANIC_CODE) {
 		 this.PROMOTION_MECHANIC_CODE = PROMOTION_MECHANIC_CODE;
 	}
-
-	public String get_PROMOTION_TYPE_CODE() {
-		return PROMOTION_TYPE_CODE;
-	}
-
-	public void set_PROMOTION_TYPE_CODE(String PROMOTION_TYPE_CODE) {
-		this.PROMOTION_TYPE_CODE = PROMOTION_TYPE_CODE;
-	}
 	
 	public String get_PROMOTION_LEVEL_CODE() {
 		return PROMOTION_LEVEL_CODE;
@@ -86,11 +78,11 @@ public abstract class PromotionSchema {
 		PROMOTION_LEVEL_CODE = pROMOTION_LEVEL_CODE;
 	}
 
-	public String getPROMOTION_TYPE_CODE() {
+	public String get_PROMOTION_TYPE_CODE() {
 		return PROMOTION_TYPE_CODE;
 	}
 
-	public void setPROMOTION_TYPE_CODE(String pROMOTION_TYPE_CODE) {
+	public void set_PROMOTION_TYPE_CODE(String pROMOTION_TYPE_CODE) {
 		PROMOTION_TYPE_CODE = pROMOTION_TYPE_CODE;
 	}
 
