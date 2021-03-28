@@ -1,5 +1,7 @@
 package io.nzbee.entity.promotion.level;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,9 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "promotion_level", schema = "mochi")
-public class PromotionLevelEntity {
+public class PromotionLevelEntity implements Serializable {
+
+	private static final long serialVersionUID = -6852695326648001491L;
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)

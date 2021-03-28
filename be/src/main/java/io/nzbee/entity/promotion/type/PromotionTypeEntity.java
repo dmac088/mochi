@@ -1,5 +1,7 @@
 package io.nzbee.entity.promotion.type;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,8 +13,10 @@ import org.hibernate.annotations.NaturalId;
 
 @Entity
 @Table(name = "promotion_type", schema = "mochi")
-public class PromotionTypeEntity {
+public class PromotionTypeEntity implements Serializable {
 	
+	private static final long serialVersionUID = -4218197340727931791L;
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	@Column(name="prm_typ_id")
