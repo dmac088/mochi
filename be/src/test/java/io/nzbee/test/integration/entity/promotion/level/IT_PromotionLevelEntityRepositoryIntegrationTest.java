@@ -95,7 +95,7 @@ public class IT_PromotionLevelEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnPromotionLevelEntity() {
 
 		// when
-		Optional<PromotionLevelEntity> found = promotionLevelService.findByCode("TST02");
+		Optional<PromotionLevelEntity> found = promotionLevelService.findByCode("TST01");
 
 		// then
 		assertFoundEntity(found);

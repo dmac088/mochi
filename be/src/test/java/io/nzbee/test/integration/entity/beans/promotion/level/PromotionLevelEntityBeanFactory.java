@@ -12,7 +12,7 @@ public class PromotionLevelEntityBeanFactory implements IPromotionLevelEntityBea
 	public final PromotionLevelEntity getBean() {
 		PromotionLevelEntity promotionLevel = new PromotionLevelEntity();
 		promotionLevel.setPromotionLevelCode("TST01");
-		promotionLevel.setPromotionLevelDesc("test promotion_level");
+		promotionLevel.setPromotionLevelDesc("test promotion level");
 		return promotionLevel;
 	}
 	
