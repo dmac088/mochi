@@ -1,5 +1,6 @@
 package io.nzbee.entity.promotion.coupon;
 
+import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,14 +13,17 @@ public class PromotionCouponEntity extends PromotionEntity {
 
 	private static final long serialVersionUID = 9148075546941323177L;
 	
-	private String promotionCode;
+	@Column(name="prm_cpn_cd")
+	private String promotionCouponCode;
 
-	public String getPromotionCode() {
-		return promotionCode;
+	public String getPromotionCouponCode() {
+		return promotionCouponCode;
 	}
 
-	public void setPromotionCode(String promotionCode) {
-		this.promotionCode = promotionCode;
+	public void setPromotionCouponCode(String promotionCouponCode) {
+		this.promotionCouponCode = promotionCouponCode;
 	}
+
+	
 	
 }

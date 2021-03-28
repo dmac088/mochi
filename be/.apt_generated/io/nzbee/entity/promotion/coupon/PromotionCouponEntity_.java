@@ -8,9 +8,9 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(PromotionCouponEntity.class)
 public abstract class PromotionCouponEntity_ extends io.nzbee.entity.promotion.PromotionEntity_ {
 
-	public static volatile SingularAttribute<PromotionCouponEntity, String> promotionCode;
+	public static volatile SingularAttribute<PromotionCouponEntity, String> promotionCouponCode;
 
-	public static final String PROMOTION_CODE = "promotionCode";
+	public static final String PROMOTION_COUPON_CODE = "promotionCouponCode";
 
 }
 
