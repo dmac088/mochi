@@ -11281,6 +11281,8 @@ INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
 -- Data for Name: promotion_regular; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO promotion_regular VALUES (234464);
+INSERT INTO promotion_regular VALUES (234467);
 
 
 --

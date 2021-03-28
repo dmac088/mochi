@@ -20,8 +20,6 @@ import io.nzbee.entity.promotion.level.IPromotionLevelService;
 import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
-import io.nzbee.entity.promotion.type.IPromotionTypeService;
-import io.nzbee.entity.promotion.type.PromotionTypeEntity;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -38,11 +36,7 @@ public class PromotionRegularMasterService {
 	private IPromotionMechanicService promotionMechanicService;
 	
 	@Autowired
-	private IPromotionTypeService promotionTypeService;
-	
-	@Autowired
 	private IPromotionLevelService promotionLevelService;
-	
 
 	@Autowired
 	private FileStorageServiceUpload fileStorageServiceUpload;
@@ -82,8 +76,6 @@ public class PromotionRegularMasterService {
 
 		Optional<PromotionMechanicEntity> pm = promotionMechanicService.findByCode(pms.get_PROMOTION_MECHANIC_CODE());
 		
-		Optional<PromotionTypeEntity> pt = promotionTypeService.findByCode(pms.get_PROMOTION_TYPE_CODE());
-		
 		Optional<PromotionLevelEntity> pl = promotionLevelService.findByCode(pms.get_PROMOTION_LEVEL_CODE()); 
 
 		p.setPromotionCode(pms.get_PROMOTION_CODE());
@@ -98,7 +90,6 @@ public class PromotionRegularMasterService {
 		p.setPromotionMechanic(pm.get());
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
 		p.setPromotionLevel(pl.get());
-		p.setPromotionType(pt.get());
 
 		promotionService.save(p);
 	}

@@ -62,7 +62,7 @@ logging:
       springframework:
         web: ERROR
       hibernate: 
-        type: ERROR
+        type: DEBUG
     io:
       nzbee: DEBUG
 

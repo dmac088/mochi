@@ -5,7 +5,6 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
-import io.nzbee.entity.promotion.type.PromotionTypeEntity;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
@@ -16,7 +15,6 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(PromotionEntity.class)
 public abstract class PromotionEntity_ {
 
-	public static volatile SingularAttribute<PromotionEntity, PromotionTypeEntity> promotionType;
 	public static volatile SingularAttribute<PromotionEntity, PromotionLevelEntity> promotionLevel;
 	public static volatile SingularAttribute<PromotionEntity, LocalDateTime> promotionEndDate;
 	public static volatile SingularAttribute<PromotionEntity, Boolean> promotionActive;
@@ -28,7 +26,6 @@ public abstract class PromotionEntity_ {
 	public static volatile SingularAttribute<PromotionEntity, Long> promotionId;
 	public static volatile SetAttribute<PromotionEntity, ProductEntity> products;
 
-	public static final String PROMOTION_TYPE = "promotionType";
 	public static final String PROMOTION_LEVEL = "promotionLevel";
 	public static final String PROMOTION_END_DATE = "promotionEndDate";
 	public static final String PROMOTION_ACTIVE = "promotionActive";

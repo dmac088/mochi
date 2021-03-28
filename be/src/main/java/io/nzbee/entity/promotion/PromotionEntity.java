@@ -28,7 +28,6 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
-import io.nzbee.entity.promotion.type.PromotionTypeEntity;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
@@ -63,10 +62,6 @@ public abstract class PromotionEntity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_lvl_id")
 	private PromotionLevelEntity promotionLevel;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name="prm_typ_id")
-	private PromotionTypeEntity promotionType;
 	
 	@OneToMany(	mappedBy="promotion",  
 				cascade = CascadeType.ALL,
@@ -186,14 +181,6 @@ public abstract class PromotionEntity implements Serializable {
 
 	public void setPromotionLevel(PromotionLevelEntity promotionLevel) {
 		this.promotionLevel = promotionLevel;
-	}
-
-	public PromotionTypeEntity getPromotionType() {
-		return promotionType;
-	}
-
-	public void setPromotionType(PromotionTypeEntity promotionType) {
-		this.promotionType = promotionType;
 	}
 
 	public void addCategory(CategoryEntity category) {
