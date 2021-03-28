@@ -7,11 +7,14 @@ import java.util.Objects;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -27,7 +30,9 @@ import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
-public class PromotionEntity implements Serializable {
+@Inheritance(strategy = InheritanceType.JOINED)
+@DiscriminatorColumn(name="prm_typ_id")
+public abstract class PromotionEntity implements Serializable {
 
 	private static final long serialVersionUID = -8035431077837286610L;
 
