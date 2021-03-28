@@ -129,7 +129,7 @@ public class PhysicalProductEntityBeanFactory implements IPhysicalProductEntityB
 		product.addTag(t);
 		
 		//we should add a promotion 
-		product.addPromotion(promotionService.findByCode("B2G50").get());
+		product.addPromotion(promotionService.findByCode("RB2G50").get());
 		
 		return product;
 	}
