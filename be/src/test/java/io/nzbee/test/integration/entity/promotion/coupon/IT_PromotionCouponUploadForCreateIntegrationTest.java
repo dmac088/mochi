@@ -78,7 +78,7 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("CB1G1F");
+		Optional<PromotionEntity> found = promotionService.findByCode("C20PCT");
 
 		// then
 		assertFound_ENGB(found);
@@ -88,7 +88,7 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("CB2G1F");
+		Optional<PromotionEntity> found = promotionService.findByCode("C20PCT");
 
 		// then
 		assertFound_ZHHK(found);
@@ -103,12 +103,12 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("CB1G1F");
+		.isEqualTo("C20PCT");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeENGB)).findAny().get().getPromotionDesc())
-		.isEqualTo("Buy 1 get 1 free");
+		.isEqualTo("20% off total basket");
 		
 	}
 
@@ -121,12 +121,12 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("CB2G1F");
+		.isEqualTo("C20PCT");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
-		.isEqualTo("買二送一");
+		.isEqualTo("總籃可享20％的折扣");
 		
 	}
 

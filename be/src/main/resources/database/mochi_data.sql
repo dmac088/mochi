@@ -11275,6 +11275,7 @@ INSERT INTO promotion_level VALUES (3, 'ORD01', 'Order');
 
 INSERT INTO promotion_mechanic VALUES (1, 'BNGNPCT', 'Buy N Get X Percent Off');
 INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
+INSERT INTO promotion_mechanic VALUES (3, 'ORDPCT20', '20% Off Total Order');
 
 
 --
