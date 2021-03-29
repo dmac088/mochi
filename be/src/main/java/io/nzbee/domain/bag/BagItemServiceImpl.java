@@ -26,7 +26,7 @@ public class BagItemServiceImpl implements IBagItemService{
 
 	@Override
 	public void update(BagItem object) {
-		// TODO Auto-generated method stub
+		bagItemService.save(object);
 	}
 
 	@Override
@@ -36,11 +36,10 @@ public class BagItemServiceImpl implements IBagItemService{
     	DroolsBagItemWrapper dpw = new DroolsBagItemWrapper(object);
     	kieSession.insert(dpw);
     	System.out.println(StringUtils.join(dpw.getPromotionCodes()));
-    	System.out.println("************* Fire Rules **************");
+    	System.out.println("************* Fire Bag Item Rules **************");
     	kieSession.fireAllRules();
         System.out.println("************************************");
         System.out.println("Customer bag\n" + object.getBag().getCustomer().getUserName());
-		
 	}
 
 }

@@ -8,4 +8,6 @@ public interface IBagService extends IService<Bag> {
 
 	Bag findByCode(String locale, String currency, String userName);
 
+	void checkAllBagRules(Bag object);
+
 }

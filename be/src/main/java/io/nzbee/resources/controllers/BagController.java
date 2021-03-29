@@ -25,6 +25,7 @@ import io.nzbee.resources.bag.BagResource;
 import io.nzbee.resources.bag.BagResourceAssembler;
 import io.nzbee.resources.bag.item.BagItemResource;
 import io.nzbee.resources.bag.item.BagItemResourceAssembler;
+import io.nzbee.view.bag.BagDTO;
 import io.nzbee.view.bag.IBagDTOMapper;
 import io.nzbee.view.bag.item.BagItemDTOIn;
 import io.nzbee.view.bag.item.IBagItemDTOMapper;
@@ -69,6 +70,26 @@ public class BagController {
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toDto(bagService.findByCode(locale,
 																	    								 currency,
 																	    								 principal.getName()))));
+	}
+    
+    @PostMapping("/Bag/{locale}/{currency}/Coupon/Code/{coupon}")
+    public ResponseEntity<BagResource> addCouponToBag( 	@PathVariable String locale, 
+														@PathVariable String currency, 
+														@PathVariable String coupon, 
+														Principal principal) {
+	LOGGER.debug("call BagController.addCouponToBag");
+	
+	Bag b = bagService.findByCode(	locale,
+									currency,
+									principal.getName());
+	
+	b.setCouponCode(coupon);
+	
+	bagService.checkAllBagRules(b);
+	
+	bagService.save(b);
+	
+	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toDto(b)));
 	}
     
     @GetMapping("/Bag/{locale}/{currency}/Items")
@@ -125,7 +146,6 @@ public class BagController {
     	}
     	
     	bagService.save(b);
-    	
     	
     	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toDto(b)));
 	}
