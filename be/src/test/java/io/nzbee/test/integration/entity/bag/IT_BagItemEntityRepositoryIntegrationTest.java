@@ -159,7 +159,7 @@ public class IT_BagItemEntityRepositoryIntegrationTest {
     	assertThat(bDto.getBagItems().stream().filter(bi -> bi.getProduct().getProductUPC().equals("76477789"))
 				.findAny().get()
 				.getProduct().getPromotions()
-				.stream().filter(promo -> promo.getPromotionCode().equals("B2G50")).findAny().isPresent()).isTrue();
+				.stream().filter(promo -> promo.getPromotionCode().equals("RB2G50")).findAny().isPresent()).isTrue();
     	
     }
 
