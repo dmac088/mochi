@@ -16,6 +16,8 @@ public class Bag {
 	private Customer customer;
 	
 	private BagIssues bagIssues = new BagIssues();
+	
+	private String couponCode;
 
 	public Bag(Customer customer) {
 		this.customer = customer;
@@ -96,6 +98,14 @@ public class Bag {
 	
 	public BagIssues getBagIssues() {
 		return bagIssues;
+	}
+
+	public String getCouponCode() {
+		return couponCode;
+	}
+
+	public void setCouponCode(String couponCode) {
+		this.couponCode = couponCode;
 	}
 
 	public boolean hasIssues() {
