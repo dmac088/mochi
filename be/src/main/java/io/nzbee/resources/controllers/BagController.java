@@ -25,7 +25,6 @@ import io.nzbee.resources.bag.BagResource;
 import io.nzbee.resources.bag.BagResourceAssembler;
 import io.nzbee.resources.bag.item.BagItemResource;
 import io.nzbee.resources.bag.item.BagItemResourceAssembler;
-import io.nzbee.view.bag.BagDTO;
 import io.nzbee.view.bag.IBagDTOMapper;
 import io.nzbee.view.bag.item.BagItemDTOIn;
 import io.nzbee.view.bag.item.IBagItemDTOMapper;
