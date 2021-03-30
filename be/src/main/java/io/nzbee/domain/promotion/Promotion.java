@@ -13,18 +13,22 @@ public class Promotion {
 	
 	private LocalDateTime promotionEndDt;
 	
-	private PromotionType promotionType;
+	private String promotionTypeCode;
+	
+	private String promotionTypeDesc;	
 
 	public Promotion(String promotionCode, 
 					 String promotionDesc,
 					 LocalDateTime promotionStartDt,
 					 LocalDateTime promotionEndDt,
-					 PromotionType promotionType) {
-		this.promotionCode = promotionCode;
-		this.promotionDesc = promotionDesc;
-		this.promotionStartDt = promotionStartDt;
-		this.promotionEndDt = promotionEndDt;
-		this.promotionType = promotionType;
+					 String promotionTypeCode,
+					 String promotionTypeDesc) {
+		this.promotionCode 		= promotionCode;
+		this.promotionDesc 		= promotionDesc;
+		this.promotionStartDt 	= promotionStartDt;
+		this.promotionEndDt 	= promotionEndDt;
+		this.promotionTypeCode 	= promotionTypeCode;
+		this.promotionTypeDesc 	= promotionTypeDesc;
 		
 	}
 
@@ -44,8 +48,12 @@ public class Promotion {
 		return promotionEndDt;
 	}
 
-	public PromotionType getPromotionType() {
-		return promotionType;
+	public String getPromotionTypeCode() {
+		return promotionTypeCode;
+	}
+
+	public String getPromotionTypeDesc() {
+		return promotionTypeDesc;
 	}
 	
 }
