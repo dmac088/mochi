@@ -29,7 +29,7 @@ public class BagItemServiceImpl implements IBagItemService{
 
 	@Override
 	public void update(BagItem object) {
-		bagItemService.save(object);
+		bagItemService.update(object);
 	}
 
 	@Override
