@@ -10,8 +10,8 @@ dialect "mvel"
 
 rule "20% off total bag"
 when
-$bag : DroolsBagWrapper(promotionCouponCode.equals("ORDPCT20"))
+$bag : DroolsBagWrapper(couponCode.equals("ORDPCT20"))
 then
-//System.out.println("\nCoupon code = " + couponCode);
+System.out.println("\nCoupon code = " + couponCode);
 System.out.println("************************************");
 end
