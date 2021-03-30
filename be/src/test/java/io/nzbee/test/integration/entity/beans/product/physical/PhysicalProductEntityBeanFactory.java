@@ -20,6 +20,7 @@ import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.promotion.IPromotionService;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
 
@@ -129,7 +130,7 @@ public class PhysicalProductEntityBeanFactory implements IPhysicalProductEntityB
 		product.addTag(t);
 		
 		//we should add a promotion 
-		product.addPromotion(promotionService.findByCode("RB2G50").get());
+		product.addPromotion((PromotionProductEntity) promotionService.findByCode("RB2G50").get());
 		
 		return product;
 	}

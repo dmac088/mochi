@@ -23,6 +23,7 @@ import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.ports.IBagItemPortService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.promotion.ProductPromotion;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.test.unit.domain.beans.brand.BrandDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
@@ -134,12 +135,14 @@ public class UT_BagItemTest {
 		
 		bagItem = new BagItem(bag, product, 3);
 
-		Promotion b3g33 = new Promotion("B3G33", 
+		Promotion b3g33 = new ProductPromotion("B3G33", 
 				 						"Buy 3 Get 33% off",
 										LocalDateTime.of(2020, Month.JANUARY, 8, 0,0,0),
 										LocalDateTime.of(2021, Month.JANUARY, 8, 0,0,0),
 										"BNGNPCT",
-										"Buy N Get X Percent Off");
+										"Buy N Get X Percent Off",
+										"PRD01",
+										"Product");
 		
 		bagItem.getProduct().addPromotion(b3g33);
 		
@@ -158,12 +161,14 @@ public class UT_BagItemTest {
 		
 		bagItem = new BagItem(bag, product, 6);
 
-		Promotion b3g33 = new Promotion("B3G33", 
+		Promotion b3g33 = new ProductPromotion("B3G33", 
 				 						"Buy 3 Get 33% off",
 										LocalDateTime.of(2020, Month.JANUARY, 8, 0,0,0),
 										LocalDateTime.of(2021, Month.JANUARY, 8, 0,0,0),
 										"BNGNPCT", 
-										"Buy N Get X Percent Off");
+										"Buy N Get X Percent Off",
+										"PRD01",
+										"Product");
 		
 		bagItem.getProduct().addPromotion(b3g33);
 		

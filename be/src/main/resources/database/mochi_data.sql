@@ -11290,8 +11290,8 @@ INSERT INTO promotion_product VALUES (234467);
 -- Data for Name: promotion_type; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO promotion_type VALUES (1, 'REG01', 'PromotionRegularDTO', 'Regular');
-INSERT INTO promotion_type VALUES (2, 'CPN01', 'PromotionCouponDTO', 'Coupon');
+INSERT INTO promotion_type VALUES (1, 'PRD01', 'PromotionProductDTO', 'Product');
+INSERT INTO promotion_type VALUES (2, 'ORD01', 'PromotionOrderDTO', 'Order');
 
 
 --
