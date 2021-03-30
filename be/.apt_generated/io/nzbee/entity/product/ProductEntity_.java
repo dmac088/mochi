@@ -6,7 +6,7 @@ import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.status.ProductStatusEntity;
-import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import io.nzbee.entity.tag.TagEntity;
 import java.time.LocalDateTime;
 import javax.annotation.Generated;
@@ -18,7 +18,7 @@ import javax.persistence.metamodel.StaticMetamodel;
 @StaticMetamodel(ProductEntity.class)
 public abstract class ProductEntity_ {
 
-	public static volatile SetAttribute<ProductEntity, PromotionEntity> promotions;
+	public static volatile SetAttribute<ProductEntity, PromotionProductEntity> promotions;
 	public static volatile SingularAttribute<ProductEntity, Long> productId;
 	public static volatile SingularAttribute<ProductEntity, String> productUPC;
 	public static volatile SingularAttribute<ProductEntity, ProductStatusEntity> productStatus;

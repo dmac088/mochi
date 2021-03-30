@@ -26,6 +26,7 @@ import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -336,7 +337,7 @@ public class PostgresProductAdapter implements IProductPortService {
 			List<Promotion> lp = domainObject.getPromotions();
 			lp.forEach(p -> {
 				Optional<PromotionEntity> promoe = promotionService.findByCode(p.getPromotionCode());
-				product.addPromotion(promoe.get());
+				product.addPromotion((PromotionProductEntity) promoe.get());
 			});
 
 			productService.save(domainObject.getLclCd(), domainObject.getCurrency(), product);

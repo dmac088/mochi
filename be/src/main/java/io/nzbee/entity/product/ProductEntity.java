@@ -61,7 +61,7 @@ import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.status.ProductStatusEntity;
-import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import io.nzbee.entity.tag.TagEntity;
 
 @Entity
@@ -223,7 +223,7 @@ public abstract class ProductEntity implements Serializable {
 	Set<ProductPriceEntity> prices = new HashSet<ProductPriceEntity>();
 
 	@ManyToMany(mappedBy = "products")
-    private Set<PromotionEntity> promotions = new HashSet<PromotionEntity>();
+    private Set<PromotionProductEntity> promotions = new HashSet<PromotionProductEntity>();
 	
 	@Transient
 	private CategoryProductEntity primaryCategory;
@@ -531,20 +531,20 @@ public abstract class ProductEntity implements Serializable {
 		this.inStock = inStock;
 	}
 	
-	public Set<PromotionEntity> getPromotions() {
+	public Set<PromotionProductEntity> getPromotions() {
 		return promotions;
 	}
 
-	public void setPromotions(Set<PromotionEntity> promotions) {
+	public void setPromotions(Set<PromotionProductEntity> promotions) {
 		this.promotions = promotions;
 	}
 	
-	public void addPromotion(PromotionEntity promotion) {
+	public void addPromotion(PromotionProductEntity promotion) {
 		this.getPromotions().add(promotion);
 		promotion.getProducts().add(this);
 	}
 	
-	public void removePromotion(PromotionEntity promotion) {
+	public void removePromotion(PromotionProductEntity promotion) {
 		this.getPromotions().remove(promotion);
 		promotion.removeProduct(this);
 	}
