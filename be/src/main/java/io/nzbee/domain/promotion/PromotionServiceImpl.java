@@ -16,6 +16,11 @@ public class PromotionServiceImpl implements IPromotionService {
 	public Promotion findByCode(String locale, String code) {
 		return promotionService.findByCode(locale, code);
 	}
+	
+	@Override
+	public Promotion findByCouponCode(String locale, String couponCode) {
+		return promotionService.findByCouponCode(locale, couponCode);
+	}
 
 	@Override
 	public Promotion findByDesc(String locale, String desc) {

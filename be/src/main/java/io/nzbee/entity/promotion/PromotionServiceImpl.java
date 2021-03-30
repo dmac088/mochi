@@ -32,6 +32,12 @@ public class PromotionServiceImpl implements IPromotionService {
 	public Optional<PromotionEntity> findByCode(String promotionCode) {
 		return promotionRepository.findByPromotionCode(promotionCode);
 	}
+	
+
+	@Override
+	public Optional<PromotionDTO> findByCouponCode(String locale, String couponCode) {
+		return promotionRepository.findByPromotionCouponCode(couponCode);
+	}
 
 	@Override
 	public Optional<PromotionEntity> findByDesc(String promotionDesc) {

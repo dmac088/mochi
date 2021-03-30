@@ -3,6 +3,7 @@ package io.nzbee.entity.promotion;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 public interface IPromotionRepository extends CrudRepository<PromotionEntity, Long> {
@@ -12,5 +13,10 @@ public interface IPromotionRepository extends CrudRepository<PromotionEntity, Lo
 	Optional<PromotionEntity> findByAttributesLocaleAndAttributesPromotionDesc(String locale, String promotionDesc);
 	
 	List<PromotionEntity> findAll();
+
+	@Query(
+			"SELECT "
+	)
+	Optional<PromotionDTO> findByPromotionCouponCode(String couponCode);
 }
 

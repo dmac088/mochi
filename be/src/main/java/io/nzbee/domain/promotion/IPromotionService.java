@@ -4,4 +4,6 @@ import io.nzbee.domain.ILocalizedService;
 
 public interface IPromotionService extends ILocalizedService<Promotion>  {
 
+	Promotion findByCouponCode(String locale, String couponCode);
+
 }
