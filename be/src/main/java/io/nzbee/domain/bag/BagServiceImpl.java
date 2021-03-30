@@ -3,6 +3,8 @@ package io.nzbee.domain.bag;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import io.nzbee.domain.ports.IBagPortService;
 
 public class BagServiceImpl implements IBagService {
@@ -11,6 +13,7 @@ public class BagServiceImpl implements IBagService {
 	private IBagPortService bagService;
 	
     @Autowired
+    @Qualifier("bagRulesContainer")
     private KieContainer kieContainer;
 	
 	@Override

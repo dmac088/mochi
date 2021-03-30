@@ -10,11 +10,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class BagItemConfiguration {
+public class BagConfiguration {
 
-	private static final String drlFile = "rules/bagItemRules.drl";
+	private static final String drlFile = "rules/bagRules.drl";
     
-    @Bean(name = "bagItemRulesContainer")
+    @Bean(name = "bagRulesContainer")
     public KieContainer kieContainer() {
         KieServices kieServices = KieServices.Factory.get();
  

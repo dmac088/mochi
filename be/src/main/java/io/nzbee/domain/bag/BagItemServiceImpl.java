@@ -4,6 +4,8 @@ import org.apache.tomcat.util.buf.StringUtils;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import io.nzbee.domain.ports.IBagItemPortService;
 
 public class BagItemServiceImpl implements IBagItemService{
@@ -12,6 +14,7 @@ public class BagItemServiceImpl implements IBagItemService{
 	private IBagItemPortService bagItemService;
 	
     @Autowired
+    @Qualifier("bagItemRulesContainer")
     private KieContainer kieContainer;
 	
 	@Override
