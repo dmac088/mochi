@@ -27,5 +27,7 @@ public class DroolsBagWrapper {
 	public String getCouponCode() {
 		return couponCode;
 	}
+	
+	
 
 }

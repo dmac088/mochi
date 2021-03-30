@@ -8,10 +8,6 @@ import org.apache.tomcat.util.buf.StringUtils;
 
 dialect "mvel"
 
-function String pendingItemKey(DroolsBagWrapper bagItem) { 
-	return bagItem.getCustomerId() + "-"+ bagItem.getProductDesc();
-}
-
 rule "20% off total bag"
 when
 $bag : DroolsBagWrapper(promotionCouponCode.equals("ORDPCT20"))
