@@ -10,6 +10,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.promotion.coupon.IPromotionCouponRepository;
 
 @Service(value="promotionEntityService")
 public class PromotionServiceImpl implements IPromotionService {
@@ -17,7 +18,10 @@ public class PromotionServiceImpl implements IPromotionService {
 	private static final String CACHE_NAME = "promotionCache";
 	
 	@Autowired
-	private IPromotionRepository promotionRepository; 
+	private IPromotionRepository promotionRepository;
+	
+	@Autowired
+	private IPromotionCouponRepository promotionCouptonRepository;
 	
 	@Autowired
 	private IPromotionDao promotionDao;
@@ -32,11 +36,10 @@ public class PromotionServiceImpl implements IPromotionService {
 	public Optional<PromotionEntity> findByCode(String promotionCode) {
 		return promotionRepository.findByPromotionCode(promotionCode);
 	}
-	
 
 	@Override
 	public Optional<PromotionDTO> findByCouponCode(String locale, String couponCode) {
-		return promotionRepository.findByPromotionCouponCode(couponCode);
+		return promotionCouptonRepository.findByPromotionCouponCode(couponCode);
 	}
 
 	@Override
