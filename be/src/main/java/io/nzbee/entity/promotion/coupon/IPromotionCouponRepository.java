@@ -11,15 +11,16 @@ public interface IPromotionCouponRepository extends CrudRepository<PromotionCoup
 			"SELECT new io.nzbee.entity.promotion.coupon.PromotionCouponDTO (" +
 			" pce.promotionId," +
 			" pce.promotionCode," +
-			" pce.promotionDesc," +
+			" attr.promotionDesc," +
 			" pce.promotionStartDate," +
 			" pce.promotionEndDate," +
-			" pce.locale, " +
+			" attr.locale, " +
 			" pce.couponCode" +
 			") " +
 			"FROM PromotionCouponEntity pce " +
+			"JOIN pce.attributes attr " + 
 			"WHERE pce.promotionCouponCode = :couponCode " + 
-			"AND pce.locale = :locale "		
+			"AND attr.locale = :locale "		
 	)
 	Optional<PromotionDTO> findByPromotionCouponCode(String locale, String couponCode);
 	

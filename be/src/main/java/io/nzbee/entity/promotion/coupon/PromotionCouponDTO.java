@@ -40,4 +40,6 @@ public class PromotionCouponDTO extends PromotionDTO {
 		return couponCode;
 	}
 
+	
+	
 }
