@@ -19,8 +19,7 @@ public interface IPromotionCouponRepository extends CrudRepository<PromotionCoup
 			") " +
 			"FROM PromotionCouponEntity pce " +
 			"WHERE pce.promotionCouponCode = :couponCode " + 
-			"AND pce.locale = :locale "
-			
+			"AND pce.locale = :locale "		
 	)
 	Optional<PromotionDTO> findByPromotionCouponCode(String locale, String couponCode);
 	

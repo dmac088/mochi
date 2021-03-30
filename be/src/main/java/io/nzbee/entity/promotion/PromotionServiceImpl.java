@@ -39,7 +39,7 @@ public class PromotionServiceImpl implements IPromotionService {
 
 	@Override
 	public Optional<PromotionDTO> findByCouponCode(String locale, String couponCode) {
-		return promotionCouptonRepository.findByPromotionCouponCode(couponCode);
+		return promotionCouptonRepository.findByPromotionCouponCode(locale, couponCode);
 	}
 
 	@Override
