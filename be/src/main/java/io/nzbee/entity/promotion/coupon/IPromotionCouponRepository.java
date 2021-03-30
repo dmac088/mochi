@@ -15,7 +15,7 @@ public interface IPromotionCouponRepository extends CrudRepository<PromotionCoup
 			" pce.promotionStartDate," +
 			" pce.promotionEndDate," +
 			" attr.locale, " +
-			" pce.couponCode" +
+			" pce.promotionCouponCode" +
 			") " +
 			"FROM PromotionCouponEntity pce " +
 			"JOIN pce.attributes attr " + 

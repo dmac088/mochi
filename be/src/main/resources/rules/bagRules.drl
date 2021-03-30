@@ -2,20 +2,20 @@ import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.bag.discount.Discount;
-import io.nzbee.domain.bag.DroolsBagItemWrapper;
+import io.nzbee.domain.bag.DroolsBagWrapper;
 import java.util.List;
 import org.apache.tomcat.util.buf.StringUtils;
 
 dialect "mvel"
 
-function String pendingItemKey(DroolsBagItemWrapper bagItem) { 
+function String pendingItemKey(DroolsBagWrapper bagItem) { 
 	return bagItem.getCustomerId() + "-"+ bagItem.getProductDesc();
 }
 
 rule "20% off total bag"
 when
-$bag : DroolsBagWrapper(couponCode.equals("ORDPCT20"))
+$bag : DroolsBagWrapper(promotionCouponCode.equals("ORDPCT20"))
 then
-System.out.println("\nCoupon code = " + couponCode);
+//System.out.println("\nCoupon code = " + couponCode);
 System.out.println("************************************");
 end
