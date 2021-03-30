@@ -26,6 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import io.nzbee.util.promotion.product.ProductPromotionMasterService;
 
 @RunWith(SpringRunner.class)
@@ -90,7 +91,7 @@ public class IT_ProductPromotionMappingUploadForCreateIntegrationTest {
 		
 		assertTrue(found.isPresent());
 		
-		PromotionEntity cp = (PromotionEntity) found.get();
+		PromotionProductEntity cp = (PromotionProductEntity) found.get();
 		
 		assertThat(cp.getProducts().size())
 		.isEqualTo(2);
