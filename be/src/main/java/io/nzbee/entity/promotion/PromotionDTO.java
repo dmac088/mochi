@@ -44,6 +44,24 @@ public class PromotionDTO implements Serializable {
 		this.promotionEndDate	= LocalDateTime.parse(tuple[aliasToIndexMap.get(END_DATE_ALIAS)].toString(), DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss.S"));
 		this.locale 			= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 	}
+	
+	
+	public PromotionDTO(Long promotionId, 
+						String promotionCode, 
+						String promotionDesc, 
+						LocalDateTime promotionStartDate,
+						LocalDateTime promotionEndDate, 
+						String locale) {
+		super();
+		this.promotionId = promotionId;
+		this.promotionCode = promotionCode;
+		this.promotionDesc = promotionDesc;
+		this.promotionStartDate = promotionStartDate;
+		this.promotionEndDate = promotionEndDate;
+		this.locale = locale;
+	}
+
+
 
 	public Long getPromotionId() {
 		return promotionId;

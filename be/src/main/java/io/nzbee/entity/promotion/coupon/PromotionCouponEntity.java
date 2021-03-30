@@ -23,7 +23,5 @@ public class PromotionCouponEntity extends PromotionEntity {
 	public void setPromotionCouponCode(String promotionCouponCode) {
 		this.promotionCouponCode = promotionCouponCode;
 	}
-
-	
 	
 }
