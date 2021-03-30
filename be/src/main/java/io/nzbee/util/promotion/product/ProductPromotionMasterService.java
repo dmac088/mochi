@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.promotion.IPromotionService;
@@ -57,13 +57,13 @@ public class ProductPromotionMasterService {
 	public void persistProductPromotionMaster(ProductPromotionMasterSchema pms) {
 		logger.debug("called persistProductPromotionMaster() ");
 
-		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
+		PromotionProductEntity p = (PromotionProductEntity) promotionService.findByCode(pms.get_PROMOTION_CODE()).get();
 		Optional<ProductEntity> oc = productService.findByCode(pms.get_PRODUCT_UPC());
 
-		op.get().setPromotionCode(pms.get_PROMOTION_CODE());
-		op.get().addProduct(oc.get());
+		p.setPromotionCode(pms.get_PROMOTION_CODE());
+		p.addProduct(oc.get());
 
-		promotionService.save(op.get());
+		promotionService.save(p);
 	}
 
 }
