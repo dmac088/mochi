@@ -13,6 +13,12 @@ public class DroolsBagWrapper {
 		bag.getBag().logItemError(key, bag);
 	}
 	
+	public int getTotalItems() {
+		return bag.getTotalItems();
+	}
 	
+	public Double getTotalAmount() {
+		return bag.getTotalAmount();
+	}
 
 }
