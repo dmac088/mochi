@@ -1,4 +1,4 @@
-package io.nzbee.entity.promotion.coupon;
+package io.nzbee.entity.promotion.product;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;

@@ -11255,12 +11255,6 @@ SELECT pg_catalog.setval('promotion_category_prm_cat_id_seq', 1, false);
 
 
 --
--- Data for Name: promotion_coupon; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-
-
---
 -- Data for Name: promotion_level; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -11279,11 +11273,17 @@ INSERT INTO promotion_mechanic VALUES (3, 'ORDPCT20', '20% Off Total Order');
 
 
 --
--- Data for Name: promotion_regular; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+-- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO promotion_regular VALUES (234464);
-INSERT INTO promotion_regular VALUES (234467);
+
+
+--
+-- Data for Name: promotion_product; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO promotion_product VALUES (234464);
+INSERT INTO promotion_product VALUES (234467);
 
 
 --

@@ -1,10 +1,8 @@
-package io.nzbee.entity.promotion.coupon;
+package io.nzbee.entity.promotion.order;
 
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SingularAttribute;
 import javax.persistence.metamodel.StaticMetamodel;
-
-import io.nzbee.entity.promotion.order.PromotionOrderEntity;
 
 @Generated(value = "org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor")
 @StaticMetamodel(PromotionOrderEntity.class)

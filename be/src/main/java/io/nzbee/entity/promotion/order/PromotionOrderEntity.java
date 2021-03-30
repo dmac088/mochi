@@ -1,4 +1,4 @@
-package io.nzbee.entity.promotion.coupon;
+package io.nzbee.entity.promotion.order;
 
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -7,9 +7,9 @@ import javax.persistence.Table;
 import io.nzbee.entity.promotion.PromotionEntity;
 
 @Entity
-@Table(name = "promotion_coupon", schema = "mochi")
+@Table(name = "promotion_order", schema = "mochi")
 @DiscriminatorValue("2")
-public class PromotionCouponEntity extends PromotionEntity {
+public class PromotionOrderEntity extends PromotionEntity {
 
 	private static final long serialVersionUID = 9148075546941323177L;
 	

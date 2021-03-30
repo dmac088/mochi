@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
+import io.nzbee.entity.promotion.type.PromotionTypeDTO;
 
 public class PromotionDTO implements Serializable {
 
@@ -36,6 +37,8 @@ public class PromotionDTO implements Serializable {
 	
 	protected PromotionMechanicDTO mechanicDTO;
 	
+	protected PromotionTypeDTO typeDTO;
+	
 	public PromotionDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.promotionId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.promotionCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
@@ -61,8 +64,6 @@ public class PromotionDTO implements Serializable {
 		this.locale = locale;
 	}
 
-
-
 	public Long getPromotionId() {
 		return promotionId;
 	}
@@ -85,6 +86,14 @@ public class PromotionDTO implements Serializable {
 
 	public LocalDateTime getPromotionEndDate() {
 		return promotionEndDate;
+	}
+
+	public PromotionTypeDTO getTypeDTO() {
+		return typeDTO;
+	}
+
+	public void setTypeDTO(PromotionTypeDTO typeDTO) {
+		this.typeDTO = typeDTO;
 	}
 
 	public PromotionMechanicDTO getMechanicDTO() {
