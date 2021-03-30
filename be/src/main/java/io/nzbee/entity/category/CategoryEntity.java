@@ -35,7 +35,7 @@ import com.google.common.collect.Lists;
 import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import io.nzbee.search.ISearchDimension;
 
 @Entity
@@ -82,7 +82,7 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 	private Set<CategoryAttributeEntity> attributes = new HashSet<CategoryAttributeEntity>();
 
 	@ManyToMany(mappedBy = "categories")
-    private Set<PromotionEntity> promotions = new HashSet<PromotionEntity>();
+    private Set<PromotionProductEntity> promotions = new HashSet<PromotionProductEntity>();
 	
 	@Transient 
 	private CategoryAttributeEntity categoryAttribute;
@@ -271,20 +271,20 @@ public abstract class CategoryEntity implements ISearchDimension, Serializable {
 		return currency;
 	}
 	
-	public Set<PromotionEntity> getPromotions() {
+	public Set<PromotionProductEntity> getPromotions() {
 		return promotions;
 	}
 
-	public void setPromotions(Set<PromotionEntity> promotions) {
+	public void setPromotions(Set<PromotionProductEntity> promotions) {
 		this.promotions = promotions;
 	}
 
-	public void addPromotion(PromotionEntity promotion) {
+	public void addPromotion(PromotionProductEntity promotion) {
 		this.getPromotions().add(promotion);
 		promotion.getCategories().add(this);
 	}
 	
-	public void removePromotion(PromotionEntity promotion) {
+	public void removePromotion(PromotionProductEntity promotion) {
 		this.getPromotions().remove(promotion);
 		promotion.removeCategory(this);
 	}

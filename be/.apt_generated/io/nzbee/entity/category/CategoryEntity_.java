@@ -2,7 +2,7 @@ package io.nzbee.entity.category;
 
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.type.CategoryType;
-import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.product.PromotionProductEntity;
 import javax.annotation.Generated;
 import javax.persistence.metamodel.SetAttribute;
 import javax.persistence.metamodel.SingularAttribute;
@@ -16,7 +16,7 @@ public abstract class CategoryEntity_ {
 	public static volatile SingularAttribute<CategoryEntity, CategoryType> categoryType;
 	public static volatile SingularAttribute<CategoryEntity, Long> categoryParentId;
 	public static volatile SingularAttribute<CategoryEntity, CategoryEntity> parent;
-	public static volatile SetAttribute<CategoryEntity, PromotionEntity> promotions;
+	public static volatile SetAttribute<CategoryEntity, PromotionProductEntity> promotions;
 	public static volatile SingularAttribute<CategoryEntity, Long> categoryLevel;
 	public static volatile SetAttribute<CategoryEntity, CategoryAttributeEntity> attributes;
 	public static volatile SingularAttribute<CategoryEntity, String> categoryCode;
