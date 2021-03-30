@@ -33,7 +33,7 @@ public class CategoryPromotionMasterService {
 
 	@Transactional
 	public void writeCategoryPromotionMaster(String fileName) {
-		logger.debug("called writePromotionMaster with parameter {} ", fileName);
+		logger.debug("called writeCategoryPromotionMaster with parameter {} ", fileName);
 		try {
 			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
 			CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader().withColumnSeparator('\t')
