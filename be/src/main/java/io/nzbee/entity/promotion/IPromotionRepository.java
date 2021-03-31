@@ -12,8 +12,5 @@ public interface IPromotionRepository extends CrudRepository<PromotionEntity, Lo
 	
 	List<PromotionEntity> findAll();
 	
-	
-
-
 }
 

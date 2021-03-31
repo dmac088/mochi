@@ -22,6 +22,7 @@ public interface IPromotionOrderRepository extends CrudRepository<PromotionOrder
 			" pce.promotionCouponCode" +
 			") " +
 			"FROM PromotionOrderEntity pce " +
+			"JOIN pce.attributes attr " + 
 			"WHERE pce.promotionCode = :promotionCode " + 
 			"AND attr.locale = :locale "		
 	)
