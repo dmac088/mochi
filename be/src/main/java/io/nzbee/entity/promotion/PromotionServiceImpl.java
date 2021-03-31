@@ -8,9 +8,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.promotion.order.IPromotionOrderRepository;
 
 @Service(value="promotionEntityService")
 public class PromotionServiceImpl implements IPromotionService {
@@ -19,9 +17,6 @@ public class PromotionServiceImpl implements IPromotionService {
 	
 	@Autowired
 	private IPromotionRepository promotionRepository;
-	
-	@Autowired
-	private IPromotionOrderRepository promotionCouptonRepository;
 	
 	@Autowired
 	private IPromotionDao promotionDao;
@@ -37,10 +32,6 @@ public class PromotionServiceImpl implements IPromotionService {
 		return promotionRepository.findByPromotionCode(promotionCode);
 	}
 
-	@Override
-	public Optional<PromotionDTO> findByCouponCode(String locale, String couponCode) {
-		return promotionCouptonRepository.findByPromotionCouponCode(locale, couponCode);
-	}
 
 	@Override
 	public Optional<PromotionEntity> findByDesc(String promotionDesc) {
