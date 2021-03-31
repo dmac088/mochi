@@ -21,6 +21,8 @@ import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.bag.IBagService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.Product;
+import io.nzbee.domain.promotion.order.IOrderPromotionService;
+import io.nzbee.domain.promotion.order.OrderPromotion;
 import io.nzbee.resources.bag.BagResource;
 import io.nzbee.resources.bag.BagResourceAssembler;
 import io.nzbee.resources.bag.item.BagItemResource;
@@ -43,6 +45,9 @@ public class BagController {
     
     @Autowired
 	private IProductService productService;
+    
+    @Autowired
+	private IOrderPromotionService promotionService;
     
     @Autowired
     private IBagDTOMapper bagDTOMapper;
@@ -77,6 +82,9 @@ public class BagController {
 														@PathVariable String coupon, 
 														Principal principal) {
 	LOGGER.debug("call BagController.addCouponToBag");
+	
+	OrderPromotion op = promotionService.findByCouponCode(locale, coupon);
+	System.out.println("coupon code found " + op);
 	
 	Bag b = bagService.findByCode(	locale,
 									currency,

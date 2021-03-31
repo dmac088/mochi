@@ -1,8 +1,6 @@
 package io.nzbee.entity.promotion;
 
-
 import org.springframework.stereotype.Component;
-
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.order.OrderPromotion;
 import io.nzbee.domain.promotion.product.ProductPromotion;
@@ -14,6 +12,8 @@ public class PromotionMapperImpl implements IPromotionMapper {
 
 	@Override
 	public Promotion DTOToDo(PromotionDTO dto) {
+		System.out.println("The instance is of type......");
+		System.out.println(dto.getClass());
 		if(dto instanceof PromotionProductDTO) {
 			return new ProductPromotion(	dto.getPromotionCode(), 
 											dto.getPromotionDesc(), 

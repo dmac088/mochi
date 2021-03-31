@@ -3,10 +3,13 @@ package io.nzbee.domain.promotion.order;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import io.nzbee.domain.ports.IPromotionPortService;
 
 public class OrderPromotionServiceImpl implements IOrderPromotionService {
 
+	@Autowired
 	private IPromotionPortService promotionService;
 	
 	@Override

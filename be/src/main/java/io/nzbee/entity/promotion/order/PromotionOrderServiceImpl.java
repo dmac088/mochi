@@ -5,7 +5,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-@Service(value="promotionOrderService")
+@Service
 public class PromotionOrderServiceImpl implements IPromotionOrderService {
 
 	@Autowired
