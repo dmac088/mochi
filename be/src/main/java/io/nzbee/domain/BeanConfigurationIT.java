@@ -27,6 +27,8 @@ import io.nzbee.domain.product.shipping.IShippingProductService;
 import io.nzbee.domain.product.shipping.ShippingProductServiceImpl;
 import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.PromotionServiceImpl;
+import io.nzbee.domain.promotion.order.IOrderPromotionService;
+import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.resources.product.ProductResource;
@@ -39,6 +41,11 @@ import io.nzbee.resources.product.shipping.ShippingProductResource;
 @Profile("it")
 public class BeanConfigurationIT {
  
+    @Bean
+    public IOrderPromotionService promotionOrderService() {
+        return new OrderPromotionServiceImpl();
+    }
+	
 	@Bean
     public PagedResourcesAssembler<ProductResource> pagedProductResourceAssembler() {
     	return new PagedResourcesAssembler<ProductResource>(null, null);
