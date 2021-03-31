@@ -3,7 +3,9 @@ package io.nzbee.entity.promotion.order;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+@Service(value="promotionOrderService")
 public class PromotionOrderServiceImpl implements IPromotionOrderService {
 
 	@Autowired
