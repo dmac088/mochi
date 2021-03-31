@@ -27,11 +27,7 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.role.IRoleTypeRepository;
 import io.nzbee.entity.role.RoleType;
 import io.nzbee.entity.role.customer.CustomerEntity;
-import io.nzbee.exceptions.customer.CustomerAlreadyExistException;
-import io.nzbee.exceptions.customer.CustomerException;
-import io.nzbee.exceptions.customer.CustomerNotFoundException;
-import io.nzbee.exceptions.customer.CustomerPasswordsDoNotMatchException;
-import io.nzbee.exceptions.product.ProductException;
+import io.nzbee.exceptions.CustomException;
 import io.nzbee.security.authority.Authority;
 import io.nzbee.security.user.IUserService;
 import io.nzbee.security.user.User;
@@ -73,7 +69,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Transactional(readOnly = true)
 	public Customer findByUsername(String userName) {
 		PersonEntity c = personService.findByUsernameAndRole(userName, Constants.partyRoleCustomer)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with username " + userName + " not found!"));
+				.orElseThrow(() -> new CustomException("Customer with username " + userName + " not found!"));
 		return customerMapper.EntityToDo(c);
 	}
 
@@ -82,7 +78,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	public Customer registerNewCustomer(CustomerDTOIn customer) {
 		boolean exists = personService.userExists(customer.getUserName(), Constants.partyRoleCustomer);
 		if(exists) {
-			throw new CustomerAlreadyExistException("Customer with username " + customer.getUserName() + " already exists!");
+			throw new CustomException("Customer with username " + customer.getUserName() + " already exists!");
 		}
 		
 		Customer c = new Customer(	customer.getGivenName(),
@@ -92,7 +88,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 									customer.isEnabled());
 		
 		if(!customer.getPassword().equals(customer.getConfirmPassword())) {
-			throw new CustomerPasswordsDoNotMatchException("Customer passwords do not match");
+			throw new CustomException("Customer passwords do not match");
 		}
 		
 		c.setPassword(customer.getPassword(), customer.getConfirmPassword());
@@ -159,7 +155,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Transactional
 	public void delete(Customer object) {
 		PersonEntity t = personService.findByUsernameAndRole(object.getUserName(), Constants.partyRoleCustomer)
-				.orElseThrow(() -> new CustomerException("Customer with username " + object.getUserName() + " not found!"));
+				.orElseThrow(() -> new CustomException("Customer with username " + object.getUserName() + " not found!"));
 		personService.delete(t);
 		
 	}
@@ -182,7 +178,7 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 	@Transactional
 	public void delete(String userName) {
 		PersonEntity t = personService.findByUsernameAndRole(userName, Constants.partyRoleCustomer)
-				.orElseThrow(() -> new CustomerException("Customer with username " + userName + " not found!"));
+				.orElseThrow(() -> new CustomException("Customer with username " + userName + " not found!"));
 		personService.delete(t);
 	}
 
@@ -250,13 +246,13 @@ public class PostgresCustomerAdapter implements ICustomerPortService {
 		
 		//get the party of the bag, which will be a person
 		PersonEntity t = personService.findByUsernameAndRole(c.getUserName(), Constants.partyRoleCustomer)
-					.orElseThrow(() -> new CustomerException("Customer with username " + c.getUserName() + " not found!"));
+					.orElseThrow(() -> new CustomException("Customer with username " + c.getUserName() + " not found!"));
 		
 		
 		//get the product of the item the customer wishes to add
 		String upc = bagItem.getProduct().getProductUPC();
 		ProductEntity p = productService.findByCode(upc)
-					.orElseThrow(() -> new ProductException("Customer with UPC " + upc + " not found!"));
+					.orElseThrow(() -> new CustomException("Customer with UPC " + upc + " not found!"));
 		
 		
 		//get the bag of the person

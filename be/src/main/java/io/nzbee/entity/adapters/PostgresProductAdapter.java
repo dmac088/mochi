@@ -49,7 +49,7 @@ import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
-import io.nzbee.exceptions.product.ProductNotFoundException;
+import io.nzbee.exceptions.CustomException;
 import io.nzbee.search.ISearchService;
 import io.nzbee.search.facet.IFacet;
 
@@ -105,7 +105,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional(readOnly = true)
 	public Product findByCode(String locale, String currency, String code) {
 		ProductDTO dto = productService.findByCode(locale, currency, code)
-				.orElseThrow(() -> new ProductNotFoundException("Product for code " + code + " not found!"));
+				.orElseThrow(() -> new CustomException("Product for code " + code + " not found!"));
 		return mapHelper(dto);
 	}
 
@@ -113,7 +113,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional(readOnly = true)
 	public Product findByDesc(String locale, String currency, String desc) {
 		ProductDTO dto = productService.findByDesc(locale, currency, desc)
-				.orElseThrow(() -> new ProductNotFoundException("Product for description " + desc + " not found!"));
+				.orElseThrow(() -> new CustomException("Product for description " + desc + " not found!"));
 		return mapHelper(dto);
 	}
 	
@@ -121,7 +121,7 @@ public class PostgresProductAdapter implements IProductPortService {
 	@Transactional(readOnly = true)
 	public ShippingProduct findByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
 		ProductDTO dto = shippingProductService.findByDestinationAndTypeAndBagWeight(locale, currency, destinationCode, type, weightKg)
-				.orElseThrow(() -> new ProductNotFoundException("Shipping product not found!"));
+				.orElseThrow(() -> new CustomException("Shipping product not found!"));
 		return (ShippingProduct) mapHelper(dto);
 	}
 
