@@ -18,11 +18,6 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 	
 	@Override
-	public Promotion findByCouponCode(String locale, String couponCode) {
-		return promotionService.findByCouponCode(locale, couponCode);
-	}
-
-	@Override
 	public Promotion findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;

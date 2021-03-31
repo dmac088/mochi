@@ -5,8 +5,8 @@ import java.time.Month;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
-import io.nzbee.domain.promotion.ProductPromotion;
 import io.nzbee.domain.promotion.Promotion;
+import io.nzbee.domain.promotion.product.ProductPromotion;
 
 @Service
 @Profile(value = "ut")

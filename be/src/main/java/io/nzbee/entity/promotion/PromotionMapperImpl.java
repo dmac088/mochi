@@ -2,9 +2,10 @@ package io.nzbee.entity.promotion;
 
 
 import org.springframework.stereotype.Component;
-import io.nzbee.domain.promotion.OrderPromotion;
-import io.nzbee.domain.promotion.ProductPromotion;
+
 import io.nzbee.domain.promotion.Promotion;
+import io.nzbee.domain.promotion.order.OrderPromotion;
+import io.nzbee.domain.promotion.product.ProductPromotion;
 import io.nzbee.entity.promotion.order.PromotionOrderDTO;
 import io.nzbee.entity.promotion.product.PromotionProductDTO;
 

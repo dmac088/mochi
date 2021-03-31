@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.ports.IPromotionPortService;
 import io.nzbee.domain.promotion.Promotion;
+import io.nzbee.domain.promotion.order.OrderPromotion;
 import io.nzbee.entity.promotion.IPromotionMapper;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionDTO;
@@ -20,20 +21,17 @@ public class PostgresPromotionAdapter implements IPromotionPortService {
 	
 	@Override
 	public void save(Promotion domainObject) {
-		// TODO Auto-generated method stub
-		
+		promotionService.save(promotionMapper.doToEntity(domainObject));
 	}
 
 	@Override
 	public void update(Promotion domainObject) {
-		// TODO Auto-generated method stub
-		
+		promotionService.update(promotionMapper.doToEntity(domainObject));
 	}
 
 	@Override
 	public void delete(Promotion domainObject) {
-		// TODO Auto-generated method stub
-		
+		promotionService.delete(promotionMapper.doToEntity(domainObject));
 	}
 
 	@Override
@@ -42,12 +40,21 @@ public class PostgresPromotionAdapter implements IPromotionPortService {
 				.orElseThrow(() -> new PromotionNotFoundException("Promotion for code " + code + " not found!"));
 		return promotionMapper.DTOToDo(dto);
 	}
+	
+	@Override
+	public OrderPromotion findOrderPromotionByCode(String locale, String code) {
+		PromotionDTO dto = promotionService.findByCode(locale, code)
+				.orElseThrow(() -> new PromotionNotFoundException("Promotion for code " + code + " not found!"));
+		return (OrderPromotion) promotionMapper.DTOToDo(dto);
+	}
 
 	@Override
-	public Promotion findByCouponCode(String locale, String couponCode) {
+	public OrderPromotion findOrderPromotionByCouponCode(String locale, String couponCode) {
 		PromotionDTO dto = promotionService.findByCouponCode(locale, couponCode)
 				.orElseThrow(() -> new PromotionNotFoundException("Promotion for coupon code " + couponCode + " not found!"));
-		return promotionMapper.DTOToDo(dto);
+		return (OrderPromotion) promotionMapper.DTOToDo(dto);
 	}
+
+	
 
 }

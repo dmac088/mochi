@@ -1,6 +1,8 @@
-package io.nzbee.domain.promotion;
+package io.nzbee.domain.promotion.product;
 
 import java.time.LocalDateTime;
+
+import io.nzbee.domain.promotion.Promotion;
 
 public class ProductPromotion extends Promotion {
 
