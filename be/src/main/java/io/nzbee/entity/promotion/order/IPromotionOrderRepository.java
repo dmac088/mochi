@@ -16,6 +16,12 @@ public interface IPromotionOrderRepository extends CrudRepository<PromotionOrder
 			" pce.promotionId," +
 			" pce.promotionCode," +
 			" attr.promotionDesc," +
+			" pm.promotionMechanicId, " +
+			" pm.promotionMechanicCode, " +
+			" pm.promotionMechanicDesc, " +
+			" pt.promotionTypeId, " +
+			" pt.promotionTypeCode, " +
+			" pt.promotionTypeDesc, " +
 			" pce.promotionStartDate," +
 			" pce.promotionEndDate," +
 			" attr.locale, " +
@@ -23,6 +29,8 @@ public interface IPromotionOrderRepository extends CrudRepository<PromotionOrder
 			") " +
 			"FROM PromotionOrderEntity pce " +
 			"JOIN pce.attributes attr " + 
+			"JOIN pce.promotionMechanic pm " +
+			"JOIN pce.promotionType pt " +
 			"WHERE pce.promotionCode = :promotionCode " + 
 			"AND attr.locale = :locale "		
 	)
@@ -33,6 +41,12 @@ public interface IPromotionOrderRepository extends CrudRepository<PromotionOrder
 			" pce.promotionId," +
 			" pce.promotionCode," +
 			" attr.promotionDesc," +
+			" pm.promotionMechanicId, " +
+			" pm.promotionMechanicCode, " +
+			" pm.promotionMechanicDesc, " +
+			" pt.promotionTypeId, " +
+			" pt.promotionTypeCode, " +
+			" pt.promotionTypeDesc, " +
 			" pce.promotionStartDate," +
 			" pce.promotionEndDate," +
 			" attr.locale, " +
@@ -40,6 +54,8 @@ public interface IPromotionOrderRepository extends CrudRepository<PromotionOrder
 			") " +
 			"FROM PromotionOrderEntity pce " +
 			"JOIN pce.attributes attr " + 
+			"JOIN pce.promotionMechanic pm " +
+			"JOIN pce.promotionType pt " +
 			"WHERE pce.promotionCouponCode = :couponCode " + 
 			"AND attr.locale = :locale "		
 	)

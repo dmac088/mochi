@@ -24,6 +24,7 @@ import org.hibernate.annotations.NaturalId;
 import io.nzbee.entity.promotion.attribute.PromotionAttributeEntity;
 import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
+import io.nzbee.entity.promotion.type.PromotionTypeEntity;
 
 @Entity
 @Table(name = "promotion", schema = "mochi")
@@ -54,6 +55,10 @@ public abstract class PromotionEntity implements Serializable {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_mec_id")
 	private PromotionMechanicEntity promotionMechanic;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="prm_typ_id")
+	private PromotionTypeEntity promotionType;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="prm_lvl_id")
@@ -114,6 +119,14 @@ public abstract class PromotionEntity implements Serializable {
 
 	public void setPromotionMechanic(PromotionMechanicEntity promotionMechanic) {
 		this.promotionMechanic = promotionMechanic;
+	}
+	
+	public PromotionTypeEntity getPromotionType() {
+		return promotionType;
+	}
+
+	public void setPromotionType(PromotionTypeEntity promotionType) {
+		this.promotionType = promotionType;
 	}
 
 	public Set<PromotionAttributeEntity> getAttributes() {
