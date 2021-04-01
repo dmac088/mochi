@@ -1031,7 +1031,7 @@ INSERT INTO discount_type VALUES (2, 'value');
 -- Name: hibernate_sequence; Type: SEQUENCE SET; Schema: mochi; Owner: mochidb_owner
 --
 
-SELECT pg_catalog.setval('hibernate_sequence', 2030863, true);
+SELECT pg_catalog.setval('hibernate_sequence', 2030866, true);
 
 
 --
@@ -11235,6 +11235,7 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 
 INSERT INTO promotion VALUES (234464, 'RB2G50', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 1, true, 1, 1);
 INSERT INTO promotion VALUES (234467, 'RB3G33', '2020-03-08 00:00:00+08', '2021-02-01 00:00:00+08', 1, true, 1, 1);
+INSERT INTO promotion VALUES (2030864, 'C10PCT', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 3, true, 2, 3);
 
 
 --
@@ -11245,6 +11246,8 @@ INSERT INTO promotion_attr_lcl VALUES (234465, 234464, 'Buy 1 get 1 free', 'en-G
 INSERT INTO promotion_attr_lcl VALUES (234466, 234464, '買1送1', 'zh-HK');
 INSERT INTO promotion_attr_lcl VALUES (234468, 234467, '買二送一', 'zh-HK');
 INSERT INTO promotion_attr_lcl VALUES (234469, 234467, 'Buy 2 get 1 free', 'en-GB');
+INSERT INTO promotion_attr_lcl VALUES (2030865, 2030864, '10% off total basket', 'en-GB');
+INSERT INTO promotion_attr_lcl VALUES (2030866, 2030864, '總籃可享10％的折扣', 'zh-HK');
 
 
 --
@@ -11269,13 +11272,14 @@ INSERT INTO promotion_level VALUES (3, 'ORD01', 'Order');
 
 INSERT INTO promotion_mechanic VALUES (1, 'BNGNPCT', 'Buy N Get X Percent Off');
 INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
-INSERT INTO promotion_mechanic VALUES (3, 'ORDPCT20', '20% Off Total Order');
+INSERT INTO promotion_mechanic VALUES (3, 'ORDPCTOFF', 'Percentage off total order');
 
 
 --
 -- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
+INSERT INTO promotion_order VALUES (2030864, 'ABCD1');
 
 
 --

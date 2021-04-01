@@ -20,6 +20,7 @@ import io.nzbee.util.product.shipping.destination.ShippingDestinationMasterServi
 import io.nzbee.util.product.shipping.type.ShippingTypeMasterService;
 import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
+import io.nzbee.util.promotion.order.PromotionOrderMasterService;
 import io.nzbee.util.promotion.product.ProductPromotionMasterService;
 import io.nzbee.util.promotion.regular.PromotionRegularMasterService;
 import io.nzbee.util.tag.TagMasterService;
@@ -63,6 +64,9 @@ public class FileController {
 
     @Autowired
     private PromotionRegularMasterService promotionRegularMasterService;
+    
+    @Autowired
+    private PromotionOrderMasterService promotionOrderMasterService;
     
     @Autowired
     private CategoryPromotionMasterService categoryPromotionMasterService;
@@ -302,6 +306,24 @@ public class FileController {
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
         promotionRegularMasterService.writePromotionRegularMaster(fileName);
+      
+        String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
+                .path(fileStorageProperties.getUploadDir())	
+                .path(fileName)
+                .toUriString();
+
+        return new UploadFileResponse(fileName, fileDownloadUri,
+        		uploadFile.getContentType(), uploadFile.getSize());
+    }
+    
+    @PostMapping("/OrderPromotion/Upload/")
+    public UploadFileResponse uploadOrderPromotionFile(@RequestParam("file") MultipartFile uploadFile) {
+    	
+    	logger.debug("called uploadOrderPromotionFile with parameters {} ", uploadFile );
+
+        String fileName = fileStorageServiceUpload.storeFile(uploadFile);
+
+        promotionOrderMasterService.writePromotionCouponMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	

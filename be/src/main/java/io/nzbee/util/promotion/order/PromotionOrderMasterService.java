@@ -1,4 +1,4 @@
-package io.nzbee.util.promotion.coupon;
+package io.nzbee.util.promotion.order;
 
 import java.io.File;
 import java.io.IOException;
@@ -25,9 +25,9 @@ import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-public class PromotionCouponMasterService {
+public class PromotionOrderMasterService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PromotionCouponMasterService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PromotionOrderMasterService.class);
 
 	@Autowired
 	private IPromotionService promotionService;
@@ -51,11 +51,11 @@ public class PromotionCouponMasterService {
 					.withQuoteChar('"');
 
 			CsvMapper mapper = new CsvMapper();
-			MappingIterator<PromotionCouponSchema> readValues = mapper.readerFor(PromotionCouponSchema.class)
+			MappingIterator<PromotionOrderSchema> readValues = mapper.readerFor(PromotionOrderSchema.class)
 					.with(bootstrapSchema).readValues(file);
 
 			readValues.readAll().stream().forEach(c -> {
-				this.persistPromotionCouponMaster(c);
+				this.persistPromotionOrderMaster(c);
 			});
 
 		} catch (IOException e) {
@@ -63,8 +63,8 @@ public class PromotionCouponMasterService {
 		}
 	}
 
-	public void persistPromotionCouponMaster(PromotionCouponSchema pms) {
-		logger.debug("called persistPromotionCouponMaster() ");
+	public void persistPromotionOrderMaster(PromotionOrderSchema pms) {
+		logger.debug("called persistPromotionOrderMaster() ");
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
 

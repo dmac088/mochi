@@ -1,8 +1,8 @@
-package io.nzbee.util.promotion.coupon;
+package io.nzbee.util.promotion.order;
 
 import io.nzbee.util.promotion.PromotionSchema;
 
-public class PromotionCouponSchema extends PromotionSchema {
+public class PromotionOrderSchema extends PromotionSchema {
 
 	private String PROMOTION_COUPON_CODE;
 

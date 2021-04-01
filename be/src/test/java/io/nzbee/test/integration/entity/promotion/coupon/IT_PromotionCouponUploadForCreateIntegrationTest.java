@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.coupon.PromotionCouponMasterService;
+import io.nzbee.util.promotion.order.PromotionOrderMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -40,7 +40,7 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private PromotionCouponMasterService pms;
+	private PromotionOrderMasterService pms;
 
 	@Autowired
 	private IPromotionService promotionService;
