@@ -39,6 +39,7 @@ public class PromotionDTO implements Serializable {
 	
 	protected PromotionTypeDTO typeDTO;
 	
+	
 	public PromotionDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.promotionId 		= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.promotionCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
@@ -51,16 +52,24 @@ public class PromotionDTO implements Serializable {
 	
 	public PromotionDTO(Long promotionId, 
 						String promotionCode, 
-						String promotionDesc, 
+						String promotionDesc,
+						Long   promotionMechanicId,
+						String promotionMechanicCode,
+						String promotionMechanicDesc,
+						Long   promotionTypeId,
+						String promotionTypeCode,
+						String promotionTypeDesc,
 						LocalDateTime promotionStartDate,
 						LocalDateTime promotionEndDate, 
 						String locale) {
 		super();
-		this.promotionId = promotionId;
-		this.promotionCode = promotionCode;
-		this.promotionDesc = promotionDesc;
+		this.promotionId 		= promotionId;
+		this.promotionCode 		= promotionCode;
+		this.promotionDesc 		= promotionDesc;
 		this.promotionStartDate = promotionStartDate;
-		this.promotionEndDate = promotionEndDate;
+		this.promotionEndDate 	= promotionEndDate;
+		this.mechanicDTO 		= new PromotionMechanicDTO(promotionMechanicId, promotionMechanicCode, promotionMechanicDesc, locale);
+		this.typeDTO 			= new PromotionTypeDTO(promotionTypeId, promotionTypeCode, promotionTypeDesc);
 		this.locale = locale;
 	}
 

@@ -30,6 +30,14 @@ public class PromotionMechanicDTO implements Serializable {
 		this.locale 			= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 	}
 
+	public PromotionMechanicDTO(Long mechanicId, String mechanicCode, String mechanicDesc, String locale) {
+		super();
+		this.mechanicId = mechanicId;
+		this.mechanicCode = mechanicCode;
+		this.mechanicDesc = mechanicDesc;
+		this.locale = locale;
+	}
+
 	public Long getMechanicId() {
 		return mechanicId;
 	}
