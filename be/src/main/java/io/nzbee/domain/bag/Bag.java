@@ -8,6 +8,7 @@ import java.util.stream.Collectors;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
+import io.nzbee.domain.promotion.order.OrderPromotion;
 
 public class Bag {
 	
@@ -17,7 +18,9 @@ public class Bag {
 	
 	private BagIssues bagIssues = new BagIssues();
 	
-	private String couponCode;
+	private OrderPromotion orderPromotion;
+	
+	
 
 	public Bag(Customer customer) {
 		this.customer = customer;
@@ -100,12 +103,12 @@ public class Bag {
 		return bagIssues;
 	}
 
-	public String getCouponCode() {
-		return couponCode;
+	public OrderPromotion getOrderPromotion() {
+		return orderPromotion;
 	}
 
-	public void setCouponCode(String couponCode) {
-		this.couponCode = couponCode;
+	public void setOrderPromotion(OrderPromotion orderPromotion) {
+		this.orderPromotion = orderPromotion;
 	}
 
 	public boolean hasIssues() {
