@@ -7,15 +7,18 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import io.nzbee.entity.bag.item.BagItemEntity;
 import io.nzbee.entity.party.Party;
+import io.nzbee.entity.promotion.order.PromotionOrderEntity;
 
 @Entity
 @Table(name = "bag", schema = "mochi")
@@ -40,6 +43,10 @@ public class BagEntity {
 
 	@Column(name="bag_upd_dt")
 	private LocalDateTime bagUpdatedDateTime;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name="prm_id")
+	private PromotionOrderEntity promotion;
 
 	public Long getBagId() {
 		return bagId;
@@ -87,6 +94,14 @@ public class BagEntity {
 		this.bagUpdatedDateTime = bagUpdatedDateTime;
 	}
 	
+	public PromotionOrderEntity getPromotion() {
+		return promotion;
+	}
+
+	public void setPromotion(PromotionOrderEntity promotion) {
+		this.promotion = promotion;
+	}
+
 	@Override
     public boolean equals(Object o) {
         if (this == o) return true;

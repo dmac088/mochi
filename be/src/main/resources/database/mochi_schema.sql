@@ -67,6 +67,7 @@ ALTER TABLE ONLY mochi.brand_category DROP CONSTRAINT brand_category_bnd_id_bran
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_lcl_cd_fkey;
 ALTER TABLE ONLY mochi.brand_attr_lcl DROP CONSTRAINT brand_attr_lcl_bnd_id_fkey;
 ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_pty_id_party_pty_id_fkey;
+ALTER TABLE ONLY mochi.bag DROP CONSTRAINT bag_prm_id_promotion_order_prm_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_sts_id_bag_item_sts_bag_item_sts_id_fkey;
 ALTER TABLE ONLY mochi.bag_item_disc DROP CONSTRAINT bag_item_disc_bag_item_id_bag_item_bag_item_id_fkey;
 ALTER TABLE ONLY mochi.bag_item DROP CONSTRAINT bag_item_bag_id_bag_bag_id_fkey;
@@ -1820,7 +1821,8 @@ CREATE TABLE bag (
     bag_id bigint DEFAULT nextval('bag_bag_id_seq'::regclass) NOT NULL,
     pty_id bigint NOT NULL,
     bag_crd_dt timestamp with time zone NOT NULL,
-    bag_upd_dt timestamp with time zone NOT NULL
+    bag_upd_dt timestamp with time zone NOT NULL,
+    prm_id bigint
 );
 
 
@@ -3963,6 +3965,14 @@ ALTER TABLE ONLY bag_item_disc
 
 ALTER TABLE ONLY bag_item
     ADD CONSTRAINT bag_item_sts_id_bag_item_sts_bag_item_sts_id_fkey FOREIGN KEY (bag_item_sts_id) REFERENCES bag_item_status(bag_item_sts_id);
+
+
+--
+-- Name: bag bag_prm_id_promotion_order_prm_id_fkey; Type: FK CONSTRAINT; Schema: mochi; Owner: mochidb_owner
+--
+
+ALTER TABLE ONLY bag
+    ADD CONSTRAINT bag_prm_id_promotion_order_prm_id_fkey FOREIGN KEY (prm_id) REFERENCES promotion_order(prm_id);
 
 
 --

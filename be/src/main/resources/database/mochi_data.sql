@@ -361,12 +361,28 @@ INSERT INTO address VALUES (2, 'Test Line 1', 'Test Line 2', 'Test Line 3', 'Tes
 
 
 --
+-- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO promotion VALUES (234464, 'RB2G50', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 1, true, 1, 1);
+INSERT INTO promotion VALUES (234467, 'RB3G33', '2020-03-08 00:00:00+08', '2021-02-01 00:00:00+08', 1, true, 1, 1);
+INSERT INTO promotion VALUES (2030864, 'C10PCT', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 3, true, 2, 3);
+
+
+--
+-- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
+--
+
+INSERT INTO promotion_order VALUES (2030864, 'ABCD1');
+
+
+--
 -- Data for Name: bag; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
-INSERT INTO bag VALUES (234473, 232304, '2020-12-01 21:33:14.43+08', '2020-12-01 21:33:14.431+08');
-INSERT INTO bag VALUES (234476, 232304, '2020-12-01 21:40:31.98+08', '2020-12-01 21:40:31.98+08');
-INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2021-01-23 19:39:07.921+08');
+INSERT INTO bag VALUES (234473, 232304, '2020-12-01 21:33:14.43+08', '2020-12-01 21:33:14.431+08', NULL);
+INSERT INTO bag VALUES (234476, 232304, '2020-12-01 21:40:31.98+08', '2020-12-01 21:40:31.98+08', NULL);
+INSERT INTO bag VALUES (234484, 234482, '2020-12-02 12:54:34.693+08', '2021-01-23 19:39:07.921+08', NULL);
 
 
 --
@@ -11230,15 +11246,6 @@ SELECT pg_catalog.setval('product_type_prd_typ_id_seq', 1, true);
 
 
 --
--- Data for Name: promotion; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO promotion VALUES (234464, 'RB2G50', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 1, true, 1, 1);
-INSERT INTO promotion VALUES (234467, 'RB3G33', '2020-03-08 00:00:00+08', '2021-02-01 00:00:00+08', 1, true, 1, 1);
-INSERT INTO promotion VALUES (2030864, 'C10PCT', '2020-03-07 00:00:00+08', '2021-01-31 00:00:00+08', 3, true, 2, 3);
-
-
---
 -- Data for Name: promotion_attr_lcl; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
 --
 
@@ -11273,13 +11280,6 @@ INSERT INTO promotion_level VALUES (3, 'ORD01', 'Order');
 INSERT INTO promotion_mechanic VALUES (1, 'BNGNPCT', 'Buy N Get X Percent Off');
 INSERT INTO promotion_mechanic VALUES (2, 'BNGNF', 'Buy N Get N Free');
 INSERT INTO promotion_mechanic VALUES (3, 'ORDPCTOFF', 'Percentage off total order');
-
-
---
--- Data for Name: promotion_order; Type: TABLE DATA; Schema: mochi; Owner: mochidb_owner
---
-
-INSERT INTO promotion_order VALUES (2030864, 'ABCD1');
 
 
 --
