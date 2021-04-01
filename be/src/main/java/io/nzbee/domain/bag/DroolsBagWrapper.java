@@ -9,7 +9,7 @@ public class DroolsBagWrapper {
 	
 	public DroolsBagWrapper(Bag bag) {
 		this.bag = bag;
-		this.couponCode = bag.getCouponCode();
+		this.couponCode = bag.getOrderPromotion().getCouponCode();
 	}
 	
 	public void logItemError(String key, BagItem bag) {
