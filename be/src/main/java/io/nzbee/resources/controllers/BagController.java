@@ -90,7 +90,7 @@ public class BagController {
 									currency,
 									principal.getName());
 	
-	b.setCouponCode(coupon);
+	b.setOrderPromotion(op);
 	
 	bagService.checkAllBagRules(b);
 	
