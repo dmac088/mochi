@@ -20,8 +20,6 @@ import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.entity.promotion.product.PromotionProductEntity;
-import io.nzbee.entity.promotion.type.IPromotionTypeService;
-import io.nzbee.entity.promotion.type.PromotionTypeEntity;
 import io.nzbee.exceptions.CustomException;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
@@ -34,9 +32,6 @@ public class PromotionProductMasterService {
 
 	@Autowired
 	private IPromotionService promotionService;
-	
-	@Autowired
-	private IPromotionTypeService promotionTypeService;
 	
 	@Autowired
 	private IPromotionMechanicService promotionMechanicService;
@@ -86,8 +81,6 @@ public class PromotionProductMasterService {
 		
 		Optional<PromotionLevelEntity> pl = promotionLevelService.findByCode(pms.get_PROMOTION_LEVEL_CODE());
 		
-		Optional<PromotionTypeEntity> pt = promotionTypeService.findByCode(pms.get_PROMOTION_TYPE_CODE());
-
 		p.setPromotionCode(pms.get_PROMOTION_CODE());
 		PromotionAttributeEntity paEN = mapAttribute(p, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB);
 		PromotionAttributeEntity paCN = mapAttribute(p, pms.get_PROMOTION_DESC_HK(), Constants.localeZHHK);
@@ -100,7 +93,6 @@ public class PromotionProductMasterService {
 		p.setPromotionMechanic(pm.orElseThrow(() -> new CustomException("Promotion mechanic " + pms.get_PROMOTION_MECHANIC_CODE() + " not found!" )));
 		p.setPromotionLevel(pl.orElseThrow(() -> new CustomException("Promotion level " + pms.get_PROMOTION_LEVEL_CODE() + " not found!" )));
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
-		p.setPromotionType(pt.orElseThrow(() -> new CustomException("Promotion type " + pms.get_PROMOTION_TYPE_CODE() + " not found!" )));
 
 		promotionService.save(p);
 	}
