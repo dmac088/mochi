@@ -71,7 +71,7 @@ public class IT_PromotionProductUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writePromotionRegularMaster(file.getAbsolutePath() + "/data/promotion/regular/create/promotion.tsv");
+		pms.writePromotionProductMaster(file.getAbsolutePath() + "/data/promotion/regular/create/promotion.tsv");
 	}
 
 	@Test
