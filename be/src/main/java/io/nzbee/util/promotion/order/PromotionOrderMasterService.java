@@ -78,7 +78,7 @@ public class PromotionOrderMasterService {
 
 		Optional<PromotionMechanicEntity> pm = promotionMechanicService.findByCode(pms.get_PROMOTION_MECHANIC_CODE());
 		
-		Optional<PromotionLevelEntity> pl = promotionLevelService.findByCode(pms.get_PROMOTION_LEVEL_CODE()); 
+		Optional<PromotionLevelEntity> pl = promotionLevelService.findByCode(pms.get_PROMOTION_LEVEL_CODE());
 
 		p.setPromotionCode(pms.get_PROMOTION_CODE());
 		PromotionAttributeEntity paEN = mapAttribute(p, pms.get_PROMOTION_DESC_EN(), Constants.localeENGB);
@@ -94,7 +94,6 @@ public class PromotionOrderMasterService {
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
 		p.setPromotionCouponCode(pms.get_PROMOTION_COUPON_CODE());
 		
-
 		promotionService.save(p);
 	}
 	
