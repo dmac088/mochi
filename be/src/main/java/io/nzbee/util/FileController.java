@@ -305,7 +305,7 @@ public class FileController {
 
         String fileName = fileStorageServiceUpload.storeFile(uploadFile);
 
-        promotionRegularMasterService.writePromotionRegularMaster(fileName);
+        promotionRegularMasterService.writePromotionProductMaster(fileName);
       
         String fileDownloadUri = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(fileStorageProperties.getUploadDir())	

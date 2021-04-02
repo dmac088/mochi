@@ -44,8 +44,8 @@ public class PromotionProductMasterService {
 
 	
 	@Transactional
-	public void writePromotionRegularMaster(String fileName) {
-		logger.debug("called writePromotionRegularMaster with parameter {} ", fileName);
+	public void writePromotionProductMaster(String fileName) {
+		logger.debug("called writePromotionProductMaster with parameter {} ", fileName);
 		try {
 			File file = fileStorageServiceUpload.loadFileAsResource(fileName).getFile();
 			CsvSchema bootstrapSchema = CsvSchema.emptySchema().withHeader().withColumnSeparator('\t')
