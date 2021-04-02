@@ -1,4 +1,4 @@
-package io.nzbee.test.integration.entity.promotion.coupon;
+package io.nzbee.test.integration.entity.promotion.product;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertNotNull;
@@ -27,20 +27,20 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.order.PromotionOrderMasterService;
+import io.nzbee.util.promotion.regular.PromotionRegularMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class IT_PromotionCouponUploadForCreateIntegrationTest {
+public class IT_PromotionProductUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private PromotionOrderMasterService pms;
+	private PromotionRegularMasterService pms;
 
 	@Autowired
 	private IPromotionService promotionService;
@@ -71,14 +71,14 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 		String path = "src/test/resources";
 		File file = new File(path);
 
-		pms.writePromotionCouponMaster(file.getAbsolutePath() + "/data/promotion/coupon/create/promotion.tsv");
+		pms.writePromotionRegularMaster(file.getAbsolutePath() + "/data/promotion/regular/create/promotion.tsv");
 	}
 
 	@Test
 	@Rollback(false)
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ENGB() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("C10PCT");
+		Optional<PromotionEntity> found = promotionService.findByCode("RB1G1F");
 
 		// then
 		assertFound_ENGB(found);
@@ -88,7 +88,7 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 	@Rollback(false)
 	public void whenPromotionUploadedForCreate_thenReturnCorrectlyCreatedPromotion_ZHHK() {
 		// when
-		Optional<PromotionEntity> found = promotionService.findByCode("C10PCT");
+		Optional<PromotionEntity> found = promotionService.findByCode("RB2G1F");
 
 		// then
 		assertFound_ZHHK(found);
@@ -103,12 +103,12 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("C10PCT");
+		.isEqualTo("RB1G1F");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeENGB)).findAny().get().getPromotionDesc())
-		.isEqualTo("10% off total basket");
+		.isEqualTo("Buy 1 get 1 free");
 		
 	}
 
@@ -121,12 +121,12 @@ public class IT_PromotionCouponUploadForCreateIntegrationTest {
 		PromotionEntity cp = (PromotionEntity) found.get();
 		
 		assertThat(cp.getPromotionCode())
-		.isEqualTo("C10PCT");
+		.isEqualTo("RB2G1F");
 		
 		assertThat(cp.getAttributes().size()).isEqualTo(2);
 		
 		assertThat(cp.getAttributes().stream().filter(a -> a.getLocale().equals(Constants.localeZHHK)).findAny().get().getPromotionDesc())
-		.isEqualTo("總籃可享10％的折扣");
+		.isEqualTo("買二送一");
 		
 	}
 
