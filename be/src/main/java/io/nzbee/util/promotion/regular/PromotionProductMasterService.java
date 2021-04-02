@@ -20,14 +20,15 @@ import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.entity.promotion.product.PromotionProductEntity;
+import io.nzbee.exceptions.CustomException;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
 
 @Service
-public class PromotionRegularMasterService {
+public class PromotionProductMasterService {
 
-	private static final Logger logger = LoggerFactory.getLogger(PromotionRegularMasterService.class);
+	private static final Logger logger = LoggerFactory.getLogger(PromotionProductMasterService.class);
 
 	@Autowired
 	private IPromotionService promotionService;
@@ -50,7 +51,7 @@ public class PromotionRegularMasterService {
 					.withQuoteChar('"');
 
 			CsvMapper mapper = new CsvMapper();
-			MappingIterator<PromotionRegularSchema> readValues = mapper.readerFor(PromotionRegularSchema.class)
+			MappingIterator<PromotionProductSchema> readValues = mapper.readerFor(PromotionProductSchema.class)
 					.with(bootstrapSchema).readValues(file);
 
 			readValues.readAll().stream().forEach(c -> {
@@ -62,7 +63,7 @@ public class PromotionRegularMasterService {
 		}
 	}
 
-	public void persistPromotionRegularMaster(PromotionRegularSchema pms) {
+	public void persistPromotionRegularMaster(PromotionProductSchema pms) {
 		logger.debug("called persistPromotionRegularMaster() ");
 
 		Optional<PromotionEntity> op = promotionService.findByCode(pms.get_PROMOTION_CODE());
@@ -87,7 +88,8 @@ public class PromotionRegularMasterService {
 		p.addAttribute(paCN);
 		p.setPromotionStartDate(psd);
 		p.setPromotionEndDate(ped);
-		p.setPromotionMechanic(pm.get());
+		p.setPromotionMechanic(pm.orElseThrow(() -> new CustomException("Promotion mechanic " + pms.get_PROMOTION_MECHANIC_CODE() + " not found!" )));
+		p.setPromotionLevel(pl.orElseThrow(() -> new CustomException("Promotion level " + pms.get_PROMOTION_LEVEL_CODE() + " not found!" )));
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
 		p.setPromotionLevel(pl.get());
 

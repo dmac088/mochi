@@ -22,7 +22,7 @@ import io.nzbee.util.promotion.category.CategoryPromotionMasterService;
 import io.nzbee.util.promotion.mechanic.PromotionMechanicMasterService;
 import io.nzbee.util.promotion.order.PromotionOrderMasterService;
 import io.nzbee.util.promotion.product.ProductPromotionMasterService;
-import io.nzbee.util.promotion.regular.PromotionRegularMasterService;
+import io.nzbee.util.promotion.regular.PromotionProductMasterService;
 import io.nzbee.util.tag.TagMasterService;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -63,7 +63,7 @@ public class FileController {
     private ShippingProductMasterService shippingProductMasterService;
 
     @Autowired
-    private PromotionRegularMasterService promotionRegularMasterService;
+    private PromotionProductMasterService promotionRegularMasterService;
     
     @Autowired
     private PromotionOrderMasterService promotionOrderMasterService;

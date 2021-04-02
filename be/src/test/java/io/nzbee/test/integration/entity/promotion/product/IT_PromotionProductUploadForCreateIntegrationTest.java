@@ -27,7 +27,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.util.promotion.regular.PromotionRegularMasterService;
+import io.nzbee.util.promotion.regular.PromotionProductMasterService;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -40,7 +40,7 @@ public class IT_PromotionProductUploadForCreateIntegrationTest {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private PromotionRegularMasterService pms;
+	private PromotionProductMasterService pms;
 
 	@Autowired
 	private IPromotionService promotionService;
