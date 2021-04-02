@@ -34,7 +34,7 @@ import io.nzbee.util.promotion.order.PromotionOrderMasterService;
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_CLASS)
-public class IT_PromotionCouponUploadForCreateIntegrationTest {
+public class IT_PromotionOrderUploadForCreateIntegrationTest {
 
 	@MockBean
 	private JavaMailSender mailSender;

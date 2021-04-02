@@ -20,6 +20,7 @@ import io.nzbee.entity.promotion.level.PromotionLevelEntity;
 import io.nzbee.entity.promotion.mechanic.IPromotionMechanicService;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicEntity;
 import io.nzbee.entity.promotion.order.PromotionOrderEntity;
+import io.nzbee.exceptions.CustomException;
 import io.nzbee.Constants;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
@@ -88,8 +89,8 @@ public class PromotionOrderMasterService {
 		p.addAttribute(paCN);
 		p.setPromotionStartDate(psd);
 		p.setPromotionEndDate(ped);
-		p.setPromotionMechanic(pm.get());
-		p.setPromotionLevel(pl.get());
+		p.setPromotionMechanic(pm.orElseThrow(() -> new CustomException("Promotion mechanic " + pms.get_PROMOTION_MECHANIC_CODE() + " not found!")));
+		p.setPromotionLevel(pl.orElseThrow(() -> new CustomException("Promotion level " + pms.get_PROMOTION_LEVEL_CODE() + " not found!" )));
 		p.setPromotionActive(pms.get_PROMOTION_ACTIVE());
 		p.setPromotionCouponCode(pms.get_PROMOTION_COUPON_CODE());
 		
