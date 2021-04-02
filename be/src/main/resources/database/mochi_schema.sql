@@ -2742,7 +2742,8 @@ CREATE TABLE promotion (
     prm_mec_id bigint NOT NULL,
     prm_act boolean NOT NULL,
     prm_typ_id bigint NOT NULL,
-    prm_lvl_id bigint NOT NULL
+    prm_lvl_id bigint NOT NULL,
+    prm_dis_id bigint
 );
 
 

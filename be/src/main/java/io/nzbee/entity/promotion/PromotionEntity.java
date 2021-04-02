@@ -29,7 +29,7 @@ import io.nzbee.entity.promotion.type.PromotionTypeEntity;
 @Entity
 @Table(name = "promotion", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
-@DiscriminatorColumn(name="prm_typ_id")
+@DiscriminatorColumn(name="prm_dis_id")
 public abstract class PromotionEntity implements Serializable {
 
 	private static final long serialVersionUID = -8035431077837286610L;
