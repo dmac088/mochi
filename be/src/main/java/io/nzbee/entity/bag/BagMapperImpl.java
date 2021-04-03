@@ -72,6 +72,7 @@ public class BagMapperImpl implements IBagMapper {
 		System.out.println("username = " + d.getCustomer().getUserName());
 		System.out.println("bag is present = " + obe.isPresent());
 		System.out.println("person is present = " + op.isPresent());
+		System.out.println("bag promotion is present = " + opr.isPresent());
 		
 		BagEntity nbe = new BagEntity();
 		nbe.setBagCreatedDateTime(LocalDateTime.now());
