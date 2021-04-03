@@ -1,41 +1,32 @@
 package io.nzbee.entity.promotion;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.domain.promotion.order.OrderPromotion;
-import io.nzbee.domain.promotion.product.ProductPromotion;
+import io.nzbee.entity.promotion.order.IPromotionOrderMapper;
 import io.nzbee.entity.promotion.order.PromotionOrderDTO;
+import io.nzbee.entity.promotion.product.IPromotionProductMapper;
 import io.nzbee.entity.promotion.product.PromotionProductDTO;
 
 @Component(value = "promotionMapper")
 public class PromotionMapperImpl implements IPromotionMapper {
 
+	@Autowired
+	private IPromotionOrderMapper promotionOrderMapper;
+	
+	@Autowired
+	private IPromotionProductMapper promotionProductMapper;
+	
 	@Override
 	public Promotion DTOToDo(PromotionDTO dto) {
 		System.out.println("The instance is of type......");
 		System.out.println(dto.getClass());
 		if(dto instanceof PromotionProductDTO) {
-			return new ProductPromotion(	dto.getPromotionCode(), 
-											dto.getPromotionDesc(), 
-											dto.getPromotionStartDate(),
-											dto.getPromotionEndDate(),
-											dto.getMechanicDTO().getMechanicCode(),
-											dto.getMechanicDTO().getMechanicDesc(),
-											dto.getTypeDTO().getPromotionTypeCode(),
-											dto.getTypeDTO().getPromotionTypeDesc());
+			return promotionProductMapper.DTOToDo((PromotionProductDTO) dto);
 		}
 		
 		if(dto instanceof PromotionOrderDTO) {
-			return new OrderPromotion(	
-					dto.getPromotionCode(), 
-					dto.getPromotionDesc(), 
-					dto.getPromotionStartDate(),
-					dto.getPromotionEndDate(),
-					dto.getMechanicDTO().getMechanicCode(),
-					dto.getMechanicDTO().getMechanicDesc(),
-					dto.getTypeDTO().getPromotionTypeCode(),
-					dto.getTypeDTO().getPromotionTypeDesc(),
-					((PromotionOrderDTO) dto).getCouponCode());
+			return promotionOrderMapper.DTOToDo((PromotionOrderDTO) dto);
 		}
 		return null;
 	}

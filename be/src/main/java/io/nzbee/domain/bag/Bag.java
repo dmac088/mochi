@@ -116,4 +116,8 @@ public class Bag {
 	public boolean hasIssues() {
 		return bagIssues.hasIssues();
 	}
+	
+	public boolean hasPromotion() {
+		return !(this.orderPromotion == null);
+	}
 }

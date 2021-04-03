@@ -33,6 +33,9 @@ public class BagMapperImpl implements IBagMapper {
 	private IBagItemMapper bagItemMapper;
 	
 	@Autowired
+	private IOrderPromotionMapper orderPromotionMapper;
+	
+	@Autowired
 	private IPersonService personService;
 	
 	@Autowired
@@ -58,6 +61,10 @@ public class BagMapperImpl implements IBagMapper {
 		sbi.forEach(bi -> {
 			b.addItem(bi.getProduct(), bi.getQuantity());
 		});
+		
+		if(b.hasPromotion()) {
+			b.setOrderPromotion();
+		}
 		
 		return b;
 	}
