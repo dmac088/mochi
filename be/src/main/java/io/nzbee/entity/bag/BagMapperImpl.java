@@ -15,6 +15,9 @@ import io.nzbee.entity.bag.item.IBagItemMapper;
 import io.nzbee.entity.party.person.ICustomerMapper;
 import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
+import io.nzbee.entity.promotion.IPromotionService;
+import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.order.PromotionOrderEntity;
 import io.nzbee.entity.party.person.PersonDTO;
 
 @Component
@@ -31,6 +34,9 @@ public class BagMapperImpl implements IBagMapper {
 	
 	@Autowired
 	private IPersonService personService;
+	
+	@Autowired
+	private IPromotionService promotionService;
 	
 	@Override
 	public Bag DTOToDo(String locale, String currency, PersonDTO pDto, BagDTO bDto) {
@@ -61,6 +67,7 @@ public class BagMapperImpl implements IBagMapper {
 		//get the bag, status, and customer from the database
 		Optional<BagEntity> obe 			= bagService.findByCode(d.getCustomer().getUserName());	
 		Optional<PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Constants.partyRoleCustomer);
+		Optional<PromotionEntity> opr		= promotionService.findByCode(d.getOrderPromotion().getPromotionCode());
 		
 		System.out.println("username = " + d.getCustomer().getUserName());
 		System.out.println("bag is present = " + obe.isPresent());
@@ -93,10 +100,12 @@ public class BagMapperImpl implements IBagMapper {
 					   		.collect(Collectors.toSet());
 				
 		//add the bag items to the bag
-		sbi.stream()
-		   .forEach(bi -> {
+		sbi.stream().forEach(bi -> {
 				b.addItem(bi);
-			});
+		});
+		
+		//add promotion to the bag if the promotion exists 
+		b.setPromotion((PromotionOrderEntity) opr.get());
 				
 		//set the customer of the bag
 		b.setParty(op.get());
