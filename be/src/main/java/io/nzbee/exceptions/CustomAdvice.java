@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class CustomAdvice {
 
 	@ResponseBody
-	@ExceptionHandler(CustomException.class)
-	public final ResponseEntity<CustomResponse> brandNotFoundResponseResponseEntity(CustomException ex) {
+	@ExceptionHandler(NotFoundException.class)
+	public final ResponseEntity<CustomResponse> notFoundResponseResponseEntity(NotFoundException ex) {
 		CustomResponse response = new CustomResponse(ex.getMessage());
 		return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
 	}

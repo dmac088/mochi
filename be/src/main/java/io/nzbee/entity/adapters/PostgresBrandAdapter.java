@@ -12,7 +12,7 @@ import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.exceptions.CustomException;
+import io.nzbee.exceptions.NotFoundException;
 
 @Component
 public class PostgresBrandAdapter implements IBrandPortService {
@@ -38,7 +38,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Transactional(readOnly = true)
 	public Brand findByCode(String locale, String code) {
 		BrandDTO b = brandService.findByCode(locale, code)
-				.orElseThrow(() -> new CustomException("Brand not found for code " + code));
+				.orElseThrow(() -> new NotFoundException("Brand not found for code " + code));
 		return DTOToDo(b);
 	}
 
@@ -46,7 +46,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Transactional(readOnly = true)
 	public Brand findByDesc(String locale, String desc) {
 		BrandDTO b = brandService.findByDesc(locale, desc)
-				.orElseThrow(() -> new CustomException("Brand not found for product desc " + desc));
+				.orElseThrow(() -> new NotFoundException("Brand not found for product desc " + desc));
 		return DTOToDo(b);
 	}
 

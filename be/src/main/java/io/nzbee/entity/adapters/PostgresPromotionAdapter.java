@@ -10,7 +10,7 @@ import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionDTO;
 import io.nzbee.entity.promotion.order.IPromotionOrderService;
 import io.nzbee.entity.promotion.order.PromotionOrderDTO;
-import io.nzbee.exceptions.CustomException;
+import io.nzbee.exceptions.NotFoundException;
 
 @Component
 public class PostgresPromotionAdapter implements IPromotionPortService {
@@ -42,21 +42,21 @@ public class PostgresPromotionAdapter implements IPromotionPortService {
 	@Override
 	public Promotion findByCode(String locale, String code) {
 		PromotionDTO dto = promotionService.findByCode(locale, code)
-				.orElseThrow(() -> new CustomException("Promotion for code " + code + " not found!"));
+				.orElseThrow(() -> new NotFoundException("Promotion for code " + code + " not found!"));
 		return promotionMapper.DTOToDo(dto);
 	}
 	
 	@Override
 	public OrderPromotion findOrderPromotionByCode(String locale, String code) {
 		PromotionOrderDTO dto = promotionOrderService.findByCode(locale, code)
-				.orElseThrow(() -> new CustomException("Promotion for code " + code + " not found!"));
+				.orElseThrow(() -> new NotFoundException("Promotion for code " + code + " not found!"));
 		return (OrderPromotion) promotionMapper.DTOToDo(dto);
 	}
 
 	@Override
 	public OrderPromotion findOrderPromotionByCouponCode(String locale, String couponCode) {
 		PromotionOrderDTO dto = promotionOrderService.findByCouponCode(locale, couponCode)
-				.orElseThrow(() -> new CustomException("Promotion for coupon code " + couponCode + " not found!"));
+				.orElseThrow(() -> new NotFoundException("Promotion for coupon code " + couponCode + " not found!"));
 		return (OrderPromotion) promotionMapper.DTOToDo(dto);
 	}
 

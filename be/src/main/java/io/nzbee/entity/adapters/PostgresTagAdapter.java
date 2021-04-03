@@ -15,7 +15,7 @@ import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagDTO;
 import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.entity.tag.attribute.TagAttributeEntity;
-import io.nzbee.exceptions.CustomException;
+import io.nzbee.exceptions.NotFoundException;
 
 @Component
 public class PostgresTagAdapter  implements ITagPortService {
@@ -30,7 +30,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Transactional(readOnly = true)
 	public Tag findByCode(String locale, String code) {
 		TagDTO t = tagService.findByCode(locale, code)
-				.orElseThrow(() -> new CustomException("Tag with code " + code + " not found!"));
+				.orElseThrow(() -> new NotFoundException("Tag with code " + code + " not found!"));
 		return tagMapper.DTOToDo(t);
 	}
 
@@ -38,7 +38,7 @@ public class PostgresTagAdapter  implements ITagPortService {
 	@Transactional(readOnly = true)
 	public Tag findByDesc(String locale, String desc) {
 		TagDTO t = tagService.findByDesc(locale, desc)
-				.orElseThrow(() -> new CustomException("Tag with desc " + desc + " not found!"));
+				.orElseThrow(() -> new NotFoundException("Tag with desc " + desc + " not found!"));
 		return tagMapper.DTOToDo(t);
 	}
 	
