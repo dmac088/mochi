@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.4.0",
+    "@stripe/stripe-js": "^1.13.2",
     "axios": "^0.19.2",
     "classnames": "^2.2.6",
     "local-storage": "^2.0.0",
