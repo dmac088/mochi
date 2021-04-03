@@ -17,6 +17,7 @@ import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
+import io.nzbee.entity.promotion.order.IPromotionOrderMapper;
 import io.nzbee.entity.promotion.order.PromotionOrderEntity;
 import io.nzbee.entity.party.person.PersonDTO;
 
@@ -31,9 +32,6 @@ public class BagMapperImpl implements IBagMapper {
 	
 	@Autowired
 	private IBagItemMapper bagItemMapper;
-	
-	@Autowired
-	private IOrderPromotionMapper orderPromotionMapper;
 	
 	@Autowired
 	private IPersonService personService;
@@ -62,9 +60,6 @@ public class BagMapperImpl implements IBagMapper {
 			b.addItem(bi.getProduct(), bi.getQuantity());
 		});
 		
-		if(b.hasPromotion()) {
-			b.setOrderPromotion();
-		}
 		
 		return b;
 	}
