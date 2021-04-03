@@ -17,7 +17,6 @@ import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.entity.promotion.PromotionEntity;
-import io.nzbee.entity.promotion.order.IPromotionOrderMapper;
 import io.nzbee.entity.promotion.order.PromotionOrderEntity;
 import io.nzbee.entity.party.person.PersonDTO;
 
