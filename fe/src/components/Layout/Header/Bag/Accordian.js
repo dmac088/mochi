@@ -47,7 +47,7 @@ function Accordion(props) {
 
   return (
     
-    !(!bag.loading && bag.isDone && session.authenticated)
+    (bag.loading)
     ? <Spinner />
     : <React.Fragment>
       <div className="cart-items">

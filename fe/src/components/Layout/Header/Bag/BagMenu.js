@@ -45,8 +45,8 @@ function BagMenu(props) {
     }, 500);
   }
 
-  const discoveryReady  = !discovery.loading && discovery.isDone && session.authenticated;
-  const bagReady        = !bag.loading && bag.isDone;
+  const discoveryReady  = (!discovery.loading && discovery.isDone && session.authenticated);
+  const bagReady        = (!bag.loading && bag.isDone && session.authenticated);
 
   useEffect(() => {
     if(discoveryReady) {
