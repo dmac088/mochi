@@ -110,7 +110,9 @@ public class BagMapperImpl implements IBagMapper {
 		});
 		
 		//add promotion to the bag if the promotion exists 
-		b.setPromotion((PromotionOrderEntity) opr.get());
+		if(opr.isPresent()) {
+			b.setPromotion((PromotionOrderEntity) opr.get());
+		}
 				
 		//set the customer of the bag
 		b.setParty(op.get());
