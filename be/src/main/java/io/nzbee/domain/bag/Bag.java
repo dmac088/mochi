@@ -18,7 +18,7 @@ public class Bag {
 	
 	private BagIssues bagIssues = new BagIssues();
 	
-	private OrderPromotion orderPromotion;
+	private Optional<OrderPromotion> orderPromotion;
 
 	public Bag(Customer customer) {
 		this.customer = customer;
@@ -101,16 +101,12 @@ public class Bag {
 		return bagIssues;
 	}
 
-	public OrderPromotion getOrderPromotion() {
+	public Optional<OrderPromotion> getOrderPromotion() {
 		return orderPromotion;
 	}
 	
-	public void addOrderPromotion(OrderPromotion orderPromotion) {
-		this.orderPromotion = orderPromotion;
-	}
-
 	public void setOrderPromotion(OrderPromotion orderPromotion) {
-		this.orderPromotion = orderPromotion;
+		this.orderPromotion = Optional.ofNullable(orderPromotion);
 	}
 
 	public boolean hasIssues() {

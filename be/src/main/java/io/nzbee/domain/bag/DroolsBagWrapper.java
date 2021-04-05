@@ -9,7 +9,9 @@ public class DroolsBagWrapper {
 	
 	public DroolsBagWrapper(Bag bag) {
 		this.bag = bag;
-		this.couponCode = bag.getOrderPromotion().getCouponCode();
+		if(bag.getOrderPromotion().isPresent()) {
+			this.couponCode = bag.getOrderPromotion().get().getCouponCode();
+		}
 	}
 	
 	public void logItemError(String key, BagItem bag) {
