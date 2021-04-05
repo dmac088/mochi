@@ -18,7 +18,7 @@ public class Bag {
 	
 	private BagIssues bagIssues = new BagIssues();
 	
-	private Optional<OrderPromotion> orderPromotion;
+	private Optional<OrderPromotion> orderPromotion = Optional.ofNullable(null);
 
 	public Bag(Customer customer) {
 		this.customer = customer;

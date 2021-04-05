@@ -68,7 +68,7 @@ public class BagMapperImpl implements IBagMapper {
 		//get the bag, status, and customer from the database
 		Optional<BagEntity> obe 			= bagService.findByCode(d.getCustomer().getUserName());	
 		Optional<PersonEntity> op	 		= personService.findByUsernameAndRole(d.getCustomer().getUserName(), Constants.partyRoleCustomer);
-		Optional<PromotionEntity> opr = null;
+		Optional<PromotionEntity> opr = Optional.ofNullable(null);
 		if(d.getOrderPromotion().isPresent()) {
 			opr = promotionService.findByCode(d.getOrderPromotion().get().getPromotionCode());
 		}
