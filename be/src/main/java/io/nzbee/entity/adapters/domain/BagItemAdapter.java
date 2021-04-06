@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import java.util.Optional;
 
@@ -18,7 +18,7 @@ import io.nzbee.entity.party.person.IPersonService;
 import io.nzbee.entity.party.person.PersonEntity;
 
 @Service
-public class PostgresBagItemAdapter implements IBagItemPortService {
+public class BagItemAdapter implements IBagItemPortService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	

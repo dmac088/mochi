@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -18,7 +18,7 @@ import io.nzbee.entity.party.address.type.AddressTypeEntity;
 import io.nzbee.entity.party.address.type.IAddressTypeService;
 
 @Service
-public class PostgresAddressAdapter implements IAddressPortService {
+public class AddressAdapter implements IAddressPortService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	

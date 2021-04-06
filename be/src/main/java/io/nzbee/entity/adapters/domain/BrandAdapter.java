@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +15,7 @@ import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.exceptions.NotFoundException;
 
 @Component
-public class PostgresBrandAdapter implements IBrandPortService {
+public class BrandAdapter implements IBrandPortService {
 
 	@Autowired 
 	private IBrandService brandService;
@@ -30,7 +30,7 @@ public class PostgresBrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<Brand> findAllByProductType(String locale, Class<?> cls) {
-		return brandService.findAllByProductType(locale, PostgresProductAdapter.mapDomainClassToDTOClass(cls))
+		return brandService.findAllByProductType(locale, ProductAdapter.mapDomainClassToDTOClass(cls))
 				.stream().map(b -> this.DTOToDo(b)).collect(Collectors.toList());
 	}
 

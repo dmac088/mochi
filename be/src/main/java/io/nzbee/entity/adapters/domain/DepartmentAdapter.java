@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import java.util.List;
 import java.util.Set;
@@ -13,7 +13,7 @@ import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.product.department.IDepartmentService;
 
 @Component
-public class PostgresDepartmentAdapter implements IDepartmentPortService {
+public class DepartmentAdapter implements IDepartmentPortService {
 
 	@Autowired 
 	private IDepartmentService departmentService;

@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,7 +54,7 @@ import io.nzbee.search.ISearchService;
 import io.nzbee.search.facet.IFacet;
 
 @Component
-public class PostgresProductAdapter implements IProductPortService {
+public class ProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IProductService productService;

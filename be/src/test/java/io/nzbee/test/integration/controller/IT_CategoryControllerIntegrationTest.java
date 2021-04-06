@@ -26,7 +26,7 @@ import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Constants;
 import io.nzbee.Globals;
 import io.nzbee.domain.category.CategoryServiceImpl;
-import io.nzbee.entity.adapters.PostgresCategoryAdapter;
+import io.nzbee.entity.adapters.domain.CategoryAdapter;
 import io.nzbee.entity.category.CategoryMapperImpl;
 import io.nzbee.entity.category.brand.CategoryBrandDaoImpl;
 import io.nzbee.entity.category.brand.CategoryBrandMapperImpl;
@@ -48,7 +48,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 @AutoConfigureMockMvc(/*addFilters = false*/)
 @ContextConfiguration(classes = {CategoryController.class, 
 							     CategoryServiceImpl.class,
-							     PostgresCategoryAdapter.class,
+							     CategoryAdapter.class,
 							     CategoryProductServiceImpl.class,
 							     CategoryProductDaoImpl.class,
 							     CategoryBrandServiceImpl.class,

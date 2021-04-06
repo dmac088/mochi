@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import java.time.LocalDateTime;
 import java.util.Calendar;
@@ -39,7 +39,7 @@ import io.nzbee.view.customer.CustomerDTOIn;
 import io.nzbee.entity.party.person.ICustomerMapper;
 
 @Component
-public class PostgresCustomerAdapter implements ICustomerPortService {
+public class CustomerAdapter implements ICustomerPortService {
 
 	@Autowired
 	private IPersonService personService;

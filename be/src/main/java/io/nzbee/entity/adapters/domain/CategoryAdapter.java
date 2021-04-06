@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import java.util.List;
 import java.util.Optional;
@@ -28,7 +28,7 @@ import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.exceptions.NotFoundException;
 
 @Component
-public class PostgresCategoryAdapter implements ICategoryPortService {
+public class CategoryAdapter implements ICategoryPortService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	

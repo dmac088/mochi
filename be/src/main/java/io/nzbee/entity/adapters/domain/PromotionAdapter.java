@@ -1,4 +1,4 @@
-package io.nzbee.entity.adapters;
+package io.nzbee.entity.adapters.domain;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,7 @@ import io.nzbee.entity.promotion.order.PromotionOrderDTO;
 import io.nzbee.exceptions.NotFoundException;
 
 @Component
-public class PostgresPromotionAdapter implements IPromotionPortService {
+public class PromotionAdapter implements IPromotionPortService {
 
 	@Autowired
 	private IPromotionService promotionService;
