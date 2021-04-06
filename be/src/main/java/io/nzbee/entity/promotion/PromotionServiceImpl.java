@@ -67,8 +67,7 @@ public class PromotionServiceImpl implements IPromotionService {
 
 	@Override
 	public List<PromotionDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
+		return promotionDao.findAll(locale);
 	}
 
 	@Override
