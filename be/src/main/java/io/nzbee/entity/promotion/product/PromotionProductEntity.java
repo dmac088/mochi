@@ -2,7 +2,6 @@ package io.nzbee.entity.promotion.product;
 
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -12,12 +11,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-
 import org.hibernate.search.annotations.Analyze;
 import org.hibernate.search.annotations.Analyzer;
 import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.product.ProductEntity;

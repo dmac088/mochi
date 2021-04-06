@@ -26,7 +26,6 @@ import org.hibernate.search.annotations.Field;
 import org.hibernate.search.annotations.Store;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.attribute.TagAttributeEntity;
-import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "tag", schema = "mochi")
@@ -51,7 +50,7 @@ import io.nzbee.search.ISearchDimension;
 	                        @FieldResult(name = "tag", 				column = "tag_id")
 	                    })
 		    })
-public class TagEntity implements ISearchDimension, Serializable {
+public class TagEntity implements Serializable {
 	
 	private static final long serialVersionUID = 5869651036409976394L;
 
@@ -87,7 +86,7 @@ public class TagEntity implements ISearchDimension, Serializable {
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
 	public String getTagToken() {
-		return getCode();
+		return this.getTagCode();
 	}
 
 	public void setTagId(Long tagId) {
@@ -168,26 +167,6 @@ public class TagEntity implements ISearchDimension, Serializable {
 	public void removeTagAttribute(TagAttributeEntity tagAttribute) {
 		this.getAttributes().remove(tagAttribute);
 		tagAttribute.setTag(null);
-	}
-
-	@Override
-	public String getDesc() {
-		return this.getTagAttribute().getTagDesc();
-	}
-
-	@Override
-	public Long getCount() {
-		return this.objectCount;
-	}
-
-	@Override
-	public boolean isHierarchical() {
-		return false;
-	}
-	
-	@Override
-	public String getCode() {
-		return this.tagCode;
 	}
 	
 	@Override

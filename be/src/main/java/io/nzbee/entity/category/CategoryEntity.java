@@ -36,13 +36,12 @@ import io.nzbee.Constants;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.promotion.product.PromotionProductEntity;
-import io.nzbee.search.ISearchDimension;
 
 @Entity
 @Table(name = "category", schema = "mochi")
 @Inheritance(strategy = InheritanceType.JOINED)
 @DiscriminatorColumn(name="cat_typ_id")
-public abstract class CategoryEntity implements ISearchDimension, Serializable {
+public abstract class CategoryEntity implements Serializable {
 
 	private static final long serialVersionUID = 3858871432012784690L;
 

@@ -63,26 +63,6 @@ public class CategoryProductEntity extends CategoryEntity {
 	public void setType(String type) {
 		
 	}
-
-	@Override
-	public String getCode() {
-		return this.getCategoryCode();
-	}
-
-	@Override
-	public String getDesc() {
-		return this.getCategoryAttribute().getCategoryDesc();
-	}
-
-	@Override
-	public Long getCount() {
-		return this.getObjectCount();
-	}
-
-	@Override
-	public boolean isHierarchical() {
-		return true;
-	}
 	
 	@Override
     public boolean equals(Object o) {
