@@ -6,8 +6,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 import io.nzbee.entity.promotion.type.PromotionTypeDTO;
+import io.nzbee.search.ISearchDimension;
 
-public class PromotionDTO implements Serializable {
+public class PromotionDTO implements ISearchDimension, Serializable {
 
 	private static final long serialVersionUID = -7734587026342633816L;
 
@@ -111,6 +112,27 @@ public class PromotionDTO implements Serializable {
 
 	public void setMechanicDTO(PromotionMechanicDTO mechanicDTO) {
 		this.mechanicDTO = mechanicDTO;
+	}
+
+
+	@Override
+	public String getCode() {
+		return this.promotionCode;
+	}
+
+	@Override
+	public String getDesc() {
+		return this.promotionDesc;
+	}
+
+	@Override
+	public Long getCount() {
+		return new Long(0);
+	}
+
+	@Override
+	public boolean isHierarchical() {
+		return false;
 	}
 
 }

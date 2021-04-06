@@ -30,14 +30,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Autowired
 	private ITagRepository tagRepository;
 
-	
-	//Entity fetch
 	@Override
 	public List<TagEntity> findAll() {
 		return tagRepository.findAll();
 	}
 	
-	//Entity fetch
 	@Override
 	public Optional<TagEntity> findById(Long id) {
 		LOGGER.debug("call TagServiceImpl.findById with parameters : {}", id);
@@ -129,19 +126,18 @@ public class TagServiceImpl implements ITagService, IFacetService {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="#tag.locale + \", \" + #tag.tagCode"),
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
-	public void save(TagEntity tag) {
-		tagDao.save(tag);
+	public void save(TagEntity t) {
+		tagDao.save(t);
 	}
 
 	@Override
 	public void update(TagEntity t) {
-		// TODO Auto-generated method stub
-		
+		tagDao.save(t);
 	}
 
 	@Override
 	public void delete(TagEntity t) {
-		// TODO Auto-generated method stub
+		tagDao.delete(t);
 		
 	}
 

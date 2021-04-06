@@ -57,14 +57,12 @@ public class PromotionServiceImpl implements IPromotionService {
 
 	@Override
 	public void update(PromotionEntity t) {
-		// TODO Auto-generated method stub
-		
+		promotionDao.save(t);
 	}
 
 	@Override
 	public void delete(PromotionEntity t) {
-		// TODO Auto-generated method stub
-		
+		promotionDao.delete(t);
 	}
 
 	@Override
@@ -75,20 +73,17 @@ public class PromotionServiceImpl implements IPromotionService {
 
 	@Override
 	public List<PromotionDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
+		return promotionDao.findAll(locale, codes);
 	}
 
 	@Override
 	public List<PromotionEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
+		return promotionDao.findAll(codes);
 	}
 
 	@Override
 	public Optional<PromotionDTO> findById(String locale, Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return promotionDao.findById(locale, id);
 	}
 
 	@Override
@@ -103,8 +98,12 @@ public class PromotionServiceImpl implements IPromotionService {
 
 	@Override
 	public List<PromotionDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
+		return promotionDao.findAll(locale, codes);
+	}
+
+	@Override
+	public String tokenToCode(String token) {
+		return token;
 	}
 
 }
