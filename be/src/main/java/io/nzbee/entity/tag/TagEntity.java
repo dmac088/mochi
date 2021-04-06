@@ -79,16 +79,16 @@ public class TagEntity implements Serializable {
 	@Transient
 	private Long objectCount;
 
-	public Long getTagId() {
-		return tagId;
-	}
-	
 	@Field(analyze = Analyze.NO, store=Store.YES)
 	@Facet
 	public String getTagToken() {
 		return this.getTagCode();
 	}
 
+	public Long getTagId() {
+		return tagId;
+	}
+	
 	public void setTagId(Long tagId) {
 		this.tagId = tagId;
 	}
