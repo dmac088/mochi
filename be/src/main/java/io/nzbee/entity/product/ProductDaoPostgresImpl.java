@@ -29,6 +29,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
 
 @Component(value = "productEntityDao")
@@ -167,7 +168,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	
 	@SuppressWarnings({"deprecation" })
 	@Override
-	public Optional<ProductDTO> findShippingProductByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
+	public Optional<ShippingProductDTO> findShippingProductByDestinationAndTypeAndWeight(String locale, String currency, String destinationCode, String type, Double weightKg) {
 		LOGGER.debug("call ProductDaoPostgresImpl.findByShippingProductByDestinationAndTypeAndWeight parameters : {}, {}, {}, {}, {}", locale, currency, destinationCode, type, weightKg);
 		
 		Query query = em.createNativeQuery(this.constructSQL(false,
@@ -200,7 +201,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		.setResultTransformer(new ProductDTOResultTransformer());
 		
 		try {
-			return Optional.ofNullable((ProductDTO) query.getSingleResult());
+			return Optional.ofNullable((ShippingProductDTO) query.getSingleResult());
 		} 
 		catch(NoResultException nre) {
 			return Optional.empty();

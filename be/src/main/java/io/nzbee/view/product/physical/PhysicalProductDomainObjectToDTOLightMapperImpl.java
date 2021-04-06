@@ -1,19 +1,20 @@
 package io.nzbee.view.product.physical;
 
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 
 @Component
-public class PhysicalProductDTOMapperImpl implements IPhysicalProductDTOMapper {
+public class PhysicalProductDomainObjectToDTOLightMapperImpl implements IPhysicalProductDomainObjectToDTOLightMapper {
 
 	@Override
-	public PhysicalProductDTO toDto(Product d) {
-		PhysicalProductDTO pdto = new PhysicalProductDTO();
+	public PhysicalProductDTOLight toDto(Product d) {
+		PhysicalProductDTOLight pdto = new PhysicalProductDTOLight();
 		
 		//brand
-		pdto.setBrandCode(d.getBrand().getBrandCode());
 		pdto.setBrandDesc(d.getBrand().getBrandDesc());
 		
 		//product 
@@ -26,17 +27,18 @@ public class PhysicalProductDTOMapperImpl implements IPhysicalProductDTOMapper {
 		pdto.setCurrency(d.getCurrency());
 		pdto.setProductType(d.getProductType());
 		
-		
 		if(d instanceof PhysicalProduct) {
 			pdto.setInStock(((PhysicalProduct) d).isInStock());
-			pdto.setWeight(((PhysicalProduct) d).getWeight());
 		}
+		
+		String categories = String.join(",", d.getCategories().stream().map(c -> c.getCategoryDesc()).collect(Collectors.toList()));
+		pdto.setCategoriesList(categories);
 		
 		return pdto;
 	}
 
 	@Override
-	public Product toDo(PhysicalProductDTO dto) {
+	public Product toDo(PhysicalProductDTOLight dto) {
 		// TODO Auto-generated method stub
 		return null;
 	}

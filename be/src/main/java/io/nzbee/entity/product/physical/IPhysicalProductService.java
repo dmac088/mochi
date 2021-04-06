@@ -8,7 +8,7 @@ public interface IPhysicalProductService {
 	public Page<PhysicalProductDTO> findAll(String locale, String currency, String rootCategory,
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
 			Double maxPrice, String page, String size, String sort);
-	
+
 	
 	
 }

@@ -1,5 +1,6 @@
 package io.nzbee.entity.product.physical;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
@@ -32,10 +33,6 @@ public class PhysicalProductServiceImpl implements IPhysicalProductService {
 		 		  size,
 		 		  sort
 		  	).map(p -> (PhysicalProductDTO) p);
-	}
-	
-	
-	
-	
+	}	
 
 }

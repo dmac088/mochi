@@ -54,6 +54,7 @@ public abstract class ProductDTO implements Serializable {
 
 	//department
 	protected DepartmentDTO department;
+		
 	
 	//these fields will contain all the categories related to the product 1->N relationship
 	protected Set<CategoryProductDTO> categories = new HashSet<CategoryProductDTO>();

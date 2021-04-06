@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import io.nzbee.entity.ILocalizedDao;
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.product.shipping.ShippingProductDTO;
 
 public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 	
@@ -37,7 +38,7 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, String page,
 			String size, String sort);
 
-	Optional<ProductDTO> findShippingProductByDestinationAndTypeAndWeight(String locale, String currency,
+	Optional<ShippingProductDTO> findShippingProductByDestinationAndTypeAndWeight(String locale, String currency,
 			String destinationCode, String type, Double weightKg);
 	
 }

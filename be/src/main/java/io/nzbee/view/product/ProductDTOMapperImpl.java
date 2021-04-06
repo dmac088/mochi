@@ -6,17 +6,17 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.ShippingProduct;
-import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
-import io.nzbee.view.product.shipping.IShippingProductDTOMapper;
+import io.nzbee.view.product.physical.IPhysicalProductDomainObjectToDTOMapper;
+import io.nzbee.view.product.shipping.IShippingProductDomainObjectToDTOMapper;
 
 @Component
 public class ProductDTOMapperImpl implements IProductDTOMapper {
 
 	@Autowired
-	private IPhysicalProductDTOMapper physicalProductDTOMapper;
+	private IPhysicalProductDomainObjectToDTOMapper physicalProductDTOMapper;
 	
 	@Autowired
-	private IShippingProductDTOMapper shippingProductDTOMapper;
+	private IShippingProductDomainObjectToDTOMapper shippingProductDTOMapper;
 	
 	@Override
 	public ProductDTO toDto(Product d) {

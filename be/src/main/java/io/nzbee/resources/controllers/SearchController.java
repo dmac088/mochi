@@ -24,7 +24,7 @@ import io.nzbee.resources.search.SearchFacetResource;
 import io.nzbee.resources.search.SearchFacetResourceAssembler;
 import io.nzbee.resources.search.SearchResultResource;
 import io.nzbee.search.facet.IFacet;
-import io.nzbee.view.product.physical.IPhysicalProductDTOMapper;
+import io.nzbee.view.product.physical.IPhysicalProductDomainObjectToDTOMapper;
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")
@@ -33,7 +33,7 @@ public class SearchController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private IPhysicalProductDTOMapper productDTOMapper;
+	private IPhysicalProductDomainObjectToDTOMapper productDTOMapper;
 	
 	@Autowired
     private IProductPortService productService;

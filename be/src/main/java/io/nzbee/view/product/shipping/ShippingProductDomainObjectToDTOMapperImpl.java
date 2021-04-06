@@ -5,7 +5,7 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.shipping.ShippingProduct;
 
 @Component
-public class ShippingProductDTOMapperImpl implements IShippingProductDTOMapper {
+public class ShippingProductDomainObjectToDTOMapperImpl implements IShippingProductDomainObjectToDTOMapper {
 
 	@Override
 	public ShippingProductDTO toDto(Product d) {

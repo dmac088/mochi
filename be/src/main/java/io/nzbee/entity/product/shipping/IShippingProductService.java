@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.product.ProductDTO;
 
 public interface IShippingProductService  {
 
@@ -12,7 +11,7 @@ public interface IShippingProductService  {
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
 			Double maxPrice, String page, String size, String sort);
 
-	Optional<ProductDTO> findByDestinationAndTypeAndBagWeight(String locale, String currency, String shippingDestinationCode,
+	Optional<ShippingProductDTO> findByDestinationAndTypeAndBagWeight(String locale, String currency, String shippingDestinationCode,
 			String shippingTypeCode, Double bagWeightKg);
 	
 }
