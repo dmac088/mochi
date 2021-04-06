@@ -40,27 +40,6 @@ public class PromotionServiceImpl implements IPromotionService {
 	public List<PromotionEntity> findAll() {
 		return promotionRepository.findAll();
 	}
-	
-	@Override
-	@Caching(evict = {
-			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.promotionCode"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.locale + \", \" + #promotion.promotionId"),
-			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.locale + \", \" + #promotion.promotionCode"),
-			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
-			})
-	public void save(PromotionEntity promotion) {
-		promotionDao.save(promotion);
-	}
-
-	@Override
-	public void update(PromotionEntity t) {
-		promotionDao.save(t);
-	}
-
-	@Override
-	public void delete(PromotionEntity t) {
-		promotionDao.delete(t);
-	}
 
 	@Override
 	public List<PromotionDTO> findAll(String locale) {
@@ -100,6 +79,27 @@ public class PromotionServiceImpl implements IPromotionService {
 	@Override
 	public String tokenToCode(String token) {
 		return token;
+	}
+	
+	@Override
+	@Caching(evict = {
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.promotionCode"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.locale + \", \" + #promotion.promotionId"),
+			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.locale + \", \" + #promotion.promotionCode"),
+			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
+			})
+	public void save(PromotionEntity promotion) {
+		promotionDao.save(promotion);
+	}
+
+	@Override
+	public void update(PromotionEntity t) {
+		promotionDao.save(t);
+	}
+
+	@Override
+	public void delete(PromotionEntity t) {
+		promotionDao.delete(t);
 	}
 
 }
