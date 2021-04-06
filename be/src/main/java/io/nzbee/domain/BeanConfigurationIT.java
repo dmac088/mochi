@@ -35,12 +35,26 @@ import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.physical.PhysicalProductResource;
 import io.nzbee.resources.product.physical.ProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
+import io.nzbee.view.product.physical.IPhysicalProductDTOToDTOMapper;
+import io.nzbee.view.product.physical.PhysicalProductDTOToDTOMapperImpl;
+import io.nzbee.view.product.shipping.IShippingProductDTOToDTOMapper;
+import io.nzbee.view.product.shipping.ShippingProductDTOToDTOMapperImpl;
 
 
 @Configuration
 @Profile("it")
 public class BeanConfigurationIT {
  
+	@Bean
+    public IPhysicalProductDTOToDTOMapper physicalProductDTOToDTOMapper() {
+		return new PhysicalProductDTOToDTOMapperImpl();
+	}
+	
+	@Bean
+    public IShippingProductDTOToDTOMapper shippingProductDTOToDTOMapper() {
+		return new ShippingProductDTOToDTOMapperImpl();
+	}
+	
     @Bean
     public IOrderPromotionService promotionOrderService() {
         return new OrderPromotionServiceImpl();
