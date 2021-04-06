@@ -64,6 +64,11 @@ public class ProductServiceImpl implements IProductService {
 	public List<ProductEntity> findAll() {
 		return productRepository.findAll();
 	}
+	
+	@Override
+	public List<ProductEntity> findAll(Set<String> codes) {		
+		return productDAO.findAll(codes);
+	}
 
 	@Override
 	public Optional<ProductEntity> findById(Long id) {
@@ -202,21 +207,12 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Override
 	public void update(ProductEntity t) {
-		// TODO Auto-generated method stub
-		
+		productRepository.save(t);
 	}
 
 	@Override
 	public void delete(ProductEntity t) {
 		productRepository.delete(t);
 	}
-
-	@Override
-	public List<ProductEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
 
 }
