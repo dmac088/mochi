@@ -223,6 +223,8 @@ public abstract class ProductEntity implements Serializable {
 	Set<ProductPriceEntity> prices = new HashSet<ProductPriceEntity>();
 
 	@ManyToMany(mappedBy = "products")
+	@IndexedEmbedded(	prefix="product.promotions.", 
+	includeEmbeddedObjectId=true)
     private Set<PromotionProductEntity> promotions = new HashSet<PromotionProductEntity>();
 	
 	@Transient

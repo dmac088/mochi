@@ -11,7 +11,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
+import org.hibernate.search.annotations.Analyze;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Store;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.promotion.PromotionEntity;
@@ -65,5 +72,17 @@ public class PromotionProductEntity extends PromotionEntity {
 	public void removeCategory(CategoryEntity category) {
 		this.getCategories().remove(category);
 		category.removePromotion(this);
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeENGB))
+	public String getPromotionDescENGB() {
+		return this.getAttributes().stream().filter(pa -> pa.getLocale().equals(Constants.localeENGB)).findFirst().get().getPromotionDesc();
+	}
+	
+	@Transient
+	@Field(analyze = Analyze.YES, store=Store.NO, analyzer = @Analyzer(definition = Constants.localeZHHK))
+	public String getPromotionDescZHHK() {
+		return this.getAttributes().stream().filter(pa -> pa.getLocale().equals(Constants.localeZHHK)).findFirst().get().getPromotionDesc();
 	}
 }
