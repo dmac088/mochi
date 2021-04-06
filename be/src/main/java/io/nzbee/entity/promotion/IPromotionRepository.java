@@ -10,6 +10,8 @@ public interface IPromotionRepository extends CrudRepository<PromotionEntity, Lo
 	
 	Optional<PromotionEntity> findByAttributesLocaleAndAttributesPromotionDesc(String locale, String promotionDesc);
 	
+	Optional<PromotionEntity> findByAttributesPromotionDesc(String promotionDesc);
+	
 	List<PromotionEntity> findAll();
 	
 }

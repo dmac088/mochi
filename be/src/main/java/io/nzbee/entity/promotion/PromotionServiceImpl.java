@@ -5,7 +5,6 @@ import java.util.Optional;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
@@ -27,7 +26,6 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#promotionCode")
 	public Optional<PromotionEntity> findByCode(String promotionCode) {
 		return promotionRepository.findByPromotionCode(promotionCode);
 	}
@@ -35,8 +33,7 @@ public class PromotionServiceImpl implements IPromotionService {
 
 	@Override
 	public Optional<PromotionEntity> findByDesc(String promotionDesc) {
-		// TODO Auto-generated method stub
-		return null;
+		return promotionRepository.findByAttributesPromotionDesc(promotionDesc);
 	}
 	
 	@Override
