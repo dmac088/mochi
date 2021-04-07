@@ -461,11 +461,6 @@ public class SearchServiceImpl implements ISearchService {
 													 				currency, 
 													 				new HashSet<String>(orderedIds)); 
 
-		System.out.println(orderedIds);
-		System.out.println(lp.size());
-		lp.forEach(c -> {
-			System.out.println(c);
-		});
 		
 		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((PhysicalProductLightView) item).getProductUPC())));		
 	 

@@ -292,7 +292,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(new Long(2));
 	} 
 	
 	@Test
