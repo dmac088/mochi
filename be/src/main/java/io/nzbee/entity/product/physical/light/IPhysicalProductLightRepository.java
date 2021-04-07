@@ -26,17 +26,22 @@ public interface IPhysicalProductLightRepository extends CrudRepository<Physical
 			+ "															 END),				"
 			+ " 														 coalesce(soh.stockOnHand, 0) > 0, "	
 			+ "															 at.ProductImage 	"
-			+ ") "
+			+ " ) "
 			+ " FROM PhysicalProductEntity pp "
 			
+			//product description
 			+ " JOIN pp.attributes at "
 			
+			//brand
 			+ " JOIN pp.brand b "
 			
+			//brand description 
 			+ " JOIN b.attributes ba"
 			
+			//status
 			+ " JOIN pp.productStatus s "
 			
+			//stock
 			+ " LEFT JOIN pp.stockOnHand soh "
 			
 			//prices
@@ -48,16 +53,17 @@ public interface IPhysicalProductLightRepository extends CrudRepository<Physical
 			//currency
 			+ " JOIN p.currency c "
 			
-			+ " WHERE at.lclCd 			= :locale "
-			+ " AND ba.lclCd 			= :locale "
-			+ " AND c.code 				= :currency "
-			+ " AND pp.productUPC 		in :productCodes "
+			+ " WHERE at.lclCd 			= 	:locale "
+			+ " AND ba.lclCd 			= 	:locale "
+			+ " AND c.code 				= 	:currency "
+			+ " AND pp.productUPC 		in 	:productCodes "
+			
 			+ " AND s.productStatusCode = '" + Constants.activeSKUCode + "'"
-			+ " GROUP BY pp.productUPC, "
-			+ " at.productDesc,"
-			+ " ba.brandDesc,"
-			+ " at.ProductImage, "
-			+ " soh.stockOnHand ")
+			+ " GROUP BY 	pp.productUPC, "
+			+ " 			at.productDesc,"
+			+ " 			ba.brandDesc,"
+			+ " 			at.ProductImage, "
+			+ " 			soh.stockOnHand ")
 	List<PhysicalProductLightDTO> findAll(String locale, String currency, Set<String> productCodes);
 	
 }

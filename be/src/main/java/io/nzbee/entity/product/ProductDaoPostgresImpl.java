@@ -705,7 +705,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				"          FROM      mochi.category            AS t " + 
 				"          WHERE     0=0 " +
 				((hasCategory) 
-				? " AND coalesce(t.cat_cd, t.cat_prnt_cd) = :categoryCode " 
+				? " AND t.cat_cd = :categoryCode " 
 				: " AND t.cat_lvl = 0 ") + 
 				"          UNION ALL " + 
 				"          SELECT t.cat_id, " + 
