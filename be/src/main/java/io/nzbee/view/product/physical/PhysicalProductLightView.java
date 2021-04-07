@@ -10,25 +10,17 @@ public class PhysicalProductLightView {
 	private String productUPC;
 
 	private String productDesc;
-	
-	private String productLongDesc;
 
 	private Double productRetail;
 	
 	private Double productMarkdown;
 	
-	private String productType;
-
-	private String categoriesList;
-	
 	private String brandDesc;
-	
-	private String locale;
-	
-	private String currency;
 	
 	private boolean inStock;
 	
+	private String productImage;
+
 	public String getProductUPC() {
 		return productUPC;
 	}
@@ -43,14 +35,6 @@ public class PhysicalProductLightView {
 
 	public void setProductDesc(String productDesc) {
 		this.productDesc = productDesc;
-	}
-	
-	public String getProductLongDesc() {
-		return productLongDesc;
-	}
-
-	public void setProductLongDesc(String productLongDesc) {
-		this.productLongDesc = productLongDesc;
 	}
 
 	public Double getProductRetail() {
@@ -69,36 +53,12 @@ public class PhysicalProductLightView {
 		this.productMarkdown = productMarkdown;
 	}
 
-	public String getProductType() {
-		return productType;
-	}
-
-	public void setProductType(String productType) {
-		this.productType = productType;
-	}
-	
 	public String getBrandDesc() {
 		return brandDesc;
 	}
 
 	public void setBrandDesc(String brandDesc) {
 		this.brandDesc = brandDesc;
-	}
-
-	public String getLocale() {
-		return locale;
-	}
-
-	public void setLocale(String locale) {
-		this.locale = locale;
-	}
-
-	public String getCurrency() {
-		return currency;
-	}
-
-	public void setCurrency(String currency) {
-		this.currency = currency;
 	}
 
 	public boolean isInStock() {
@@ -109,13 +69,12 @@ public class PhysicalProductLightView {
 		this.inStock = inStock;
 	}
 
-	public String getCategoriesList() {
-		return categoriesList;
+	public String getProductImage() {
+		return productImage;
 	}
 
-	public void setCategoriesList(String categoriesList) {
-		this.categoriesList = categoriesList;
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
-	
 	
 }

@@ -459,7 +459,13 @@ public class SearchServiceImpl implements ISearchService {
 		List<String> orderedIds = result.stream().map(o -> o[0].toString()).collect(Collectors.toList());
 		List<PhysicalProductLightView> lp = productService.findAll( lcl, 
 													 				currency, 
-													 				result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+													 				new HashSet<String>(orderedIds)); 
+
+		System.out.println(orderedIds);
+		System.out.println(lp.size());
+		lp.forEach(c -> {
+			System.out.println(c);
+		});
 		
 		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((PhysicalProductLightView) item).getProductUPC())));		
 	 

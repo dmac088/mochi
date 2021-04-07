@@ -9,8 +9,15 @@ public class PhysicalProductLightMapperImpl implements IPhysicalProductLightMapp
 
 	@Override
 	public PhysicalProductLightView DTOToView(PhysicalProductLightDTO dto) {
-		// TODO Auto-generated method stub
-		return null;
+		PhysicalProductLightView pplv = new PhysicalProductLightView();
+		pplv.setProductUPC(dto.getProductUPC());
+		pplv.setProductDesc(dto.getProductDesc());
+		pplv.setProductRetail(dto.getRetailPrice());
+		pplv.setProductMarkdown(dto.getMarkdownPrice());
+		pplv.setBrandDesc(dto.getBrandDesc());
+		pplv.setInStock(dto.getInStock());
+		pplv.setProductImage(dto.getProductImage());
+		return pplv;
 	}
 
 	@Override
