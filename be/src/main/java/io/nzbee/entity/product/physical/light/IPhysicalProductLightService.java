@@ -10,8 +10,7 @@ public interface IPhysicalProductLightService {
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
 			Double maxPrice, String page, String size, String sort);
 
-	public List<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategoryCode,
-			StringCollectionWrapper stringCollectionWrapper);
+	List<PhysicalProductLightDTO> findAll(String locale, String currency, StringCollectionWrapper productCodes);
 
 
 }

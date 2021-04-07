@@ -6,7 +6,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
-import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightService;
@@ -84,7 +83,7 @@ public class PhysicalProductLightAdapterImpl implements IPhysicalProductLightPor
 	@Override
 	@Transactional(readOnly = true)
 	public List<PhysicalProductLightView> findAll(String locale, String currency, Set<String> codes) {
-		List<PhysicalProductLightDTO> lp =  productEntityService.findAll(locale, currency, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(codes));
+		List<PhysicalProductLightDTO> lp =  productEntityService.findAll(locale, currency, new StringCollectionWrapper(codes));
 		return lp.stream().map(p -> productLightMapper.DTOToView(p)).collect(Collectors.toList());
 	}
 

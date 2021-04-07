@@ -30,10 +30,10 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.Product;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.search.facet.IFacet;
+import io.nzbee.view.ports.IPhysicalProductLightPortService;
+import io.nzbee.view.product.physical.PhysicalProductLightView;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -54,7 +54,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	private EntityManager entityManager;
     
 	@Autowired
-    private IProductPortService productService;
+    private IPhysicalProductLightPortService productService;
 	
     @Autowired
     @Qualifier("mochiDataSourceOwner")
@@ -106,7 +106,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchFruit_thenReturnFruitProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
@@ -129,7 +129,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchFruit_thenReturnFruitProductsZHHK() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD",
@@ -155,7 +155,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenSearchVegetables_thenReturnVegetableProducts() {
 		
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
@@ -179,7 +179,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchApple_thenReturnAppleProduct() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -203,7 +203,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchCauliflower_thenReturnCauliflowerProduct() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -227,7 +227,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchAll_thenReturnAllProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -251,7 +251,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchNuts_thenReturnNuts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -275,7 +275,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchOrganic_thenReturnOrganicProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -299,7 +299,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchOrganic_thenReturnOrganicProductsZHHK() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
@@ -323,7 +323,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchOrganic_thenReturnOrganicGlutenFreeZHHK() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
@@ -347,7 +347,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchGlutenFree_thenReturnGlutenFreeProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -371,7 +371,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchGlorys_thenReturnGlorysProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -395,7 +395,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchEnza_thenReturnEnzaProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -419,7 +419,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchPlanters_thenReturnPlantersProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -443,7 +443,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchPlanters_thenReturnDoleProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -467,7 +467,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	@Rollback(false)
 	public void whenSearchDriscolls_thenReturnDriscollsProducts() {
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -493,7 +493,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenSearchCashews_thenReturnCashewsProducts() {
 		
 		// when
-		Page<Product> 
+		Page<PhysicalProductLightView> 
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
@@ -534,7 +534,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 
 		returnFacets.clear();
 		
-		Page<Product> pp = 
+		Page<PhysicalProductLightView> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
 								"Ignored",
@@ -558,7 +558,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 	public void whenSearchForBrandGlorysAndPlantersFruit_thenReturnBrandGlorysAndPlantersFruitProducts() {
 
 		// when
-		Page<Product> pp = 
+		Page<PhysicalProductLightView> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
 								"Ignored",

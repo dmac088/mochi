@@ -38,9 +38,9 @@ public class PhysicalProductLightServiceImpl implements IPhysicalProductLightSer
 	}
 
 	@Override
-	public List<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategoryCode,
+	public List<PhysicalProductLightDTO> findAll(String locale, String currency,
 			StringCollectionWrapper productCodes) {
-		return productDAO.findAll(locale, currency, rootCategoryCode, productCodes).stream()
+		return productDAO.findAll(locale, currency, productCodes).stream()
 				.map(p -> (PhysicalProductLightDTO) p).collect(Collectors.toList());
 	}
 
