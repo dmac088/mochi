@@ -723,11 +723,11 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				", categories AS " + 
 				"( " +
 				"          SELECT    " +
-				"					 coalesce(s2.cat_typ_id,s1.cat_typ_id) as cat_typ_id, " +
-				"					 coalesce(s2.cat_id,s1.cat_id) as cat_id, " +
-				"		   			 coalesce(s2.cat_cd,s1.cat_cd) as cat_cd " +
+				"					 s2.cat_typ_id as cat_typ_id, " +
+				"					 s2.cat_id as cat_id, " +
+				"		   			 s2.cat_cd as cat_cd " +
 				"          FROM      descendants s1 " + 
-				"          LEFT JOIN descendants s2 " + 
+				"          INNER JOIN descendants s2 " + 
 				"          ON        s1.node <> s2.node " + 
 				"          AND       LEFT(s2.node, length(s1.node)) = s1.node " +				
 				"		   WHERE 0=0 " + 
@@ -735,9 +735,9 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				? " AND  s1.cat_cd IN (:categoryCodes) " 
 				: "") +
 						   
-				"          GROUP BY  coalesce(s2.cat_typ_id,s1.cat_typ_id), " +
-				"					 coalesce(s2.cat_id,s1.cat_id), " +
-				"		   			 coalesce(s2.cat_cd,s1.cat_cd)" +
+				"          GROUP BY  s2.cat_typ_id, " +
+				"					 s2.cat_id, " +
+				"		   			 s2.cat_cd" +
 				"), promotions AS " + 
 				"( " +
 				" select pc.prd_id, " +
