@@ -458,9 +458,8 @@ public class SearchServiceImpl implements ISearchService {
 		List<Object[]> result = jpaQuery.getResultList();
 		List<String> orderedIds = result.stream().map(o -> o[0].toString()).collect(Collectors.toList());
 		List<PhysicalProductLightView> lp = productService.findAll( lcl, 
-													 currency, 
-													 Constants.defaultProductRootCategoryCode,
-													 result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+													 				currency, 
+													 				result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 		
 		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((PhysicalProductLightView) item).getProductUPC())));		
 	 
