@@ -1,22 +1,25 @@
-package io.nzbee.resources.product.physical;
+package io.nzbee.resources.product.physical.full;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
+
+import java.util.stream.Stream;
+
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import io.nzbee.resources.controllers.ProductController;
-import io.nzbee.view.product.physical.PhysicalProductDTO;
+import io.nzbee.view.product.physical.PhysicalProductFullView;
 
 @Component
-public class PhysicalProductResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductDTO, PhysicalProductResource> {
+public class PhysicalProductFullResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductFullView, PhysicalProductFullResource> {
 	
-	public PhysicalProductResourceAssembler() {
-		super(ProductController.class, PhysicalProductResource.class);
+	public PhysicalProductFullResourceAssembler() {
+		super(ProductController.class, PhysicalProductFullResource.class);
 	}
 
 	@Override
-	public PhysicalProductResource toModel(PhysicalProductDTO product) {
-		PhysicalProductResource pr = new PhysicalProductResource(product);
+	public PhysicalProductFullResource toModel(PhysicalProductFullView product) {
+		PhysicalProductFullResource pr = new PhysicalProductFullResource(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,
 				product.getProductUPC())).withSelfRel(),
@@ -30,4 +33,5 @@ public class PhysicalProductResourceAssembler extends RepresentationModelAssembl
 
 		return pr;
 	}
+
 }

@@ -9,7 +9,7 @@ import io.nzbee.view.product.ProductDTO;
 //domain model in terms of Jackson annotations (i.e. Ignore that we typically want to avoid)
 
 @JsonTypeName("physicalproduct")
-public class PhysicalProductDTO extends ProductDTO {
+public class PhysicalProductFullView extends ProductDTO {
 	
 	private boolean inStock;
 	

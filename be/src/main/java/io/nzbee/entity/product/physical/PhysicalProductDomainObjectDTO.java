@@ -7,7 +7,7 @@ import java.util.Map;
 
 import io.nzbee.entity.product.ProductDTO;
 
-public class PhysicalProductDTOLight extends ProductDTO implements Serializable {
+public class PhysicalProductDomainObjectDTO extends ProductDTO implements Serializable {
 
 	private static final long serialVersionUID = -408191039793736868L;
 	
@@ -29,7 +29,7 @@ public class PhysicalProductDTOLight extends ProductDTO implements Serializable 
 	private Double weight;
 		
 
-	public PhysicalProductDTOLight(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public PhysicalProductDomainObjectDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		super(tuple, aliasToIndexMap);
 		this.height	= ((BigInteger) tuple[aliasToIndexMap.get(HEIGHT_ALIAS)]).intValue();
 		this.width	= ((BigInteger) tuple[aliasToIndexMap.get(WIDTH_ALIAS)]).intValue();

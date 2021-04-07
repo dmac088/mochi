@@ -4,17 +4,17 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.resources.controllers.ProductController;
-import io.nzbee.view.product.shipping.ShippingProductDTO;
+import io.nzbee.view.product.shipping.ShippingProductView;
 
 @Component
-public class ShippingProductResourceAssembler extends RepresentationModelAssemblerSupport<ShippingProductDTO, ShippingProductResource> {
+public class ShippingProductResourceAssembler extends RepresentationModelAssemblerSupport<ShippingProductView, ShippingProductResource> {
 	
 	public ShippingProductResourceAssembler() {
 		super(ProductController.class, ShippingProductResource.class);
 	}
 
 	@Override
-	public ShippingProductResource toModel(ShippingProductDTO product) {
+	public ShippingProductResource toModel(ShippingProductView product) {
 		ShippingProductResource pr = new ShippingProductResource(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,

@@ -19,8 +19,7 @@ public class ShippingDestinationResourceAssembler extends RepresentationModelAss
 	public ShippingDestinationResource toModel(ShippingDestinationDTO product) {
 		ShippingDestinationResource sdr = new ShippingDestinationResource(product);
 		
-		sdr.add(linkTo(methodOn(ProductController.class).getShippingDestination(null, null,
-				product.getProductDestinationCode())).withSelfRel());
+		sdr.add(linkTo(methodOn(ProductController.class).getShippingDestination(null, null, product.getProductDestinationCode())).withSelfRel());
 		
 		sdr.add(linkTo(methodOn(ProductController.class).getShippingTypesByDestination(null, null, product.getProductDestinationCode(), null)).withRel("shippingTypes"));
 		

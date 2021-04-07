@@ -13,7 +13,7 @@ import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.promotion.IPromotionMapper;
 
 @Component(value="physicalProductMapper")
-public class PhysicalProductMapperImpl implements IPhysicalProductMapper {
+public class PhysicalProductDomainObjectMapperImpl implements IPhysicalProductDomainObjectMapper {
 	
 	@Autowired
 	private IBrandMapper brandMapper;
@@ -28,7 +28,7 @@ public class PhysicalProductMapperImpl implements IPhysicalProductMapper {
 	private IPromotionMapper promotionMapper;
 	
 	@Override
-	public Product DTOToDo(PhysicalProductDTO dto) {
+	public Product DTOToDo(PhysicalProductDomainObjectDTO dto) {
 		return new PhysicalProduct(
 				dto.getProductUPC(),
 			   	dto.getProductCreateDt(),

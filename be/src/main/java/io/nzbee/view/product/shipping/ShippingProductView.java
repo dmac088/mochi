@@ -9,7 +9,7 @@ import io.nzbee.view.product.ProductDTO;
 //domain model in terms of Jackson annotations (i.e. Ignore that we typically want to avoid)
 
 @JsonTypeName("shippingproduct")
-public class ShippingProductDTO extends ProductDTO {
+public class ShippingProductView extends ProductDTO {
 	
 	private String shippingDestinationCode;
 	

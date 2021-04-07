@@ -32,28 +32,14 @@ import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.resources.product.ProductResource;
-import io.nzbee.resources.product.physical.PhysicalProductResource;
-import io.nzbee.resources.product.physical.ProductLightResource;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
-import io.nzbee.view.product.physical.IPhysicalProductDTOToDTOMapper;
-import io.nzbee.view.product.physical.PhysicalProductDTOToDTOMapperImpl;
-import io.nzbee.view.product.shipping.IShippingProductDTOToDTOMapper;
-import io.nzbee.view.product.shipping.ShippingProductDTOToDTOMapperImpl;
 
 
 @Configuration
 @Profile("it")
 public class BeanConfigurationIT {
- 
-	@Bean
-    public IPhysicalProductDTOToDTOMapper physicalProductDTOToDTOMapper() {
-		return new PhysicalProductDTOToDTOMapperImpl();
-	}
-	
-	@Bean
-    public IShippingProductDTOToDTOMapper shippingProductDTOToDTOMapper() {
-		return new ShippingProductDTOToDTOMapperImpl();
-	}
+
 	
     @Bean
     public IOrderPromotionService promotionOrderService() {
@@ -66,18 +52,13 @@ public class BeanConfigurationIT {
     }
 	
 	@Bean
-    public PagedResourcesAssembler<PhysicalProductResource> pagedPhysicalProductResourceAssembler() {
-    	return new PagedResourcesAssembler<PhysicalProductResource>(null, null);
-    }
-	
-	@Bean
     public PagedResourcesAssembler<ShippingProductResource> pagedShippingProductResourceAssembler() {
     	return new PagedResourcesAssembler<ShippingProductResource>(null, null);
     }
 	
 	@Bean
-    public PagedResourcesAssembler<ProductLightResource> pagedPhysicalProductLightResourceAssembler() {
-    	return new PagedResourcesAssembler<ProductLightResource>(null, null);
+    public PagedResourcesAssembler<PhysicalProductLightResource> pagedPhysicalProductLightResourceAssembler() {
+    	return new PagedResourcesAssembler<PhysicalProductLightResource>(null, null);
     }
 	
     @Bean

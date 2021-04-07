@@ -1,22 +1,22 @@
-package io.nzbee.resources.product.physical;
+package io.nzbee.resources.product.physical.light;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 
 import io.nzbee.resources.controllers.ProductController;
-import io.nzbee.view.product.physical.PhysicalProductDTOLight;
+import io.nzbee.view.product.physical.PhysicalProductLightView;
 
 @Component
-public class ProductLightResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductDTOLight, ProductLightResource> {
+public class PhysicalProductLightResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductLightView, PhysicalProductLightResource> {
 	
-	public ProductLightResourceAssembler() {
-		super(ProductController.class, ProductLightResource.class);
+	public PhysicalProductLightResourceAssembler() {
+		super(ProductController.class, PhysicalProductLightResource.class);
 	}
 
 	@Override
-	public ProductLightResource toModel(PhysicalProductDTOLight product) {
-		ProductLightResource pr = new ProductLightResource(product);
+	public PhysicalProductLightResource toModel(PhysicalProductLightView product) {
+		PhysicalProductLightResource pr = new PhysicalProductLightResource(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,
 				product.getProductUPC())).withSelfRel(),

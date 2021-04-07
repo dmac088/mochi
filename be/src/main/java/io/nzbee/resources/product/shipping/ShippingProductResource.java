@@ -1,17 +1,17 @@
 package io.nzbee.resources.product.shipping;
 
 import org.springframework.hateoas.RepresentationModel;
-import io.nzbee.view.product.shipping.ShippingProductDTO;
+import io.nzbee.view.product.shipping.ShippingProductView;
 
 public class ShippingProductResource  extends RepresentationModel<ShippingProductResource> {
 
-	private final ShippingProductDTO data;
+	private final ShippingProductView data;
 	
-	public ShippingProductResource(final ShippingProductDTO product) {
+	public ShippingProductResource(final ShippingProductView product) {
 		this.data = product;
 	}
 	
-	public ShippingProductDTO getData() {
+	public ShippingProductView getData() {
 		return data;
 	}
 	

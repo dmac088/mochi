@@ -5,7 +5,7 @@ package io.nzbee.view.product.physical;
 //application UI, stitching the UI directly over the domain model results in verbosity in the 
 //domain model in terms of Jackson annotations (i.e. Ignore that we typically want to avoid)
 
-public class PhysicalProductDTOLight {
+public class PhysicalProductLightView {
 
 	private String productUPC;
 

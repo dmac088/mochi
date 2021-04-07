@@ -17,14 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.Constants;
-import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.resources.product.ProductResource;
-import io.nzbee.resources.product.ProductResourceAssembler;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightResourceAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
 import io.nzbee.resources.search.SearchFacetResourceAssembler;
 import io.nzbee.resources.search.SearchResultResource;
 import io.nzbee.search.facet.IFacet;
-import io.nzbee.view.product.physical.IPhysicalProductDomainObjectToDTOMapper;
+import io.nzbee.view.ports.IPhysicalProductLightPortService;
+
 
 @RestController
 @RequestMapping(value = "/api", produces = "application/hal+json")
@@ -33,22 +33,19 @@ public class SearchController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private IPhysicalProductDomainObjectToDTOMapper productDTOMapper;
+    private IPhysicalProductLightPortService productService;
 	
 	@Autowired
-    private IProductPortService productService;
+    private PhysicalProductLightResourceAssembler prodResourceAssembler;
 	
 	@Autowired
-    private ProductResourceAssembler prodResourceAssembler;
-	
-	@Autowired
-    private PagedResourcesAssembler<ProductResource> prodPagedAssembler;
+    private PagedResourcesAssembler<PhysicalProductLightResource> prodPagedAssembler;
 	
 	@Autowired
 	private SearchFacetResourceAssembler searchFacetResourceAssembler;
 	
 	@Autowired
-	private IProductPortService ipps;
+	private IPhysicalProductLightPortService ipps;
 	
 	
 	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}",
@@ -68,15 +65,15 @@ public class SearchController {
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
     	//get the resulting pages of product
-    	final Page<ProductResource> pages = ipps.search(locale, 
-		    												currency,
-		    												category, 
-		    												Integer.parseInt(page), 
-		    												Integer.parseInt(size),
-		    												sort,
-		    												term, 
-		    												selectedFacets,
-		    												returnFacets).map(p -> prodResourceAssembler.toModel(productDTOMapper.toDto(p)));
+    	final Page<PhysicalProductLightResource> pages = ipps.search(	locale, 
+					    												currency,
+					    												category, 
+					    												Integer.parseInt(page), 
+					    												Integer.parseInt(size),
+					    												sort,
+					    												term, 
+					    												selectedFacets,
+					    												returnFacets).map(p -> prodResourceAssembler.toModel(p));
     	
     	Set<SearchFacetResource> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
     	

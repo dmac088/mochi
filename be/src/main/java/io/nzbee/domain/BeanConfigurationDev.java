@@ -29,25 +29,11 @@ import io.nzbee.domain.promotion.order.IOrderPromotionService;
 import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
-import io.nzbee.view.product.physical.IPhysicalProductDTOToDTOMapper;
-import io.nzbee.view.product.physical.PhysicalProductDTOToDTOMapperImpl;
-import io.nzbee.view.product.shipping.IShippingProductDTOToDTOMapper;
-import io.nzbee.view.product.shipping.ShippingProductDTOToDTOMapperImpl;
 
 @Configuration
 @Profile("dev")
 public class BeanConfigurationDev {
  
-	@Bean
-    public IPhysicalProductDTOToDTOMapper physicalProductDTOToDTOMapper() {
-		return new PhysicalProductDTOToDTOMapperImpl();
-	}
-	
-	@Bean
-    public IShippingProductDTOToDTOMapper shippingProductDTOToDTOMapper() {
-		return new ShippingProductDTOToDTOMapperImpl();
-	}
-	
     @Bean
     public IProductService productService() {
         return new ProductServiceImpl();

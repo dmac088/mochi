@@ -37,8 +37,8 @@ import io.nzbee.search.facet.SearchFacetDiscrete;
 import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
-import io.nzbee.entity.product.IProductService;
-import io.nzbee.entity.product.ProductDTO;
+import io.nzbee.view.ports.IPhysicalProductLightPortService;
+import io.nzbee.view.product.physical.PhysicalProductLightView;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.Constants;
@@ -67,7 +67,7 @@ public class SearchServiceImpl implements ISearchService {
 	private IFacetServices facetServices;
 	
 	@Autowired
-	private IProductService productService;
+	private IPhysicalProductLightPortService productService;
 
 	@PersistenceContext(unitName = "mochiEntityManagerFactory")
 	private EntityManager em;
@@ -302,12 +302,12 @@ public class SearchServiceImpl implements ISearchService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public PageImpl<ProductDTO> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
+	public PageImpl<PhysicalProductLightView> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
 			int size, String sortBy, Set<io.nzbee.search.facet.IFacet> facetPayload,
 			Set<io.nzbee.search.facet.IFacet> returnFacets) {
 		
 		if (searchTerm.trim().equals(EMPTY_STRING)) {
-			return new PageImpl<ProductDTO>(new ArrayList<ProductDTO>(), PageRequest.of(page, size), 0);
+			return new PageImpl<PhysicalProductLightView>(new ArrayList<PhysicalProductLightView>(), PageRequest.of(page, size), 0);
 		}
 		
 
@@ -457,14 +457,14 @@ public class SearchServiceImpl implements ISearchService {
 		setProductProjection(jpaQuery);
 		List<Object[]> result = jpaQuery.getResultList();
 		List<String> orderedIds = result.stream().map(o -> o[0].toString()).collect(Collectors.toList());
-		List<ProductDTO> lp = productService.findAll( lcl, 
+		List<PhysicalProductLightView> lp = productService.findAll( lcl, 
 													 currency, 
 													 Constants.defaultProductRootCategoryCode,
-													 new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
+													 result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 		
-		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((ProductDTO) item).getProductUPC())));		
+		Collections.sort(lp, Comparator.comparing(item -> orderedIds.indexOf(((PhysicalProductLightView) item).getProductUPC())));		
 	 
-		return new PageImpl<ProductDTO>(lp, pageable, jpaQuery.getResultSize());
+		return new PageImpl<PhysicalProductLightView>(lp, pageable, jpaQuery.getResultSize());
 
 	}
 
@@ -489,7 +489,7 @@ public class SearchServiceImpl implements ISearchService {
 		LOGGER.debug("***********Searching for the following UPC*****************");
 		LOGGER.debug((StringUtils.join(",", result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))));
 		LOGGER.debug("***********************************************************");
-		List<ProductDTO> lp = productService.findAll(locale, currency, rootCategory, new StringCollectionWrapper(result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))); 
+		List<PhysicalProductLightView> lp = productService.findAll(locale, currency, rootCategory, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
 		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
 

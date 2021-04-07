@@ -35,7 +35,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.ProductServiceImpl;
 import io.nzbee.entity.product.physical.IPhysicalProductService;
-import io.nzbee.entity.product.physical.PhysicalProductDTO;
+import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductService;
@@ -120,7 +120,7 @@ public class IT_ProductCacheIntegrationTest {
     	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
     	assertNotNull(ob.get());
-    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDTO.class.getSimpleName());
+    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
     }
 	
 	@Test
@@ -140,7 +140,7 @@ public class IT_ProductCacheIntegrationTest {
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
 	    	
 	    assertNotNull(ob.get());
-	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDTO.class.getSimpleName());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
     }
 	
 	@Test
@@ -160,7 +160,7 @@ public class IT_ProductCacheIntegrationTest {
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
 	    	
 	    assertNotNull(ob.get());
-	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDTO.class.getSimpleName());
+	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
     }
 	
 	@Test
@@ -319,7 +319,7 @@ public class IT_ProductCacheIntegrationTest {
     	
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
-	    assertThat(((PageImpl<PhysicalProductDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    assertThat(((PageImpl<PhysicalProductDomainObjectDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
 	    
 	}
 	
@@ -366,7 +366,7 @@ public class IT_ProductCacheIntegrationTest {
 	    
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
-	    assertThat(((PageImpl<PhysicalProductDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    assertThat(((PageImpl<PhysicalProductDomainObjectDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
 	    
 	}
 	
@@ -412,7 +412,7 @@ public class IT_ProductCacheIntegrationTest {
 	    
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
-	    assertThat(((PageImpl<PhysicalProductDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    assertThat(((PageImpl<PhysicalProductDomainObjectDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
 	    
 	}
 

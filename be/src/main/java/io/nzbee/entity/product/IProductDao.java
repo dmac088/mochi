@@ -26,8 +26,6 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 
 	List<ProductDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes);
 
-	List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes);
-
 	Optional<ProductDTO> findById(String locale, String currency, Long productId);
 
 	<T> Page<ProductDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
@@ -40,5 +38,7 @@ public interface IProductDao extends ILocalizedDao<ProductDTO, ProductEntity> {
 
 	Optional<ShippingProductDTO> findShippingProductByDestinationAndTypeAndWeight(String locale, String currency,
 			String destinationCode, String type, Double weightKg);
+	
+	List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes);
 	
 }

@@ -6,9 +6,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.Constants;
@@ -17,7 +14,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
@@ -35,8 +31,7 @@ import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
 import io.nzbee.entity.product.department.IDepartmentService;
-import io.nzbee.entity.product.physical.IPhysicalProductService;
-import io.nzbee.entity.product.physical.PhysicalProductDTO;
+import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
@@ -50,17 +45,12 @@ import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.exceptions.NotFoundException;
-import io.nzbee.search.ISearchService;
-import io.nzbee.search.facet.IFacet;
 
 @Component
 public class ProductAdapter implements IProductPortService {
 	
 	@Autowired
 	private IProductService productService;
-	
-	@Autowired
-	private IPhysicalProductService physicalProductService;
 	
 	@Autowired
 	private IShippingProductService shippingProductService;
@@ -70,9 +60,6 @@ public class ProductAdapter implements IProductPortService {
 
 	@Autowired
 	private IProductPriceService productPriceService;
-
-	@Autowired
-	private ISearchService searchService;
 
 	@Autowired
 	private IDepartmentService departmentService;
@@ -147,105 +134,12 @@ public class ProductAdapter implements IProductPortService {
 	
 	public static Class<?> mapDomainClassToDTOClass(Class<?> cls) {
 		if(cls.equals(PhysicalProduct.class)) {
-			return PhysicalProductDTO.class;
+			return PhysicalProductDomainObjectDTO.class;
 		} else if (cls.equals(ShippingProduct.class)) {
 			return ShippingProductDTO.class;
 		}
-		return PhysicalProductDTO.class;
-	}
-
-	@Override
-	public Page<Product> search(String locale, String currency, String categoryCode, int page, int size, String sort, String searchTerm,
-			Set<IFacet> selectedFacets, Set<IFacet> returnFacets) {
-
-		return searchService.findAll(locale, currency, categoryCode, searchTerm, page,
-					size, sort, selectedFacets, returnFacets).map(p -> {
-					Product pDo = productMapper.DTOToDo(p);
-					return pDo;
-				});
-	}
-
-	@Override
-	@Transactional(readOnly = true)
-	public List<Product> findAll(String locale, String currency, Set<String> codes) {
-		List<ProductDTO> lp =  productService.findAll(locale, currency, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(codes));
-		return lp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList());
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public Page<Product> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
-		
-		Page<ProductDTO> pp = productService.findAll(
-															locale, 
-															currency,
-															categoryCode, 
-															new StringCollectionWrapper(categoryCodes), 
-															new StringCollectionWrapper(brandCodes), 
-															new StringCollectionWrapper(tagCodes),
-															maxPrice,
-															page, 
-															size, 
-															sort);
-				
-		return new PageImpl<Product>(
-						// receive a list of entities and map to domain objects
-						pp.stream().map(pe -> mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
-						pp.getTotalElements());		
-	}
-	
-	@Override
-	@Transactional(readOnly = true)
-	public Page<PhysicalProduct> findAllPhysicalProducts(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page, String size, String sort) {
-		
-		
-		//cannot downcast here, 
-		Page<PhysicalProductDTO> pp = physicalProductService.findAll(
-															locale, 
-															currency,
-															categoryCode, 
-															new StringCollectionWrapper(categoryCodes), 
-															new StringCollectionWrapper(brandCodes), 
-															new StringCollectionWrapper(tagCodes),
-															maxPrice,
-															page, 
-															size, 
-															sort);
-				
-		return new PageImpl<PhysicalProduct>(
-						// receive a list of entities and map to domain objects
-						pp.stream().map(pe -> (PhysicalProduct) mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
-						pp.getTotalElements());		
-	}
-	
-	
-	
-	@Override
-	@Transactional(readOnly = true)
-	public Page<ShippingProduct> findAllShippingProducts(String locale, String currency, String categoryCode,
-			Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page,
-			String size, String sort) {
-
-		Page<ShippingProductDTO> pp = shippingProductService.findAll(
-															locale, 
-															currency,
-															categoryCode, 
-															new StringCollectionWrapper(categoryCodes), 
-															new StringCollectionWrapper(brandCodes), 
-															new StringCollectionWrapper(tagCodes),
-															maxPrice,
-															page, 
-															size, 
-															sort);
-
-		return new PageImpl<ShippingProduct>(
-						// receive a list of entities and map to domain objects
-						pp.stream().map(pe -> (ShippingProduct) mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
-						pp.getTotalElements());		
-		
-	}
+		return PhysicalProductDomainObjectDTO.class;
+	}	
 	
 	@Override
 	@Transactional
@@ -358,14 +252,12 @@ public class ProductAdapter implements IProductPortService {
 	}
 
 	@Override
-	public String[] getSuggestion(String searchTerm, String rootCategory, String locale, String currency) {
-		return searchService.getSuggestions(searchTerm, rootCategory, locale, currency);
-	}
-
-	@Override
 	public void delete(Product domainObject) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
+
 
 }

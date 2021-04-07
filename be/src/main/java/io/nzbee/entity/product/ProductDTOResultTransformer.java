@@ -10,7 +10,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
-import io.nzbee.entity.product.physical.PhysicalProductDTO;
+import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
 import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
@@ -48,13 +48,13 @@ public class ProductDTOResultTransformer implements ResultTransformer {
             	ProductDTO pDto = null;  
             	switch(pd.getDepartmentCode()) {
             		case Constants.physicalProductDepartmentCode:
-            			pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+            			pDto = new PhysicalProductDomainObjectDTO(tuple, aliasToIndexMap);
             			break;
             		case Constants.shippingProductDepartmentCode:
             			pDto = new ShippingProductDTO(tuple, aliasToIndexMap);
             			break;
             		default:
-            			pDto = new PhysicalProductDTO(tuple, aliasToIndexMap);
+            			pDto = new PhysicalProductDomainObjectDTO(tuple, aliasToIndexMap);
             			break;
             	}
             			

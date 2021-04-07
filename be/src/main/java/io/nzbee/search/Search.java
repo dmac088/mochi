@@ -4,20 +4,20 @@ import java.util.Set;
 
 import org.springframework.hateoas.PagedModel;
 
-import io.nzbee.resources.product.physical.ProductLightResource;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.search.facet.IFacet;
 
 public class Search {
 	
-	PagedModel<ProductLightResource> products;
+	PagedModel<PhysicalProductLightResource> products;
 	
 	Set<IFacet> facets;
 
-	public PagedModel<ProductLightResource> getProducts() {
+	public PagedModel<PhysicalProductLightResource> getProducts() {
 		return products;
 	}
 
-	public void setProducts(PagedModel<ProductLightResource> products) {
+	public void setProducts(PagedModel<PhysicalProductLightResource> products) {
 		this.products = products;
 	}
 	
