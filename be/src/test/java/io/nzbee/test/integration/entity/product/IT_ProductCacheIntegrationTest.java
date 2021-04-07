@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.persistence.EntityManager;
 import javax.sql.DataSource;
 import org.junit.Before;
@@ -34,9 +33,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.ProductServiceImpl;
-import io.nzbee.entity.product.physical.IPhysicalProductService;
 import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
+import io.nzbee.entity.product.physical.light.IPhysicalProductLightService;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductEntityBeanFactory;
@@ -69,7 +68,7 @@ public class IT_ProductCacheIntegrationTest {
     private IProductService productService;
     
     @Autowired
-    private IPhysicalProductService physicalProductService;
+    private IPhysicalProductLightService physicalProductService;
     
     @Autowired
     @Qualifier("mochiDataSourceOwner")
@@ -379,15 +378,15 @@ public class IT_ProductCacheIntegrationTest {
 		String cc = "VEG01";
 		
 		physicalProductService.findAll(	Constants.localeENGB, 
-								Constants.currencyHKD, 
-								cc, 
-								new StringCollectionWrapper(new HashSet<String>()),  
-								new StringCollectionWrapper(new HashSet<String>()), 
-								new StringCollectionWrapper(new HashSet<String>()), 
-								null, 
-								"0", 
-								"10", 
-								"nameAsc");
+										Constants.currencyHKD, 
+										cc, 
+										new StringCollectionWrapper(new HashSet<String>()),  
+										new StringCollectionWrapper(new HashSet<String>()), 
+										new StringCollectionWrapper(new HashSet<String>()), 
+										null, 
+										"0", 
+										"10", 
+										"nameAsc");
 		
 		// then
 	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");

@@ -33,6 +33,8 @@ import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
+import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
+import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
@@ -50,10 +52,14 @@ public class BeanConfigurationIT {
 	}
 	
 	@Bean
+	public IPhysicalProductLightMapper productLightMapper() {
+		return new PhysicalProductLightMapperImpl();
+	}
+	
+	@Bean
 	public IPhysicalProductFullPortService productFullPortService() {
 		return new PhysicalProductFullAdapterImpl();
 	}
-	
 	
     @Bean
     public IOrderPromotionService promotionOrderService() {

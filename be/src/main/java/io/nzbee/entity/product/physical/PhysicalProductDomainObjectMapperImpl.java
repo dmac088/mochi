@@ -1,10 +1,8 @@
 package io.nzbee.entity.product.physical;
 
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.entity.brand.IBrandMapper;
