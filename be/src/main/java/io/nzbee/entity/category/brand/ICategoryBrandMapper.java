@@ -1,8 +1,8 @@
 package io.nzbee.entity.category.brand;
 
 import io.nzbee.domain.category.BrandCategory;
-import io.nzbee.entity.IMapper;
+import io.nzbee.entity.IDomainObjectMapper;
 
-public interface ICategoryBrandMapper extends IMapper<BrandCategory, CategoryBrandEntity, CategoryBrandDTO> { 
+public interface ICategoryBrandMapper extends IDomainObjectMapper<BrandCategory, CategoryBrandEntity, CategoryBrandDTO> { 
 
 }

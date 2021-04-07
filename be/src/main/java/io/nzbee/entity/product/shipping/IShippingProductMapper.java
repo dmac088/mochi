@@ -1,8 +1,8 @@
 package io.nzbee.entity.product.shipping;
 
-import io.nzbee.entity.IMapper;
+import io.nzbee.entity.IDomainObjectMapper;
 import io.nzbee.domain.product.Product;
 
-public interface IShippingProductMapper extends IMapper<Product, ShippingProductEntity, ShippingProductDTO> {
+public interface IShippingProductMapper extends IDomainObjectMapper<Product, ShippingProductEntity, ShippingProductDTO> {
 
 }

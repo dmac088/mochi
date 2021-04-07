@@ -1,8 +1,8 @@
 package io.nzbee.entity.promotion.order;
 
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.entity.IMapper;
+import io.nzbee.entity.IDomainObjectMapper;
 
-public interface IPromotionOrderMapper extends IMapper<Promotion, PromotionOrderEntity, PromotionOrderDTO>  {
+public interface IPromotionOrderMapper extends IDomainObjectMapper<Promotion, PromotionOrderEntity, PromotionOrderDTO>  {
 
 }

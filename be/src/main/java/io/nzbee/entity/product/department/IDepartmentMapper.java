@@ -1,8 +1,8 @@
 package io.nzbee.entity.product.department;
 
 import io.nzbee.domain.department.Department;
-import io.nzbee.entity.IMapper;
+import io.nzbee.entity.IDomainObjectMapper;
 
-public interface IDepartmentMapper extends IMapper<Department, DepartmentEntity, DepartmentDTO> {
+public interface IDepartmentMapper extends IDomainObjectMapper<Department, DepartmentEntity, DepartmentDTO> {
 
 }

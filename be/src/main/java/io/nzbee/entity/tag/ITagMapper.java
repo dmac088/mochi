@@ -1,8 +1,8 @@
 package io.nzbee.entity.tag;
 
 import io.nzbee.domain.tag.Tag;
-import io.nzbee.entity.IMapper;
+import io.nzbee.entity.IDomainObjectMapper;
 
-public interface ITagMapper extends IMapper<Tag, TagEntity, TagDTO> {
+public interface ITagMapper extends IDomainObjectMapper<Tag, TagEntity, TagDTO> {
 
 }

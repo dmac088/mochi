@@ -1,8 +1,8 @@
 package io.nzbee.entity.product.physical;
 
-import io.nzbee.entity.IMapper;
+import io.nzbee.entity.IDomainObjectMapper;
 
-public interface IPhysicalProductLightMapper extends IMapper<io.nzbee.view.product.physical.PhysicalProductDTOLight, PhysicalProductEntity, PhysicalProductDTOLight> {
+public interface IPhysicalProductLightMapper extends IDomainObjectMapper<io.nzbee.view.product.physical.PhysicalProductDTOLight, PhysicalProductEntity, PhysicalProductDTOLight> {
 
 }
  
