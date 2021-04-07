@@ -29,7 +29,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.entity.inventory.IInventoryTransactionService;
 import io.nzbee.entity.inventory.InventoryTransaction;
 import io.nzbee.entity.stock.IStockOnHandService;
-import io.nzbee.entity.stock.StockOnHand;
+import io.nzbee.entity.stock.StockOnHandEntity;
 import io.nzbee.util.inventory.InventoryMasterService;
 
 @RunWith(SpringRunner.class)
@@ -100,7 +100,7 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 	public void whenInventoryTransactionUploaded_thenReturnCorrectStockOnHand() {
 		
 		// when
-		Optional<StockOnHand> found = sohService.findByProductCode("3577789");
+		Optional<StockOnHandEntity> found = sohService.findByProductCode("3577789");
 
 		//then
 		assertFound(found);
@@ -114,7 +114,7 @@ public class IT_InventoryTransactionUploadIntegrationTest {
 		
 	}
 	
-	private void assertFound(Optional<StockOnHand> found) {
+	private void assertFound(Optional<StockOnHandEntity> found) {
 		
 		assertNotNull(found);
 		
