@@ -103,33 +103,6 @@ public abstract class ProductDTO implements Serializable {
 		this.markdownPrice			= ((BigDecimal) tuple[aliasToIndexMap.get(MARKDOWN_PRICE_ALIAS)]).doubleValue();
 	}
 	
-	
-
-	public ProductDTO(Long productId, String productUPC, String productDesc, String productLongDesc,
-			LocalDateTime productCreateDt, BrandDTO brand, DepartmentDTO department, Set<CategoryProductDTO> categories,
-			Set<PromotionDTO> promotions, Double retailPrice, Double markdownPrice, String locale, String currency,
-			String productStatus, boolean inStock, String productImage, String productStatusCode) {
-		super();
-		this.productId = productId;
-		this.productUPC = productUPC;
-		this.productDesc = productDesc;
-		this.productLongDesc = productLongDesc;
-		this.productCreateDt = productCreateDt;
-		this.brand = brand;
-		this.department = department;
-		this.categories = categories;
-		this.promotions = promotions;
-		this.retailPrice = retailPrice;
-		this.markdownPrice = markdownPrice;
-		this.locale = locale;
-		this.currency = currency;
-		this.productStatus = productStatus;
-		this.inStock = inStock;
-		this.productImage = productImage;
-		this.productStatusCode = productStatusCode;
-	}
-
-
 
 	public String getProductUPC() {
 		return productUPC;
