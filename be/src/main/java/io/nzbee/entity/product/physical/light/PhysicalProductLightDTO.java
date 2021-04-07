@@ -1,7 +1,6 @@
 package io.nzbee.entity.product.physical.light;
 
 import java.io.Serializable;
-import io.nzbee.entity.brand.BrandDTO;
 
 public class PhysicalProductLightDTO implements Serializable {
 
@@ -11,7 +10,7 @@ public class PhysicalProductLightDTO implements Serializable {
 	
 	private String 		productDesc; 
 	
-	private BrandDTO 	brand;  
+	private String 		brandDesc;
 	
 	private Double 		retailPrice; 
 	
@@ -21,16 +20,21 @@ public class PhysicalProductLightDTO implements Serializable {
 	
 	private String 		productImage;
 
-	public PhysicalProductLightDTO(String productUPC, String productDesc, BrandDTO brand, Double retailPrice,
-			Double markdownPrice, Boolean inStock, String productImage) {
+	public PhysicalProductLightDTO(String 	 productUPC, 
+								   String 	 productDesc,
+								   String 	 brandDesc,
+								   Double 	 retailPrice,
+								   Double 	 markdownPrice, 
+								   Boolean 	 inStock, 
+								   String	 productImage) {
 		super();
-		this.productUPC = productUPC;
-		this.productDesc = productDesc;
-		this.brand = brand;
-		this.retailPrice = retailPrice;
-		this.markdownPrice = markdownPrice;
-		this.inStock = inStock;
-		this.productImage = productImage;
+		this.productUPC 	= productUPC;
+		this.productDesc 	= productDesc;
+		this.retailPrice 	= retailPrice;
+		this.markdownPrice 	= markdownPrice;
+		this.brandDesc		= brandDesc;
+		this.inStock 		= inStock;
+		this.productImage 	= productImage;
 	}
 
 	public String getProductUPC() {
@@ -41,8 +45,8 @@ public class PhysicalProductLightDTO implements Serializable {
 		return productDesc;
 	}
 
-	public BrandDTO getBrand() {
-		return brand;
+	public String getBrandDesc() {
+		return brandDesc;
 	}
 
 	public Double getRetailPrice() {
@@ -53,7 +57,7 @@ public class PhysicalProductLightDTO implements Serializable {
 		return markdownPrice;
 	}
 
-	public Boolean getInStock() {
+	public Boolean getInStock() { 
 		return inStock;
 	}
 

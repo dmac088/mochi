@@ -5,15 +5,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
 import javax.transaction.Transactional;
-
 import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
@@ -27,10 +24,11 @@ import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
+import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.role.supplier.ISupplierService;
 import io.nzbee.entity.role.supplier.Supplier;
 import io.nzbee.entity.stock.IStockOnHandService;
-import io.nzbee.entity.stock.StockOnHand;
+import io.nzbee.entity.stock.StockOnHandEntity;
 import io.nzbee.util.FileStorageServiceUpload;
 import io.nzbee.entity.party.organization.Organization;
 
@@ -119,13 +117,13 @@ public class InventoryMasterService {
 		i.setCurrency(ocurr.get());
 		
 		//ensure the SOH is updated
-		Optional<StockOnHand> osoh = stockOnHandService.findByProductCode(ims.get_INVENTORY_PRODUCT_UPC()); 
+		Optional<StockOnHandEntity> osoh = stockOnHandService.findByProductCode(ims.get_INVENTORY_PRODUCT_UPC()); 
 		
-		StockOnHand soh = osoh.isPresent()
+		StockOnHandEntity soh = osoh.isPresent()
 						  ? osoh.get()
-						  : new StockOnHand();
+						  : new StockOnHandEntity();
 						  
-		soh.setProduct(p.get());
+		soh.setProduct((PhysicalProductEntity) p.get());
 		soh.setStockOnHand(((soh.getStockOnHand() == null) ? 0 : soh.getStockOnHand()) + ims.get_INVENTORY_QUANTITY());
 
 		inventoryTransactionService.save(i);

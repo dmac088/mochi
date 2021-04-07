@@ -4,8 +4,8 @@ import java.util.Optional;
 
 import io.nzbee.entity.IService;
 
-public interface IStockOnHandService extends IService<StockOnHand> {
+public interface IStockOnHandService extends IService<StockOnHandEntity> {
 
-	Optional<StockOnHand> findByProductCode(String productCode);
+	Optional<StockOnHandEntity> findByProductCode(String productCode);
 	
 }

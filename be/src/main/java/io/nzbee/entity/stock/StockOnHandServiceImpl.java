@@ -12,41 +12,41 @@ public class StockOnHandServiceImpl implements IStockOnHandService {
 	private IStockOnHandRepository stockOnHandRepository;
 	
 	@Override
-	public List<StockOnHand> findAll() {
+	public List<StockOnHandEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<StockOnHand> findById(Long id) {
+	public Optional<StockOnHandEntity> findById(Long id) {
 		return stockOnHandRepository.findById(id);
 	}
 
 	@Override
-	public Optional<StockOnHand> findByCode(String code) {
+	public Optional<StockOnHandEntity> findByCode(String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void save(StockOnHand t) {
+	public void save(StockOnHandEntity t) {
 		stockOnHandRepository.save(t);
 	}
 
 	@Override
-	public void update(StockOnHand t) {
+	public void update(StockOnHandEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(StockOnHand t) {
+	public void delete(StockOnHandEntity t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Optional<StockOnHand> findByProductCode(String productCode) {
+	public Optional<StockOnHandEntity> findByProductCode(String productCode) {
 		return stockOnHandRepository.findByProductProductUPC(productCode);
 	}
 
