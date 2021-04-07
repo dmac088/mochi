@@ -30,7 +30,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
