@@ -31,6 +31,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
+import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.product.physical.PhysicalProductLightView;
@@ -86,7 +87,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		
     	try {
 			fullTextEntityManager
-			.createIndexer( ProductEntity.class )
+			.createIndexer( PhysicalProductEntity.class )
 			.batchSizeToLoadObjects( 25 )
 			.cacheMode( CacheMode.NORMAL )
 			.threadsToLoadObjects( 12 )
@@ -316,7 +317,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(new Long(2));
 	} 
 	
 	@Test
@@ -460,7 +461,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(2));
+        .isEqualTo(new Long(3));
 	}
 	
 	@Test
