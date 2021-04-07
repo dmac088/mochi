@@ -33,6 +33,7 @@ import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
+import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.resources.product.ProductResource;
@@ -40,12 +41,18 @@ import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
+import io.nzbee.view.ports.IShippingProductPortService;
 
 
 @Configuration
 @Profile("it")
 public class BeanConfigurationIT {
 
+	@Bean
+	public IShippingProductPortService shippingProductPortService() {
+		return new ShippingProductAdapterImpl();
+	}
+	
 	@Bean
 	public IPhysicalProductLightPortService productLightPortService() {
 		return new PhysicalProductLightAdapterImpl();

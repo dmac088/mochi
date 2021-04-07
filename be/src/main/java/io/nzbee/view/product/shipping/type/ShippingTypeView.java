@@ -1,6 +1,6 @@
 package io.nzbee.view.product.shipping.type;
 
-public class ShippingTypeDTO {
+public class ShippingTypeView {
 
 	private String shippingTypeCode;
 	

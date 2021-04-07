@@ -12,7 +12,7 @@ import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.promotion.IPromotionMapper;
 
 @Component(value="shippingProductMapper")
-public class ShippingProductMapper implements IShippingProductMapper {
+public class ShippingProductMapperImpl implements IShippingProductMapper {
 
 	@Autowired
 	private IBrandMapper brandMapper;

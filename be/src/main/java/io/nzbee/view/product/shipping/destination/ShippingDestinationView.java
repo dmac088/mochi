@@ -1,6 +1,6 @@
 package io.nzbee.view.product.shipping.destination;
 
-public class ShippingDestinationDTO {
+public class ShippingDestinationView {
 
 	private String productDestinationCode;
 	

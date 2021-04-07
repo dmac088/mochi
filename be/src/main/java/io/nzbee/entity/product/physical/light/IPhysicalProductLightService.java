@@ -1,7 +1,6 @@
 package io.nzbee.entity.product.physical.light;
 
 import java.util.List;
-
 import org.springframework.data.domain.Page;
 import io.nzbee.entity.StringCollectionWrapper;
 

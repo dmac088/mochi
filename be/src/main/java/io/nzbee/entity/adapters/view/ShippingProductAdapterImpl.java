@@ -1,56 +1,82 @@
 package io.nzbee.entity.adapters.view;
 
-import java.util.Set;
+import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.transaction.annotation.Transactional;
-
-import io.nzbee.domain.product.Product;
-import io.nzbee.domain.product.shipping.ShippingProduct;
-import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.product.IProductMapper;
-import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.shipping.IShippingProductService;
-import io.nzbee.entity.product.shipping.ShippingProductDTO;
+import io.nzbee.entity.product.shipping.IShippingProductViewMapper;
+import io.nzbee.entity.product.shipping.destination.IShippingDestinationService;
+import io.nzbee.entity.product.shipping.destination.IShippingDestinationViewMapper;
+import io.nzbee.entity.product.shipping.type.IShippingTypeService;
+import io.nzbee.entity.product.shipping.type.IShippingTypeViewMapper;
 import io.nzbee.view.ports.IShippingProductPortService;
 import io.nzbee.view.product.shipping.ShippingProductView;
+import io.nzbee.view.product.shipping.destination.ShippingDestinationView;
+import io.nzbee.view.product.shipping.type.ShippingTypeView;
 
 public class ShippingProductAdapterImpl  implements IShippingProductPortService {
 
 	@Autowired
-	private IShippingProductService shippingProductService;
+	private IShippingProductService productEntityService;
 	
 	@Autowired
-	private IProductMapper productMapper;
+	private IShippingDestinationService shippingDestinationService;
+	
+	@Autowired
+	private IShippingTypeService shippingTypeService;
+	
+	@Autowired
+	private IShippingDestinationViewMapper shippingDestinationMapper;
+	
+	@Autowired
+	private IShippingTypeViewMapper shippingTypeMapper;
+	
+	@Autowired
+	private IShippingProductViewMapper productMapper;
+	
 	
 	@Override
-	@Transactional(readOnly = true)
-	public Page<ShippingProduct> findAllShippingProducts(String locale, String currency, String categoryCode,
-			Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice, String page,
-			String size, String sort) {
-
-		Page<ShippingProductDTO> pp = shippingProductService.findAll(
-															locale, 
-															currency,
-															categoryCode, 
-															new StringCollectionWrapper(categoryCodes), 
-															new StringCollectionWrapper(brandCodes), 
-															new StringCollectionWrapper(tagCodes),
-															maxPrice,
-															page, 
-															size, 
-															sort);
-
-		return new PageImpl<ShippingProduct>(
-						// receive a list of entities and map to domain objects
-						pp.stream().map(pe -> (ShippingProduct) mapHelper(pe)).collect(Collectors.toList()), PageRequest.of(Integer.parseInt(page), Integer.parseInt(size)),
-						pp.getTotalElements());		
-		
+	public List<ShippingDestinationView> findAllActiveByBagWeight(String locale, Double totalWeight) {
+		return shippingDestinationService.findAllActiveByBagWeight(locale, totalWeight)
+				.stream().map(sd -> shippingDestinationMapper.DTOToView(sd)).collect(Collectors.toList());
 	}
+
+
+	@Override
+	public List<ShippingTypeView> findAll(String locale) {
+		return shippingTypeService.findAll(locale)
+				.stream().map(st -> shippingTypeMapper.DTOToView(st)).collect(Collectors.toList());
+	}
+
+
+	@Override
+	public Optional<ShippingTypeView> findTypeByCode(String locale, String providerCode) {
+		return Optional.ofNullable(shippingTypeMapper.DTOToView(shippingTypeService.findByCode(locale, providerCode).get()));
+	}
+
+
+	@Override
+	public Optional<ShippingDestinationView> findDestinationByCode(String locale, String destinationCode) {
+		return Optional.ofNullable(shippingDestinationMapper.DTOToView(shippingDestinationService.findByCode(locale, destinationCode).get()));
+	}
+
+
+	@Override
+	public List<ShippingTypeView> findAllTypesByDestinationAndWeight(String locale, String destinationCode,
+			Double totalWeight) {
+		return shippingTypeService.findAll(locale, destinationCode, totalWeight)
+				.stream().map(st -> shippingTypeMapper.DTOToView(st)).collect(Collectors.toList());
+	}
+
+
+	@Override
+	public ShippingProductView findByDestinationAndTypeAndBagWeight(String locale, String currency, String code,
+			String type, Double totalWeight) {
+		return productMapper.DTOToView(productEntityService.findByDestinationAndTypeAndBagWeight(locale, currency, code, type, totalWeight).get());
+
+	}
+
 	
 
 	@Override
@@ -71,8 +97,6 @@ public class ShippingProductAdapterImpl  implements IShippingProductPortService 
 		
 	}
 
-	private Product mapHelper(ProductDTO dto) {
-		return productMapper.DTOToDo(dto);
-	}
+	
 
 }

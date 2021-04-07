@@ -393,7 +393,7 @@ public class ProductDaoPostgresImpl implements IProductDao {
 				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
 		
 		Object result = query.getSingleResult();
-		long total = ((Number) result).longValue();
+		Long total = ((Number) result).longValue();
 		
 		query = em.createNativeQuery(this.constructSQL(
 													  false,
