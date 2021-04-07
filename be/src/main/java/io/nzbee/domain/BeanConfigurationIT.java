@@ -31,15 +31,29 @@ import io.nzbee.domain.promotion.order.IOrderPromotionService;
 import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
+import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
+import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
 import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
+import io.nzbee.view.ports.IPhysicalProductFullPortService;
+import io.nzbee.view.ports.IPhysicalProductLightPortService;
 
 
 @Configuration
 @Profile("it")
 public class BeanConfigurationIT {
 
+	@Bean
+	public IPhysicalProductLightPortService productLightPortService() {
+		return new PhysicalProductLightAdapterImpl();
+	}
+	
+	@Bean
+	public IPhysicalProductFullPortService productFullPortService() {
+		return new PhysicalProductFullAdapterImpl();
+	}
+	
 	
     @Bean
     public IOrderPromotionService promotionOrderService() {
