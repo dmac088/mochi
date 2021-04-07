@@ -28,6 +28,7 @@ public interface IPhysicalProductLightRepository extends CrudRepository<Physical
 			+ "															 at.ProductImage 	"
 			+ ") "
 			+ " FROM PhysicalProductEntity pp "
+			
 			+ " JOIN pp.attributes at "
 			
 			+ " JOIN pp.brand b "
@@ -36,7 +37,7 @@ public interface IPhysicalProductLightRepository extends CrudRepository<Physical
 			
 			+ " JOIN pp.productStatus s "
 			
-			+ " LEFT pp.stockOnHand soh "
+			+ " LEFT JOIN pp.stockOnHand soh "
 			
 			//prices
 			+ " JOIN pp.prices p "

@@ -119,6 +119,9 @@ public class IT_ProductLightEntityRepositoryIntegrationTest {
     	assertThat(physicalProductLightDTO.getRetailPrice())
     	.isEqualTo(new Double(7.8));
     	
+    	assertThat(physicalProductLightDTO.getInStock())
+    	.isFalse();
+    	
     	assertThat(physicalProductLightDTO.getMarkdownPrice())
     	.isEqualTo(new Double(6.45));
     	
