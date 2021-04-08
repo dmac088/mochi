@@ -27,13 +27,13 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategory, Pageable pageable,
+	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategoryCode, Pageable pageable,
 			String orderby) {
-		LOGGER.debug("call PhysicalProductLightDaoImpl.findAll with parameters : {}, {}, {}, {}", locale, currency, pageable, orderby);
+		LOGGER.debug("call PhysicalProductLightDaoImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency, rootCategoryCode, pageable, orderby);
 		
-		Query query = em.createNativeQuery(this.constructSQL(false, false, false, false, false, true, true, ""))
+		Query query = em.createNativeQuery(this.constructSQL(false, false, false, false, false, true, false, ""))
 		
-		.setParameter("rootCategoryCode", rootCategory)
+		.setParameter("rootCategoryCode", rootCategoryCode)
 		.setParameter("locale", locale)
 		.setParameter("currency", currency);
 		
@@ -42,11 +42,11 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		
 		query = em.createNativeQuery(this.constructSQL(false, false, false, false, false, false, true, ""))
 				
-				.setParameter("rootCategoryCode", rootCategory)
-				.setParameter("locale", locale)
-				.setParameter("currency", currency)
-				.setParameter("limit", pageable.getPageSize())
-				.setParameter("offset", pageable.getOffset());
+		.setParameter("rootCategoryCode", rootCategoryCode)
+		.setParameter("locale", locale)
+		.setParameter("currency", currency)
+		.setParameter("limit", pageable.getPageSize())
+		.setParameter("offset", pageable.getOffset());
 		
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new AliasToBeanResultTransformer(PhysicalProductLightDTO.class));
@@ -127,7 +127,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 				"" + 
 				"SELECT " +
 				((countOnly) 
-				? "count(*) as product_count" 
+				? "count(*) as product_count " 
 				:
 					"		physicalpr0_1_.upc_cd                 AS productUPC," + 
 					"       attributes1_.prd_desc                 AS productDesc," + 
@@ -166,7 +166,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 				"       INNER JOIN mochi.currency currency8_" + 
 				"               ON prices6_.ccy_id = currency8_.ccy_id" + 
 				"			   " + 
-				"	   --if has tags then join" + 
+				
 				((hasTagCodes)
 				? 	"	   INNER JOIN mochi.product_tag pt " + 
 					"	   		   ON physicalpr0_.prd_id = pt.prd_id" + 
@@ -177,40 +177,44 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 				: "") +
 				"			   " + 
 				"WHERE  0=0 " +
-				"		ANDattributes1_.lcl_cd = :locale" + 
+				"		AND attributes1_.lcl_cd = :locale" + 
 				"       AND attributes3_.lcl_cd = :locale" + 
 				"       AND currency8_.ccy_cd = :currency" + 
-				"	    AND productsta4_.prd_sts_cd = " + Constants.activeSKUCode + "'" +
+				"	    AND productsta4_.prd_sts_cd = '" + Constants.activeSKUCode + "'" +
 				"	    " + 
-				"--has brand codes" +
+				
 				((hasBrandCodes) 
 				? " AND (brandentit2_.bnd_cd in :brandCodes)"
 				: "") +
 				"	   " + 
-				"--has product codes" + 
+				 
 				((hasProductCodes) 
 				? "	AND (physicalpr0_1_.upc_cd IN :productCodes)"
 				: "") + 
 				"	   " + 
-				"--has category codes" +
+				
 				((hasCategoryCodes)
 				? "	AND (d.cat_cd in :categoryCodes)" 
 			    : "") +
 				"	   " + 
-				"--has price" +
+				
 				((hasPrice)
 				? " AND prices6_.prc_val > :maxPrice " + 
 				  "	AND productpri7_.prc_typ_cd = '" + Constants.markdownPriceCode + "'"
 				: "") +
 				"	" + 
-				"GROUP  BY physicalpr0_1_.upc_cd," + 
-				"          attributes1_.prd_desc," + 
-				"          attributes3_.bnd_desc," + 
-				"          attributes1_.prd_img_pth," + 
-				"          stockonhan5_.soh_qty " + 
-				"		  " + 
-				"ORDER BY 	attributes1_.prd_desc" + 
-				"LIMIT :limit OFFSET :offset";
+				((!countOnly)
+				? "GROUP  BY physicalpr0_1_.upc_cd," + 
+				  "          attributes1_.prd_desc," + 
+				  "          attributes3_.bnd_desc," + 
+				  "          attributes1_.prd_img_pth," + 
+				  "          stockonhan5_.soh_qty " + 
+				  "		  " + 
+				  "ORDER BY 	attributes1_.prd_desc" + 
+				  ((offset) 
+				  ? "LIMIT :limit OFFSET :offset" 
+				  : "")
+				 : "");
 		
 		return sql;
 	}
