@@ -1,5 +1,7 @@
 package io.nzbee.entity.product.physical;
 
+import java.math.BigDecimal;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
@@ -108,8 +110,8 @@ import io.nzbee.entity.stock.StockOnHandEntity;
 	            @ColumnResult(name = "upc_cd", 			type = String.class),
 	            @ColumnResult(name = "prd_desc", 		type = String.class),
 	            @ColumnResult(name = "bnd_desc", 		type = String.class),
-	            @ColumnResult(name = "retail_price", 	type = Double.class),
-	            @ColumnResult(name = "markdown_price", 	type = Double.class),
+	            @ColumnResult(name = "retail_price", 	type = BigDecimal.class),
+	            @ColumnResult(name = "markdown_price", 	type = BigDecimal.class),
 	            @ColumnResult(name = "hasStock", 		type = Boolean.class),
 	            @ColumnResult(name = "prd_img_pth", 	type = String.class),
 	        }
