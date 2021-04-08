@@ -1,13 +1,15 @@
 package io.nzbee.entity.product.physical.light;
 
+import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
-
+import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
@@ -20,6 +22,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
+	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategory, Pageable pageable,
 			String orderby) {
@@ -38,9 +41,16 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 				
 				.setParameter("rootCategoryCode", rootCategory)
 				.setParameter("locale", locale)
-				.setParameter("currency", currency);
+				.setParameter("currency", currency)
+				.setParameter("limit", pageable.getPageSize())
+				.setParameter("offset", pageable.getOffset());
 		
-		return null;
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new AliasToBeanResultTransformer(PhysicalProductLightDTO.class));
+		
+		List<PhysicalProductLightDTO> results = query.getResultList();
+		
+		return new PageImpl<PhysicalProductLightDTO>(results, pageable, total);
 	}
 
 	@Override
@@ -116,19 +126,19 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 				((countOnly) 
 				? "count(*) as product_count" 
 				:
-					"		physicalpr0_1_.upc_cd                 AS col_0_0_," + 
-					"       attributes1_.prd_desc                 AS col_1_0_," + 
-					"       attributes3_.bnd_desc                 AS col_2_0_," + 
+					"		physicalpr0_1_.upc_cd                 AS productUPC," + 
+					"       attributes1_.prd_desc                 AS productDesc," + 
+					"       attributes3_.bnd_desc                 AS brandDesc," + 
 					"       Max(CASE" + 
 					"             WHEN productpri7_.prc_typ_cd = 'RET01' THEN prices6_.prc_val" + 
 					"             ELSE 0" + 
-					"           END)                              AS col_3_0_," + 
+					"           END)                              AS retailPrice," + 
 					"       Max(CASE" + 
 					"             WHEN productpri7_.prc_typ_cd = 'MKD01' THEN prices6_.prc_val" + 
 					"             ELSE 0" + 
-					"           END)                              AS col_4_0_," + 
-					"       COALESCE(stockonhan5_.soh_qty, 0) > 0 AS col_5_0_," + 
-					"       attributes1_.prd_img_pth              AS col_6_0_") + 
+					"           END)                              AS markdownPrice," + 
+					"       COALESCE(stockonhan5_.soh_qty, 0) > 0 AS inStock," + 
+					"       attributes1_.prd_img_pth              AS productImage") + 
 				"FROM   mochi.product_basic physicalpr0_" + 
 				"	   INNER JOIN mochi.product_category pc " + 
 				"	   		   ON physicalpr0_.prd_id = pc.prd_id" + 
