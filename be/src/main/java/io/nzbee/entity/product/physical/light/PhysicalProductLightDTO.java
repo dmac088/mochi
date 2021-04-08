@@ -65,4 +65,34 @@ public class PhysicalProductLightDTO implements Serializable {
 		return productImage;
 	}
 
+	public void setProductUPC(String productUPC) {
+		this.productUPC = productUPC;
+	}
+
+	public void setProductDesc(String productDesc) {
+		this.productDesc = productDesc;
+	}
+
+	public void setBrandDesc(String brandDesc) {
+		this.brandDesc = brandDesc;
+	}
+
+	public void setRetailPrice(Double retailPrice) {
+		this.retailPrice = retailPrice;
+	}
+
+	public void setMarkdownPrice(Double markdownPrice) {
+		this.markdownPrice = markdownPrice;
+	}
+
+	public void setInStock(Boolean inStock) {
+		this.inStock = inStock;
+	}
+
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
+	}
+	
+	
+
 }
