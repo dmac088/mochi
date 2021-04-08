@@ -141,7 +141,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 					"             ELSE 0" + 
 					"           END)                              AS markdownPrice," + 
 					"       COALESCE(stockonhan5_.soh_qty, 0) > 0 AS inStock," + 
-					"       attributes1_.prd_img_pth              AS productImage") + 
+					"       attributes1_.prd_img_pth              AS productImage ") + 
 				"FROM   mochi.product_basic physicalpr0_" + 
 				"	   INNER JOIN mochi.product_category pc " + 
 				"	   		   ON physicalpr0_.prd_id = pc.prd_id" + 
