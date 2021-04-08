@@ -122,7 +122,7 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
      
         // then
     	assertNotNull(found);
-    	assertThat(found.getTotalPages()).isEqualTo(2);
+    	assertThat(found.getTotalPages()).isEqualTo(3);
     	
 	}
 
