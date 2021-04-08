@@ -6,19 +6,19 @@ public class PhysicalProductLightDTO implements Serializable {
 
 	private static final long serialVersionUID = -8575411581964316295L;
 
-	private String 		productUPC; 
+	private String 		productupc; 
 	
-	private String 		productDesc; 
+	private String 		productdesc; 
 	
-	private String 		brandDesc;
+	private String 		branddesc;
 	
-	private Double 		retailPrice; 
+	private Double 		retailprice; 
 	
-	private Double 		markdownPrice; 
+	private Double 		markdownprice; 
 	
-	private Boolean 	inStock;
+	private Boolean 	instock;
 	
-	private String 		productImage;
+	private String 		productimage;
 
 	public PhysicalProductLightDTO(String 	 productUPC, 
 								   String 	 productDesc,
@@ -28,71 +28,69 @@ public class PhysicalProductLightDTO implements Serializable {
 								   Boolean 	 inStock, 
 								   String	 productImage) {
 		super();
-		this.productUPC 	= productUPC;
-		this.productDesc 	= productDesc;
-		this.retailPrice 	= retailPrice;
-		this.markdownPrice 	= markdownPrice;
-		this.brandDesc		= brandDesc;
-		this.inStock 		= inStock;
-		this.productImage 	= productImage;
+		this.productupc 	= productUPC;
+		this.productdesc 	= productDesc;
+		this.retailprice 	= retailPrice;
+		this.markdownprice 	= markdownPrice;
+		this.branddesc		= brandDesc;
+		this.instock 		= inStock;
+		this.productimage 	= productImage;
 	}
 
-	public String getProductUPC() {
-		return productUPC;
+	public String getProductupc() {
+		return productupc;
 	}
 
-	public String getProductDesc() {
-		return productDesc;
+	public void setProductupc(String productupc) {
+		this.productupc = productupc;
 	}
 
-	public String getBrandDesc() {
-		return brandDesc;
+	public String getProductdesc() {
+		return productdesc;
 	}
 
-	public Double getRetailPrice() {
-		return retailPrice;
+	public void setProductdesc(String productdesc) {
+		this.productdesc = productdesc;
 	}
 
-	public Double getMarkdownPrice() {
-		return markdownPrice;
+	public String getBranddesc() {
+		return branddesc;
 	}
 
-	public Boolean getInStock() { 
-		return inStock;
+	public void setBranddesc(String branddesc) {
+		this.branddesc = branddesc;
 	}
 
-	public String getProductImage() {
-		return productImage;
+	public Double getRetailprice() {
+		return retailprice;
 	}
 
-	public void setProductUPC(String productUPC) {
-		this.productUPC = productUPC;
+	public void setRetailprice(Double retailprice) {
+		this.retailprice = retailprice;
 	}
 
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
+	public Double getMarkdownprice() {
+		return markdownprice;
 	}
 
-	public void setBrandDesc(String brandDesc) {
-		this.brandDesc = brandDesc;
+	public void setMarkdownprice(Double markdownprice) {
+		this.markdownprice = markdownprice;
 	}
 
-	public void setRetailPrice(Double retailPrice) {
-		this.retailPrice = retailPrice;
+	public Boolean getInstock() {
+		return instock;
 	}
 
-	public void setMarkdownPrice(Double markdownPrice) {
-		this.markdownPrice = markdownPrice;
+	public void setInstock(Boolean instock) {
+		this.instock = instock;
 	}
 
-	public void setInStock(Boolean inStock) {
-		this.inStock = inStock;
+	public String getProductimage() {
+		return productimage;
 	}
 
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
-	}
-	
-	
+	public void setProductimage(String productimage) {
+		this.productimage = productimage;
+	}	
 
 }

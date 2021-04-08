@@ -130,19 +130,19 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
     	
     	assertNotNull(physicalProductLightDTO);
     
-    	assertThat(physicalProductLightDTO.getProductUPC())
+    	assertThat(physicalProductLightDTO.getProductupc())
         .isEqualTo("123456789");
     	
-    	assertThat(physicalProductLightDTO.getBrandDesc())
+    	assertThat(physicalProductLightDTO.getBranddesc())
     	.isEqualTo("Planters");
     	
-    	assertThat(physicalProductLightDTO.getRetailPrice())
+    	assertThat(physicalProductLightDTO.getRetailprice())
     	.isEqualTo(new Double(7.8));
     	
-    	assertThat(physicalProductLightDTO.getInStock())
+    	assertThat(physicalProductLightDTO.getInstock())
     	.isFalse();
     	
-    	assertThat(physicalProductLightDTO.getMarkdownPrice())
+    	assertThat(physicalProductLightDTO.getMarkdownprice())
     	.isEqualTo(new Double(6.45));
     	
     }
