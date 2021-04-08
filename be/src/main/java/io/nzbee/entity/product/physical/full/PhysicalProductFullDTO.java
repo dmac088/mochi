@@ -2,60 +2,95 @@ package io.nzbee.entity.product.physical.full;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.util.Map;
 
-import io.nzbee.entity.product.ProductDTO;
+public class PhysicalProductFullDTO implements Serializable {
 
-public class PhysicalProductFullDTO extends ProductDTO implements Serializable {
+	private static final long serialVersionUID = 7636060079376331942L;
 
-	private static final long serialVersionUID = -408191039793736868L;
-	
-    public static final String HEIGHT_ALIAS = "height";
-    
-    public static final String WIDTH_ALIAS = "width";
-    
-    public static final String LENGTH_ALIAS = "length";
-    
-    public static final String WEIGHT_ALIAS = "weight";
-	
-	//physical dimensions
-	private Integer height;
-		
-	private Integer width;
-		
-	private Integer length;
-		
-	private Double weight;
-		
+	private String productupc;
 
-	public PhysicalProductFullDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		super(tuple, aliasToIndexMap);
-		this.height	= ((BigInteger) tuple[aliasToIndexMap.get(HEIGHT_ALIAS)]).intValue();
-		this.width	= ((BigInteger) tuple[aliasToIndexMap.get(WIDTH_ALIAS)]).intValue();
-		this.length	= ((BigInteger) tuple[aliasToIndexMap.get(LENGTH_ALIAS)]).intValue();
-		this.weight	= ((BigDecimal) tuple[aliasToIndexMap.get(WEIGHT_ALIAS)]).doubleValue();
+	private String productdesc;
+
+	private String branddesc;
+
+	private BigDecimal retailprice;
+
+	private BigDecimal markdownprice;
+
+	private Boolean instock;
+
+	private String productimage;
+
+	public PhysicalProductFullDTO(String productUPC, String productDesc, String brandDesc, BigDecimal retailPrice,
+			BigDecimal markdownPrice, Boolean inStock, String productImage) {
+		super();
+		this.productupc = productUPC;
+		this.productdesc = productDesc;
+		this.retailprice = retailPrice;
+		this.markdownprice = markdownPrice;
+		this.branddesc = brandDesc;
+		this.instock = inStock;
+		this.productimage = productImage;
 	}
 
-
-	public Integer getHeight() {
-		return height;
+	public PhysicalProductFullDTO() {
+		super();
 	}
 
-
-	public Integer getWidth() {
-		return width;
+	public String getProductupc() {
+		return productupc;
 	}
 
-
-	public Integer getLength() {
-		return length;
+	public void setProductupc(String productupc) {
+		this.productupc = productupc;
 	}
 
-
-	public Double getWeight() {
-		return weight;
+	public String getProductdesc() {
+		return productdesc;
 	}
-	
+
+	public void setProductdesc(String productdesc) {
+		this.productdesc = productdesc;
+	}
+
+	public String getBranddesc() {
+		return branddesc;
+	}
+
+	public void setBranddesc(String branddesc) {
+		this.branddesc = branddesc;
+	}
+
+	public BigDecimal getRetailprice() {
+		return retailprice;
+	}
+
+	public void setRetailprice(BigDecimal retailprice) {
+		this.retailprice = retailprice;
+	}
+
+	public BigDecimal getMarkdownprice() {
+		return markdownprice;
+	}
+
+	public void setMarkdownprice(BigDecimal markdownprice) {
+		this.markdownprice = markdownprice;
+	}
+
+	public Boolean getInstock() {
+		return instock;
+	}
+
+	public void setInstock(Boolean instock) {
+		this.instock = instock;
+	}
+
+	public String getProductimage() {
+		return productimage;
+	}
+
+	public void setProductimage(String productimage) {
+		this.productimage = productimage;
+	}
 
 }
