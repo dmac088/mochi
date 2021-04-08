@@ -36,6 +36,10 @@ public class PhysicalProductLightDTO implements Serializable {
 		this.instock 		= inStock;
 		this.productimage 	= productImage;
 	}
+	
+	public PhysicalProductLightDTO() {
+		super();
+	}
 
 	public String getProductupc() {
 		return productupc;
