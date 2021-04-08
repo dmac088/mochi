@@ -25,13 +25,13 @@ public class PhysicalProductFullDaoImpl implements IPhysicalProductFullDao {
 	@Override
 	public Optional<PhysicalProductFullDTO> findByCode(String locale, String currency, String code) {
 		  
-		LOGGER.debug("call PhysicalProductLightDaoImpl.findByCode with parameters : {}, {}, {}", locale, currency, code);
+		LOGGER.debug("call PhysicalProductFullDaoImpl.findByCode with parameters : {}, {}, {}", locale, currency, code);
 		
-		Query query = em.createNativeQuery(this.constructSQL(false, false, false, false, false, false, true, ""))
+		Query query = em.createNativeQuery(this.constructSQL())
 				
-		.setParameter("productCode", code)
-		.setParameter("locale", locale)
-		.setParameter("currency", currency);
+		.setParameter("productCode", 	code)
+		.setParameter("locale", 		locale)
+		.setParameter("currency",	 	currency);
 		
 		query.unwrap(org.hibernate.query.Query.class)
 		.setResultTransformer(new AliasToBeanResultTransformer(PhysicalProductFullDTO.class));
@@ -46,65 +46,26 @@ public class PhysicalProductFullDaoImpl implements IPhysicalProductFullDao {
 		
 	}
 	
-	private String constructSQL(boolean hasProductCodes,
-			boolean hasCategoryCodes,
-			boolean hasBrandCodes,
-			boolean hasTagCodes,
-			boolean hasPrice,
-			boolean countOnly,
-			boolean offset,
-			String 	sort) {
+	private String constructSQL() {
 
-		String sql = "WITH recursive descendants AS" + 
-		"(" + 
-		"       SELECT t.cat_id," + 
-		"              t.cat_cd," + 
-		"              t.cat_lvl," + 
-		"              t.cat_prnt_id," + 
-		"              t.cat_prnt_cd," + 
-		"              t.cat_typ_id," + 
-		"              cast('/'" + 
-		"                     || cast(t.cat_id AS text)" + 
-		"                     || '/' AS text) node" + 
-		"       FROM   mochi.category         AS t" + 
-		"       WHERE  0=0" + 
-		"       AND    t.cat_cd = :rootCategoryCode " + 
-		"       UNION ALL" + 
-		"       SELECT t.cat_id," + 
-		"              t.cat_cd," + 
-		"              t.cat_lvl," + 
-		"              t.cat_prnt_id," + 
-		"              t.cat_prnt_cd," + 
-		"              t.cat_typ_id," + 
-		"              cast(d.node" + 
-		"                     || cast(t.cat_id AS text)" + 
-		"                     || '/' AS text) node" + 
-		"       FROM   mochi.category         AS t" + 
-		"       JOIN   descendants            AS d" + 
-		"       ON     t.cat_prnt_id = d.cat_id )" + 
-		"" + 
+		String sql = 
 		"SELECT " +
-		((countOnly) 
-		? "count(*) as product_count " 
-		:
 		"		physicalpr0_1_.upc_cd                 AS productUPC," + 
 		"       attributes1_.prd_desc                 AS productDesc," + 
 		"       attributes3_.bnd_desc                 AS brandDesc," + 
 		"       Max(CASE" + 
-		"             WHEN productpri7_.prc_typ_cd = 'RET01' THEN prices6_.prc_val" + 
+		"             WHEN productpri7_.prc_typ_cd = '" + Constants.retailPriceCode + "'" +
+		"			  THEN prices6_.prc_val" + 
 		"             ELSE 0" + 
 		"           END)                              AS retailPrice," + 
 		"       Max(CASE" + 
-		"             WHEN productpri7_.prc_typ_cd = 'MKD01' THEN prices6_.prc_val" + 
+		"             WHEN productpri7_.prc_typ_cd = '" + Constants.markdownPriceCode + "'" +
+		"			  THEN prices6_.prc_val" + 
 		"             ELSE 0" + 
 		"           END)                              AS markdownPrice," + 
 		"       COALESCE(stockonhan5_.soh_qty, 0) > 0 AS inStock," + 
-		"       attributes1_.prd_img_pth              AS productImage ") + 
-		"FROM   mochi.product_basic physicalpr0_" + 
-		"	   INNER JOIN mochi.product_category pc " + 
-		"	   		   ON physicalpr0_.prd_id = pc.prd_id" + 
-		"	   INNER JOIN descendants d" + 
-		"	   			ON pc.cat_id = d.cat_id" + 
+		"       attributes1_.prd_img_pth              AS productImage " + 
+		"FROM   mochi.product_basic physicalpr0_" +
 		"       INNER JOIN mochi.product physicalpr0_1_" + 
 		"               ON physicalpr0_.prd_id = physicalpr0_1_.prd_id" + 
 		"       INNER JOIN mochi.product_attr_lcl attributes1_" + 
@@ -124,55 +85,18 @@ public class PhysicalProductFullDaoImpl implements IPhysicalProductFullDao {
 		"       INNER JOIN mochi.currency currency8_" + 
 		"               ON prices6_.ccy_id = currency8_.ccy_id" + 
 		"			   " + 
-		
-		((hasTagCodes)
-		? 	"	   INNER JOIN mochi.product_tag pt " + 
-		"	   		   ON physicalpr0_.prd_id = pt.prd_id" + 
-		"			   " + 
-		"	   INNER JOIN mochi.tag t" + 
-		"	   		   ON pt.tag_id = t.tag_id" + 
-		"	   		   AND (t.tag_cd in :tagCodes)"  
-		: "") +
-		"			   " + 
 		"WHERE  0=0 " +
 		"		AND attributes1_.lcl_cd = :locale" + 
 		"       AND attributes3_.lcl_cd = :locale" + 
 		"       AND currency8_.ccy_cd = :currency" + 
 		"	    AND productsta4_.prd_sts_cd = '" + Constants.activeSKUCode + "'" +
-		"	    " + 
-		
-		((hasBrandCodes) 
-		? " AND (brandentit2_.bnd_cd in :brandCodes)"
-		: "") +
-		"	   " + 
-		
-		((hasProductCodes) 
-		? "	AND (physicalpr0_1_.upc_cd IN :productCodes)"
-		: "") + 
-		"	   " + 
-		
-		((hasCategoryCodes)
-		? "	AND (d.cat_cd in :categoryCodes)" 
-		: "") +
-		"	   " + 
-		
-		((hasPrice)
-		? " AND prices6_.prc_val > :maxPrice " + 
-		"	AND productpri7_.prc_typ_cd = '" + Constants.markdownPriceCode + "'"
-		: "") +
-		"	" + 
-		((!countOnly)
-		? "GROUP  BY physicalpr0_1_.upc_cd," + 
+		"	    AND (physicalpr0_1_.upc_cd = :productCode) " +
+		"	   " +
+		"GROUP  BY physicalpr0_1_.upc_cd," + 
 		"          attributes1_.prd_desc," + 
 		"          attributes3_.bnd_desc," + 
 		"          attributes1_.prd_img_pth," + 
-		"          stockonhan5_.soh_qty " + 
-		"		  " + 
-		"ORDER BY 	attributes1_.prd_desc " + 
-		((offset) 
-		? "LIMIT :limit OFFSET :offset " 
-		: "")
-		: "");
+		"          stockonhan5_.soh_qty ";
 		
 		return sql;
 	}

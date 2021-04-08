@@ -133,11 +133,13 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 					"       attributes1_.prd_desc                 AS productDesc," + 
 					"       attributes3_.bnd_desc                 AS brandDesc," + 
 					"       Max(CASE" + 
-					"             WHEN productpri7_.prc_typ_cd = 'RET01' THEN prices6_.prc_val" + 
+					"             WHEN productpri7_.prc_typ_cd = '" + Constants.retailPriceCode + "'" +
+					"			  THEN prices6_.prc_val" + 
 					"             ELSE 0" + 
 					"           END)                              AS retailPrice," + 
 					"       Max(CASE" + 
-					"             WHEN productpri7_.prc_typ_cd = 'MKD01' THEN prices6_.prc_val" + 
+					"             WHEN productpri7_.prc_typ_cd = '" + Constants.markdownPriceCode + "'" +
+					"			  THEN prices6_.prc_val" + 
 					"             ELSE 0" + 
 					"           END)                              AS markdownPrice," + 
 					"       COALESCE(stockonhan5_.soh_qty, 0) > 0 AS inStock," + 
