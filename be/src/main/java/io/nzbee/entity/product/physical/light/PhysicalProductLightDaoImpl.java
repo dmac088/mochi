@@ -210,9 +210,9 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 				  "          attributes1_.prd_img_pth," + 
 				  "          stockonhan5_.soh_qty " + 
 				  "		  " + 
-				  "ORDER BY 	attributes1_.prd_desc" + 
+				  "ORDER BY 	attributes1_.prd_desc " + 
 				  ((offset) 
-				  ? "LIMIT :limit OFFSET :offset" 
+				  ? "LIMIT :limit OFFSET :offset " 
 				  : "")
 				 : "");
 		
