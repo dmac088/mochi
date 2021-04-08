@@ -99,8 +99,9 @@ public class IT_ProductLightEntityRepositoryIntegrationTest {
 		
 		 // when
     	List<PhysicalProductLightDTO> found = physicalProductLightService.findAll(Constants.localeENGB, 
-									  								  	 Constants.currencyUSD,  
-									  								  	 new StringCollectionWrapper(codes));
+									  								  	 		  Constants.currencyUSD,
+									  								  	 		  Constants.primaryProductRootCategoryCode,
+									  								  	 		  new StringCollectionWrapper(codes));
      
         // then
     	assertFound(found.get(0));

@@ -22,9 +22,11 @@ public class PhysicalProductLightServiceImpl implements IPhysicalProductLightSer
 	}
 
 	@Override
-	public List<PhysicalProductLightDTO> findAll(String locale, String currency,
-			StringCollectionWrapper productCodes) {
-		return productRepository.findAll(locale, currency, productCodes.getCodes());
+	public List<PhysicalProductLightDTO> findAll(String locale, 
+												 String currency,
+												 String categoryCode,
+												 StringCollectionWrapper productCodes) {
+		return productRepository.findAll(locale, currency, categoryCode, productCodes.getCodes());
 	}
 
 

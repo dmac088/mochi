@@ -4,12 +4,19 @@ import java.util.List;
 import java.util.Set;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
-import io.nzbee.Constants;
+import org.springframework.data.repository.query.Param;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 
 public interface IPhysicalProductLightRepository extends CrudRepository<PhysicalProductEntity, Long> {
-		
 	
+	@Query(name = "QueryForListOfProducts", nativeQuery = true)
+	   List<PhysicalProductLightDTO> findAll(
+	      @Param("locale")	 	 	 String locale, 
+	      @Param("currency") 	 	 String currency, 
+	      @Param("categoryCode") 	 String categoryCode,
+	      @Param("productCodes") 	 Set<String> productCodes);
+	
+	/*
 	@Query(	  " SELECT new  io.nzbee.entity.product.physical.light.PhysicalProductLightDTO(	"
 			+ "															 pp.productUPC, 	"
 			+ "															 at.productDesc, 	"
@@ -65,6 +72,7 @@ public interface IPhysicalProductLightRepository extends CrudRepository<Physical
 			+ " 			at.ProductImage, "
 			+ " 			soh.stockOnHand ")
 	List<PhysicalProductLightDTO> findAll(String locale, String currency, Set<String> productCodes);
+	*/
 	
 }
 

@@ -1,6 +1,7 @@
 package io.nzbee.entity.product.physical.light;
 
 import java.util.List;
+
 import org.springframework.data.domain.Page;
 import io.nzbee.entity.StringCollectionWrapper;
 
@@ -10,7 +11,7 @@ public interface IPhysicalProductLightService {
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
 			Double maxPrice, String page, String size, String sort);
 
-	List<PhysicalProductLightDTO> findAll(String locale, String currency, StringCollectionWrapper productCodes);
-
+	List<PhysicalProductLightDTO> findAll(String locale, String currency, String categoryCode,
+			StringCollectionWrapper productCodes);
 
 }
