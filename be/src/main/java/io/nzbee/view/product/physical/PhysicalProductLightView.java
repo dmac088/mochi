@@ -1,5 +1,6 @@
 package io.nzbee.view.product.physical;
 
+import java.math.BigDecimal;
 
 //the DTO exposes the bits or the slice of the domain model that we want to expose to the 
 //application UI, stitching the UI directly over the domain model results in verbosity in the 
@@ -11,9 +12,9 @@ public class PhysicalProductLightView {
 
 	private String productDesc;
 
-	private Double productRetail;
+	private BigDecimal productRetail;
 	
-	private Double productMarkdown;
+	private BigDecimal productMarkdown;
 	
 	private String brandDesc;
 	
@@ -37,19 +38,19 @@ public class PhysicalProductLightView {
 		this.productDesc = productDesc;
 	}
 
-	public Double getProductRetail() {
+	public BigDecimal getProductRetail() {
 		return productRetail;
 	}
 
-	public void setProductRetail(Double productRetail) {
-		this.productRetail = productRetail;
+	public void setProductRetail(BigDecimal bigDecimal) {
+		this.productRetail = bigDecimal;
 	}
 
-	public Double getProductMarkdown() {
+	public BigDecimal getProductMarkdown() {
 		return productMarkdown;
 	}
 
-	public void setProductMarkdown(Double productMarkdown) {
+	public void setProductMarkdown(BigDecimal productMarkdown) {
 		this.productMarkdown = productMarkdown;
 	}
 

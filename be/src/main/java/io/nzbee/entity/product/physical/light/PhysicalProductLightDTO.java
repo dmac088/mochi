@@ -1,6 +1,7 @@
 package io.nzbee.entity.product.physical.light;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 public class PhysicalProductLightDTO implements Serializable {
 
@@ -12,21 +13,21 @@ public class PhysicalProductLightDTO implements Serializable {
 	
 	private String 		branddesc;
 	
-	private Double 		retailprice; 
+	private BigDecimal 	retailprice; 
 	
-	private Double 		markdownprice; 
+	private BigDecimal 	markdownprice; 
 	
 	private Boolean 	instock;
 	
 	private String 		productimage;
 
-	public PhysicalProductLightDTO(String 	 productUPC, 
-								   String 	 productDesc,
-								   String 	 brandDesc,
-								   Double 	 retailPrice,
-								   Double 	 markdownPrice, 
-								   Boolean 	 inStock, 
-								   String	 productImage) {
+	public PhysicalProductLightDTO(String 		productUPC, 
+								   String 	 	productDesc,
+								   String 	 	brandDesc,
+								   BigDecimal 	retailPrice,
+								   BigDecimal 	markdownPrice, 
+								   Boolean 	 	inStock, 
+								   String	 	productImage) {
 		super();
 		this.productupc 	= productUPC;
 		this.productdesc 	= productDesc;
@@ -65,19 +66,19 @@ public class PhysicalProductLightDTO implements Serializable {
 		this.branddesc = branddesc;
 	}
 
-	public Double getRetailprice() {
+	public BigDecimal getRetailprice() {
 		return retailprice;
 	}
 
-	public void setRetailprice(Double retailprice) {
+	public void setRetailprice(BigDecimal retailprice) {
 		this.retailprice = retailprice;
 	}
 
-	public Double getMarkdownprice() {
+	public BigDecimal getMarkdownprice() {
 		return markdownprice;
 	}
 
-	public void setMarkdownprice(Double markdownprice) {
+	public void setMarkdownprice(BigDecimal markdownprice) {
 		this.markdownprice = markdownprice;
 	}
 
