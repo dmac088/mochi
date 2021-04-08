@@ -1,5 +1,5 @@
 /.metadata/
 /.recommenders/
-mochidb.backup
+mochidb.backup*
 luke-with-deps.jar
 GeoLite2-City.mmdb
