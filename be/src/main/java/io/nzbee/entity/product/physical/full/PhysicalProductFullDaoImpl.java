@@ -9,9 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightDaoImpl;
 
+@Component(value = "physicalProductFullDao")
 public class PhysicalProductFullDaoImpl implements IPhysicalProductFullDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(PhysicalProductLightDaoImpl.class);

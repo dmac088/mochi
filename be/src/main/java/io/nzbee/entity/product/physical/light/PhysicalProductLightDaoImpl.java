@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 
-@Component(value = "physicalProductEntityDao")
+@Component(value = "physicalProductLightDao")
 public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(PhysicalProductLightDaoImpl.class);  
