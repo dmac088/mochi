@@ -35,7 +35,6 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.ProductServiceImpl;
 import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
-import io.nzbee.entity.product.physical.light.IPhysicalProductLightService;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductEntityBeanFactory;
@@ -66,9 +65,6 @@ public class IT_ProductCacheIntegrationTest {
  
     @Autowired
     private IProductService productService;
-    
-    @Autowired
-    private IPhysicalProductLightService physicalProductService;
     
     @Autowired
     @Qualifier("mochiDataSourceOwner")

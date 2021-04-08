@@ -9,7 +9,6 @@ import io.nzbee.entity.StringCollectionWrapper;
 @Service
 public class PhysicalProductLightServiceImpl implements IPhysicalProductLightService {
 
-	
 	@Autowired
 	private IPhysicalProductLightRepository productRepository;
 	
@@ -21,6 +20,12 @@ public class PhysicalProductLightServiceImpl implements IPhysicalProductLightSer
 		return productRepository.findAll(locale, currency, categoryCode, productCodes.getCodes());
 	}
 
-
+	@Override
+	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategory,
+			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
+			Double maxPrice, String page, String size, String sort) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
