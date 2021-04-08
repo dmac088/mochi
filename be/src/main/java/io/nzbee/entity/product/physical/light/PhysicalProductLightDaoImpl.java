@@ -11,9 +11,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
+
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 
+@Component(value = "physicalProductEntityDao")
 public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(PhysicalProductLightDaoImpl.class);  
@@ -213,19 +216,19 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 	}
 	
 
-	private String getOrderby(String param) {
-		switch (param) {
-			case "nameAsc":
-				return "lower(attr.prd_desc) asc";
-			case "nameDesc":
-				return "lower(attr.prd_desc) desc";
-			case "priceAsc":
-				return "mprc.prc_val asc";
-			case "priceDesc":
-			  	return "mprc.prc_val desc";
-			default:
-				return "lower(prd_desc) asc";
-			}
-	}
+//	private String getOrderby(String param) {
+//		switch (param) {
+//			case "nameAsc":
+//				return "lower(attr.prd_desc) asc";
+//			case "nameDesc":
+//				return "lower(attr.prd_desc) desc";
+//			case "priceAsc":
+//				return "mprc.prc_val asc";
+//			case "priceDesc":
+//			  	return "mprc.prc_val desc";
+//			default:
+//				return "lower(prd_desc) asc";
+//			}
+//	}
 
 }

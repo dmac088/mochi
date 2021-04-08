@@ -19,6 +19,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.Rollback;
@@ -36,7 +38,7 @@ import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductE
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles(profiles = "it")
-public class IT_ProductLightEntityRepositoryIntegrationTest {
+public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
 
 	@TestConfiguration
     static class ProductDTORepositoryIntegrationTest {
@@ -92,7 +94,7 @@ public class IT_ProductLightEntityRepositoryIntegrationTest {
 	
 	@Test
 	@Rollback(false)
-	public void whenFindByCodes_thenReturnPhysicalProductLightDTOs() {
+	public void whenFindByProductCodes_thenReturnPhysicalProductLightDTOs() {
 		
 		Set<String> codes = new HashSet<String>();
 		codes.add(product.getProductUPC());
@@ -105,6 +107,23 @@ public class IT_ProductLightEntityRepositoryIntegrationTest {
      
         // then
     	assertFound(found.get(0));
+	}
+	
+	@Test
+	@Rollback(false)
+	public void whenFindByRootCategory_thenReturnPhysicalProductLightDTOs() {
+		
+		 // when
+    	Page<PhysicalProductLightDTO> found = physicalProductLightService.findAll(Constants.localeENGB, 
+									  								  	 		  Constants.currencyUSD,
+									  								  	 		  "FRT01",
+									  								  	 		  PageRequest.of(0, 10),
+									  								  	 		  "");
+     
+        // then
+    	assertNotNull(found);
+    	assertThat(found.getTotalPages()).isEqualTo(2);
+    	
 	}
 
     private void assertFound(PhysicalProductLightDTO physicalProductLightDTO) {
