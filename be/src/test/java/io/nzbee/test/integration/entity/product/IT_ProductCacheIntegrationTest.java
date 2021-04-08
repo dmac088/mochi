@@ -118,6 +118,7 @@ public class IT_ProductCacheIntegrationTest {
     	String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + product.getProductId().toString();
     	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
+    	assertNotNull(ob);
     	assertNotNull(ob.get());
     	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
     }
@@ -138,6 +139,7 @@ public class IT_ProductCacheIntegrationTest {
 	    String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + product.getProductUPC().toString();
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
 	    	
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
     }
@@ -158,6 +160,7 @@ public class IT_ProductCacheIntegrationTest {
 	    String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + product.getProductDescENGB();
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
 	    	
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
     }
@@ -183,6 +186,7 @@ public class IT_ProductCacheIntegrationTest {
 		
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(ArrayList.class.getSimpleName());
 		
@@ -231,6 +235,7 @@ public class IT_ProductCacheIntegrationTest {
 	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
 	    
@@ -273,6 +278,7 @@ public class IT_ProductCacheIntegrationTest {
 	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
 	    
@@ -316,6 +322,7 @@ public class IT_ProductCacheIntegrationTest {
 	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
     	
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
 	    assertThat(((PageImpl<PhysicalProductDomainObjectDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
@@ -363,6 +370,7 @@ public class IT_ProductCacheIntegrationTest {
 	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
 	    
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
 	    assertThat(((PageImpl<PhysicalProductDomainObjectDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
@@ -377,7 +385,7 @@ public class IT_ProductCacheIntegrationTest {
 		
 		String cc = "VEG01";
 		
-		physicalProductService.findAll(	Constants.localeENGB, 
+		productService.findAll(	Constants.localeENGB, 
 										Constants.currencyHKD, 
 										cc, 
 										new StringCollectionWrapper(new HashSet<String>()),  
@@ -401,14 +409,14 @@ public class IT_ProductCacheIntegrationTest {
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
 	    			 (new StringCollectionWrapper(new HashSet<String>()).getCacheKey()) + ", " +
-	    			 "" + ", " + 
-	    			 PhysicalProductEntity.class.getSimpleName() + ", " +
+	    			 "" + ", " +
 					 "0" + ", " +
 					 "10" + ", " + 
 					 "nameAsc";
 	    
 	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
 	    
+	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
 	    assertThat(((PageImpl<PhysicalProductDomainObjectDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));

@@ -14,14 +14,6 @@ public class PhysicalProductLightServiceImpl implements IPhysicalProductLightSer
 	private IPhysicalProductLightRepository productRepository;
 	
 	@Override
-	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategory,
-			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
-			Double maxPrice, String page, String size, String sort) {
-		
-		return null;
-	}
-
-	@Override
 	public List<PhysicalProductLightDTO> findAll(String locale, 
 												 String currency,
 												 String categoryCode,
