@@ -1025,11 +1025,12 @@ public class ProductDaoPostgresImpl implements IProductDao {
 		((hasShippingWeight) 			? 	" 	AND :shippingWeight > ship.shp_wgt_frm " +
 								"	AND :shippingWeight <= ship.shp_wgt_to " 	: "") +
 		
-		((countOnly || !offset) 
-		? 	""
-		: 	" ORDER BY " + getOrderby(sort) + 
-			" LIMIT 	:limit " +
-			" OFFSET 	:offset ");
+		((countOnly) 
+				? 	""
+				: 	" ORDER BY " + getOrderby(sort) + 
+					((!offset) 	? ""
+								: " LIMIT 	:limit " +
+								  " OFFSET 	:offset "));
 		
 		return sql;
 	}

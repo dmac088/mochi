@@ -2,11 +2,9 @@ package io.nzbee.entity.product.physical.light;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import io.nzbee.entity.ILocalizedDao;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.product.physical.PhysicalProductEntity;
 
-public interface IPhysicalProductLightDao extends ILocalizedDao<PhysicalProductLightDTO, PhysicalProductEntity> {
+public interface IPhysicalProductLightDao {
 	
 	Page<PhysicalProductLightDTO> findAll(	String locale, 
 								String currency, 
