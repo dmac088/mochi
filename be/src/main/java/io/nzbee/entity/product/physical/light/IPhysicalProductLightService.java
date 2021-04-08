@@ -14,4 +14,5 @@ public interface IPhysicalProductLightService {
 	List<PhysicalProductLightDTO> findAll(String locale, String currency, String categoryCode,
 			StringCollectionWrapper productCodes);
 
+
 }

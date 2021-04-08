@@ -302,7 +302,7 @@ public class SearchServiceImpl implements ISearchService {
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	@Override
-	public PageImpl<PhysicalProductLightView> findAll(String lcl, String currency, String categoryDesc, String searchTerm, int page,
+	public PageImpl<PhysicalProductLightView> findAll(String lcl, String currency, String rootCategoryCode, String searchTerm, int page,
 			int size, String sortBy, Set<io.nzbee.search.facet.IFacet> facetPayload,
 			Set<io.nzbee.search.facet.IFacet> returnFacets) {
 		
@@ -409,7 +409,7 @@ public class SearchServiceImpl implements ISearchService {
 			
 			System.out.println(service.getClass().getSimpleName());
 			
-			List<ISearchDimension> lc = service.findAll(lcl, currency, Constants.defaultProductRootCategoryCode, new StringCollectionWrapper(sfh.getCodes()));
+			List<ISearchDimension> lc = service.findAll(lcl, currency, rootCategoryCode, new StringCollectionWrapper(sfh.getCodes()));
 			
 			lc.stream().forEach(f -> {
 				System.out.println(f.getClass().getSimpleName() + " - " + f.getCode() + " - " + f.getDesc());
@@ -469,7 +469,7 @@ public class SearchServiceImpl implements ISearchService {
 	}
 
 	@Override
-	public String[] getSuggestions(String searchTerm, String rootCategory, String locale, String currency) {
+	public String[] getSuggestions(String searchTerm, String rootCategoryCode, String locale, String currency) {
 
 		FullTextEntityManager fullTextEntityManager = org.hibernate.search.jpa.Search.getFullTextEntityManager(em);
 
@@ -489,7 +489,7 @@ public class SearchServiceImpl implements ISearchService {
 		LOGGER.debug("***********Searching for the following UPC*****************");
 		LOGGER.debug((StringUtils.join(",", result.stream().map(p -> p[0].toString()).collect(Collectors.toSet()))));
 		LOGGER.debug("***********************************************************");
-		List<PhysicalProductLightView> lp = productService.findAll(locale, currency, rootCategory, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
+		List<PhysicalProductLightView> lp = productService.findAll(locale, currency, rootCategoryCode, result.stream().map(p -> p[0].toString()).collect(Collectors.toSet())); 
 
 		return lp.stream().map(p -> p.getProductDesc()).toArray(String[]::new);
 

@@ -110,7 +110,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -133,7 +133,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD",
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -159,7 +159,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD",
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10, 
 							  "nameAsc",
@@ -183,7 +183,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -207,7 +207,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10, 
 							  "nameAsc",
@@ -231,7 +231,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -255,7 +255,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -279,7 +279,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -292,7 +292,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(2));
+        .isEqualTo(new Long(1));
 	} 
 	
 	@Test
@@ -303,7 +303,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -316,7 +316,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(2));
+        .isEqualTo(new Long(1));
 	} 
 	
 	@Test
@@ -327,7 +327,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "zh-HK", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -351,7 +351,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -375,7 +375,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -399,7 +399,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -423,7 +423,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -447,7 +447,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10, 
 							  "nameAsc",
@@ -460,7 +460,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(3));
+        .isEqualTo(new Long(2));
 	}
 	
 	@Test
@@ -471,7 +471,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10,
 							  "nameAsc",							 							
@@ -497,7 +497,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 						pp = productService.search(
 							  "en-GB", 
 							  "HKD", 
-							  "Ignored",
+							  Constants.primaryProductRootCategoryCode,
 							  0,
 							  10, 
 							  "nameAsc",
@@ -521,7 +521,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		// when
 		productService.search( 	"en-GB", 
 								"HKD", 
-								"Ignored",
+								Constants.primaryProductRootCategoryCode,
 								  0,
 								  10, 
 								  "nameAsc",
@@ -537,7 +537,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		Page<PhysicalProductLightView> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
-								"Ignored",
+								Constants.primaryProductRootCategoryCode,
 								  0,
 								  10, 
 								  "nameAsc",
@@ -561,7 +561,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		Page<PhysicalProductLightView> pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
-								"Ignored",
+								Constants.primaryProductRootCategoryCode,
 								  0,
 								  10,
 								  "nameAsc",
@@ -589,7 +589,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		pp = 
 		productService.search( 	"en-GB", 
 								"HKD", 
-								"Ignored",
+								Constants.primaryProductRootCategoryCode,
 								  0,
 								  10,
 								  "nameAsc",

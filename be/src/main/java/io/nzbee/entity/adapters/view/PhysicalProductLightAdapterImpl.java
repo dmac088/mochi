@@ -6,6 +6,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.transaction.annotation.Transactional;
+
+import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightService;
@@ -83,7 +85,7 @@ public class PhysicalProductLightAdapterImpl implements IPhysicalProductLightPor
 	@Override
 	@Transactional(readOnly = true)
 	public List<PhysicalProductLightView> findAll(String locale, String currency, Set<String> codes) {
-		List<PhysicalProductLightDTO> lp =  productEntityService.findAll(locale, currency, new StringCollectionWrapper(codes));
+		List<PhysicalProductLightDTO> lp =  productEntityService.findAll(locale, currency, Constants.defaultProductRootCategoryCode ,new StringCollectionWrapper(codes));
 		return lp.stream().map(p -> productLightMapper.DTOToView(p)).collect(Collectors.toList());
 	}
 
@@ -92,14 +94,13 @@ public class PhysicalProductLightAdapterImpl implements IPhysicalProductLightPor
 	@Override
 	public List<PhysicalProductLightView> findAll(String locale, String currency, String rootCategoryCode,
 			Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
+		List<PhysicalProductLightDTO> lp =  productEntityService.findAll(locale, currency, rootCategoryCode, new StringCollectionWrapper(codes));
+		return lp.stream().map(p -> productLightMapper.DTOToView(p)).collect(Collectors.toList());
 	}
 
 	@Override
 	public String[] getSuggestion(String searchTerm, String rootCategory, String locale, String currency) {
-		// TODO Auto-generated method stub
-		return null;
+		return searchService.getSuggestions(searchTerm, rootCategory, locale, currency);
 	}
 
 	@Override
