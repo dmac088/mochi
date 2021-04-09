@@ -5,7 +5,7 @@ import io.nzbee.view.product.shipping.ShippingProductView;
 import io.nzbee.view.product.shipping.destination.ShippingDestinationView;
 import io.nzbee.view.product.shipping.type.ShippingTypeView;
 
-public interface IShippingProductPortService extends IPortService<ShippingProductView> {
+public interface IShippingProductPortService extends IViewPortService<ShippingProductView> {
 
 
 	List<ShippingDestinationView> findAllActiveByBagWeight(String locale, Double totalWeight);

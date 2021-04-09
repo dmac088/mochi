@@ -103,23 +103,4 @@ public class PhysicalProductLightAdapterImpl implements IPhysicalProductLightPor
 		return searchService.getSuggestions(searchTerm, rootCategory, locale, currency);
 	}
 
-	@Override
-	public void save(PhysicalProductLightView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(PhysicalProductLightView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(PhysicalProductLightView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
 }

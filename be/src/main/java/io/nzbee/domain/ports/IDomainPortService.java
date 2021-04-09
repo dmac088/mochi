@@ -1,6 +1,6 @@
 package io.nzbee.domain.ports;
 
-public interface IPortService<X> {
+public interface IDomainPortService<X> {
 
     void save(X domainObject);
 

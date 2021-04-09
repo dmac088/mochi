@@ -4,7 +4,7 @@ import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.view.customer.CustomerDTOIn;
 
-public interface ICustomerPortService extends IPortService<Customer> {
+public interface ICustomerPortService extends IDomainPortService<Customer> {
 
 	public Customer findByUsername(String userName);
 	

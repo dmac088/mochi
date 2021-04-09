@@ -9,23 +9,6 @@ import io.nzbee.view.product.physical.PhysicalProductFullView;
 
 public class PhysicalProductFullAdapterImpl implements IPhysicalProductFullPortService {
 
-	@Override
-	public void save(PhysicalProductFullView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(PhysicalProductFullView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(PhysicalProductFullView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public RepresentationModelAssemblerSupport<PhysicalProductFullView, PhysicalProductFullResource> findAll(

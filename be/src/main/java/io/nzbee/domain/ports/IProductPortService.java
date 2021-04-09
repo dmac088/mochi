@@ -3,7 +3,7 @@ package io.nzbee.domain.ports;
 import java.util.List;
 import io.nzbee.domain.product.Product;
 
-public interface IProductPortService extends IPortService<Product> {
+public interface IProductPortService extends IDomainPortService<Product> {
 
 	<T> List<Product> findAllByType(String locale, String currency, Class<T> cls);
 

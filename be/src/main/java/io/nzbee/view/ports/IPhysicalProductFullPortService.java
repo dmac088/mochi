@@ -6,7 +6,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.resources.product.physical.full.PhysicalProductFullResource;
 import io.nzbee.view.product.physical.PhysicalProductFullView;
 
-public interface IPhysicalProductFullPortService extends IPortService<PhysicalProductFullView> {
+public interface IPhysicalProductFullPortService extends IViewPortService<PhysicalProductFullView> {
  
 
 	RepresentationModelAssemblerSupport<PhysicalProductFullView, PhysicalProductFullResource> findAll(String locale, String currency,

@@ -77,26 +77,5 @@ public class ShippingProductAdapterImpl  implements IShippingProductPortService 
 
 	}
 
-	
-
-	@Override
-	public void save(ShippingProductView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(ShippingProductView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(ShippingProductView viewObject) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
 
 }

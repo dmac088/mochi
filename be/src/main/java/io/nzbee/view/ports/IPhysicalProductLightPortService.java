@@ -7,7 +7,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.product.physical.PhysicalProductLightView;
 
-public interface IPhysicalProductLightPortService extends IPortService<PhysicalProductLightView> {
+public interface IPhysicalProductLightPortService extends IViewPortService<PhysicalProductLightView> {
 
 	Page<PhysicalProductLightView> findAll(String locale, String currency,
 			String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,

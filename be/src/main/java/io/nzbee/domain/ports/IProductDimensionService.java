@@ -3,7 +3,7 @@ package io.nzbee.domain.ports;
 import java.util.List;
 import java.util.Set;
 
-public interface IProductDimensionService<X> extends IPortService<X> {
+public interface IProductDimensionService<X> extends IDomainPortService<X> {
 	
 	List<X> findAll(String locale);
 	    
