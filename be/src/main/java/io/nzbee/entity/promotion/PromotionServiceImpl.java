@@ -32,6 +32,11 @@ public class PromotionServiceImpl implements IPromotionService {
 	}
 	
 	@Override
+	public Optional<PromotionDTO> findByCode(String locale, String code) {
+		return promotionDao.findByCode(locale, code);
+	}
+	
+	@Override
 	@Caching(evict = {
 			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.promotionCode"),
 			  @CacheEvict(cacheNames = CACHE_NAME, key="#promotion.locale + \", \" + #promotion.promotionId"),
@@ -51,6 +56,8 @@ public class PromotionServiceImpl implements IPromotionService {
 	public void delete(PromotionEntity t) {
 		promotionDao.delete(t);
 	}
+
+	
 
 	
 

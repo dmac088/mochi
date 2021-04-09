@@ -10,5 +10,7 @@ public interface IPromotionService extends IService<PromotionEntity> {
 	Optional<PromotionEntity> findByCode(String promotionCode);
 
 	Optional<PromotionEntity> findById(Long promotionId);
+
+	Optional<PromotionDTO> findByCode(String locale, String code);
 	
 }
