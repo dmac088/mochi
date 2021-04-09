@@ -186,7 +186,7 @@ public class ProductAdapter implements IProductPortService {
 			ProductStatusEntity ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
 
 			Optional<ProductPriceEntity> oprcr = 
-					productPriceService.findOne(domainObject.getProductUPC(), 
+					productPriceService.findByProductCode(domainObject.getProductUPC(), 
 												Constants.retailPriceCode, 
 												domainObject.getCurrency());
 
@@ -200,7 +200,7 @@ public class ProductAdapter implements IProductPortService {
 			prcr.setPriceValue(domainObject.getProductRetail());
 
 			Optional<ProductPriceEntity> oprcm = 
-					productPriceService.findOne(domainObject.getProductUPC(), 
+					productPriceService.findByProductCode(domainObject.getProductUPC(), 
 												Constants.markdownPriceCode, 
 												domainObject.getCurrency());
 
