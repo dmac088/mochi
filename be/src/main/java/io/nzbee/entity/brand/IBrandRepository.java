@@ -14,7 +14,7 @@ public interface IBrandRepository  extends CrudRepository<BrandEntity, Long>  {
 	Optional<BrandEntity> findByAttributesLclCdAndAttributesBrandDesc(String locale, String brandDesc);
 
 	
-	@Query(	  " SELECT new io.nzbee.entity.brand.BrandDTO("
+	@Query(	  " SELECT new io.nzbee.entity.brand.domain.BrandDomainDTO("
 			+ "												be.brandId, "
 			+ "												be.brandCode, "
 			+ "												at.brandDesc, "
@@ -25,7 +25,7 @@ public interface IBrandRepository  extends CrudRepository<BrandEntity, Long>  {
 			+ " WHERE at.lclCd = :locale")
 	List<BrandDomainDTO> findAll(String locale);
 	
-	@Query(	  " SELECT DISTINCT new io.nzbee.entity.brand.BrandDTO("
+	@Query(	  " SELECT DISTINCT new io.nzbee.entity.brand.domain.BrandDomainDTO("
 			+ "												be.brandId, "
 			+ "												be.brandCode, "
 			+ "												at.brandDesc, "
