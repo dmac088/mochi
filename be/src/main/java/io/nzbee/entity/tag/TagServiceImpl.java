@@ -54,13 +54,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #id.toString()")
-	public Optional<TagDTO> findById(String locale, Long id) {
-		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}, {}", locale, id);
-		return tagDao.findById(locale, id);
-	}
-
-	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #code")
 	public Optional<TagDTO> findByCode(String locale, String rootCategory, String code) {
 		LOGGER.debug("call TagServiceImpl.findByCode with parameters : {}, {}, {}", locale, rootCategory, code);
@@ -72,13 +65,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc) {
 		LOGGER.debug("call TagServiceImpl.findByDesc with parameters : {}, {}", locale, rootCategory, desc);
 		return tagDao.findByDesc(locale, rootCategory, desc);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<TagDTO> findAll(String locale) {
-		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}", locale);
-		return tagDao.findAll(locale);
 	}
 	
 	@Override
@@ -127,17 +113,17 @@ public class TagServiceImpl implements ITagService, IFacetService {
 			  @CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true)
 			})
 	public void save(TagEntity t) {
-		tagDao.save(t);
+		tagRepository.save(t);
 	}
 
 	@Override
 	public void update(TagEntity t) {
-		tagDao.save(t);
+		tagRepository.save(t);
 	}
 
 	@Override
 	public void delete(TagEntity t) {
-		tagDao.delete(t);
+		tagRepository.delete(t);
 		
 	}
 
@@ -154,6 +140,18 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	@Override
 	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
 		return this.findAll(locale, Constants.defaultProductRootCategoryCode, codes);
+	}
+
+	@Override
+	public List<TagDTO> findAll(String locale) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Optional<TagDTO> findById(String locale, Long id) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	

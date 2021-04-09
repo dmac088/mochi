@@ -39,7 +39,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	private ITagRepository tagRepository;
 	
 	@Override
-	public Optional<TagEntity> findById(long id) {
+	public Optional<TagEntity> findById(Long id) {
 		return tagRepository.findById(id);
 	}
 
@@ -51,6 +51,24 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	public List<TagEntity> findAll(Set<String> codes) {
 		return tagRepository.findByTagCodeIn(codes);
+	}
+	
+	@Override
+	public void save(TagDTO t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(TagDTO t, String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(TagDTO t) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@SuppressWarnings("deprecation")
@@ -305,23 +323,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 	}
 	
-	@Override
-	public void save(TagEntity t) {
-		em.persist(t);
-		
-	}
-
-	@Override
-	public void update(TagEntity t, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(TagEntity t) {
-		// TODO Auto-generated method stub
-		
-	}
 		
 
 	private String constructSQL(
@@ -433,34 +434,6 @@ public class TagDaoPostgresImpl implements ITagDao {
 	return sql;
 	}
 
-	@Override
-	public Optional<TagDTO> findById(String locale, Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public Optional<TagDTO> findByCode(String locale, String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<TagDTO> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<TagDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 }

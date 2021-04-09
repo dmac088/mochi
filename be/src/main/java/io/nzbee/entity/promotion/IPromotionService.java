@@ -1,10 +1,9 @@
 package io.nzbee.entity.promotion;
 
 import java.util.Optional;
-import io.nzbee.entity.ILightLocalizedService;
-import io.nzbee.search.ISearchDimensionService;
+import io.nzbee.entity.IService;
 
-public interface IPromotionService extends ILightLocalizedService<PromotionDTO, PromotionEntity>, ISearchDimensionService<PromotionDTO> {
+public interface IPromotionService extends IService<PromotionEntity> {
 
 	Optional<PromotionEntity> findByDesc(String promotionDesc);
 

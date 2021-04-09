@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -489,24 +488,6 @@ public class BrandDomainDaoPostgresImpl  implements IBrandDomainDao {
 			"order by lcl.bnd_desc ASC ";
 		
 	return sql;
-	}
-
-	@Override
-	public Optional<BrandEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BrandEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BrandEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

@@ -2,7 +2,6 @@ package io.nzbee.entity.bag;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -73,31 +72,6 @@ public class BagDaoPostgresImpl implements IBagDao {
 
 	@Override
 	public List<BagDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-
-	@Override
-	public Optional<BagEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<BagEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BagEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BagEntity> findAll(Set<String> codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

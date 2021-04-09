@@ -50,7 +50,7 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 
 
 	@Override
-	public Optional<CategoryEntity> findById(long id) {
+	public Optional<CategoryEntity> findById(Long id) {
 		return categoryRepository.findById(id);
 	}
 	

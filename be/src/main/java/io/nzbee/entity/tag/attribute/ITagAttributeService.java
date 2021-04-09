@@ -11,4 +11,6 @@ public interface ITagAttributeService extends ILocalizedDao<TagAttributeDTO, Tag
 	Optional<TagAttributeEntity> getTagAttributeHK(Long id);
 
 	Optional<TagAttributeEntity> getTagAttribute(Long id, String locale);
+
+	Optional<TagAttributeEntity> findById(long id);
 }

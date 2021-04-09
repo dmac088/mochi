@@ -2,7 +2,6 @@ package io.nzbee.entity.tag.attribute;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
@@ -17,24 +16,6 @@ public class TagAttributeServiceImpl implements ITagAttributeService {
 	@Override
 	public Optional<TagAttributeEntity> findById(long id) {
 		return tagAttributeRepository.findById(id);
-	}
-
-	@Override
-	public Optional<TagAttributeEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<TagAttributeEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<TagAttributeEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	@Override

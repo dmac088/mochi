@@ -2,7 +2,6 @@ package io.nzbee.entity.category.attribute;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
@@ -14,23 +13,7 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 	@Autowired
 	private CategoryAttributeRepository categoryAttributeRepository; 
 	
-	@Override
-	public Optional<CategoryAttributeEntity> findById(long id) {
-		return categoryAttributeRepository.findById(id);
-	}
 
-	@Override
-	public Optional<CategoryAttributeEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<CategoryAttributeEntity> findAll() {
-		return categoryAttributeRepository.findAll();
-	}
-
-	
 	@Override
 	public Optional<CategoryAttributeDTO> findById(String locale, Long id) {
 		return null;
@@ -90,12 +73,5 @@ public class CategoryAttributeServiceImpl implements ICategoryAttributeService {
 	public Optional<CategoryAttributeEntity> getCategoryAttributeHK(Long id) {
 		return categoryAttributeRepository.findByLclCdAndCategoryCategoryId(Constants.localeZHHK, id);
 	}
-
-	@Override
-	public List<CategoryAttributeEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	
 }

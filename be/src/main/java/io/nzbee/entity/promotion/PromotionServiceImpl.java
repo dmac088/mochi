@@ -1,13 +1,10 @@
 package io.nzbee.entity.promotion;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import io.nzbee.entity.StringCollectionWrapper;
 
 @Service(value="promotionEntityService")
 public class PromotionServiceImpl implements IPromotionService {
@@ -29,51 +26,9 @@ public class PromotionServiceImpl implements IPromotionService {
 	public Optional<PromotionEntity> findByCode(String promotionCode) {
 		return promotionRepository.findByPromotionCode(promotionCode);
 	}
-
-
 	@Override
 	public Optional<PromotionEntity> findByDesc(String promotionDesc) {
 		return promotionRepository.findByAttributesPromotionDesc(promotionDesc);
-	}
-
-	@Override
-	public List<PromotionDTO> findAll(String locale) {
-		return promotionDao.findAll(locale);
-	}
-
-	@Override
-	public List<PromotionDTO> findAll(String locale, StringCollectionWrapper codes) {
-		return promotionDao.findAll(locale, codes);
-	}
-
-	@Override
-	public List<PromotionEntity> findAll(Set<String> codes) {
-		return promotionDao.findAll(codes);
-	}
-
-	@Override
-	public Optional<PromotionDTO> findById(String locale, Long id) {
-		return promotionDao.findById(locale, id);
-	}
-
-	@Override
-	public Optional<PromotionDTO> findByCode(String locale, String code) {
-		return promotionDao.findByCode(locale, code);
-	}
-
-	@Override
-	public Optional<PromotionDTO> findByDesc(String locale, String desc) {
-		return promotionDao.findByDesc(locale, desc);
-	}
-
-	@Override
-	public List<PromotionDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
-		return promotionDao.findAll(locale, codes);
-	}
-
-	@Override
-	public String tokenToCode(String token) {
-		return token;
 	}
 	
 	@Override
@@ -96,5 +51,7 @@ public class PromotionServiceImpl implements IPromotionService {
 	public void delete(PromotionEntity t) {
 		promotionDao.delete(t);
 	}
+
+	
 
 }

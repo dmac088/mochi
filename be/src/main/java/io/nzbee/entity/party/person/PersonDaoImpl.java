@@ -3,7 +3,6 @@ package io.nzbee.entity.party.person;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.TypedQuery;
@@ -94,24 +93,6 @@ public class PersonDaoImpl implements IPersonDao {
 	}
 	
 	@Override
-	public Optional<PersonEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<PersonEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PersonEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void save(PersonEntity t) {
 		em.persist(t);
 	}
@@ -128,10 +109,4 @@ public class PersonDaoImpl implements IPersonDao {
 		
 	}
 
-	@Override
-	public List<PersonEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

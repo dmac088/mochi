@@ -2,7 +2,6 @@ package io.nzbee.entity.brand.attribute;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
@@ -76,23 +75,6 @@ public class BrandAttributeServiceImpl implements IBrandAttributeService {
 	@Override
 	public Optional<BrandAttributeEntity> findById(long id) {
 		return brandAttributeRepository.findById(id);
-	}
-
-	@Override
-	public Optional<BrandAttributeEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BrandAttributeEntity> findAll() {
-		return brandAttributeRepository.findAll();
-	}
-
-	@Override
-	public List<BrandAttributeEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	

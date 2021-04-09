@@ -2,7 +2,6 @@ package io.nzbee.entity.product.department;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -164,21 +163,4 @@ public class DepartmentDaoImpl  implements IDepartmentDao {
 		
 	}
 
-	@Override
-	public Optional<DepartmentEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<DepartmentEntity> findAll() {
-		return departmentRepository.findAll();
-	}
-
-	@Override
-	public List<DepartmentEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }

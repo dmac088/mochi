@@ -1,8 +1,6 @@
 package io.nzbee.entity.promotion;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.Query;
@@ -12,8 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
-
-import io.nzbee.entity.StringCollectionWrapper;
 
 
 @Component(value = "promotionEntityDao")
@@ -25,11 +21,6 @@ public class PromotionDaoPostgresImpl implements IPromotionDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
-	@Override
-	public Optional<PromotionDTO> findById(String locale, Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -54,36 +45,6 @@ public class PromotionDaoPostgresImpl implements IPromotionDao {
 	}
 
 	@Override
-	public Optional<PromotionDTO> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PromotionDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<PromotionEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PromotionEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PromotionEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void save(PromotionEntity t) {
 		em.persist(t);
 	}
@@ -100,30 +61,6 @@ public class PromotionDaoPostgresImpl implements IPromotionDao {
 		
 	}
 
-	@Override
-	public List<PromotionDTO> findAll(String locale, Set<String> PromotionCodes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<PromotionDTO> findByProductCode(String locale, String productCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PromotionDTO> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
-			Set<String> tagCodes, Double maxPrice) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<PromotionDTO> findAllByCategory(String locale, String categoryCode) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Optional<PromotionEntity> findByCode(String code) {
@@ -156,9 +93,4 @@ public class PromotionDaoPostgresImpl implements IPromotionDao {
 		"WHERE promo.prm_cd = :promoCode "; 
 	}
 
-	@Override
-	public List<PromotionDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

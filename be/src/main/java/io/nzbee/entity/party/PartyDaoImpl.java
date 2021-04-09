@@ -2,7 +2,6 @@ package io.nzbee.entity.party;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.persistence.EntityManager;
@@ -58,23 +57,6 @@ public class PartyDaoImpl implements IPartyDao {
 		return query.getResultStream().collect(Collectors.toSet());
 	}
 	
-	@Override
-	public Optional<Party> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<Party> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Party> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void save(Party t) {
@@ -94,9 +76,4 @@ public class PartyDaoImpl implements IPartyDao {
 		
 	}
 
-	@Override
-	public List<Party> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

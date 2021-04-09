@@ -40,12 +40,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
-
-	@Override
-	public List<ProductEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	@Override
 	public Optional<ProductEntity> findByCode(String productUPC) {
@@ -1089,18 +1083,6 @@ public class ProductDaoPostgresImpl implements IProductDao {
 
 	@Override
 	public Optional<ProductDTO> findByCode(String locale, String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ProductEntity> findById(long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ProductEntity> findAll() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -2,7 +2,6 @@ package io.nzbee.entity.category.brand;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -29,20 +28,10 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	}
 	
 	@Override
-	public Optional<CategoryBrandEntity> findById(long id) {
+	public Optional<CategoryBrandEntity> findById(Long id) {
 		return categoryBrandRepository.findById(id);
 	}
 
-	@Override
-	public Optional<CategoryBrandEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<CategoryBrandEntity> findAll() {
-		return categoryBrandRepository.findAll();
-	}
 
 	@Override
 	public Optional<CategoryBrandDTO> findById(String locale, Long id) {
@@ -83,12 +72,6 @@ public class CategoryBrandDaoImpl implements ICategoryBrandDao {
 	public void delete(CategoryBrandEntity t) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	@Override
-	public List<CategoryBrandEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

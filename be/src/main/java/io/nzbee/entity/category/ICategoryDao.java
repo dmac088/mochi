@@ -2,6 +2,8 @@ package io.nzbee.entity.category;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+
 import io.nzbee.entity.ILocalizedDao;
 import io.nzbee.entity.StringCollectionWrapper;
 
@@ -27,6 +29,10 @@ public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity>
 
 	Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes);
+
+	Optional<CategoryEntity> findById(Long id);
+
+	List<CategoryEntity> findAll(Set<String> codes);
 
 	
 }

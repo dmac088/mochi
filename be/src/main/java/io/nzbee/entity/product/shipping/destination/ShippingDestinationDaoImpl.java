@@ -1,16 +1,12 @@
 package io.nzbee.entity.product.shipping.destination;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.entity.StringCollectionWrapper;
 
 @Service
 public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
@@ -24,11 +20,6 @@ public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
 	
-	@Override
-	public Optional<ShippingDestinationDTO> findById(String locale, Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Optional<ShippingDestinationDTO> findByCode(String locale, String code) {
@@ -42,57 +33,30 @@ public class ShippingDestinationDaoImpl implements IShippingDestinationDao {
 		return shippingDestinationRepository.findByShippingDestinationCode(code);
 	}
 
-	@Override
-	public Optional<ShippingDestinationDTO> findByDesc(String locale, String desc) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
-	public List<ShippingDestinationDTO> findAll(String locale) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ShippingDestinationDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ShippingDestinationEntity> findById(long id) {
+	public Optional<ShippingDestinationEntity> findById(Long id) {
 		return shippingDestinationRepository.findById(id);
 	}
 
 	@Override
-	public List<ShippingDestinationEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ShippingDestinationEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void save(ShippingDestinationEntity t) {
+	public void save(ShippingDestinationDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(ShippingDestinationEntity t, String[] params) {
+	public void update(ShippingDestinationDTO t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(ShippingDestinationEntity t) {
+	public void delete(ShippingDestinationDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 	
 }
