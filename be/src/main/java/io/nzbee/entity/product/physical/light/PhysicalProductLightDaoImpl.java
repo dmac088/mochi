@@ -208,7 +208,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		"" + 
 		"SELECT " +
 		((countOnly) 
-		? "count(*) as product_count " 
+		? "count(distinct physicalpr0_1_.upc_cd) as product_count " 
 		:
 		"		physicalpr0_1_.upc_cd                 AS productUPC," + 
 		"       attributes1_.prd_desc                 AS productDesc," + 
