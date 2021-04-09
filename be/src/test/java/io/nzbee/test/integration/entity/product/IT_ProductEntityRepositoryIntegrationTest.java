@@ -5,9 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -20,18 +18,15 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.data.domain.Page;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductDTO;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -127,148 +122,6 @@ public class IT_ProductEntityRepositoryIntegrationTest {
         // then
     	assertFound(found);
 	}
-	
-	@Test
-	@Rollback(false)
-    public void whenFindForFruitCategory_thenReturnAllFruitProducts() {
-    	
-        // when
-    	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-	    														 Constants.currencyUSD, 
-	    														 "FRT01", 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new Double(10000), 
-	    														 PhysicalProductEntity.class,
-	    														 "0", 
-	    														 "50", 
-	    														 "priceAsc");
-    
-    	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
-    }
-	
-	
-	@Test
-	@Rollback(false)
-    public void whenFindForFruitCategoryWithNullPrice_thenReturnAllFruitProducts() {
-    	
-        // when
-    	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-	    														 Constants.currencyUSD, 
-	    														 "FRT01", 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 null, 
-	    														 PhysicalProductEntity.class,
-	    														 "0", 
-	    														 "50", 
-	    														 "priceAsc");
-    
-    	assertNotNull(found);
-	}
-	
-	@Test
-	@Rollback(false)
-    public void whenFindForPomesCategory_thenReturnAllPomesProducts() {
-    	
-		Set<String> categories = new HashSet<String>();
-		categories.add("POM01");
-		
-        // when
-    	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-	    														 Constants.currencyUSD, 
-	    														 "FRT01", 
-	    														 new StringCollectionWrapper(categories), 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new Double(10000), 
-	    														 PhysicalProductEntity.class,
-	    														 "0", 
-	    														 "50", 
-	    														 "priceAsc");
-    
-    	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
-    }
-	
-	
-	@Test
-	@Rollback(false)
-    public void whenFindForFruitWithOrganicTag_thenReturnAllOrganicFruitProducts() {
-    	
-		Set<String> tags = new HashSet<String>();
-		tags.add("ORG01");
-		
-        // when
-    	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-	    														 Constants.currencyUSD, 
-	    														 "FRT01", 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(tags), 
-	    														 new Double(10000),
-	    														 PhysicalProductEntity.class,
-	    														 "0", 
-	    														 "50", 
-	    														 "priceAsc");
-    
-        //then
-    	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(2));
-    }
-	
-	@Test
-	@Rollback(false)
-    public void whenFindForFruitWithBrandEnza_thenReturnAllEnzaFruitProducts() {
-    	
-		Set<String> brands = new HashSet<String>();
-		brands.add("ENZ01");
-		
-        // when
-    	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-	    														 Constants.currencyUSD, 
-	    														 "FRT01", 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(brands), 
-	    														 new StringCollectionWrapper(new HashSet<String>()),
-	    														 new Double(10000),
-	    														 PhysicalProductEntity.class,
-	    														 "0", 
-	    														 "50", 
-	    														 "priceAsc");
-    
-        //then
-    	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
-    }
-	
-	@Test
-	@Rollback(false)
-    public void whenFindForBrandEnza_thenReturnAllEnzaProducts() {
-    	
-		Set<String> brands = new HashSet<String>();
-		brands.add("ENZ01");
-		
-        // when
-    	Page<ProductDTO> found =		 productService.findAll( Constants.localeENGB, 
-	    														 Constants.currencyUSD, 
-	    														 "PRM01", 
-	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new StringCollectionWrapper(brands), 
-	    														 new StringCollectionWrapper(new HashSet<String>()),
-	    														 new Double(10000), 
-	    														 PhysicalProductEntity.class,
-	    														 "0", 
-	    														 "50", 
-	    														 "priceAsc");
-    
-        //then
-    	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
-    }
 	
 	 
     private void assertFound(Optional<ProductDTO> found) {
