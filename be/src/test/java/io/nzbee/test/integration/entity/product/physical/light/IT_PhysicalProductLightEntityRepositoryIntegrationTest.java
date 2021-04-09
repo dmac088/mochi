@@ -53,7 +53,7 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
 	private IPhysicalProductEntityBeanFactory productEntityBeanFactory;
  
     @Autowired
-    private IProductService productService;
+    private IProductService productEntityService;
     
     @Autowired
     private IPhysicalProductLightService physicalProductLightService;
@@ -71,7 +71,7 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
     	
 		product = productEntityBeanFactory.getBean();
 	    
-		productService.save(product);
+		productEntityService.save(product);
 	    	
 	    return product;
 	}
@@ -125,6 +125,143 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
     	assertThat(found.getTotalPages()).isEqualTo(3);
     	
 	}
+	
+	@Test
+	@Rollback(false)
+    public void whenFindForFruitCategory_thenReturnAllFruitProducts() {
+    	
+		
+        // when
+    	Page<PhysicalProductLightDTO> found = physicalProductLightService.findAll(	 Constants.localeENGB, 
+						    														 Constants.currencyUSD, 
+						    														 "FRT01", 
+						    														 new StringCollectionWrapper(new HashSet<String>()), 
+						    														 new StringCollectionWrapper(new HashSet<String>()), 
+						    														 new StringCollectionWrapper(new HashSet<String>()), 
+						    														 new Double(10000), 
+						    														 "0", 
+						    														 "50", 
+						    														 "priceAsc");
+    
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
+    }
+	
+	
+	@Test
+	@Rollback(false)
+    public void whenFindForFruitCategoryWithNullPrice_thenReturnAllFruitProducts() {
+    	
+        // when
+    	Page<PhysicalProductLightDTO> found =		 physicalProductLightService.findAll( Constants.localeENGB, 
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 null,
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
+    
+    	assertNotNull(found);
+	}
+	
+	@Test
+	@Rollback(false)
+    public void whenFindForPomesCategory_thenReturnAllPomesProducts() {
+    	
+		Set<String> categories = new HashSet<String>();
+		categories.add("POM01");
+		
+        // when
+    	Page<PhysicalProductLightDTO> found =		 physicalProductLightService.findAll( Constants.localeENGB, 
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new StringCollectionWrapper(categories), 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new Double(10000),
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
+    
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
+    }
+	
+	
+	@Test
+	@Rollback(false)
+    public void whenFindForFruitWithOrganicTag_thenReturnAllOrganicFruitProducts() {
+    	
+		Set<String> tags = new HashSet<String>();
+		tags.add("ORG01");
+		
+        // when
+    	Page<PhysicalProductLightDTO> found =		 physicalProductLightService.findAll( Constants.localeENGB, 
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new StringCollectionWrapper(tags), 
+	    														 new Double(10000),
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
+    
+        //then
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(2));
+    }
+	
+	@Test
+	@Rollback(false)
+    public void whenFindForFruitWithBrandEnza_thenReturnAllEnzaFruitProducts() {
+    	
+		Set<String> brands = new HashSet<String>();
+		brands.add("ENZ01");
+		
+        // when
+    	Page<PhysicalProductLightDTO> found =		 physicalProductLightService.findAll( Constants.localeENGB, 
+	    														 Constants.currencyUSD, 
+	    														 "FRT01", 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new StringCollectionWrapper(brands), 
+	    														 new StringCollectionWrapper(new HashSet<String>()),
+	    														 new Double(10000),
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
+    
+        //then
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
+    }
+	
+	@Test
+	@Rollback(false)
+    public void whenFindForBrandEnza_thenReturnAllEnzaProducts() {
+    	
+		Set<String> brands = new HashSet<String>();
+		brands.add("ENZ01");
+		
+        // when
+    	Page<PhysicalProductLightDTO> found =		 physicalProductLightService.findAll( Constants.localeENGB, 
+	    														 Constants.currencyUSD, 
+	    														 "PRM01", 
+	    														 new StringCollectionWrapper(new HashSet<String>()), 
+	    														 new StringCollectionWrapper(brands), 
+	    														 new StringCollectionWrapper(new HashSet<String>()),
+	    														 new Double(10000),
+	    														 "0", 
+	    														 "50", 
+	    														 "priceAsc");
+    
+        //then
+    	assertNotNull(found);
+    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
+    }
 
     private void assertFound(PhysicalProductLightDTO physicalProductLightDTO) {
     	

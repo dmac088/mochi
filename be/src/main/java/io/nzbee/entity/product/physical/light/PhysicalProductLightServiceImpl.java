@@ -38,11 +38,18 @@ public class PhysicalProductLightServiceImpl implements IPhysicalProductLightSer
 	
 
 	@Override
-	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategory,
-			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
-			Double maxPrice, String page, String size, String sort) {
-		// TODO Auto-generated method stub
-		return null;
+	public Page<PhysicalProductLightDTO> findAll(	String locale, 
+													String currency, 
+													String rootCategory,
+													StringCollectionWrapper categoryCodes, 
+													StringCollectionWrapper brandCodes, 
+													StringCollectionWrapper tagCodes,
+													Double maxPrice, 
+													String page, 
+													String size, 
+													String sort) {
+
+		return productDao.findAll(locale, currency, rootCategory, categoryCodes, brandCodes, tagCodes, maxPrice, page, size, sort);
 	}
 
 }
