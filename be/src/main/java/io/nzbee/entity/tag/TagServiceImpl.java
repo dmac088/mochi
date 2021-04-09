@@ -43,6 +43,11 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	}
 	
 	@Override
+	public List<TagEntity> findAll() {
+		return tagRepository.findAll();
+	}
+	
+	@Override
 	public List<TagEntity> findAll(Set<String> codes) {
 		LOGGER.debug("call TagServiceImpl.findAll with parameters : {}", StringUtils.join(codes));
 		return tagDao.findAll(codes);
@@ -150,4 +155,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	public List<TagDTO> findAll(String locale, StringCollectionWrapper codes) {
 		return this.findAll(locale, Constants.defaultProductRootCategoryCode, codes);
 	}
+
+	
 }

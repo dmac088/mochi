@@ -94,44 +94,44 @@ public class TagMasterService {
 		return ta;
 	}
 	
-//	public void extractTagMaster(Resource resource) {
-//		logger.debug("called extractTagMaster() ");
-//		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
-//	    try {
-//		    	List<TagEntity> tagList = new ArrayList<TagEntity>(tagService.findAll());
-//		    	
-//		    	//create a map of categories (full list)
-//		    	Map<String, TagMasterSchema> map = tagList.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
-//		 
-//		    	lpms.addAll(tagList.stream().map(t -> {
-//		    		
-//		    	TagMasterSchema tms = map.get(t.getTagCode());
-//		    		
-//			    Optional<TagEntity> tag = tagService.findByCode(t.getTagCode()); 
-//			    	
-//			    tms.set_TAG_CODE(tag.get().getTagCode());
-//			    tms.set_TAG_DESC_EN(tag.get().getTagDescENGB());
-//			    tms.set_TAG_DESC_HK(tag.get().getTagDescZHHK());
-//			    	
-//			    return tms;
-//		    }).collect(Collectors.toSet()));
-//	    	
-//	    	CsvMapper mapper = new CsvMapper(); 
-//	        CsvSchema schema = mapper.schemaFor(TagMasterSchema.class)
-//	        		.withHeader()
-//	        		.withColumnSeparator('\t')
-//	        		.withQuoteChar('"');
-//	        
-//	        ObjectWriter myObjectWriter = mapper.writer(schema);
-//	        String ow = myObjectWriter.writeValueAsString(lpms);
-//	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
-//	        out.write(ow);
-//	        out.flush();
-//	        out.close();
-//	        
-//	    } catch (Exception e) {
-//	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
-//	    }
-//	}
+	public void extractTagMaster(Resource resource) {
+		logger.debug("called extractTagMaster() ");
+		List<TagMasterSchema> lpms = new ArrayList<TagMasterSchema>();
+	    try {
+		    	List<TagEntity> tagList = new ArrayList<TagEntity>(tagService.findAll());
+		    	
+		    	//create a map of categories (full list)
+		    	Map<String, TagMasterSchema> map = tagList.stream().collect(Collectors.toMap(c -> c.getTagCode(), c -> new TagMasterSchema()));
+		 
+		    	lpms.addAll(tagList.stream().map(t -> {
+		    		
+		    	TagMasterSchema tms = map.get(t.getTagCode());
+		    		
+			    Optional<TagEntity> tag = tagService.findByCode(t.getTagCode()); 
+			    	
+			    tms.set_TAG_CODE(tag.get().getTagCode());
+			    tms.set_TAG_DESC_EN(tag.get().getTagDescENGB());
+			    tms.set_TAG_DESC_HK(tag.get().getTagDescZHHK());
+			    	
+			    return tms;
+		    }).collect(Collectors.toSet()));
+	    	
+	    	CsvMapper mapper = new CsvMapper(); 
+	        CsvSchema schema = mapper.schemaFor(TagMasterSchema.class)
+	        		.withHeader()
+	        		.withColumnSeparator('\t')
+	        		.withQuoteChar('"');
+	        
+	        ObjectWriter myObjectWriter = mapper.writer(schema);
+	        String ow = myObjectWriter.writeValueAsString(lpms);
+	        PrintWriter out = new PrintWriter(resource.getFile().getAbsolutePath());
+	        out.write(ow);
+	        out.flush();
+	        out.close();
+	        
+	    } catch (Exception e) {
+	        logger.error("Error occurred while loading object list from file " + resource.getFilename(), e);
+	    }
+	}
 	
 }

@@ -21,5 +21,7 @@ public interface ITagService  extends ILightLocalizedService<TagDTO, TagEntity>,
 
 	Optional<TagEntity> findById(Long id);
 
+	List<TagEntity> findAll();
+
 	
 }
