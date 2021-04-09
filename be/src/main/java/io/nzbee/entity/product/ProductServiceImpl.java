@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.ICategoryService;
@@ -117,75 +116,6 @@ public class ProductServiceImpl implements IProductService {
 		return productDAO.findAllByType(locale, currency, rootCategory, cls);
 	}
 
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #cls.getSimpleName() + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
-	public <T> Page<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper categoryCodes,
-			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice, Class<T> cls, String page, String size, String sort) {
-		
-		LOGGER.debug("call ProductServiceImpl.findAll with parameters: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
-																							 locale, 
-																							 currency, 
-																							 rootCategory, 
-																							 categoryCodes.getCodes(),
-																							 brandCodes.getCodes(),
-																							 tagCodes.getCodes(),
-																							 maxPrice,
-																							 cls.getSimpleName(),
-																							 page,
-																							 size,
-																							 sort);
-		
-		return productDAO.findAll(
-								  locale,
-						 		  currency,
-						 		  rootCategory,
-						 		  categoryCodes,
-						 		  brandCodes, 
-						 		  tagCodes,
-						 		  maxPrice,
-						 		  cls,
-						 		  page,
-						 		  size,
-						 		  sort
-				 		  	);
-	
-	}
-	
-	@Override									  
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page.toString() + \", \" + #size.toString() + \", \" + #sort.toString()")
-	public Page<ProductDTO> findAll(String locale, String currency, String rootCategory,
-			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
-			Double maxPrice, String page, String size, String sort) {
-		
-		LOGGER.debug("call ProductServiceImpl.findAll with parameters: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
-																							 locale, 
-																							 currency, 
-																							 rootCategory, 
-																							 categoryCodes.getCodes(),
-																							 brandCodes.getCodes(),
-																							 tagCodes.getCodes(),
-																							 maxPrice,
-																							 page,
-																							 size,
-																							 sort);
-		
-		System.out.println("cache key = ");
-		System.out.println(locale + ", " + currency + ", " + rootCategory + ", " + categoryCodes.getCacheKey() + ", " + brandCodes.getCacheKey() + ", " + tagCodes.getCacheKey() + ", " + ((maxPrice == null) ? "" : maxPrice.toString()) + ", " + page.toString() + ", " + size.toString() + ", " + sort.toString());
-		
-		return productDAO.findAll(
-				  locale,
-		 		  currency,
-		 		  rootCategory,
-		 		  categoryCodes,
-		 		  brandCodes, 
-		 		  tagCodes,
-		 		  maxPrice,
-		 		  page,
-		 		  size,
-		 		  sort
-		  	);
-	}
-	
 	@Override
 	@Caching(evict = {
 			@CacheEvict(cacheNames = CACHE_NAME + "Other", allEntries = true),
