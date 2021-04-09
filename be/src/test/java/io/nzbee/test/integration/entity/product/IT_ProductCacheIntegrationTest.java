@@ -33,7 +33,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightDTO;
-import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightService;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightServiceImpl;
 import io.nzbee.entity.StringCollectionWrapper;
