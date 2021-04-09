@@ -2,7 +2,6 @@ package io.nzbee.entity.product;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,44 +30,13 @@ public class ProductServiceImpl implements IProductService {
 	@Autowired
 	@Qualifier("categoryEntityService")
 	private ICategoryService categoryService;
-	
-	@Override
-	public Optional<ProductDTO> findByCode(String locale, String code) {
-		LOGGER.debug("call ProductServiceImpl.findByCode parameters : {}, {}", locale, code);
-		return productDAO.findByCode(locale, code);
-	}
-	
-	@Override
-	public List<ProductDTO> findAll(String locale) {
-		return productDAO.findAll(locale);
-	}
 
-	@Override
-	public List<ProductDTO> findAll(String locale, StringCollectionWrapper codes) {
-		return productDAO.findAll(locale, codes);
-	}
-
-	@Override
-	public Optional<ProductDTO> findById(String locale, Long id) {
-		LOGGER.debug("call ProductServiceImpl.findById parameters : {}, {}", locale, id);
-		return productDAO.findById(locale, id);
-	}
-
-	@Override
-	public Optional<ProductDTO> findByDesc(String locale, String desc) {
-		return productDAO.findByDesc(locale, desc);
-	}
 
 	@Override
 	public List<ProductEntity> findAll() {
 		return productRepository.findAll();
 	}
 	
-	@Override
-	public List<ProductEntity> findAll(Set<String> codes) {		
-		return productDAO.findAll(codes);
-	}
-
 	@Override
 	public Optional<ProductEntity> findById(Long id) {
 		LOGGER.debug("call ProductServiceImpl.findById parameters : {}", id);
