@@ -1,4 +1,4 @@
-package io.nzbee.entity.brand;
+package io.nzbee.entity.brand.domain;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,12 +24,12 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.BrandEntity_;
-import io.nzbee.entity.brand.domain.BrandDomainDTO;
-import io.nzbee.entity.brand.domain.BrandDomainDTOResultTransformer;
+import io.nzbee.entity.brand.BrandServiceImpl;
 
 @Component
-public class BrandDaoPostgresImpl  implements IBrandDao { 
+public class BrandDomainDaoPostgresImpl  implements IBrandDomainDao { 
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	

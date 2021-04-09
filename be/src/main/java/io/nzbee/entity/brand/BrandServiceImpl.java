@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.domain.BrandDomainDTO;
+import io.nzbee.entity.brand.domain.IBrandDomainDao;
 import io.nzbee.search.IFacetService;
 
 @Service(value="brandEntityService")
@@ -20,7 +21,7 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	public static final String CACHE_NAME = "brandCache";
 	
 	@Autowired
-	private IBrandDao brandDao; 
+	private IBrandDomainDao brandDao; 
 	
 	@Autowired 
 	private IBrandRepository brandRepository;

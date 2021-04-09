@@ -1,12 +1,12 @@
-package io.nzbee.entity.brand;
+package io.nzbee.entity.brand.domain;
 
 import java.util.List;
 import java.util.Optional;
 import io.nzbee.entity.ILocalizedDao;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.brand.domain.BrandDomainDTO;
+import io.nzbee.entity.brand.BrandEntity;
 
-public interface IBrandDao extends ILocalizedDao<BrandDomainDTO, BrandEntity> {
+public interface IBrandDomainDao extends ILocalizedDao<BrandDomainDTO, BrandEntity> {
 
 	Optional<BrandEntity> findByCode(String code);
 	
