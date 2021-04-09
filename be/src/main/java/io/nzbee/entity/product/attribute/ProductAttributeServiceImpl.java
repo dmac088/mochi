@@ -1,6 +1,5 @@
 package io.nzbee.entity.product.attribute;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,17 +13,6 @@ public class ProductAttributeServiceImpl implements IProductAttributeService {
 	@Override
 	public Optional<ProductAttributeEntity> findById(Long id) {
 		return productAttributeRepository.findById(id);
-	}
-
-	@Override
-	public Optional<ProductAttributeEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ProductAttributeEntity> findAll() {
-		return productAttributeRepository.findAll();
 	}
 
 	@Override

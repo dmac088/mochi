@@ -1,6 +1,5 @@
 package io.nzbee.entity.promotion.level;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +9,6 @@ public class PromotionLevelServiceImpl implements IPromotionLevelService {
 	
 	@Autowired
 	private IPromotionLevelRepository promotionLevelRepository; 
-
-	@Override
-	public List<PromotionLevelEntity> findAll() {
-		return promotionLevelRepository.findAll();
-	}
 
 	@Override
 	public Optional<PromotionLevelEntity> findById(Long id) {

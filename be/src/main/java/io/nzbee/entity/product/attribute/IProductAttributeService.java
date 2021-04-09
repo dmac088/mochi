@@ -6,5 +6,7 @@ import io.nzbee.entity.IService;
 public interface IProductAttributeService extends IService<ProductAttributeEntity> {
 	
 	Optional<ProductAttributeEntity> findByCode(String locale, String code);
+
+	Optional<ProductAttributeEntity> findById(Long id);
 	
 }

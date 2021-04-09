@@ -225,7 +225,7 @@ public class ShippingProductMasterService {
 		ProductStatusEntity ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
 
 		Optional<ProductPriceEntity> oprcr = 
-				productPriceService.findOne(upcCode, 
+				productPriceService.findByProductCode(upcCode, 
 											Constants.retailPriceCode, 
 											currency);
 
@@ -239,7 +239,7 @@ public class ShippingProductMasterService {
 		prcr.setPriceValue(retailPrice);
 
 		Optional<ProductPriceEntity> oprcm = 
-				productPriceService.findOne(upcCode, 
+				productPriceService.findByProductCode(upcCode, 
 											Constants.markdownPriceCode, 
 											currency);
 

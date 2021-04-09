@@ -26,21 +26,13 @@ public class BagItemServiceImpl implements IBagItemService {
 	}
 
 	@Override
-	public Optional<BagItemEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public void save(BagItemEntity t) {
 		bagItemRepository.save(t);
-		
 	}
 
 	@Override
 	public void update(BagItemEntity t) {
-		// TODO Auto-generated method stub
-		
+		bagItemRepository.save(t);
 	}
 
 	@Override

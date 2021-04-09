@@ -37,12 +37,6 @@ public class PersonServiceImpl implements IPersonService {
 	public Optional<PersonEntity> findById(Long id) {
 		return personRepository.findByPartyId(id);
 	}
-	
-	@Override
-	public Optional<PersonEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	@Transactional

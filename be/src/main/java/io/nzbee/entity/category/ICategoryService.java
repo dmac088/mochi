@@ -1,12 +1,14 @@
 package io.nzbee.entity.category;
 
 import java.util.List;
-import io.nzbee.entity.ILocalizedService;
+import java.util.Optional;
+
+import io.nzbee.entity.ILightLocalizedService;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.search.ISearchDimensionService;
 
-public interface ICategoryService extends ILocalizedService<CategoryDTO, CategoryEntity>, ISearchDimensionService<CategoryDTO> {
+public interface ICategoryService extends ILightLocalizedService<CategoryDTO, CategoryEntity>, ISearchDimensionService<CategoryDTO> {
 
 	List<CategoryEntity> findByParent(String locale, String parentCategoryCode);
 
@@ -21,6 +23,10 @@ public interface ICategoryService extends ILocalizedService<CategoryDTO, Categor
 			StringCollectionWrapper brands, StringCollectionWrapper tags);
 
 	List<CategoryEntity> findAll();
+
+	Optional<CategoryEntity> findByCode(String categoryCode);
+
+	Optional<CategoryEntity> findById(Long categoryId);
 
 
 }

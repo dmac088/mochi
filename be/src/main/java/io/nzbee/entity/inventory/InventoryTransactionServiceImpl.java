@@ -10,22 +10,10 @@ public class InventoryTransactionServiceImpl implements IInventoryTransactionSer
 
 	@Autowired
 	private IInventoryTransactionRepository inventoryTransactionRepository;
-	
-	@Override
-	public List<InventoryTransaction> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public Optional<InventoryTransaction> findById(Long id) {
 		return inventoryTransactionRepository.findById(id);
-	}
-
-	@Override
-	public Optional<InventoryTransaction> findByCode(String code) {
-		//inventoryTransactionRepository.find
-		return null;
 	}
 	
 	@Override

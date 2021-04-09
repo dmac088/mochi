@@ -31,11 +31,6 @@ public class TagServiceImpl implements ITagService, IFacetService {
 	private ITagRepository tagRepository;
 
 	@Override
-	public List<TagEntity> findAll() {
-		return tagRepository.findAll();
-	}
-	
-	@Override
 	public Optional<TagEntity> findById(Long id) {
 		LOGGER.debug("call TagServiceImpl.findById with parameters : {}", id);
 		return tagRepository.findById(id);

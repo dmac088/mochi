@@ -7,6 +7,10 @@ import io.nzbee.entity.StringCollectionWrapper;
 
 public interface IProductService extends IService<ProductEntity> {
 	
+	Optional<ProductEntity> findByCode(String productUPC);
+	
+	void save(String locale, String currency, ProductEntity product);
+	
 	<T> List<ProductDTO> findAllByType(String locale, String currency, String rootCategory, Class<T> cls);
 
 	Optional<ProductDTO> findById(String locale, String currency, Long productId);
@@ -17,8 +21,6 @@ public interface IProductService extends IService<ProductEntity> {
 
 	List<ProductDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper productCodes);
 
-	Optional<ProductEntity> findByCode(String productUPC);
- 
-	void save(String locale, String currency, ProductEntity product);
+	Optional<ProductEntity> findById(Long id);
 
 }

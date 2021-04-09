@@ -1,6 +1,5 @@
 package io.nzbee.entity.promotion.order;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,11 +10,6 @@ public class PromotionOrderServiceImpl implements IPromotionOrderService {
 	@Autowired
 	private IPromotionOrderRepository promotionOrderRepository;
 	
-	@Override
-	public List<PromotionOrderEntity> findAll() {
-		return promotionOrderRepository.findAll();
-	}
-
 	@Override
 	public Optional<PromotionOrderEntity> findById(Long id) {
 		return promotionOrderRepository.findById(id);

@@ -1,6 +1,5 @@
 package io.nzbee.entity.product.shipping.destination.attribute;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,37 +16,18 @@ public class ShippingDestinationAttributeServiceImpl implements IShippingDestina
 	}
 	
 	@Override
-	public List<ShippingDestinationAttributeEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ShippingDestinationAttributeEntity> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ShippingDestinationAttributeEntity> findByCode(String code) {
-		return null;
-	}
-
-	@Override
 	public void save(ShippingDestinationAttributeEntity t) {
 		shippingDestinationAttributeRepository.save(t);
 	}
 
 	@Override
 	public void update(ShippingDestinationAttributeEntity t) {
-		// TODO Auto-generated method stub
-		
+		shippingDestinationAttributeRepository.save(t);
 	}
 
 	@Override
 	public void delete(ShippingDestinationAttributeEntity t) {
-		// TODO Auto-generated method stub
-		
+		shippingDestinationAttributeRepository.delete(t);
 	}
 
 

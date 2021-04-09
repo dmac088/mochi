@@ -34,11 +34,6 @@ public class PartyServiceImpl implements IPartyService {
 	}
 
 	@Override
-	public Optional<Party> findByCode(String code) {
-		return partyRepository.findByPartyUserUsername(code);
-	}
-
-	@Override
 	public void save(Party Party) {
 		partyRepository.save(Party);
 	}

@@ -32,9 +32,10 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.ProductServiceImpl;
 import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
+import io.nzbee.entity.product.physical.light.IPhysicalProductLightService;
+import io.nzbee.entity.product.physical.light.PhysicalProductLightServiceImpl;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.test.integration.entity.beans.product.physical.IPhysicalProductEntityBeanFactory;
@@ -63,6 +64,9 @@ public class IT_ProductCacheIntegrationTest {
 	@Autowired
 	private IPhysicalProductEntityBeanFactory productEntityBeanFactory;
  
+    @Autowired
+    private IPhysicalProductLightService physicalProductService;
+    
     @Autowired
     private IProductService productService;
     
@@ -98,68 +102,7 @@ public class IT_ProductCacheIntegrationTest {
 		productService.save(product);
 	}
 	
-	@Test
-	@Rollback(false)
-    public void whenFindDTOByIdAndLocale_thenReturnProductDTOFromCache() {
-    	
-        // when
-    	productService.findById(Constants.localeENGB, Constants.currencyHKD, product.getProductId());
-     
-        // then
-    	Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME);
-    	
-    	assertNotNull(cache);
-    	
-    	JCacheCache jCache = (JCacheCache) cache;
-    	String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + product.getProductId().toString();
-    	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
-    	
-    	assertNotNull(ob);
-    	assertNotNull(ob.get());
-    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
-    }
 	
-	@Test
-	@Rollback(false)
-    public void whenFindDTOByCodeAndLocale_thenReturnProductDTOFromCache() {
-    	
-	    // when
-	    productService.findByCode(Constants.localeENGB, Constants.currencyHKD, product.getProductUPC());
-	     
-	    // then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME);
-	    	
-	    assertNotNull(cache);
-	    	
-	    JCacheCache jCache = (JCacheCache) cache;
-	    String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + product.getProductUPC().toString();
-	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
-	    	
-	    assertNotNull(ob);
-	    assertNotNull(ob.get());
-	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
-    }
-	
-	@Test
-	@Rollback(false)
-    public void whenFindDTOByDescAndLocale_thenReturnProductDTOFromCache() {
-    	
-	    // when
-	    productService.findByDesc(Constants.localeENGB, Constants.currencyHKD, product.getProductDescENGB());
-	     
-	    // then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
-	    	
-	    assertNotNull(cache);
-	    	
-	    JCacheCache jCache = (JCacheCache) cache;
-	    String key = Constants.localeENGB + ", " + Constants.currencyHKD + ", " + product.getProductDescENGB();
-	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
-	    	
-	    assertNotNull(ob);
-	    assertNotNull(ob.get());
-	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PhysicalProductDomainObjectDTO.class.getSimpleName());
-    }
 	
 	@Test
 	@Rollback(false)
@@ -170,10 +113,10 @@ public class IT_ProductCacheIntegrationTest {
 		ss.add(product.getProductUPC());
 		
 		 // when
-		productService.findAll(Constants.localeENGB, Constants.currencyHKD, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(ss));
+		physicalProductService.findAll(Constants.localeENGB, Constants.currencyHKD, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(ss));
 		
 		// then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+	    Cache cache = cacheManager.getCache(PhysicalProductLightServiceImpl.CACHE_NAME);
 		
 		assertNotNull(cache);
     	
@@ -198,20 +141,19 @@ public class IT_ProductCacheIntegrationTest {
 	@Rollback(false)
     public void whenFindProductDTOByBrowseCriteriaWithClass_thenReturnCurrectBrowseResultFromCache() {
 		
-		productService.findAll(	Constants.localeENGB, 
+		physicalProductService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
 								Constants.primaryProductRootCategoryCode, 
 								new StringCollectionWrapper(new HashSet<String>()), 
 								new StringCollectionWrapper(new HashSet<String>()), 
 								new StringCollectionWrapper(new HashSet<String>()), 
 								null, 
-								PhysicalProductEntity.class, 
 								"0", 
 								"10", 
 								"nameAsc");
 		
 		// then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+	    Cache cache = cacheManager.getCache(PhysicalProductLightServiceImpl.CACHE_NAME + "Other");
 		
 	    assertNotNull(cache);
     	
@@ -241,7 +183,7 @@ public class IT_ProductCacheIntegrationTest {
 	@Rollback(false)
     public void whenFindProductDTOByBrowseCriteriaWithoutClass_thenReturnCurrectBrowseResultFromCache() {
 		
-		productService.findAll(	Constants.localeENGB, 
+		physicalProductService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
 								Constants.primaryProductRootCategoryCode, 
 								new StringCollectionWrapper(new HashSet<String>()), 
@@ -253,7 +195,7 @@ public class IT_ProductCacheIntegrationTest {
 								"nameAsc");
 		
 		// then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+	    Cache cache = cacheManager.getCache(PhysicalProductLightServiceImpl.CACHE_NAME + "Other");
 		
 	    assertNotNull(cache);
     	
@@ -287,7 +229,7 @@ public class IT_ProductCacheIntegrationTest {
 		
 		String cc = "VEG01";
 		
-		productService.findAll(	Constants.localeENGB, 
+		physicalProductService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
 								cc, 
 								new StringCollectionWrapper(new HashSet<String>()),  
@@ -299,7 +241,7 @@ public class IT_ProductCacheIntegrationTest {
 								"nameAsc");
 		
 		// then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+	    Cache cache = cacheManager.getCache(PhysicalProductLightServiceImpl.CACHE_NAME + "Other");
 		
 	    assertNotNull(cache);
     	
@@ -333,20 +275,19 @@ public class IT_ProductCacheIntegrationTest {
 		
 		String cc = "VEG01";
 		
-		productService.findAll(	Constants.localeENGB, 
+		physicalProductService.findAll(	Constants.localeENGB, 
 								Constants.currencyHKD, 
 								cc, 
 								new StringCollectionWrapper(new HashSet<String>()),  
 								new StringCollectionWrapper(new HashSet<String>()), 
 								new StringCollectionWrapper(new HashSet<String>()), 
 								null, 
-								PhysicalProductEntity.class,
 								"0", 
 								"10", 
 								"nameAsc");
 		
 		// then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+	    Cache cache = cacheManager.getCache(PhysicalProductLightServiceImpl.CACHE_NAME + "Other");
 		
 	    assertNotNull(cache);
     	
@@ -381,7 +322,7 @@ public class IT_ProductCacheIntegrationTest {
 		
 		String cc = "VEG01";
 		
-		productService.findAll(	Constants.localeENGB, 
+		physicalProductService.findAll(	Constants.localeENGB, 
 										Constants.currencyHKD, 
 										cc, 
 										new StringCollectionWrapper(new HashSet<String>()),  
@@ -393,7 +334,7 @@ public class IT_ProductCacheIntegrationTest {
 										"nameAsc");
 		
 		// then
-	    Cache cache = cacheManager.getCache(ProductServiceImpl.CACHE_NAME + "Other");
+	    Cache cache = cacheManager.getCache(PhysicalProductLightServiceImpl.CACHE_NAME + "Other");
 		
 	    assertNotNull(cache);
     	

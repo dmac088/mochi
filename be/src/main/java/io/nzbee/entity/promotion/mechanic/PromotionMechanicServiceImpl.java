@@ -1,6 +1,5 @@
 package io.nzbee.entity.promotion.mechanic;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,24 +26,19 @@ public class PromotionMechanicServiceImpl implements IPromotionMechanicService {
 	}
 	
 	@Override
-	public List<PromotionMechanicEntity> findAll() {
-		return promotionMechanicRepository.findAll();
-	}
-	
-	@Override
-	public void save(PromotionMechanicEntity promotionMechanic) {
-		promotionMechanicRepository.save(promotionMechanic);
+	public void save(PromotionMechanicEntity t) {
+		promotionMechanicRepository.save(t);
 	}
 
 	@Override
 	public void update(PromotionMechanicEntity t) {
-		// TODO Auto-generated method stub
+		promotionMechanicRepository.save(t);
 		
 	}
 
 	@Override
 	public void delete(PromotionMechanicEntity t) {
-		// TODO Auto-generated method stub
+		promotionMechanicRepository.delete(t);
 		
 	}
 

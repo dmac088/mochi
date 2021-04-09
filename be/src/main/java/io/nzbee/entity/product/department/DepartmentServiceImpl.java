@@ -30,11 +30,6 @@ public class DepartmentServiceImpl implements IDepartmentService{
 	}
 
 	@Override
-	public List<DepartmentEntity> findAll() {
-		return departmentRepository.findAll();
-	}
-
-	@Override
 	public Optional<DepartmentEntity> findById(Long id) {
 		return departmentRepository.findById(id);
 	}
@@ -77,12 +72,6 @@ public class DepartmentServiceImpl implements IDepartmentService{
 
 	@Override
 	public List<DepartmentEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<DepartmentDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}

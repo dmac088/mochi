@@ -7,5 +7,7 @@ import io.nzbee.entity.IService;
 public interface IStockOnHandService extends IService<StockOnHandEntity> {
 
 	Optional<StockOnHandEntity> findByProductCode(String productCode);
+
+	Optional<StockOnHandEntity> findById(Long id);
 	
 }

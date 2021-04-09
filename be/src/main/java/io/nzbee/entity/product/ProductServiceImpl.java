@@ -30,12 +30,6 @@ public class ProductServiceImpl implements IProductService {
 	@Autowired
 	@Qualifier("categoryEntityService")
 	private ICategoryService categoryService;
-
-
-	@Override
-	public List<ProductEntity> findAll() {
-		return productRepository.findAll();
-	}
 	
 	@Override
 	public Optional<ProductEntity> findById(Long id) {

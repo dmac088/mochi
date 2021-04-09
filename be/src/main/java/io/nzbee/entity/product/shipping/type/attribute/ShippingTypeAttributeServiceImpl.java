@@ -1,6 +1,5 @@
 package io.nzbee.entity.product.shipping.type.attribute;
 
-import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,24 +9,6 @@ public class ShippingTypeAttributeServiceImpl implements IShippingTypeAttributeS
 
 	@Autowired
 	private IShippingTypeAttributeRepository shippingTypeAttributeRepository;
-	
-	@Override
-	public List<ShippingTypeAttributeEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ShippingTypeAttributeEntity> findById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ShippingTypeAttributeEntity> findByCode(String code) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public void save(ShippingTypeAttributeEntity t) {
@@ -36,14 +17,13 @@ public class ShippingTypeAttributeServiceImpl implements IShippingTypeAttributeS
 
 	@Override
 	public void update(ShippingTypeAttributeEntity t) {
-		// TODO Auto-generated method stub
+		shippingTypeAttributeRepository.save(t);
 		
 	}
 
 	@Override
 	public void delete(ShippingTypeAttributeEntity t) {
-		// TODO Auto-generated method stub
-		
+		shippingTypeAttributeRepository.delete(t);
 	}
 
 	@Override

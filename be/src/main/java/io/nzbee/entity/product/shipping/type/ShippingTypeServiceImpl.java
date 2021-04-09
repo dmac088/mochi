@@ -59,18 +59,6 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 	}
 
 	@Override
-	public List<ShippingTypeDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ShippingTypeEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<ShippingTypeEntity> findById(Long id) {
 		return shippingTypeRepository.findById(id);
 	}

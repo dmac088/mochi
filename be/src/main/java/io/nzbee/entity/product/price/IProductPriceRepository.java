@@ -10,4 +10,7 @@ public interface IProductPriceRepository extends CrudRepository<ProductPriceEnti
 	List<ProductPriceEntity> findAll();
 	
 	Optional<ProductPriceEntity> findByTypeCodeAndProductProductUPCAndCurrencyCode(String code, String upcCode, String currency);
+
+	Optional<ProductPriceEntity> findByTypeCodeAndProductProductIdAndCurrencyCode(String priceTypeCode, Long productId,
+			String currencyCode);
 }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
-public interface ILocalizedService<T, Z> extends IService<Z> {
+public interface ILightLocalizedService<T, Z> extends IService<Z> {
 	
 	List<T> findAll(String locale);
 	
@@ -17,7 +17,5 @@ public interface ILocalizedService<T, Z> extends IService<Z> {
 	Optional<T> findByDesc(String locale, String desc);
 	
 	Optional<T> findByCode(String locale, String code);
-
-	List<T> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes);
 	
 }

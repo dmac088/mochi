@@ -1,20 +1,16 @@
 package io.nzbee.entity;
 
-import java.util.List;
 import java.util.Optional;
+
+import io.nzbee.entity.role.supplier.Supplier;
 
 public interface IService<T> {
 
-	 List<T> findAll();
-	
-	 Optional<T> findById(Long id);
-	
-	 Optional<T> findByCode(String code);
-	
 	 void save(T t);
 	
 	 void update(T t);
 	
 	 void delete(T t);
+
 
 }

@@ -35,11 +35,6 @@ public class PromotionServiceImpl implements IPromotionService {
 	public Optional<PromotionEntity> findByDesc(String promotionDesc) {
 		return promotionRepository.findByAttributesPromotionDesc(promotionDesc);
 	}
-	
-	@Override
-	public List<PromotionEntity> findAll() {
-		return promotionRepository.findAll();
-	}
 
 	@Override
 	public List<PromotionDTO> findAll(String locale) {

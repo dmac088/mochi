@@ -71,12 +71,6 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 	}
 
 	@Override
-	public List<CategoryBrandEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<CategoryBrandEntity> findById(Long id) {
 		return brandCategoryRepository.findById(id);
 	}
@@ -88,12 +82,6 @@ public class CategoryBrandServiceImpl implements ICategoryBrandService {
 
 	@Override
 	public List<CategoryBrandEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<CategoryBrandDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
