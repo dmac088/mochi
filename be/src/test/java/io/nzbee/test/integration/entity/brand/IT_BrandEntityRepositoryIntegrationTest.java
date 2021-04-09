@@ -28,9 +28,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
 import io.nzbee.test.integration.entity.beans.brand.IBrandEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -113,7 +113,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnBrandDTO() {
 
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "DRI01");
+		Optional<BrandDomainDTO> found = brandService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "DRI01");
 
 		// then
 		assertFoundDTO(found);
@@ -124,7 +124,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnBrandDTO() {
 
 		// when
-		Optional<BrandDTO> found = brandService.findByDesc(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "Driscolls");
+		Optional<BrandDomainDTO> found = brandService.findByDesc(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "Driscolls");
 
 		// then
 		assertFoundDTO(found);
@@ -139,7 +139,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	Set<String> tagCodes 		= new HashSet<String>();
     	
         // when
-    	List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+    	List<BrandDomainDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
 					  								new StringCollectionWrapper(categoryCodes), 
@@ -161,7 +161,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
     	categoryCodes.add("POM01");
     	
         // when
-    	List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+    	List<BrandDomainDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
 					  								new StringCollectionWrapper(categoryCodes), 
@@ -183,7 +183,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("32.4");
 
 		// when
-		List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+		List<BrandDomainDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyHKD, 
 					  								"FRT01", 
 					  								new StringCollectionWrapper(categoryCodes), 
@@ -206,7 +206,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 		Double price = new Double("4.15");
 
 		// when
-		List<BrandDTO> lb = brandService.findAll(	Constants.localeENGB, 
+		List<BrandDomainDTO> lb = brandService.findAll(	Constants.localeENGB, 
 					  								Constants.currencyUSD, 
 					  								"FRT01", 
 					  								new StringCollectionWrapper(categoryCodes), 
@@ -236,7 +236,7 @@ public class IT_BrandEntityRepositoryIntegrationTest {
 	    
     }
     
-   private void assertFoundDTO(Optional<BrandDTO> found) {
+   private void assertFoundDTO(Optional<BrandDomainDTO> found) {
     	
     	assertNotNull(found);
     	

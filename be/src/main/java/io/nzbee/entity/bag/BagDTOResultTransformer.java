@@ -9,7 +9,7 @@ import org.hibernate.transform.ResultTransformer;
 import io.nzbee.Constants;
 import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.bag.item.BagItemDTO;
-import io.nzbee.entity.brand.BrandDTO;
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.party.person.PersonDTO;
@@ -30,7 +30,7 @@ public class BagDTOResultTransformer implements ResultTransformer {
 
 	private Map<Long, ProductDTO> productDTOMap = new LinkedHashMap<>();
 
-	private Map<Long, BrandDTO> brandDTOMap = new LinkedHashMap<>();
+	private Map<Long, BrandDomainDTO> brandDTOMap = new LinkedHashMap<>();
 
 	private Map<Long, DepartmentDTO> departmentDTOMap = new LinkedHashMap<>();
 
@@ -79,10 +79,10 @@ public class BagDTOResultTransformer implements ResultTransformer {
 					return d;
 				});
 
-				Long brandId = ((Number) tuple[aliasToIndexMap.get(BrandDTO.ID_ALIAS)]).longValue();
+				Long brandId = ((Number) tuple[aliasToIndexMap.get(BrandDomainDTO.ID_ALIAS)]).longValue();
 
-				BrandDTO brandDTO = brandDTOMap.computeIfAbsent(brandId, id -> {
-					BrandDTO bnd = new BrandDTO(tuple, aliasToIndexMap);
+				BrandDomainDTO brandDTO = brandDTOMap.computeIfAbsent(brandId, id -> {
+					BrandDomainDTO bnd = new BrandDomainDTO(tuple, aliasToIndexMap);
 					return bnd;
 				});
 

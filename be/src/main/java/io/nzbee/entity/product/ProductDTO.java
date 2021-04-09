@@ -6,7 +6,8 @@ import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import io.nzbee.entity.brand.BrandDTO;
+
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.promotion.PromotionDTO;
@@ -50,7 +51,7 @@ public abstract class ProductDTO implements Serializable {
 	
 	
 	//brand object
-	protected BrandDTO brand;
+	protected BrandDomainDTO brand;
 
 	//department
 	protected DepartmentDTO department;
@@ -152,11 +153,11 @@ public abstract class ProductDTO implements Serializable {
 		this.promotions = promotions;
 	}
 
-	public BrandDTO getBrand() {
+	public BrandDomainDTO getBrand() {
 		return brand;
 	}
 
-	public void setBrand(BrandDTO brand) {
+	public void setBrand(BrandDomainDTO brand) {
 		this.brand = brand;
 	}
 

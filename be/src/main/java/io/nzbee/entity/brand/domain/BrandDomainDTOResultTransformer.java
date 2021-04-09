@@ -1,31 +1,32 @@
-package io.nzbee.entity.brand;
+package io.nzbee.entity.brand.domain;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
-import io.nzbee.entity.brand.BrandDTO;
+
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
 
 
-public class BrandDTOResultTransformer implements ResultTransformer {
+public class BrandDomainDTOResultTransformer implements ResultTransformer {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Long, BrandDTO> brandDTOMap = new LinkedHashMap<>();
+	private Map<Long, BrandDomainDTO> brandDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
         
-        Long brandId = ((Number) tuple[aliasToIndexMap.get(BrandDTO.ID_ALIAS)]).longValue();
+        Long brandId = ((Number) tuple[aliasToIndexMap.get(BrandDomainDTO.ID_ALIAS)]).longValue();
  
-        BrandDTO brandDTO = brandDTOMap.computeIfAbsent(
+        BrandDomainDTO brandDTO = brandDTOMap.computeIfAbsent(
             brandId,
-            id -> new BrandDTO(tuple, aliasToIndexMap)
+            id -> new BrandDomainDTO(tuple, aliasToIndexMap)
         );
         
         return brandDTO;

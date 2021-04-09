@@ -10,8 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.brand.BrandDTO;
 import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
 import io.nzbee.exceptions.NotFoundException;
 
 @Component
@@ -37,7 +37,7 @@ public class BrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByCode(String locale, String code) {
-		BrandDTO b = brandService.findByCode(locale, code)
+		BrandDomainDTO b = brandService.findByCode(locale, code)
 				.orElseThrow(() -> new NotFoundException("Brand not found for code " + code));
 		return DTOToDo(b);
 	}
@@ -45,7 +45,7 @@ public class BrandAdapter implements IBrandPortService {
 	@Override
 	@Transactional(readOnly = true)
 	public Brand findByDesc(String locale, String desc) {
-		BrandDTO b = brandService.findByDesc(locale, desc)
+		BrandDomainDTO b = brandService.findByDesc(locale, desc)
 				.orElseThrow(() -> new NotFoundException("Brand not found for product desc " + desc));
 		return DTOToDo(b);
 	}
@@ -110,7 +110,7 @@ public class BrandAdapter implements IBrandPortService {
 		brandService.save(b);		
 	}
 	
-	private Brand DTOToDo(BrandDTO dto) {
+	private Brand DTOToDo(BrandDomainDTO dto) {
 		return	new Brand(
 					 dto.getBrandCode(),
 					 dto.getBrandDesc(),

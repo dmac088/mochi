@@ -1,14 +1,15 @@
-package io.nzbee.entity.brand;
+package io.nzbee.entity.brand.domain;
 
 import org.springframework.stereotype.Component;
 
 import io.nzbee.domain.brand.Brand;
+import io.nzbee.entity.brand.BrandEntity;
 
 @Component
-public class BrandMapperImpl implements IBrandMapper {
+public class BrandDomainMapperImpl implements IBrandDomainMapper {
 
 	@Override
-	public Brand DTOToDo(BrandDTO dto) {
+	public Brand DTOToDo(BrandDomainDTO dto) {
 		Brand bo = 
 				new Brand(	dto.getBrandCode(),
 							dto.getBrandDesc(),

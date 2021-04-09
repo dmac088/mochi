@@ -5,6 +5,8 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
+
 public interface IBrandRepository  extends CrudRepository<BrandEntity, Long>  {
 
 	List<BrandEntity> findAll();
@@ -21,7 +23,7 @@ public interface IBrandRepository  extends CrudRepository<BrandEntity, Long>  {
 			+ " FROM BrandEntity be "
 			+ " JOIN be.attributes at "
 			+ " WHERE at.lclCd = :locale")
-	List<BrandDTO> findAll(String locale);
+	List<BrandDomainDTO> findAll(String locale);
 	
 	@Query(	  " SELECT DISTINCT new io.nzbee.entity.brand.BrandDTO("
 			+ "												be.brandId, "
@@ -35,7 +37,7 @@ public interface IBrandRepository  extends CrudRepository<BrandEntity, Long>  {
 			+ " JOIN p.department d "
 			+ " WHERE at.lclCd = :locale "
 			+ " AND d.departmentClass = :cls ")
-	List<BrandDTO> findAllByProductType(String locale, String cls);
+	List<BrandDomainDTO> findAllByProductType(String locale, String cls);
 	
 	
 	

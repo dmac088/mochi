@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
-import io.nzbee.entity.brand.IBrandMapper;
+import io.nzbee.entity.brand.domain.IBrandDomainMapper;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
 import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.promotion.IPromotionMapper;
@@ -14,7 +14,7 @@ import io.nzbee.entity.promotion.IPromotionMapper;
 public class PhysicalProductDomainObjectMapperImpl implements IPhysicalProductDomainObjectMapper {
 	
 	@Autowired
-	private IBrandMapper brandMapper;
+	private IBrandDomainMapper brandMapper;
 	
 	@Autowired
 	private IDepartmentMapper departmentMapper;

@@ -1,13 +1,13 @@
-package io.nzbee.entity.brand;
+package io.nzbee.entity.brand.view;
 
 import java.io.Serializable;
 import java.util.Map;
 
 import io.nzbee.search.ISearchDimension;
 
-public class BrandDTO implements ISearchDimension, Serializable {
-
-	private static final long serialVersionUID = 7130627751498901160L;
+public class BrandFacetViewDTO implements ISearchDimension, Serializable {
+	
+	private static final long serialVersionUID = 5082157529149474395L;
 
 	public static final String ID_ALIAS = "bnd_id";
 	
@@ -29,7 +29,7 @@ public class BrandDTO implements ISearchDimension, Serializable {
 	
 	private Long count; 
 	
-	public BrandDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public BrandFacetViewDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.brandId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
@@ -39,7 +39,7 @@ public class BrandDTO implements ISearchDimension, Serializable {
 						  : new Long(0);
 	}
 
-	public BrandDTO(Long brandId, String brandCode, String brandDesc, String locale) {
+	public BrandFacetViewDTO(Long brandId, String brandCode, String brandDesc, String locale) {
 		super();
 		this.brandId = brandId;
 		this.brandCode = brandCode;
@@ -99,5 +99,6 @@ public class BrandDTO implements ISearchDimension, Serializable {
 	public boolean isHierarchical() {
 		return false;
 	}
+	
 	
 }

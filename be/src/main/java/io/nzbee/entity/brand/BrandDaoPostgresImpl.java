@@ -25,6 +25,8 @@ import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandEntity_;
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
+import io.nzbee.entity.brand.domain.BrandDomainDTOResultTransformer;
 
 @Component
 public class BrandDaoPostgresImpl  implements IBrandDao { 
@@ -42,7 +44,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #id.toString()")
 			}
 	)
-	public Optional<BrandDTO> findById(String locale, String rootCategory, Long id) {
+	public Optional<BrandDomainDTO> findById(String locale, String rootCategory, Long id) {
 		LOGGER.debug("call BrandDaoImpl.findById parameters : {}, {}", locale, id);
 		
 		Session session = em.unwrap(Session.class);
@@ -64,10 +66,10 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
 		try {
-			BrandDTO result = (BrandDTO) query.getSingleResult();
+			BrandDomainDTO result = (BrandDomainDTO) query.getSingleResult();
 			return Optional.ofNullable(result);
 		} catch(NoResultException nre) {
 			return Optional.empty();
@@ -111,7 +113,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #code")
 			}
 	)
-	public Optional<BrandDTO> findByCode(String locale, String rootCategory, String code) {
+	public Optional<BrandDomainDTO> findByCode(String locale, String rootCategory, String code) {
 		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, rootCategory, code);
 		
 		Session session = em.unwrap(Session.class);
@@ -133,10 +135,10 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
 		try {
-			BrandDTO result = (BrandDTO) query.getSingleResult();
+			BrandDomainDTO result = (BrandDomainDTO) query.getSingleResult();
 			return Optional.ofNullable(result);
 		} catch(NoResultException nre) {
 			return Optional.empty();
@@ -151,7 +153,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
-	public List<BrandDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
+	public List<BrandDomainDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
 		LOGGER.debug("call BrandDaoPostgresImpl.findAll with parameters : {}, {}, {}", locale, StringUtil.join(codes));
 
 		Session session = em.unwrap(Session.class);
@@ -173,7 +175,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
 		return query.getResultList();
 	}
@@ -185,7 +187,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #desc")
 			}
 	)
-	public Optional<BrandDTO> findByDesc(String locale, String rootCategory, String desc) {
+	public Optional<BrandDomainDTO> findByDesc(String locale, String rootCategory, String desc) {
 		LOGGER.debug("call BrandDaoImpl.findByDesc parameters : {}, {}", locale, desc);
 		
 		Session session = em.unwrap(Session.class);
@@ -207,10 +209,10 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
 		try {
-			BrandDTO result = (BrandDTO) query.getSingleResult();
+			BrandDomainDTO result = (BrandDomainDTO) query.getSingleResult();
 			return Optional.ofNullable(result);
 		} catch(NoResultException nre) {
 			return Optional.empty();
@@ -220,7 +222,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<BrandDTO> findAllByCategory(String locale, String rootCategory, String categoryCode) {
+	public List<BrandDomainDTO> findAllByCategory(String locale, String rootCategory, String categoryCode) {
 		LOGGER.debug("call BrandDaoImpl.findAllByCategory parameters : {}, {}", locale, categoryCode);
 		
 		Session session = em.unwrap(Session.class);
@@ -242,9 +244,9 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
-		List<BrandDTO> results = query.getResultList();
+		List<BrandDomainDTO> results = query.getResultList();
 		
 		return results;
 	}
@@ -256,7 +258,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #productCode")
 			}
 	)
-	public Optional<BrandDTO> findByProductCode(String locale, String rootCategory, String productCode) {
+	public Optional<BrandDomainDTO> findByProductCode(String locale, String rootCategory, String productCode) {
 		LOGGER.debug("call BrandDaoImpl.findByProductCode parameters : {}, {}", locale, productCode);
 		
 		Session session = em.unwrap(Session.class);
@@ -277,16 +279,16 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				 .setParameter("productCodes", lpc);
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
-		BrandDTO result = (BrandDTO) query.getSingleResult();
+		BrandDomainDTO result = (BrandDomainDTO) query.getSingleResult();
 		
 		return Optional.ofNullable(result);
 	}
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<BrandDTO> findAll(String locale, String rootCategory) {
+	public List<BrandDomainDTO> findAll(String locale, String rootCategory) {
 		LOGGER.debug("call BrandDaoImpl.findAll parameters : {}", locale);
 				
 		Session session = em.unwrap(Session.class);
@@ -304,9 +306,9 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
-		List<BrandDTO> results = query.getResultList();
+		List<BrandDomainDTO> results = query.getResultList();
 		
 		return results;
 	}
@@ -318,7 +320,7 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
-	public List<BrandDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
+	public List<BrandDomainDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
 		LOGGER.debug("call BrandDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);
@@ -350,9 +352,9 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandDTOResultTransformer());
+		.setResultTransformer(new BrandDomainDTOResultTransformer());
 		
-		List<BrandDTO> results = query.getResultList();
+		List<BrandDomainDTO> results = query.getResultList();
 		
 		return results;
 	}
@@ -508,31 +510,31 @@ public class BrandDaoPostgresImpl  implements IBrandDao {
 	}
 
 	@Override
-	public List<BrandDTO> findAll(String locale) {
+	public List<BrandDomainDTO> findAll(String locale) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<BrandDTO> findByCode(String locale, String code) {
+	public Optional<BrandDomainDTO> findByCode(String locale, String code) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<BrandDTO> findByDesc(String locale, String desc) {
+	public Optional<BrandDomainDTO> findByDesc(String locale, String desc) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<BrandDTO> findAll(String locale, StringCollectionWrapper codes) {
+	public List<BrandDomainDTO> findAll(String locale, StringCollectionWrapper codes) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Optional<BrandDTO> findById(String locale, Long id) {
+	public Optional<BrandDomainDTO> findById(String locale, Long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}

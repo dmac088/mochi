@@ -26,7 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.brand.BrandDTO;
+import io.nzbee.entity.brand.domain.BrandDomainDTO;
 import io.nzbee.util.brand.BrandMasterService;
 
 @RunWith(SpringRunner.class)
@@ -79,7 +79,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ENZ01");
+		Optional<BrandDomainDTO> found = brandService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ENZ01");
 
 		// then
 		assertFound_ENGB(found);
@@ -89,13 +89,13 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
 		// when
-		Optional<BrandDTO> found = brandService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "ENZ01");
+		Optional<BrandDomainDTO> found = brandService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "ENZ01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<BrandDTO> found) {
+	private void assertFound_ENGB(Optional<BrandDomainDTO> found) {
 		
 		assertNotNull(found);
 		
@@ -106,7 +106,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<BrandDTO> found) {
+	private void assertFound_ZHHK(Optional<BrandDomainDTO> found) {
 		
 		assertNotNull(found);
 		
