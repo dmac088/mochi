@@ -71,7 +71,7 @@ public class BagController {
 														@PathVariable String currency, 
 														Principal principal) {
     	LOGGER.debug("call BagController.getCustomerBag");
-    	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toDto(bagService.findByCode(locale,
+    	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toView(bagService.findByCode(locale,
 																	    								 currency,
 																	    								 principal.getName()))));
 	}
@@ -96,7 +96,7 @@ public class BagController {
 	
 	bagService.save(b);
 	
-	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toDto(b)));
+	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toView(b)));
 	}
     
     @GetMapping("/Bag/{locale}/{currency}/Items")
@@ -109,7 +109,7 @@ public class BagController {
 												   principal.getName()).getBagItems();
     	
     	return ResponseEntity.ok(bagItemResourceAssembler.toCollectionModel(sbi.stream()
-    													 					   .map(bi -> bagItemDTOMapper.toDto(bi))
+    													 					   .map(bi -> bagItemDTOMapper.toView(bi))
     													 					   .collect(Collectors.toSet())));
     	
 	}
@@ -145,7 +145,7 @@ public class BagController {
     	bagItemService.checkAllBagItemRules(bagItem);
 		
     	if(bagItem.isErrors()) {
-    		return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toDto(b)));
+    		return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toView(b)));
     	}
     	
     	if(!exists) {
@@ -154,7 +154,7 @@ public class BagController {
     	
     	bagService.save(b);
     	
-    	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toDto(b)));
+    	return ResponseEntity.ok(bagResourceAssembler.toModel(bagDTOMapper.toView(b)));
 	}
     
     @GetMapping("/Bag/{locale}/{currency}/Items/Remove/{itemCode}")

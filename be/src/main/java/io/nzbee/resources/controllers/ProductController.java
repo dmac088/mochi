@@ -48,8 +48,8 @@ import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.ports.IShippingProductPortService;
-import io.nzbee.view.product.brand.BrandDTO;
-import io.nzbee.view.product.brand.IBrandDTOMapper;
+import io.nzbee.view.product.brand.BrandView;
+import io.nzbee.view.product.brand.IBrandViewMapper;
 import io.nzbee.view.product.physical.PhysicalProductFullView;
 import io.nzbee.view.product.physical.PhysicalProductLightView;
 import io.nzbee.view.product.shipping.destination.ShippingDestinationView;
@@ -77,7 +77,7 @@ public class ProductController {
 	private IShippingProductPortService shippingProductService; 
 
 	@Autowired
-	private IBrandDTOMapper brandDTOMapper;
+	private IBrandViewMapper brandDTOMapper;
 
 	@Autowired
 	private ShippingDestinationResourceAssembler shippingDestinationResourceAssembler;
@@ -198,8 +198,8 @@ public class ProductController {
 
 		LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
 
-		final List<BrandDTO> lb = brandService.findByAllProductType(locale, ShippingProduct.class).stream()
-				.map(b -> brandDTOMapper.toDto(b)).collect(Collectors.toList());
+		final List<BrandView> lb = brandService.findByAllProductType(locale, ShippingProduct.class).stream()
+				.map(b -> brandDTOMapper.toView(b)).collect(Collectors.toList());
 
 		return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(lb));
 	}

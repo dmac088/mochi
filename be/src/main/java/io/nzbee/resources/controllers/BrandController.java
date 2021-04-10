@@ -24,8 +24,8 @@ import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
-import io.nzbee.view.product.brand.BrandDTO;
-import io.nzbee.view.product.brand.IBrandDTOMapper;
+import io.nzbee.view.product.brand.BrandView;
+import io.nzbee.view.product.brand.IBrandViewMapper;
 
 @RestController
 @RequestMapping("/api")
@@ -46,7 +46,7 @@ public class BrandController {
 	private IFacetMapper<Brand> facetMapper;
 	
 	@Autowired
-	private IBrandDTOMapper brandDTOMapper;
+	private IBrandViewMapper brandDTOMapper;
 
     public BrandController() {
         super();
@@ -66,7 +66,7 @@ public class BrandController {
     		maxPrice = new Double(oMaxPrice.get());
     	}
     	
-    	final List<BrandDTO> collection =
+    	final List<BrandView> collection =
     			brandService.findAll(locale, 
     								 currency, 
     								 categoryCode,
@@ -74,7 +74,7 @@ public class BrandController {
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice
-    			).stream().map(b -> brandDTOMapper.toDto(b)).collect(Collectors.toList());
+    			).stream().map(b -> brandDTOMapper.toView(b)).collect(Collectors.toList());
 
         return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
     }
@@ -82,8 +82,8 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}")
     public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale) {
     	LOGGER.debug("call BrandController.getBrands with parameters: {}, {}", locale);
-    	final List<BrandDTO> collection = 
-    			 brandService.findAll(locale).stream().map(b -> brandDTOMapper.toDto(b)).collect(Collectors.toList());;
+    	final List<BrandView> collection = 
+    			 brandService.findAll(locale).stream().map(b -> brandDTOMapper.toView(b)).collect(Collectors.toList());;
     	
     	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
     }
@@ -118,7 +118,7 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
 	public ResponseEntity<BrandResource> get(String locale, String brandCode) {
     	LOGGER.debug("call BrandController.get with parameters: {}, {}, {}", locale, brandCode);
-    	BrandDTO b = brandDTOMapper.toDto(brandService.findByCode(locale, brandCode));
+    	BrandView b = brandDTOMapper.toView(brandService.findByCode(locale, brandCode));
     	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
 	}
 }

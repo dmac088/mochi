@@ -8,7 +8,7 @@ import io.nzbee.domain.bag.BagItem;
 public class BagItemDTOMapperImpl implements IBagItemDTOMapper {
 
 	@Override
-	public BagItemDTOOut toDto(BagItem d) {
+	public BagItemDTOOut toView(BagItem d) {
 		BagItemDTOOut bi = new BagItemDTOOut();
 		bi.setLocale(d.getLocale());
 		bi.setCurrency(d.getCurrency());
@@ -19,12 +19,6 @@ public class BagItemDTOMapperImpl implements IBagItemDTOMapper {
 		bi.setBagItemTotal(d.getBagItemTotal());
 		bi.setBagItemWeight(d.getBagItemWeight());
 		return bi;
-	}
-
-	@Override
-	public BagItem toDo(BagItemDTOIn dto) {
-		return null;
-		
 	}
 
 }

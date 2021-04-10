@@ -2,7 +2,7 @@ package io.nzbee.view.product.brand;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-public class BrandDTO {
+public class BrandView {
 
 	private String brandCode;
 	

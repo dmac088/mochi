@@ -96,13 +96,13 @@ public class CustomerController {
     @GetMapping("/Customer")
 	public ResponseEntity<CustomerResource> getCustomer(Principal customer) {   	
     	Customer c = customerService.findByUsername(customer.getName());
-    	return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.toDto(c)));
+    	return ResponseEntity.ok(customerResourceAssembler.toModel(customerDTOMapper.toView(c)));
 	}
     
     @GetMapping("/Customer/Address/{addressTypeCode}")
 	public ResponseEntity<CustomerAddressResource> getCustomerAddress(Principal customer, @PathVariable String addressTypeCode) {   	
     	Address a = addressService.findByUsernameAndType(customer.getName(), addressTypeCode); 
-    	return ResponseEntity.ok(customerAddressResourceAssembler.toModel(customerAddressDTOMapper.toDto(a)));
+    	return ResponseEntity.ok(customerAddressResourceAssembler.toModel(customerAddressDTOMapper.toView(a)));
 	}
     
     @PostMapping("/Customer/Address/Update")
