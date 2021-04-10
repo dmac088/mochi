@@ -2,14 +2,16 @@ package io.nzbee.resources.brand;
 
 import org.springframework.stereotype.Component;
 
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacetMapper;
+import io.nzbee.view.product.brand.BrandView;
 
 @Component
-public class BrandFacetMapper implements IFacetMapper<Brand> {
+public class BrandFacetMapperImpl implements IFacetMapper<BrandView> {
 
-	public EntityFacet toEntityFacet(Brand brand) {
+
+	@Override
+	public EntityFacet toEntityFacet(BrandView brand) {
 		EntityFacet ef = new EntityFacet();
 		ef.setFacetingName("brand");
 		ef.setObjectType(brand.getClass().getSimpleName());
@@ -17,7 +19,6 @@ public class BrandFacetMapper implements IFacetMapper<Brand> {
 		ef.setDesc(brand.getBrandDesc());
 		ef.setHierarchical(true);
 		ef.setValue(brand.getBrandCode());
-		ef.setCount(brand.getCount().intValue());
 		return ef;
 	}
 
