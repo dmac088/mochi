@@ -1,7 +1,6 @@
 package io.nzbee.resources.brand;
 
 import org.springframework.stereotype.Component;
-
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.brand.BrandView;

@@ -53,10 +53,6 @@ import io.nzbee.view.product.brand.IBrandViewService;
 @Profile("it")
 public class BeanConfigurationIT {
 
-	@Bean
-	public IFacetMapper<BrandView> brandFacetMapper() {
-		return new BrandFacetMapperImpl();
-	}
 	
 	@Bean
 	public IBrandViewService brandViewService() {
