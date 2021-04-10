@@ -1,9 +1,9 @@
 package io.nzbee.domain.customer;
 
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IDomainService;
 import io.nzbee.view.customer.CustomerDTOIn;
 
-public interface ICustomerService extends IService<Customer> {
+public interface ICustomerService extends IDomainService<Customer> {
 
 	boolean customerExist(final String username);
 

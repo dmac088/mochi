@@ -1,7 +1,7 @@
-package io.nzbee.domain;
+package io.nzbee.view;
 
 
-public interface IService<T> {
+public interface IViewService<T> {
 
 	void save(T object); 
 	

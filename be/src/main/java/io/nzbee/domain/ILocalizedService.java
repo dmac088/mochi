@@ -3,7 +3,7 @@ package io.nzbee.domain;
 import java.util.List;
 import java.util.Set;
 
-public interface ILocalizedService<T> extends IService<T> {
+public interface ILocalizedService<T> extends IDomainService<T> {
 
 	T findByCode(String locale, String code);	
 	

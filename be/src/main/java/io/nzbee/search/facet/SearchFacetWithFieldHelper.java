@@ -4,7 +4,7 @@ import java.util.Objects;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.springframework.context.ApplicationContext;
 
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IDomainService;
 
 public class SearchFacetWithFieldHelper {
 
@@ -39,8 +39,8 @@ public class SearchFacetWithFieldHelper {
 	}
 	
 	@SuppressWarnings("rawtypes")
-	public IService getBean(ApplicationContext appContext) {
-		return (IService) appContext.getBean(this.getFacetingName() + "EntityService");
+	public IDomainService getBean(ApplicationContext appContext) {
+		return (IDomainService) appContext.getBean(this.getFacetingName() + "EntityService");
 	}
 
 	@Override

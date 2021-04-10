@@ -3,9 +3,7 @@ package io.nzbee.resources.discovery;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
-
 import io.nzbee.resources.controllers.BagController;
-import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.CustomerController;
 import io.nzbee.resources.controllers.ProductController;
@@ -15,7 +13,6 @@ public class DiscoveryResource extends RepresentationModel<DiscoveryResource> {
 
 	public DiscoveryResource(String rootURL) {
 
-		this.add(linkTo(methodOn(BrandController.class).getBrands(null)).withRel("getAllBrands"));
 		this.add(linkTo(methodOn(CategoryController.class).getProductCategories(null))
 				.withRel("getAllProductCategories"));
 		this.add(linkTo(methodOn(CategoryController.class).getBrandCategories(null)).withRel("getAllBrandCategories"));

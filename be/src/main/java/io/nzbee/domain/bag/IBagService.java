@@ -1,8 +1,8 @@
 package io.nzbee.domain.bag;
 
-import io.nzbee.domain.IService;
+import io.nzbee.domain.IDomainService;
 
-public interface IBagService extends IService<Bag> {
+public interface IBagService extends IDomainService<Bag> {
 
 	Bag findByCode(String userName);
 

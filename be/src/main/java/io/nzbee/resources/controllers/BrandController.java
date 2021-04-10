@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.resources.brand.BrandFacetResource;
 import io.nzbee.resources.brand.BrandFacetResourceAssembler;
 import io.nzbee.resources.brand.BrandResource;
@@ -25,7 +23,7 @@ import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.brand.BrandView;
-import io.nzbee.view.product.brand.IBrandViewMapper;
+import io.nzbee.view.product.brand.IBrandViewService;
 
 @RestController
 @RequestMapping("/api")
@@ -34,7 +32,7 @@ public class BrandController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private IBrandService brandService;
+    private IBrandViewService brandService;
     
     @Autowired
     private BrandResourceAssembler brandResourceAssembler;
@@ -43,10 +41,7 @@ public class BrandController {
 	private BrandFacetResourceAssembler brandFacetResourceAssembler;
     
 	@Autowired
-	private IFacetMapper<Brand> facetMapper;
-	
-	@Autowired
-	private IBrandViewMapper brandDTOMapper;
+	private IFacetMapper<BrandView> facetMapper;
 
     public BrandController() {
         super();
@@ -73,20 +68,11 @@ public class BrandController {
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
-    								 maxPrice
-    			).stream().map(b -> brandDTOMapper.toView(b)).collect(Collectors.toList());
+    								 maxPrice);
 
         return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
     }
     
-    @GetMapping("/Brand/{locale}/{currency}")
-    public ResponseEntity<CollectionModel<BrandResource>> getBrands(@PathVariable String locale) {
-    	LOGGER.debug("call BrandController.getBrands with parameters: {}, {}", locale);
-    	final List<BrandView> collection = 
-    			 brandService.findAll(locale).stream().map(b -> brandDTOMapper.toView(b)).collect(Collectors.toList());;
-    	
-    	return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
-    }
     
     @PostMapping("/BrandFacet/{locale}/{currency}/category/{categoryCode}")
     public ResponseEntity<CollectionModel<BrandFacetResource>> getBrandFacets(@PathVariable String locale, 
@@ -118,7 +104,7 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
 	public ResponseEntity<BrandResource> get(String locale, String brandCode) {
     	LOGGER.debug("call BrandController.get with parameters: {}, {}, {}", locale, brandCode);
-    	BrandView b = brandDTOMapper.toView(brandService.findByCode(locale, brandCode));
+    	BrandView b = brandService.findByCode(locale, brandCode);
     	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
 	}
 }
