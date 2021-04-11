@@ -8,7 +8,7 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import io.nzbee.search.IFacetService;
 
-@Service(value="brandEntityService")
+@Service
 public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	public static final String CACHE_NAME = "brandCache";

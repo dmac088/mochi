@@ -8,8 +8,8 @@ import org.springframework.stereotype.Service;
 
 import io.nzbee.entity.StringCollectionWrapper;
 
-@Service(value="brandFacetViewService")
-public class BrandFacetServiceImpl implements IBrandFacetViewService {
+@Service(value="brandEntityService")
+public class BrandFacetViewServiceImpl implements IBrandFacetViewService {
 
 	public static final String CACHE_NAME = "brandCache";
 	
