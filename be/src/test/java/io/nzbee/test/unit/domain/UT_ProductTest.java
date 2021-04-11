@@ -18,10 +18,8 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.ProductServiceImpl;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.product.IProductService;
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.Category;
 import io.nzbee.domain.department.Department;
-import io.nzbee.domain.ports.IBrandPortService;
 import io.nzbee.domain.ports.ICategoryPortService;
 import io.nzbee.domain.ports.IDepartmentPortService;
 import io.nzbee.domain.ports.IProductPortService;
@@ -29,8 +27,6 @@ import io.nzbee.domain.ports.IPromotionPortService;
 import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.brand.BrandDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.brand.IBrandDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.category.ICategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.department.DepartmentDoBeanFactory;
@@ -53,11 +49,6 @@ public class UT_ProductTest {
 		@Bean
 		public IProductDoBeanFactory productDoBeanFactory() {
 			return new ProductDoBeanFactory();
-		}
-		
-		@Bean
-		public IBrandDoBeanFactory brandDoBeanFactory() {
-			return new BrandDoBeanFactory();
 		}
 		
 		@Bean
@@ -84,9 +75,6 @@ public class UT_ProductTest {
 	private IProductPortService productPortService;
 	
 	@MockBean
-	private IBrandPortService brandPortService;
-	
-	@MockBean
 	private IDepartmentPortService departmentPortService;
 	
 	@MockBean
@@ -94,9 +82,6 @@ public class UT_ProductTest {
 	
 	@MockBean
 	private IPromotionPortService promotionPortService;
-	
-	@Autowired
-	private IBrandDoBeanFactory brandDoBeanFactory;
 	
 	@Autowired
 	private IDepartmentDoBeanFactory departmentDoBeanFactory;
@@ -116,7 +101,6 @@ public class UT_ProductTest {
 		MockitoAnnotations.initMocks(this);
 
 		Product 	product 		= productDoBeanFactory.getBean();
-		Brand 		brand 			= brandDoBeanFactory.getBean();
 		Department 	department 		= departmentDoBeanFactory.getBean();
 		Category 	category 		= categoryDoBeanFactory.getBean();
 		Promotion 	promotion 		= promotionDoBeanFactory.getBean();
@@ -130,18 +114,6 @@ public class UT_ProductTest {
 		Mockito.when(productPortService.findByDesc(	Constants.localeENGB,
 													Constants.currencyHKD,
 													product.getProductDesc())).thenReturn(product);
-		
-		Mockito.when(brandPortService.findByCode(	Constants.localeENGB,
-													brand.getBrandCode())).thenReturn(brand);
-		
-		Mockito.when(brandPortService.findByDesc(	Constants.localeENGB,
-													brand.getBrandDesc())).thenReturn(brand);
-		
-		Mockito.when(departmentPortService.findByCode(	Constants.localeENGB,
-														brand.getBrandCode())).thenReturn(department);
-
-		Mockito.when(departmentPortService.findByDesc(	Constants.localeENGB,
-														brand.getBrandDesc())).thenReturn(department);
 		
 		Mockito.when(categoryPortService.findByCode(	Constants.localeENGB,
 														category.getCategoryCode())).thenReturn(category);

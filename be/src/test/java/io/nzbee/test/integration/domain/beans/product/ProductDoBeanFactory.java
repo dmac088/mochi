@@ -7,13 +7,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.test.integration.domain.beans.brand.IBrandDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.category.ICategoryDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.department.IDepartmentDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.promotion.IPromotionDoBeanFactory;
@@ -25,8 +23,6 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 	@Autowired
 	private ICategoryDoBeanFactory categoryDoBeanFactory;
 	
-	@Autowired
-	private IBrandDoBeanFactory brandDoBeanFactory;
 	
 	@Autowired
 	private IDepartmentDoBeanFactory departmentDoBeanFactory;
@@ -42,8 +38,7 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 		
 		ProductCategory pc2 = (ProductCategory) categoryDoBeanFactory.getCitrusBean();
 		
-		Brand brand = brandDoBeanFactory.getBean();
-		
+	
 		Department department = departmentDoBeanFactory.getBean();
 		
 		Promotion promotion = promotionDoBeanFactory.getBean();
@@ -64,7 +59,6 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   "HKD",
 								   true,
 								   new Double(0.24),
-								   brand,
 								   department,
 								   new ArrayList<ProductCategory>(Arrays.asList(pc1,pc2)),
 								   promos);
