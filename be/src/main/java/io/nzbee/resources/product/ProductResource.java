@@ -2,17 +2,17 @@ package io.nzbee.resources.product;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import io.nzbee.view.product.ProductDTO;
+import io.nzbee.view.product.ProductView;
 
 public class ProductResource  extends RepresentationModel<ProductResource> {
 
-	private final ProductDTO data;
+	private final ProductView data;
 	
-	public ProductResource(final ProductDTO product) {
+	public ProductResource(final ProductView product) {
 		this.data = product;
 	}
 	
-	public ProductDTO getData() {
+	public ProductView getData() {
 		return data;
 	}
 	

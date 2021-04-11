@@ -1,34 +1,57 @@
 package io.nzbee.view.product.physical.full;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
+import io.nzbee.view.product.ProductView;
 
-import io.nzbee.view.product.ProductDTO;
+public class PhysicalProductFullView {
 
-//the DTO exposes the bits or the slice of the domain model that we want to expose to the 
-//application UI, stitching the UI directly over the domain model results in verbosity in the 
-//domain model in terms of Jackson annotations (i.e. Ignore that we typically want to avoid)
-
-@JsonTypeName("physicalproduct")
-public class PhysicalProductFullView extends ProductDTO {
+	private ProductView productView;
 	
 	private boolean inStock;
-	
+		
 	private Double weight;
 
-	public boolean isInStock() {
-		return inStock;
+	public PhysicalProductFullView(ProductView productView, 
+								   boolean inStock, 
+								   Double weight) {
+		super();
+		this.productView = productView;
+		this.inStock = inStock;
+		this.weight = weight;
 	}
 
-	public void setInStock(boolean inStock) {
-		this.inStock = inStock;
+	public String getProductUPC() {
+		return productView.getProductUPC();
+	}
+
+	public String getProductDesc() {
+		return productView.getProductDesc();
+	}
+
+	public Double getProductRetail() {
+		return productView.getProductRetail();
+	}
+	public Double getProductMarkdown() {
+		return productView.getProductMarkdown();
+	}
+
+	public String getProductType() {
+		return productView.getProductType();
+	}
+
+	public String getBrandDesc() {
+		return productView.getBrandDesc();
+	}
+	
+	public boolean isInStock() {
+		return inStock;
 	}
 
 	public Double getWeight() {
 		return weight;
 	}
 
-	public void setWeight(Double weight) {
-		this.weight = weight;
+	public ProductView getProductView() {
+		return productView;
 	}
 	
 	
