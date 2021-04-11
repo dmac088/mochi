@@ -10,5 +10,7 @@ public interface IBrandFacetViewPortService extends IViewPortService<BrandFacetV
 			Set<String> tagCodes, Double maxPrice);
 
 	BrandFacetView findByCode(String locale, String rootCategory, String brandCode);
+
+	List<BrandFacetView> findByAllShippingProviders(String locale);
 	
 }

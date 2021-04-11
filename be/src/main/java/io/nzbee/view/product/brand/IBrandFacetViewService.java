@@ -11,6 +11,8 @@ public interface IBrandFacetViewService extends IViewService<BrandFacetView> {
 
 	BrandFacetView findByCode(String locale, String rootCategory, String brandCode);
 
+	List<BrandFacetView> findByAllShippingProviders(String locale);
+
 
 	
 }

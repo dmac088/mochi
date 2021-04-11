@@ -51,6 +51,10 @@ import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
 @Profile("dev")
 public class BeanConfigurationDev {
  
+	public IBrandFacetViewService brandFacetService() {
+		return new BrandFacetViewServiceImpl();
+	}
+	
 	@Bean
 	public IPhysicalProductLightService physicalProductLightService() {
 		return new PhysicalProductLightServiceImpl();

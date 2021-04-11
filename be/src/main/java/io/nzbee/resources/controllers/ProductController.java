@@ -26,11 +26,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.IBagService;
-import io.nzbee.entity.brand.view.IBrandFacetService;
-import io.nzbee.entity.brand.view.IBrandFacetViewMapper;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.resources.dto.BrowseProductResultDto;
@@ -47,6 +44,7 @@ import io.nzbee.resources.product.shipping.type.ShippingTypeResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IShippingProductPortService;
 import io.nzbee.view.product.brand.BrandFacetView;
+import io.nzbee.view.product.brand.IBrandFacetViewService;
 import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
 import io.nzbee.view.product.physical.full.PhysicalProductFullView;
 import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
@@ -70,13 +68,10 @@ public class ProductController {
 	private IBagService bagService;
 
 	@Autowired
-	private IBrandFacetService brandService;
+	private IBrandFacetViewService brandService;
 
 	@Autowired
 	private IShippingProductPortService shippingProductService; 
-
-	@Autowired
-	private IBrandFacetViewMapper BrandFacetViewMapper;
 
 	@Autowired
 	private ShippingDestinationResourceAssembler shippingDestinationResourceAssembler;
@@ -186,7 +181,7 @@ public class ProductController {
 	public ResponseEntity<ShippingTypeResource> getShippingType(@PathVariable String locale,
 
 			@PathVariable String currency,
-
+ 
 			@PathVariable String providerCode) {
 		LOGGER.debug("Fetching shipping destination for parameters : {}, {}, {}", locale, currency, providerCode);
 
@@ -204,8 +199,7 @@ public class ProductController {
 
 		LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
 
-		List<BrandFacetView> lb = brandService.findByAllProductType(locale, ShippingProduct.class).stream()
-				.map(b -> BrandFacetViewMapper.toView(b)).collect(Collectors.toList());
+		List<BrandFacetView> lb = brandService.findByAllShippingProviders(locale);
 
 		return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(lb));
 	}

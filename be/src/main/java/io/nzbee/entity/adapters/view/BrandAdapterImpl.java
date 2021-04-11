@@ -9,6 +9,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.view.BrandFacetViewDTO;
 import io.nzbee.entity.brand.view.IBrandFacetService;
 import io.nzbee.entity.brand.view.IBrandFacetViewMapper;
+import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.exceptions.NotFoundException;
 import io.nzbee.view.ports.IBrandFacetViewPortService;
 import io.nzbee.view.product.brand.BrandFacetView;
@@ -33,6 +34,12 @@ public class BrandAdapterImpl implements IBrandFacetViewPortService {
 		BrandFacetViewDTO dto = brandService.findByCode(locale, rootCategory, brandCode)
 			.orElseThrow(() -> new NotFoundException("Brand not found for code " + brandCode));
 		return brandMapper.toView(dto);
+	}
+
+	@Override
+	public List<BrandFacetView> findByAllShippingProviders(String locale) {
+		return brandService.findAllByProductType(locale, ShippingProductDTO.class)
+				.stream().map(p -> brandMapper.toView(p)).collect(Collectors.toList());
 	}
 
 }
