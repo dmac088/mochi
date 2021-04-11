@@ -40,6 +40,8 @@ import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.ports.IShippingProductPortService;
+import io.nzbee.view.product.brand.IBrandViewService;
+import io.nzbee.view.product.brand.BrandViewServiceImpl;
 import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 import io.nzbee.view.product.brand.facet.IBrandFacetViewService;
 import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
@@ -51,6 +53,10 @@ import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
 @Profile("dev")
 public class BeanConfigurationDev {
  
+	public IBrandViewService brandViewService() {
+		return new BrandViewServiceImpl();
+	}
+	
 	public IBrandFacetViewService brandFacetService() {
 		return new BrandFacetViewServiceImpl();
 	}
@@ -66,7 +72,7 @@ public class BeanConfigurationDev {
 	}
 	
 	@Bean
-	public IBrandFacetViewService brandViewService() {
+	public IBrandFacetViewService brandFacetViewService() {
 		return new BrandFacetViewServiceImpl();
 	}
 	
