@@ -3,6 +3,7 @@ package io.nzbee.entity.brand.view;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
+
 public class BrandViewServiceImpl implements IBrandViewService {
 
 	@Autowired
@@ -30,6 +31,5 @@ public class BrandViewServiceImpl implements IBrandViewService {
 	public List<BrandViewDTO> findAllByProductType(String locale, Class<?> cls) {
 		return brandRepo.findAllByProductType(locale, cls.getSimpleName());
 	}
-
 	
 }
