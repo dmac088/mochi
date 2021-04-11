@@ -4,19 +4,19 @@ import org.springframework.hateoas.RepresentationModel;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import io.nzbee.view.product.brand.BrandView;
+import io.nzbee.view.product.brand.BrandFacetView;
 
 public class BrandResource extends RepresentationModel<BrandResource> {
 
-	private final BrandView data;
+	private final BrandFacetView data;
 	
 	@JsonCreator
-	public BrandResource(@JsonProperty("brand") BrandView brand) {
+	public BrandResource(@JsonProperty("brand") BrandFacetView brand) {
 		this.data = brand;
 		
 	}
 	
-	public BrandView getData() {
+	public BrandFacetView getData() {
 		return data;
 	}
 }

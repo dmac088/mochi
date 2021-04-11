@@ -29,8 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.IBagService;
-import io.nzbee.domain.brand.IBrandService;
-import io.nzbee.entity.brand.view.IBrandViewMapper;
+import io.nzbee.entity.brand.view.IBrandFacetService;
+import io.nzbee.entity.brand.view.IBrandFacetViewMapper;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.resources.dto.BrowseProductResultDto;
@@ -46,7 +46,7 @@ import io.nzbee.resources.product.shipping.type.ShippingTypeResource;
 import io.nzbee.resources.product.shipping.type.ShippingTypeResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IShippingProductPortService;
-import io.nzbee.view.product.brand.BrandView;
+import io.nzbee.view.product.brand.BrandFacetView;
 import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
 import io.nzbee.view.product.physical.full.PhysicalProductFullView;
 import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
@@ -58,7 +58,7 @@ import io.nzbee.view.product.shipping.type.ShippingTypeView;
 @RequestMapping("/api")
 public class ProductController {
 
-	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	private Logger LOGGER = LoggerFactory.getLogger(getClass());
 
 	@Autowired
 	private IPhysicalProductFullService physicalProductFullService;
@@ -70,13 +70,13 @@ public class ProductController {
 	private IBagService bagService;
 
 	@Autowired
-	private IBrandService brandService;
+	private IBrandFacetService brandService;
 
 	@Autowired
 	private IShippingProductPortService shippingProductService; 
 
 	@Autowired
-	private IBrandViewMapper brandViewMapper;
+	private IBrandFacetViewMapper BrandFacetViewMapper;
 
 	@Autowired
 	private ShippingDestinationResourceAssembler shippingDestinationResourceAssembler;
@@ -109,7 +109,7 @@ public class ProductController {
 		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page,
 				size);
 
-		final Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(
+		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(
 																						locale, 
 																						currency,
 																						categoryCode, 
@@ -121,7 +121,7 @@ public class ProductController {
 																						size, 
 																						sort);
 
-		final Page<PhysicalProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
+		Page<PhysicalProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
 
 		return ResponseEntity.ok(new BrowseProductResultDto(prodPhysicalPagedAssembler.toModel(pages)));
 	}
@@ -167,7 +167,7 @@ public class ProductController {
 			maxPrice = new Double(oMaxPrice.get());
 		}
 
-		final Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(locale, currency,
+		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(locale, currency,
 				categoryCode,
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category"))
 						.map(c -> c.getValue()).collect(Collectors.toSet()),
@@ -177,7 +177,7 @@ public class ProductController {
 						.map(c -> c.getValue()).collect(Collectors.toSet()),
 				maxPrice, page, size, sort);
 
-		final Page<PhysicalProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
+		Page<PhysicalProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
 
 		return ResponseEntity.ok(new BrowseProductResultDto(prodPhysicalPagedAssembler.toModel(pages)));
 	}
@@ -204,8 +204,8 @@ public class ProductController {
 
 		LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
 
-		final List<BrandView> lb = brandService.findByAllProductType(locale, ShippingProduct.class).stream()
-				.map(b -> brandViewMapper.toView(b)).collect(Collectors.toList());
+		List<BrandFacetView> lb = brandService.findByAllProductType(locale, ShippingProduct.class).stream()
+				.map(b -> BrandFacetViewMapper.toView(b)).collect(Collectors.toList());
 
 		return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(lb));
 	}
@@ -220,7 +220,7 @@ public class ProductController {
 
 		Bag b = bagService.findByCode(locale, currency, principal.getName());
 
-		final List<ShippingDestinationView> sp = shippingProductService
+		List<ShippingDestinationView> sp = shippingProductService
 				.findAllActiveByBagWeight(locale, b.getTotalWeight());
 
 		return ResponseEntity.ok(shippingDestinationResourceAssembler.toCollectionModel(sp));
@@ -233,7 +233,7 @@ public class ProductController {
 
 		LOGGER.debug("call ProductController.getShippingTypes : {}, {}", locale, currency);
 
-		final List<ShippingTypeView> sp = shippingProductService.findAll(locale);
+		List<ShippingTypeView> sp = shippingProductService.findAll(locale);
 
 		return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
 	}
@@ -266,7 +266,7 @@ public class ProductController {
 
 		Bag b = bagService.findByCode(locale, currency, principal.getName());
 
-		final List<ShippingTypeView> sp = shippingProductService.findAllTypesByDestinationAndWeight(locale, destinationCode, b.getTotalWeight());
+		List<ShippingTypeView> sp = shippingProductService.findAllTypesByDestinationAndWeight(locale, destinationCode, b.getTotalWeight());
 
 		return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
 	}

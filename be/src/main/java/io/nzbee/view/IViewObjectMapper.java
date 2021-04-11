@@ -1,8 +1,8 @@
 package io.nzbee.view;
 
 //in, out, domain
-public interface IViewObjectMapper<D, E, F> {
+public interface IViewObjectMapper<DTO, VIEW> {
 
-	E toView(F d);
+	VIEW toView(DTO d);
 
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.Constants;
 import io.nzbee.resources.brand.BrandFacetResource;
 import io.nzbee.resources.brand.BrandFacetResourceAssembler;
 import io.nzbee.resources.brand.BrandResource;
@@ -22,8 +24,8 @@ import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
-import io.nzbee.view.product.brand.BrandView;
-import io.nzbee.view.product.brand.IBrandViewService;
+import io.nzbee.view.product.brand.BrandFacetView;
+import io.nzbee.view.product.brand.IBrandFacetViewService;
 
 @RestController
 @RequestMapping("/api")
@@ -32,7 +34,7 @@ public class BrandController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private IBrandViewService brandService;
+    private IBrandFacetViewService brandService;
     
     @Autowired
     private BrandResourceAssembler brandResourceAssembler;
@@ -41,7 +43,7 @@ public class BrandController {
 	private BrandFacetResourceAssembler brandFacetResourceAssembler;
     
 	@Autowired
-	private IFacetMapper<BrandView> facetMapper;
+	private IFacetMapper<BrandFacetView> facetMapper;
 
     public BrandController() {
         super();
@@ -61,7 +63,7 @@ public class BrandController {
     		maxPrice = new Double(oMaxPrice.get());
     	}
     	
-    	final List<BrandView> collection =
+    	final List<BrandFacetView> collection =
     			brandService.findAll(locale, 
     								 currency, 
     								 categoryCode,
@@ -104,7 +106,7 @@ public class BrandController {
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
 	public ResponseEntity<BrandResource> get(String locale, String brandCode) {
     	LOGGER.debug("call BrandController.get with parameters: {}, {}, {}", locale, brandCode);
-    	BrandView b = brandService.findByCode(locale, brandCode);
+    	BrandFacetView b = brandService.findByCode(locale, Constants.primaryProductRootCategoryCode, brandCode);
     	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
 	}
 }

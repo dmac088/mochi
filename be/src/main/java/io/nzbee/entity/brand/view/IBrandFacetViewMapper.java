@@ -1,10 +1,9 @@
 package io.nzbee.entity.brand.view;
 
-import io.nzbee.domain.brand.Brand;
-import io.nzbee.entity.IDomainObjectMapper;
-import io.nzbee.entity.brand.BrandEntity;
+import io.nzbee.view.IViewObjectMapper;
+import io.nzbee.view.product.brand.BrandFacetView;
 
-public interface IBrandFacetViewMapper extends IDomainObjectMapper<Brand, BrandEntity, BrandFacetViewDTO> {
+public interface IBrandFacetViewMapper extends IViewObjectMapper<BrandFacetViewDTO, BrandFacetView> {
 
 
 }

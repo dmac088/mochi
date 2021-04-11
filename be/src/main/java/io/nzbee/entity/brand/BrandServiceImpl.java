@@ -8,7 +8,6 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.domain.BrandDomainDTO;
@@ -34,17 +33,17 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 	@Override
 	public Optional<BrandEntity> findById(Long id) {
 		return brandRepository.findById(id);
-	}	
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #id.toString()")
-	public Optional<BrandDomainDTO> findById(String locale, Long id) {
-		return brandDao.findById(locale, id);
 	}
 	
 	@Override
 	public Optional<BrandEntity> findByCode(String code) {
 		return brandDao.findByCode(code);
+	}
+	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #id.toString()")
+	public Optional<BrandDomainDTO> findById(String locale, Long id) {
+		return brandDao.findById(locale, id);
 	}
 
 	@Override

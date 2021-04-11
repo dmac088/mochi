@@ -1,15 +1,14 @@
 package io.nzbee.view.product.brand;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-public class BrandView {
+public class BrandFacetView {
 
 	private String brandCode;
-	
+
 	private String brandDesc;
 	
-	@JsonIgnore
 	private String locale;
+	
+	private Long objectCount;
 
 	public String getBrandCode() {
 		return brandCode;
@@ -35,4 +34,14 @@ public class BrandView {
 		this.locale = locale;
 	}
 
+	public Long getObjectCount() {
+		return objectCount;
+	}
+
+	public void setObjectCount(Long objectCount) {
+		this.objectCount = objectCount;
+	}
+	
 }
+
+
