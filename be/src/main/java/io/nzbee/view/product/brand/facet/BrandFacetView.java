@@ -1,4 +1,4 @@
-package io.nzbee.view.product.brand;
+package io.nzbee.view.product.brand.facet;
 
 public class BrandFacetView {
 

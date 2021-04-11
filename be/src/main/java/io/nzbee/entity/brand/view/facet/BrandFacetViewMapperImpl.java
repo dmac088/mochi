@@ -1,6 +1,6 @@
-package io.nzbee.entity.brand.view;
+package io.nzbee.entity.brand.view.facet;
 
-import io.nzbee.view.product.brand.BrandFacetView;
+import io.nzbee.view.product.brand.facet.BrandFacetView;
 
 public class BrandFacetViewMapperImpl implements IBrandFacetViewMapper {
  
@@ -15,8 +15,5 @@ public class BrandFacetViewMapperImpl implements IBrandFacetViewMapper {
 		
 		return bfv;
 	}
-
-	
-	
 	
 }

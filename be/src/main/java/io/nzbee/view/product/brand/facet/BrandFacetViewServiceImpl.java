@@ -1,4 +1,4 @@
-package io.nzbee.view.product.brand;
+package io.nzbee.view.product.brand.facet;
 
 import java.util.List;
 import java.util.Set;
@@ -19,11 +19,5 @@ public class BrandFacetViewServiceImpl implements IBrandFacetViewService {
 	public BrandFacetView findByCode(String locale, String rootCategory, String brandCode) {
 		return brandService.findByCode(locale, rootCategory, brandCode);
 	}
-
-	@Override
-	public List<BrandFacetView> findByAllShippingProviders(String locale) {
-		return brandService.findByAllShippingProviders(locale);
-	}
-
 
 }

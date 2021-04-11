@@ -1,18 +1,17 @@
 package io.nzbee.resources.brand;
 
 import org.springframework.hateoas.RepresentationModel;
-
-import io.nzbee.search.facet.EntityFacet;
+import io.nzbee.view.product.brand.facet.BrandFacetView;
 
 public class BrandFacetResource extends RepresentationModel<BrandFacetResource>  {
 	
-	private final EntityFacet data;
+	private final BrandFacetView data;
 	
-	public BrandFacetResource(EntityFacet brand) {
+	public BrandFacetResource(BrandFacetView brand) {
 		this.data = brand;
 	}
 
-	public EntityFacet getData() {
+	public BrandFacetView getData() {
 		return data;
 	}
 	

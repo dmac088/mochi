@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.IBagService;
+import io.nzbee.entity.brand.view.IBrandViewService;
 import io.nzbee.resources.brand.BrandResource;
 import io.nzbee.resources.brand.BrandResourceAssembler;
 import io.nzbee.resources.dto.BrowseProductResultDto;
@@ -43,8 +44,7 @@ import io.nzbee.resources.product.shipping.type.ShippingTypeResource;
 import io.nzbee.resources.product.shipping.type.ShippingTypeResourceAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IShippingProductPortService;
-import io.nzbee.view.product.brand.BrandFacetView;
-import io.nzbee.view.product.brand.IBrandFacetViewService;
+import io.nzbee.view.product.brand.BrandView;
 import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
 import io.nzbee.view.product.physical.full.PhysicalProductFullView;
 import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
@@ -66,9 +66,9 @@ public class ProductController {
 
 	@Autowired
 	private IBagService bagService;
-
+	
 	@Autowired
-	private IBrandFacetViewService brandService;
+	private IBrandViewService brandService;
 
 	@Autowired
 	private IShippingProductPortService shippingProductService; 
@@ -199,7 +199,7 @@ public class ProductController {
 
 		LOGGER.debug("Fetching products for parameters : {}, {}", locale, currency);
 
-		List<BrandFacetView> lb = brandService.findByAllShippingProviders(locale);
+		List<BrandView> lb = brandService.findByAllShippingProviders(locale);
 
 		return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(lb));
 	}

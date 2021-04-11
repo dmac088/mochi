@@ -1,4 +1,4 @@
-package io.nzbee.entity.brand.view;
+package io.nzbee.entity.brand.view.facet;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;

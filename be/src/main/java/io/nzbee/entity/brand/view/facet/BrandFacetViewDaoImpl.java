@@ -1,7 +1,10 @@
-package io.nzbee.entity.brand.view;
+package io.nzbee.entity.brand.view.facet;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.Query;
 import org.hibernate.Session;
 import org.mockito.internal.util.StringUtil;
@@ -9,8 +12,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.brand.BrandServiceImpl;
 
 public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 
@@ -22,6 +28,11 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
+			}
+	)
 	public List<BrandFacetViewDTO> findAll(String locale, String currency, String categoryCode,
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
 		
@@ -61,6 +72,82 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 		List<BrandFacetViewDTO> results = query.getResultList();
 		
 		return results;
+	}
+	
+
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #brandCodes.getCacheKey()")
+			}
+	)	
+	public List<BrandFacetViewDTO> findAll(String locale, String rootCategory,
+			StringCollectionWrapper brandCodes) {
+		LOGGER.debug("call BrandFacetViewDaoImpl.findAll with parameters : {}, {}, {}", locale, StringUtil.join(brandCodes));
+
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(false,
+															 false,
+															 false,
+															 false,
+															 !brandCodes.getCodes().isEmpty(),
+															 false,
+															 false))
+				 .setParameter("categoryCode", rootCategory)
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+		
+		
+		if(!brandCodes.getCodes().isEmpty()) {
+			query.setParameter("brandCodes", brandCodes.getCodes());
+		}
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandFacetViewDTOResultTransformer());
+		
+		return query.getResultList();
+	}
+	
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #code")
+			}
+	)
+	public Optional<BrandFacetViewDTO> findByCode(String locale, String rootCategory, String code) {
+		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, rootCategory, code);
+		
+		Session session = em.unwrap(Session.class);
+		
+		List<String> lbc = Arrays.asList(code);
+		
+		Query query = session.createNativeQuery(constructSQL(
+															 false,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false))
+				 .setParameter("categoryCode", rootCategory)
+				 .setParameter("locale", locale)
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("brandCodes", lbc);
+		
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new BrandFacetViewDTOResultTransformer());
+		
+		try {
+			BrandFacetViewDTO result = (BrandFacetViewDTO) query.getSingleResult();
+			return Optional.ofNullable(result);
+		} catch(NoResultException nre) {
+			return Optional.empty();
+		}
 	}
 	
 	@Override
@@ -191,6 +278,7 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 		
 	return sql;
 	}
+
 
 
 }

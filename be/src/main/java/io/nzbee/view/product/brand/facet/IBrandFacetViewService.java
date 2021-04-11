@@ -1,4 +1,4 @@
-package io.nzbee.view.product.brand;
+package io.nzbee.view.product.brand.facet;
 
 import java.util.List;
 import java.util.Set;
@@ -10,8 +10,6 @@ public interface IBrandFacetViewService extends IViewService<BrandFacetView> {
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);
 
 	BrandFacetView findByCode(String locale, String rootCategory, String brandCode);
-
-	List<BrandFacetView> findByAllShippingProviders(String locale);
 
 
 	

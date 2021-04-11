@@ -41,8 +41,8 @@ import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.ports.IShippingProductPortService;
-import io.nzbee.view.product.brand.BrandFacetViewServiceImpl;
-import io.nzbee.view.product.brand.IBrandFacetViewService;
+import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
+import io.nzbee.view.product.brand.facet.IBrandFacetViewService;
 
 
 @Configuration
