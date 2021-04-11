@@ -25,8 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.test.integration.domain.beans.brand.BrandDoBeanFactory;
-import io.nzbee.test.integration.domain.beans.brand.IBrandDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.category.CategoryDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.category.ICategoryDoBeanFactory;
 import io.nzbee.test.integration.domain.beans.department.DepartmentDoBeanFactory;
@@ -54,11 +52,6 @@ public class IT_ProductDoServiceImplIntegrationTest {
 		@Bean
 		public ICategoryDoBeanFactory categoryDoBeanFactory() {
 			return new CategoryDoBeanFactory();
-		}
-		
-		@Bean
-		public IBrandDoBeanFactory brandDoBeanFactory() {
-			return new BrandDoBeanFactory();
 		}
 		
 		@Bean
@@ -143,7 +136,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
     	assertThat(found.getProductMarkdown())
     	.isEqualTo(new Double(71));
 	    
-	    assertNotNull(found.getBrand());
+	    //assertNotNull(found.getBrand());
     	
 	    assertThat(found.getProductDesc())
 	    .isEqualTo("Test Product Description");
