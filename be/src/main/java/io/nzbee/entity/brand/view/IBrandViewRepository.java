@@ -9,7 +9,6 @@ import io.nzbee.entity.brand.view.BrandViewDTO;
 public interface IBrandViewRepository  extends CrudRepository<BrandEntity, Long>  {
 	
 	@Query(	  " SELECT new io.nzbee.entity.brand.view.BrandViewDTO("
-			+ "												be.brandId, "
 			+ "												be.brandCode, "
 			+ "												at.brandDesc, "
 			+ "												at.lclCd "		
@@ -19,8 +18,7 @@ public interface IBrandViewRepository  extends CrudRepository<BrandEntity, Long>
 			+ " WHERE at.lclCd = :locale")
 	List<BrandViewDTO> findAll(String locale);
 	
-	@Query(	  " SELECT DISTINCT new io.nzbee.entity.view.domain.BrandViewDTO("
-			+ "												be.brandId, "
+	@Query(	  " SELECT DISTINCT new io.nzbee.entity.brand.view.BrandViewDTO("
 			+ "												be.brandCode, "
 			+ "												at.brandDesc, "
 			+ "												at.lclCd "		

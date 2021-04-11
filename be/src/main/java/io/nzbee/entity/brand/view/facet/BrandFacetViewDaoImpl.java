@@ -14,10 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
+import org.springframework.stereotype.Component;
+
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandServiceImpl;
 
+@Component
 public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());

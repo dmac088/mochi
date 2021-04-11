@@ -30,6 +30,7 @@ import io.nzbee.domain.promotion.order.IOrderPromotionService;
 import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
+import io.nzbee.entity.adapters.view.BrandAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
 import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
@@ -37,6 +38,7 @@ import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
+import io.nzbee.view.ports.IBrandViewPortService;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.ports.IShippingProductPortService;
@@ -53,12 +55,25 @@ import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
 @Profile("dev")
 public class BeanConfigurationDev {
  
+	
+	@Bean
+	public io.nzbee.entity.brand.view.IBrandViewService brandEntityViewService() {
+		return new io.nzbee.entity.brand.view.BrandViewServiceImpl();
+	}
+	
+	@Bean
 	public IBrandViewService brandViewService() {
 		return new BrandViewServiceImpl();
 	}
 	
+	@Bean
 	public IBrandFacetViewService brandFacetService() {
 		return new BrandFacetViewServiceImpl();
+	}
+	
+	@Bean
+	public IBrandViewPortService brandViewPortService() {
+		return new BrandAdapterImpl();
 	}
 	
 	@Bean
@@ -69,11 +84,6 @@ public class BeanConfigurationDev {
 	@Bean
 	public IPhysicalProductFullService physicalProductFullService() {
 		return new PhysicalProductFullServiceImpl();
-	}
-	
-	@Bean
-	public IBrandFacetViewService brandFacetViewService() {
-		return new BrandFacetViewServiceImpl();
 	}
 	
 	@Bean

@@ -2,8 +2,9 @@ package io.nzbee.entity.brand.view;
 
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-
+@Service(value="brandViewService")
 public class BrandViewServiceImpl implements IBrandViewService {
 
 	@Autowired
