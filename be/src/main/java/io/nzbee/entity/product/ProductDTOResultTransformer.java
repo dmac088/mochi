@@ -5,9 +5,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
-
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.domain.BrandDomainDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.product.department.DepartmentDTO;
 import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
@@ -40,8 +38,6 @@ public class ProductDTOResultTransformer implements ResultTransformer {
         
         DepartmentDTO pd = new DepartmentDTO(tuple, aliasToIndexMap);
         
-        BrandDomainDTO pb = new BrandDomainDTO(tuple, aliasToIndexMap);
- 
         ProductDTO productDTO = productDTOMap.computeIfAbsent(
             productId,
             id -> {
@@ -88,8 +84,6 @@ public class ProductDTOResultTransformer implements ResultTransformer {
 
                 }
             	
-            	pDto.setBrand(pb);
-                
             	pDto.setDepartment(pd);
                  
             	return pDto;

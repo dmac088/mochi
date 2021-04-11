@@ -5,10 +5,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import io.nzbee.domain.category.BrandCategory;
 import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.tag.Tag;
+import io.nzbee.view.product.brand.facet.BrandFacetView;
 
 public class FacetContainer {
 
@@ -39,7 +39,7 @@ public class FacetContainer {
 	public Set<IFacet> getBrands() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getObjectType().equals(Brand.class.getSimpleName()))
+				f.getObjectType().equals(BrandFacetView.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toSet());
 	}

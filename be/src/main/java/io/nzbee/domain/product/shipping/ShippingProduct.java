@@ -2,7 +2,6 @@ package io.nzbee.domain.product.shipping;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import io.nzbee.domain.brand.Brand;
 import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.department.Department;
 import io.nzbee.domain.product.Product;
@@ -35,8 +34,7 @@ public class ShippingProduct extends Product {
 							String productImage, 
 							String lclCd,
 							String currency, 
-							boolean inStock, 
-							Brand brand, 
+							boolean inStock,
 							Department department,
 							List<ProductCategory> productCategories, 
 							List<Promotion> productPromotions,
@@ -57,8 +55,7 @@ public class ShippingProduct extends Product {
 				productMarkdown,
 				productImage, 
 				lclCd, 
-				currency, 
-				brand, 
+				currency,
 				department, 
 				productCategories, 
 				productPromotions);

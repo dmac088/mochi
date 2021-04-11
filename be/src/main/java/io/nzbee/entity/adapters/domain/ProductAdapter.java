@@ -166,7 +166,7 @@ public class ProductAdapter implements IProductPortService {
 			
 		
 			// find the brand
-			BrandEntity b = brandService.findByCode(domainObject.getBrand().getBrandCode()).get();
+			//BrandEntity b = brandService.findByCode(domainObject.getBrand().getBrandCode()).get();
 
 			Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(domainObject.getLclCd(), domainObject.getProductUPC());
 
@@ -219,7 +219,7 @@ public class ProductAdapter implements IProductPortService {
 			lcp.forEach(c -> {
 				product.addCategory(c);
 			});
-			product.setBrand(b);
+			//product.setBrand(b);
 			tags.forEach(t -> {
 				product.addTag(t);
 			});

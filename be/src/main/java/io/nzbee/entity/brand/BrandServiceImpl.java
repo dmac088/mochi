@@ -1,17 +1,11 @@
 package io.nzbee.entity.brand;
 
-import java.util.List;
 import java.util.Optional;
-import java.util.Set;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
-import io.nzbee.Constants;
-import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.brand.domain.BrandDomainDTO;
-import io.nzbee.entity.brand.domain.IBrandDomainDao;
 import io.nzbee.search.IFacetService;
 
 @Service(value="brandEntityService")
@@ -19,74 +13,9 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 
 	public static final String CACHE_NAME = "brandCache";
 	
-	@Autowired
-	private IBrandDomainDao brandDao; 
-	
 	@Autowired 
 	private IBrandRepository brandRepository;
-
-	@Override
-	public List<BrandEntity> findAll() {
-		return brandRepository.findAll();
-	}
-
-	@Override
-	public Optional<BrandEntity> findById(Long id) {
-		return brandRepository.findById(id);
-	}
 	
-	@Override
-	public Optional<BrandEntity> findByCode(String code) {
-		return brandDao.findByCode(code);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #id.toString()")
-	public Optional<BrandDomainDTO> findById(String locale, Long id) {
-		return brandDao.findById(locale, id);
-	}
-
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #code")
-	public Optional<BrandDomainDTO> findByCode(String locale, String rootCategory, String code) {
-		return brandDao.findByCode(locale, rootCategory,code);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key = "#locale + \", \" + #rootCategory + \", \" + #desc")
-	public Optional<BrandDomainDTO> findByDesc(String locale, String rootCategory, String desc) {
-		return brandDao.findByDesc(locale, rootCategory, desc);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other")
-	public List<BrandDomainDTO> findAll(String locale) {
-		return brandRepository.findAll(locale);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #cls.getSimpleName()")
-	public List<BrandDomainDTO> findAllByProductType(String locale, Class<?> cls) {
-		return brandRepository.findAllByProductType(locale, cls.getSimpleName());
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
-	public List<BrandDomainDTO> findAll(String locale, String currency, String categoryCode,  StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
-		return brandDao.findAll(locale, currency, categoryCode, categoryCodes, tagCodes, maxPrice);
-	}
-	
-	@Override
-	public List<BrandDomainDTO> findAll(String locale, String rootCategory, String categoryCode) {
-		return brandDao.findAllByCategory(locale, rootCategory, categoryCode);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #rootCategory + \", \" + #brandCodes.getCacheKey()")
-	public List<BrandDomainDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper brandCodes) {
-		return brandDao.findAll(locale, rootCategory, brandCodes);
-	}
-
 	@Override
 	@Caching(
 			evict = {
@@ -98,6 +27,11 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 			})
 	public void save(BrandEntity brand) {
 		brandRepository.save(brand);
+	}
+	
+	@Override
+	public Optional<BrandEntity> findByCode(String brandCode) {
+		return brandRepository.findByBrandCode(brandCode);
 	}
 
 	@Override
@@ -122,31 +56,6 @@ public class BrandServiceImpl implements IBrandService, IFacetService {
 		return "brand";
 	}
 
-	@Override
-	public String tokenToCode(String token) {
-		return token;
-	}
 
-	@Override
-	public List<BrandEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<BrandDomainDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<BrandDomainDTO> findByCode(String locale, String code) {
-		return this.findByCode(locale, Constants.defaultProductRootCategoryCode, code);
-	}
-
-	@Override
-	public Optional<BrandDomainDTO> findByDesc(String locale, String desc) {
-		return this.findByDesc(locale, Constants.defaultProductRootCategoryCode, desc);
-	}
 
 }

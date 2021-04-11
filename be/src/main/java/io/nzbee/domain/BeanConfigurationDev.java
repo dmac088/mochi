@@ -8,8 +8,6 @@ import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.BagServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.bag.IBagService;
-import io.nzbee.domain.brand.BrandServiceImpl;
-import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.category.CategoryServiceImpl;
 import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.CustomerServiceImpl;
@@ -148,11 +146,6 @@ public class BeanConfigurationDev {
     @Bean
     public ICategoryService categoryService() {
         return new CategoryServiceImpl();
-    }
-    
-    @Bean
-    public IBrandService brandService() {
-        return new BrandServiceImpl();
     }
     
     @Bean
