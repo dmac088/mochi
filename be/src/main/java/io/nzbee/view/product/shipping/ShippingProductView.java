@@ -1,11 +1,6 @@
 package io.nzbee.view.product.shipping;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
-import io.nzbee.view.product.ProductView;
-
-@JsonTypeName("shippingproduct")
-public class ShippingProductView extends ProductView {
+public class ShippingProductView  {
 	
 	private String shippingDestinationCode;
 	
