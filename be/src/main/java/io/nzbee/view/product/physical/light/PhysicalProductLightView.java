@@ -1,65 +1,19 @@
 package io.nzbee.view.product.physical.light;
 
-import java.math.BigDecimal;
+import io.nzbee.view.product.ProductView;
 
-//the DTO exposes the bits or the slice of the domain model that we want to expose to the 
-//application UI, stitching the UI directly over the domain model results in verbosity in the 
-//domain model in terms of Jackson annotations (i.e. Ignore that we typically want to avoid)
+public class PhysicalProductLightView extends ProductView {
 
-public class PhysicalProductLightView {
-
-	private String productUPC;
-
-	private String productDesc;
-
-	private BigDecimal productRetail;
-	
-	private BigDecimal productMarkdown;
-	
-	private String brandDesc;
-	
 	private boolean inStock;
 	
 	private String productImage;
 
-	public String getProductUPC() {
-		return productUPC;
+	public String getProductImage() {
+		return productImage;
 	}
 
-	public void setProductUPC(String productUPC) {
-		this.productUPC = productUPC;
-	}
-
-	public String getProductDesc() {
-		return productDesc;
-	}
-
-	public void setProductDesc(String productDesc) {
-		this.productDesc = productDesc;
-	}
-
-	public BigDecimal getProductRetail() {
-		return productRetail;
-	}
-
-	public void setProductRetail(BigDecimal bigDecimal) {
-		this.productRetail = bigDecimal;
-	}
-
-	public BigDecimal getProductMarkdown() {
-		return productMarkdown;
-	}
-
-	public void setProductMarkdown(BigDecimal productMarkdown) {
-		this.productMarkdown = productMarkdown;
-	}
-
-	public String getBrandDesc() {
-		return brandDesc;
-	}
-
-	public void setBrandDesc(String brandDesc) {
-		this.brandDesc = brandDesc;
+	public void setProductImage(String productImage) {
+		this.productImage = productImage;
 	}
 
 	public boolean isInStock() {
@@ -68,14 +22,6 @@ public class PhysicalProductLightView {
 
 	public void setInStock(boolean inStock) {
 		this.inStock = inStock;
-	}
-
-	public String getProductImage() {
-		return productImage;
-	}
-
-	public void setProductImage(String productImage) {
-		this.productImage = productImage;
 	}
 	
 }
