@@ -139,8 +139,8 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	assertThat(found.get().getProductStatusCode())
     	.isEqualTo("ACT01");
     	
-    	assertThat(found.get().getBrand().getBrandCode())
-    	.isEqualTo("PLA01");
+//    	assertThat(found.get().getBrand().getBrandCode())
+//    	.isEqualTo("PLA01");
     	
     	assertNotNull(found.get().getCategories());
     	assertThat(found.get().getCategories().size()).isEqualTo(2);

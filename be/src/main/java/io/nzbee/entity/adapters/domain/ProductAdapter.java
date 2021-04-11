@@ -14,8 +14,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.brand.IBrandService;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductMapper;
@@ -66,9 +64,6 @@ public class ProductAdapter implements IProductPortService {
 
 	@Autowired
 	private ICategoryService categoryService;
-
-	@Autowired
-	private IBrandService brandService;
 	
 	@Autowired
 	private ITagService tagService;
