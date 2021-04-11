@@ -2,6 +2,8 @@ package io.nzbee.view.product.shipping;
 
 public class ShippingProductView  {
 	
+	private String productUPC;
+	
 	private String shippingDestinationCode;
 	
 	private String shippingDestinationDesc;
@@ -42,6 +44,10 @@ public class ShippingProductView  {
 
 	public Double getWeightTo() {
 		return weightTo;
+	}
+
+	public String getProductUPC() {
+		return productUPC;
 	}
     
 }

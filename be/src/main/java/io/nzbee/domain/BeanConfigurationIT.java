@@ -36,7 +36,6 @@ import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
 import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
-import io.nzbee.resources.product.ProductResource;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
@@ -79,11 +78,6 @@ public class BeanConfigurationIT {
     @Bean
     public IOrderPromotionService promotionOrderService() {
         return new OrderPromotionServiceImpl();
-    }
-	
-	@Bean
-    public PagedResourcesAssembler<ProductResource> pagedProductResourceAssembler() {
-    	return new PagedResourcesAssembler<ProductResource>(null, null);
     }
 	
 	@Bean
