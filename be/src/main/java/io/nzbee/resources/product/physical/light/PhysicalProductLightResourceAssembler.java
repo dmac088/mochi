@@ -5,7 +5,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import org.springframework.stereotype.Component;
 
 import io.nzbee.resources.controllers.ProductController;
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 @Component
 public class PhysicalProductLightResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductLightView, PhysicalProductLightResource> {

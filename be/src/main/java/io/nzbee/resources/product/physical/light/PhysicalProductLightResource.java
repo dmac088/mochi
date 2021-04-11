@@ -2,7 +2,7 @@ package io.nzbee.resources.product.physical.light;
 
 import org.springframework.hateoas.RepresentationModel;
 
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 public class PhysicalProductLightResource  extends RepresentationModel<PhysicalProductLightResource> {
 

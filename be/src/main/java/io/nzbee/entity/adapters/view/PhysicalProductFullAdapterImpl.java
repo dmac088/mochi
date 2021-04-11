@@ -5,7 +5,7 @@ import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSuppor
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.resources.product.physical.full.PhysicalProductFullResource;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
-import io.nzbee.view.product.physical.PhysicalProductFullView;
+import io.nzbee.view.product.physical.full.PhysicalProductFullView;
 
 public class PhysicalProductFullAdapterImpl implements IPhysicalProductFullPortService {
 

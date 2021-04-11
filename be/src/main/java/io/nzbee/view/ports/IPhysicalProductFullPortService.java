@@ -4,7 +4,7 @@ import org.springframework.data.util.Streamable;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.resources.product.physical.full.PhysicalProductFullResource;
-import io.nzbee.view.product.physical.PhysicalProductFullView;
+import io.nzbee.view.product.physical.full.PhysicalProductFullView;
 
 public interface IPhysicalProductFullPortService extends IViewPortService<PhysicalProductFullView> {
  

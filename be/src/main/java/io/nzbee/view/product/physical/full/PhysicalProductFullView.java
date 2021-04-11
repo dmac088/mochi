@@ -1,4 +1,4 @@
-package io.nzbee.view.product.physical;
+package io.nzbee.view.product.physical.full;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 

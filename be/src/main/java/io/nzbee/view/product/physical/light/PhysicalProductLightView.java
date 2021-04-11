@@ -1,4 +1,4 @@
-package io.nzbee.view.product.physical;
+package io.nzbee.view.product.physical.light;
 
 import java.math.BigDecimal;
 

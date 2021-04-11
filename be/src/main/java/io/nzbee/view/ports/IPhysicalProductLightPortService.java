@@ -5,7 +5,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.facet.IFacet;
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 public interface IPhysicalProductLightPortService extends IViewPortService<PhysicalProductLightView> {
 

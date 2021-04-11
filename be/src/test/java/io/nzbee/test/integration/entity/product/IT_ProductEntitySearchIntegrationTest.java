@@ -33,7 +33,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest

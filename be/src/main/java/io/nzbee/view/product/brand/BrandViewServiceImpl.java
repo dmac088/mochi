@@ -19,23 +19,5 @@ public class BrandViewServiceImpl implements IBrandViewService {
 	public BrandView findByCode(String locale, String brandCode) {
 		return brandService.findByCode(locale, brandCode);
 	}
-
-	@Override
-	public void save(BrandView object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(BrandView object) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void update(BrandView object) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

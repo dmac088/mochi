@@ -2,7 +2,7 @@ package io.nzbee.entity.product.physical.light;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 @Component(value="physicalProductLightMapper")
 public class PhysicalProductLightMapperImpl implements IPhysicalProductLightMapper {

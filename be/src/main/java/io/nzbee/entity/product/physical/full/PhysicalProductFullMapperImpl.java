@@ -1,7 +1,7 @@
 package io.nzbee.entity.product.physical.full;
 
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
-import io.nzbee.view.product.physical.PhysicalProductFullView;
+import io.nzbee.view.product.physical.full.PhysicalProductFullView;
 
 public class PhysicalProductFullMapperImpl implements IPhysicalProductFullMapper {
 

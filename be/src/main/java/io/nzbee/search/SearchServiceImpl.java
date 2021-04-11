@@ -38,7 +38,7 @@ import io.nzbee.search.facet.SearchFacetHelper;
 import io.nzbee.search.facet.SearchFacetRange;
 import io.nzbee.search.facet.SearchFacetWithFieldHelper;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.Constants;

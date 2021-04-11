@@ -15,7 +15,7 @@ import io.nzbee.entity.product.physical.light.PhysicalProductLightDTO;
 import io.nzbee.search.ISearchService;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 public class PhysicalProductLightAdapterImpl implements IPhysicalProductLightPortService {
 

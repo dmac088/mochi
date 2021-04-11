@@ -3,7 +3,7 @@ package io.nzbee.search;
 import java.util.Set;
 import org.springframework.data.domain.PageImpl;
 import io.nzbee.search.facet.IFacet;
-import io.nzbee.view.product.physical.PhysicalProductLightView;
+import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 public interface ISearchService {
 	
