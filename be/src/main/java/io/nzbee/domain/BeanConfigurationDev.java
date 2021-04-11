@@ -54,10 +54,19 @@ import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
 @Configuration
 @Profile("dev")
 public class BeanConfigurationDev {
- 
 	
 	@Bean
-	public io.nzbee.entity.brand.view.IBrandViewService brandEntityViewService() {
+	public io.nzbee.entity.brand.view.facet.IBrandFacetViewMapper brandFacetViewMapper() { 
+		return new io.nzbee.entity.brand.view.facet.BrandFacetViewMapperImpl();
+	}
+	
+	@Bean
+	public io.nzbee.view.ports.IBrandFacetViewPortService brandEntityViewService() {
+		return new io.nzbee.entity.adapters.view.BrandFacetAdapterImpl();
+	}
+	
+	@Bean
+	public io.nzbee.entity.brand.view.IBrandViewService test() {
 		return new io.nzbee.entity.brand.view.BrandViewServiceImpl();
 	}
 	
@@ -91,7 +100,7 @@ public class BeanConfigurationDev {
 		return new ShippingProductAdapterImpl();
 	}
 	
-	@Bean
+	@Bean	
 	public IPhysicalProductLightPortService productLightPortService() {
 		return new PhysicalProductLightAdapterImpl();
 	}

@@ -2,11 +2,15 @@ package io.nzbee.view.product.brand.facet;
 
 import java.util.List;
 import java.util.Set;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
 import io.nzbee.view.ports.IBrandFacetViewPortService;
 
 
 public class BrandFacetViewServiceImpl implements IBrandFacetViewService {
 
+	@Autowired
 	private IBrandFacetViewPortService brandService;
 	
 	@Override

@@ -28,8 +28,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.IBagService;
-import io.nzbee.resources.brand.BrandResource;
-import io.nzbee.resources.brand.BrandResourceAssembler;
+import io.nzbee.resources.brand.BrandViewResource;
+import io.nzbee.resources.brand.BrandViewResourceAssembler;
 import io.nzbee.resources.dto.BrowseProductResultDto;
 import io.nzbee.resources.product.physical.full.PhysicalProductFullResource;
 import io.nzbee.resources.product.physical.full.PhysicalProductFullResourceAssembler;
@@ -86,7 +86,7 @@ public class ProductController {
 	private PhysicalProductLightResourceAssembler prodLightResourceAssembler;
 
 	@Autowired
-	private BrandResourceAssembler brandResourceAssembler;
+	private BrandViewResourceAssembler brandResourceAssembler;
 
 	@Autowired
 	private PhysicalProductFullResourceAssembler prodFullResourceAssembler;
@@ -193,7 +193,7 @@ public class ProductController {
 	}
 
 	@GetMapping(value = "/Product/Shipping/Provider/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<BrandResource>> getShippingProviders(@PathVariable String locale,
+	public ResponseEntity<CollectionModel<BrandViewResource>> getShippingProviders(@PathVariable String locale,
 
 			@PathVariable String currency) {
 

@@ -16,9 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.Constants;
-import io.nzbee.resources.brand.BrandFacetResource;
-import io.nzbee.resources.brand.BrandFacetResourceAssembler;
+import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResource;
+import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResourceAssembler;
+import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResource;
+import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResourceAssembler;
+import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
+import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.brand.facet.BrandFacetView;
 import io.nzbee.view.product.brand.facet.IBrandFacetViewService;
 
@@ -32,14 +36,20 @@ public class BrandController {
     private IBrandFacetViewService brandService;
     
     @Autowired
-	private BrandFacetResourceAssembler brandFacetResourceAssembler;
+	private BrandSearchFacetResourceAssembler brandFacetResourceAssembler;
+    
+    @Autowired
+	private BrandBrowseFacetResourceAssembler brandResourceAssembler;
+    
+    @Autowired
+    private IFacetMapper<BrandFacetView> facetMapper;
 
     public BrandController() {
         super();
     }
     
     @PostMapping("/Brand/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandFacetResource>> getBrands(@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<BrandBrowseFacetResource>> getBrands(@PathVariable String locale, 
     																@PathVariable String currency, 
     																@PathVariable String categoryCode,
     																@RequestBody  Set<IFacet> selectedFacets) {
@@ -61,12 +71,12 @@ public class BrandController {
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice);
 
-        return ResponseEntity.ok(brandFacetResourceAssembler.toCollectionModel(collection));
+        return ResponseEntity.ok(brandResourceAssembler.toCollectionModel(collection));
     }
     
     
     @PostMapping("/BrandFacet/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandFacetResource>> getBrandFacets(@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<BrandSearchFacetResource>> getBrandFacets(@PathVariable String locale, 
 	    																 @PathVariable String currency, 
 	    																 @PathVariable String categoryCode,
 	    																 @RequestBody  Set<IFacet> selectedFacets) {
@@ -79,7 +89,7 @@ public class BrandController {
     		maxPrice = new Double(oMaxPrice.get());
     	}
     	
-    	List<BrandFacetView> collection =
+    	List<EntityFacet> collection =
     			brandService.findAll(locale, 
     								 currency, 
     								 categoryCode,
@@ -87,15 +97,15 @@ public class BrandController {
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice
-    			);
+    			).stream().map(b -> facetMapper.toEntityFacet(b)).collect(Collectors.toList());
 
         return ResponseEntity.ok(brandFacetResourceAssembler.toCollectionModel(collection));
     }
 
     @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
-	public ResponseEntity<BrandFacetResource> get(String locale, String brandCode) {
+	public ResponseEntity<BrandBrowseFacetResource> get(String locale, String brandCode) {
     	LOGGER.debug("call BrandController.get with parameters: {}, {}, {}", locale, brandCode);
     	BrandFacetView b = brandService.findByCode(locale, Constants.primaryProductRootCategoryCode, brandCode);
-    	return ResponseEntity.ok(brandFacetResourceAssembler.toModel(b));
+    	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
 	}
 }
