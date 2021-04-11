@@ -29,8 +29,6 @@ import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.BagItem;
 import io.nzbee.domain.bag.BagServiceImpl;
 import io.nzbee.domain.bag.IBagService;
-import io.nzbee.domain.brand.BrandServiceImpl;
-import io.nzbee.domain.brand.IBrandService;
 import io.nzbee.domain.customer.Customer;
 import io.nzbee.domain.customer.CustomerServiceImpl;
 import io.nzbee.domain.customer.ICustomerService;
@@ -52,11 +50,6 @@ public class IT_BagDoServiceImplIntegrationTest {
 		@Bean
 		public IBagService bagService() {
 			return new BagServiceImpl();
-		}
-		
-		@Bean
-		public IBrandService brandService() {
-			return new BrandServiceImpl();
 		}
 		
 		@Bean
