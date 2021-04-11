@@ -18,6 +18,7 @@ public class BrandSearchFacetMapperImpl implements IFacetMapper<BrandFacetView> 
 		ef.setDesc(brand.getBrandDesc());
 		ef.setHierarchical(true);
 		ef.setValue(brand.getBrandCode());
+		ef.setCount(brand.getObjectCount().intValue());
 		return ef;
 	}
 

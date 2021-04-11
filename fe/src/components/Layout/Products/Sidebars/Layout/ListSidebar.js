@@ -3,6 +3,7 @@ import './ListSidebar.css';
 
 const renderItems = (items, modFacet) => {
   return items.map((i, index) => {
+    console.log(i.data.desc  + ' ' + i.data.count);
     return (
       <li key={index}>
         <a onClick={(e) => {

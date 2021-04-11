@@ -10,7 +10,5 @@ public interface IBrandFacetViewService extends IViewService<BrandFacetView> {
 			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);
 
 	BrandFacetView findByCode(String locale, String rootCategory, String brandCode);
-
-
 	
 }

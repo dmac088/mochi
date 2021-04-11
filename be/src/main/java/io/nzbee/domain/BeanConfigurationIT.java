@@ -31,6 +31,7 @@ import io.nzbee.domain.promotion.order.IOrderPromotionService;
 import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
 import io.nzbee.domain.tag.ITagService;
 import io.nzbee.domain.tag.TagServiceImpl;
+import io.nzbee.entity.adapters.view.BrandAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
 import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
@@ -38,11 +39,18 @@ import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
+import io.nzbee.view.ports.IBrandViewPortService;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.ports.IShippingProductPortService;
+import io.nzbee.view.product.brand.BrandViewServiceImpl;
+import io.nzbee.view.product.brand.IBrandViewService;
 import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 import io.nzbee.view.product.brand.facet.IBrandFacetViewService;
+import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
+import io.nzbee.view.product.physical.full.PhysicalProductFullServiceImpl;
+import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
+import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
 
 
 @Configuration
@@ -51,8 +59,43 @@ public class BeanConfigurationIT {
 
 	
 	@Bean
-	public IBrandFacetViewService brandViewService() {
+	public io.nzbee.entity.brand.view.facet.IBrandFacetViewMapper brandFacetViewMapper() { 
+		return new io.nzbee.entity.brand.view.facet.BrandFacetViewMapperImpl();
+	}
+	
+	@Bean
+	public io.nzbee.view.ports.IBrandFacetViewPortService brandEntityViewService() {
+		return new io.nzbee.entity.adapters.view.BrandFacetAdapterImpl();
+	}
+	
+	@Bean
+	public io.nzbee.entity.brand.view.IBrandViewService test() {
+		return new io.nzbee.entity.brand.view.BrandViewServiceImpl();
+	}
+	
+	@Bean
+	public IBrandViewService brandViewService() {
+		return new BrandViewServiceImpl();
+	}
+	
+	@Bean
+	public IBrandFacetViewService brandFacetService() {
 		return new BrandFacetViewServiceImpl();
+	}
+	
+	@Bean
+	public IBrandViewPortService brandViewPortService() {
+		return new BrandAdapterImpl();
+	}
+	
+	@Bean
+	public IPhysicalProductLightService physicalProductLightService() {
+		return new PhysicalProductLightServiceImpl();
+	}
+	
+	@Bean
+	public IPhysicalProductFullService physicalProductFullService() {
+		return new PhysicalProductFullServiceImpl();
 	}
 	
 	@Bean
@@ -60,7 +103,7 @@ public class BeanConfigurationIT {
 		return new ShippingProductAdapterImpl();
 	}
 	
-	@Bean
+	@Bean	
 	public IPhysicalProductLightPortService productLightPortService() {
 		return new PhysicalProductLightAdapterImpl();
 	}

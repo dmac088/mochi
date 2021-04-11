@@ -26,19 +26,20 @@ public class BrandFacetViewDTO implements ISearchDimension, Serializable {
 	private Long count; 
 	
 	public BrandFacetViewDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
-		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
-		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
-		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
-		this.count 		= !(aliasToIndexMap.get(COUNT_ALIAS) == null)
+		this.brandCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
+		this.brandDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
+		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
+		this.count 	= !(aliasToIndexMap.get(COUNT_ALIAS) == null)
 						  ? ((Number) tuple[aliasToIndexMap.get(COUNT_ALIAS)]).longValue()
 						  : new Long(0);
 	}
 
-	public BrandFacetViewDTO(String brandCode, String brandDesc, String locale) {
+	public BrandFacetViewDTO(String brandCode, String brandDesc, String locale, Long count) {
 		super();
 		this.brandCode = brandCode;
 		this.brandDesc = brandDesc;
 		this.locale = locale;
+		this.count = count;
 	}
 
 	public String getBrandCode() {
@@ -53,6 +54,7 @@ public class BrandFacetViewDTO implements ISearchDimension, Serializable {
 		return locale;
 	}
 
+	@Override
 	public Long getCount() {
 		return count;
 	}

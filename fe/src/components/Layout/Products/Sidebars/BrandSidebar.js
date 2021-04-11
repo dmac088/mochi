@@ -38,7 +38,7 @@ function BrandSidebar(props) {
                         setObjectState((prevState) => ({
                             ...prevState,
                             brandFacets: (response.data._embedded)
-                                ? response.data._embedded.brandFacetResources
+                                ? response.data._embedded.brandSearchFacetResources
                                 : [],
                         }));
                     }
