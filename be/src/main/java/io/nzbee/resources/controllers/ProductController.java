@@ -94,7 +94,7 @@ public class ProductController {
 	@Autowired
 	private PagedResourcesAssembler<PhysicalProductLightResource> prodPhysicalPagedAssembler;
 
-	@GetMapping(value = "/Product/Physical/{locale}/{currency}/category/{categoryCode}")
+	@GetMapping(value = "/Product/Physical/{locale}/{currency}/Category/Code/{code}")
 	public ResponseEntity<BrowseProductResultDto> getPhysicalProducts(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String categoryCode,
 			@RequestParam(value = "page", defaultValue = "0") String page,
@@ -146,7 +146,7 @@ public class ProductController {
 		return new ResponseEntity<byte[]>(HttpStatus.NOT_FOUND);
 	}
 
-	@PostMapping(value = "/Product/{locale}/{currency}/category/{categoryCode}", params = { "page", "size", "sort" })
+	@PostMapping(value = "/Product/{locale}/{currency}/Category/Code/{code}", params = { "page", "size", "sort" })
 	public ResponseEntity<BrowseProductResultDto> getProducts(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String categoryCode, @RequestParam("page") String page,
 			@RequestParam("size") String size, @RequestParam("sort") String sort,

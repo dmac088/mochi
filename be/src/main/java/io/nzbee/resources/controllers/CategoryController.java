@@ -78,7 +78,7 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
-	@GetMapping("/Category/{locale}/{currency}/code/{categoryCode}")
+	@GetMapping("/Category/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<CategoryResource> getCategory(@PathVariable String locale,
 			@PathVariable String categoryCode) {
 		LOGGER.debug("Fetching category for parameters : {}, {}, {}", locale, categoryCode);
@@ -86,7 +86,7 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryResourceAssember.toModel(c));
 	}
 
-	@PostMapping("/Category/{locale}/{currency}/code/{categoryCode}")
+	@PostMapping("/Category/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getChildCategories(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String categoryCode,
 			@RequestBody Set<IFacet> selectedFacets) {
