@@ -108,17 +108,20 @@ function Products(props) {
             query.size !== prevSize ||
             query.sort !== prevSort ||
             query.q    !== prevQuery)) {
-                console.log(discovery.links)
+            
+                if(currentCategory) {
+                    console.log(currentCategory);
+                }
 
             axios.post(
                 (type === 'browse') 
-                ? discovery.links.getProducts.href
+                ? currentCategory._links.products.href
                 : discovery.links.searchProduct.href.replace('{code}', rootNode.data.categoryCode).replace('{q}', query.q),
                 stateObject.selectedFacets.map(f => f.data))
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
-                            ...prevState, 
+                            ...prevState,
                             page: response.data.products.page,
                             products: (response.data.products._embedded) 
                                         ? response.data.products._embedded.physicalProductLightResources

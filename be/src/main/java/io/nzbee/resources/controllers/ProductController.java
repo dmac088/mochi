@@ -3,7 +3,6 @@ package io.nzbee.resources.controllers;
 import java.io.IOException;
 import java.io.InputStream;
 import java.security.Principal;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -94,34 +93,7 @@ public class ProductController {
 	@Autowired
 	private PagedResourcesAssembler<PhysicalProductLightResource> prodPhysicalPagedAssembler;
 
-	@GetMapping(value = "/Product/Physical/{locale}/{currency}/Category/Code/{code}")
-	public ResponseEntity<BrowseProductResultDto> getPhysicalProducts(@PathVariable String locale,
-			@PathVariable String currency, @PathVariable String code,
-			@RequestParam(value = "page", defaultValue = "0") String page,
-			@RequestParam(value = "size", defaultValue = "10") String size,
-			@RequestParam(value = "sort", defaultValue = "10") String sort) {
-
-		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, code, page,
-				size);
-
-		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(
-																						locale, 
-																						currency,
-																						code, 
-																						new HashSet<String>(),
-																						new HashSet<String>(), 
-																						new HashSet<String>(),
-																						null, 
-																						page, 
-																						size, 
-																						sort);
-
-		Page<PhysicalProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
-
-		return ResponseEntity.ok(new BrowseProductResultDto(prodPhysicalPagedAssembler.toModel(pages)));
-	}
-
-	@GetMapping("/Product/{locale}/{currency}/code/{code}")
+	@GetMapping("/Product/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<PhysicalProductFullResource> get(@PathVariable String locale, @PathVariable String currency,
 			@PathVariable String code) {
 		PhysicalProductFullResource pr = prodFullResourceAssembler.toModel(
@@ -147,13 +119,15 @@ public class ProductController {
 	}
 
 	@PostMapping(value = "/Product/{locale}/{currency}/Category/Code/{code}", params = { "page", "size", "sort" })
-	public ResponseEntity<BrowseProductResultDto> getProducts(@PathVariable String locale,
-			@PathVariable String currency, @PathVariable String code, @RequestParam("page") String page,
-			@RequestParam("size") String size, @RequestParam("sort") String sort,
-			@RequestBody Set<IFacet> selectedFacets) {
+	public ResponseEntity<BrowseProductResultDto> getProducts(	@PathVariable String locale,
+																@PathVariable String currency, 
+																@PathVariable String code, 
+																@RequestParam("page") String page,
+																@RequestParam("size") String size, 
+																@RequestParam("sort") String sort,
+																@RequestBody Set<IFacet> selectedFacets) {
 
-		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale,
-				currency, code, page, size, sort, selectedFacets.size());
+		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale, currency, code, page, size, sort, selectedFacets.size());
 
 		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price"))
 				.map(p -> p.getId()).findFirst();
@@ -177,16 +151,14 @@ public class ProductController {
 		return ResponseEntity.ok(new BrowseProductResultDto(prodPhysicalPagedAssembler.toModel(pages)));
 	}
 
-	@GetMapping(value = "/Product/Shipping/Provider/{locale}/{currency}/Code/{providerCode}")
+	@GetMapping(value = "/Product/Shipping/Provider/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<ShippingTypeResource> getShippingType(@PathVariable String locale,
-
-			@PathVariable String currency,
- 
-			@PathVariable String providerCode) {
-		LOGGER.debug("Fetching shipping destination for parameters : {}, {}, {}", locale, currency, providerCode);
+																@PathVariable String currency,
+																@PathVariable String code) {
+		LOGGER.debug("Fetching shipping destination for parameters : {}, {}, {}", locale, currency, code);
 
 		ShippingTypeResource sd = shippingTypeResourceAssembler
-				.toModel(shippingProductService.findTypeByCode(locale, providerCode).get());
+				.toModel(shippingProductService.findTypeByCode(locale, code).get());
 
 		return new ResponseEntity<ShippingTypeResource>(sd, HttpStatus.OK);
 
@@ -205,10 +177,8 @@ public class ProductController {
 	}
 
 	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingDestinations(
-			@PathVariable String locale,
-
-			@PathVariable String currency, Principal principal) {
+	public ResponseEntity<CollectionModel<ShippingDestinationResource>> getShippingDestinations(@PathVariable String locale,
+																								@PathVariable String currency, Principal principal) {
 
 		LOGGER.debug("call ProductController.getShippingDestinations : {}, {}", locale, currency);
 
@@ -221,9 +191,8 @@ public class ProductController {
 	}
 
 	@GetMapping(value = "/Product/Shipping/Type/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypes(@PathVariable String locale,
-
-			@PathVariable String currency) {
+	public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypes(	@PathVariable String locale,
+																					@PathVariable String currency) {
 
 		LOGGER.debug("call ProductController.getShippingTypes : {}, {}", locale, currency);
 
@@ -232,48 +201,41 @@ public class ProductController {
 		return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
 	}
 
-	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/Code/{destinationCode}")
-	public ResponseEntity<ShippingDestinationResource> getShippingDestination(@PathVariable String locale,
-
-			@PathVariable String currency,
-
-			@PathVariable String destinationCode) {
-		LOGGER.debug("Fetching shipping destination for parameters : {}, {}, {}", locale, currency, destinationCode);
+	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/Code/{code}")
+	public ResponseEntity<ShippingDestinationResource> getShippingDestination(	@PathVariable String locale,
+																				@PathVariable String currency,
+																				@PathVariable String code) {
+		LOGGER.debug("Fetching shipping destination for parameters : {}, {}, {}", locale, currency, code);
 
 		ShippingDestinationResource sd = shippingDestinationResourceAssembler.toModel(
-				shippingProductService.findDestinationByCode(locale, destinationCode).get());
+				shippingProductService.findDestinationByCode(locale, code).get());
 
 		return new ResponseEntity<ShippingDestinationResource>(sd, HttpStatus.OK);
 
 	}
 
-	@GetMapping(value = "/Product/Shipping/Type/{locale}/{currency}/Destination/Code/{destinationCode}")
-	public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypesByDestination(
-			@PathVariable String locale,
+	@GetMapping(value = "/Product/Shipping/Type/{locale}/{currency}/Destination/Code/{code}")
+	public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypesByDestination(	@PathVariable String locale,
+																								@PathVariable String currency,
+																								@PathVariable String code, 
+																								Principal principal) {
 
-			@PathVariable String currency,
-
-			@PathVariable String destinationCode, Principal principal) {
-
-		LOGGER.debug("call ProductController.getShippingTypesByDestination : {}, {}, {}", locale, currency,
-				destinationCode);
+		LOGGER.debug("call ProductController.getShippingTypesByDestination : {}, {}, {}", locale, currency, code);
 
 		Bag b = bagService.findByCode(locale, currency, principal.getName());
 
-		List<ShippingTypeView> sp = shippingProductService.findAllTypesByDestinationAndWeight(locale, destinationCode, b.getTotalWeight());
+		List<ShippingTypeView> sp = shippingProductService.findAllTypesByDestinationAndWeight(locale, code, b.getTotalWeight());
 
 		return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
 	}
 
 	
 	@GetMapping("/Product/{locale}/{currency}/Destination/{code}/Type/{type}")
-	public ResponseEntity<ShippingProductResource> getByDestinationAndType(@PathVariable String locale,
-
-			@PathVariable String currency,
-
-			@PathVariable String code,
-
-			@PathVariable String type, Principal principal) {
+	public ResponseEntity<ShippingProductResource> getByDestinationAndType(	@PathVariable String locale,
+																			@PathVariable String currency,
+																			@PathVariable String code,
+																			@PathVariable String type, 
+																			Principal principal) {
 		Bag b = bagService.findByCode(locale, currency, principal.getName());
  
 		ShippingProductResource pr = prodShippingResourceAssembler

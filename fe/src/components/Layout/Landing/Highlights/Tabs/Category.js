@@ -71,9 +71,11 @@ function Category(props) {
     return ref.current;
   }
 
+  
   useEffect(() => {
     let isSubscribed = true;
-    axios.get(category._links.products.href)
+    console.log(category._links.products.href);
+    axios.post(category._links.products.href, [])
       .then((response) => {
         if (isSubscribed) {
           setObjectState((prevState) => ({
@@ -89,7 +91,7 @@ function Category(props) {
   useEffect(() => {
     let isSubscribed = true;
     if (prevParams && (lang !== prevParams.lang || curr !== prevParams.curr)) {
-      axios.get(category._links.products.href)
+      axios.post(category._links.products.href, [])
         .then((response) => {
           if (isSubscribed) {
             setObjectState((prevState) => ({
