@@ -50,8 +50,6 @@ function Highlights(props) {
     }) 
   }
 
-
-
   const renderCategoryTabs = (categories, props) => {
     if(!categories) { return null; }
     return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map((c, index) => {

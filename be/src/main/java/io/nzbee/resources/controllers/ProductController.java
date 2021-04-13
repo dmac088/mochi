@@ -96,18 +96,18 @@ public class ProductController {
 
 	@GetMapping(value = "/Product/Physical/{locale}/{currency}/Category/Code/{code}")
 	public ResponseEntity<BrowseProductResultDto> getPhysicalProducts(@PathVariable String locale,
-			@PathVariable String currency, @PathVariable String categoryCode,
+			@PathVariable String currency, @PathVariable String code,
 			@RequestParam(value = "page", defaultValue = "0") String page,
 			@RequestParam(value = "size", defaultValue = "10") String size,
 			@RequestParam(value = "sort", defaultValue = "10") String sort) {
 
-		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, categoryCode, page,
+		LOGGER.debug("Fetching products for parameters : {}, {}, {}, {}, {}", locale, currency, code, page,
 				size);
 
 		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(
 																						locale, 
 																						currency,
-																						categoryCode, 
+																						code, 
 																						new HashSet<String>(),
 																						new HashSet<String>(), 
 																						new HashSet<String>(),
@@ -148,12 +148,12 @@ public class ProductController {
 
 	@PostMapping(value = "/Product/{locale}/{currency}/Category/Code/{code}", params = { "page", "size", "sort" })
 	public ResponseEntity<BrowseProductResultDto> getProducts(@PathVariable String locale,
-			@PathVariable String currency, @PathVariable String categoryCode, @RequestParam("page") String page,
+			@PathVariable String currency, @PathVariable String code, @RequestParam("page") String page,
 			@RequestParam("size") String size, @RequestParam("sort") String sort,
 			@RequestBody Set<IFacet> selectedFacets) {
 
 		LOGGER.debug("call ProductController.getProducts with parameters : {}, {}, {}, {}, {}, {}, {}", locale,
-				currency, categoryCode, page, size, sort, selectedFacets.size());
+				currency, code, page, size, sort, selectedFacets.size());
 
 		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price"))
 				.map(p -> p.getId()).findFirst();
@@ -163,7 +163,7 @@ public class ProductController {
 		}
 
 		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(locale, currency,
-				categoryCode,
+				code,
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category"))
 						.map(c -> c.getValue()).collect(Collectors.toSet()),
 				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand"))
