@@ -29,6 +29,6 @@ public class DiscoveryResource extends RepresentationModel<DiscoveryResource> {
 		this.add(linkTo(methodOn(BagController.class).getCustomerBag(null, null, null)).withRel("getBag"));
 		this.add(new Link(rootURL + "/oauth/token").withRel("accessTokens"));
 
-	}
+	}  
 
 }
