@@ -5,8 +5,6 @@ import java.util.Optional;
 import io.nzbee.entity.IService;
 
 public interface IShippingTypeService extends IService<ShippingTypeEntity> {
-	
-	Optional<ShippingTypeDTO> findByDesc(String locale, String desc);
 
 	Optional<ShippingTypeDTO> findByCode(String locale, String code);
 

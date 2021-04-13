@@ -23,12 +23,8 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 	
 	@Override
 	public List<ShippingTypeDTO> findAll(String locale, String destinationCode, Double bagWeight) {
+		LOGGER.debug("call ShippingTypeServiceImpl.findAll() with parameters {}, {}, {}", locale, destinationCode, bagWeight);
 		return shippingTypeRepository.findAllByDestinationCodeAndBagWeight(locale, destinationCode, bagWeight);
-	}
-
-	@Override
-	public Optional<ShippingTypeDTO> findByDesc(String locale, String desc) {
-		return shippingTypeRepository.findByDesc(locale, desc);
 	}
 
 	@Override
@@ -39,26 +35,31 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 
 	@Override
 	public Optional<ShippingTypeEntity> findById(Long id) {
+		LOGGER.debug("call ShippingTypeServiceImpl.findById() with parameters {}", id);
 		return shippingTypeRepository.findById(id);
 	}
 
 	@Override
 	public Optional<ShippingTypeEntity> findByCode(String code) {
+		LOGGER.debug("call ShippingTypeServiceImpl.findByCode() with parameters {}", code);
 		return shippingTypeRepository.findByShippingTypeCode(code);
 	}
 
 	@Override
 	public void save(ShippingTypeEntity t) {
+		LOGGER.debug("call ShippingTypeServiceImpl.save()");
 		shippingTypeRepository.save(t);
 	}
 
 	@Override
 	public void update(ShippingTypeEntity t) {
+		LOGGER.debug("call ShippingTypeServiceImpl.update()");
 		shippingTypeRepository.save(t);
 	}
 
 	@Override
 	public void delete(ShippingTypeEntity t) {
+		LOGGER.debug("call ShippingTypeServiceImpl.delete()");
 		shippingTypeRepository.delete(t);
 	}
 
