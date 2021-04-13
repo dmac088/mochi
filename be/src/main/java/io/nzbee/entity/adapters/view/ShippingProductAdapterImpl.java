@@ -42,14 +42,6 @@ public class ShippingProductAdapterImpl  implements IShippingProductPortService 
 				.stream().map(sd -> shippingDestinationMapper.DTOToView(sd)).collect(Collectors.toList());
 	}
 
-
-	@Override
-	public List<ShippingTypeView> findAll(String locale) {
-		return shippingTypeService.findAll(locale)
-				.stream().map(st -> shippingTypeMapper.DTOToView(st)).collect(Collectors.toList());
-	}
-
-
 	@Override
 	public Optional<ShippingTypeView> findTypeByCode(String locale, String providerCode) {
 		return Optional.ofNullable(shippingTypeMapper.DTOToView(shippingTypeService.findByCode(locale, providerCode).get()));
