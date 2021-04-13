@@ -2,10 +2,13 @@ package io.nzbee.entity.product.shipping.type;
 
 import java.util.List;
 import java.util.Optional;
+import io.nzbee.entity.IService;
 
-import io.nzbee.entity.ILightLocalizedService;
+public interface IShippingTypeService extends IService<ShippingTypeEntity> {
+	
+	Optional<ShippingTypeDTO> findByDesc(String locale, String desc);
 
-public interface IShippingTypeService extends ILightLocalizedService<ShippingTypeDTO, ShippingTypeEntity> {
+	Optional<ShippingTypeDTO> findByCode(String locale, String code);
 
 	List<ShippingTypeDTO> findAll(String locale, String destiantionCode);
 
@@ -15,5 +18,4 @@ public interface IShippingTypeService extends ILightLocalizedService<ShippingTyp
 
 	Optional<ShippingTypeEntity> findById(Long id);
 
-	
 }

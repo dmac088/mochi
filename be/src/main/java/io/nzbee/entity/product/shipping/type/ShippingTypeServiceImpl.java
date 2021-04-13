@@ -2,23 +2,19 @@ package io.nzbee.entity.product.shipping.type;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import io.nzbee.entity.StringCollectionWrapper;
 
 @Service
 public class ShippingTypeServiceImpl implements IShippingTypeService {
 
+	private final Logger LOGGER = LoggerFactory.getLogger(ShippingTypeServiceImpl.class);
+	
 	@Autowired
 	private IShippingTypeRepository shippingTypeRepository;
-	
-	@Override
-	public List<ShippingTypeDTO> findAll(String locale) {
-		return shippingTypeRepository.findAll(locale);
-	}
 	
 	@Override
 	public List<ShippingTypeDTO> findAll(String locale, String destinationCode) {
@@ -31,30 +27,13 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 	}
 
 	@Override
-	public List<ShippingTypeDTO> findAll(String locale, StringCollectionWrapper codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<ShippingTypeEntity> findAll(Set<String> codes) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public Optional<ShippingTypeDTO> findById(String locale, Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public Optional<ShippingTypeDTO> findByDesc(String locale, String desc) {
 		return shippingTypeRepository.findByDesc(locale, desc);
 	}
 
 	@Override
 	public Optional<ShippingTypeDTO> findByCode(String locale, String code) {
+		LOGGER.debug("call ShippingTypeServiceImpl.findByCode() with parameters {}, {}", locale, code);
 		return shippingTypeRepository.findByCode(locale, code);
 	}
 
@@ -75,14 +54,12 @@ public class ShippingTypeServiceImpl implements IShippingTypeService {
 
 	@Override
 	public void update(ShippingTypeEntity t) {
-		// TODO Auto-generated method stub
-		
+		shippingTypeRepository.save(t);
 	}
 
 	@Override
 	public void delete(ShippingTypeEntity t) {
-		// TODO Auto-generated method stub
-		
+		shippingTypeRepository.delete(t);
 	}
 
 
