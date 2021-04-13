@@ -109,10 +109,6 @@ function Products(props) {
             query.sort !== prevSort ||
             query.q    !== prevQuery)) {
             
-                if(currentCategory) {
-                    console.log(currentCategory);
-                }
-
             axios.post(
                 (type === 'browse') 
                 ? currentCategory._links.products.href
