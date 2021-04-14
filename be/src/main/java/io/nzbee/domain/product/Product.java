@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import io.nzbee.domain.category.ProductCategory;
-import io.nzbee.domain.department.Department;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.tag.Tag;
 
@@ -31,13 +30,15 @@ public abstract class Product {
 	
 	private String currency;
 	
-	protected String productType;
+	private String productType;
+	
+	private String departmentCode;
+	
+	private String departmentDesc;
 
 	private List<ProductCategory> categories;
 	
 	private List<Promotion> promotions;
-
-	private Department department;
 	
 	private List<Tag> tags;
 	
@@ -51,7 +52,6 @@ public abstract class Product {
 				   	String 			productImage,
 				   	String 			lclCd,
 				   	String 			currency,
-				   	Department 		department,
 				   	List<ProductCategory> productCategories,
 				   	List<Promotion> productPromotions) {
 		
@@ -63,7 +63,6 @@ public abstract class Product {
 					this.productImage = productImage;
 					this.lclCd = lclCd;
 					this.currency = currency;
-					this.department = department;
 					this.tags = new ArrayList<Tag>();
 					this.categories = productCategories;
 					this.promotions	= productPromotions;
@@ -77,10 +76,6 @@ public abstract class Product {
 	
 	public List<ProductCategory> getCategories() {
 		return categories;
-	}
-
-	public Department getDepartment() {
-		return department;
 	}
 	
 	public String getProductUPC() {
@@ -123,6 +118,14 @@ public abstract class Product {
 		return productType;
 	}
 	
+	public String getDepartmentCode() {
+		return departmentCode;
+	}
+
+	public String getDepartmentDesc() {
+		return departmentDesc;
+	}
+
 	public void addTag(Tag t) {
 		tags.add(t);
 	}

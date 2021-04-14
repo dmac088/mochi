@@ -27,8 +27,6 @@ import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
-import io.nzbee.entity.product.department.DepartmentEntity;
-import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.physical.PhysicalProductDomainObjectDTO;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.product.price.IProductPriceService;
@@ -58,9 +56,6 @@ public class ProductAdapter implements IProductPortService {
 
 	@Autowired
 	private IProductPriceService productPriceService;
-
-	@Autowired
-	private IDepartmentService departmentService;
 
 	@Autowired
 	private ICategoryService categoryService;
@@ -146,9 +141,6 @@ public class ProductAdapter implements IProductPortService {
 			PhysicalProductEntity product = (op.isPresent()) 
 					? (PhysicalProductEntity) op.get()
 					: new PhysicalProductEntity();
-
-			// find the department
-			DepartmentEntity d = departmentService.findByCode(domainObject.getDepartment().getDepartmentCode()).get();
 			
 			// get all the categories
 			Set<CategoryProductEntity> lcp = 
@@ -210,7 +202,6 @@ public class ProductAdapter implements IProductPortService {
 
 			product.setProductUPC(domainObject.getProductUPC());
 			product.setProductCreateDt(domainObject.getProductCreateDt());
-			product.setDepartment(d);
 			lcp.forEach(c -> {
 				product.addCategory(c);
 			});

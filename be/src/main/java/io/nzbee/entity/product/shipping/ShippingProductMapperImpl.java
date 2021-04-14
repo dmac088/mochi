@@ -6,14 +6,10 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
-import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.promotion.IPromotionMapper;
 
 @Component(value="shippingProductMapper")
 public class ShippingProductMapperImpl implements IShippingProductMapper {
-	
-	@Autowired
-	private IDepartmentMapper departmentMapper;
 	
 	@Autowired
 	private ICategoryProductMapper categoryProductMapper;
@@ -35,7 +31,6 @@ public class ShippingProductMapperImpl implements IShippingProductMapper {
 			   	dto.getLocale(),
 			   	dto.getCurrency(),
 			   	true,
-			   	departmentMapper.DTOToDo(dto.getDepartment()),
 			   	dto.getCategories().stream().map(c -> categoryProductMapper.DTOToDo(c)).collect(Collectors.toList()),
 			   	dto.getPromotions().stream().map(promo -> promotionMapper.DTOToDo(promo)).collect(Collectors.toList()),
 			   	new Double(((ShippingProductDTO) dto).getWeightLimit()),

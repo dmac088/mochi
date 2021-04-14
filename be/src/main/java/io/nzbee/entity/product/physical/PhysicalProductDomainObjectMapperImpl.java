@@ -6,15 +6,10 @@ import org.springframework.stereotype.Component;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.entity.category.product.ICategoryProductMapper;
-import io.nzbee.entity.product.department.IDepartmentMapper;
 import io.nzbee.entity.promotion.IPromotionMapper;
 
 @Component(value="physicalProductMapper")
 public class PhysicalProductDomainObjectMapperImpl implements IPhysicalProductDomainObjectMapper {
-	
-	
-	@Autowired
-	private IDepartmentMapper departmentMapper;
 	
 	@Autowired
 	private ICategoryProductMapper categoryProductMapper;
@@ -37,7 +32,6 @@ public class PhysicalProductDomainObjectMapperImpl implements IPhysicalProductDo
 			   	dto.getCurrency(),
 			   	dto.isInStock(),
 			   	dto.getWeight(),
-			   	departmentMapper.DTOToDo(dto.getDepartment()),
 			   	dto.getCategories().stream().map(c -> categoryProductMapper.DTOToDo(c)).collect(Collectors.toList()),
 			   	dto.getPromotions().stream().map(promo -> promotionMapper.DTOToDo(promo)).collect(Collectors.toList()));
 	}

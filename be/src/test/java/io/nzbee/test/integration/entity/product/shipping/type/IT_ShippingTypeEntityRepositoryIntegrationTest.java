@@ -114,18 +114,6 @@ public class IT_ShippingTypeEntityRepositoryIntegrationTest {
 		assertFoundDTO(found);
 	}
 
-	@Test
-	@Rollback(false)
-	public void whenFindByDesc_thenReturnShippingTypeDTO() {
-
-		// when
-		Optional<ShippingTypeDTO> found = shippingTypeService.findByDesc(Constants.localeENGB, "Test localized shipping type description");
-
-		// then
-		assertFoundDTO(found);
-	}
-
-
 	private void assertFoundEntity(Optional<ShippingTypeEntity> found) {
 
 		assertNotNull(found);

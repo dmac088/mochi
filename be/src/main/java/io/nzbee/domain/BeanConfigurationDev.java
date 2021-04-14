@@ -14,8 +14,6 @@ import io.nzbee.domain.customer.CustomerServiceImpl;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.customer.address.AddressServiceImpl;
 import io.nzbee.domain.customer.address.IAddressService;
-import io.nzbee.domain.department.DepartmentServiceImpl;
-import io.nzbee.domain.department.IDepartmentService;
 import io.nzbee.domain.product.IProductService;
 import io.nzbee.domain.product.ProductServiceImpl;
 import io.nzbee.domain.product.physical.IPhysicalProductService;
@@ -161,11 +159,6 @@ public class BeanConfigurationDev {
     @Bean
     public ICustomerService customerService() {
         return new CustomerServiceImpl();
-    }
-    
-    @Bean
-    public IDepartmentService departmentService() {
-        return new DepartmentServiceImpl();
     }
     
     @Bean

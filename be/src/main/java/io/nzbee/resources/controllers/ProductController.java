@@ -190,17 +190,6 @@ public class ProductController {
 		return ResponseEntity.ok(shippingDestinationResourceAssembler.toCollectionModel(sp));
 	}
 
-	@GetMapping(value = "/Product/Shipping/Type/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<ShippingTypeResource>> getShippingTypes(	@PathVariable String locale,
-																					@PathVariable String currency) {
-
-		LOGGER.debug("call ProductController.getShippingTypes : {}, {}", locale, currency);
-
-		List<ShippingTypeView> sp = shippingProductService.findAll(locale);
-
-		return ResponseEntity.ok(shippingTypeResourceAssembler.toCollectionModel(sp));
-	}
-
 	@GetMapping(value = "/Product/Shipping/Destination/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<ShippingDestinationResource> getShippingDestination(	@PathVariable String locale,
 																				@PathVariable String currency,
