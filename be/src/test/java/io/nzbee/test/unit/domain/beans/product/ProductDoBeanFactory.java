@@ -12,15 +12,11 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.test.unit.domain.beans.category.ICategoryDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.department.IDepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
 
 @Service
 @Profile(value = "ut")
 public class ProductDoBeanFactory implements IProductDoBeanFactory {
-
-	@Autowired 
-	private IDepartmentDoBeanFactory departmentDoBeanFactory;
 	
 	@Autowired 
 	private ICategoryDoBeanFactory categoryDoBeanFactory;
@@ -43,7 +39,6 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   Constants.currencyHKD,
 								   true,
 								   new Double(0.72),
-								   departmentDoBeanFactory.getBean(),
 								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
@@ -63,7 +58,6 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   Constants.currencyHKD,
 								   false,
 								   new Double(0.52),
-								   departmentDoBeanFactory.getBean(),
 								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
