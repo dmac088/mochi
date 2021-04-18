@@ -3,26 +3,22 @@ package io.nzbee.resources.category;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
-import io.nzbee.domain.category.Category;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.controllers.ProductController;
-//import io.nzbee.resources.controllers.ProductController;
 import io.nzbee.resources.controllers.TagController;
+import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class CategoryResourceAssembler extends RepresentationModelAssemblerSupport<Category, CategoryResource> {
+public class CategoryResourceAssembler extends RepresentationModelAssemblerSupport<ProductCategoryView, CategoryResource> {
 
 	public CategoryResourceAssembler() {
 		super(CategoryController.class, CategoryResource.class);
 	}
 
 	@Override
-	public CategoryResource toModel(Category category) {
+	public CategoryResource toModel(ProductCategoryView category) {
 		CategoryResource cr = new CategoryResource(category);
-
-		cr.add(linkTo(methodOn(CategoryController.class).getCategory(category.getLocale(),
-				category.getCategoryCode())).withSelfRel());
 
 		if (category.getCategoryType().equals("brandcategory")) {
 			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), null,

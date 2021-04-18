@@ -3,8 +3,6 @@ package io.nzbee.search.facet;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import io.nzbee.domain.category.BrandCategory;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.tag.Tag;
@@ -15,23 +13,12 @@ public class FacetContainer {
 	
 	private Set<IFacet> facets = new HashSet<IFacet>();
 
-	//@JsonIgnore
 	public Set<IFacet> getFacets() {
 		return facets;
 	}
 
 	public Set<IFacet> getProductCategories() {
 		return this.facets.stream()
-				.filter(f -> 
-				f.getObjectType().equals(ProductCategory.class.getSimpleName()))
-				.map(f -> (IFacet) f)
-				.collect(Collectors.toSet());
-	}
-	
-	public Set<IFacet> getBrandCategories() {
-		return this.facets.stream()
-				.filter(f -> 
-				f.getObjectType().equals(BrandCategory.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toSet());
 	}

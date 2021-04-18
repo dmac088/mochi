@@ -8,8 +8,6 @@ import io.nzbee.domain.bag.BagItemServiceImpl;
 import io.nzbee.domain.bag.BagServiceImpl;
 import io.nzbee.domain.bag.IBagItemService;
 import io.nzbee.domain.bag.IBagService;
-import io.nzbee.domain.category.CategoryServiceImpl;
-import io.nzbee.domain.category.ICategoryService;
 import io.nzbee.domain.customer.CustomerServiceImpl;
 import io.nzbee.domain.customer.ICustomerService;
 import io.nzbee.domain.customer.address.AddressServiceImpl;
@@ -29,12 +27,14 @@ import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.entity.adapters.view.BrandAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
+import io.nzbee.entity.adapters.view.ProductCategoryAdapterImpl;
 import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.view.ports.IBrandViewPortService;
+import io.nzbee.view.ports.ICategoryViewPortService;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.ports.IShippingProductPortService;
@@ -50,6 +50,11 @@ import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
 @Configuration
 @Profile("dev")
 public class BeanConfigurationDev {
+	
+	@Bean
+	public ICategoryViewPortService productCategoryPortService() {
+		return new ProductCategoryAdapterImpl();
+	}
 	
 	@Bean
 	public io.nzbee.entity.brand.view.facet.IBrandFacetViewMapper brandFacetViewMapper() { 
@@ -139,11 +144,6 @@ public class BeanConfigurationDev {
     @Bean
     public IShippingProductService shippingProductService() {
         return new ShippingProductServiceImpl();
-    }
-    
-    @Bean
-    public ICategoryService categoryService() {
-        return new CategoryServiceImpl();
     }
     
     @Bean

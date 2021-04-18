@@ -25,14 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Constants;
 import io.nzbee.Globals;
-import io.nzbee.domain.category.CategoryServiceImpl;
-import io.nzbee.entity.adapters.domain.CategoryAdapter;
-import io.nzbee.entity.category.CategoryMapperImpl;
+import io.nzbee.entity.adapters.view.ProductCategoryAdapterImpl;
 import io.nzbee.entity.category.brand.CategoryBrandDaoImpl;
-import io.nzbee.entity.category.brand.CategoryBrandMapperImpl;
 import io.nzbee.entity.category.brand.CategoryBrandServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductDaoImpl;
-import io.nzbee.entity.category.product.CategoryProductMapperImpl;
 import io.nzbee.entity.category.product.CategoryProductServiceImpl;
 import io.nzbee.resources.category.CategoryFacetMapper;
 import io.nzbee.resources.category.CategoryFacetResourceAssembler;
@@ -47,15 +43,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc(/*addFilters = false*/)
 @ContextConfiguration(classes = {CategoryController.class, 
-							     CategoryServiceImpl.class,
-							     CategoryAdapter.class,
+							     ProductCategoryAdapterImpl.class,
 							     CategoryProductServiceImpl.class,
 							     CategoryProductDaoImpl.class,
 							     CategoryBrandServiceImpl.class,
 							     CategoryBrandDaoImpl.class,
-							     CategoryMapperImpl.class,
-							     CategoryProductMapperImpl.class,
-							     CategoryBrandMapperImpl.class,
 							     CategoryResourceAssembler.class,  
 							     CategoryFacetMapper.class,
 							     CategoryFacetResourceAssembler.class,
@@ -64,7 +56,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 							     SecurityBeanConfiguration.class,
 							     Globals.class,
 							     JavaMailSender.class,
-							     io.nzbee.domain.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
 							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
 							     io.nzbee.entity.DataSourceBeanMochi.class,

@@ -2,7 +2,6 @@ package io.nzbee.domain.product.physical;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 
@@ -24,7 +23,6 @@ public class PhysicalProduct extends Product {
 						   	 String currency,
 						   	 Boolean inStock,
 						   	 Double weight,
-						   	 List<ProductCategory> productCategories,
 						   	 List<Promotion> productPromotions) {
 	
 		super(productUPC,
@@ -37,7 +35,6 @@ public class PhysicalProduct extends Product {
 			  productImage,
 			  lclCd,
 			  currency,
-			  productCategories,
 			  productPromotions);
 		
 		this.inStock 	 = inStock;

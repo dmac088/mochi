@@ -1,17 +1,17 @@
 package io.nzbee.resources.category;
 
 import org.springframework.hateoas.RepresentationModel;
-import io.nzbee.domain.category.Category;
+import io.nzbee.view.category.product.ProductCategoryView;
 
 public class CategoryResource extends RepresentationModel<CategoryResource>  {
 	
-	private final Category data;
+	private final ProductCategoryView data;
 	
-	public CategoryResource(Category category) {
+	public CategoryResource(ProductCategoryView category) {
 		this.data = category;
 	}
 
-	public Category getData() {
+	public ProductCategoryView getData() {
 		return data;
 	}
 	

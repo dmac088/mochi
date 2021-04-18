@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.tag.Tag;
 
@@ -36,8 +35,6 @@ public abstract class Product {
 	
 	private String departmentDesc;
 
-	private List<ProductCategory> categories;
-	
 	private List<Promotion> promotions;
 	
 	private List<Tag> tags;
@@ -52,7 +49,6 @@ public abstract class Product {
 				   	String 			productImage,
 				   	String 			lclCd,
 				   	String 			currency,
-				   	List<ProductCategory> productCategories,
 				   	List<Promotion> productPromotions) {
 		
 					this.productUPC = productUPC;
@@ -64,7 +60,6 @@ public abstract class Product {
 					this.lclCd = lclCd;
 					this.currency = currency;
 					this.tags = new ArrayList<Tag>();
-					this.categories = productCategories;
 					this.promotions	= productPromotions;
 					this.productStatus = productStatus;
 					this.productLongDesc = productLongDesc;
@@ -72,10 +67,6 @@ public abstract class Product {
 
 	public String getProductStatus() {
 		return productStatus;
-	}
-	
-	public List<ProductCategory> getCategories() {
-		return categories;
 	}
 	
 	public String getProductUPC() {

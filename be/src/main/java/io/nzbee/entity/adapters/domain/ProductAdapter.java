@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,8 +13,6 @@ import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.product.shipping.ShippingProduct;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductMapper;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.promotion.IPromotionService;
@@ -56,9 +53,6 @@ public class ProductAdapter implements IProductPortService {
 
 	@Autowired
 	private IProductPriceService productPriceService;
-
-	@Autowired
-	private ICategoryService categoryService;
 	
 	@Autowired
 	private ITagService tagService;
@@ -142,11 +136,6 @@ public class ProductAdapter implements IProductPortService {
 					? (PhysicalProductEntity) op.get()
 					: new PhysicalProductEntity();
 			
-			// get all the categories
-			Set<CategoryProductEntity> lcp = 
-					categoryService.findAll(domainObject.getCategories().stream().map(cc -> cc.getCategoryCode()).collect(Collectors.toSet()))
-																		.stream().map(cd -> (CategoryProductEntity) Hibernate.unproxy(cd)).collect(Collectors.toSet());
-			
 			//get all the tags
 			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
 			List<TagEntity> tags = tagService.findAll(tagCodes);	
@@ -202,9 +191,7 @@ public class ProductAdapter implements IProductPortService {
 
 			product.setProductUPC(domainObject.getProductUPC());
 			product.setProductCreateDt(domainObject.getProductCreateDt());
-			lcp.forEach(c -> {
-				product.addCategory(c);
-			});
+			
 			//product.setBrand(b);
 			tags.forEach(t -> {
 				product.addTag(t);

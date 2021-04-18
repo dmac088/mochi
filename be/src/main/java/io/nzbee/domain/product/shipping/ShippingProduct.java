@@ -2,7 +2,6 @@ package io.nzbee.domain.product.shipping;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 
@@ -34,7 +33,6 @@ public class ShippingProduct extends Product {
 							String lclCd,
 							String currency, 
 							boolean inStock,
-							List<ProductCategory> productCategories, 
 							List<Promotion> productPromotions,
 							Double weightLimit,
 							Double weightFrom,
@@ -54,7 +52,6 @@ public class ShippingProduct extends Product {
 				productImage, 
 				lclCd, 
 				currency,
-				productCategories, 
 				productPromotions);
 		
 		this.weightLimit 				= 	weightLimit;
