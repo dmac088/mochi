@@ -58,7 +58,7 @@ public class CategoryController {
 	@GetMapping("/Category/Product/{locale}/{currency}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale);
-		final List<ProductCategoryView> collection = categoryService.findAllProductCategories(locale);
+		final List<ProductCategoryView> collection = categoryService.findAll(locale);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
