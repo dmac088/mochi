@@ -20,7 +20,7 @@ public class ProductCategoryAdapterImpl implements ICategoryViewPortService {
 	@Override
 	public List<ProductCategoryView> findAll(String locale) {
 		return categoryService.findAll(locale)
-				.stream().map(c -> ((ProductCategoryView) categoryMapper.toView(c))).collect(Collectors.toList());
+				.stream().map(c -> (categoryMapper.toView(c))).collect(Collectors.toList());
 	}
 
 	@Override

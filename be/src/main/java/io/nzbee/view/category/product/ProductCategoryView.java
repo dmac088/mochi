@@ -6,8 +6,6 @@ public class ProductCategoryView {
 	
 	private String categoryDesc;
 	
-	private String categoryType;
-	
 	private Long objectCount;
 	
 	private String locale;
@@ -27,15 +25,7 @@ public class ProductCategoryView {
 	public void setCategoryDesc(String categoryDesc) {
 		this.categoryDesc = categoryDesc;
 	}
-
-	public String getCategoryType() {
-		return categoryType;
-	}
-
-	public void setCategoryType(String categoryType) {
-		this.categoryType = categoryType;
-	}
-
+	
 	public Long getObjectCount() {
 		return objectCount;
 	}

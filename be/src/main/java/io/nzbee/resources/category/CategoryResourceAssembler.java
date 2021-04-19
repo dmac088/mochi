@@ -10,7 +10,8 @@ import io.nzbee.resources.controllers.TagController;
 import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class CategoryResourceAssembler extends RepresentationModelAssemblerSupport<ProductCategoryView, CategoryResource> {
+public class CategoryResourceAssembler
+		extends RepresentationModelAssemblerSupport<ProductCategoryView, CategoryResource> {
 
 	public CategoryResourceAssembler() {
 		super(CategoryController.class, CategoryResource.class);
@@ -20,41 +21,34 @@ public class CategoryResourceAssembler extends RepresentationModelAssemblerSuppo
 	public CategoryResource toModel(ProductCategoryView category) {
 		CategoryResource cr = new CategoryResource(category);
 
-		if (category.getCategoryType().equals("brandcategory")) {
-			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), null,
-					category.getCategoryCode(), null)).withRel("brands"));
-		}
+		cr.add(linkTo(methodOn(ProductController.class).getProducts(null, null, category.getCategoryCode(), null, null,
+				null, null)).withRel("products"));
 
-		if (category.getCategoryType().equals("productcategory")) {
-			
-			cr.add(linkTo(methodOn(ProductController.class).getProducts(null, null, 
-					category.getCategoryCode(), null, null, null, null)).withRel("products"));
+		cr.add(linkTo(
+				methodOn(BrandController.class).getBrands(category.getLocale(), null, category.getCategoryCode(), null))
+						.withRel("brands"));
 
-			cr.add(linkTo(methodOn(BrandController.class).getBrands(category.getLocale(), null,
-					category.getCategoryCode(), null)).withRel("brands"));
+		cr.add(linkTo(
+				methodOn(TagController.class).getTags(category.getLocale(), null, category.getCategoryCode(), null))
+						.withRel("tags"));
 
-			cr.add(linkTo(methodOn(TagController.class).getTags(category.getLocale(), null,
-					category.getCategoryCode(), null)).withRel("tags"));
+		cr.add(linkTo(methodOn(CategoryController.class).getChildCategories(category.getLocale(), null,
+				category.getCategoryCode(), null)).withRel("children"));
 
-			cr.add(linkTo(methodOn(CategoryController.class).getChildCategories(category.getLocale(), null
-					, category.getCategoryCode(), null)).withRel("children"));
+		cr.add(linkTo(methodOn(CategoryController.class).getChildCategoryFacets(category.getLocale(), null,
+				category.getCategoryCode(), null)).withRel("childFacets"));
 
-			cr.add(linkTo(methodOn(CategoryController.class).getChildCategoryFacets(category.getLocale(), null
-					, category.getCategoryCode(), null)).withRel("childFacets"));
+		cr.add(linkTo(methodOn(BrandController.class).getBrandFacets(category.getLocale(), null,
+				category.getCategoryCode(), null)).withRel("brandFacets"));
 
-			cr.add(linkTo(methodOn(BrandController.class).getBrandFacets(category.getLocale(), null
-					, category.getCategoryCode(), null)).withRel("brandFacets"));
+		cr.add(linkTo(methodOn(TagController.class).getTagFacets(category.getLocale(), null, category.getCategoryCode(),
+				null)).withRel("tagFacets"));
 
-			cr.add(linkTo(methodOn(TagController.class).getTagFacets(category.getLocale(), null 
-					, category.getCategoryCode(), null)).withRel("tagFacets"));
+		cr.add(linkTo(methodOn(CategoryController.class).getMaxPrice(category.getLocale(), null,
+				category.getCategoryCode(), null)).withRel("maxPrice"));
 
-			cr.add(linkTo(methodOn(CategoryController.class).getMaxPrice(category.getLocale(), null 
-					, category.getCategoryCode(), null)).withRel("maxPrice"));
-
-			cr.add(linkTo(methodOn(CategoryController.class).getMaxPriceFacet(category.getLocale(), null
-					, category.getCategoryCode(), null)).withRel("maxPriceFacet"));
-
-		}
+		cr.add(linkTo(methodOn(CategoryController.class).getMaxPriceFacet(category.getLocale(), null,
+				category.getCategoryCode(), null)).withRel("maxPriceFacet"));
 
 		return cr;
 	}
