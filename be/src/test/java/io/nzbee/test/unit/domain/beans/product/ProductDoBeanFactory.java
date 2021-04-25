@@ -7,19 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 import io.nzbee.Constants;
-import io.nzbee.domain.category.ProductCategory;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.product.physical.PhysicalProduct;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.test.unit.domain.beans.category.ICategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
 
 @Service
 @Profile(value = "ut")
 public class ProductDoBeanFactory implements IProductDoBeanFactory {
-	
-	@Autowired 
-	private ICategoryViewBeanFactory categoryDoBeanFactory;
 	
 	@Autowired 
 	private IPromotionDoBeanFactory promotionDoBeanFactory;
@@ -39,7 +34,6 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   Constants.currencyHKD,
 								   true,
 								   new Double(0.72),
-								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 	
@@ -58,7 +52,6 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   Constants.currencyHKD,
 								   false,
 								   new Double(0.52),
-								   new ArrayList<ProductCategory>(Arrays.asList(categoryDoBeanFactory.getProductCategoryDoBean())),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 

@@ -25,9 +25,7 @@ import io.nzbee.domain.ports.IBagItemPortService;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.product.ProductPromotion;
-import io.nzbee.test.unit.domain.beans.category.CategoryDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.customer.CustomerDoBeanFactory;
-import io.nzbee.test.unit.domain.beans.department.DepartmentDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.product.IProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.product.ProductDoBeanFactory;
 import io.nzbee.test.unit.domain.beans.promotion.PromotionDoBeanFactory;
@@ -53,16 +51,6 @@ public class UT_BagItemTest {
 		@Bean
 		public IBagItemService bagItemService() {
 			return new BagItemServiceImpl();
-		}
-		
-		@Bean
-		public DepartmentDoBeanFactory departmentDoBeanFactory() {
-			return new DepartmentDoBeanFactory();
-		}
-		
-		@Bean
-		public CategoryDoBeanFactory CategoryDoBeanFactory() {
-			return new CategoryDoBeanFactory();
 		}
 		
 		@Bean

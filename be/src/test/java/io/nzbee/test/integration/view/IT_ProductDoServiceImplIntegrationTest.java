@@ -25,8 +25,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.IProductPortService;
 import io.nzbee.domain.product.Product;
-import io.nzbee.test.integration.view.beans.category.CategoryDoBeanFactory;
-import io.nzbee.test.integration.view.beans.category.ICategoryViewBeanFactory;
 import io.nzbee.test.integration.view.beans.product.IProductViewBeanFactory;
 import io.nzbee.test.integration.view.beans.product.ProductViewBeanFactory;
 
@@ -44,12 +42,7 @@ public class IT_ProductDoServiceImplIntegrationTest {
 		public IProductViewBeanFactory productDoBeanFactory() {
 			return new ProductViewBeanFactory();
 		}
-		
-		@Bean
-		public ICategoryViewBeanFactory categoryDoBeanFactory() {
-			return new CategoryDoBeanFactory();
-		}
-		
+			
 	}
 	
 	@MockBean
