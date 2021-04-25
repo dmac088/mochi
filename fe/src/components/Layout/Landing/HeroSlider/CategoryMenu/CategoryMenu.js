@@ -22,6 +22,7 @@ function CategoryMenu(props) {
         if (!renderList) { return; }
 
         return renderList.map(category => {
+            console.log(category);
             return (
                 <TransitionGroup
                     {...props}
@@ -44,6 +45,7 @@ function CategoryMenu(props) {
     const setContainer = (c) => {
         container = c;
     }
+
     return (
         <Transition
             in={props.in}

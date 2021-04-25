@@ -15,6 +15,8 @@ public class ProductCategoryViewDTO implements ISearchDimension, Serializable {
     
     public static final String DESC_ALIAS = "cat_desc";
     
+    public static final String PARENT_CODE_ALIAS = "prnt_cat_cd";
+    
     public static final String LOCALE_CODE_ALIAS = "lcl_cd";
     
     public static final String OBJECT_COUNT_ALIAS = "object_count";
@@ -26,6 +28,8 @@ public class ProductCategoryViewDTO implements ISearchDimension, Serializable {
 	private String categoryCode;
 	
 	private String categoryDesc;
+	
+	private String parentCode;
 	
 	private String locale;
 	
@@ -42,7 +46,6 @@ public class ProductCategoryViewDTO implements ISearchDimension, Serializable {
 		}
 		
 	}
-
 
 	public Long getCategoryId() {
 		return categoryId;
@@ -75,7 +78,12 @@ public class ProductCategoryViewDTO implements ISearchDimension, Serializable {
 		return this.categoryDesc;
 	}
 
+	
+	public String getParentCode() {
+		return parentCode;
+	}
 
+	
 	@Override
 	public Long getCount() {
 		return this.objectCount;

@@ -12,6 +12,7 @@ public class ProductCategoryViewMapperImpl implements IProductCategoryViewMapper
 		ProductCategoryView pcv = new ProductCategoryView();
 		pcv.setCategoryCode(d.getCategoryCode());
 		pcv.setCategoryDesc(d.getCategoryDesc());
+		pcv.setParentCode(d.getParentCode());
 		pcv.setLocale(d.getLocale());
 		pcv.setObjectCount(d.getCount());
 		return pcv;

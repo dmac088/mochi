@@ -9,7 +9,6 @@ function CategoryMenuItem(props) {
     
     const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter, match } = props;
     const { childCount } = category.data;
-
     const [stateObject, setObjectState] = useState({
         hasChildren: childCount > 0,
         expand: false,

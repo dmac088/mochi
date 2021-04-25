@@ -57,7 +57,7 @@ public class UT_ProductTest {
 		}
 		
 		@Bean
-		public ICategoryDoBeanFactory categoryDoBeanFactory() {
+		public ICategoryViewBeanFactory categoryDoBeanFactory() {
 			return new CategoryDoBeanFactory();
 		}
 		
@@ -87,7 +87,7 @@ public class UT_ProductTest {
 	private IDepartmentDoBeanFactory departmentDoBeanFactory;
 	
 	@Autowired
-	private ICategoryDoBeanFactory categoryDoBeanFactory;
+	private ICategoryViewBeanFactory categoryDoBeanFactory;
 	
 	@Autowired
 	private IPromotionDoBeanFactory promotionDoBeanFactory;

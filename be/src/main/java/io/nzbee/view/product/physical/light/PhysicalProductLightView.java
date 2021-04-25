@@ -20,6 +20,23 @@ public class PhysicalProductLightView {
 	
 	private String productImage;
 
+	public PhysicalProductLightView(String productUPC, String productDesc, BigDecimal productRetail,
+			BigDecimal productMarkdown, String productType, String brandDesc, boolean inStock, String productImage) {
+		super();
+		this.productUPC = productUPC;
+		this.productDesc = productDesc;
+		this.productRetail = productRetail;
+		this.productMarkdown = productMarkdown;
+		this.productType = productType;
+		this.brandDesc = brandDesc;
+		this.inStock = inStock;
+		this.productImage = productImage;
+	}
+	
+	public PhysicalProductLightView() {
+		super();
+	}
+
 	public String getProductUPC() {
 		return productUPC;
 	}

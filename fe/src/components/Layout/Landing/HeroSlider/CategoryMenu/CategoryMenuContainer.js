@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import 'velocity-animate/velocity.ui';
 import CategoryMenu from "./CategoryMenu";
-import { findByCode, findRootNode } from '../../../../../services/Category';
+import { findRootNode } from '../../../../../services/Category';
 import { isMobile } from '../../../Helpers/Mobile/Mobile';
 import { localization } from '../../../../Layout/Localization/Localization';
 

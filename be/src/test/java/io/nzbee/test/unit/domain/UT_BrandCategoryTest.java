@@ -48,7 +48,7 @@ public class UT_BrandCategoryTest {
 	private ICategoryPortService categoryPortService;
 
 	@Autowired
-	private ICategoryDoBeanFactory categoryDoBeanFactory;
+	private ICategoryViewBeanFactory categoryDoBeanFactory;
 	
 	@Before
 	public void setUp() {

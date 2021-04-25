@@ -19,7 +19,7 @@ import io.nzbee.test.unit.domain.beans.promotion.IPromotionDoBeanFactory;
 public class ProductDoBeanFactory implements IProductDoBeanFactory {
 	
 	@Autowired 
-	private ICategoryDoBeanFactory categoryDoBeanFactory;
+	private ICategoryViewBeanFactory categoryDoBeanFactory;
 	
 	@Autowired 
 	private IPromotionDoBeanFactory promotionDoBeanFactory;
