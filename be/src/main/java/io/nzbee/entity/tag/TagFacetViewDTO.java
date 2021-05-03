@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Map;
 import io.nzbee.search.ISearchDimension;
 
-public class TagDTO implements ISearchDimension, Serializable  {
+public class TagFacetViewDTO implements ISearchDimension, Serializable  {
 
 	private static final long serialVersionUID = -5385810041656869889L;
 
@@ -28,7 +28,7 @@ public class TagDTO implements ISearchDimension, Serializable  {
 	
 	private Long objectCount;
 
-	public TagDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public TagFacetViewDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.tagId 			= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.tagCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.tagDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();

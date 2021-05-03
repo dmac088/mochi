@@ -26,7 +26,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.TagDTO;
+import io.nzbee.entity.tag.TagFacetViewDTO;
 import io.nzbee.util.tag.TagMasterService;
 
 @RunWith(SpringRunner.class)
@@ -81,7 +81,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ENGB() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "GFR01");
+		Optional<TagFacetViewDTO> found = tagService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "GFR01");
 
 		// then
 		assertFound_ENGB(found);
@@ -91,13 +91,13 @@ public class IT_TagUploadForUpdateIntegrationTest {
 	@Rollback(false)
 	public void whenTagUploadedForUpdate_thenReturnCorrectlyUpdatedTag_ZHHK() {
 		// when
-		Optional<TagDTO> found = tagService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "GFR01");
+		Optional<TagFacetViewDTO> found = tagService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "GFR01");
 
 		// then
 		assertFound_ZHHK(found);
 	}
 
-	private void assertFound_ENGB(Optional<TagDTO> found) {
+	private void assertFound_ENGB(Optional<TagFacetViewDTO> found) {
 		
 		assertNotNull(found);
 		
@@ -108,7 +108,7 @@ public class IT_TagUploadForUpdateIntegrationTest {
 		
 	}
 
-	private void assertFound_ZHHK(Optional<TagDTO> found) {
+	private void assertFound_ZHHK(Optional<TagFacetViewDTO> found) {
 		
 		assertNotNull(found);
 		

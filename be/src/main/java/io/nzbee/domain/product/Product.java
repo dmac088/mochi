@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.domain.tag.Tag;
+import io.nzbee.view.product.tag.facet.TagFacetView;
 
 public abstract class Product {
 
@@ -37,7 +37,7 @@ public abstract class Product {
 
 	private List<Promotion> promotions;
 	
-	private List<Tag> tags;
+	private List<TagFacetView> tags;
 	
 	public Product(	String 			productUPC,
 					LocalDateTime 	productCreateDt,
@@ -59,7 +59,7 @@ public abstract class Product {
 					this.productImage = productImage;
 					this.lclCd = lclCd;
 					this.currency = currency;
-					this.tags = new ArrayList<Tag>();
+					this.tags = new ArrayList<TagFacetView>();
 					this.promotions	= productPromotions;
 					this.productStatus = productStatus;
 					this.productLongDesc = productLongDesc;
@@ -117,11 +117,11 @@ public abstract class Product {
 		return departmentDesc;
 	}
 
-	public void addTag(Tag t) {
+	public void addTag(TagFacetView t) {
 		tags.add(t);
 	}
 	
-	public List<Tag> getTags() {
+	public List<TagFacetView> getTags() {
 		return tags;
 	}
 

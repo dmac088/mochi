@@ -22,8 +22,6 @@ import io.nzbee.domain.promotion.IPromotionService;
 import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.promotion.order.IOrderPromotionService;
 import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
-import io.nzbee.domain.tag.ITagService;
-import io.nzbee.domain.tag.TagServiceImpl;
 import io.nzbee.entity.adapters.view.BrandAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
@@ -46,6 +44,8 @@ import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
 import io.nzbee.view.product.physical.full.PhysicalProductFullServiceImpl;
 import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
 import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
+import io.nzbee.view.product.tag.facet.ITagFacetService;
+import io.nzbee.view.product.tag.facet.TagFacetServiceImpl;
 
 @Configuration
 @Profile("dev")
@@ -147,8 +147,8 @@ public class BeanConfigurationDev {
     }
     
     @Bean
-    public ITagService tagService() {
-        return new TagServiceImpl();
+    public ITagFacetService tagService() {
+        return new TagFacetServiceImpl();
     }
     
     @Bean

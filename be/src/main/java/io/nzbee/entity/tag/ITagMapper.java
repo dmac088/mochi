@@ -1,8 +1,8 @@
 package io.nzbee.entity.tag;
 
-import io.nzbee.domain.tag.Tag;
 import io.nzbee.entity.IDomainObjectMapper;
+import io.nzbee.view.product.tag.facet.TagFacetView;
 
-public interface ITagMapper extends IDomainObjectMapper<Tag, TagEntity, TagDTO> {
+public interface ITagMapper extends IDomainObjectMapper<TagFacetView, TagEntity, TagFacetViewDTO> {
 
 }

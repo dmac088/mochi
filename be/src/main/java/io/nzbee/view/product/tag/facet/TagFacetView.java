@@ -1,4 +1,4 @@
-package io.nzbee.domain.tag;
+package io.nzbee.view.product.tag.facet;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,7 +7,7 @@ import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.product.Product;
 
 //Anemic
-public class Tag implements ILocalizedDomainObject {
+public class TagFacetView implements ILocalizedDomainObject {
 
 	private String tagCode;
 
@@ -19,7 +19,7 @@ public class Tag implements ILocalizedDomainObject {
 
 	private List<Product> products;
 
-	public Tag(	String tagCode,
+	public TagFacetView(	String tagCode,
 				String tagDesc,
 				Long objectCount,
 				String locale) {
@@ -30,7 +30,7 @@ public class Tag implements ILocalizedDomainObject {
 		this.products = new ArrayList<Product>();
 	}
 	
-	public Tag(	String tagCode,
+	public TagFacetView(	String tagCode,
 			String tagDesc,
 			String locale) {
 	this.tagCode = tagCode;
@@ -72,7 +72,7 @@ public class Tag implements ILocalizedDomainObject {
 	public boolean equals(Object o) {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
-	     Tag pcDto = (Tag) o;
+	     TagFacetView pcDto = (TagFacetView) o;
 	     return this.getTagCode() == pcDto.getTagCode();
 	}
 

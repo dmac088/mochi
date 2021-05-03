@@ -5,8 +5,8 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import io.nzbee.domain.product.Product;
 import io.nzbee.domain.promotion.Promotion;
-import io.nzbee.domain.tag.Tag;
 import io.nzbee.view.product.brand.facet.BrandFacetView;
+import io.nzbee.view.product.tag.facet.TagFacetView;
 
 public class FacetContainer {
 
@@ -34,7 +34,7 @@ public class FacetContainer {
 	public Set<IFacet> getTags() {
 		return this.facets.stream()
 				.filter(f -> 
-				f.getObjectType().getClass().getSimpleName().equals(Tag.class.getSimpleName()))
+				f.getObjectType().getClass().getSimpleName().equals(TagFacetView.class.getSimpleName()))
 				.map(f -> (IFacet) f)
 				.collect(Collectors.toSet());
 	}

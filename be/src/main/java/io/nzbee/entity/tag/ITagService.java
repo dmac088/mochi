@@ -6,18 +6,18 @@ import io.nzbee.entity.ILightLocalizedService;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.ISearchDimensionService;
 
-public interface ITagService  extends ILightLocalizedService<TagDTO, TagEntity>, ISearchDimensionService<TagDTO> {
+public interface ITagService  extends ILightLocalizedService<TagFacetViewDTO, TagEntity>, ISearchDimensionService<TagFacetViewDTO> {
 
-	List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+	List<TagFacetViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, Double maxPrice);
 
 	Optional<TagEntity> findByCode(String tagCode);
 
-	Optional<TagDTO> findByCode(String locale, String rootCategory, String code);
+	Optional<TagFacetViewDTO> findByCode(String locale, String rootCategory, String code);
 
-	Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc);
+	Optional<TagFacetViewDTO> findByDesc(String locale, String rootCategory, String desc);
 
-	List<TagDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes);
+	List<TagFacetViewDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes);
 
 	Optional<TagEntity> findById(Long id);
 

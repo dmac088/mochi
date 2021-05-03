@@ -54,19 +54,19 @@ public class TagDaoPostgresImpl implements ITagDao {
 	}
 	
 	@Override
-	public void save(TagDTO t) {
+	public void save(TagFacetViewDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(TagDTO t, String[] params) {
+	public void update(TagFacetViewDTO t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(TagDTO t) {
+	public void delete(TagFacetViewDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
@@ -78,7 +78,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = TagServiceImpl.CACHE_NAME, key="{#locale, #id}")
 			}
 	)
-	public Optional<TagDTO> findById(String locale, String rootCategory, Long id) {
+	public Optional<TagFacetViewDTO> findById(String locale, String rootCategory, Long id) {
 		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, rootCategory, id);
 		
 		Session session = em.unwrap(Session.class);
@@ -102,7 +102,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 	
-		TagDTO result = (TagDTO) query.getSingleResult();
+		TagFacetViewDTO result = (TagFacetViewDTO) query.getSingleResult();
 		
 		return Optional.ofNullable(result);
 	}
@@ -146,7 +146,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = TagServiceImpl.CACHE_NAME, key="#locale + \", \" + #code")
 			}
 	)
-	public Optional<TagDTO> findByCode(String locale, String rootCategory, String code) {
+	public Optional<TagFacetViewDTO> findByCode(String locale, String rootCategory, String code) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}", locale, code);
 		
 		Session session = em.unwrap(Session.class);
@@ -170,7 +170,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 		try {
-			TagDTO result = (TagDTO) query.getSingleResult();
+			TagFacetViewDTO result = (TagFacetViewDTO) query.getSingleResult();
 			return Optional.ofNullable(result);
 		} 
 		catch(NoResultException nre) {
@@ -187,7 +187,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = TagServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #desc")
 			}
 	)
-	public Optional<TagDTO> findByDesc(String locale, String rootCategory, String desc) {
+	public Optional<TagFacetViewDTO> findByDesc(String locale, String rootCategory, String desc) {
 		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}", locale, desc);
 		
 		Session session = em.unwrap(Session.class);
@@ -211,7 +211,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 		.setResultTransformer(new TagDTOResultTransformer());
 		
 		try {
-			TagDTO result = (TagDTO) query.getSingleResult();
+			TagFacetViewDTO result = (TagFacetViewDTO) query.getSingleResult();
 			return Optional.ofNullable(result);
 		} 
 		catch(NoResultException nre) {
@@ -226,7 +226,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = TagServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
-	public List<TagDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
+	public List<TagFacetViewDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
 		LOGGER.debug("pop call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale, StringUtil.join(codes));
 
 		Session session = em.unwrap(Session.class);
@@ -255,7 +255,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
-	public List<TagDTO> findAll(String locale, String rootCategory) {
+	public List<TagFacetViewDTO> findAll(String locale, String rootCategory) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : {}, {}", locale);
 
 		Session session = em.unwrap(Session.class);
@@ -284,7 +284,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 					@CachePut(value = TagServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
-	public List<TagDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {
+	public List<TagFacetViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {
 		LOGGER.debug("call TagDaoPostgresImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, categoryCodes = {}, brandCodes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(brandCodes, ','), maxPrice);
 		
 		Session session = em.unwrap(Session.class);

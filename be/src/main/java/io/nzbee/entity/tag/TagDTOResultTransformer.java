@@ -8,7 +8,7 @@ import java.util.Map;
 
 import org.hibernate.transform.ResultTransformer;
 
-import io.nzbee.entity.tag.TagDTO;
+import io.nzbee.entity.tag.TagFacetViewDTO;
 
 public class TagDTOResultTransformer implements ResultTransformer {
 
@@ -18,17 +18,17 @@ public class TagDTOResultTransformer implements ResultTransformer {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Long, TagDTO> tagDTOMap = new LinkedHashMap<>();
+	private Map<Long, TagFacetViewDTO> tagDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
 		
-        Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(TagDTO.ID_ALIAS)]).longValue();
+        Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(TagFacetViewDTO.ID_ALIAS)]).longValue();
  
-        TagDTO tagDTO = tagDTOMap.computeIfAbsent(
+        TagFacetViewDTO tagDTO = tagDTOMap.computeIfAbsent(
             tagId,
-            id -> new TagDTO(tuple, aliasToIndexMap)
+            id -> new TagFacetViewDTO(tuple, aliasToIndexMap)
         );
         
         return tagDTO;

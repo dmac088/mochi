@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.domain.tag.ITagService;
-import io.nzbee.domain.tag.Tag;
+
 import io.nzbee.resources.tag.TagFacetResource;
 import io.nzbee.resources.tag.TagFacetResourceAssembler;
 import io.nzbee.resources.tag.TagResource;
@@ -23,6 +22,8 @@ import io.nzbee.resources.tag.TagResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
+import io.nzbee.view.product.tag.facet.ITagFacetService;
+import io.nzbee.view.product.tag.facet.TagFacetView;
 
 
 @RestController
@@ -32,10 +33,10 @@ public class TagController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private ITagService tagService;
+    private ITagFacetService tagService;
     
 	@Autowired
-	private IFacetMapper<Tag> facetMapper;
+	private IFacetMapper<TagFacetView> facetMapper;
     
     @Autowired
     private TagResourceAssembler tagResourceAssembler;
@@ -57,7 +58,7 @@ public class TagController {
     		maxPrice = new Double(oMaxPrice.get());
     	}
     	
-    	final List<Tag> collection =
+    	final List<TagFacetView> collection =
     			tagService.findAll(	 locale, 
     								 currency, 
     								 categoryCode,

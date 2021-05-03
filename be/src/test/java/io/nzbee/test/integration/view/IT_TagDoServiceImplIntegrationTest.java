@@ -24,9 +24,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.domain.ports.ITagPortService;
-import io.nzbee.domain.tag.Tag;
 import io.nzbee.test.integration.view.beans.tag.ITagDoBeanFactory;
 import io.nzbee.test.integration.view.beans.tag.TagDoBeanFactory;
+import io.nzbee.view.product.tag.facet.TagFacetView;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
@@ -59,7 +59,7 @@ public class IT_TagDoServiceImplIntegrationTest {
 	
 	private static boolean setUpIsDone = false;
 	
-	private static Tag tag = null;
+	private static TagFacetView tag = null;
 	
 	@Before
 	public void setUp() {
@@ -77,7 +77,7 @@ public class IT_TagDoServiceImplIntegrationTest {
 		setUpIsDone = true;
 	}
 	
-	public Tag persistNewTag() {
+	public TagFacetView persistNewTag() {
 		tag = tagDoBeanFactory.getBean();
    	
 		tagService.save(tag);
@@ -88,7 +88,7 @@ public class IT_TagDoServiceImplIntegrationTest {
 	@Test
 	@Rollback(false)
     public void whenValidCode_thenTagShouldBeFound() {
-        Tag found = tagService.findByCode(Constants.localeENGB, "ORG01");
+        TagFacetView found = tagService.findByCode(Constants.localeENGB, "ORG01");
       
         assertFound(found);
     }
@@ -96,12 +96,12 @@ public class IT_TagDoServiceImplIntegrationTest {
 	@Test
 	@Rollback(false)
     public void whenValidDesc_thenTagShouldBeFound() {
-        Tag found = tagService.findByDesc(Constants.localeENGB, "ORGANIC");
+        TagFacetView found = tagService.findByDesc(Constants.localeENGB, "ORGANIC");
       
         assertFound(found);
     }
 	
-	private void assertFound(Tag found) {
+	private void assertFound(TagFacetView found) {
 
 		assertNotNull(found);
 		

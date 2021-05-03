@@ -1,27 +1,27 @@
-package io.nzbee.domain.tag;
+package io.nzbee.view.product.tag.facet;
 
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.domain.ports.ITagPortService;
 
-public class TagServiceImpl implements ITagService {
+public class TagFacetServiceImpl implements ITagFacetService {
 
 	@Autowired
 	private ITagPortService tagService;
 	
 	@Override
-	public Tag findByCode(String locale, String code) {
+	public TagFacetView findByCode(String locale, String code) {
 		return tagService.findByCode(locale, code);
 	}
 
 	@Override
-	public Tag findByDesc(String locale, String desc) {
+	public TagFacetView findByDesc(String locale, String desc) {
 		return tagService.findByDesc(locale, desc);
 	}
 
 	@Override
-	public List<Tag> findAll(	String locale, 
+	public List<TagFacetView> findAll(	String locale, 
 								String currency, 
 								String categoryCode, 
 								Set<String> categories,
@@ -37,27 +37,27 @@ public class TagServiceImpl implements ITagService {
 	}
 	
 	@Override
-	public List<Tag> findAll(String locale) {
+	public List<TagFacetView> findAll(String locale) {
 		return tagService.findAll(locale);
 	}
 
 	@Override
-	public List<Tag> findAll(String locale, Set<String> codes) {
+	public List<TagFacetView> findAll(String locale, Set<String> codes) {
 		return tagService.findAll(locale, codes);
 	}
 
 	@Override
-	public void save(Tag object) {
+	public void save(TagFacetView object) {
 		tagService.save(object);
 	}
 
 	@Override
-	public void delete(Tag object) {
+	public void delete(TagFacetView object) {
 		tagService.delete(object);
 	}
 
 	@Override
-	public void update(Tag object) {
+	public void update(TagFacetView object) {
 		tagService.update(object);
 	}
 
