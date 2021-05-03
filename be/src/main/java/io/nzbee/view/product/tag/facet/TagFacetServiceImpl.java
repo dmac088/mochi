@@ -3,22 +3,14 @@ package io.nzbee.view.product.tag.facet;
 import java.util.List;
 import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
-import io.nzbee.domain.ports.ITagPortService;
+
+import io.nzbee.view.ports.ITagFacetViewPortService;
 
 public class TagFacetServiceImpl implements ITagFacetService {
 
 	@Autowired
-	private ITagPortService tagService;
+	private ITagFacetViewPortService tagService;
 	
-	@Override
-	public TagFacetView findByCode(String locale, String code) {
-		return tagService.findByCode(locale, code);
-	}
-
-	@Override
-	public TagFacetView findByDesc(String locale, String desc) {
-		return tagService.findByDesc(locale, desc);
-	}
 
 	@Override
 	public List<TagFacetView> findAll(	String locale, 
@@ -35,31 +27,5 @@ public class TagFacetServiceImpl implements ITagFacetService {
 				 maxPrice    							  
 		);
 	}
-	
-	@Override
-	public List<TagFacetView> findAll(String locale) {
-		return tagService.findAll(locale);
-	}
-
-	@Override
-	public List<TagFacetView> findAll(String locale, Set<String> codes) {
-		return tagService.findAll(locale, codes);
-	}
-
-	@Override
-	public void save(TagFacetView object) {
-		tagService.save(object);
-	}
-
-	@Override
-	public void delete(TagFacetView object) {
-		tagService.delete(object);
-	}
-
-	@Override
-	public void update(TagFacetView object) {
-		tagService.update(object);
-	}
-
 
 }

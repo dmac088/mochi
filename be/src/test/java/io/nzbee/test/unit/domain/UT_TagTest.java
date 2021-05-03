@@ -14,8 +14,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.domain.ports.ITagPortService;
 import io.nzbee.test.unit.domain.beans.tag.TagDoBeanFactory;
+import io.nzbee.view.ports.ITagFacetViewPortService;
 import io.nzbee.view.product.tag.facet.ITagFacetService;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 import io.nzbee.view.product.tag.facet.TagFacetServiceImpl;
@@ -45,7 +45,7 @@ public class UT_TagTest {
 	private ITagFacetService tagService;
 
 	@MockBean
-	private ITagPortService tagPortService;
+	private ITagFacetViewPortService tagPortService;
 
 	@Autowired
 	private ITagDoBeanFactory tagDoBeanFactory;

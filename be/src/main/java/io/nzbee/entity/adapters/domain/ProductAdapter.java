@@ -2,7 +2,6 @@ package io.nzbee.entity.adapters.domain;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,8 +34,6 @@ import io.nzbee.entity.product.shipping.ShippingProductDTO;
 import io.nzbee.entity.product.shipping.ShippingProductEntity;
 import io.nzbee.entity.product.status.IProductStatusRepository;
 import io.nzbee.entity.product.status.ProductStatusEntity;
-import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.exceptions.NotFoundException;
 
 @Component
@@ -53,9 +50,6 @@ public class ProductAdapter implements IProductPortService {
 
 	@Autowired
 	private IProductPriceService productPriceService;
-	
-	@Autowired
-	private ITagService tagService;
 	
 	@Autowired
 	private IPromotionService promotionService;
@@ -135,11 +129,6 @@ public class ProductAdapter implements IProductPortService {
 			PhysicalProductEntity product = (op.isPresent()) 
 					? (PhysicalProductEntity) op.get()
 					: new PhysicalProductEntity();
-			
-			//get all the tags
-			Set<String> tagCodes = domainObject.getTags().stream().map(t -> t.getTagCode()).collect(Collectors.toSet());
-			List<TagEntity> tags = tagService.findAll(tagCodes);	
-			
 		
 			// find the brand
 			//BrandEntity b = brandService.findByCode(domainObject.getBrand().getBrandCode()).get();
@@ -192,10 +181,6 @@ public class ProductAdapter implements IProductPortService {
 			product.setProductUPC(domainObject.getProductUPC());
 			product.setProductCreateDt(domainObject.getProductCreateDt());
 			
-			//product.setBrand(b);
-			tags.forEach(t -> {
-				product.addTag(t);
-			});
 			product.addProductPrice(prcr);
 			product.addProductPrice(prcm);
 			product.setProductStatus(ps);

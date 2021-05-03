@@ -3,11 +3,9 @@ package io.nzbee.view.product.tag.facet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import io.nzbee.domain.ILocalizedDomainObject;
 import io.nzbee.domain.product.Product;
 
-//Anemic
-public class TagFacetView implements ILocalizedDomainObject {
+public class TagFacetView  {
 
 	private String tagCode;
 
