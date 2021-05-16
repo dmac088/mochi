@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import io.nzbee.Constants;
 import io.nzbee.resources.category.CategoryFacetResource;
 import io.nzbee.resources.category.CategoryFacetResourceAssembler;
 import io.nzbee.resources.category.CategoryResource;
@@ -58,7 +60,7 @@ public class CategoryController {
 	@GetMapping("/Category/Product/{locale}/{currency}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale);
-		final List<ProductCategoryView> collection = categoryService.findAll(locale);
+		final List<ProductCategoryView> collection = categoryService.findAll(locale, Constants.primaryProductRootCategoryCode);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 

@@ -11,8 +11,8 @@ public class ProductCategoryServiceImpl implements IProductCategoryService {
 	private IProductCategoryViewDao productCategoryDao;
 	
 	@Override
-	public List<ProductCategoryViewDTO> findAll(String locale) {
-		return productCategoryDao.findAll(locale);
+	public List<ProductCategoryViewDTO> findAll(String locale, String rootCategory) {
+		return productCategoryDao.findAll(locale, rootCategory);
 	}
 	
 	@Override

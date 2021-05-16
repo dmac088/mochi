@@ -10,7 +10,7 @@ import io.nzbee.view.category.product.ProductCategoryView;
 import io.nzbee.view.ports.ICategoryViewPortService;
 
 public class ProductCategoryAdapterImpl implements ICategoryViewPortService {
-
+	
 	@Autowired
 	private IProductCategoryService categoryService;
 	
@@ -18,30 +18,30 @@ public class ProductCategoryAdapterImpl implements ICategoryViewPortService {
 	private IProductCategoryViewMapper categoryMapper;
 	
 	@Override
-	public List<ProductCategoryView> findAll(String locale) {
-		return categoryService.findAll(locale)
-				.stream().map(c -> (categoryMapper.toView(c))).collect(Collectors.toList());
-	}
-
-	@Override
-	public List<ProductCategoryView> findAll(String locale, String currency, String code, Set<String> collect,
-			Set<String> collect2, Set<String> collect3, Double maxPrice) {
+	public List<ProductCategoryView> findAll(String locale, String currency, String rootCategoryCode,
+			Set<String> collect, Set<String> collect2, Set<String> collect3) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Double getMaxPrice(String locale, String currency, String code, Set<String> collect, Set<String> collect2,
-			Set<String> collect3) {
+	public List<ProductCategoryView> findAll(String locale, String currency, String rootCategoryCode,
+			Set<String> collect, Set<String> collect2, Set<String> collect3, Double maxPrice) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<ProductCategoryView> findAll(String locale, String currency, String code, Set<String> collect,
+	public Double getMaxPrice(String locale, String currency, String rootCategoryCode, Set<String> collect,
 			Set<String> collect2, Set<String> collect3) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<ProductCategoryView> findAll(String locale, String rootCategoryCode) {
+		return categoryService.findAll(locale, rootCategoryCode)
+				.stream().map(c -> categoryMapper.toView(c)).collect(Collectors.toList());
 	}
 
 }

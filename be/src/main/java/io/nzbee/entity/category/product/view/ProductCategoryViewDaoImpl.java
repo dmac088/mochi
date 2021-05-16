@@ -25,7 +25,7 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 	
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
-	public List<ProductCategoryViewDTO> findAll(String locale) { 
+	public List<ProductCategoryViewDTO> findAll(String locale, String rootCategoryCode) { 
 		LOGGER.debug("call ProductCategoryViewDaoImpl.findAll parameters : {} ", locale);
 		
 		Session session = em.unwrap(Session.class);
@@ -38,11 +38,12 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 															 false,
 															 false,
 															 false,
-															 false,
+															 true,
 															 true,
 															 false))
 				 .setParameter("locale", locale)
 				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("categoryCode", rootCategoryCode)
 				 .setParameter("typeDiscriminator", Long.parseLong(CategoryProductEntity.class.getAnnotation(DiscriminatorValue.class).value()))
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
@@ -294,7 +295,7 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 			"       pa.cat_desc 					AS cat_prnt_desc, " +
 			"       pa.lcl_cd 						AS cat_prnt_lcl_cd, " +
 			"       a.cat_img_pth					AS cat_img_pth, " +
-			"       s.object_count					AS object_count, " +
+			"       coalesce(s.object_count, 0)		AS object_count, " +
 			"		coalesce(s.child_cat_count,0)	AS child_cat_count ") +
 
 			"FROM summaries s " +

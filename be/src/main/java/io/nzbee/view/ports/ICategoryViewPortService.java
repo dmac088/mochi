@@ -16,5 +16,5 @@ public interface ICategoryViewPortService {
 	Double getMaxPrice(String locale, String currency, String rootCategoryCode, Set<String> collect, Set<String> collect2,
 			Set<String> collect3);
 
-	List<ProductCategoryView> findAll(String locale);
+	List<ProductCategoryView> findAll(String locale, String rootCategoryCode);
 }

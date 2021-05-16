@@ -27,7 +27,7 @@ function CategoryMenuItem(props) {
             ? 25
             : 25 + (((level - 1) * 10) - offset)) + "px";
     }
-
+    
     return (
         <li
             className={((stateObject.hasChildren)
@@ -47,7 +47,7 @@ function CategoryMenuItem(props) {
                 style={(isMobile)
                     ? { "--my-cat-indent": getIndent(category.data.categoryLevel) }
                     : { "": "" }}>
-                    {category.data.categoryDesc} ({category.data.count})
+                    {category.data.categoryDesc} ({category.data.objectCount})
                     {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}

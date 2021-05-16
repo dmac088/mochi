@@ -5,6 +5,6 @@ import io.nzbee.entity.IService;
 
 public interface IProductCategoryService extends IService<ProductCategoryViewDTO> {
 
-	List<ProductCategoryViewDTO> findAll(String locale);
+	List<ProductCategoryViewDTO> findAll(String locale, String rootCategory);
 
 }

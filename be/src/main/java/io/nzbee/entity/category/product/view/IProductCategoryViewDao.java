@@ -6,6 +6,6 @@ import io.nzbee.entity.IDao;
 
 public interface IProductCategoryViewDao extends IDao<ProductCategoryViewDTO> {
 
-	List<ProductCategoryViewDTO> findAll(String locale);
+	List<ProductCategoryViewDTO> findAll(String locale, String rootCategoryCode);
 
 }

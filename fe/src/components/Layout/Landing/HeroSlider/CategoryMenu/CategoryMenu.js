@@ -22,7 +22,6 @@ function CategoryMenu(props) {
         if (!renderList) { return; }
 
         return renderList.map(category => {
-            console.log(category);
             return (
                 <TransitionGroup
                     {...props}

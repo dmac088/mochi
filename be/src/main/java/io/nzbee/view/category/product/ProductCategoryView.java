@@ -10,16 +10,9 @@ public class ProductCategoryView {
 	
 	private Long objectCount;
 	
-	private String locale;
+	private Long childCount;
 	
-	public ProductCategoryView(String categoryCode, String categoryDesc, String parentCode, Long objectCount, String locale) {
-		super();
-		this.categoryCode 	= categoryCode;
-		this.categoryDesc 	= categoryDesc;
-		this.parentCode 	= parentCode;
-		this.objectCount 	= objectCount;
-		this.locale 		= locale;
-	}
+	private String locale;
 	
 	public ProductCategoryView() {
 		super();
@@ -47,6 +40,14 @@ public class ProductCategoryView {
 
 	public void setParentCode(String parentCode) {
 		this.parentCode = parentCode;
+	}
+
+	public Long getChildCount() {
+		return childCount;
+	}
+
+	public void setChildCount(Long childCount) {
+		this.childCount = childCount;
 	}
 
 	public Long getObjectCount() {

@@ -10,7 +10,6 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.search.IFacetService;
 
 @Service(value = "categoryEntityService")

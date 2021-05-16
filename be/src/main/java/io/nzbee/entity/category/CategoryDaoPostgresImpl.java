@@ -28,7 +28,6 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity_;
 import io.nzbee.entity.category.product.CategoryProductEntity;
