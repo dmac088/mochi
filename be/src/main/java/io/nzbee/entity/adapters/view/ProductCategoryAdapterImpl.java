@@ -22,15 +22,14 @@ public class ProductCategoryAdapterImpl implements ICategoryViewPortService {
 
 	@Override
 	public List<ProductCategoryView> findAll(String locale, String currency, String rootCategoryCode,
-			Set<String> collect, Set<String> collect2, Set<String> collect3, Double maxPrice) {
-		return productCategoryService.findAll(locale, currency, rootCategoryCode, new StringCollectionWrapper(collect), new StringCollectionWrapper(collect2), new StringCollectionWrapper(collect3), maxPrice)
+			Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagCodes, Double maxPrice) {
+		return productCategoryService.findAll(locale, currency, rootCategoryCode, new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new StringCollectionWrapper(tagCodes), maxPrice)
 				.stream().map(c -> categoryMapper.toView(c)).collect(Collectors.toList());
 	}
 
 	@Override
-	public Double getMaxPrice(String locale, String currency, String rootCategoryCode, Set<String> collect,
-			Set<String> collect2, Set<String> collect3) {
-		return productCategoryService.getMaxPrice(locale, currency, rootCategoryCode, new StringCollectionWrapper(collect), new StringCollectionWrapper(collect2), new StringCollectionWrapper(collect3));
+	public Double getMaxPrice(String locale, String currency, String rootCategoryCode, Set<String> categoryCodes, Set<String> brandCodes, Set<String> tagcodes) {
+		return productCategoryService.getMaxPrice(locale, currency, rootCategoryCode, new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new StringCollectionWrapper(tagcodes));
 	}
 
 	@Override

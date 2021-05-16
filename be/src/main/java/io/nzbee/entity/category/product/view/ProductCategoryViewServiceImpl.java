@@ -22,9 +22,13 @@ public class ProductCategoryViewServiceImpl implements IProductCategoryViewServi
 	
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
-	public List<ProductCategoryViewDTO> findAll(String locale, String currency, String categoryCode,
-			StringCollectionWrapper categoryCodes, StringCollectionWrapper brands, StringCollectionWrapper tags, Double maxPrice) {
-		return productCategoryDao.findAll(locale, currency, categoryCode, categoryCodes, brands, tags, maxPrice);
+	public List<ProductCategoryViewDTO> findAll(	String locale, 
+													String currency, String categoryCode,
+													StringCollectionWrapper categoryCodes, 
+													StringCollectionWrapper brandCodes, 
+													StringCollectionWrapper tagCodes, 
+													Double maxPrice) {
+		return productCategoryDao.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice);
 	}
 	
 	@Override
