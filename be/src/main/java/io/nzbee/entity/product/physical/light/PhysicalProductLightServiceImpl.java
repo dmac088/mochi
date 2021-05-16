@@ -41,7 +41,6 @@ public class PhysicalProductLightServiceImpl implements IPhysicalProductLightSer
 	}
 	
 	
-
 	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page + \", \" + #size + \", \" + #sort")
 	public Page<PhysicalProductLightDTO> findAll(	String locale, 
