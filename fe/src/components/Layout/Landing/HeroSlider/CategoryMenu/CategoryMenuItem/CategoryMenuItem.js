@@ -27,7 +27,7 @@ function CategoryMenuItem(props) {
             ? 25
             : 25 + (((level - 1) * 10) - offset)) + "px";
     }
-    
+
     return (
         <li
             className={((stateObject.hasChildren)
