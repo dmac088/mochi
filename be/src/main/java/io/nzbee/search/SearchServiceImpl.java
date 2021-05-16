@@ -1,6 +1,7 @@
 package io.nzbee.search;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -269,7 +270,7 @@ public class SearchServiceImpl implements ISearchService {
 								FullTextQuery jpaQuery
 								) {
 		
-		Double minPrice = new Double(0), maxPrice = new Double(0);
+		Double minPrice = Double.valueOf(0), maxPrice = Double.valueOf(0);
 		
 		if (currency.equals(Constants.currencyHKD)) maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceHKD();
 		if (currency.equals(Constants.currencyUSD)) maxPrice = results.stream().findFirst().get().getCurrentMarkdownPriceUSD();
@@ -277,13 +278,13 @@ public class SearchServiceImpl implements ISearchService {
 		if (currency.equals(Constants.currencyUSD)) minPrice = Lists.reverse(results).stream().findFirst().get().getCurrentMarkdownPriceUSD();
 				  		  
 		Double inc = (maxPrice > 0) ? (maxPrice - ((minPrice.equals(maxPrice)) ? 0 : minPrice)) / 4 : maxPrice;
-		inc = new BigDecimal(inc).setScale(2, BigDecimal.ROUND_DOWN).doubleValue();
+		inc = new BigDecimal(inc).setScale(2, RoundingMode.DOWN).doubleValue();
 		
 		Double	below = inc,
-				froma = (new BigDecimal(inc + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-			   	toa = 	(new BigDecimal(inc * 2).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-			   	fromb = (new BigDecimal(toa + new Double(0.01)).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()),
-				tob = 	(new BigDecimal(inc * 4).setScale(2, BigDecimal.ROUND_DOWN).doubleValue()), 
+				froma = (new BigDecimal(inc + Double.valueOf(0.01)).setScale(2, RoundingMode.DOWN).doubleValue()),
+			   	toa = 	(new BigDecimal(inc * 2).setScale(2, RoundingMode.DOWN).doubleValue()),
+			   	fromb = (new BigDecimal(toa + Double.valueOf(0.01)).setScale(2, RoundingMode.DOWN).doubleValue()),
+				tob = 	(new BigDecimal(inc * 4).setScale(2, RoundingMode.DOWN).doubleValue()), 
 				above = tob;
 		
 		facets.addAll(this.getRangeFacets(	queryBuilder, 
