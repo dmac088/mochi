@@ -55,7 +55,7 @@ public class TagController {
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
-    		maxPrice = new Double(oMaxPrice.get());
+    		maxPrice = Double.valueOf(oMaxPrice.get());
     	}
     	
     	final List<TagFacetView> collection =
@@ -81,7 +81,7 @@ public class TagController {
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
-    		maxPrice = new Double(oMaxPrice.get());
+    		maxPrice = Double.valueOf(oMaxPrice.get());
     	}
     	
     	final Set<EntityFacet> collection =

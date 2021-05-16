@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
 import io.nzbee.Constants;
-import io.nzbee.entity.bag.BagDTO;
 import io.nzbee.entity.bag.item.BagItemDTO;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.product.CategoryProductDTO;

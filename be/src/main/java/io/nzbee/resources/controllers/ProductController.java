@@ -133,7 +133,7 @@ public class ProductController {
 				.map(p -> p.getId()).findFirst();
 		Double maxPrice = null;
 		if (oMaxPrice.isPresent()) {
-			maxPrice = new Double(oMaxPrice.get());
+			maxPrice = Double.valueOf(oMaxPrice.get());
 		}
 
 		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(locale, currency,

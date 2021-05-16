@@ -1,10 +1,8 @@
 package io.nzbee.entity.promotion.order;
 
 import org.springframework.stereotype.Component;
-
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.order.OrderPromotion;
-import io.nzbee.entity.promotion.order.PromotionOrderDTO;
 
 @Component(value = "promotionOrderMapper")
 public class PromotionOrderMapperImpl implements IPromotionOrderMapper {

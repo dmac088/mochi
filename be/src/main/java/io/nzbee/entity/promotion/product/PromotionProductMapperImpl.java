@@ -3,7 +3,6 @@ package io.nzbee.entity.promotion.product;
 import org.springframework.stereotype.Component;
 import io.nzbee.domain.promotion.Promotion;
 import io.nzbee.domain.promotion.product.ProductPromotion;
-import io.nzbee.entity.promotion.product.PromotionProductDTO;
 
 @Component(value = "promotionProductMapper")
 public class PromotionProductMapperImpl implements IPromotionProductMapper {

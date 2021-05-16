@@ -72,7 +72,7 @@ public class BagItem {
 		if(this.product instanceof PhysicalProduct) {
 			return (this.quantity * ((PhysicalProduct) this.product).getWeight());
 		}
-		return new Double(0.0);
+		return Double.valueOf(0.0);
 	}
 
 	public boolean isErrors() {

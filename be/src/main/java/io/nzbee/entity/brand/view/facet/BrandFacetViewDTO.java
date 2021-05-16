@@ -31,7 +31,7 @@ public class BrandFacetViewDTO implements ISearchDimension, Serializable {
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 		this.count 	= !(aliasToIndexMap.get(COUNT_ALIAS) == null)
 						  ? ((Number) tuple[aliasToIndexMap.get(COUNT_ALIAS)]).longValue()
-						  : new Long(0);
+						  : Long.valueOf(0);
 	}
 
 	public BrandFacetViewDTO(String brandCode, String brandDesc, String locale, Long count) {

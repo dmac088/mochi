@@ -35,7 +35,7 @@ public class TagFacetViewDTO implements ISearchDimension, Serializable  {
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 		this.objectCount 	= !(aliasToIndexMap.get(OBJECT_COUNT_ALIAS) == null)
 							  ? ((Number) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue()
-							  : new Long(0);
+							  : Long.valueOf(0);
 	}
 
 	public static String getIdAlias() {

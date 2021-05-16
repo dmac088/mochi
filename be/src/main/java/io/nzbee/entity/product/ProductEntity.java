@@ -252,7 +252,7 @@ public abstract class ProductEntity implements Serializable {
 				 
 		 return (priceVal.isPresent()) 
 					? priceVal.get().getPriceValue()
-					: new Double(0);     
+					: Double.valueOf(0);     
 	}
 	
 	@Field(store=Store.YES)
@@ -267,7 +267,7 @@ public abstract class ProductEntity implements Serializable {
 				 
 		return (priceVal.isPresent()) 
 				? priceVal.get().getPriceValue()
-				: new Double(0);     
+				: Double.valueOf(0);   
 	}
 	
 	@Field(store=Store.YES)
@@ -282,7 +282,7 @@ public abstract class ProductEntity implements Serializable {
 				 
 		return (priceVal.isPresent()) 
 				? priceVal.get().getPriceValue()
-				: new Double(0);        
+				: Double.valueOf(0);         
 	}
 	
 	@Field(store=Store.YES)
@@ -297,7 +297,7 @@ public abstract class ProductEntity implements Serializable {
 				 
 		return (priceVal.isPresent()) 
 				? priceVal.get().getPriceValue()
-				: new Double(0);           
+				: Double.valueOf(0);           
 	}
 	
 	@Facet

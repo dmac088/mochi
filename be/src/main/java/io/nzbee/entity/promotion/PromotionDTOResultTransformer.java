@@ -6,7 +6,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
-import io.nzbee.entity.promotion.PromotionDTO;
 import io.nzbee.entity.promotion.mechanic.PromotionMechanicDTO;
 
 public class PromotionDTOResultTransformer implements ResultTransformer {

@@ -1,7 +1,6 @@
 package io.nzbee.entity.product.shipping.type;
 
 import org.springframework.stereotype.Component;
-import io.nzbee.entity.product.shipping.type.ShippingTypeDTO;
 import io.nzbee.view.product.shipping.type.ShippingTypeView;
 
 @Component

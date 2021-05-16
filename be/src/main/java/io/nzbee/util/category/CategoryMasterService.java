@@ -74,7 +74,7 @@ public class CategoryMasterService {
 		
 		CategoryEntity cEN = c.get_CATEGORY_TYPE().equals("productcategory")
 						? mapToProductCategory(c.get_CATEGORY_CODE(),
-											   new Long(c.get_CATEGORY_LEVEL()),
+											   Long.valueOf(c.get_CATEGORY_LEVEL()),
 											   c.get_PARENT_CATEGORY_CODE(),
 											   c.get_CATEGORY_DESC_EN(),
 											   Constants.localeENGB)
@@ -87,7 +87,7 @@ public class CategoryMasterService {
 		CategoryEntity cCN =	c.get_CATEGORY_TYPE().equals("productcategory")
 				?  mapToProductCategory(
 						c.get_CATEGORY_CODE(),
-						new Long(c.get_CATEGORY_LEVEL()),
+						Long.valueOf(c.get_CATEGORY_LEVEL()),
 						c.get_PARENT_CATEGORY_CODE(),
 						c.get_CATEGORY_DESC_HK(),
 						Constants.localeZHHK)

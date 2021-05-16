@@ -127,7 +127,7 @@ public class PromotionDTO implements ISearchDimension, Serializable {
 
 	@Override
 	public Long getCount() {
-		return new Long(0);
+		return Long.valueOf(0);
 	}
 
 	@Override

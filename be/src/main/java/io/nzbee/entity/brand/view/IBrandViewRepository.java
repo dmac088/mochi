@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.brand.view.BrandViewDTO;
+
 
 public interface IBrandViewRepository  extends CrudRepository<BrandEntity, Long>  {
 	

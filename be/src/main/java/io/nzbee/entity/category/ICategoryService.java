@@ -5,7 +5,6 @@ import java.util.Optional;
 import io.nzbee.entity.ILightLocalizedService;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.ISearchDimensionService;
-import io.nzbee.view.category.product.ProductCategoryView;
 
 public interface ICategoryService extends ILightLocalizedService<CategoryDTO, CategoryEntity>, ISearchDimensionService<CategoryDTO> {
 

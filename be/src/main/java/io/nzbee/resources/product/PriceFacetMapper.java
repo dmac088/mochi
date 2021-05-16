@@ -15,7 +15,7 @@ public class PriceFacetMapper implements IFacetMapper<Double> {
 		ef.setDesc(price.toString());
 		ef.setHierarchical(false);
 		ef.setValue(price.toString());
-		ef.setCount(new Long(0).intValue());
+		ef.setCount(Long.valueOf(0).intValue());
 		return ef;
 	}
 

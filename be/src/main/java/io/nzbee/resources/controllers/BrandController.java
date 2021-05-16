@@ -59,7 +59,7 @@ public class BrandController {
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
-    		maxPrice = new Double(oMaxPrice.get());
+    		maxPrice = Double.valueOf(oMaxPrice.get());
     	}
     	
     	final List<BrandFacetView> collection =
@@ -86,7 +86,7 @@ public class BrandController {
     	Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getId()).findFirst();
     	Double maxPrice = null;
     	if(oMaxPrice.isPresent()) {
-    		maxPrice = new Double(oMaxPrice.get());
+    		maxPrice =  Double.valueOf(oMaxPrice.get());
     	}
     	
     	List<EntityFacet> collection =

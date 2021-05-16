@@ -17,7 +17,7 @@ public class CategoryBrandDTO extends CategoryDTO implements Serializable {
 		super(tuple, aliasToIndexMap);
 		this.brandCount    		= !(aliasToIndexMap.get(BRAND_COUNT_ALIAS) == null)
 								  ? ((Number) tuple[aliasToIndexMap.get(BRAND_COUNT_ALIAS)]).longValue()
-								  : new Long(0);
+								  : Long.valueOf(0);
 	}
 
 	public Long getBrandCount() {

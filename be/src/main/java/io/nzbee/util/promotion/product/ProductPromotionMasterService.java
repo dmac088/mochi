@@ -16,7 +16,6 @@ import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.promotion.IPromotionService;
 import io.nzbee.util.FileStorageServiceUpload;
-import io.nzbee.util.promotion.product.ProductPromotionMasterSchema;
 import io.nzbee.util.promotion.product.ProductPromotionMasterService;
 
 @Service

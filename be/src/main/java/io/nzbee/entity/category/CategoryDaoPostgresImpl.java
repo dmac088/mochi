@@ -295,8 +295,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		Optional<Object> result = Optional.ofNullable(query.getSingleResult());
 		
 		return result.isPresent()
-			   ? new Double(result.get().toString())
-			   : new Double(0);
+			   ? Double.valueOf((String) result.get())
+			   : Double.valueOf(0);
 	}
 	
 	

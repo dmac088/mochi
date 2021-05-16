@@ -30,10 +30,10 @@ public class CategoryProductDTO extends CategoryDTO {
 									  : null;
 		this.productCount			= !(aliasToIndexMap.get(PRODUCT_COUNT_ALIAS) == null)
 									  ? ((Number) tuple[aliasToIndexMap.get(PRODUCT_COUNT_ALIAS)]).longValue()
-									  : new Long(0);
+									  : Long.valueOf(0);
 		this.childCategoryCount    	= !(aliasToIndexMap.get(CHILD_COUNT_ALIAS) == null)
 									  ? ((Number) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue()
-									  : new Long(0);
+									  : Long.valueOf(0);
 	}
 	
 
