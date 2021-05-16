@@ -23,5 +23,15 @@ public class CategoryBrandDTO extends CategoryDTO implements Serializable {
 	public Long getBrandCount() {
 		return brandCount;
 	}
+
+	@Override
+	public String getDesc() {
+		return this.getCategoryDesc();
+	}
+
+	@Override
+	public Long getCount() {
+		return this.getBrandCount();
+	}
 	
 }

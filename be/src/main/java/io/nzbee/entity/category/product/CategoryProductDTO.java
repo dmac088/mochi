@@ -52,5 +52,17 @@ public class CategoryProductDTO extends CategoryDTO {
 	public Long getChildCategoryCount() {
 		return childCategoryCount;
 	}
+
+
+	@Override
+	public String getDesc() {
+		return this.getCategoryDesc();
+	}
+
+
+	@Override
+	public Long getCount() {
+		return this.getProductCount();
+	}
 	
 }
