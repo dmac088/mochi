@@ -232,6 +232,7 @@ public class BagDaoPostgresImpl implements IBagDao {
 		"			sda.shp_dst_desc, " +
 		"			sp.shp_typ_id, " + 
 		"			st.shp_typ_cd, " +
+		"           0 as object_count, " +
 		"      		:currency as ccy_cd, " +
 		"	   		:locale as lcl_cd " + 
 		
