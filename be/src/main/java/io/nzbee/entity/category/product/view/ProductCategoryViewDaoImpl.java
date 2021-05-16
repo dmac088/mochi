@@ -1,17 +1,23 @@
 package io.nzbee.entity.category.product.view;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
+import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
+import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 
 @Component
@@ -51,6 +57,110 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 		.setResultTransformer(new ProductProductCategoryViewDTOResultTransformer());
 		
 		return query.getResultList();
+	}
+	
+	@Override
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	@Caching(
+			put = {
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
+			}
+	)
+	public List<ProductCategoryViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+			StringCollectionWrapper tagCodes, Double maxPrice) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes.getCodes()), StringUtils.join(tagCodes.getCodes()));
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(false, 
+															 !brandCodes.getCodes().isEmpty(),
+															 !tagCodes.getCodes().isEmpty(),
+															 !(maxPrice == null),
+															 true,
+															 false,
+															 false,
+															 false,
+															 true,
+															 false,
+															 true))
+				 .setParameter("locale", locale)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+		
+		query.setParameter("categoryCode", categoryCode);
+		
+		if(!brandCodes.getCodes().isEmpty()) {
+			 query.setParameter("brandCodes", brandCodes.getCodes());
+		}
+			
+		if(!tagCodes.getCodes().isEmpty()) {
+			 query.setParameter("tagCodes", tagCodes.getCodes());
+		}
+		
+		if(!(maxPrice == null)) {
+			query.setParameter("maxPrice", maxPrice);
+			query.setParameter("currency", currency);
+			query.setParameter("markdownPriceCode", Constants.markdownPriceCode);
+		}
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductProductCategoryViewDTOResultTransformer());
+		
+		return query.getResultList();
+	}
+	
+
+	@Override
+	@Caching(
+			put = {
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey()")
+			}
+	)
+	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+			StringCollectionWrapper tagCodes) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.getMaxPrice parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}", locale, currency, categoryCode, StringUtils.join(categoryCodes.getCodes()), StringUtils.join(brandCodes.getCodes()), StringUtils.join(tagCodes.getCodes()));
+		
+		Session session = em.unwrap(Session.class);
+		
+		Query query = session.createNativeQuery(constructSQL(!categoryCodes.getCodes().isEmpty(), 
+															 !brandCodes.getCodes().isEmpty(),
+															 !tagCodes.getCodes().isEmpty(),
+															 false,
+															 false,
+															 true,
+															 false,
+															 false,
+															 true,
+															 false,
+															 false))
+				 .setParameter("locale", locale)
+				 .setParameter("currency", currency)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", Constants.activeSKUCode)
+				 .setParameter("retailPriceCode", Constants.retailPriceCode)
+				 .setParameter("markdownPriceCode", Constants.markdownPriceCode);
+				 
+		if(!categoryCodes.getCodes().isEmpty()) {
+			 query.setParameter("categoryCodes", categoryCodes.getCodes());
+		}
+		
+		if(!brandCodes.getCodes().isEmpty()) {
+			 query.setParameter("brandCodes", brandCodes.getCodes());
+		}
+			
+		if(!tagCodes.getCodes().isEmpty()) {
+			 query.setParameter("tagCodes", tagCodes.getCodes());
+		}
+		
+		query.setParameter("categoryCode", categoryCode);
+		
+		Optional<Object> result = Optional.ofNullable(query.getSingleResult());
+		
+		return result.isPresent()
+			   ? Double.valueOf(result.get().toString())
+			   : Double.valueOf(0);
 	}
 
 	

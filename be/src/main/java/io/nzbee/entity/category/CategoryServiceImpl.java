@@ -50,18 +50,6 @@ public class CategoryServiceImpl implements ICategoryService, IFacetService {
 	}
 	
 	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
-	public List<CategoryDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
-		return categoryDAO.findAll(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes, maxPrice);
-	}
-	
-	@Override
-	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey()")
-	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes) {
-		return categoryDAO.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
-	}
-	
-	@Override
 	@Cacheable(cacheNames = CACHE_NAME + "Other")
 	public List<CategoryDTO> findAll(String locale) {
 		return categoryDAO.findAll(locale);

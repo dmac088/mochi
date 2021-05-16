@@ -7,14 +7,11 @@ import io.nzbee.view.category.product.ProductCategoryView;
 
 public interface ICategoryViewPortService {
 
-	List<ProductCategoryView> findAll(String locale, String currency, String rootCategoryCode, Set<String> collect,
-			Set<String> collect2, Set<String> collect3);
-	
-	List<ProductCategoryView> findAll(String locale, String currency, String rootCategoryCode, Set<String> collect,
-			Set<String> collect2, Set<String> collect3, Double maxPrice);
+	List<ProductCategoryView> findAll(String locale, String currency, String rootCategoryCode, Set<String> categoryCodes,
+			Set<String> brandCodes, Set<String> tagCodes, Double maxPrice);
 
-	Double getMaxPrice(String locale, String currency, String rootCategoryCode, Set<String> collect, Set<String> collect2,
-			Set<String> collect3);
+	Double getMaxPrice(String locale, String currency, String rootCategoryCode, Set<String> categoryCodes, Set<String> brandCodes,
+			Set<String> tagCodes);
 
 	List<ProductCategoryView> findAll(String locale, String rootCategoryCode);
 }
