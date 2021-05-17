@@ -48,7 +48,7 @@ public class SearchController {
 	private IPhysicalProductLightPortService ipps;
 	
 	
-	@PostMapping(value = "/Search/{locale}/{currency}/Category/{category}",
+	@PostMapping(value = "/Search/{locale}/{currency}/Category/Code/{category}",
     					params = { "q", "page", "size", "sort" })
     public ResponseEntity<SearchResultResource> search(	
 						    						@PathVariable 		  String locale,

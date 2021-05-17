@@ -12,6 +12,4 @@ public interface IBrandRepository  extends CrudRepository<BrandEntity, Long>  {
 	
 	Optional<BrandEntity> findByAttributesLclCdAndAttributesBrandDesc(String locale, String brandDesc);
 
-	
-	
 }
