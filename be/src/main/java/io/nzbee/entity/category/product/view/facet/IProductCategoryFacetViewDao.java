@@ -16,4 +16,6 @@ public interface IProductCategoryFacetViewDao extends IDao<ProductCategoryFacetV
 	Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes);
 
+	List<ProductCategoryFacetViewDTO> findAll(String locale, StringCollectionWrapper codes);
+
 }

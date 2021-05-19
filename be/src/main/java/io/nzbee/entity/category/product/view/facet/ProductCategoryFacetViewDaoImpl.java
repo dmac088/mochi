@@ -2,12 +2,12 @@ package io.nzbee.entity.category.product.view.facet;
 
 import java.util.List;
 import java.util.Optional;
-
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.hibernate.Session;
+import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -161,6 +161,44 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 		return result.isPresent()
 			   ? Double.valueOf(result.get().toString())
 			   : Double.valueOf(0);
+	}
+	
+	@Override
+	@SuppressWarnings({ "deprecation", "unchecked" })
+	@Caching(
+			put = {
+					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
+			}
+	)
+	public List<ProductCategoryFacetViewDTO> findAll(String locale, StringCollectionWrapper codes) {
+		
+		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(codes.getCodes(), ','));
+		
+		Session session = em.unwrap(Session.class);
+
+		Query query = session.createNativeQuery(constructSQL(!codes.getCodes().isEmpty(),
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false,
+															 false))
+				 .setParameter("locale", locale)
+				 .setParameter("parentCategoryCode", "-1")
+				 .setParameter("activeProductCode", Constants.activeSKUCode);
+		
+		if(!codes.getCodes().isEmpty()) {
+			query.setParameter("categoryCodes", codes.getCodes());
+		}
+		
+		query.unwrap(org.hibernate.query.Query.class)
+		.setResultTransformer(new ProductProductCategoryFacetViewDTOResultTransformer());
+		
+		return query.getResultList();
 	}
 
 	

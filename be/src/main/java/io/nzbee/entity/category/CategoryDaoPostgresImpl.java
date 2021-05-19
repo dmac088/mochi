@@ -17,7 +17,6 @@ import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import org.apache.commons.lang3.ArrayUtils;
 import org.hibernate.Session;
-import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,6 @@ import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
-import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.attribute.CategoryAttributeEntity_;
 import io.nzbee.entity.category.product.CategoryProductEntity;
@@ -52,8 +50,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return categoryRepository.findById(id);
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
+	@SuppressWarnings("deprecation")
 	@Caching(
 			put = {
 					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryId.toString()")
@@ -95,8 +93,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		}
 	}
 	
-	@SuppressWarnings("deprecation")
 	@Override
+	@SuppressWarnings("deprecation")
 	@Caching(
 			put = {
 					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryCode")
@@ -148,9 +146,8 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return categoryRepository.findByCategoryCode(categoryCode);
 	}
 	
-	
-	@SuppressWarnings("deprecation")
 	@Override
+	@SuppressWarnings("deprecation")
 	@Caching(
 			put = {
 					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #categoryDesc")
@@ -309,45 +306,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		
 		return query.getResultList();
 	}
-
-
-	@SuppressWarnings({ "deprecation", "unchecked" })
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
-			}
-	)
-	public List<CategoryDTO> findAll(String locale, StringCollectionWrapper codes) {
-		
-		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(codes.getCodes(), ','));
-		
-		Session session = em.unwrap(Session.class);
-
-		Query query = session.createNativeQuery(constructSQL(!codes.getCodes().isEmpty(),
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 false))
-				 .setParameter("locale", locale)
-				 .setParameter("parentCategoryCode", "-1")
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		if(!codes.getCodes().isEmpty()) {
-			query.setParameter("categoryCodes", codes.getCodes());
-		}
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new CategoryDTOResultTransformer());
-		
-		return query.getResultList();
-	}
 	
 	
 	@Override
@@ -436,21 +394,6 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 		return query.getResultList();
 	}
 
-	@Override
-	public void save(CategoryEntity t) {
-		em.persist(t);
-	}
-
-	@Override
-	public void update(CategoryEntity t, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void delete(CategoryEntity t) {
-		// TODO Auto-generated method stub
-	}	
 	
 	private String constructSQL(
 				boolean hasCategories,
@@ -729,5 +672,24 @@ public class CategoryDaoPostgresImpl implements ICategoryDao {
 			
 		return sql;
 	}
+
+	@Override
+	public void save(CategoryDTO t) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void update(CategoryDTO t, String[] params) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void delete(CategoryDTO t) {
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

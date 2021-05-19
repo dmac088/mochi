@@ -3,9 +3,9 @@ package io.nzbee.entity.category;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import io.nzbee.entity.ILocalizedDao;
+import io.nzbee.entity.IDao;
 
-public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity> {
+public interface ICategoryDao extends IDao<CategoryDTO> {
 	
 	List<CategoryEntity> findByParent(String locale, String parentCategoryCode);
 	
@@ -24,6 +24,12 @@ public interface ICategoryDao extends ILocalizedDao<CategoryDTO, CategoryEntity>
 	Optional<CategoryEntity> findById(Long id);
 
 	List<CategoryEntity> findAll(Set<String> codes);
+
+	Optional<CategoryDTO> findById(String locale, Long categoryId);
+
+	Optional<CategoryDTO> findByCode(String locale, String categoryCode);
+
+	Optional<CategoryDTO> findByDesc(String locale, String categoryDesc);
 
 	
 }

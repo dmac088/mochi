@@ -4,7 +4,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
-
 import io.nzbee.entity.StringCollectionWrapper;
 
 @Service
@@ -35,6 +34,18 @@ public class ProductCategoryFacetViewServiceImpl implements IProductCategoryFace
 	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey()")
 	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes) {
 		return productCategoryDao.getMaxPrice(locale, currency, categoryCode, categoryCodes, brandCodes, tagCodes);
+	}
+	
+	
+	@Override
+	@Cacheable(cacheNames = CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
+	public List<ProductCategoryFacetViewDTO> findAll(String locale, String currency, String rootCategory, StringCollectionWrapper codes) {
+		return productCategoryDao.findAll(locale, codes);
+	}
+
+	@Override
+	public String tokenToCode(String token) {
+		return token.substring(token.lastIndexOf('/')+1,token.length());
 	}
 	
 	@Override
