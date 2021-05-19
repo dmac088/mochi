@@ -5,11 +5,11 @@ import io.nzbee.entity.IService;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.ISearchDimensionService;
 
-public interface IProductCategoryFacetViewService extends IService<ProductCategoryFacetViewDTO>, ISearchDimensionService<ProductCategoryFacetViewDTO> {
+public interface IProductCategoryFacetDTOService extends IService<ProductCategoryFacetDTO>, ISearchDimensionService<ProductCategoryFacetDTO> {
 
-	List<ProductCategoryFacetViewDTO> findAll(String locale, String rootCategory);
+	List<ProductCategoryFacetDTO> findAll(String locale, String rootCategory);
 
-	List<ProductCategoryFacetViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+	List<ProductCategoryFacetDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brands, StringCollectionWrapper tags, Double maxPrice);
 
 	Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,

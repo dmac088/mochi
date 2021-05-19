@@ -20,7 +20,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 
 @Component
-public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetViewDao {
+public class ProductCategoryFacetDTODaoImpl implements IProductCategoryFacetDTODao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
@@ -32,7 +32,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 	
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
-	public List<ProductCategoryFacetViewDTO> findAll(String locale, String rootCategoryCode) { 
+	public List<ProductCategoryFacetDTO> findAll(String locale, String rootCategoryCode) { 
 		LOGGER.debug("call ProductCategoryViewDaoImpl.findAll parameters : {} ", locale);
 		
 		Session session = em.unwrap(Session.class);
@@ -55,7 +55,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new ProductProductCategoryFacetViewDTOResultTransformer());
+		.setResultTransformer(new ProductProductCategoryFacetDTOResultTransformer());
 		
 		return query.getResultList();
 	}
@@ -67,7 +67,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
 			}
 	)
-	public List<ProductCategoryFacetViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+	public List<ProductCategoryFacetDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
 			StringCollectionWrapper tagCodes, Double maxPrice) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes.getCodes()), StringUtils.join(tagCodes.getCodes()));
@@ -106,7 +106,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new ProductProductCategoryFacetViewDTOResultTransformer());
+		.setResultTransformer(new ProductProductCategoryFacetDTOResultTransformer());
 		
 		return query.getResultList();
 	}
@@ -171,7 +171,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
 			}
 	)
-	public List<ProductCategoryFacetViewDTO> findAll(String locale, StringCollectionWrapper codes) {
+	public List<ProductCategoryFacetDTO> findAll(String locale, StringCollectionWrapper codes) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : {}, {}, {}", locale, StringUtil.join(codes.getCodes(), ','));
 		
@@ -197,26 +197,26 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new ProductProductCategoryFacetViewDTOResultTransformer());
+		.setResultTransformer(new ProductProductCategoryFacetDTOResultTransformer());
 		
 		return query.getResultList();
 	}
 
 	
 	@Override
-	public void save(ProductCategoryFacetViewDTO t) {
+	public void save(ProductCategoryFacetDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(ProductCategoryFacetViewDTO t, String[] params) {
+	public void update(ProductCategoryFacetDTO t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(ProductCategoryFacetViewDTO t) {
+	public void delete(ProductCategoryFacetDTO t) {
 		// TODO Auto-generated method stub
 		
 	}

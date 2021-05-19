@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
 
-public class ProductProductCategoryFacetViewDTOResultTransformer implements ResultTransformer {
+public class ProductProductCategoryFacetDTOResultTransformer implements ResultTransformer {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Long, ProductCategoryFacetViewDTO> ProductCategoryViewDTOMap = new LinkedHashMap<>();
+	private Map<Long, ProductCategoryFacetDTO> ProductCategoryViewDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
 		
-        Long tagId = ((Number) tuple[aliasToIndexMap.get(ProductCategoryFacetViewDTO.ID_ALIAS)]).longValue();
+        Long tagId = ((Number) tuple[aliasToIndexMap.get(ProductCategoryFacetDTO.ID_ALIAS)]).longValue();
         
-        ProductCategoryFacetViewDTO ProductCategoryViewDTO = ProductCategoryViewDTOMap.computeIfAbsent(
+        ProductCategoryFacetDTO ProductCategoryViewDTO = ProductCategoryViewDTOMap.computeIfAbsent(
             tagId,
-            id -> new ProductCategoryFacetViewDTO(tuple, aliasToIndexMap)
+            id -> new ProductCategoryFacetDTO(tuple, aliasToIndexMap)
         );
         
         return ProductCategoryViewDTO;

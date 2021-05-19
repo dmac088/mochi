@@ -408,28 +408,31 @@ public class SearchServiceImpl implements ISearchService {
 			// create a new array of entity facets
 			ISearchDimensionService service = sfh.getBean(appContext);
 			
-			System.out.println(service.getClass().getSimpleName());
-			
 			List<ISearchDimension> lc = service.findAll(lcl, currency, rootCategoryCode, new StringCollectionWrapper(sfh.getCodes()));
 			
+			LOGGER.debug("found the following facets begin");
 			lc.stream().forEach(f -> {
-				System.out.println(f.getClass().getSimpleName() + " - " + f.getCode() + " - " + f.getDesc());
-				
+				LOGGER.debug(
+						f.getClass().getSimpleName() + " - " + f.getCode() + " - " + f.getDesc()
+				);
 			});
+			LOGGER.debug("found the following facets end");
 
 			facets.stream().filter(x -> !selectedFacets.stream().filter(y -> (x.getValue().equals(y.getValue())))
 			.findFirst().isPresent()).collect(Collectors.toSet())
 			.stream().filter(f -> sfh.getFacetingName().equals(f.getFacetingName()))
 			.forEach(f -> {
 				Optional<ISearchDimension> dO = lc.stream().filter(c -> {
+							LOGGER.debug(c.getCode().equals(service.tokenToCode(f.getValue())) + ": " + c.getCode() + " = " + service.tokenToCode(f.getValue()) + " = " +  f.getValue());
 							return (c.getCode().equals(service.tokenToCode(f.getValue())));
-						}).findFirst();
+						}).findAny();
 
 						if (dO.isPresent()) {
+							LOGGER.debug("adding " + dO.get().getCode());
 							returnFacets.add(new SearchFacetDiscrete(f, dO.get()));
 						}
-					});
-		});
+				});
+			});
 		
 		returnFacets.addAll(facets.stream().filter(x -> !selectedFacets.stream().filter(y -> (x.getValue().equals(y.getValue())))
 				.findFirst().isPresent()).collect(Collectors.toSet())

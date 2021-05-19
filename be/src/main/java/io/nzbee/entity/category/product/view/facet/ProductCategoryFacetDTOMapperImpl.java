@@ -5,10 +5,10 @@ import org.springframework.stereotype.Component;
 import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class ProductCategoryFacetViewMapperImpl implements IProductCategoryFacetViewMapper {
+public class ProductCategoryFacetDTOMapperImpl implements IProductCategoryFacetDTOMapper {
 
 	@Override
-	public ProductCategoryView toView(ProductCategoryFacetViewDTO d) {
+	public ProductCategoryView toView(ProductCategoryFacetDTO d) {
 		ProductCategoryView pcv = new ProductCategoryView();
 		pcv.setCategoryCode(d.getCategoryCode());
 		pcv.setCategoryDesc(d.getCategoryDesc());
