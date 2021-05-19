@@ -16,7 +16,6 @@ public class ProductCategoryAdapterImpl implements ICategoryViewPortService {
 	@Autowired
 	private IProductCategoryFacetViewService productCategoryService;
 	
-	
 	@Autowired
 	private IProductCategoryFacetViewMapper categoryMapper;
 	

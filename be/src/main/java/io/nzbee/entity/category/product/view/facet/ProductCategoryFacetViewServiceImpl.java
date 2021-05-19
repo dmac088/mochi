@@ -5,14 +5,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.search.IFacetService;
 
 @Service
-public class ProductCategoryFacetViewServiceImpl implements IProductCategoryFacetViewService {
+public class ProductCategoryFacetViewServiceImpl implements IProductCategoryFacetViewService, IFacetService {
 
 	public static final String CACHE_NAME = "categoryCache";
 	
 	@Autowired
 	private IProductCategoryFacetViewDao productCategoryDao;
+
+
+	@Override
+	public String getFacetField() {
+		return "product.categories.categoryToken";
+	}
+
+	@Override
+	public String getFacetCategory() {
+		return "category";
+	}
 	
 	@Override
 	public List<ProductCategoryFacetViewDTO> findAll(String locale, String rootCategory) {
@@ -65,6 +77,7 @@ public class ProductCategoryFacetViewServiceImpl implements IProductCategoryFace
 		// TODO Auto-generated method stub
 		
 	}
+
 
 
 

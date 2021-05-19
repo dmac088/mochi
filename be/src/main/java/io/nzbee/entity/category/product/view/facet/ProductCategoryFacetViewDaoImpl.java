@@ -17,13 +17,14 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 
 @Component
 public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetViewDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
+	public final static String CACHE_NAME = "categoryCache";
 
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
@@ -63,7 +64,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
 			}
 	)
 	public List<ProductCategoryFacetViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
@@ -114,7 +115,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey()")
+					@CachePut(value = CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey()")
 			}
 	)
 	public Double getMaxPrice(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
@@ -167,7 +168,7 @@ public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetVie
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Caching(
 			put = {
-					@CachePut(value = CategoryServiceImpl.CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
+					@CachePut(value = CACHE_NAME, key="#locale + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<ProductCategoryFacetViewDTO> findAll(String locale, StringCollectionWrapper codes) {
