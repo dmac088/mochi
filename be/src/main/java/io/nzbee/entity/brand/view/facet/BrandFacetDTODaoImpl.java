@@ -21,7 +21,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.brand.BrandServiceImpl;
 
 @Component
-public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
+public class BrandFacetDTODaoImpl implements IBrandFacetDTODao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -36,7 +36,7 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
-	public List<BrandFacetViewDTO> findAll(String locale, String currency, String categoryCode,
+	public List<BrandFacetDTO> findAll(String locale, String currency, String categoryCode,
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper tagCodes, Double maxPrice) {
 		
 		LOGGER.debug("call BrandFacetViewDaoImpl.findAll with parameters : locale = {}, currency = {}, categoryCode = {}, category codes = {}, tag codes = {}, maxPrice = {}", locale, currency, categoryCode, StringUtil.join(categoryCodes, ','), StringUtil.join(tagCodes, ','), maxPrice);
@@ -70,9 +70,9 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandFacetViewDTOResultTransformer());
+		.setResultTransformer(new BrandFacetDTOResultTransformer());
 		
-		List<BrandFacetViewDTO> results = query.getResultList();
+		List<BrandFacetDTO> results = query.getResultList();
 		
 		return results;
 	}
@@ -85,7 +85,7 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #brandCodes.getCacheKey()")
 			}
 	)	
-	public List<BrandFacetViewDTO> findAll(String locale, String rootCategory,
+	public List<BrandFacetDTO> findAll(String locale, String rootCategory,
 			StringCollectionWrapper brandCodes) {
 		LOGGER.debug("call BrandFacetViewDaoImpl.findAll with parameters : {}, {}, {}", locale, StringUtil.join(brandCodes));
 
@@ -108,7 +108,7 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandFacetViewDTOResultTransformer());
+		.setResultTransformer(new BrandFacetDTOResultTransformer());
 		
 		return query.getResultList();
 	}
@@ -121,7 +121,7 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 					@CachePut(value = BrandServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #code")
 			}
 	)
-	public Optional<BrandFacetViewDTO> findByCode(String locale, String rootCategory, String code) {
+	public Optional<BrandFacetDTO> findByCode(String locale, String rootCategory, String code) {
 		LOGGER.debug("call BrandDaoImpl.findByCode parameters : {}, {}, {}", locale, rootCategory, code);
 		
 		Session session = em.unwrap(Session.class);
@@ -143,10 +143,10 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 		
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new BrandFacetViewDTOResultTransformer());
+		.setResultTransformer(new BrandFacetDTOResultTransformer());
 		
 		try {
-			BrandFacetViewDTO result = (BrandFacetViewDTO) query.getSingleResult();
+			BrandFacetDTO result = (BrandFacetDTO) query.getSingleResult();
 			return Optional.ofNullable(result);
 		} catch(NoResultException nre) {
 			return Optional.empty();
@@ -154,19 +154,19 @@ public class BrandFacetViewDaoImpl implements IBrandFacetViewDao {
 	}
 	
 	@Override
-	public void save(BrandFacetViewDTO t) {
+	public void save(BrandFacetDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(BrandFacetViewDTO t, String[] params) {
+	public void update(BrandFacetDTO t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(BrandFacetViewDTO t) {
+	public void delete(BrandFacetDTO t) {
 		
 	}
 

@@ -60,8 +60,8 @@ public class BeanConfigurationIT {
 	}
 	
 	@Bean
-	public io.nzbee.entity.brand.view.facet.IBrandFacetViewMapper brandFacetViewMapper() { 
-		return new io.nzbee.entity.brand.view.facet.BrandFacetViewMapperImpl();
+	public io.nzbee.entity.brand.view.facet.IBrandFacetDTOMapper brandFacetViewMapper() { 
+		return new io.nzbee.entity.brand.view.facet.BrandFacetDTOMapperImpl();
 	}
 	
 	@Bean
@@ -70,8 +70,8 @@ public class BeanConfigurationIT {
 	}
 	
 	@Bean
-	public io.nzbee.entity.brand.view.IBrandViewService test() {
-		return new io.nzbee.entity.brand.view.BrandViewServiceImpl();
+	public io.nzbee.entity.brand.view.IBrandDTOService test() {
+		return new io.nzbee.entity.brand.view.BrandDTOServiceImpl();
 	}
 	
 	@Bean

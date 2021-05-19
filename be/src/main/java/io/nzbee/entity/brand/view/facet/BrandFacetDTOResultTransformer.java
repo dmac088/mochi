@@ -7,24 +7,24 @@ import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
 
 
-public class BrandFacetViewDTOResultTransformer implements ResultTransformer {
+public class BrandFacetDTOResultTransformer implements ResultTransformer {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Map<String, BrandFacetViewDTO> brandDTOMap = new LinkedHashMap<>();
+	private Map<String, BrandFacetDTO> brandDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
         
-        String brandCode = ((String) tuple[aliasToIndexMap.get(BrandFacetViewDTO.CODE_ALIAS)]);
+        String brandCode = ((String) tuple[aliasToIndexMap.get(BrandFacetDTO.CODE_ALIAS)]);
  
-        BrandFacetViewDTO brandDTO = brandDTOMap.computeIfAbsent(
+        BrandFacetDTO brandDTO = brandDTOMap.computeIfAbsent(
         	brandCode,
-        	code -> new BrandFacetViewDTO(tuple, aliasToIndexMap)
+        	code -> new BrandFacetDTO(tuple, aliasToIndexMap)
         );
         
         return brandDTO;

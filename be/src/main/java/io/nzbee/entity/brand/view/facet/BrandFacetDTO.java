@@ -5,7 +5,7 @@ import java.util.Map;
 
 import io.nzbee.search.ISearchDimension;
 
-public class BrandFacetViewDTO implements ISearchDimension, Serializable {
+public class BrandFacetDTO implements ISearchDimension, Serializable {
 	
 	private static final long serialVersionUID = 5082157529149474395L;
 
@@ -25,7 +25,7 @@ public class BrandFacetViewDTO implements ISearchDimension, Serializable {
 	
 	private Long count; 
 	
-	public BrandFacetViewDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public BrandFacetDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.brandCode 		= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 		= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
@@ -34,7 +34,7 @@ public class BrandFacetViewDTO implements ISearchDimension, Serializable {
 						  : Long.valueOf(0);
 	}
 
-	public BrandFacetViewDTO(String brandCode, String brandDesc, String locale, Long count) {
+	public BrandFacetDTO(String brandCode, String brandDesc, String locale, Long count) {
 		super();
 		this.brandCode = brandCode;
 		this.brandDesc = brandDesc;

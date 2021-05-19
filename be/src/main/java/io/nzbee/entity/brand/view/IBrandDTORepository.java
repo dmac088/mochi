@@ -6,9 +6,9 @@ import org.springframework.data.repository.CrudRepository;
 import io.nzbee.entity.brand.BrandEntity;
 
 
-public interface IBrandViewRepository  extends CrudRepository<BrandEntity, Long>  {
+public interface IBrandDTORepository  extends CrudRepository<BrandEntity, Long>  {
 	
-	@Query(	  " SELECT new io.nzbee.entity.brand.view.BrandViewDTO("
+	@Query(	  " SELECT new io.nzbee.entity.brand.view.BrandDTO("
 			+ "												be.brandCode, "
 			+ "												at.brandDesc, "
 			+ "												at.lclCd "		
@@ -16,9 +16,9 @@ public interface IBrandViewRepository  extends CrudRepository<BrandEntity, Long>
 			+ " FROM BrandEntity be "
 			+ " JOIN be.attributes at "
 			+ " WHERE at.lclCd = :locale")
-	List<BrandViewDTO> findAll(String locale);
+	List<BrandDTO> findAll(String locale);
 	
-	@Query(	  " SELECT DISTINCT new io.nzbee.entity.brand.view.BrandViewDTO("
+	@Query(	  " SELECT DISTINCT new io.nzbee.entity.brand.view.BrandDTO("
 			+ "												be.brandCode, "
 			+ "												at.brandDesc, "
 			+ "												at.lclCd "		
@@ -29,6 +29,6 @@ public interface IBrandViewRepository  extends CrudRepository<BrandEntity, Long>
 			+ " JOIN p.department d "
 			+ " WHERE at.lclCd = :locale "
 			+ " AND d.departmentClass = :cls ")
-	List<BrandViewDTO> findAllByProductType(String locale, String cls);
+	List<BrandDTO> findAllByProductType(String locale, String cls);
 	
 }

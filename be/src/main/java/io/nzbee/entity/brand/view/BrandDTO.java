@@ -3,7 +3,7 @@ package io.nzbee.entity.brand.view;
 import java.io.Serializable;
 import java.util.Map;
 
-public class BrandViewDTO implements Serializable {
+public class BrandDTO implements Serializable {
 	
 	private static final long serialVersionUID = 5082157529149474395L;
 
@@ -19,13 +19,13 @@ public class BrandViewDTO implements Serializable {
 	
 	private String locale;
 	
-	public BrandViewDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public BrandDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.brandCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.brandDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();
 		this.locale 	= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 	}
 
-	public BrandViewDTO(String brandCode, String brandDesc, String locale) {
+	public BrandDTO(String brandCode, String brandDesc, String locale) {
 		super();
 		this.brandCode = brandCode;
 		this.brandDesc = brandDesc;

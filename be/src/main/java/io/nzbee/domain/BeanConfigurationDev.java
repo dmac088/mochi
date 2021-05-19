@@ -23,14 +23,19 @@ import io.nzbee.domain.promotion.PromotionServiceImpl;
 import io.nzbee.domain.promotion.order.IOrderPromotionService;
 import io.nzbee.domain.promotion.order.OrderPromotionServiceImpl;
 import io.nzbee.entity.adapters.view.BrandAdapterImpl;
+import io.nzbee.entity.adapters.view.BrandFacetAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
 import io.nzbee.entity.adapters.view.ProductCategoryAdapterImpl;
 import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTOMapperImpl;
+import io.nzbee.entity.brand.view.facet.IBrandFacetDTOMapper;
+import io.nzbee.entity.brand.view.facet.IBrandFacetDTOService;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
+import io.nzbee.view.ports.IBrandFacetViewPortService;
 import io.nzbee.view.ports.IBrandViewPortService;
 import io.nzbee.view.ports.ICategoryViewPortService;
 import io.nzbee.view.ports.IPhysicalProductFullPortService;
@@ -57,28 +62,33 @@ public class BeanConfigurationDev {
 	}
 	
 	@Bean
-	public io.nzbee.entity.brand.view.facet.IBrandFacetViewMapper brandFacetViewMapper() { 
-		return new io.nzbee.entity.brand.view.facet.BrandFacetViewMapperImpl();
+	public IBrandFacetDTOMapper brandFacetViewMapper() { 
+		return new BrandFacetDTOMapperImpl();
 	}
 	
 	@Bean
-	public io.nzbee.view.ports.IBrandFacetViewPortService brandEntityViewService() {
-		return new io.nzbee.entity.adapters.view.BrandFacetAdapterImpl();
+	public IBrandFacetViewPortService brandEntityViewService() {
+		return new BrandFacetAdapterImpl();
 	}
 	
 	@Bean
-	public io.nzbee.entity.brand.view.IBrandViewService test() {
-		return new io.nzbee.entity.brand.view.BrandViewServiceImpl();
+	public IBrandFacetViewService brandFacetViewService() {
+		return new BrandFacetViewServiceImpl();
+	}
+	
+	@Bean(value = "brandFacetService")
+	public IBrandFacetDTOService brandFacetDTOService() {
+		return new io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl();
+	}
+	
+	@Bean
+	public io.nzbee.entity.brand.view.IBrandDTOService test() {
+		return new io.nzbee.entity.brand.view.BrandDTOServiceImpl();
 	}
 	
 	@Bean
 	public IBrandViewService brandViewService() {
 		return new BrandViewServiceImpl();
-	}
-	
-	@Bean
-	public IBrandFacetViewService brandFacetService() {
-		return new BrandFacetViewServiceImpl();
 	}
 	
 	@Bean

@@ -2,10 +2,10 @@ package io.nzbee.entity.brand.view.facet;
 
 import io.nzbee.view.product.brand.facet.BrandFacetView;
 
-public class BrandFacetViewMapperImpl implements IBrandFacetViewMapper {
+public class BrandFacetDTOMapperImpl implements IBrandFacetDTOMapper {
  
 	@Override
-	public BrandFacetView toView(BrandFacetViewDTO d) {
+	public BrandFacetView toView(BrandFacetDTO d) {
 		
 		BrandFacetView bfv = new BrandFacetView();
 		bfv.setBrandCode(d.getBrandCode());

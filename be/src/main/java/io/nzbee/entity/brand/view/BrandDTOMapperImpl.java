@@ -4,10 +4,10 @@ import org.springframework.stereotype.Component;
 import io.nzbee.view.product.brand.BrandView;
 
 @Component
-public class BrandViewMapperImpl implements IBrandViewMapper {
+public class BrandDTOMapperImpl implements IBrandDTOMapper {
 
 	@Override
-	public BrandView toView(BrandViewDTO d) {
+	public BrandView toView(BrandDTO d) {
 		return new BrandView(
 				d.getBrandCode(),
 				d.getBrandDesc(),

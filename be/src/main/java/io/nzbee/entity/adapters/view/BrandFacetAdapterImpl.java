@@ -5,9 +5,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.brand.view.facet.BrandFacetViewDTO;
-import io.nzbee.entity.brand.view.facet.IBrandFacetViewMapper;
-import io.nzbee.entity.brand.view.facet.IBrandFacetViewService;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTO;
+import io.nzbee.entity.brand.view.facet.IBrandFacetDTOMapper;
+import io.nzbee.entity.brand.view.facet.IBrandFacetDTOService;
 import io.nzbee.exceptions.NotFoundException;
 import io.nzbee.view.ports.IBrandFacetViewPortService;
 import io.nzbee.view.product.brand.facet.BrandFacetView;
@@ -15,10 +15,10 @@ import io.nzbee.view.product.brand.facet.BrandFacetView;
 public class BrandFacetAdapterImpl implements IBrandFacetViewPortService {
 	
 	@Autowired
-	private IBrandFacetViewService brandFacetService;
+	private IBrandFacetDTOService brandFacetService;
 	
 	@Autowired 
-	private IBrandFacetViewMapper brandFacetMapper;
+	private IBrandFacetDTOMapper brandFacetMapper;
 		
 	@Override
 	public List<BrandFacetView> findAll(String locale, String currency, String categoryCode, Set<String> categoryCodes,
@@ -30,7 +30,7 @@ public class BrandFacetAdapterImpl implements IBrandFacetViewPortService {
 
 	@Override
 	public BrandFacetView findByCode(String locale, String rootCategory, String brandCode) {
-		BrandFacetViewDTO dto = brandFacetService.findByCode(locale, rootCategory, brandCode)
+		BrandFacetDTO dto = brandFacetService.findByCode(locale, rootCategory, brandCode)
 			.orElseThrow(() -> new NotFoundException("Brand not found for code " + brandCode));
 		return brandFacetMapper.toView(dto);
 	}
