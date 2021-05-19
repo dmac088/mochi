@@ -17,7 +17,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.IFacetService;
 
-@Service(value = "tagEntityService")
+@Service(value = "tagFacetService")
 public class TagServiceImpl implements ITagService, IFacetService {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());

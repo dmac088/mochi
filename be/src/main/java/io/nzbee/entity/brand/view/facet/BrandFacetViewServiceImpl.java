@@ -7,11 +7,23 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.search.IFacetService;
 
-@Service(value="brandEntityService")
-public class BrandFacetViewServiceImpl implements IBrandFacetViewService {
+@Service(value = "brandFacetService")
+public class BrandFacetViewServiceImpl implements IBrandFacetViewService, IFacetService {
 
 	public static final String CACHE_NAME = "brandCache";
+	
+
+	@Override
+	public String getFacetField() {
+		return "product.brand.brandToken";
+	}
+
+	@Override
+	public String getFacetCategory() {
+		return "brand";
+	}
 	
 	@Autowired
 	private IBrandFacetViewDao brandDao;
@@ -40,6 +52,7 @@ public class BrandFacetViewServiceImpl implements IBrandFacetViewService {
 	public Optional<BrandFacetViewDTO> findByCode(String locale, String rootCategory, String brandCode) {
 		return brandDao.findByCode(locale, rootCategory, brandCode);
 	}
+
 
 
 }

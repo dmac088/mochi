@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.search.IFacetService;
 
-@Service
+@Service(value = "categoryFacetService")
 public class ProductCategoryFacetViewServiceImpl implements IProductCategoryFacetViewService, IFacetService {
 
 	public static final String CACHE_NAME = "categoryCache";

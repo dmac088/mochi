@@ -5,13 +5,11 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Service;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.category.ICategoryService;
 
 
 @Service(value = "productEntityService")
@@ -26,10 +24,7 @@ public class ProductServiceImpl implements IProductService {
 	
 	@Autowired
 	private IProductRepository productRepository;
-	
-	@Autowired
-	@Qualifier("categoryEntityService")
-	private ICategoryService categoryService;
+
 	
 	@Override
 	public Optional<ProductEntity> findById(Long id) {

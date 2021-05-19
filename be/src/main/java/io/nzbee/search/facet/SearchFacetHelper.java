@@ -33,7 +33,7 @@ public class SearchFacetHelper {
 	
 	@SuppressWarnings("rawtypes")
 	public ISearchDimensionService getBean(ApplicationContext appContext) {
-		return (ISearchDimensionService) appContext.getBean(this.getFacetingName() + "EntityService");
+		return (ISearchDimensionService) appContext.getBean(this.getFacetingName() + "FacetService");
 	}
 	
 	public String getType() {
