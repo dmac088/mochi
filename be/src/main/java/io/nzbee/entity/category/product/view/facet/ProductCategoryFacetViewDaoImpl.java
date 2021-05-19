@@ -1,4 +1,4 @@
-package io.nzbee.entity.category.product.view;
+package io.nzbee.entity.category.product.view.facet;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +21,7 @@ import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 
 @Component
-public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
+public class ProductCategoryFacetViewDaoImpl implements IProductCategoryFacetViewDao {
 
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 
@@ -31,7 +31,7 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 	
 	@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
-	public List<ProductCategoryViewDTO> findAll(String locale, String rootCategoryCode) { 
+	public List<ProductCategoryFacetViewDTO> findAll(String locale, String rootCategoryCode) { 
 		LOGGER.debug("call ProductCategoryViewDaoImpl.findAll parameters : {} ", locale);
 		
 		Session session = em.unwrap(Session.class);
@@ -54,7 +54,7 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 				 .setParameter("activeProductCode", Constants.activeSKUCode);
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new ProductProductCategoryViewDTOResultTransformer());
+		.setResultTransformer(new ProductProductCategoryFacetViewDTOResultTransformer());
 		
 		return query.getResultList();
 	}
@@ -66,7 +66,7 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 					@CachePut(value = CategoryServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + #maxPrice")
 			}
 	)
-	public List<ProductCategoryViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
+	public List<ProductCategoryFacetViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes,
 			StringCollectionWrapper tagCodes, Double maxPrice) {
 		
 		LOGGER.debug("call CategoryDaoPostgresImpl.findAll parameters : locale = {}, currency = {}, category code = {}, category codes = {}, brand codes = {}, tag codes = {}, max price = {}", locale, currency, categoryCode, StringUtils.join(brandCodes.getCodes()), StringUtils.join(tagCodes.getCodes()));
@@ -105,7 +105,7 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 		}
 		
 		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new ProductProductCategoryViewDTOResultTransformer());
+		.setResultTransformer(new ProductProductCategoryFacetViewDTOResultTransformer());
 		
 		return query.getResultList();
 	}
@@ -165,19 +165,19 @@ public class ProductCategoryViewDaoImpl implements IProductCategoryViewDao {
 
 	
 	@Override
-	public void save(ProductCategoryViewDTO t) {
+	public void save(ProductCategoryFacetViewDTO t) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void update(ProductCategoryViewDTO t, String[] params) {
+	public void update(ProductCategoryFacetViewDTO t, String[] params) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void delete(ProductCategoryViewDTO t) {
+	public void delete(ProductCategoryFacetViewDTO t) {
 		// TODO Auto-generated method stub
 		
 	}

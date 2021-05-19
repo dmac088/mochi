@@ -1,15 +1,15 @@
-package io.nzbee.entity.category.product.view;
+package io.nzbee.entity.category.product.view.facet;
 
 import java.util.List;
 
 import io.nzbee.entity.IDao;
 import io.nzbee.entity.StringCollectionWrapper;
 
-public interface IProductCategoryViewDao extends IDao<ProductCategoryViewDTO> {
+public interface IProductCategoryFacetViewDao extends IDao<ProductCategoryFacetViewDTO> {
 
-	List<ProductCategoryViewDTO> findAll(String locale, String rootCategoryCode);
+	List<ProductCategoryFacetViewDTO> findAll(String locale, String rootCategoryCode);
 
-	List<ProductCategoryViewDTO> findAll(String locale, String currency, String categoryCode,
+	List<ProductCategoryFacetViewDTO> findAll(String locale, String currency, String categoryCode,
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
 			Double maxPrice);
 

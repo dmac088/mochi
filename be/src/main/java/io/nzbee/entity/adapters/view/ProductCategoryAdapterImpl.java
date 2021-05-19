@@ -4,20 +4,21 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
-import io.nzbee.entity.category.product.view.IProductCategoryViewService;
+
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.category.product.view.IProductCategoryViewMapper;
+import io.nzbee.entity.category.product.view.facet.IProductCategoryFacetViewMapper;
+import io.nzbee.entity.category.product.view.facet.IProductCategoryFacetViewService;
 import io.nzbee.view.category.product.ProductCategoryView;
 import io.nzbee.view.ports.ICategoryViewPortService;
 
 public class ProductCategoryAdapterImpl implements ICategoryViewPortService {
 	
 	@Autowired
-	private IProductCategoryViewService productCategoryService;
+	private IProductCategoryFacetViewService productCategoryService;
 	
 	
 	@Autowired
-	private IProductCategoryViewMapper categoryMapper;
+	private IProductCategoryFacetViewMapper categoryMapper;
 	
 
 	@Override

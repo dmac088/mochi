@@ -1,11 +1,11 @@
-package io.nzbee.entity.category.product.view;
+package io.nzbee.entity.category.product.view.facet;
 
 import java.io.Serializable;
 import java.util.Map;
 
 import io.nzbee.search.ISearchDimension;
 
-public class ProductCategoryViewDTO implements ISearchDimension, Serializable {
+public class ProductCategoryFacetViewDTO implements ISearchDimension, Serializable {
 	
 	private static final long serialVersionUID = -4167714174959634389L;
 
@@ -39,7 +39,7 @@ public class ProductCategoryViewDTO implements ISearchDimension, Serializable {
 	
 	private Long objectCount;
 	
-	public ProductCategoryViewDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
+	public ProductCategoryFacetViewDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.categoryId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.categoryCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
 		this.categoryDesc 	= tuple[aliasToIndexMap.get(DESC_ALIAS)].toString();

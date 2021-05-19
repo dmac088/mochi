@@ -1,4 +1,4 @@
-package io.nzbee.entity.category.product.view;
+package io.nzbee.entity.category.product.view.facet;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -6,21 +6,21 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
 
-public class ProductProductCategoryViewDTOResultTransformer implements ResultTransformer {
+public class ProductProductCategoryFacetViewDTOResultTransformer implements ResultTransformer {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Long, ProductCategoryViewDTO> ProductCategoryViewDTOMap = new LinkedHashMap<>();
+	private Map<Long, ProductCategoryFacetViewDTO> ProductCategoryViewDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
 		
-        Long tagId = ((Number) tuple[aliasToIndexMap.get(ProductCategoryViewDTO.ID_ALIAS)]).longValue();
+        Long tagId = ((Number) tuple[aliasToIndexMap.get(ProductCategoryFacetViewDTO.ID_ALIAS)]).longValue();
         
-        ProductCategoryViewDTO ProductCategoryViewDTO = ProductCategoryViewDTOMap.computeIfAbsent(
+        ProductCategoryFacetViewDTO ProductCategoryViewDTO = ProductCategoryViewDTOMap.computeIfAbsent(
             tagId,
-            id -> new ProductCategoryViewDTO(tuple, aliasToIndexMap)
+            id -> new ProductCategoryFacetViewDTO(tuple, aliasToIndexMap)
         );
         
         return ProductCategoryViewDTO;

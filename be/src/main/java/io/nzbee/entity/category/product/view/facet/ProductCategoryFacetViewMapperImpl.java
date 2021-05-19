@@ -1,14 +1,14 @@
-package io.nzbee.entity.category.product.view;
+package io.nzbee.entity.category.product.view.facet;
 
 import org.springframework.stereotype.Component;
 
 import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class ProductCategoryViewMapperImpl implements IProductCategoryViewMapper {
+public class ProductCategoryFacetViewMapperImpl implements IProductCategoryFacetViewMapper {
 
 	@Override
-	public ProductCategoryView toView(ProductCategoryViewDTO d) {
+	public ProductCategoryView toView(ProductCategoryFacetViewDTO d) {
 		ProductCategoryView pcv = new ProductCategoryView();
 		pcv.setCategoryCode(d.getCategoryCode());
 		pcv.setCategoryDesc(d.getCategoryDesc());
