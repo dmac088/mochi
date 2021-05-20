@@ -8,6 +8,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -27,10 +29,15 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = PhysicalProductLightServiceImpl.CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #pageable.getPageSize() + \", \" + #pageable.getOffset() + \", \" + #orderby")
+			}
+	)
 	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategoryCode,
-			Pageable pageable, String sort) {
+			Pageable pageable, String orderby) {
 		LOGGER.debug("call PhysicalProductLightDaoImpl.findAll with parameters : {}, {}, {}, {}, {}", locale, currency,
-				rootCategoryCode, pageable, sort);
+				rootCategoryCode, pageable, orderby);
 
 		Query query = em.createNativeQuery(this.constructSQL(false, false, false, false, false, true, false, ""))
 
@@ -41,14 +48,13 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		Object result = query.getSingleResult();
 		long total = ((Number) result).longValue();
 
-		query = em.createNativeQuery(this.constructSQL(false, false, false, false, false, false, true, ""))
+		query = em.createNativeQuery(this.constructSQL(false, false, false, false, false, false, true, getOrderby(orderby)))
 
 				.setParameter("rootCategoryCode", rootCategoryCode)
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
 				.setParameter("limit", pageable.getPageSize())
-				.setParameter("offset", pageable.getOffset())
-				.setParameter("orderby", getOrderby(sort));
+				.setParameter("offset", pageable.getOffset());
 
 		query.unwrap(org.hibernate.query.Query.class)
 				.setResultTransformer(new AliasToBeanResultTransformer(PhysicalProductLightDTO.class));
@@ -62,23 +68,17 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 	
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
+	@Caching(
+			put = {
+					@CachePut(value = PhysicalProductLightServiceImpl.CACHE_NAME, key="#locale + \", \" + #currency + \", \" + #rootCategory + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + #tagCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString()) + \", \" + #page + \", \" + #size + \", \" + #orderby")
+			}
+	)
 	public Page<PhysicalProductLightDTO> findAll(String locale, String currency, String rootCategoryCode,
 			StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, StringCollectionWrapper tagCodes,
-			Double maxPrice, String page, String size, String sort) {
+			Double maxPrice, String page, String size, String orderby) {
 		LOGGER.debug("call PhysicalProductLightDaoImpl.findAll with parameters: {}, {}, {}, {}, {}, {}, {}, {}, {}, {}",
 				locale, currency, rootCategoryCode, categoryCodes.getCodes(), brandCodes.getCodes(), tagCodes.getCodes(),
-				maxPrice, page, size, sort);
-
-		/*
-		boolean hasProductCodes,
-		boolean hasCategoryCodes,
-		boolean hasBrandCodes,
-		boolean hasTagCodes,
-		boolean hasPrice,
-		boolean countOnly,
-		boolean offset,
-		String 	sort
-		*/
+				maxPrice, page, size, orderby);
 		
 		Query query = em
 				.createNativeQuery(this.constructSQL(false,
@@ -120,7 +120,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 									 !(maxPrice == null),
 									 false,
 									 true,
-									 ""))
+									 getOrderby(orderby)))
 				
 				.setParameter("locale", locale)
 				.setParameter("currency", currency)
@@ -129,7 +129,6 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		Pageable pageable = PageRequest.of(Integer.parseInt(page), Integer.parseInt(size));
 		// these should contain default values for these parameters
 		query
-				.setParameter("orderby", getOrderby(sort))
 				.setParameter("limit", pageable.getPageSize())
 				.setParameter("offset", pageable.getOffset());
 
@@ -176,7 +175,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 								boolean hasPrice,
 								boolean countOnly,
 								boolean offset,
-								String 	sort) {
+								String 	orderby) {
 
 		String sql = "WITH recursive descendants AS" + 
 		"(" + 
@@ -211,20 +210,20 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		? "count(distinct physicalpr0_1_.upc_cd) as product_count " 
 		:
 		"		physicalpr0_1_.upc_cd                 AS productUPC," + 
-		"       attributes1_.prd_desc                 AS productDesc," + 
+		"       attr.prd_desc                 		  AS productDesc," + 
 		"       attributes3_.bnd_desc                 AS brandDesc," + 
-		"       Max(CASE" + 
+		"       MAX(CASE" + 
 		"             WHEN productpri7_.prc_typ_cd = '" + Constants.retailPriceCode + "'" +
 		"			  THEN prices6_.prc_val" + 
 		"             ELSE 0" + 
 		"           END)                              AS retailPrice," + 
-		"       Max(CASE" + 
+		"       MAX(CASE" + 
 		"             WHEN productpri7_.prc_typ_cd = '" + Constants.markdownPriceCode + "'" +
 		"			  THEN prices6_.prc_val" + 
 		"             ELSE 0" + 
 		"           END)                              AS markdownPrice," + 
 		"       COALESCE(stockonhan5_.soh_qty, 0) > 0 AS inStock," + 
-		"       attributes1_.prd_img_pth              AS productImage ") + 
+		"       attr.prd_img_pth              AS productImage ") + 
 		"FROM   mochi.product_basic physicalpr0_" + 
 		"	   INNER JOIN mochi.product_category pc " + 
 		"	   		   ON physicalpr0_.prd_id = pc.prd_id" + 
@@ -232,8 +231,8 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		"	   			ON pc.cat_id = d.cat_id" + 
 		"       INNER JOIN mochi.product physicalpr0_1_" + 
 		"               ON physicalpr0_.prd_id = physicalpr0_1_.prd_id" + 
-		"       INNER JOIN mochi.product_attr_lcl attributes1_" + 
-		"               ON physicalpr0_.prd_id = attributes1_.prd_id" + 
+		"       INNER JOIN mochi.product_attr_lcl attr" + 
+		"               ON physicalpr0_.prd_id = attr.prd_id" + 
 		"       INNER JOIN mochi.brand brandentit2_" + 
 		"               ON physicalpr0_1_.bnd_id = brandentit2_.bnd_id" + 
 		"       INNER JOIN mochi.brand_attr_lcl attributes3_" + 
@@ -260,7 +259,7 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		: "") +
 		"			   " + 
 		"WHERE  0=0 " +
-		"		AND attributes1_.lcl_cd = :locale" + 
+		"		AND attr.lcl_cd = :locale" + 
 		"       AND attributes3_.lcl_cd = :locale" + 
 		"       AND currency8_.ccy_cd = :currency" + 
 		"	    AND productsta4_.prd_sts_cd = '" + Constants.activeSKUCode + "'" +
@@ -288,16 +287,16 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 		"	" + 
 		((!countOnly)
 		? "GROUP  BY physicalpr0_1_.upc_cd," + 
-		"          attributes1_.prd_desc," + 
+		"          attr.prd_desc," + 
 		"          attributes3_.bnd_desc," + 
-		"          attributes1_.prd_img_pth," + 
+		"          attr.prd_img_pth," + 
 		"          stockonhan5_.soh_qty " + 
 		"		  " + 
 		((countOnly) 
 		? " " 
-		: " ORDER BY 	:orderby ") +
+		: 	" ORDER BY " + orderby) +
 			((offset) 
-			? "LIMIT :limit OFFSET :offset " 
+			? " LIMIT :limit OFFSET :offset " 
 			: "")
 		: "");
 		
@@ -305,15 +304,16 @@ public class PhysicalProductLightDaoImpl implements IPhysicalProductLightDao {
 	}
 	
 	private String getOrderby(String param) {
+		LOGGER.debug("getOrderby(" + param + ")");
 		switch (param) {
 			case "nameAsc":
 				return "lower(attr.prd_desc) asc";
 			case "nameDesc":
 				return "lower(attr.prd_desc) desc";
 			case "priceAsc":
-				return "mprc.prc_val asc";
+				return "5 asc";
 			case "priceDesc":
-			  	return "mprc.prc_val desc";
+			  	return "5 desc";
 			default:
 				return "lower(prd_desc) asc";
 			}
