@@ -28,6 +28,8 @@ import io.nzbee.entity.adapters.view.PhysicalProductFullAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
 import io.nzbee.entity.adapters.view.ProductCategoryAdapterImpl;
 import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
+import io.nzbee.entity.brand.view.facet.IBrandFacetDTOService;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
@@ -53,6 +55,11 @@ import io.nzbee.view.product.tag.facet.TagFacetServiceImpl;
 @Profile("it")
 public class BeanConfigurationIT {
 
+	
+	@Bean
+	public IBrandFacetDTOService brandFAcetDTOService() {
+		return new BrandFacetDTOServiceImpl();
+	}
 	
 	@Bean
 	public ICategoryViewPortService productCategoryPortService() {
