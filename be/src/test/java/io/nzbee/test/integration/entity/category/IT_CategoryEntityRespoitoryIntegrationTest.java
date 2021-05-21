@@ -427,20 +427,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	    
     }
 	
-	 private void assertFoundDTO(Optional<CategoryDTO> found) {
-	    	
-	    	assertNotNull(found);
-	    	
-	    	assertTrue(found.isPresent());
-	    	
-	    	assertThat(found.get().getCategoryCode())
-	        .isEqualTo("TST02");
-	    	
-		    assertThat(found.get().getCategoryDesc())
-		    .isEqualTo("test product category");
-		    
-	    }
-	
 	private boolean isOrdered(List<ProductCategoryFacetDTO> list) {
 		return Ordering.from(String.CASE_INSENSITIVE_ORDER).isOrdered(list.stream().map(c -> c.getCategoryDesc()).collect(Collectors.toList())); 
 	}
