@@ -18,3 +18,7 @@ button.search {
    position: relative;
    height: 50px;
 }
+
+div.rbt-aux {
+    right: 40px;
+}
