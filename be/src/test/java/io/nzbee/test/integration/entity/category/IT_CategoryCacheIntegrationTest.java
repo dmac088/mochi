@@ -29,6 +29,7 @@ import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductDTO;
+import io.nzbee.entity.category.product.view.facet.IProductCategoryFacetDTOService;
 import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -56,8 +57,11 @@ public class IT_CategoryCacheIntegrationTest {
 	private EntityManager entityManager;
 
 	@Autowired
-	private ICategoryService categoryService;
+	private ICategoryService categoryEntityService;
 
+	@Autowired
+	private IProductCategoryFacetDTOService categoryFacetService;
+	
 	@Autowired
 	private ICategoryEntityBeanFactory categoryEntityBeanFactory;
 	
@@ -73,50 +77,31 @@ public class IT_CategoryCacheIntegrationTest {
 		category = categoryEntityBeanFactory.getBean();
 		
 	    //persist a new transient test category
-	    categoryService.save(category);
+		categoryEntityService.save(category);
 	}
 	
-	@Test
-    public void whenFindDTOByIdAndLocale_thenReturnCategoryDTOFromCache() {
-    	
-        // when
-    	categoryService.findById(Constants.localeENGB, category.getCategoryId());
-     
-        // then
-    	Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
-    	
-    	assertNotNull(cache);
-    	
-    	JCacheCache jCache = (JCacheCache) cache;
-    	String key = Constants.localeENGB + ", " + category.getCategoryId().toString();
-    	SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
-    	
-    	assertNotNull(ob.get());
-    	assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
-    }
-	
-	@Test
-    public void whenFindDTOByCodeAndLocale_thenReturnCategoryDTOFromCache() {
-    	
-	    // when
-	    categoryService.findByCode(Constants.localeENGB, category.getCategoryCode());
-	     
-	    // then
-	    Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
-	    	
-	    assertNotNull(cache);
-	    	
-	    JCacheCache jCache = (JCacheCache) cache;
-	    String key = Constants.localeENGB + ", " + category.getCategoryCode().toString();
-	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
-	    	
-	    assertNotNull(ob.get());
-	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
-    }
+//	@Test
+//    public void whenFindDTOByCodeAndLocale_thenReturnCategoryDTOFromCache() {
+//    	
+//	    // when
+//		categoryFacetService.(Constants.localeENGB, category.getCategoryCode());
+//	     
+//	    // then
+//	    Cache cache = cacheManager.getCache(CategoryServiceImpl.CACHE_NAME);
+//	    	
+//	    assertNotNull(cache);
+//	    	
+//	    JCacheCache jCache = (JCacheCache) cache;
+//	    String key = Constants.localeENGB + ", " + category.getCategoryCode().toString();
+//	    SimpleValueWrapper ob = (SimpleValueWrapper) jCache.get(key);
+//	    	
+//	    assertNotNull(ob.get());
+//	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
+//    }
 	
 	
-	@Test
-    public void whenSavingEntity_thenKeyIsEvictedFromCache() {
+//	@Test
+//    public void whenSavingEntity_thenKeyIsEvictedFromCache() {
     	
 //        // when
 //    	categoryService.findByCode(Constants.localeENGB, category.getCategoryCode());
@@ -134,7 +119,7 @@ public class IT_CategoryCacheIntegrationTest {
 //    	assertNotNull(ob);
 //    	assertTrue(nativeCache.containsKey(key)); 	
 //    	assertThat(ob.getClass().getSimpleName()).isEqualTo(CategoryProductDTO.class.getSimpleName());
-    }
+//    }
     
 
 }

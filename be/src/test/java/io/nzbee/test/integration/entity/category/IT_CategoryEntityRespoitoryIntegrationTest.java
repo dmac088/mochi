@@ -34,8 +34,8 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.brand.CategoryBrandEntity;
-import io.nzbee.entity.category.product.CategoryProductEntity;
+import io.nzbee.entity.category.product.view.facet.IProductCategoryFacetDTOService;
+import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTO;
 import io.nzbee.test.integration.entity.beans.category.ICategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -56,6 +56,9 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	@Autowired
 	private ICategoryService categoryService;
 
+	@Autowired
+	private IProductCategoryFacetDTOService categoryFacetService;
+	
 	@Autowired
 	private ICategoryEntityBeanFactory categoryEntityBeanFactory;
 	
@@ -91,18 +94,6 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	    categoryService.save(category);
 	}
 	
-	@Test
-	@Rollback(false)
-    public void whenFindById_thenReturnCategoryEntity() {
-    	
-        // when
-    	Optional<CategoryEntity> found = categoryService.findById(category.getCategoryId());
-     
-        // then
-    	assertFoundEntity(found);
-    }
-    
-    
     @Test
     @Rollback(false)
     public void whenFindByCode_thenReturnCategoryEntity() {
@@ -116,32 +107,10 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
     
 	@Test
 	@Rollback(false)
-	public void whenFindByCode_thenReturnCategoryDTO() {
-
-		// when
-		Optional<CategoryDTO> found = categoryService.findByCode(Constants.localeENGB, "TST02");
-
-		// then
-		assertFoundDTO(found);
-	}
-	
-	@Test
-	@Rollback(false)
-	public void whenFindByDesc_thenReturnCategoryDTO() {
-
-		// when
-		Optional<CategoryDTO> found = categoryService.findByDesc(Constants.localeENGB, "test product category");
-
-		// then
-		assertFoundDTO(found);
-	}
-	
-	@Test
-	@Rollback(false)
 	public void whenFindAll_thenReturnAllCategories() {
 
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB);
+		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll(Constants.localeENGB, Constants.primaryProductRootCategoryCode);
 
 		// then
 		assertNotNull(found);
@@ -159,10 +128,10 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		List<CategoryDTO> found = categoryService.findAll(	Constants.localeENGB,
-													  		Constants.currencyHKD, 
-													  		Constants.primaryProductRootCategoryCode,
-													  		new StringCollectionWrapper(ls));
+		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll(	Constants.localeENGB,
+													  						Constants.currencyHKD, 
+													  						Constants.primaryProductRootCategoryCode,
+													  						new StringCollectionWrapper(ls));
 
 		// then
 		assertNotNull(found);
@@ -180,7 +149,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, new StringCollectionWrapper(ls));
+		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll(Constants.localeENGB, Constants.currencyHKD, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(ls));
 
 		// then
 		assertNotNull(found);
@@ -198,13 +167,13 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("CIT01");
 		
 		// when
-		List<CategoryDTO> found = categoryService.findAll( 	Constants.localeENGB, 
-														  	Constants.currencyHKD, 
-															"FRT01", 
-															new StringCollectionWrapper(ls), 
-															new StringCollectionWrapper(new HashSet<String>()), 
-															new StringCollectionWrapper(new HashSet<String>()), 
-															null);	
+		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll( 	Constants.localeENGB, 
+																  				Constants.currencyHKD, 
+																  				"FRT01", 
+																  				new StringCollectionWrapper(ls), 
+																  				new StringCollectionWrapper(new HashSet<String>()), 
+																  				new StringCollectionWrapper(new HashSet<String>()), 
+																  				null);	
 
 		// then only children
 		assertNotNull(found);
@@ -218,13 +187,13 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategories_thenReturnAllCategories() {
 		
 		//when
-		List<CategoryDTO> found = categoryService.findAll(  Constants.localeENGB, 
-															Constants.currencyHKD, 
-															"PRM01", 
-															new StringCollectionWrapper(new HashSet<String>()), 
-															new StringCollectionWrapper(new HashSet<String>()),
-															new StringCollectionWrapper(new HashSet<String>()), 
-															null);
+		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll( Constants.localeENGB, 
+																			Constants.currencyHKD, 
+																			"PRM01", 
+																			new StringCollectionWrapper(new HashSet<String>()), 
+																			new StringCollectionWrapper(new HashSet<String>()),
+																			new StringCollectionWrapper(new HashSet<String>()), 
+																			null);
 		
 		// then
 		assertNotNull(found);
@@ -242,13 +211,13 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenFindAllCategoriesWithNullPrice_thenReturnAllCategories() {
 		
 		//when
-		List<CategoryDTO> found = categoryService.findAll(  Constants.localeENGB, 
-															Constants.currencyHKD, 
-															"PRM01", 
-															new StringCollectionWrapper(new HashSet<String>()), 
-															new StringCollectionWrapper(new HashSet<String>()),
-															new StringCollectionWrapper(new HashSet<String>()), 
-															null);
+		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll(  Constants.localeENGB, 
+																			Constants.currencyHKD, 
+																			"PRM01", 
+																			new StringCollectionWrapper(new HashSet<String>()), 
+																			new StringCollectionWrapper(new HashSet<String>()),
+																			new StringCollectionWrapper(new HashSet<String>()), 
+																			null);
 		
 		// then
 		assertNotNull(found);
@@ -257,49 +226,49 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		assertTrue(isOrdered(found));
 	}
 
-	@Test
-	@Rollback(false)
-	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
+//	@Test
+//	@Rollback(false)
+//	public void whenFindAllBrandCategories_thenReturnAllBrandCategories() {
+//
+//		// when
+//		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll(Constants.localeENGB, Constants.primaryBrandRootCategoryCode, CategoryBrandEntity.class);
+//
+//		// then
+//		assertNotNull(found);
+//		assertTrue(!found.isEmpty());
+//		assertThat(found.size()).isEqualTo(1);
+//		assertTrue(isOrdered(found));
+//	}
 
-		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryBrandRootCategoryCode, CategoryBrandEntity.class);
-
-		// then
-		assertNotNull(found);
-		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(1);
-		assertTrue(isOrdered(found));
-	}
-
-	@Test
-	@Rollback(false)
-	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
-
-		// when
-		List<CategoryDTO> found = categoryService.findAll(Constants.localeENGB, Constants.primaryProductRootCategoryCode, CategoryProductEntity.class);
-
-		// then
-		assertNotNull(found);
-		assertTrue(!found.isEmpty());
-		assertThat(found).size().isEqualTo(27);
-		assertTrue(isOrdered(found));
-	}
+//	@Test
+//	@Rollback(false)
+//	public void whenFindAllProductCategories_thenReturnAllProductCategories() {
+//
+//		// when
+//		List<ProductCategoryFacetDTO> found = categoryFacetService.findAll(Constants.localeENGB, Constants.primaryProductRootCategoryCode, CategoryProductEntity.class);
+//
+//		// then
+//		assertNotNull(found);
+//		assertTrue(!found.isEmpty());
+//		assertThat(found).size().isEqualTo(27);
+//		assertTrue(isOrdered(found));
+//	}
 
 	@Test
 	@Rollback(false)
 	public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyHKD, 
-													"FRT01",
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(	Constants.localeENGB, 
+															Constants.currencyHKD, 
+															"FRT01",
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("162.0"));
+		assertThat(found).isEqualTo(Double.valueOf("162.0"));
 	}
 	
 	@Test
@@ -310,17 +279,17 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		ls.add("FCOO1");
 		
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyHKD, "FAS01",
-													new StringCollectionWrapper(ls), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(Constants.localeENGB, 
+														Constants.currencyHKD, "FAS01",
+														new StringCollectionWrapper(ls), 
+														new StringCollectionWrapper(new HashSet<String>()), 
+														new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		System.out.println(found);
 		assertNotNull(found);
-		assertThat(found).isGreaterThan(new Double(0));
-		assertThat(found).isEqualTo(new Double(12));
+		assertThat(found).isGreaterThan(Double.valueOf(0));
+		assertThat(found).isEqualTo(Double.valueOf(12));
 	}
 
 	@Test
@@ -328,15 +297,15 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyHKD, "VEG01",
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(Constants.localeENGB, 
+														Constants.currencyHKD, "VEG01",
+														new StringCollectionWrapper(new HashSet<String>()), 
+														new StringCollectionWrapper(new HashSet<String>()), 
+														new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("108.0"));
+		assertThat(found).isEqualTo(Double.valueOf("108.0"));
 	}
 
 	@Test
@@ -344,16 +313,16 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyHKD, 
-													Constants.primaryProductRootCategoryCode,
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(Constants.localeENGB, 
+														Constants.currencyHKD, 
+														Constants.primaryProductRootCategoryCode,
+														new StringCollectionWrapper(new HashSet<String>()), 
+														new StringCollectionWrapper(new HashSet<String>()), 
+														new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("855.0"));
+		assertThat(found).isEqualTo(Double.valueOf("855.0"));
 	}
 
 	@Test
@@ -361,16 +330,16 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceHKD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyHKD, 
-													"POM01",
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(Constants.localeENGB, 
+														Constants.currencyHKD, 
+														"POM01",
+														new StringCollectionWrapper(new HashSet<String>()), 
+														new StringCollectionWrapper(new HashSet<String>()), 
+														new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("85.5"));
+		assertThat(found).isEqualTo(Double.valueOf("85.5"));
 	}
 
 	@Test
@@ -378,16 +347,16 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForFruitCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyUSD, 
-													"FRT01",
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(	Constants.localeENGB, 
+															Constants.currencyUSD, 
+															"FRT01",
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("20.8"));
+		assertThat(found).isEqualTo(Double.valueOf("20.8"));
 	}
 
 	@Test
@@ -395,16 +364,16 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForVegetablesCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyUSD, 
-													"VEG01",
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(	Constants.localeENGB, 
+															Constants.currencyUSD, 
+															"VEG01",
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("13.8"));
+		assertThat(found).isEqualTo(Double.valueOf("13.8"));
 	}
 
 	@Test
@@ -412,16 +381,16 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForAllCategory_thenReturnCorrectMaxPriceInUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyUSD, 
-													Constants.primaryProductRootCategoryCode,
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(	Constants.localeENGB, 
+															Constants.currencyUSD, 
+															Constants.primaryProductRootCategoryCode,
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("109.6"));
+		assertThat(found).isEqualTo(Double.valueOf("109.6"));
 	}
 
 	@Test
@@ -429,16 +398,16 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 	public void whenGetMaxPriceForPomesCategory_thenReturnCurrectMaxPriceUSD() {
 
 		// when
-		Double found = categoryService.getMaxPrice(	Constants.localeENGB, 
-													Constants.currencyUSD, 
-													"POM01",
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()), 
-													new StringCollectionWrapper(new HashSet<String>()));
+		Double found = categoryFacetService.getMaxPrice(	Constants.localeENGB, 
+															Constants.currencyUSD, 
+															"POM01",
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()), 
+															new StringCollectionWrapper(new HashSet<String>()));
 
 		// then
 		assertNotNull(found);
-		assertThat(found).isEqualTo(new Double("11.0"));
+		assertThat(found).isEqualTo(Double.valueOf("11.0"));
 	}
 	
 	private void assertFoundEntity(Optional<CategoryEntity> found) {
@@ -472,7 +441,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		    
 	    }
 	
-	private boolean isOrdered(List<CategoryDTO> list) {
+	private boolean isOrdered(List<ProductCategoryFacetDTO> list) {
 		return Ordering.from(String.CASE_INSENSITIVE_ORDER).isOrdered(list.stream().map(c -> c.getCategoryDesc()).collect(Collectors.toList())); 
 	}
 
