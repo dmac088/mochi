@@ -4,7 +4,6 @@ import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.springframework.context.ApplicationContext;
-
 import io.nzbee.search.ISearchDimensionService;
 
 public class SearchFacetHelper {
@@ -33,6 +32,7 @@ public class SearchFacetHelper {
 	
 	@SuppressWarnings("rawtypes")
 	public ISearchDimensionService getBean(ApplicationContext appContext) {
+		System.out.println(appContext.getBean(this.getFacetingName() + "FacetService").toString());
 		return (ISearchDimensionService) appContext.getBean(this.getFacetingName() + "FacetService");
 	}
 	
@@ -55,7 +55,7 @@ public class SearchFacetHelper {
 	        return true;
         }
 	    if (!(obj instanceof SearchFacetHelper)) {
-	            return false;
+	        return false;
 	    }
 	    SearchFacetHelper that = (SearchFacetHelper) obj;
 	      EqualsBuilder eb = new EqualsBuilder();

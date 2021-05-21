@@ -87,7 +87,7 @@ public class BeanConfigurationIT {
 	}
 	
 	@Bean
-	public IBrandFacetViewService brandFacetService() {
+	public IBrandFacetViewService brandFacetViewService() {
 		return new BrandFacetViewServiceImpl();
 	}
 	
