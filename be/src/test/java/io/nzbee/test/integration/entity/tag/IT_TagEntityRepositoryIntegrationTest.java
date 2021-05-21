@@ -29,8 +29,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.tag.ITagService;
-import io.nzbee.entity.tag.TagFacetViewDTO;
 import io.nzbee.entity.tag.TagEntity;
+import io.nzbee.entity.tag.view.facet.TagFacetDTO;
 import io.nzbee.test.integration.entity.beans.tag.ITagEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -112,7 +112,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByCode_thenReturnTagDTO() {
 
 		// when
-		Optional<TagFacetViewDTO> found = tagService.findByCode(Constants.localeENGB, "ORG01");
+		Optional<TagFacetDTO> found = tagService.findByCode(Constants.localeENGB, "ORG01");
 
 		// then
 		assertFoundDTO(found);
@@ -123,7 +123,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	public void whenFindByDesc_thenReturnTagDTO() {
 
 		// when
-		Optional<TagFacetViewDTO> found = tagService.findByDesc(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ORGANIC");
+		Optional<TagFacetDTO> found = tagService.findByDesc(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ORGANIC");
 
 		// then
 		assertFoundDTO(found);
@@ -138,7 +138,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		tagCodes.add("ORG01");
 
 		// when
-		List<TagFacetViewDTO> lb = tagService.findAll(Constants.localeENGB, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(tagCodes));
+		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.primaryProductRootCategoryCode, new StringCollectionWrapper(tagCodes));
 
 		// then
 		assertNotNull(lb);
@@ -153,7 +153,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> brandCodes = new HashSet<String>();
 
 		// when
-		List<TagFacetViewDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new Double(1000));
 
 		// then
@@ -171,7 +171,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		categoryCodes.add("POM01");
 
 		// when
-		List<TagFacetViewDTO> lt = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+		List<TagFacetDTO> lt = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new Double(1000));
 
 		// then
@@ -189,7 +189,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("97.2");
 
 		// when
-		List<TagFacetViewDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyHKD, "FRT01",
+		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyHKD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), price);
 
 		// then
@@ -207,7 +207,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = new Double("12.4");
 
 		// when
-		List<TagFacetViewDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), price);
 
 		// then
@@ -226,7 +226,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 				.get().getTagDesc()).isEqualTo("test tag");
 	}
 
-	private void assertFoundDTO(Optional<TagFacetViewDTO> found) {
+	private void assertFoundDTO(Optional<TagFacetDTO> found) {
 
 		assertNotNull(found);
 

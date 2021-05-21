@@ -5,22 +5,23 @@ import java.util.Optional;
 import java.util.Set;
 import io.nzbee.entity.IDao;
 import io.nzbee.entity.StringCollectionWrapper;
+import io.nzbee.entity.tag.view.facet.TagFacetDTO;
 
-public interface ITagDao  extends IDao<TagFacetViewDTO> {
+public interface ITagDao  extends IDao<TagFacetDTO> {
 
 	Optional<TagEntity> findByCode(String code);
 
-	Optional<TagFacetViewDTO> findById(String locale, String rootCategory, Long id);
+	Optional<TagFacetDTO> findById(String locale, String rootCategory, Long id);
 	
-	Optional<TagFacetViewDTO> findByCode(String locale, String rootCategory, String code);
+	Optional<TagFacetDTO> findByCode(String locale, String rootCategory, String code);
 
-	Optional<TagFacetViewDTO> findByDesc(String locale, String rootCategory, String desc);
+	Optional<TagFacetDTO> findByDesc(String locale, String rootCategory, String desc);
 
-	List<TagFacetViewDTO> findAll(String locale, String rootCategory);
+	List<TagFacetDTO> findAll(String locale, String rootCategory);
 	
-	List<TagFacetViewDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes);
+	List<TagFacetDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes);
 	
-	List<TagFacetViewDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
+	List<TagFacetDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
 			StringCollectionWrapper brandCodes, Double maxPrice);
 
 	Optional<TagEntity> findById(Long id);

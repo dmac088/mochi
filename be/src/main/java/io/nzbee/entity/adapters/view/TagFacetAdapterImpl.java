@@ -7,8 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.tag.ITagMapper;
 import io.nzbee.entity.tag.ITagService;
+import io.nzbee.entity.tag.view.facet.ITagFacetMapper;
 import io.nzbee.view.ports.ITagFacetViewPortService;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 
@@ -19,7 +19,7 @@ public class TagFacetAdapterImpl  implements ITagFacetViewPortService {
 	private ITagService tagService;
 	
 	@Autowired
-	private ITagMapper tagMapper;
+	private ITagFacetMapper tagMapper;
 	
 
 	@Override

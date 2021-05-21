@@ -1,18 +1,8 @@
-package io.nzbee.entity.tag;
+package io.nzbee.entity.tag.view.facet;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Set;
 import javax.persistence.EntityManager;
-import javax.persistence.NoResultException;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import java.util.Arrays;
 import org.hibernate.Session;
 import org.mockito.internal.util.StringUtil;
 import org.slf4j.Logger;
@@ -24,37 +14,16 @@ import org.springframework.cache.annotation.Caching;
 import org.springframework.stereotype.Component;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.tag.view.facet.TagFacetDTOResultTransformer;
-import io.nzbee.entity.tag.view.facet.TagFacetDTO;
 
 @Component 
-public class TagDaoPostgresImpl implements ITagDao {
+public class TagFacetDaoPostgresImpl implements ITagFacetDao {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
 	@Qualifier("mochiEntityManagerFactory")
 	private EntityManager em;
-	
-	
-	@Autowired
-	private ITagRepository tagRepository;
-	
-	@Override
-	public Optional<TagEntity> findById(Long id) {
-		return tagRepository.findById(id);
-	}
-
-	@Override
-	public List<TagEntity> findAll() {
-		return tagRepository.findAll();
-	}
-
-	@Override
-	public List<TagEntity> findAll(Set<String> codes) {
-		return tagRepository.findByTagCodeIn(codes);
-	}
-	
+		
 	@Override
 	public void save(TagFacetDTO t) {
 		// TODO Auto-generated method stub
@@ -73,159 +42,11 @@ public class TagDaoPostgresImpl implements ITagDao {
 		
 	}
 
-	@SuppressWarnings("deprecation")
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = TagServiceImpl.CACHE_NAME, key="{#locale, #id}")
-			}
-	)
-	public Optional<TagFacetDTO> findById(String locale, String rootCategory, Long id) {
-		LOGGER.debug("call TagDaoPostgresImpl.findById with parameters : {}, {}", locale, rootCategory, id);
-		
-		Session session = em.unwrap(Session.class);
-		
-		List<Long> ltids = Arrays.asList(id);
-		
-		Query query = session.createNativeQuery(constructSQL(
-															 false,
-															 false,
-															 false,
-															 false,
-															 false,
-															 true))
-				 .setParameter("categoryCode", rootCategory)
-				 .setParameter("locale", locale)
-				 .setParameter("tagIDs", ltids)
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new TagFacetDTOResultTransformer());
-		
-	
-		TagFacetDTO result = (TagFacetDTO) query.getSingleResult();
-		
-		return Optional.ofNullable(result);
-	}
-	
-	@Override
-	public Optional<TagEntity> findByCode(String code) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}", code);
-		
-		CriteriaBuilder cb = em.getCriteriaBuilder();
-		
-		CriteriaQuery<TagEntity> cq = cb.createQuery(TagEntity.class);
-		
-		Root<TagEntity> root = cq.from(TagEntity.class);
-
-		List<Predicate> conditions = new ArrayList<Predicate>();
-
-		conditions.add(
-				cb.equal(root.get(TagEntity_.TAG_CODE), code)
-		);
-		
-		TypedQuery<TagEntity> query = em.createQuery(cq
-				.select(root)
-				.where(conditions.toArray(new Predicate[] {}))
-				.distinct(false)
-		);
-		
-		try {
-			TagEntity tag = query.getSingleResult();
-			return Optional.ofNullable(tag);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
-		
-	}
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = TagServiceImpl.CACHE_NAME, key="#locale + \", \" + #code")
-			}
-	)
-	public Optional<TagFacetDTO> findByCode(String locale, String rootCategory, String code) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByCode with parameters : {}, {}", locale, code);
-		
-		Session session = em.unwrap(Session.class);
-		
-		List<String> ltc = Arrays.asList(code);
-		
-		Query query = session.createNativeQuery(constructSQL(
-															 false,
-															 false,
-															 false,
-															 !ltc.isEmpty(),
-															 false,
-															 false))
-				 .setParameter("categoryCode", rootCategory)
-				 .setParameter("locale", locale)
-				 .setParameter("tagCodes", ltc)
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new TagFacetDTOResultTransformer());
-		
-		try {
-			TagFacetDTO result = (TagFacetDTO) query.getSingleResult();
-			return Optional.ofNullable(result);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
-		
-	}
-	
-	
-	@SuppressWarnings("deprecation")
-	@Override
-	@Caching(
-			put = {
-					@CachePut(value = TagServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #rootCategory + \", \" + #desc")
-			}
-	)
-	public Optional<TagFacetDTO> findByDesc(String locale, String rootCategory, String desc) {
-		LOGGER.debug("call TagDaoPostgresImpl.findByDesc with parameters : {}, {}", locale, desc);
-		
-		Session session = em.unwrap(Session.class);
-		
-		List<String> ltd = Arrays.asList(desc);
-		
-		Query query = session.createNativeQuery(constructSQL(
-															 false,
-															 false,
-															 false,
-															 false,
-															 true,
-															 false))
-				 .setParameter("categoryCode", rootCategory)
-				 .setParameter("locale", locale)
-				 .setParameter("tagDescriptions", ltd)
-				 .setParameter("activeProductCode", Constants.activeSKUCode);
-		
-		
-		query.unwrap(org.hibernate.query.Query.class)
-		.setResultTransformer(new TagFacetDTOResultTransformer());
-		
-		try {
-			TagFacetDTO result = (TagFacetDTO) query.getSingleResult();
-			return Optional.ofNullable(result);
-		} 
-		catch(NoResultException nre) {
-			return Optional.empty();
-		}
-	}
-
 	@SuppressWarnings({ "deprecation", "unchecked" })
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = TagServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
+					@CachePut(value = TagFacetDTOServiceImpl.CACHE_NAME, key="#locale + \", \" + #rootCategory + \", \" + #codes.getCacheKey()")
 			}
 	)
 	public List<TagFacetDTO> findAll(String locale, String rootCategory, StringCollectionWrapper codes) {
@@ -283,7 +104,7 @@ public class TagDaoPostgresImpl implements ITagDao {
 	@Override
 	@Caching(
 			put = {
-					@CachePut(value = TagServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
+					@CachePut(value = TagFacetDTOServiceImpl.CACHE_NAME + "Other", key="#locale + \", \" + #currency + \", \" + #categoryCode + \", \" + #categoryCodes.getCacheKey() + \", \" + #brandCodes.getCacheKey() + \", \" + ((#maxPrice == null) ? '' : #maxPrice.toString())")
 			}
 	)
 	public List<TagFacetDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes, StringCollectionWrapper brandCodes, Double maxPrice) {

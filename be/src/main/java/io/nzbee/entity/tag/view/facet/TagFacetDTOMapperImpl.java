@@ -1,14 +1,15 @@
-package io.nzbee.entity.tag;
+package io.nzbee.entity.tag.view.facet;
 
 import org.springframework.stereotype.Component;
 
+import io.nzbee.entity.tag.TagEntity;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 
 @Component
-public class TagMapperImpl implements ITagMapper {
+public class TagFacetDTOMapperImpl implements ITagFacetMapper {
 
 	@Override
-	public TagFacetView DTOToDo(TagFacetViewDTO dto) {
+	public TagFacetView DTOToDo(TagFacetDTO dto) {
 		TagFacetView to = 
 				new TagFacetView(
 						dto.getTagCode(),

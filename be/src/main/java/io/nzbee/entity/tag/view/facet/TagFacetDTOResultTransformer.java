@@ -1,4 +1,4 @@
-package io.nzbee.entity.tag;
+package io.nzbee.entity.tag.view.facet;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import org.hibernate.transform.ResultTransformer;
 
-public class TagDTOResultTransformer implements ResultTransformer {
+public class TagFacetDTOResultTransformer implements ResultTransformer {
 
 
 	/**
@@ -15,17 +15,17 @@ public class TagDTOResultTransformer implements ResultTransformer {
 	 */
 	private static final long serialVersionUID = 1L;
 	
-	private Map<Long, TagFacetViewDTO> tagDTOMap = new LinkedHashMap<>();
+	private Map<Long, TagFacetDTO> tagDTOMap = new LinkedHashMap<>();
 	
 	@Override
 	public Object transformTuple(Object[] tuple, String[] aliases) {
 		Map<String, Integer> aliasToIndexMap = aliasToIndexMap(aliases);
 		
-        Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(TagFacetViewDTO.ID_ALIAS)]).longValue();
+        Long tagId = ((BigInteger) tuple[aliasToIndexMap.get(TagFacetDTO.ID_ALIAS)]).longValue();
  
-        TagFacetViewDTO tagDTO = tagDTOMap.computeIfAbsent(
+        TagFacetDTO tagDTO = tagDTOMap.computeIfAbsent(
             tagId,
-            id -> new TagFacetViewDTO(tuple, aliasToIndexMap)
+            id -> new TagFacetDTO(tuple, aliasToIndexMap)
         );
         
         return tagDTO;
