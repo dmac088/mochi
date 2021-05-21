@@ -25,7 +25,8 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTO;
+import io.nzbee.entity.brand.view.facet.IBrandFacetDTOService;
 import io.nzbee.util.brand.BrandMasterService;
 
 @RunWith(SpringRunner.class)
@@ -42,7 +43,7 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 	private BrandMasterService pms;
 
 	@Autowired
-	private IBrandService brandService;
+	private IBrandFacetDTOService brandFacetService;
 
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
@@ -74,45 +75,45 @@ public class IT_BrandUploadForUpdateIntegrationTest {
 		pms.writeBrandMaster(file.getAbsolutePath() + "/data/product/brand/update/brand_master.tsv");
 	}
 
-//	@Test
-//	@Rollback(false)
-//	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
-//		// when
-//		Optional<BrandDomainDTO> found = brandService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ENZ01");
-//
-//		// then
-//		assertFound_ENGB(found);
-//	}
-//
-//	@Test
-//	@Rollback(false)
-//	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
-//		// when
-//		Optional<BrandDomainDTO> found = brandService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "ENZ01");
-//
-//		// then
-//		assertFound_ZHHK(found);
-//	}
-//
-//	private void assertFound_ENGB(Optional<BrandDomainDTO> found) {
-//		
-//		assertNotNull(found);
-//		
-//		assertTrue(found.isPresent());
-//		
-//		assertThat(found.get().getBrandDesc())
-//		.isEqualTo("Enza Update EN");
-//		
-//	}
-//
-//	private void assertFound_ZHHK(Optional<BrandDomainDTO> found) {
-//		
-//		assertNotNull(found);
-//		
-//		assertTrue(found.isPresent());
-//		
-//		assertThat(found.get().getBrandDesc())
-//		.isEqualTo("Enza Update HK");
-//	}
+	@Test
+	@Rollback(false)
+	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ENGB() {
+		// when
+		Optional<BrandFacetDTO> found = brandFacetService.findByCode(Constants.localeENGB, Constants.primaryProductRootCategoryCode, "ENZ01");
+
+		// then
+		assertFound_ENGB(found);
+	}
+
+	@Test
+	@Rollback(false)
+	public void whenBrandUploadedForUpdate_thenReturnCorrectlyUpdatedBrand_ZHHK() {
+		// when
+		Optional<BrandFacetDTO> found = brandFacetService.findByCode(Constants.localeZHHK, Constants.primaryProductRootCategoryCode, "ENZ01");
+
+		// then
+		assertFound_ZHHK(found);
+	}
+
+	private void assertFound_ENGB(Optional<BrandFacetDTO> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
+		
+		assertThat(found.get().getBrandDesc())
+		.isEqualTo("Enza Update EN");
+		
+	}
+
+	private void assertFound_ZHHK(Optional<BrandFacetDTO> found) {
+		
+		assertNotNull(found);
+		
+		assertTrue(found.isPresent());
+		
+		assertThat(found.get().getBrandDesc())
+		.isEqualTo("Enza Update HK");
+	}
 
 }
