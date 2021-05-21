@@ -23,39 +23,43 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.domain.ports.IProductPortService;
-import io.nzbee.domain.product.Product;
-import io.nzbee.test.integration.view.beans.product.IProductViewBeanFactory;
-import io.nzbee.test.integration.view.beans.product.ProductViewBeanFactory;
+import io.nzbee.test.integration.view.beans.tag.ITagDoBeanFactory;
+import io.nzbee.test.integration.view.beans.tag.TagDoBeanFactory;
+import io.nzbee.view.ports.ITagFacetViewPortService;
+import io.nzbee.view.product.tag.facet.TagFacetView;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles("it")
-public class IT_ProductDoServiceImplIntegrationTest {
-	
+public class IT_TagViewServiceImplIntegrationTest {
+
 	@TestConfiguration
-	static class ProductDoServiceImplIntegrationTest_Configuration {
+	static class BrandDoServiceImplIntegrationTest_Configuration {
 		// the beans that we need to run this test
-		
 		@Bean
-		public IProductViewBeanFactory productDoBeanFactory() {
-			return new ProductViewBeanFactory();
+		public ITagDoBeanFactory tagDoBeanFactory() {
+			return new TagDoBeanFactory();
 		}
-			
+		
 	}
 	
 	@MockBean
     private JavaMailSender mailSender;
 	
 	@Autowired
-    private IProductPortService productService;
+    private ITagFacetViewPortService tagService;
+	
+	@Autowired
+	private ITagDoBeanFactory tagDoBeanFactory;
 	
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
 	private DataSource database;
 	
 	private static boolean setUpIsDone = false;
+	
+	private static TagFacetView tag = null;
 	
 	@Before
 	public void setUp() {
@@ -72,43 +76,15 @@ public class IT_ProductDoServiceImplIntegrationTest {
 		setUpIsDone = true;
 	}
 	
-	@Test
-	@Rollback(false)
-    public void whenValidCode_thenProductShouldBeFound() {
-        Product found = productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "3254354673");
-      
-        assertFound(found);
-    }
-    
-    @Test
-    @Rollback(false)
-    public void whenValidDesc_thenProductShouldBeFound() {
-    	Product found = productService.findByDesc(Constants.localeENGB, Constants.currencyHKD, "Test Product Description");
-      
-        assertFound(found);
-    }
-    
-    private void assertFound(Product found) {
+	private void assertFound(TagFacetView found) {
 
-    	assertNotNull(found);
-    	
-    	assertThat(found.getProductUPC())
-        .isEqualTo("3254354673");
-    	
-    	assertThat(found.getProductRetail())
-    	.isEqualTo(new Double(78));
-    	
-    	assertThat(found.getProductMarkdown())
-    	.isEqualTo(new Double(71));
-    	
-	    assertThat(found.getProductDesc())
-	    .isEqualTo("Test Product Description");
-	    
-	    assertNotNull(found.getPromotions());
-	    
-	    assertThat(found.getPromotions().size())
-	    .isEqualTo(1);
-	    
-    }
-	
+		assertNotNull(found);
+		
+		assertThat(found.getTagCode())
+	       .isEqualTo("ORG01");
+		
+		assertThat(found.getTagDesc())
+	       .isEqualTo("ORGANIC");
+	    	
+	}
 }

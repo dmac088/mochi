@@ -31,7 +31,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.google.common.collect.Ordering;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.view.facet.IProductCategoryFacetDTOService;

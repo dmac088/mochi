@@ -1,10 +1,9 @@
 package io.nzbee.test.integration.view;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
+import static org.junit.Assert.assertNotNull;
 import java.sql.Connection;
 import java.sql.SQLException;
-import java.util.List;
 import javax.sql.DataSource;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +13,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.datasource.init.ScriptUtils;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -22,20 +23,33 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
-import io.nzbee.view.category.product.ProductCategoryView;
-import io.nzbee.view.ports.ICategoryViewPortService;
+import io.nzbee.domain.ports.IProductPortService;
+import io.nzbee.domain.product.Product;
+import io.nzbee.test.integration.view.beans.product.IProductViewBeanFactory;
+import io.nzbee.test.integration.view.beans.product.ProductViewBeanFactory;
 
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
 @ActiveProfiles("it")
-public class IT_CategoryDoServiceImplIntegrationTest {
+public class IT_ProductLightViewServiceImplIntegrationTest {
+	
+	@TestConfiguration
+	static class ProductDoServiceImplIntegrationTest_Configuration {
+		// the beans that we need to run this test
+		
+		@Bean
+		public IProductViewBeanFactory productDoBeanFactory() {
+			return new ProductViewBeanFactory();
+		}
+			
+	}
 	
 	@MockBean
     private JavaMailSender mailSender;
 	
 	@Autowired
-	private ICategoryViewPortService categoryService;
+    private IProductPortService productService;
 	
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
@@ -58,24 +72,43 @@ public class IT_CategoryDoServiceImplIntegrationTest {
 		setUpIsDone = true;
 	}
 	
-
 	@Test
 	@Rollback(false)
-	public void whenFindAll_thenReturnAllCategories() {
+    public void whenValidCode_thenProductShouldBeFound() {
+        Product found = productService.findByCode(Constants.localeENGB, Constants.currencyHKD, "3254354673");
+      
+        assertFound(found);
+    }
+    
+    @Test
+    @Rollback(false)
+    public void whenValidDesc_thenProductShouldBeFound() {
+    	Product found = productService.findByDesc(Constants.localeENGB, Constants.currencyHKD, "Test Product Description");
+      
+        assertFound(found);
+    }
+    
+    private void assertFound(Product found) {
 
-		// when
-		List<ProductCategoryView> found = categoryService.findAll(	Constants.localeENGB);
-
-		// then
-		assertFound(found);
-	}
-
-	private void assertFound(final List<ProductCategoryView> found) {
-
-		assertThat(found).isNotNull();
-		
-		assertThat(found).size().isEqualTo(80);
-		
-	}
-
+    	assertNotNull(found);
+    	
+    	assertThat(found.getProductUPC())
+        .isEqualTo("3254354673");
+    	
+    	assertThat(found.getProductRetail())
+    	.isEqualTo(Double.valueOf(78));
+    	
+    	assertThat(found.getProductMarkdown())
+    	.isEqualTo(Double.valueOf(71));
+    	
+	    assertThat(found.getProductDesc())
+	    .isEqualTo("Test Product Description");
+	    
+	    assertNotNull(found.getPromotions());
+	    
+	    assertThat(found.getPromotions().size())
+	    .isEqualTo(1);
+	    
+    }
+	
 }

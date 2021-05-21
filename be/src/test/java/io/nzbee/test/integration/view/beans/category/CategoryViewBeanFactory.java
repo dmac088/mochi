@@ -7,10 +7,13 @@ import io.nzbee.view.category.product.ProductCategoryView;
 
 @Service
 @Profile(value = "it")
-public class CategoryDoBeanFactory implements ICategoryViewBeanFactory {
+public class CategoryViewBeanFactory implements ICategoryViewBeanFactory {
 
 	@Override
 	public ProductCategoryView getBean() {
+		
+		
+		
 		return new ProductCategoryView( "TST01",
 										"test product category",									
 										"FRT01",

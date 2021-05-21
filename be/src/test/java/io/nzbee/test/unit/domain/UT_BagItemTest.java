@@ -134,7 +134,7 @@ public class UT_BagItemTest {
         .isEqualTo(1);
     	
     	assertThat(bagItem.getBagItemDiscount())
-    	.isEqualTo(new Double(71.0));
+    	.isEqualTo(Double.valueOf(71.0));
 	}
 	
 	
@@ -160,7 +160,7 @@ public class UT_BagItemTest {
         .isEqualTo(1);
     	
     	assertThat(bagItem.getBagItemDiscount())
-    	.isEqualTo(new Double(142.0));
+    	.isEqualTo(Double.valueOf(142.0));
 	}
 	
 	@Test

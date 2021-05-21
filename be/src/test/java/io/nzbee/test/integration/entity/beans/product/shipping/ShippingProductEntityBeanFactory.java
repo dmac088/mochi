@@ -86,14 +86,14 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 		markdownPriceUSD.setType(pptMarkdown);
 		
 		retailPriceHKD.setCurrency(currHKD);
-		retailPriceHKD.setPriceValue(new Double(60.48));
+		retailPriceHKD.setPriceValue(Double.valueOf(60.48));
 		retailPriceUSD.setCurrency(currUSD);
-		retailPriceUSD.setPriceValue(new Double(7.8));
+		retailPriceUSD.setPriceValue(Double.valueOf(7.8));
 		
 		markdownPriceHKD.setCurrency(currHKD);
-		markdownPriceHKD.setPriceValue(new Double(50.00));
+		markdownPriceHKD.setPriceValue(Double.valueOf(50.00));
 		markdownPriceUSD.setCurrency(currUSD);
-		markdownPriceUSD.setPriceValue(new Double(6.45));
+		markdownPriceUSD.setPriceValue(Double.valueOf(6.45));
 		
 		product.getPrices().add(retailPriceHKD);
 		product.getPrices().add(retailPriceUSD);
@@ -121,9 +121,9 @@ public class ShippingProductEntityBeanFactory implements IShippingProductEntityB
 		//we need a status
 		product.setProductStatus(productStatusRepository.findByProductStatusCode("ACT01").get());
 		
-		product.setWeightLimit(new Double(5));
-		product.setWeightFrom(new Double(2));
-		product.setWeightTo(new Double(3));
+		product.setWeightLimit(Double.valueOf(5));
+		product.setWeightFrom(Double.valueOf(2));
+		product.setWeightTo(Double.valueOf(3));
 		product.setTrackingLevel(1);
 		
 		Optional<ShippingDestinationEntity> osd = shippingDestinationService.findByCode("ADAD1");
