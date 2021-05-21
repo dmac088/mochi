@@ -25,6 +25,11 @@ public class CategoryServiceImpl implements ICategoryService {
 	public void delete(CategoryEntity t) {
 		categoryRepository.delete(t);
 	}
+	
+	@Override
+	public Optional<CategoryEntity> findById(Long categoryId) {
+		return categoryRepository.findById(categoryId);
+	}
 
 	@Override
 	public Optional<CategoryEntity> findByCode(String categoryCode) {
@@ -35,5 +40,4 @@ public class CategoryServiceImpl implements ICategoryService {
 	public List<CategoryEntity> findAll() {
 		return categoryRepository.findAll();
 	}
-
 }

@@ -29,11 +29,11 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
-import io.nzbee.entity.category.CategoryDTO;
 import io.nzbee.entity.category.CategoryEntity;
 import io.nzbee.entity.category.ICategoryService;
-import io.nzbee.entity.category.product.CategoryProductDTO;
 import io.nzbee.entity.category.product.CategoryProductEntity;
+import io.nzbee.entity.category.product.view.facet.IProductCategoryFacetDTOService;
+import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTO;
 import io.nzbee.test.integration.entity.beans.category.CategoryEntityBeanFactory;
 
 @RunWith(SpringRunner.class)
@@ -56,6 +56,9 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
  
     @Autowired
     private ICategoryService categoryService;
+    
+    @Autowired
+    private IProductCategoryFacetDTOService categoryFacetService;
     
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
@@ -118,138 +121,6 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         // then
     	assertFoundEntity(found);
     }
-   
-    
-    @Test
-    @Rollback(false)
-    public void whenFindByCode_thenReturnProductCategoryDTO() {
-    	
-        // when
-    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "TST02");
-     
-        // then
-    	assertFoundDTO(found);
-    }
-    
-    @Test
-    @Rollback(false)
-    public void whenFindFruitCategory_thenReturnProductCategoryDTO() {
-    	
-        // when
-    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "FRT01");
-     
-        // then
-    	assertNotNull(found);
-    	
-    	assertTrue(found.isPresent());
-    	
-    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
-    	
-    	assertThat(cp.getCategoryCode())
-        .isEqualTo("FRT01");
-    	
-	    assertThat(cp.getCategoryLevel())
-	    .isEqualTo(new Long(1));
-	    
-	    assertThat(cp.getCategoryDesc())
-	    .isEqualTo("Fruit");
-	    
-	    assertThat(cp.getChildCategoryCount())
-	    .isEqualTo(7);
-	    
-	    assertThat(cp.getCount())
-	    .isEqualTo(12);
-    }
-    
-    @Test
-    @Rollback(false)
-    public void whenFindVegetableCategory_thenReturnProductCategoryDTO() {
-    	
-        // when
-    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "VEG01");
-     
-        // then
-    	assertNotNull(found);
-    	
-    	assertTrue(found.isPresent());
-    	
-    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
-    	
-    	assertThat(cp.getCategoryCode())
-        .isEqualTo("VEG01");
-    	
-	    assertThat(cp.getCategoryLevel())
-	    .isEqualTo(new Long(1));
-	    
-	    assertThat(cp.getCategoryDesc())
-	    .isEqualTo("Vegetables");
-	    
-	    assertThat(cp.getChildCategoryCount())
-	    .isEqualTo(7);
-	    
-	    assertThat(cp.getCount())
-	    .isEqualTo(12);
-    }
-    
-    @Test
-    @Rollback(false)
-    public void whenFindRedAndOrangeVegetablesCategory_thenReturnProductCategoryDTO() {
-    	
-        // when
-    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "ROV01");
-     
-        // then
-    	assertNotNull(found);
-    	
-    	assertTrue(found.isPresent());
-    	
-    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
-    	
-    	assertThat(cp.getCategoryCode())
-        .isEqualTo("ROV01");
-    	
-	    assertThat(cp.getCategoryLevel())
-	    .isEqualTo(new Long(2));
-	    
-	    assertThat(cp.getCategoryDesc())
-	    .isEqualTo("Red and Orange");
-	    
-	    assertThat(cp.getChildCategoryCount())
-	    .isEqualTo(2);
-	    
-	    assertThat(cp.getCount())
-	    .isEqualTo(1);
-    }
-    
-    @Test
-    @Rollback(false)
-    public void whenFindPomesCategory_thenReturnProductCategoryDTO() {
-    	
-        // when
-    	Optional<CategoryDTO> found = categoryService.findByCode("en-GB", "POM01");
-     
-        // then
-    	assertNotNull(found);
-    	
-    	assertTrue(found.isPresent());
-    	
-    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
-    	
-    	assertThat(cp.getCategoryCode())
-        .isEqualTo("POM01");
-    	
-	    assertThat(cp.getCategoryLevel())
-	    .isEqualTo(new Long(2));
-	    
-	    assertThat(cp.getCategoryDesc())
-	    .isEqualTo("Pomes");
-	    
-	    assertThat(cp.getChildCategoryCount())
-	    .isEqualTo(0);
-	    
-	    assertThat(cp.getCount())
-	    .isEqualTo(3);
-    }
     
     @Test
     @Rollback(false)
@@ -260,13 +131,13 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
-		    											Constants.currencyUSD, 
-		    											"FRT01",
-		    											new StringCollectionWrapper(categories),
-		    											new StringCollectionWrapper(brands), 
-		    											new StringCollectionWrapper(tags), 
-		    											null);
+    	List<ProductCategoryFacetDTO> lc = categoryFacetService.findAll(	Constants.localeENGB, 
+							    											Constants.currencyUSD, 
+							    											"FRT01",
+							    											new StringCollectionWrapper(categories),
+							    											new StringCollectionWrapper(brands), 
+							    											new StringCollectionWrapper(tags), 
+							    											null);
 
         //then
     	assertNotNull(lc);
@@ -283,13 +154,13 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	Set<String> tags = new HashSet<String>();
     	
     	//when
-    	List<CategoryDTO> lc = categoryService.findAll(	Constants.localeENGB, 
-    													Constants.currencyUSD, 
-    													"FRT01", 
-    													new StringCollectionWrapper(categories),
-    													new StringCollectionWrapper(brands), 
-    													new StringCollectionWrapper(tags), 
-    													null);
+    	List<ProductCategoryFacetDTO> lc = categoryFacetService.findAll(	Constants.localeENGB, 
+					    													Constants.currencyUSD, 
+					    													"FRT01", 
+					    													new StringCollectionWrapper(categories),
+					    													new StringCollectionWrapper(brands), 
+					    													new StringCollectionWrapper(tags), 
+					    													null);
      
         //then
     	assertNotNull(lc);
@@ -306,13 +177,13 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
     	tags.add("GFR01");
     	
     	//when
-    	List<CategoryDTO> lc = categoryService.findAll(		Constants.localeENGB, 
-		    												Constants.currencyUSD, 
-		    												"FRT01", 
-		    												new StringCollectionWrapper(categories),
-		    												new StringCollectionWrapper(brands), 
-		    												new StringCollectionWrapper(tags), 
-		    												null);
+    	List<ProductCategoryFacetDTO> lc = categoryFacetService.findAll(	Constants.localeENGB, 
+						    												Constants.currencyUSD, 
+						    												"FRT01", 
+						    												new StringCollectionWrapper(categories),
+						    												new StringCollectionWrapper(brands), 
+						    												new StringCollectionWrapper(tags), 
+						    												null);
      
         //then
 		assertNotNull(lc);
@@ -332,29 +203,11 @@ public class IT_ProductCategoryEntityRepositoryIntegrationTest {
         .isEqualTo("TST02");
     	
 	    assertThat(cp.getCategoryLevel())
-	    .isEqualTo(new Long(1));
+	    .isEqualTo(Long.valueOf(1));
 	    
 	    assertThat(cp.getCategoryDescENGB())
 	    .isEqualTo("test product category");
     }
     
-    private void assertFoundDTO(Optional<CategoryDTO> found) {
-    	
-    	assertNotNull(found);
-    	
-    	assertTrue(found.isPresent());
-    	
-    	CategoryProductDTO cp = (CategoryProductDTO) found.get();
-    	
-    	assertThat(cp.getCategoryCode())
-        .isEqualTo("TST02");
-    	
-	    assertThat(cp.getCategoryLevel())
-	    .isEqualTo(new Long(1));
-	    
-	    assertThat(cp.getCategoryDesc())
-	    .isEqualTo("test product category");
-	    
-    }
-
+ 
 }

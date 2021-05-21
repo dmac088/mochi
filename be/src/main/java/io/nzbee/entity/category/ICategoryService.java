@@ -7,6 +7,8 @@ import io.nzbee.entity.IService;
 
 public interface ICategoryService extends IService<CategoryEntity> {
 
+	Optional<CategoryEntity> findById(Long categoryId);
+	
 	Optional<CategoryEntity> findByCode(String categoryCode);
 
 	List<CategoryEntity> findAll();
