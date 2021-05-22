@@ -550,7 +550,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(Long.valueOf(2));
+        .isEqualTo(Long.valueOf(1));
 	}
 	
 	@Test
@@ -568,6 +568,13 @@ public class IT_ProductEntitySearchIntegrationTest {
 								"Fruit", 		
 								facetPayload,
 								returnFacets);
+		
+		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getFacetingName().equals("brand")
+									   && 
+									   (f.getValue().equals("GLO01")
+									   || 
+									    f.getValue().equals("PLA01")
+									   )).collect(Collectors.toSet());
 		
 		// then
 		assertThat(pp.getTotalPages())
