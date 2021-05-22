@@ -124,7 +124,16 @@ public class IT_BrandControllerIntegrationTest {
     			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.value").value("ADO01"))
     			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.count").value("2"))
     			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.id").value("ADO01"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.hierarchical").value(true));
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.hierarchical").value(true))
+    	
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.type").value("EntityFacet"))
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.desc").value("Shine"))
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.facetingName").value("brand"))
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.objectType").value("BrandFacetView"))
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.value").value("SHI01"))
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.count").value("2"))
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.id").value("SHI01"))
+				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.hierarchical").value(true));
     }
     
 	
