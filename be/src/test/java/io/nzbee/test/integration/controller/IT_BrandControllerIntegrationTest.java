@@ -45,6 +45,7 @@ import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 								 BrandFacetDTOServiceImpl.class,
 								 BrandFacetDTODaoImpl.class,
 								 BrandFacetDTOMapperImpl.class,
+								 BrandFacetMapperImpl.class,
 								 DataSourceBeanMochi.class,
 							     DataSourceBeanSecurity.class,
 							     WebMvcConfig.class,
