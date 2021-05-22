@@ -42,10 +42,11 @@ import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.product.PriceFacetMapper;
 import io.nzbee.resources.product.PriceFacetResourceAssembler;
 import io.nzbee.security.DataSourceBeanSecurity;
+import io.nzbee.security.OAuth2ResourceServerConfig;
 import io.nzbee.security.SecurityBeanConfiguration;
 import io.nzbee.security.WebSecurityConfig;
+import io.nzbee.security.user.IUserRepository;
 import io.nzbee.security.user.UserService;
-
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 
@@ -73,8 +74,8 @@ import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 							     DataSourceBeanSecurity.class,
 							     WebMvcConfig.class,
 							     UserService.class,
-							     io.nzbee.security.user.IUserRepository.class,
-							     io.nzbee.security.OAuth2ResourceServerConfig.class
+							     IUserRepository.class,
+							     OAuth2ResourceServerConfig.class
 							     })
 @WebMvcTest(CategoryController.class)
 @Import(WebSecurityConfig.class)
