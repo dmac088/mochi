@@ -24,12 +24,32 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Constants;
+import io.nzbee.WebMvcConfig;
+import io.nzbee.entity.DataSourceBeanMochi;
+import io.nzbee.entity.adapters.view.BrandFacetAdapterImpl;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTODaoImpl;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTOMapperImpl;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
+import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResourceAssembler;
+import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResourceAssembler;
 import io.nzbee.resources.controllers.BrandController;
+import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.WebSecurityConfig;
+import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc()
-@ContextConfiguration(classes = {BrandController.class})
+@ContextConfiguration(classes = {BrandController.class,
+								 BrandFacetViewServiceImpl.class,
+								 BrandFacetAdapterImpl.class,
+								 BrandFacetDTOServiceImpl.class,
+								 BrandFacetDTODaoImpl.class,
+								 BrandFacetDTOMapperImpl.class,
+								 DataSourceBeanMochi.class,
+							     DataSourceBeanSecurity.class,
+							     WebMvcConfig.class,
+							     BrandSearchFacetResourceAssembler.class,
+							     BrandBrowseFacetResourceAssembler.class})
 @WebMvcTest(BrandController.class)
 @Import(WebSecurityConfig.class)
 @ActiveProfiles(profiles = "it")

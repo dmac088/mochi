@@ -25,7 +25,10 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Constants;
 import io.nzbee.Globals;
+import io.nzbee.WebMvcConfig;
+import io.nzbee.entity.DataSourceBeanMochi;
 import io.nzbee.entity.adapters.view.ProductCategoryAdapterImpl;
+import io.nzbee.entity.category.CategoryServiceImpl;
 import io.nzbee.entity.category.brand.CategoryBrandDaoImpl;
 import io.nzbee.entity.category.brand.CategoryBrandServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductDaoImpl;
@@ -38,8 +41,11 @@ import io.nzbee.resources.category.CategoryResourceAssembler;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.product.PriceFacetMapper;
 import io.nzbee.resources.product.PriceFacetResourceAssembler;
+import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.SecurityBeanConfiguration;
 import io.nzbee.security.WebSecurityConfig;
+import io.nzbee.security.user.UserService;
+
 import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 
@@ -61,12 +67,12 @@ import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 							     SecurityBeanConfiguration.class,
 							     Globals.class,
 							     JavaMailSender.class,
-							     io.nzbee.entity.category.CategoryServiceImpl.class,
+							     CategoryServiceImpl.class,
 							     ProductCategoryFacetDTOServiceImpl.class,
-							     io.nzbee.entity.DataSourceBeanMochi.class,
-							     io.nzbee.security.DataSourceBeanSecurity.class,
-							     io.nzbee.WebMvcConfig.class,
-							     io.nzbee.security.user.UserService.class,
+							     DataSourceBeanMochi.class,
+							     DataSourceBeanSecurity.class,
+							     WebMvcConfig.class,
+							     UserService.class,
 							     io.nzbee.security.user.IUserRepository.class,
 							     io.nzbee.security.OAuth2ResourceServerConfig.class
 							     })
