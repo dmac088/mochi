@@ -2,18 +2,20 @@ package io.nzbee.search.facet;
 
 import java.util.Objects;
 import org.apache.lucene.search.Query;
+import org.hibernate.search.query.facet.Facet;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 
 @JsonTypeName("SearchFacet")
-public class SearchFacetRange  implements org.hibernate.search.query.facet.Facet, IFacet {
+public class SearchFacetRange  implements Facet, IFacet {
 	
 	private final org.hibernate.search.query.facet.Facet delegate;
 	
 	private String value;
 	 
-	public SearchFacetRange(org.hibernate.search.query.facet.Facet f) {
+	public SearchFacetRange(Facet f) {
 	  this.delegate = f;
 	  if(!(f==null)) {
 		 this.value = f.getValue();

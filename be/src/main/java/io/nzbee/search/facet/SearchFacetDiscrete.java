@@ -2,6 +2,7 @@ package io.nzbee.search.facet;
 
 import java.util.Objects;
 import org.apache.lucene.search.Query;
+import org.hibernate.search.query.facet.Facet;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonTypeName;
@@ -9,15 +10,15 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("SearchFacet")
-public class SearchFacetDiscrete  implements org.hibernate.search.query.facet.Facet, IFacet {
+public class SearchFacetDiscrete implements Facet, IFacet {
 	
-	private final org.hibernate.search.query.facet.Facet delegate;
+	private final Facet delegate;
 	
 	private ISearchDimension entity;
 	
 	private String value;
 	 
-	public SearchFacetDiscrete(org.hibernate.search.query.facet.Facet f, ISearchDimension entity) {
+	public SearchFacetDiscrete(Facet f, ISearchDimension entity) {
 	  this.delegate = f;
 	  this.entity = entity;
 	  if(!(f==null)) {
