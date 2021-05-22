@@ -90,14 +90,29 @@ public class IT_BrandControllerIntegrationTest {
     
     @Test
     @Transactional
-    public void testFindAllBrands() throws Exception {
-    	mockMvc.perform(MockMvcRequestBuilders.get("/api/Brand/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01")
+    public void testFindAllBrandViews() throws Exception {
+    	mockMvc.perform(MockMvcRequestBuilders.post("/api/Brand/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
+                .content("[]")
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(7)));
+        		.andExpect(jsonPath("$._embedded.brandBrowseFacetResources.length()", is(7)));
+        
+    }
+    
+    @Test
+    @Transactional
+    public void testFindAllBrandFacets() throws Exception {
+    	mockMvc.perform(MockMvcRequestBuilders.post("/api/Brand/Facet/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01")
+                .with(csrf())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("[]")
+                .accept(MediaType.ALL))
+        		.andDo(print()).andExpect(status().isOk())
+        		.andExpect(content().contentType("application/hal+json"))
+        		.andExpect(jsonPath("$._embedded.brandSearchFacetResources.length()", is(7)));
         
     }
     
