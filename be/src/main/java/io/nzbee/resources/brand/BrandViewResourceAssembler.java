@@ -1,6 +1,5 @@
 package io.nzbee.resources.brand;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.resources.controllers.BrandController;
@@ -17,8 +16,6 @@ public class BrandViewResourceAssembler extends RepresentationModelAssemblerSupp
 	@Override
 	public BrandViewResource toModel(BrandView brand) {
 		BrandViewResource br = new BrandViewResource(brand);
-		br.add(linkTo(methodOn(BrandController.class).get(	brand.getLocale(),
-															brand.getBrandCode())).withSelfRel());
 		return br;
 	}
 

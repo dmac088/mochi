@@ -9,13 +9,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.Constants;
 import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResource;
 import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResourceAssembler;
 import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResource;
@@ -48,11 +46,11 @@ public class BrandController {
         super();
     }
     
-    @PostMapping("/Brand/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandBrowseFacetResource>> getBrands(@PathVariable String locale, 
-    																@PathVariable String currency, 
-    																@PathVariable String categoryCode,
-    																@RequestBody  Set<IFacet> selectedFacets) {
+    @PostMapping("/Brand/{locale}/{currency}/Category/Code/{categoryCode}")
+    public ResponseEntity<CollectionModel<BrandBrowseFacetResource>> getBrands(	@PathVariable String locale, 
+			    																@PathVariable String currency, 
+			    																@PathVariable String categoryCode,
+			    																@RequestBody  Set<IFacet> selectedFacets) {
     	 
     	LOGGER.debug("call BrandController.getBrands with parameters {}, {}, {}", locale, currency, categoryCode);
     	
@@ -75,11 +73,11 @@ public class BrandController {
     }
     
     
-    @PostMapping("/BrandFacet/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandSearchFacetResource>> getBrandFacets(@PathVariable String locale, 
-	    																 @PathVariable String currency, 
-	    																 @PathVariable String categoryCode,
-	    																 @RequestBody  Set<IFacet> selectedFacets) {
+    @PostMapping("/Brand/Facet/{locale}/{currency}/Category/Code/{categoryCode}")
+    public ResponseEntity<CollectionModel<BrandSearchFacetResource>> getBrandFacets( @PathVariable String locale, 
+				    																 @PathVariable String currency, 
+				    																 @PathVariable String categoryCode,
+				    																 @RequestBody  Set<IFacet> selectedFacets) {
     	 
     	LOGGER.debug("call BrandController.getBrandFacets with parameters: {}, {}, {}", locale, currency, categoryCode);
     	
@@ -102,10 +100,4 @@ public class BrandController {
         return ResponseEntity.ok(brandFacetResourceAssembler.toCollectionModel(collection));
     }
 
-    @GetMapping("/Brand/{locale}/{currency}/code/{brandCode}")
-	public ResponseEntity<BrandBrowseFacetResource> get(String locale, String brandCode) {
-    	LOGGER.debug("call BrandController.get with parameters: {}, {}, {}", locale, brandCode);
-    	BrandFacetView b = brandService.findByCode(locale, Constants.primaryProductRootCategoryCode, brandCode);
-    	return ResponseEntity.ok(brandResourceAssembler.toModel(b));
-	}
 }

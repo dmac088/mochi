@@ -1,6 +1,5 @@
 package io.nzbee.resources.brand.browseFacet;
 
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
 import org.springframework.stereotype.Component;
 import io.nzbee.resources.controllers.BrandController;
@@ -17,8 +16,6 @@ public class BrandBrowseFacetResourceAssembler extends RepresentationModelAssemb
 	@Override
 	public BrandBrowseFacetResource toModel(BrandFacetView brand) {
 		BrandBrowseFacetResource br = new BrandBrowseFacetResource(brand);
-		br.add(linkTo(methodOn(BrandController.class).get(	brand.getLocale(),
-															brand.getBrandCode())).withSelfRel());
 		return br;
 	}
 

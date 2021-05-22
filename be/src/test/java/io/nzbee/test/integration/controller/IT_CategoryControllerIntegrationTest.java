@@ -44,7 +44,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 
 @RunWith(SpringRunner.class)
-@AutoConfigureMockMvc(/*addFilters = false*/)
+@AutoConfigureMockMvc()
 @ContextConfiguration(classes = {CategoryController.class, 
 							     ProductCategoryAdapterImpl.class,
 							     ProductCategoryViewServiceImpl.class,
