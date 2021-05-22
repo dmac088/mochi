@@ -29,34 +29,19 @@ import io.nzbee.Globals;
 import io.nzbee.WebMvcConfig;
 import io.nzbee.entity.DataSourceBeanMochi;
 import io.nzbee.entity.adapters.view.BrandFacetAdapterImpl;
-import io.nzbee.entity.adapters.view.ProductCategoryAdapterImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTODaoImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOMapperImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
-import io.nzbee.entity.category.CategoryServiceImpl;
-import io.nzbee.entity.category.brand.CategoryBrandDaoImpl;
-import io.nzbee.entity.category.brand.CategoryBrandServiceImpl;
-import io.nzbee.entity.category.product.CategoryProductDaoImpl;
-import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTODaoImpl;
-import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOMapperImpl;
-import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOServiceImpl;
 import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResourceAssembler;
 import io.nzbee.resources.brand.searchFacet.BrandSearchFacetMapperImpl;
 import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResourceAssembler;
-import io.nzbee.resources.category.CategoryFacetMapper;
-import io.nzbee.resources.category.CategoryFacetResourceAssembler;
-import io.nzbee.resources.category.CategoryResourceAssembler;
 import io.nzbee.resources.controllers.BrandController;
-import io.nzbee.resources.controllers.CategoryController;
-import io.nzbee.resources.product.PriceFacetMapper;
-import io.nzbee.resources.product.PriceFacetResourceAssembler;
 import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.OAuth2ResourceServerConfig;
 import io.nzbee.security.SecurityBeanConfiguration;
 import io.nzbee.security.WebSecurityConfig;
 import io.nzbee.security.user.IUserRepository;
 import io.nzbee.security.user.UserService;
-import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 
 @RunWith(SpringRunner.class)
@@ -77,8 +62,6 @@ import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 							     BrandSearchFacetResourceAssembler.class,
 							     SecurityBeanConfiguration.class,
 							     JavaMailSender.class,
-							     CategoryServiceImpl.class,
-							     ProductCategoryFacetDTOServiceImpl.class,
 							     DataSourceBeanMochi.class,
 							     DataSourceBeanSecurity.class,
 							     WebMvcConfig.class,
