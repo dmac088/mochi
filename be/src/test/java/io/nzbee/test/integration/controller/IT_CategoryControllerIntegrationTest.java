@@ -115,11 +115,21 @@ public class IT_CategoryControllerIntegrationTest {
         		.andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
         		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(7)))
+        		
+        		//check the first child category
         		.andExpect(jsonPath("$._embedded.categoryResources[0].data.categoryCode").value("BER01"))
         		.andExpect(jsonPath("$._embedded.categoryResources[0].data.parentCode").value("FRT01"))
         		.andExpect(jsonPath("$._embedded.categoryResources[0].data.categoryDesc").value("Berries"))
         		.andExpect(jsonPath("$._embedded.categoryResources[0].data.objectCount").value("2"))
         		.andExpect(jsonPath("$._embedded.categoryResources[0].data.childCount").value("0"))
+        		
+        		//check the last child category
+        		.andExpect(jsonPath("$._embedded.categoryResources[6].data.categoryCode").value("TRO01"))
+        		.andExpect(jsonPath("$._embedded.categoryResources[6].data.parentCode").value("FRT01"))
+        		.andExpect(jsonPath("$._embedded.categoryResources[6].data.categoryDesc").value("Tropical"))
+        		.andExpect(jsonPath("$._embedded.categoryResources[6].data.objectCount").value("2"))
+        		.andExpect(jsonPath("$._embedded.categoryResources[6].data.childCount").value("0"))
+        		
         		.andExpect(jsonPath("$._embedded.categoryResources[0].data.locale").value(Constants.localeENGB));
     }
     
