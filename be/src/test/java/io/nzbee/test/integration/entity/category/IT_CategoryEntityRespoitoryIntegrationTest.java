@@ -114,7 +114,7 @@ public class IT_CategoryEntityRespoitoryIntegrationTest {
 		// then
 		assertNotNull(found);
 		assertTrue(!found.isEmpty());
-		assertThat(found.size()).isEqualTo(81);
+		assertThat(found.size()).isEqualTo(27);
 		assertTrue(isOrdered(found));
 	}
 	

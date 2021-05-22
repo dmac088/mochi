@@ -122,7 +122,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(2);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(12));
+        .isEqualTo(Long.valueOf(12));
 	}
 	
 	@Test
@@ -146,7 +146,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(2);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(12));
+        .isEqualTo(Long.valueOf(12));
 	}
 	
 
@@ -172,7 +172,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(2);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(12));
+        .isEqualTo(Long.valueOf(12));
 	}
 	
 	@Test
@@ -196,7 +196,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(Long.valueOf(1));
 	} 
 	
 	@Test
@@ -220,7 +220,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(Long.valueOf(1));
 	} 
 	
 	@Test
@@ -244,7 +244,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(3);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(29));
+        .isEqualTo(Long.valueOf(29));
 	} 
 	
 	@Test
@@ -268,7 +268,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(5));
+        .isEqualTo(Long.valueOf(5));
 	} 
 	
 	@Test
@@ -292,7 +292,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(Long.valueOf(1));
 	} 
 	
 	@Test
@@ -316,7 +316,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(Long.valueOf(1));
 	} 
 	
 	@Test
@@ -340,7 +340,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(5));
+        .isEqualTo(Long.valueOf(5));
 	} 
 	
 	@Test
@@ -364,7 +364,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(5));
+        .isEqualTo(Long.valueOf(5));
 	}
 	
 	@Test
@@ -388,7 +388,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(4));
+        .isEqualTo(Long.valueOf(4));
 	}
 	
 	@Test
@@ -412,7 +412,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(4));
+        .isEqualTo(Long.valueOf(4));
 	}
 	
 	@Test
@@ -436,7 +436,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(4));
+        .isEqualTo(Long.valueOf(4));
 	}
 	
 	@Test
@@ -460,7 +460,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(2));
+        .isEqualTo(Long.valueOf(2));
 	}
 	
 	@Test
@@ -484,7 +484,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(4));
+        .isEqualTo(Long.valueOf(4));
 	}
 	
 	
@@ -510,7 +510,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(Long.valueOf(1));
 	}
 	
 	@Test
@@ -522,9 +522,9 @@ public class IT_ProductEntitySearchIntegrationTest {
 		productService.search( 	"en-GB", 
 								"HKD", 
 								Constants.primaryProductRootCategoryCode,
-								  0,
-								  10, 
-								  "nameAsc",
+								0,
+								10, 
+								"nameAsc",
 								"Fruit", 
 								facetPayload,
 								returnFacets);
@@ -550,7 +550,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(1));
+        .isEqualTo(Long.valueOf(2));
 	}
 	
 	@Test
@@ -562,27 +562,20 @@ public class IT_ProductEntitySearchIntegrationTest {
 		productService.search( 	"en-GB", 
 								"HKD", 
 								Constants.primaryProductRootCategoryCode,
-								  0,
-								  10,
-								  "nameAsc",
+								0,
+								10,
+								"nameAsc",
 								"Fruit", 		
 								facetPayload,
 								returnFacets);
-		
-		Set<IFacet> fp = returnFacets.stream().filter(f -> f.getFacetingName().equals("brand")
-									   && 
-									   (f.getValue().equals("GLO01")
-									   || 
-									    f.getValue().equals("PLA01")
-									   )).collect(Collectors.toSet());
 		
 		// then
 		assertThat(pp.getTotalPages())
 		 .isEqualTo(2);
 		assertThat(pp.getTotalElements())
-		.isEqualTo(new Long(12));
+		.isEqualTo(Long.valueOf(12));
 		assertThat(returnFacets.size())
-		.isEqualTo(13);
+		.isEqualTo(20);
 		
 		returnFacets.clear();
 		
@@ -602,7 +595,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(new Long(4));
+        .isEqualTo(Long.valueOf(4));
     	assertThat(returnFacets.size())
 		.isEqualTo(10);
 	}

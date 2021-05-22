@@ -1,1 +1,1 @@
-net start "postgresql-x64-9.5"
+net start "postgresql-x64-9.6"
