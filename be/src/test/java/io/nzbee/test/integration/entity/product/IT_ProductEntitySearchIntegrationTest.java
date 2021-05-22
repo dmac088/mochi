@@ -550,7 +550,7 @@ public class IT_ProductEntitySearchIntegrationTest {
 		assertThat(pp.getTotalPages())
         .isEqualTo(1);
     	assertThat(pp.getTotalElements())
-        .isEqualTo(Long.valueOf(1));
+        .isEqualTo(Long.valueOf(2));
 	}
 	
 	@Test
