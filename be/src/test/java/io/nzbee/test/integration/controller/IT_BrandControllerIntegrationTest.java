@@ -98,8 +98,11 @@ public class IT_BrandControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.brandBrowseFacetResources.length()", is(7)));
-        
+        		.andExpect(jsonPath("$._embedded.brandBrowseFacetResources.length()", is(7)))
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.brandCode").value("ADO01"))
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.brandDesc").value("Adora"))
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.locale").value(Constants.localeENGB))
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.objectCount").value("2"));
     }
     
     @Test
@@ -112,8 +115,16 @@ public class IT_BrandControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.brandSearchFacetResources.length()", is(7)));
-        
+        		.andExpect(jsonPath("$._embedded.brandSearchFacetResources.length()", is(7)))
+    	
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.type").value("EntityFacet"))
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.desc").value("Adora"))
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.facetingName").value("brand"))
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.objectType").value("BrandFacetView"))
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.value").value("ADO01"))
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.count").value("2"))
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.id").value("ADO01"))
+    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.hierarchical").value(true));
     }
     
 	
