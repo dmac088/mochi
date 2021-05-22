@@ -29,7 +29,9 @@ import io.nzbee.entity.adapters.view.ProductCategoryAdapterImpl;
 import io.nzbee.entity.category.brand.CategoryBrandDaoImpl;
 import io.nzbee.entity.category.brand.CategoryBrandServiceImpl;
 import io.nzbee.entity.category.product.CategoryProductDaoImpl;
-import io.nzbee.entity.category.product.CategoryProductServiceImpl;
+import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTODaoImpl;
+import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOMapperImpl;
+import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOServiceImpl;
 import io.nzbee.resources.category.CategoryFacetMapper;
 import io.nzbee.resources.category.CategoryFacetResourceAssembler;
 import io.nzbee.resources.category.CategoryResourceAssembler;
@@ -39,25 +41,28 @@ import io.nzbee.resources.product.PriceFacetResourceAssembler;
 import io.nzbee.security.SecurityBeanConfiguration;
 import io.nzbee.security.WebSecurityConfig;
 import org.springframework.test.context.junit4.SpringRunner;
+import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc(/*addFilters = false*/)
 @ContextConfiguration(classes = {CategoryController.class, 
 							     ProductCategoryAdapterImpl.class,
-							     CategoryProductServiceImpl.class,
+							     ProductCategoryViewServiceImpl.class,
 							     CategoryProductDaoImpl.class,
 							     CategoryBrandServiceImpl.class,
 							     CategoryBrandDaoImpl.class,
 							     CategoryResourceAssembler.class,  
 							     CategoryFacetMapper.class,
 							     CategoryFacetResourceAssembler.class,
+							     ProductCategoryFacetDTODaoImpl.class,
+							     ProductCategoryFacetDTOMapperImpl.class,
 							     PriceFacetMapper.class,
 							     PriceFacetResourceAssembler.class,
 							     SecurityBeanConfiguration.class,
 							     Globals.class,
 							     JavaMailSender.class,
 							     io.nzbee.entity.category.CategoryServiceImpl.class,
-							     io.nzbee.entity.category.CategoryDaoPostgresImpl.class,
+							     ProductCategoryFacetDTOServiceImpl.class,
 							     io.nzbee.entity.DataSourceBeanMochi.class,
 							     io.nzbee.security.DataSourceBeanSecurity.class,
 							     io.nzbee.WebMvcConfig.class,
@@ -87,13 +92,13 @@ public class IT_CategoryControllerIntegrationTest {
     @Test
     @Transactional
     public void testFindAll() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/en-GB/HKD")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD)
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(87)));
+        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(27)));
         
     }
     
@@ -101,7 +106,7 @@ public class IT_CategoryControllerIntegrationTest {
     @Test
     @Transactional
     public void testFindOne() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/code/FRT01")
+        mockMvc.perform(MockMvcRequestBuilders.get("/api/CategoryFacet/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Code/FRT01")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.ALL))
