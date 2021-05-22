@@ -154,7 +154,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		// when
 		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
-				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new Double(1000));
+				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), Double.valueOf(1000));
 
 		// then
 		assertNotNull(lb);
@@ -172,7 +172,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 
 		// when
 		List<TagFacetDTO> lt = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
-				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), new Double(1000));
+				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), Double.valueOf(1000));
 
 		// then
 		assertNotNull(lt);
@@ -186,7 +186,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> categoryCodes = new HashSet<String>();
 		Set<String> brandCodes = new HashSet<String>();
 
-		Double price = new Double("97.2");
+		Double price = Double.valueOf("97.2");
 
 		// when
 		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyHKD, "FRT01",
@@ -204,7 +204,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> categoryCodes = new HashSet<String>();
 		Set<String> brandCodes = new HashSet<String>();
 
-		Double price = new Double("12.4");
+		Double price = Double.valueOf("12.4");
 
 		// when
 		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
