@@ -27,13 +27,13 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   "ACT01",
 								   "Test Product Description",
 								   "Test Product Long Description",
-								   new Double(78),
-								   new Double(71),
+								   Double.valueOf(78),
+								   Double.valueOf(71),
 								   "test_image.jpg",
 								   Constants.localeENGB,
 								   Constants.currencyHKD,
 								   true,
-								   new Double(0.72),
+								   Double.valueOf(0.72),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 	
@@ -45,13 +45,13 @@ public class ProductDoBeanFactory implements IProductDoBeanFactory {
 								   "ACT01",
 								   "Test Product Description",
 								   "Test Product Long Description",
-								   new Double(78),
-								   new Double(71),
+								   Double.valueOf(78),
+								   Double.valueOf(71),
 								   "test_image.jpg",
 								   Constants.localeENGB,
 								   Constants.currencyHKD,
 								   false,
-								   new Double(0.52),
+								   Double.valueOf(0.52),
 								   new ArrayList<Promotion>(Arrays.asList(promotionDoBeanFactory.getBean())));
 	}
 

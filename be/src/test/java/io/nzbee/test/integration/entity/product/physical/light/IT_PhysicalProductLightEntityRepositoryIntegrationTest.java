@@ -138,13 +138,13 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
 						    														 new StringCollectionWrapper(new HashSet<String>()), 
 						    														 new StringCollectionWrapper(new HashSet<String>()), 
 						    														 new StringCollectionWrapper(new HashSet<String>()), 
-						    														 new Double(10000), 
+						    														 Double.valueOf(10000), 
 						    														 "0", 
 						    														 "50", 
 						    														 "priceAsc");
     
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(13));
+    	assertThat(found.getTotalElements()).isEqualTo(Long.valueOf(13));
     }
 	
 	
@@ -181,13 +181,13 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(categories), 
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
-	    														 new Double(10000),
+	    														 Double.valueOf(10000),
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
     
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
+    	assertThat(found.getTotalElements()).isEqualTo(Long.valueOf(4));
     }
 	
 	
@@ -205,14 +205,14 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(tags), 
-	    														 new Double(10000),
+	    														 Double.valueOf(10000),
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
     
         //then
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(2));
+    	assertThat(found.getTotalElements()).isEqualTo(Long.valueOf(2));
     }
 	
 	@Test
@@ -229,14 +229,14 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(brands), 
 	    														 new StringCollectionWrapper(new HashSet<String>()),
-	    														 new Double(10000),
+	    														 Double.valueOf(10000),
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
     
         //then
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(1));
+    	assertThat(found.getTotalElements()).isEqualTo(Long.valueOf(1));
     }
 	
 	@Test
@@ -253,14 +253,14 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
 	    														 new StringCollectionWrapper(new HashSet<String>()), 
 	    														 new StringCollectionWrapper(brands), 
 	    														 new StringCollectionWrapper(new HashSet<String>()),
-	    														 new Double(10000),
+	    														 Double.valueOf(10000),
 	    														 "0", 
 	    														 "50", 
 	    														 "priceAsc");
     
         //then
     	assertNotNull(found);
-    	assertThat(found.getTotalElements()).isEqualTo(new Long(4));
+    	assertThat(found.getTotalElements()).isEqualTo(Long.valueOf(4));
     }
 
     private void assertFound(PhysicalProductLightDTO physicalProductLightDTO) {
@@ -274,13 +274,13 @@ public class IT_PhysicalProductLightEntityRepositoryIntegrationTest {
     	.isEqualTo("Planters");
     	
     	assertThat(physicalProductLightDTO.getRetailprice().doubleValue())
-    	.isEqualTo(new Double(7.8));
+    	.isEqualTo(Double.valueOf(7.8));
     	
     	assertThat(physicalProductLightDTO.getInstock())
     	.isFalse();
     	
     	assertThat(physicalProductLightDTO.getMarkdownprice().doubleValue())
-    	.isEqualTo(new Double(6.45));
+    	.isEqualTo(Double.valueOf(6.45));
     	
     }
     

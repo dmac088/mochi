@@ -123,17 +123,17 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyUSD);
 
-		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(8));
+		assertThat(found.get().getRetailPrice()).isEqualTo(Double.valueOf(8));
 
-		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(7));
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(Double.valueOf(7));
 
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getHeight()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getHeight()).isEqualTo(Integer.valueOf(1));
 		
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWidth()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWidth()).isEqualTo(Integer.valueOf(1));
 		
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getLength()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getLength()).isEqualTo(Integer.valueOf(1));
 		
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWeight()).isEqualTo(new Double(1.0));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWeight()).isEqualTo(Double.valueOf(1.0));
 		
 	}
 
@@ -157,17 +157,17 @@ public class IT_PhysicalProductUploadForUpdateIntegrationTest {
 		
 		assertThat(found.get().getCurrency()).isEqualTo(Constants.currencyHKD);
 
-		assertThat(found.get().getRetailPrice()).isEqualTo(new Double(60));
+		assertThat(found.get().getRetailPrice()).isEqualTo(Double.valueOf(60));
 
-		assertThat(found.get().getMarkdownPrice()).isEqualTo(new Double(55));
+		assertThat(found.get().getMarkdownPrice()).isEqualTo(Double.valueOf(55));
 		
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getHeight()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getHeight()).isEqualTo(Integer.valueOf(1));
 		
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWidth()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWidth()).isEqualTo(Integer.valueOf(1));
 		
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getLength()).isEqualTo(new Integer(1));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getLength()).isEqualTo(Integer.valueOf(1));
 		
-		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWeight()).isEqualTo(new Double(1.0));
+		assertThat(((PhysicalProductDomainObjectDTO) found.get()).getWeight()).isEqualTo(Double.valueOf(1.0));
 	}
 
 }

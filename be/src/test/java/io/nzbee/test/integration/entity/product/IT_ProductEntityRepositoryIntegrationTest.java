@@ -148,10 +148,10 @@ public class IT_ProductEntityRepositoryIntegrationTest {
     	assertThat(found.get().getCategories().stream().filter(f -> f.getCategoryCode().equals("CIT01")).findAny().isPresent()).isTrue();
     	
     	assertThat(found.get().getRetailPrice())
-    	.isEqualTo(new Double(7.8));
+    	.isEqualTo(Double.valueOf(7.8));
     	
     	assertThat(found.get().getMarkdownPrice())
-    	.isEqualTo(new Double(6.45));
+    	.isEqualTo(Double.valueOf(6.45));
     	
     	assertThat(found.get().getPromotions().size()).isEqualTo(1);
     	

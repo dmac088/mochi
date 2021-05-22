@@ -21,7 +21,7 @@ public class CategoryEntityBeanFactory implements ICategoryEntityBeanFactory {
 		final CategoryEntity category = new CategoryProductEntity();
 	
 		category.setCategoryCode("TST02");
-		category.setCategoryLevel(new Long(1));
+		category.setCategoryLevel(Long.valueOf(1));
 
 		final CategoryAttributeEntity categoryAttributeEn = new CategoryAttributeEntity();
 		categoryAttributeEn.setCategory(category);
@@ -43,7 +43,7 @@ public class CategoryEntityBeanFactory implements ICategoryEntityBeanFactory {
 		final CategoryEntity category = new CategoryBrandEntity();
 		
 		category.setCategoryCode("TST03");
-		category.setCategoryLevel(new Long(2));
+		category.setCategoryLevel(Long.valueOf(2));
 
 		final CategoryAttributeEntity categoryAttribute = new CategoryAttributeEntity();
 		categoryAttribute.setCategory(category);

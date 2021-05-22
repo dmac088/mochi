@@ -119,13 +119,13 @@ public class IT_PhysicalProductFullEntityRepositoryIntegrationTest {
     	.isEqualTo("Planters");
     	
     	assertThat(physicalProductFullDTO.get().getRetailprice().doubleValue())
-    	.isEqualTo(new Double(7.8));
+    	.isEqualTo(Double.valueOf(7.8));
     	
     	assertThat(physicalProductFullDTO.get().getInstock())
     	.isFalse();
     	
     	assertThat(physicalProductFullDTO.get().getMarkdownprice().doubleValue())
-    	.isEqualTo(new Double(6.45));
+    	.isEqualTo(Double.valueOf(6.45));
     	
     }
     

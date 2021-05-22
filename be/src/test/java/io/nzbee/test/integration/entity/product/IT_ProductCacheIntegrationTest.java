@@ -221,7 +221,7 @@ public class IT_ProductCacheIntegrationTest {
 	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
-	    assertThat(((PageImpl<PhysicalProductLightDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    assertThat(((PageImpl<PhysicalProductLightDTO>) ob.get()).getTotalElements()).isEqualTo(Long.valueOf(12));
 	    
 	}
 	
@@ -267,7 +267,7 @@ public class IT_ProductCacheIntegrationTest {
 	    assertNotNull(ob);
 	    assertNotNull(ob.get());
 	    assertThat(ob.get().getClass().getSimpleName()).isEqualTo(PageImpl.class.getSimpleName());
-	    assertThat(((PageImpl<PhysicalProductLightDTO>) ob.get()).getTotalElements()).isEqualTo(new Long(12));
+	    assertThat(((PageImpl<PhysicalProductLightDTO>) ob.get()).getTotalElements()).isEqualTo(Long.valueOf(12));
 	    
 	}
 

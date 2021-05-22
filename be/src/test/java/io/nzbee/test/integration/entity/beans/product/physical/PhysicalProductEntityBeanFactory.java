@@ -86,14 +86,14 @@ public class PhysicalProductEntityBeanFactory implements IPhysicalProductEntityB
 		markdownPriceUSD.setType(pptMarkdown);
 		
 		retailPriceHKD.setCurrency(currHKD);
-		retailPriceHKD.setPriceValue(new Double(60.48));
+		retailPriceHKD.setPriceValue(Double.valueOf(60.48));
 		retailPriceUSD.setCurrency(currUSD);
-		retailPriceUSD.setPriceValue(new Double(7.8));
+		retailPriceUSD.setPriceValue(Double.valueOf(7.8));
 		
 		markdownPriceHKD.setCurrency(currHKD);
-		markdownPriceHKD.setPriceValue(new Double(50.00));
+		markdownPriceHKD.setPriceValue(Double.valueOf(50.00));
 		markdownPriceUSD.setCurrency(currUSD);
-		markdownPriceUSD.setPriceValue(new Double(6.45));
+		markdownPriceUSD.setPriceValue(Double.valueOf(6.45));
 		
 		product.getPrices().add(retailPriceHKD);
 		product.getPrices().add(retailPriceUSD);

@@ -61,9 +61,9 @@ public class InventoryTransactionEntityBeanFactory implements IInventoryEntityBe
 		
 		inventoryTransaction.setProduct(iP.get());
 		
-		inventoryTransaction.setQuantity(new Long(5));
+		inventoryTransaction.setQuantity(Long.valueOf(5));
 		
-		inventoryTransaction.setPrice(new Double(15.20));
+		inventoryTransaction.setPrice(Double.valueOf(15.20));
 		
 		inventoryTransaction.setInventoryTransactionDate(LocalDateTime.parse("2020-10-01 00:00:00", DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")));
 		

@@ -14,7 +14,7 @@ public class TagDoBeanFactory implements ITagDoBeanFactory {
 		
 		return new TagFacetView(	"TST01",
 						"test tag",
-						new Long(20),
+						Long.valueOf(20),
 						"en-GB");
 		
 	}
