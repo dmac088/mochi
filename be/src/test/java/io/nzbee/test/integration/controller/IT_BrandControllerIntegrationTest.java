@@ -102,7 +102,12 @@ public class IT_BrandControllerIntegrationTest {
     			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.brandCode").value("ADO01"))
     			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.brandDesc").value("Adora"))
     			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.locale").value(Constants.localeENGB))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.objectCount").value("2"));
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.objectCount").value("2"))
+    			
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.brandCode").value("SHI01"))
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.brandDesc").value("Shine"))
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.locale").value(Constants.localeENGB))
+    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.objectCount").value("2"));
     }
     
     @Test
