@@ -65,7 +65,7 @@ public class CategoryController {
 	}
 
 
-	@PostMapping("/Category/{locale}/{currency}/Code/{code}")
+	@PostMapping("/Category/Product/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<CollectionModel<CategoryResource>> getChildCategories(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String code,
 			@RequestBody Set<IFacet> selectedFacets) {
@@ -90,7 +90,7 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	} 
 	
-	@PostMapping("/CategoryFacet/{locale}/{currency}/Code/{code}")
+	@PostMapping("/Category/Facet/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<CollectionModel<CategoryFacetResource>> getChildCategoryFacets(@PathVariable String locale,
 																						 @PathVariable String currency, 
 																						 @PathVariable String code,
@@ -115,7 +115,7 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryFacetResourceAssembler.toCollectionModel(collection));
 	}
 	
-	@PostMapping("/Category/{locale}/{currency}/Code/{code}/maxPrice")
+	@PostMapping("/Category/Product/{locale}/{currency}/Code/{code}/maxPrice")
 	public ResponseEntity<Double> getMaxPrice(	@PathVariable String locale,
 												@PathVariable String currency, @PathVariable String code,
 												@RequestBody  Set<IFacet> selectedFacets) {
@@ -129,7 +129,7 @@ public class CategoryController {
 		return ResponseEntity.ok(result);
 	}
 	
-	@PostMapping("/Category/{locale}/{currency}/Code/{code}/maxPriceFacet")
+	@PostMapping("/Category/Product/{locale}/{currency}/Code/{code}/maxPriceFacet")
 	public ResponseEntity<PriceFacetResource> getMaxPriceFacet(	@PathVariable String locale,
 																@PathVariable String currency, 
 																@PathVariable String code,

@@ -91,7 +91,7 @@ public class IT_CategoryControllerIntegrationTest {
     
     @Test
     @Transactional
-    public void testFindAll() throws Exception {
+    public void testFindAllCategories() throws Exception {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/Category/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD)
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -105,17 +105,19 @@ public class IT_CategoryControllerIntegrationTest {
     
     @Test
     @Transactional
-    public void testFindOne() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("/api/CategoryFacet/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Code/FRT01")
+    public void testFindAllChildCategories() throws Exception {
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/Category/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Code/FRT01")
                 .with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
+                .content("[]")
                 .accept(MediaType.ALL))
         		.andDo(print())
         		.andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$.data.categoryCode").value("FRT01"))
-        		.andExpect(jsonPath("$.data.categoryDesc").value("Fruit"))
-        		.andExpect(jsonPath("$.data.locale").value(Constants.localeENGB));
+        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(7)))
+        		.andExpect(jsonPath("$._embedded.categoryResources[0].data.categoryCode").value("BER01"))
+        		.andExpect(jsonPath("$._embedded.categoryResources[0].data.categoryDesc").value("Berries"))
+        		.andExpect(jsonPath("$._embedded.categoryResources[0].data.locale").value(Constants.localeENGB));
     }
     
 
