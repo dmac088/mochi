@@ -25,9 +25,9 @@ public class TagFacetView  {
 	public TagFacetView(	String tagCode,
 			String tagDesc,
 			String locale) {
-	this.tagCode = tagCode;
-	this.tagDesc = tagDesc;
-	this.locale = locale;
+		this.tagCode = tagCode;
+		this.tagDesc = tagDesc;
+		this.locale = locale;
 	}
 	
 	public Long getCount() {
