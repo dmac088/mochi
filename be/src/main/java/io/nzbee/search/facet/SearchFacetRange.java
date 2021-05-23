@@ -33,7 +33,7 @@ public class SearchFacetRange  implements Facet, IFacet {
 	}
 
 	@Override
-	public boolean isHierarchical() {
+	public Boolean isHierarchical() {
 		return false;
 	}
 
