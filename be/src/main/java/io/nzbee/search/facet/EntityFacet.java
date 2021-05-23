@@ -34,7 +34,7 @@ public class EntityFacet implements IFacet {
 	}
 
 	@Override
-	public boolean isHierarchical() {
+	public Boolean isHierarchical() {
 		return this.isHierarchical;
 	}
 
@@ -90,5 +90,5 @@ public class EntityFacet implements IFacet {
 	public void setFacetingName(String name) {
 		this.facetingName = name.toLowerCase();
 	}
-	
+
 }

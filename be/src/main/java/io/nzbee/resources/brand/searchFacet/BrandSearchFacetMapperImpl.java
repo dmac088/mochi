@@ -12,6 +12,7 @@ public class BrandSearchFacetMapperImpl implements IFacetMapper<BrandFacetView> 
 	@Override
 	public EntityFacet toEntityFacet(BrandFacetView brand) {
 		EntityFacet ef = new EntityFacet();
+
 		ef.setFacetingName("brand");
 		ef.setObjectType(brand.getClass().getSimpleName());
 		ef.setId(brand.getBrandCode());
@@ -19,6 +20,7 @@ public class BrandSearchFacetMapperImpl implements IFacetMapper<BrandFacetView> 
 		ef.setHierarchical(true);
 		ef.setValue(brand.getBrandCode());
 		ef.setCount(brand.getObjectCount().intValue());
+
 		return ef;
 	}
 

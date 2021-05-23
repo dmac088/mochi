@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("SearchFacet")
-public class SearchFacetDiscrete implements IFacet {
+public class SearchFacetDiscrete implements IFacet, Facet {
 	
 	private final Facet delegate;
 	
@@ -37,7 +37,7 @@ public class SearchFacetDiscrete implements IFacet {
 	}
 
 	@Override
-	public boolean isHierarchical() {
+	public Boolean isHierarchical() {
 		return ((ISearchDimension)this.getPayload()).isHierarchical();
 	}
 
