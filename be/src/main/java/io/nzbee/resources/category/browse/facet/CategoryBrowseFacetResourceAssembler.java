@@ -41,7 +41,7 @@ public class CategoryBrowseFacetResourceAssembler
 		cr.add(linkTo(methodOn(BrandController.class).getBrandFacets(category.getLocale(), null,
 				category.getCategoryCode(), null)).withRel("brandFacets"));
 
-		cr.add(linkTo(methodOn(TagController.class).getTagFacets(category.getLocale(), null, category.getCategoryCode(),
+		cr.add(linkTo(methodOn(TagController.class).getTags(category.getLocale(), null, category.getCategoryCode(),
 				null)).withRel("tagFacets"));
 
 		cr.add(linkTo(methodOn(CategoryController.class).getMaxPrice(category.getLocale(), null,
