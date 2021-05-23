@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.nzbee.resources.tag.TagFacetResource;
-import io.nzbee.resources.tag.TagFacetResourceAssembler;
-import io.nzbee.resources.tag.TagResource;
-import io.nzbee.resources.tag.TagResourceAssembler;
+import io.nzbee.resources.tag.browse.facet.TagBrowseFacetResource;
+import io.nzbee.resources.tag.browse.facet.TagBrowseFacetResourceAssembler;
+import io.nzbee.resources.tag.search.facet.TagSearchFacetResource;
+import io.nzbee.resources.tag.search.facet.TagSearchFacetResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
@@ -39,13 +39,13 @@ public class TagController {
 	private IFacetMapper<TagFacetView> facetMapper;
     
     @Autowired
-    private TagResourceAssembler tagResourceAssembler;
+    private TagBrowseFacetResourceAssembler tagResourceAssembler;
     
 	@Autowired
-	private TagFacetResourceAssembler tagFacetResourceAssembler;
+	private TagSearchFacetResourceAssembler tagFacetResourceAssembler;
 	
 	@PostMapping("/Tag/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<TagResource>> getTags(@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<TagBrowseFacetResource>> getTags(@PathVariable String locale, 
     																@PathVariable String currency, 
     																@PathVariable String categoryCode,
     																@RequestBody Set<IFacet> selectedFacets) {
@@ -70,8 +70,8 @@ public class TagController {
     	return ResponseEntity.ok(tagResourceAssembler.toCollectionModel(collection));
     }
 	
-	@PostMapping("/TagFacet/{locale}/{currency}/category/{categoryCode}")
-    public ResponseEntity<CollectionModel<TagFacetResource>> getTagFacets(@PathVariable String locale, 
+	@PostMapping("/Tag/Facet/{locale}/{currency}/category/{categoryCode}")
+    public ResponseEntity<CollectionModel<TagSearchFacetResource>> getTagFacets(@PathVariable String locale, 
     																 @PathVariable String currency, 
     																 @PathVariable String categoryCode,
     																 @RequestBody Set<IFacet> selectedFacets) {

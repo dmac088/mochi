@@ -1,4 +1,4 @@
-package io.nzbee.resources.brand.browseFacet;
+package io.nzbee.resources.brand.browse.facet;
 
 import org.springframework.hateoas.RepresentationModel;
 

@@ -1,4 +1,4 @@
-package io.nzbee.resources.tag;
+package io.nzbee.resources.tag.browse.facet;
 
 import org.springframework.stereotype.Component;
 
@@ -7,7 +7,7 @@ import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 
 @Component
-public class TagFacetMapper implements IFacetMapper<TagFacetView> {
+public class TagBrowseFacetMapperImpl implements IFacetMapper<TagFacetView> {
 
 	public EntityFacet toEntityFacet(TagFacetView tag) {
 		EntityFacet ef = new EntityFacet();

@@ -14,10 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResource;
-import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResourceAssembler;
-import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResource;
-import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResourceAssembler;
+
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetResource;
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetResourceAssembler;
+import io.nzbee.resources.brand.search.facet.BrandSearchFacetResource;
+import io.nzbee.resources.brand.search.facet.BrandSearchFacetResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;

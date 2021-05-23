@@ -1,4 +1,4 @@
-package io.nzbee.resources.brand.searchFacet;
+package io.nzbee.resources.brand.search.facet;
 
 import org.springframework.hateoas.RepresentationModel;
 

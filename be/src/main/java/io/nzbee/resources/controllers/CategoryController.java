@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import io.nzbee.Constants;
-import io.nzbee.resources.category.CategoryFacetResource;
-import io.nzbee.resources.category.CategoryFacetResourceAssembler;
-import io.nzbee.resources.category.CategoryResource;
-import io.nzbee.resources.category.CategoryResourceAssembler;
+import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetResource;
+import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetResourceAssembler;
+import io.nzbee.resources.category.search.facet.CategorySearchFacetResource;
+import io.nzbee.resources.category.search.facet.CategorySearchFacetResourceAssembler;
 import io.nzbee.resources.product.PriceFacetResource;
 import io.nzbee.resources.product.PriceFacetResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
@@ -42,10 +42,10 @@ public class CategoryController {
 	private IFacetMapper<ProductCategoryView> categoryFacetMapper; 
 	
 	@Autowired
-	private CategoryResourceAssembler categoryResourceAssember;
+	private CategoryBrowseFacetResourceAssembler categoryResourceAssember;
 	
 	@Autowired
-	private CategoryFacetResourceAssembler categoryFacetResourceAssembler;
+	private CategorySearchFacetResourceAssembler categoryFacetResourceAssembler;
 	
 	@Autowired
 	private PriceFacetResourceAssembler priceFacetResourceAssembler;
@@ -58,7 +58,7 @@ public class CategoryController {
 	}
 
 	@GetMapping("/Category/Product/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<CategoryResource>> getProductCategories(@PathVariable String locale) {
+	public ResponseEntity<CollectionModel<CategoryBrowseFacetResource>> getProductCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale);
 		final List<ProductCategoryView> collection = categoryService.findAll(locale, Constants.primaryProductRootCategoryCode);
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
@@ -66,7 +66,7 @@ public class CategoryController {
 
 
 	@PostMapping("/Category/Product/{locale}/{currency}/Code/{code}")
-	public ResponseEntity<CollectionModel<CategoryResource>> getChildCategories(@PathVariable String locale,
+	public ResponseEntity<CollectionModel<CategoryBrowseFacetResource>> getChildCategories(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String code,
 			@RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency, code);
@@ -91,7 +91,7 @@ public class CategoryController {
 	} 
 	
 	@PostMapping("/Category/Facet/{locale}/{currency}/Code/{code}")
-	public ResponseEntity<CollectionModel<CategoryFacetResource>> getChildCategoryFacets(@PathVariable String locale,
+	public ResponseEntity<CollectionModel<CategorySearchFacetResource>> getChildCategoryFacets(@PathVariable String locale,
 																						 @PathVariable String currency, 
 																						 @PathVariable String code,
 																						 @RequestBody Set<IFacet> selectedFacets) {

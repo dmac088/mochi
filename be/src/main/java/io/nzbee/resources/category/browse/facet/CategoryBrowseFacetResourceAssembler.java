@@ -1,4 +1,4 @@
-package io.nzbee.resources.category;
+package io.nzbee.resources.category.browse.facet;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.*;
 import org.springframework.hateoas.server.mvc.RepresentationModelAssemblerSupport;
@@ -10,16 +10,16 @@ import io.nzbee.resources.controllers.TagController;
 import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class CategoryResourceAssembler
-		extends RepresentationModelAssemblerSupport<ProductCategoryView, CategoryResource> {
+public class CategoryBrowseFacetResourceAssembler
+		extends RepresentationModelAssemblerSupport<ProductCategoryView, CategoryBrowseFacetResource> {
 
-	public CategoryResourceAssembler() {
-		super(CategoryController.class, CategoryResource.class);
+	public CategoryBrowseFacetResourceAssembler() {
+		super(CategoryController.class, CategoryBrowseFacetResource.class);
 	}
 
 	@Override
-	public CategoryResource toModel(ProductCategoryView category) {
-		CategoryResource cr = new CategoryResource(category);
+	public CategoryBrowseFacetResource toModel(ProductCategoryView category) {
+		CategoryBrowseFacetResource cr = new CategoryBrowseFacetResource(category);
 
 		cr.add(linkTo(methodOn(ProductController.class).getProducts(null, null, category.getCategoryCode(), null, null,
 				null, null)).withRel("products"));

@@ -32,9 +32,9 @@ import io.nzbee.entity.adapters.view.BrandFacetAdapterImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTODaoImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOMapperImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
-import io.nzbee.resources.brand.browseFacet.BrandBrowseFacetResourceAssembler;
-import io.nzbee.resources.brand.searchFacet.BrandSearchFacetMapperImpl;
-import io.nzbee.resources.brand.searchFacet.BrandSearchFacetResourceAssembler;
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetResourceAssembler;
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetMapperImpl;
+import io.nzbee.resources.brand.search.facet.BrandSearchFacetResourceAssembler;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.OAuth2ResourceServerConfig;
@@ -52,7 +52,7 @@ import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 								 BrandFacetDTOServiceImpl.class,
 								 BrandFacetDTODaoImpl.class,
 								 BrandFacetDTOMapperImpl.class,
-								 BrandSearchFacetMapperImpl.class,
+								 BrandBrowseFacetMapperImpl.class,
 								 DataSourceBeanMochi.class,
 							     DataSourceBeanSecurity.class,
 							     WebMvcConfig.class,
