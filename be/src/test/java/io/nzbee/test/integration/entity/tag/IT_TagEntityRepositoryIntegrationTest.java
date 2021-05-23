@@ -30,6 +30,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.tag.ITagService;
 import io.nzbee.entity.tag.TagEntity;
+import io.nzbee.entity.tag.view.facet.ITagFacetDTOService;
 import io.nzbee.entity.tag.view.facet.TagFacetDTO;
 import io.nzbee.test.integration.entity.beans.tag.ITagEntityBeanFactory;
 
@@ -53,6 +54,9 @@ public class IT_TagEntityRepositoryIntegrationTest {
 	@Autowired
 	private ITagService tagService;
 
+	@Autowired
+	private ITagFacetDTOService tagFacetService;
+	
 	@Autowired
 	@Qualifier("mochiDataSourceOwner")
 	private DataSource database;
@@ -153,7 +157,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Set<String> brandCodes = new HashSet<String>();
 
 		// when
-		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+		List<TagFacetDTO> lb = tagFacetService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), Double.valueOf(1000));
 
 		// then
@@ -171,7 +175,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		categoryCodes.add("POM01");
 
 		// when
-		List<TagFacetDTO> lt = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+		List<TagFacetDTO> lt = tagFacetService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), Double.valueOf(1000));
 
 		// then
@@ -189,7 +193,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = Double.valueOf("97.2");
 
 		// when
-		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyHKD, "FRT01",
+		List<TagFacetDTO> lb = tagFacetService.findAll(Constants.localeENGB, Constants.currencyHKD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), price);
 
 		// then
@@ -207,7 +211,7 @@ public class IT_TagEntityRepositoryIntegrationTest {
 		Double price = Double.valueOf("12.4");
 
 		// when
-		List<TagFacetDTO> lb = tagService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
+		List<TagFacetDTO> lb = tagFacetService.findAll(Constants.localeENGB, Constants.currencyUSD, "FRT01",
 				new StringCollectionWrapper(categoryCodes), new StringCollectionWrapper(brandCodes), price);
 
 		// then
