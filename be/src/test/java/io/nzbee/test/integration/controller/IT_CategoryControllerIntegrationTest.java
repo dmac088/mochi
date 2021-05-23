@@ -105,7 +105,7 @@ public class IT_CategoryControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(27)));
+        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources.length()", is(27)));
         
     }
     
@@ -121,7 +121,7 @@ public class IT_CategoryControllerIntegrationTest {
         		.andDo(print())
         		.andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.categoryResources.length()", is(7)))
+        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources.length()", is(7)))
         		
         		//check the first child category
         		.andExpect(jsonPath("$._embedded.categoryResources[0].data.categoryCode").value("BER01"))
