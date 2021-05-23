@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 import io.nzbee.search.ISearchDimension;
 
 @JsonTypeName("SearchFacet")
-public class SearchFacetDiscrete implements Facet, IFacet {
+public class SearchFacetDiscrete implements IFacet {
 	
 	private final Facet delegate;
 	

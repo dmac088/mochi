@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonTypeName;
 @JsonTypeName("SearchFacet")
 public class SearchFacetRange  implements Facet, IFacet {
 	
-	private final org.hibernate.search.query.facet.Facet delegate;
+	private final Facet delegate;
 	
 	private String value;
 	 
