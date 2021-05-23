@@ -1,9 +1,6 @@
 package io.nzbee.view.product.tag.facet;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import io.nzbee.domain.product.Product;
 
 public class TagFacetView  {
 
@@ -15,8 +12,6 @@ public class TagFacetView  {
 	
 	private Long objectCount;
 
-	private List<Product> products;
-
 	public TagFacetView(	String tagCode,
 				String tagDesc,
 				Long objectCount,
@@ -25,7 +20,6 @@ public class TagFacetView  {
 		this.tagDesc = tagDesc;
 		this.objectCount = objectCount;
 		this.locale = locale;
-		this.products = new ArrayList<Product>();
 	}
 	
 	public TagFacetView(	String tagCode,
@@ -34,7 +28,6 @@ public class TagFacetView  {
 	this.tagCode = tagCode;
 	this.tagDesc = tagDesc;
 	this.locale = locale;
-	this.products = new ArrayList<Product>();
 	}
 	
 	public Long getCount() {
@@ -51,10 +44,6 @@ public class TagFacetView  {
 
 	public String getLocale() {
 		return locale;
-	}
-	
-	public List<Product> getProducts() {
-		return products;
 	}
 	
 	@Override
