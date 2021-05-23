@@ -9,9 +9,6 @@ import io.nzbee.search.ISearchDimensionService;
 
 public interface ITagService  extends ILightLocalizedService<TagFacetDTO, TagEntity>, ISearchDimensionService<TagFacetDTO> {
 
-	List<TagFacetDTO> findAll(String locale, String currency, String categoryCode, StringCollectionWrapper categoryCodes,
-			StringCollectionWrapper brandCodes, Double maxPrice);
-
 	Optional<TagEntity> findByCode(String tagCode);
 
 	Optional<TagFacetDTO> findByCode(String locale, String rootCategory, String code);
