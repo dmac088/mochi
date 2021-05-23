@@ -16,7 +16,7 @@ import io.nzbee.Constants;
 import io.nzbee.entity.StringCollectionWrapper;
 
 @Component 
-public class TagFacetDaoPostgresImpl implements ITagFacetDao {
+public class TagFacetDTODaoImpl implements ITagFacetDao {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	

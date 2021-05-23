@@ -52,8 +52,8 @@ import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
 import io.nzbee.view.product.physical.full.PhysicalProductFullServiceImpl;
 import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
 import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
-import io.nzbee.view.product.tag.facet.ITagFacetService;
-import io.nzbee.view.product.tag.facet.TagFacetServiceImpl;
+import io.nzbee.view.product.tag.facet.ITagFacetViewService;
+import io.nzbee.view.product.tag.facet.TagFacetViewServiceImpl;
 
 @Configuration
 @Profile("dev")
@@ -160,8 +160,8 @@ public class BeanConfigurationDev {
     }
     
     @Bean
-    public ITagFacetService tagService() {
-        return new TagFacetServiceImpl();
+    public ITagFacetViewService tagService() {
+        return new TagFacetViewServiceImpl();
     }
     
     @Bean

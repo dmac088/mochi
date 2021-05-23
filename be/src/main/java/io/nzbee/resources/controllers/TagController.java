@@ -22,7 +22,7 @@ import io.nzbee.resources.tag.search.facet.TagSearchFacetResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
-import io.nzbee.view.product.tag.facet.ITagFacetService;
+import io.nzbee.view.product.tag.facet.ITagFacetViewService;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 
 
@@ -33,7 +33,7 @@ public class TagController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
     @Autowired
-    private ITagFacetService tagService;
+    private ITagFacetViewService tagService;
     
 	@Autowired
 	private IFacetMapper<TagFacetView> facetMapper;

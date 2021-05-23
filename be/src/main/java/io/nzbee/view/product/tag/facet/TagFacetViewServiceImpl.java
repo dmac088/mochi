@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import io.nzbee.view.ports.ITagFacetViewPortService;
 
-public class TagFacetServiceImpl implements ITagFacetService {
+public class TagFacetViewServiceImpl implements ITagFacetViewService {
 
 	@Autowired
 	private ITagFacetViewPortService tagService;

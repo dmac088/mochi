@@ -32,9 +32,9 @@ import io.nzbee.entity.adapters.view.TagFacetAdapterImpl;
 import io.nzbee.entity.tag.view.facet.TagFacetDTODaoImpl;
 import io.nzbee.entity.tag.view.facet.TagFacetDTOMapperImpl;
 import io.nzbee.entity.tag.view.facet.TagFacetDTOServiceImpl;
+import io.nzbee.resources.tag.browse.facet.TagBrowseFacetMapperImpl;
 import io.nzbee.resources.tag.browse.facet.TagBrowseFacetResourceAssembler;
-import io.nzbee.resources.tag.search.facet.browse.facet.TagSearchFacetMapperImpl;
-import io.nzbee.resources.tag.search.facet.browse.facet.TagSearchFacetResourceAssembler;
+import io.nzbee.resources.tag.search.facet.TagSearchFacetResourceAssembler;
 import io.nzbee.resources.controllers.TagController;
 import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.OAuth2ResourceServerConfig;
@@ -52,7 +52,7 @@ import io.nzbee.view.product.tag.facet.TagFacetViewServiceImpl;
 								 TagFacetDTOServiceImpl.class,
 								 TagFacetDTODaoImpl.class,
 								 TagFacetDTOMapperImpl.class,
-								 TagSearchFacetMapperImpl.class,
+								 TagBrowseFacetMapperImpl.class,
 								 DataSourceBeanMochi.class,
 							     DataSourceBeanSecurity.class,
 							     WebMvcConfig.class,
