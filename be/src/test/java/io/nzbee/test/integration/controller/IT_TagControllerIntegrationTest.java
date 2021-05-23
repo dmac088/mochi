@@ -98,7 +98,7 @@ public class IT_TagControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.tagSearchFacetResources.length()", is(2)));
+        		.andExpect(jsonPath("$._embedded.tagBrowseFacetResources.length()", is(2)));
     	
 //    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.type").value("EntityFacet"))
 //    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.desc").value("Adora"))
