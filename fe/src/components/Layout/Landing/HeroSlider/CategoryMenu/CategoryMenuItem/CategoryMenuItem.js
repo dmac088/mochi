@@ -39,15 +39,15 @@ function CategoryMenuItem(props) {
             style={
                 (isRoot && itemCounter > 8)
                 ? { "display": "none" }
-                : { "--my-left-indent": getIndent(category.data.categoryLevel, 10) }
+                : { "--my-left-indent": getIndent(category.data.level, 10) }
             }>
 
             <Link 
                 to={getCategoryPath(category.data.categoryCode, match)}
                 style={(isMobile)
-                    ? { "--my-cat-indent": getIndent(category.data.categoryLevel) }
+                    ? { "--my-cat-indent": getIndent(category.data.level) }
                     : { "": "" }}>
-                    {category.data.categoryDesc} ({category.data.objectCount})
+                    {category.data.desc} ({category.data.objectCount})
                     {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}
@@ -62,7 +62,7 @@ function CategoryMenuItem(props) {
                     renderList={renderList}
                     fullList={fullList}
                     children={getChildCategories(category, fullList, [])}
-                    categoryLevel={category.data.categoryLevel}
+                    level={category.data.level}
                     itemCounter={itemCounter}
                     renderCategoryList={renderCategoryList}
                     expand={stateObject.expand}
@@ -71,7 +71,7 @@ function CategoryMenuItem(props) {
                     renderList={renderList}
                     fullList={fullList}
                     children={getChildCategories(category, fullList, [])}
-                    categoryLevel={category.data.categoryLevel}
+                    level={category.data.level}
                     itemCounter={itemCounter}
                     renderCategoryList={renderCategoryList}
                     expand={stateObject.expand}

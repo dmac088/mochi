@@ -17,6 +17,7 @@ public class CategoryFacetMapper implements IFacetMapper<ProductCategoryView> {
 		ef.setHierarchical(true);
 		ef.setValue(category.getCategoryCode());
 		ef.setCount(category.getObjectCount().intValue());
+		ef.setParentId(category.getParentCode());
 		return ef;
 	}
 

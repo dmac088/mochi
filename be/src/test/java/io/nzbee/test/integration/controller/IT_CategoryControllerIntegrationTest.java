@@ -123,9 +123,9 @@ public class IT_CategoryControllerIntegrationTest {
         		.andExpect(jsonPath("$._embedded.categories.length()", is(7)))
         		
         		//check the first child category
-        		.andExpect(jsonPath("$._embedded.categories[0].data.categoryCode").value("BER01"))
+        		.andExpect(jsonPath("$._embedded.categories[0].data.id").value("BER01"))
         		.andExpect(jsonPath("$._embedded.categories[0].data.parentCode").value("FRT01"))
-        		.andExpect(jsonPath("$._embedded.categories[0].data.categoryDesc").value("Berries"))
+        		.andExpect(jsonPath("$._embedded.categories[0].data.desc").value("Berries"))
         		.andExpect(jsonPath("$._embedded.categories[0].data.objectCount").value("2"))
         		.andExpect(jsonPath("$._embedded.categories[0].data.childCount").value("0"))
         		

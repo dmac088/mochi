@@ -1,9 +1,8 @@
 package io.nzbee.view.product.tag.facet;
 
 import java.util.Objects;
-import io.nzbee.search.facet.IFacet;
 
-public class TagFacetView implements IFacet  {
+public class TagFacetView  {
 
 	private String tagCode;
 
@@ -23,49 +22,41 @@ public class TagFacetView implements IFacet  {
 		this.locale = locale;
 	}
 	
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.getId());
+	public String getTagCode() {
+		return tagCode;
 	}
 
-	@Override
-	public String getId() {
-		return this.tagCode;
+	public void setTagCode(String tagCode) {
+		this.tagCode = tagCode;
 	}
 
-	@Override
-	public String getDesc() {
-		return this.tagDesc;
+	public String getTagDesc() {
+		return tagDesc;
 	}
 
-	@Override
-	public Boolean isHierarchical() {
-		return false;
+	public void setTagDesc(String tagDesc) {
+		this.tagDesc = tagDesc;
 	}
 
-	@Override
-	public String getType() {
-		return "SimpleFacet";
+	public String getLocale() {
+		return locale;
 	}
 
-	@Override
-	public String getObjectType() {
-		return null;
+	public void setLocale(String locale) {
+		this.locale = locale;
 	}
 
-	@Override
-	public String getFacetingName() {
-		return "tag";
-	}
-
-	@Override
-	public int getCount() {
+	public int getProductCount() {
 		return productCount;
 	}
 
+	public void setProductCount(int productCount) {
+		this.productCount = productCount;
+	}
+	
 	@Override
-	public String getValue() {
-		return this.getId();
+	public int hashCode() {
+		return Objects.hash(this.getTagCode());
 	}
 	
 	@Override
@@ -82,7 +73,7 @@ public class TagFacetView implements IFacet  {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     TagFacetView pcDto = (TagFacetView) o;
-	     return this.getId() == pcDto.getId();
+	     return this.getTagCode() == pcDto.getTagCode();
 	}
 	
 }

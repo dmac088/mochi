@@ -20,7 +20,7 @@ export const findRootNode = (categories) => {
   if (!categories) { return; }
   if (categories.length <= 0) { return; }
   const min = categories.reduce(function(prev, current) {
-    return (prev.categoryLevel > current.categoryLevel) ? current : prev
+    return (prev.level > current.level) ? current : prev
   })
   return min;
 }
@@ -43,7 +43,7 @@ export const getAllCategories = () => {
   }
 
 export const getChildCategories = (parent = {}, categories = [], children = []) => {
-    const c = categories.filter(o => o.data.parentCode === parent.data.categoryCode);
+    const c = categories.filter(o => o.data.parentId === parent.data.id);
     if (c.length === 0) {
         return children;
     }

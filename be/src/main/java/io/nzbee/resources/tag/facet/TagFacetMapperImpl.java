@@ -14,11 +14,11 @@ public class TagFacetMapperImpl implements IFacetMapper<TagFacetView> {
 		
 		ef.setFacetingName("Tag");
 		ef.setObjectType(tag.getClass().getSimpleName());
-		ef.setId(tag.getId());
-		ef.setDesc(tag.getDesc());
+		ef.setId(tag.getTagCode());
+		ef.setDesc(tag.getTagDesc());
 		ef.setHierarchical(true);
-		ef.setValue(tag.getId());
-		ef.setCount(tag.getCount());
+		ef.setValue(tag.getTagCode());
+		ef.setCount(tag.getProductCount());
 		
 		return ef;
 	}

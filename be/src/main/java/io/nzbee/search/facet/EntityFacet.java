@@ -7,6 +7,8 @@ public class EntityFacet implements IFacet {
 
 	private String Id;
 	
+	private String parentId;
+	
 	private String desc;
 	
 	private String facetingName;
@@ -77,6 +79,14 @@ public class EntityFacet implements IFacet {
 
 	public void setDesc(String desc) {
 		this.desc = desc;
+	}
+	
+	public String getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
 	}
 
 	public void setValue(String value) {

@@ -5,7 +5,7 @@ export const mockCategory = {
   "data": {
     "categoryCode": "PRM01",
     "categoryDesc": "ALL",
-    "categoryLevel": 0,
+    "level": 0,
     "categoryType": "productcategory",
     "locale": "en-GB",
     "currency": "HKD",
@@ -30,7 +30,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "POM01",
                 "categoryDesc": "Pomes",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -51,7 +51,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DRU01",
                 "categoryDesc": "Drupes",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -72,7 +72,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "VEG01",
                 "categoryDesc": "Vegetables",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -93,7 +93,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "REV01",
                 "categoryDesc": "Red",
-                "categoryLevel": 3,
+                "level": 3,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -114,7 +114,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "OFT01",
                 "categoryDesc": "Other Fruit",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -135,7 +135,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "ONT01",
                 "categoryDesc": "Other Nuts",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -156,7 +156,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "MEL01",
                 "categoryDesc": "Melons",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -177,7 +177,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "PEC01",
                 "categoryDesc": "Pecans",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -198,7 +198,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "PEA01",
                 "categoryDesc": "Peanuts",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -219,7 +219,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DGV01",
                 "categoryDesc": "Dark Green",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -240,7 +240,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "ORV01",
                 "categoryDesc": "Orange",
-                "categoryLevel": 3,
+                "level": 3,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -261,7 +261,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "BER01",
                 "categoryDesc": "Berries",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -282,7 +282,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "FBR01",
                 "categoryDesc": "Featured Brands",
-                "categoryLevel": 0,
+                "level": 0,
                 "categoryType": "brandcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -302,7 +302,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "BAP01",
                 "categoryDesc": "Beans and Peas",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -323,7 +323,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "PIS01",
                 "categoryDesc": "Pistachios",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -344,7 +344,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "MAC01",
                 "categoryDesc": "Macadamia",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -365,7 +365,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "ALM01",
                 "categoryDesc": "Almonds",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -386,7 +386,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM03",
                 "categoryDesc": "DUMMY 3",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -407,7 +407,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM04",
                 "categoryDesc": "DUMMY 4",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -428,7 +428,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "BRA01",
                 "categoryDesc": "Brazil",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -449,7 +449,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM01",
                 "categoryDesc": "DUMMY 1",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -470,7 +470,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "CAS01",
                 "categoryDesc": "Cashews",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -491,7 +491,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM02",
                 "categoryDesc": "DUMMY 2",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -512,7 +512,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "CIT01",
                 "categoryDesc": "Citrus",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -533,7 +533,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "SVG01",
                 "categoryDesc": "Starchy",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -554,7 +554,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "BND01",
                 "categoryDesc": "All Brands",
-                "categoryLevel": 0,
+                "level": 0,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -575,7 +575,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "UNK01",
                 "categoryDesc": "Unknown",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -596,7 +596,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "PRM02",
                 "categoryDesc": "MISC",
-                "categoryLevel": 0,
+                "level": 0,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -617,7 +617,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM09",
                 "categoryDesc": "DUMMY 9",
-                "categoryLevel": 4,
+                "level": 4,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -638,7 +638,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "OTH01",
                 "categoryDesc": "Other",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -659,7 +659,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM07",
                 "categoryDesc": "DUMMY 7",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -680,7 +680,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "OTH02",
                 "categoryDesc": "Other Brands",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -701,7 +701,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM08",
                 "categoryDesc": "DUMMY 8",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -722,7 +722,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "PRM01",
                 "categoryDesc": "ALL",
-                "categoryLevel": 0,
+                "level": 0,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -743,7 +743,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM05",
                 "categoryDesc": "DUMMY 5",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -764,7 +764,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "DUM06",
                 "categoryDesc": "DUMMY 6",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -785,7 +785,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "FRT01",
                 "categoryDesc": "Fruit",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -806,7 +806,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "FET01",
                 "categoryDesc": "Featured",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -827,7 +827,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "ROV01",
                 "categoryDesc": "Red and Orange",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -848,7 +848,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "HAZ01",
                 "categoryDesc": "Hazelnuts",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -869,7 +869,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "TRO01",
                 "categoryDesc": "Tropical",
-                "categoryLevel": 2,
+                "level": 2,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -890,7 +890,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "BSP01",
                 "categoryDesc": "Best Sellers",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
@@ -911,7 +911,7 @@ export const mockCategoryList = {
               "data": {
                 "categoryCode": "NUT01",
                 "categoryDesc": "Nuts",
-                "categoryLevel": 1,
+                "level": 1,
                 "categoryType": "productcategory",
                 "locale": "en-GB",
                 "currency": "HKD",
