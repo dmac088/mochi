@@ -103,12 +103,12 @@ public class IT_TagControllerIntegrationTest {
 				.andExpect(jsonPath("$._embedded.tags[0].data.tagCode").value("GFR01"))
 				.andExpect(jsonPath("$._embedded.tags[0].data.tagDesc").value("Gluten Free Test"))
 				.andExpect(jsonPath("$._embedded.tags[0].data.locale").value(Constants.localeENGB))
-				.andExpect(jsonPath("$._emb	edded.tags[0].data.count").value("1"))
+				.andExpect(jsonPath("$._embedded.tags[0].data.count").value("1"))
 		    	
-				.andExpect(jsonPath("$._embedded.tags[0].data.tagCode").value("ORG01"))
-				.andExpect(jsonPath("$._embedded.tags[0].data.tagDesc").value("ORGANIC"))
-				.andExpect(jsonPath("$._embedded.tags[0].data.locale").value(Constants.localeENGB))
-				.andExpect(jsonPath("$._emb	edded.tags[0].data.count").value("1"));
+				.andExpect(jsonPath("$._embedded.tags[1].data.tagCode").value("ORG01"))
+				.andExpect(jsonPath("$._embedded.tags[1.data.tagDesc").value("ORGANIC"))
+				.andExpect(jsonPath("$._embedded.tags[1].data.locale").value(Constants.localeENGB))
+				.andExpect(jsonPath("$._embedded.tags10].data.count").value("1"));
     }
     
 	
