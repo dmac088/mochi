@@ -98,25 +98,17 @@ public class IT_TagControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.tagBrowseFacetResources.length()", is(2)));
+        		.andExpect(jsonPath("$._embedded.tags.length()", is(2)))
     	
-//    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.type").value("EntityFacet"))
-//    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.desc").value("Adora"))
-//    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.facetingName").value("tag"))
-//    			.andExpect(jsonPath("$._emb	edded.tagSearchFacetResources[0].data.objectType").value("TagFacetView"))
-//    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.value").value("ADO01"))
-//    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.count").value("2"))
-//    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.id").value("ADO01"))
-//    			.andExpect(jsonPath("$._embedded.tagSearchFacetResources[0].data.hierarchical").value(true))
-//    	
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.type").value("EntityFacet"))
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.desc").value("Shine"))
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.facetingName").value("tag"))
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.objectType").value("TagFacetView"))
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.value").value("SHI01"))
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.count").value("2"))
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.id").value("SHI01"))
-//				.andExpect(jsonPath("$._embedded.tagSearchFacetResources[6].data.hierarchical").value(true));
+				.andExpect(jsonPath("$._embedded.tags[0].data.tagCode").value("GFR01"))
+				.andExpect(jsonPath("$._embedded.tags[0].data.tagDesc").value("Gluten Free Test"))
+				.andExpect(jsonPath("$._embedded.tags[0].data.locale").value(Constants.localeENGB))
+				.andExpect(jsonPath("$._emb	edded.tags[0].data.count").value("1"))
+		    	
+				.andExpect(jsonPath("$._embedded.tags[0].data.tagCode").value("ORG01"))
+				.andExpect(jsonPath("$._embedded.tags[0].data.tagDesc").value("ORGANIC"))
+				.andExpect(jsonPath("$._embedded.tags[0].data.locale").value(Constants.localeENGB))
+				.andExpect(jsonPath("$._emb	edded.tags[0].data.count").value("1"));
     }
     
 	
