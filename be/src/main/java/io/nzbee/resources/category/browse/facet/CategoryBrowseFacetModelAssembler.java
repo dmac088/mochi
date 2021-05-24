@@ -10,16 +10,16 @@ import io.nzbee.resources.controllers.TagController;
 import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class CategoryBrowseFacetResourceAssembler
-		extends RepresentationModelAssemblerSupport<ProductCategoryView, CategoryBrowseFacetResource> {
+public class CategoryBrowseFacetModelAssembler
+		extends RepresentationModelAssemblerSupport<ProductCategoryView, CategoryBrowseFacetModel> {
 
-	public CategoryBrowseFacetResourceAssembler() {
-		super(CategoryController.class, CategoryBrowseFacetResource.class);
+	public CategoryBrowseFacetModelAssembler() {
+		super(CategoryController.class, CategoryBrowseFacetModel.class);
 	}
 
 	@Override
-	public CategoryBrowseFacetResource toModel(ProductCategoryView category) {
-		CategoryBrowseFacetResource cr = new CategoryBrowseFacetResource(category);
+	public CategoryBrowseFacetModel toModel(ProductCategoryView category) {
+		CategoryBrowseFacetModel cr = new CategoryBrowseFacetModel(category);
 
 		cr.add(linkTo(methodOn(ProductController.class).getProducts(null, null, category.getCategoryCode(), null, null,
 				null, null)).withRel("products"));

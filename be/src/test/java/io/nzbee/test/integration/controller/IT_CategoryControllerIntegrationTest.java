@@ -36,8 +36,8 @@ import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTODaoImp
 import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOMapperImpl;
 import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOServiceImpl;
 import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetMapper;
-import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetResourceAssembler;
-import io.nzbee.resources.category.search.facet.CategorySearchFacetResourceAssembler;
+import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetModelAssembler;
+import io.nzbee.resources.category.search.facet.CategorySearchFacetModelAssembler;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.product.PriceFacetMapper;
 import io.nzbee.resources.product.PriceFacetResourceAssembler;
@@ -58,9 +58,9 @@ import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 							     CategoryProductDaoImpl.class,
 							     CategoryBrandServiceImpl.class,
 							     CategoryBrandDaoImpl.class,
-							     CategoryBrowseFacetResourceAssembler.class,  
+							     CategoryBrowseFacetModelAssembler.class,  
 							     CategoryBrowseFacetMapper.class,
-							     CategorySearchFacetResourceAssembler.class,
+							     CategorySearchFacetModelAssembler.class,
 							     ProductCategoryFacetDTODaoImpl.class,
 							     ProductCategoryFacetDTOMapperImpl.class,
 							     PriceFacetMapper.class,
@@ -105,7 +105,7 @@ public class IT_CategoryControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources.length()", is(27)));
+        		.andExpect(jsonPath("$._embedded.categories.length()", is(27)));
         
     }
     
@@ -121,23 +121,23 @@ public class IT_CategoryControllerIntegrationTest {
         		.andDo(print())
         		.andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources.length()", is(7)))
+        		.andExpect(jsonPath("$._embedded.categories.length()", is(7)))
         		
         		//check the first child category
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[0].data.categoryCode").value("BER01"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[0].data.parentCode").value("FRT01"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[0].data.categoryDesc").value("Berries"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[0].data.objectCount").value("2"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[0].data.childCount").value("0"))
+        		.andExpect(jsonPath("$._embedded.categories[0].data.categoryCode").value("BER01"))
+        		.andExpect(jsonPath("$._embedded.categories[0].data.parentCode").value("FRT01"))
+        		.andExpect(jsonPath("$._embedded.categories[0].data.categoryDesc").value("Berries"))
+        		.andExpect(jsonPath("$._embedded.categories[0].data.objectCount").value("2"))
+        		.andExpect(jsonPath("$._embedded.categories[0].data.childCount").value("0"))
         		
         		//check the last child category
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[6].data.categoryCode").value("TRO01"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[6].data.parentCode").value("FRT01"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[6].data.categoryDesc").value("Tropical"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[6].data.objectCount").value("2"))
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[6].data.childCount").value("0"))
+        		.andExpect(jsonPath("$._embedded.categories[6].data.categoryCode").value("TRO01"))
+        		.andExpect(jsonPath("$._embedded.categories[6].data.parentCode").value("FRT01"))
+        		.andExpect(jsonPath("$._embedded.categories[6].data.categoryDesc").value("Tropical"))
+        		.andExpect(jsonPath("$._embedded.categories[6].data.objectCount").value("2"))
+        		.andExpect(jsonPath("$._embedded.categories[6].data.childCount").value("0"))
         		
-        		.andExpect(jsonPath("$._embedded.categoryBrowseFacetResources[0].data.locale").value(Constants.localeENGB));
+        		.andExpect(jsonPath("$._embedded.categories[0].data.locale").value(Constants.localeENGB));
     }
     
 
