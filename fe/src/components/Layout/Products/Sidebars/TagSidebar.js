@@ -33,11 +33,13 @@ function TagSidebar(props) {
                                                               ? selectedFacets.map(f => f.data)
                                                               : [])
                 .then((response) => {
+                    return response.data._embedded;
+                }).then((payload) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            tagFacets: (response.data._embedded)
-                                ? response.data._embedded.tagFacet
+                            tagFacets: (payload)
+                                ? payload.tags
                                 : [],
                         }));
                     }

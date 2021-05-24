@@ -103,7 +103,7 @@ function Products(props) {
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||
             categoriesLoading !== prevCategoriesLoading ||
-            stateObject.loading ||
+            stateObject.loading     ||
             query.page !== prevPage ||
             query.size !== prevSize ||
             query.sort !== prevSort ||
@@ -116,14 +116,13 @@ function Products(props) {
                 stateObject.selectedFacets.map(f => f.data))
                 .then((response) => {
                     if (isSubscribed) {
-                       // console.log(response.data.facets);
                         setObjectState((prevState) => ({
                             ...prevState,
-                            page: response.data.products.page,
+                            page: response.data.searchResults.page,
                             products: (response.data.searchResults._embedded) 
                                         ? response.data.searchResults._embedded.products
                                         : [],
-                            facets: response.data.facets || [],
+                            facets: response.data.searchFacets || [],
                             loading: false,
                         }));
                     }
