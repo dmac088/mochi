@@ -1,7 +1,7 @@
 package io.nzbee.search.facet;
 
-public interface IFacetMapper<T> {
+public interface IFacetMapper<T, E> {
 
-	EntityFacet toEntityFacet(T object);
+	E toEntityFacet(T object);
 	
 }

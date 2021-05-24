@@ -36,7 +36,7 @@ public class BrandController {
 	private BrandFacetModelAssembler brandFacetResourceAssembler;
     
     @Autowired
-    private IFacetMapper<BrandFacetView> facetMapper;
+    private IFacetMapper<BrandFacetView, EntityFacet> facetMapper;
 
     public BrandController() {
         super();

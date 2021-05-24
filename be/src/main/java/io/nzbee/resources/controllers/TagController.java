@@ -36,7 +36,7 @@ public class TagController {
     private TagFacetModelAssembler tagFacetResourceAssembler;
     
     @Autowired
-    private IFacetMapper<TagFacetView> facetMapper;
+    private IFacetMapper<TagFacetView, EntityFacet> facetMapper;
     
 	@PostMapping("/Tag/Facet/{locale}/{currency}/Category/Code/{categoryCode}")
     public ResponseEntity<CollectionModel<TagFacetModel>> getTags(@PathVariable String locale, 

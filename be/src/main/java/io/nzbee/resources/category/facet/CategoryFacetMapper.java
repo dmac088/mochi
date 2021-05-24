@@ -2,14 +2,15 @@ package io.nzbee.resources.category.facet;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.search.facet.EntityFacet;
+import io.nzbee.search.facet.EntityFacetHierarchical;
 import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class CategoryFacetMapper implements IFacetMapper<ProductCategoryView> {
+public class CategoryFacetMapper implements IFacetMapper<ProductCategoryView, EntityFacetHierarchical> {
 
-	public EntityFacet toEntityFacet(ProductCategoryView category) {
-		EntityFacet ef = new EntityFacet();
+	public EntityFacetHierarchical toEntityFacet(ProductCategoryView category) {
+		EntityFacetHierarchical ef = new EntityFacetHierarchical();
 		ef.setFacetingName("category");
 		ef.setObjectType(category.getClass().getSimpleName());
 		ef.setId(category.getCategoryCode());

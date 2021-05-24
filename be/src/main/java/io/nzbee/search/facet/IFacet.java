@@ -10,7 +10,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 	    include = JsonTypeInfo.As.PROPERTY,
 	    property="type")
 @JsonSubTypes( {@JsonSubTypes.Type(value = SearchFacetDiscrete.class, name = "SearchFacet"),
-			    @JsonSubTypes.Type(value = EntityFacet.class, name = "EntityFacet")})
+			    @JsonSubTypes.Type(value = EntityFacet.class, name = "EntityFacet"),
+			    @JsonSubTypes.Type(value = EntityFacetHierarchical.class, name = "EntityFacetHierarchical")})
+
 public interface IFacet  {
 
 	String getId();

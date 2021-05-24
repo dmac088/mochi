@@ -5,7 +5,7 @@ import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacetMapper;
 
 @Component
-public class PriceFacetMapper implements IFacetMapper<Double> {
+public class PriceFacetMapper implements IFacetMapper<Double, EntityFacet> {
 
 	public EntityFacet toEntityFacet(Double price) {
 		EntityFacet ef = new EntityFacet();

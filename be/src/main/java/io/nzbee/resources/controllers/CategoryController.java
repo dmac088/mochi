@@ -21,6 +21,7 @@ import io.nzbee.resources.category.facet.CategoryFacetModelAssembler;
 import io.nzbee.resources.product.PriceFacetResource;
 import io.nzbee.resources.product.PriceFacetResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
+import io.nzbee.search.facet.EntityFacetHierarchical;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.category.product.ProductCategoryView;
@@ -33,10 +34,10 @@ public class CategoryController {
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
 	@Autowired
-	private IFacetMapper<Double> priceFacetMapper;
+	private IFacetMapper<Double, EntityFacet> priceFacetMapper;
 
 	@Autowired 
-	private IFacetMapper<ProductCategoryView> facetMapper; 
+	private IFacetMapper<ProductCategoryView, EntityFacetHierarchical> facetMapper; 
 	
 	@Autowired
 	private CategoryFacetModelAssembler categoryResourceAssember;
@@ -57,7 +58,7 @@ public class CategoryController {
 	@GetMapping("/Category/Product/{locale}/{currency}")
 	public ResponseEntity<CollectionModel<CategoryFacetModel>> getProductCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale);
-		List<EntityFacet> collection = categoryService.findAll(locale, Constants.primaryProductRootCategoryCode)
+		List<EntityFacetHierarchical> collection = categoryService.findAll(locale, Constants.primaryProductRootCategoryCode)
 				.stream().map(c -> facetMapper.toEntityFacet(c)).collect(Collectors.toList());
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
@@ -76,7 +77,7 @@ public class CategoryController {
     	}
  
 		
-		List<EntityFacet> collection = categoryService.findAll( locale, 
+		List<EntityFacetHierarchical> collection = categoryService.findAll( locale, 
 																currency, 
 																code,
 																selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
@@ -102,7 +103,7 @@ public class CategoryController {
     		maxPrice =  Double.valueOf(oMaxPrice.get());
     	}
 		
-		List<EntityFacet> collection = categoryService.findAll(locale, 
+		List<EntityFacetHierarchical> collection = categoryService.findAll(locale, 
 															  currency, 
 															  code,
 															  selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
