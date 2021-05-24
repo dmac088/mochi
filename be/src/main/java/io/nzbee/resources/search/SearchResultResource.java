@@ -3,19 +3,22 @@ package io.nzbee.resources.search;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.nzbee.resources.product.physical.light.PhysicalProductLightModel;
 
 import java.util.Set;
 
-
 public class SearchResultResource extends RepresentationModel<SearchResultResource> {
 	
+	@JsonProperty("searchResults")
     private PagedModel<EntityModel<PhysicalProductLightModel>> products;
     
-    private Set<SearchFacetResource> facets;
+	@JsonProperty("searchFacets")
+    private Set<SearchFacetModel> facets;
     
 	public SearchResultResource(	PagedModel<EntityModel<PhysicalProductLightModel>> products,
-									Set<SearchFacetResource> ssf) {
+									Set<SearchFacetModel> ssf) {
 
     	this.products = products;
     	
@@ -26,7 +29,7 @@ public class SearchResultResource extends RepresentationModel<SearchResultResour
 		return products;
 	}
 
-	public Set<SearchFacetResource> getFacets() {
+	public Set<SearchFacetModel> getFacets() {
 		return facets;
 	}
 	

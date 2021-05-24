@@ -2,20 +2,19 @@ package io.nzbee.resources.search;
 
 import java.util.Objects;
 import org.springframework.hateoas.RepresentationModel;
-
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.SearchFacetDiscrete;
 
-public class SearchFacetResource extends RepresentationModel<SearchFacetResource> {
+
+public class SearchFacetModel extends RepresentationModel<SearchFacetModel> {
 
 	private IFacet searchFacet;
 	
-	public SearchFacetResource(SearchFacetDiscrete searchFacet) {
+	public SearchFacetModel(SearchFacetDiscrete searchFacet) {
 		this.searchFacet = searchFacet;
 	}
 
-	public SearchFacetResource(IFacet searchFacet) {
-		// TODO Auto-generated constructor stub
+	public SearchFacetModel(IFacet searchFacet) {
 		this.searchFacet = searchFacet;
 	}
 

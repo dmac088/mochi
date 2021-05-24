@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.Constants;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightModel;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightModelAssembler;
-import io.nzbee.resources.search.SearchFacetResource;
-import io.nzbee.resources.search.SearchFacetResourceAssembler;
+import io.nzbee.resources.search.SearchFacetModel;
+import io.nzbee.resources.search.SearchFacetModelAssembler;
 import io.nzbee.resources.search.SearchResultResource;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
@@ -42,7 +42,7 @@ public class SearchController {
     private PagedResourcesAssembler<PhysicalProductLightModel> prodPagedAssembler;
 	
 	@Autowired
-	private SearchFacetResourceAssembler searchFacetResourceAssembler;
+	private SearchFacetModelAssembler searchFacetResourceAssembler;
 	
 	@Autowired
 	private IPhysicalProductLightPortService ipps;
@@ -75,7 +75,7 @@ public class SearchController {
 					    												selectedFacets,
 					    												returnFacets).map(p -> prodResourceAssembler.toModel(p));
     	
-    	Set<SearchFacetResource> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
+    	Set<SearchFacetModel> ssf = searchFacetResourceAssembler.toCollectionModel(returnFacets);
     	
     	return ResponseEntity.ok(new SearchResultResource(prodPagedAssembler.toModel(pages), ssf));
     }

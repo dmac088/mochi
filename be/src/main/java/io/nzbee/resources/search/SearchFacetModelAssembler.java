@@ -8,18 +8,18 @@ import io.nzbee.resources.controllers.SearchController;
 import io.nzbee.search.facet.IFacet;
 
 @Component
-public class SearchFacetResourceAssembler extends RepresentationModelAssemblerSupport<IFacet, SearchFacetResource> {
+public class SearchFacetModelAssembler extends RepresentationModelAssemblerSupport<IFacet, SearchFacetModel> {
 
-	public SearchFacetResourceAssembler() {
-		super(SearchController.class, SearchFacetResource.class);
+	public SearchFacetModelAssembler() {
+		super(SearchController.class, SearchFacetModel.class);
 	}
 	
 	@Override
-	public SearchFacetResource toModel(IFacet searchFacet) {
-		return new SearchFacetResource(searchFacet);
+	public SearchFacetModel toModel(IFacet searchFacet) {
+		return new SearchFacetModel(searchFacet);
 	}
 
-	public Set<SearchFacetResource> toCollectionModel(Set<IFacet> returnFacets) {
+	public Set<SearchFacetModel> toCollectionModel(Set<IFacet> returnFacets) {
 		return returnFacets.stream().map(rf -> toModel((IFacet) rf)).collect(Collectors.toSet());
 	}
     
