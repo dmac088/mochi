@@ -32,8 +32,8 @@ import io.nzbee.resources.brand.BrandViewModelAssembler;
 import io.nzbee.resources.dto.BrowseProductResultDto;
 import io.nzbee.resources.product.physical.full.PhysicalProductFullResource;
 import io.nzbee.resources.product.physical.full.PhysicalProductFullResourceAssembler;
-import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
-import io.nzbee.resources.product.physical.light.PhysicalProductLightResourceAssembler;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightModel;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightModelAssembler;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.resources.product.shipping.ShippingProductResourceAssembler;
 import io.nzbee.resources.product.shipping.destination.ShippingDestinationResource;
@@ -82,7 +82,7 @@ public class ProductController {
 	private ShippingProductResourceAssembler prodShippingResourceAssembler;
 	
 	@Autowired
-	private PhysicalProductLightResourceAssembler prodLightResourceAssembler;
+	private PhysicalProductLightModelAssembler prodLightResourceAssembler;
 
 	@Autowired
 	private BrandViewModelAssembler brandResourceAssembler;
@@ -91,7 +91,7 @@ public class ProductController {
 	private PhysicalProductFullResourceAssembler prodFullResourceAssembler;
 
 	@Autowired
-	private PagedResourcesAssembler<PhysicalProductLightResource> prodPhysicalPagedAssembler;
+	private PagedResourcesAssembler<PhysicalProductLightModel> prodPhysicalPagedAssembler;
 
 	@GetMapping("/Product/{locale}/{currency}/Code/{code}")
 	public ResponseEntity<PhysicalProductFullResource> get(@PathVariable String locale, @PathVariable String currency,
@@ -146,7 +146,7 @@ public class ProductController {
 						.map(c -> c.getValue()).collect(Collectors.toSet()),
 				maxPrice, page, size, sort);
 
-		Page<PhysicalProductLightResource> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
+		Page<PhysicalProductLightModel> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
 
 		return ResponseEntity.ok(new BrowseProductResultDto(prodPhysicalPagedAssembler.toModel(pages)));
 	}

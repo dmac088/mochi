@@ -17,8 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.Constants;
-import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
-import io.nzbee.resources.product.physical.light.PhysicalProductLightResourceAssembler;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightModel;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightModelAssembler;
 import io.nzbee.resources.search.SearchFacetResource;
 import io.nzbee.resources.search.SearchFacetResourceAssembler;
 import io.nzbee.resources.search.SearchResultResource;
@@ -36,10 +36,10 @@ public class SearchController {
     private IPhysicalProductLightPortService productService;
 	
 	@Autowired
-    private PhysicalProductLightResourceAssembler prodResourceAssembler;
+    private PhysicalProductLightModelAssembler prodResourceAssembler;
 	
 	@Autowired
-    private PagedResourcesAssembler<PhysicalProductLightResource> prodPagedAssembler;
+    private PagedResourcesAssembler<PhysicalProductLightModel> prodPagedAssembler;
 	
 	@Autowired
 	private SearchFacetResourceAssembler searchFacetResourceAssembler;
@@ -65,7 +65,7 @@ public class SearchController {
 		final Set<IFacet> returnFacets = new HashSet<IFacet>();
 		
     	//get the resulting pages of product
-    	final Page<PhysicalProductLightResource> pages = ipps.search(	locale, 
+    	final Page<PhysicalProductLightModel> pages = ipps.search(	locale, 
 					    												currency,
 					    												category, 
 					    												Integer.parseInt(page), 

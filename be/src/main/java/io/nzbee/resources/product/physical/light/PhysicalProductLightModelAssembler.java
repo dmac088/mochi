@@ -8,15 +8,15 @@ import io.nzbee.resources.controllers.ProductController;
 import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 
 @Component
-public class PhysicalProductLightResourceAssembler extends RepresentationModelAssemblerSupport<PhysicalProductLightView, PhysicalProductLightResource> {
+public class PhysicalProductLightModelAssembler extends RepresentationModelAssemblerSupport<PhysicalProductLightView, PhysicalProductLightModel> {
 	
-	public PhysicalProductLightResourceAssembler() {
-		super(ProductController.class, PhysicalProductLightResource.class);
+	public PhysicalProductLightModelAssembler() {
+		super(ProductController.class, PhysicalProductLightModel.class);
 	}
 
 	@Override
-	public PhysicalProductLightResource toModel(PhysicalProductLightView product) {
-		PhysicalProductLightResource pr = new PhysicalProductLightResource(product);
+	public PhysicalProductLightModel toModel(PhysicalProductLightView product) {
+		PhysicalProductLightModel pr = new PhysicalProductLightModel(product);
 
 		pr.add(linkTo(methodOn(ProductController.class).get(null, null,
 				product.getProductUPC())).withSelfRel(),

@@ -36,7 +36,7 @@ import io.nzbee.entity.brand.view.facet.IBrandFacetDTOMapper;
 import io.nzbee.entity.brand.view.facet.IBrandFacetDTOService;
 import io.nzbee.entity.product.physical.light.IPhysicalProductLightMapper;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
-import io.nzbee.resources.product.physical.light.PhysicalProductLightResource;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightModel;
 import io.nzbee.resources.product.shipping.ShippingProductResource;
 import io.nzbee.view.ports.IBrandFacetViewPortService;
 import io.nzbee.view.ports.IBrandViewPortService;
@@ -140,8 +140,8 @@ public class BeanConfigurationDev {
     }
 	
 	@Bean
-    public PagedResourcesAssembler<PhysicalProductLightResource> pagedPhysicalProductLightResourceAssembler() {
-    	return new PagedResourcesAssembler<PhysicalProductLightResource>(null, null);
+    public PagedResourcesAssembler<PhysicalProductLightModel> pagedPhysicalProductLightResourceAssembler() {
+    	return new PagedResourcesAssembler<PhysicalProductLightModel>(null, null);
     }
 	
     @Bean
