@@ -30,9 +30,10 @@ public class TagController {
     @Autowired
     private ITagFacetViewService tagService;
     
+    
     @Autowired
     private TagBrowseFacetResourceAssembler tagResourceAssembler;
-	
+    
 	@PostMapping("/Tag/Facet/{locale}/{currency}/Category/Code/{categoryCode}")
     public ResponseEntity<CollectionModel<TagBrowseFacetResource>> getTags(@PathVariable String locale, 
     																@PathVariable String currency, 
