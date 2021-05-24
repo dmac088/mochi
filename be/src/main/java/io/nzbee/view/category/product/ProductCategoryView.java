@@ -12,6 +12,8 @@ public class ProductCategoryView {
 	
 	private Long childCount;
 	
+	private Long level;
+	
 	private String locale;
 	
 	public ProductCategoryView() {
@@ -64,6 +66,14 @@ public class ProductCategoryView {
 
 	public void setLocale(String locale) {
 		this.locale = locale;
+	}
+
+	public Long getLevel() {
+		return level;
+	}
+
+	public void setLevel(Long level) {
+		this.level = level;
 	}
 	
 }

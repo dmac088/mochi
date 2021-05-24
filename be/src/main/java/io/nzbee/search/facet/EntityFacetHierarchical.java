@@ -2,64 +2,121 @@ package io.nzbee.search.facet;
 
 public class EntityFacetHierarchical implements IFacetHierarchical {
 
+	private String Id;
+	
+	private String parentId;
+	
+	private String desc;
+	
+	private String facetingName;
+	
+	private String objectType;
+	
+	private String value;
+	
+	private boolean isHierarchical;
+	
+	private int count;
+	
+	private int childCount;
+	
+	private int level;
+	
 	@Override
 	public String getId() {
-		// TODO Auto-generated method stub
-		return null;
+		return Id;
+	}
+	
+	@Override
+	public String getParentId() {
+		return parentId;
 	}
 
 	@Override
 	public String getDesc() {
-		// TODO Auto-generated method stub
-		return null;
+		return desc;
 	}
 
 	@Override
 	public Boolean isHierarchical() {
-		// TODO Auto-generated method stub
-		return null;
+		return isHierarchical;
 	}
 
 	@Override
 	public String getType() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getClass().getSimpleName();
 	}
 
 	@Override
 	public String getObjectType() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.objectType;
 	}
 
 	@Override
 	public String getFacetingName() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.facetingName;
 	}
 
 	@Override
 	public int getCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.count;
 	}
 
 	@Override
 	public String getValue() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.value;
 	}
 
 	@Override
 	public int getChildCount() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.childCount;
 	}
 
 	@Override
 	public int getLevel() {
-		// TODO Auto-generated method stub
-		return 0;
+		return this.level;
 	}
+
+	public void setId(String id) {
+		Id = id;
+	}
+
+	public void setParentId(String parentId) {
+		this.parentId = parentId;
+	}
+
+	public void setDesc(String desc) {
+		this.desc = desc;
+	}
+
+	public void setFacetingName(String facetingName) {
+		this.facetingName = facetingName;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+
+	public void setHierarchical(boolean isHierarchical) {
+		this.isHierarchical = isHierarchical;
+	}
+
+	public void setCount(int count) {
+		this.count = count;
+	}
+
+	public void setChildCount(int childCount) {
+		this.childCount = childCount;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
+	}
+	
+	
 
 }

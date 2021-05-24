@@ -1,7 +1,6 @@
 package io.nzbee.resources.category.facet;
 
 import org.springframework.stereotype.Component;
-import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.EntityFacetHierarchical;
 import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.category.product.ProductCategoryView;
@@ -19,6 +18,8 @@ public class CategoryFacetMapper implements IFacetMapper<ProductCategoryView, En
 		ef.setValue(category.getCategoryCode());
 		ef.setCount(category.getObjectCount().intValue());
 		ef.setParentId(category.getParentCode());
+		ef.setLevel(category.getLevel().intValue());
+		ef.setChildCount(category.getChildCount().intValue());
 		return ef;
 	}
 
