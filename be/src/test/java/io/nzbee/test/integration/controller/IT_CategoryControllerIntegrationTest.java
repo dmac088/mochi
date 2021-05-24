@@ -35,8 +35,7 @@ import io.nzbee.entity.category.product.CategoryProductDaoImpl;
 import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTODaoImpl;
 import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOMapperImpl;
 import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOServiceImpl;
-import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetMapper;
-import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetModelAssembler;
+import io.nzbee.resources.category.facet.CategoryFacetMapper;
 import io.nzbee.resources.category.facet.CategoryFacetModelAssembler;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.product.PriceFacetMapper;
@@ -58,8 +57,8 @@ import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 							     CategoryProductDaoImpl.class,
 							     CategoryBrandServiceImpl.class,
 							     CategoryBrandDaoImpl.class,
-							     CategoryBrowseFacetModelAssembler.class,  
-							     CategoryBrowseFacetMapper.class,
+							     CategoryFacetModelAssembler.class,  
+							     CategoryFacetMapper.class,
 							     CategoryFacetModelAssembler.class,
 							     ProductCategoryFacetDTODaoImpl.class,
 							     ProductCategoryFacetDTOMapperImpl.class,
