@@ -37,7 +37,7 @@ function TagSidebar(props) {
                         setObjectState((prevState) => ({
                             ...prevState,
                             tagFacets: (response.data._embedded)
-                                ? response.data._embedded.tagFacetResources
+                                ? response.data._embedded.tagFacet
                                 : [],
                         }));
                     }

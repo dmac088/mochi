@@ -3,10 +3,14 @@ package io.nzbee.resources.dto;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.nzbee.resources.product.physical.light.PhysicalProductLightModel;
 
 public class BrowseProductResultDto  extends RepresentationModel<PhysicalProductLightModel> {
 
+	@JsonProperty("searchResults")
 	private PagedModel<EntityModel<PhysicalProductLightModel>> products;
 	
 	public BrowseProductResultDto(PagedModel<EntityModel<PhysicalProductLightModel>> products) {

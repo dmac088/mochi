@@ -34,11 +34,11 @@ function CategorySidebar(props) {
                                                                 : [])
                 .then((response) => {
                     if (isSubscribed) {
-                        console.log(response);
+                        console.log(currentCategory);
                         setObjectState((prevState) => ({
                             ...prevState,
                             categoryFacets: (response.data._embedded)
-                                ? response.data._embedded.categoryFacetResources
+                                ? response.data._embedded.categories
                                 : [],
                             loading: false,
                         }));

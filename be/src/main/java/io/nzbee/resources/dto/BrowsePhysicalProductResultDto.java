@@ -4,10 +4,13 @@ import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.hateoas.RepresentationModel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import io.nzbee.resources.product.physical.light.PhysicalProductLightModel;
 
 public class BrowsePhysicalProductResultDto  extends RepresentationModel<PhysicalProductLightModel> {
 
+	@JsonProperty("searchResults")
 	private PagedModel<EntityModel<PhysicalProductLightModel>> products;
 	
 	public BrowsePhysicalProductResultDto(PagedModel<EntityModel<PhysicalProductLightModel>> products) {

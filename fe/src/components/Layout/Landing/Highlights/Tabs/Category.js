@@ -79,7 +79,7 @@ function Category(props) {
         if (isSubscribed) {
           setObjectState((prevState) => ({
             ...prevState,
-            products: (response.data.products._embedded) ? response.data.products._embedded.physicalProductLightResources
+            products: (response.data.searchResults._embedded) ? response.data.searchResults._embedded.products
               : [],
           }));
         }
@@ -95,7 +95,7 @@ function Category(props) {
           if (isSubscribed) {
             setObjectState((prevState) => ({
               ...prevState,
-              products: (response.data.products._embedded) ? response.data.products._embedded.physicalProductLightResources 
+              products: (response.data.searchResults._embedded) ? response.data.searchResults._embedded.products 
                 : [],
             }));
           }

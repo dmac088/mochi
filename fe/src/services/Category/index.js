@@ -32,7 +32,7 @@ export const getAllCategories = () => {
       if(!state.discovery.loading && state.discovery.isDone) {
         return axios.get(state.discovery.links.getAllProductCategories.href)
         .then((payload) => {
-          return payload.data._embedded.categoryResources;
+          return payload.data._embedded.categories;
         }).then((categories) => {
           dispatch(getCategoriesSuccess(categories));
         }).catch((error) => {

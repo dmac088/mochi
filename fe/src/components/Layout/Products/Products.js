@@ -120,8 +120,8 @@ function Products(props) {
                         setObjectState((prevState) => ({
                             ...prevState,
                             page: response.data.products.page,
-                            products: (response.data.products._embedded) 
-                                        ? response.data.products._embedded.physicalProductLightResources
+                            products: (response.data.searchResults._embedded) 
+                                        ? response.data.searchResults._embedded.products
                                         : [],
                             facets: response.data.facets || [],
                             loading: false,
