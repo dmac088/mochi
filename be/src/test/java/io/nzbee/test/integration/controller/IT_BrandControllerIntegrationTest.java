@@ -32,9 +32,9 @@ import io.nzbee.entity.adapters.view.BrandFacetAdapterImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTODaoImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOMapperImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
-import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetResourceAssembler;
-import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetMapperImpl;
-import io.nzbee.resources.brand.search.facet.BrandSearchFacetResourceAssembler;
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetModelAssembler;
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetModelMapperImpl;
+import io.nzbee.resources.brand.search.facet.BrandSearchFacetModelAssembler;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.OAuth2ResourceServerConfig;
@@ -52,14 +52,14 @@ import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 								 BrandFacetDTOServiceImpl.class,
 								 BrandFacetDTODaoImpl.class,
 								 BrandFacetDTOMapperImpl.class,
-								 BrandBrowseFacetMapperImpl.class,
+								 BrandBrowseFacetModelMapperImpl.class,
 								 DataSourceBeanMochi.class,
 							     DataSourceBeanSecurity.class,
 							     WebMvcConfig.class,
 							     UserService.class,
 							     Globals.class,
-							     BrandBrowseFacetResourceAssembler.class,
-							     BrandSearchFacetResourceAssembler.class,
+							     BrandBrowseFacetModelAssembler.class,
+							     BrandSearchFacetModelAssembler.class,
 							     SecurityBeanConfiguration.class,
 							     JavaMailSender.class,
 							     DataSourceBeanMochi.class,
@@ -98,16 +98,16 @@ public class IT_BrandControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.brandBrowseFacetResources.length()", is(7)))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.brandCode").value("ADO01"))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.brandDesc").value("Adora"))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.locale").value(Constants.localeENGB))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[0].data.objectCount").value("2"))
+        		.andExpect(jsonPath("$._embedded.brands.length()", is(7)))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.brandCode").value("ADO01"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.brandDesc").value("Adora"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.locale").value(Constants.localeENGB))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.objectCount").value("2"))
     			
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.brandCode").value("SHI01"))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.brandDesc").value("Shine"))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.locale").value(Constants.localeENGB))
-    			.andExpect(jsonPath("$._embedded.brandBrowseFacetResources[6].data.objectCount").value("2"));
+    			.andExpect(jsonPath("$._embedded.brands[6].data.brandCode").value("SHI01"))
+    			.andExpect(jsonPath("$._embedded.brands[6].data.brandDesc").value("Shine"))
+    			.andExpect(jsonPath("$._embedded.brands[6].data.locale").value(Constants.localeENGB))
+    			.andExpect(jsonPath("$._embedded.brands[6].data.objectCount").value("2"));
     }
     
     @Test
@@ -120,25 +120,25 @@ public class IT_BrandControllerIntegrationTest {
                 .accept(MediaType.ALL))
         		.andDo(print()).andExpect(status().isOk())
         		.andExpect(content().contentType("application/hal+json"))
-        		.andExpect(jsonPath("$._embedded.brandSearchFacetResources.length()", is(7)))
+        		.andExpect(jsonPath("$._embedded.brands.length()", is(7)))
     	
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.type").value("EntityFacet"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.desc").value("Adora"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.facetingName").value("brand"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.objectType").value("BrandFacetView"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.value").value("ADO01"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.count").value("2"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.id").value("ADO01"))
-    			.andExpect(jsonPath("$._embedded.brandSearchFacetResources[0].data.hierarchical").value(true))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.type").value("EntityFacet"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.desc").value("Adora"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.facetingName").value("brand"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.objectType").value("BrandFacetView"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.value").value("ADO01"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.count").value("2"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.id").value("ADO01"))
+    			.andExpect(jsonPath("$._embedded.brands[0].data.hierarchical").value(true))
     	
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.type").value("EntityFacet"))
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.desc").value("Shine"))
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.facetingName").value("brand"))
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.objectType").value("BrandFacetView"))
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.value").value("SHI01"))
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.count").value("2"))
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.id").value("SHI01"))
-				.andExpect(jsonPath("$._embedded.brandSearchFacetResources[6].data.hierarchical").value(true));
+				.andExpect(jsonPath("$._embedded.brands[6].data.type").value("EntityFacet"))
+				.andExpect(jsonPath("$._embedded.brands[6].data.desc").value("Shine"))
+				.andExpect(jsonPath("$._embedded.brands[6].data.facetingName").value("brand"))
+				.andExpect(jsonPath("$._embedded.brands[6].data.objectType").value("BrandFacetView"))
+				.andExpect(jsonPath("$._embedded.brands[6].data.value").value("SHI01"))
+				.andExpect(jsonPath("$._embedded.brands[6].data.count").value("2"))
+				.andExpect(jsonPath("$._embedded.brands[6].data.id").value("SHI01"))
+				.andExpect(jsonPath("$._embedded.brands[6].data.hierarchical").value(true));
     }
     
 	

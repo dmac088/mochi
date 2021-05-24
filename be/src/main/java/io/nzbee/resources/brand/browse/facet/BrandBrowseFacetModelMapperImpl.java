@@ -6,7 +6,7 @@ import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.brand.facet.BrandFacetView;
 
 @Component
-public class BrandBrowseFacetMapperImpl implements IFacetMapper<BrandFacetView> {
+public class BrandBrowseFacetModelMapperImpl implements IFacetMapper<BrandFacetView> {
 
 
 	@Override

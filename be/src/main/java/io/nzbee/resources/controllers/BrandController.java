@@ -15,10 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetResource;
-import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetResourceAssembler;
-import io.nzbee.resources.brand.search.facet.BrandSearchFacetResource;
-import io.nzbee.resources.brand.search.facet.BrandSearchFacetResourceAssembler;
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetModel;
+import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetModelAssembler;
+import io.nzbee.resources.brand.search.facet.BrandSearchFacetModel;
+import io.nzbee.resources.brand.search.facet.BrandSearchFacetModelAssembler;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.search.facet.IFacetMapper;
@@ -35,10 +35,10 @@ public class BrandController {
     private IBrandFacetViewService brandService;
     
     @Autowired
-	private BrandSearchFacetResourceAssembler brandFacetResourceAssembler;
+	private BrandSearchFacetModelAssembler brandFacetResourceAssembler;
     
     @Autowired
-	private BrandBrowseFacetResourceAssembler brandResourceAssembler;
+	private BrandBrowseFacetModelAssembler brandResourceAssembler;
     
     @Autowired
     private IFacetMapper<BrandFacetView> facetMapper;
@@ -48,7 +48,7 @@ public class BrandController {
     }
     
     @PostMapping("/Brand/{locale}/{currency}/Category/Code/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandBrowseFacetResource>> getBrands(	@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<BrandBrowseFacetModel>> getBrands(	@PathVariable String locale, 
 			    																@PathVariable String currency, 
 			    																@PathVariable String categoryCode,
 			    																@RequestBody  Set<IFacet> selectedFacets) {
@@ -75,7 +75,7 @@ public class BrandController {
     
     
     @PostMapping("/Brand/Facet/{locale}/{currency}/Category/Code/{categoryCode}")
-    public ResponseEntity<CollectionModel<BrandSearchFacetResource>> getBrandFacets( @PathVariable String locale, 
+    public ResponseEntity<CollectionModel<BrandSearchFacetModel>> getBrandFacets( @PathVariable String locale, 
 				    																 @PathVariable String currency, 
 				    																 @PathVariable String categoryCode,
 				    																 @RequestBody  Set<IFacet> selectedFacets) {

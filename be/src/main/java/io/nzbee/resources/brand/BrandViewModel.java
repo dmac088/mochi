@@ -1,17 +1,18 @@
 package io.nzbee.resources.brand;
 
 import org.springframework.hateoas.RepresentationModel;
-
+import org.springframework.hateoas.server.core.Relation;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nzbee.view.product.brand.BrandView;
 
-public class BrandViewResource extends RepresentationModel<BrandViewResource> {
+@Relation(collectionRelation="brands", itemRelation="brand")
+public class BrandViewModel extends RepresentationModel<BrandViewModel> {
 
 	private final BrandView data;
 	
 	@JsonCreator
-	public BrandViewResource(@JsonProperty("brand") BrandView brand) {
+	public BrandViewModel(@JsonProperty("brand") BrandView brand) {
 		this.data = brand;
 		
 	}
