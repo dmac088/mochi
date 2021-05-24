@@ -30,7 +30,6 @@ public class TagController {
     @Autowired
     private ITagFacetViewService tagService;
     
-    
     @Autowired
     private TagBrowseFacetResourceAssembler tagResourceAssembler;
     

@@ -15,7 +15,6 @@ public class TagBrowseFacetResourceAssembler extends RepresentationModelAssemble
 		super(TagController.class, TagBrowseFacetResource.class);
 	}
 
-
 	@Override
 	public TagBrowseFacetResource toModel(TagFacetView t) {
 		TagBrowseFacetResource tr = new TagBrowseFacetResource(t);
@@ -25,11 +24,11 @@ public class TagBrowseFacetResourceAssembler extends RepresentationModelAssemble
     @Override
     public CollectionModel<TagBrowseFacetResource> toCollectionModel(Iterable<? extends TagFacetView> views) 
     {
-        CollectionModel<TagBrowseFacetResource> actorModels = super.toCollectionModel(views);
+        CollectionModel<TagBrowseFacetResource> tags = super.toCollectionModel(views);
          
-        actorModels.add(linkTo(methodOn(TagController.class).getTags(null, null, null, null)).withSelfRel());
+        tags.add(linkTo(methodOn(TagController.class).getTags(null, null, null, null)).withSelfRel());
          
-        return actorModels;
+        return tags;
     }
 
 }
