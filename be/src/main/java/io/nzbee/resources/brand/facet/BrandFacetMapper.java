@@ -6,7 +6,7 @@ import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.brand.facet.BrandFacetView;
 
 @Component
-public class BrandFacetMapper implements IFacetMapper<BrandFacetView> {
+public class BrandFacetMapper implements IFacetMapper<BrandFacetView, EntityFacet> {
 
 	public EntityFacet toEntityFacet(BrandFacetView brand) {
 		EntityFacet ef = new EntityFacet();
