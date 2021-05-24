@@ -16,6 +16,7 @@ public class ProductCategoryFacetDTOMapperImpl implements IProductCategoryFacetD
 		pcv.setLocale(d.getLocale());
 		pcv.setChildCount(d.getChildCount());
 		pcv.setObjectCount(d.getCount());
+		pcv.setLevel(d.getCategorylevel());
 		return pcv;
 	}
 

@@ -25,6 +25,8 @@ public class ProductCategoryFacetDTO implements ISearchDimension, Serializable {
     
 	public static final String CATEGORY_TYPE_ALIAS = "cat_typ_cd";
 	
+	public static final String CATEGORY_LEVEL_ALIAS = "cat_lvl";
+	
 	private Long categoryId;
 	
 	private String categoryCode;
@@ -39,6 +41,8 @@ public class ProductCategoryFacetDTO implements ISearchDimension, Serializable {
 	
 	private Long objectCount;
 	
+	private Long categorylevel;
+	
 	public ProductCategoryFacetDTO(Object[] tuple, Map<String, Integer> aliasToIndexMap) {
 		this.categoryId 	= ((Number) tuple[aliasToIndexMap.get(ID_ALIAS)]).longValue();
 		this.categoryCode 	= tuple[aliasToIndexMap.get(CODE_ALIAS)].toString();
@@ -49,6 +53,7 @@ public class ProductCategoryFacetDTO implements ISearchDimension, Serializable {
 		this.locale 		= tuple[aliasToIndexMap.get(LOCALE_CODE_ALIAS)].toString();
 		this.childCount		= ((Number) tuple[aliasToIndexMap.get(CHILD_COUNT_ALIAS)]).longValue();
 		this.objectCount	= ((Number) tuple[aliasToIndexMap.get(OBJECT_COUNT_ALIAS)]).longValue();	
+		this.categorylevel  = ((Number) tuple[aliasToIndexMap.get(CATEGORY_LEVEL_ALIAS)]).longValue();	
 	}
 
 	public Long getCategoryId() {
@@ -99,7 +104,10 @@ public class ProductCategoryFacetDTO implements ISearchDimension, Serializable {
 	public Long getCount() {
 		return this.objectCount;
 	}
-
+	
+	public Long getCategorylevel() {
+		return categorylevel;
+	}
 
 	@Override
 	public boolean isHierarchical() {
