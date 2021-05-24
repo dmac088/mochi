@@ -1,8 +1,9 @@
 package io.nzbee.view.product.tag.facet;
 
 import java.util.Objects;
+import io.nzbee.search.facet.IFacet;
 
-public class TagFacetView  {
+public class TagFacetView implements IFacet  {
 
 	private String tagCode;
 
@@ -10,40 +11,61 @@ public class TagFacetView  {
 	
 	private String locale;
 	
-	private Long objectCount;
+	private int productCount;
 
-	public TagFacetView(	String tagCode,
-				String tagDesc,
-				Long objectCount,
-				String locale) {
+	public TagFacetView(String tagCode,
+						String tagDesc,
+						int productCount,
+						String locale) {
 		this.tagCode = tagCode;
 		this.tagDesc = tagDesc;
-		this.objectCount = objectCount;
+		this.productCount = productCount;
 		this.locale = locale;
 	}
 	
-	public TagFacetView(	String tagCode,
-			String tagDesc,
-			String locale) {
-		this.tagCode = tagCode;
-		this.tagDesc = tagDesc;
-		this.locale = locale;
-	}
-	
-	public Long getCount() {
-		return objectCount;
+	@Override
+	public int hashCode() {
+		return Objects.hash(this.getId());
 	}
 
-	public String getTagCode() {
-		return tagCode;
+	@Override
+	public String getId() {
+		return this.tagCode;
 	}
 
-	public String getTagDesc() {
-		return tagDesc;
+	@Override
+	public String getDesc() {
+		return this.tagDesc;
 	}
 
-	public String getLocale() {
-		return locale;
+	@Override
+	public Boolean isHierarchical() {
+		return false;
+	}
+
+	@Override
+	public String getType() {
+		return "SimpleFacet";
+	}
+
+	@Override
+	public String getObjectType() {
+		return null;
+	}
+
+	@Override
+	public String getFacetingName() {
+		return "tag";
+	}
+
+	@Override
+	public int getCount() {
+		return productCount;
+	}
+
+	@Override
+	public String getValue() {
+		return this.getId();
 	}
 	
 	@Override
@@ -60,12 +82,7 @@ public class TagFacetView  {
 		 if (this == o) return true;
 	     if (o == null || getClass() != o.getClass()) return false;
 	     TagFacetView pcDto = (TagFacetView) o;
-	     return this.getTagCode() == pcDto.getTagCode();
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(this.getTagCode());
+	     return this.getId() == pcDto.getId();
 	}
 	
 }

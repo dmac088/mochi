@@ -14,7 +14,7 @@ public class TagFacetDTOMapperImpl implements ITagFacetMapper {
 				new TagFacetView(
 						dto.getTagCode(),
 						dto.getTagDesc(),
-						dto.getCount(),
+						dto.getCount().intValue(),
 						dto.getLocale()
 						);
 		return to;

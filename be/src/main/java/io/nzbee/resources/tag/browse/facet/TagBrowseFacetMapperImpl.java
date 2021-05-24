@@ -13,11 +13,11 @@ public class TagBrowseFacetMapperImpl implements IFacetMapper<TagFacetView> {
 		EntityFacet ef = new EntityFacet();
 		ef.setFacetingName("Tag");
 		ef.setObjectType(tag.getClass().getSimpleName());
-		ef.setId(tag.getTagCode());
-		ef.setDesc(tag.getTagDesc());
+		ef.setId(tag.getId());
+		ef.setDesc(tag.getDesc());
 		ef.setHierarchical(true);
-		ef.setValue(tag.getTagCode());
-		ef.setCount(tag.getCount().intValue());
+		ef.setValue(tag.getId());
+		ef.setCount(tag.getCount());
 		return ef;
 	}
 
