@@ -33,18 +33,19 @@ function Highlights(props) {
 
   const renderCategoryTabHeaders = (categories) => {
     if(!categories) { return null; }
-    return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map((c, index) => {
-      const isActive = (c.data.categoryCode === stateObject.selectedCategoryCode);
+    console.log(categories);
+    return categories.filter(c => categoryMaster.includes(c.data.id)).map((c, index) => {
+      const isActive = (c.data.id === stateObject.selectedCategoryCode);
         return (
           <a  key={index}
               className={"nav-item nav-link" + ((isActive) ? " active" : "")}
-              id={c.data.categoryCode}
+              id={c.data.id}
               onClick={showTab}
               data-toggle="tab" 
               href="#" 
               role="tab" 
               aria-selected="true">
-            {c.data.categoryDesc}
+            {c.data.desc}
           </a>
         )
     }) 
@@ -52,12 +53,12 @@ function Highlights(props) {
 
   const renderCategoryTabs = (categories, props) => {
     if(!categories) { return null; }
-    return categories.filter(c => categoryMaster.includes(c.data.categoryCode)).map((c, index) => {
-      const isActive = (c.data.categoryCode === stateObject.selectedCategoryCode);
+    return categories.filter(c => categoryMaster.includes(c.data.id)).map((c, index) => {
+      const isActive = (c.data.id === stateObject.selectedCategoryCode);
       return (
         <div key={index}
              className={"tab-pane fade "  + ((isActive) ? " show active" : "")}
-             id={c.data.categoryCode}
+             id={c.data.id}
              role="tabpanel"
              aria-labelledby="featured-tab">
           <Category

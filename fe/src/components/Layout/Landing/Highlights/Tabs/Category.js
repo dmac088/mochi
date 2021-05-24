@@ -74,6 +74,7 @@ function Category(props) {
   
   useEffect(() => {
     let isSubscribed = true;
+    console.log(category);
     axios.post(category._links.products.href, [])
       .then((response) => {
         if (isSubscribed) {

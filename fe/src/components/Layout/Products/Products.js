@@ -100,6 +100,8 @@ function Products(props) {
         const currentCategory = findByCode(categories.list, categoryCode);
         const rootNode = findRootNode(categories.list);
 
+        console.log(rootNode);
+
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||
             categoriesLoading !== prevCategoriesLoading ||
@@ -112,7 +114,7 @@ function Products(props) {
             axios.post(
                 (type === 'browse') 
                 ? currentCategory._links.products.href
-                : discovery.links.searchProduct.href.replace('{category}', rootNode.data.categoryCode).replace('{q}', query.q),
+                : discovery.links.searchProduct.href.replace('{category}', rootNode.data.id).replace('{q}', query.q),
                 stateObject.selectedFacets.map(f => f.data))
                 .then((response) => {
                     if (isSubscribed) {

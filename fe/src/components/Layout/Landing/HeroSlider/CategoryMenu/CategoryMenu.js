@@ -25,7 +25,7 @@ function CategoryMenu(props) {
             return (
                 <TransitionGroup
                     {...props}
-                    key={category.data.categoryCode}
+                    key={category.data.id}
                     component={CategoryMenuItem}
                     isMobile={isMobile}
                     category={category}
@@ -57,7 +57,7 @@ function CategoryMenu(props) {
                 {renderCategoryList(//tells us if we are in mobile mode
                                     isMobile,
                                     //display categories and sort order defined here, list of codes
-                                    getChildCategories(categories.find(c => c.data.categoryCode === category.data.categoryCode), categories, []),
+                                    getChildCategories(categories.find(c => c.data.id === category.data.id), categories, []),
                                     //the actual list of objects to be displayed
                                     categories,
                                     //is it the root list (level = 0)

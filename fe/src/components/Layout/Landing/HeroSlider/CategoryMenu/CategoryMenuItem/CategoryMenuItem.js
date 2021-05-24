@@ -8,6 +8,7 @@ import { getChildCategories } from "../../../../../../services/Category/index";
 function CategoryMenuItem(props) {
     
     const { isMobile, isRoot, renderList, fullList, category, renderCategoryList, itemCounter, match } = props;
+
     const { childCount } = category.data;
     const [stateObject, setObjectState] = useState({
         hasChildren: childCount > 0,
@@ -43,11 +44,11 @@ function CategoryMenuItem(props) {
             }>
 
             <Link 
-                to={getCategoryPath(category.data.categoryCode, match)}
+                to={getCategoryPath(category.data.id, match)}
                 style={(isMobile)
                     ? { "--my-cat-indent": getIndent(category.data.level) }
                     : { "": "" }}>
-                    {category.data.desc} ({category.data.objectCount})
+                    {category.data.desc} ({category.data.count})
                     {(stateObject.hasChildren && isMobile)
                     ? <span>
                         <i onClick={expandCat}

@@ -22,8 +22,8 @@ function BreadCrumb(props) {
     
                 //lookup category to get the localized description 
                 if(array[index-1] === 'category') {
-                    const category = categories.list.find(x => x.data.categoryCode === array[index]);
-                    categoryDesc = (category) ? category.data.categoryDesc : '';
+                    const category = categories.list.find(x => x.data.id === array[index]);
+                    categoryDesc = (category) ? category.data.desc : '';
                 }
 
                 return (
