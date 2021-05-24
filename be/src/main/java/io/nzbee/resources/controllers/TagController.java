@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.resources.tag.browse.facet.TagBrowseFacetResource;
-import io.nzbee.resources.tag.browse.facet.TagBrowseFacetResourceAssembler;
+import io.nzbee.resources.tag.browse.facet.TagBrowseFacetModel;
+import io.nzbee.resources.tag.browse.facet.TagBrowseFacetModelAssembler;
 import io.nzbee.search.facet.IFacet;
 import io.nzbee.view.product.tag.facet.ITagFacetViewService;
 import io.nzbee.view.product.tag.facet.TagFacetView;
@@ -31,10 +31,10 @@ public class TagController {
     private ITagFacetViewService tagService;
     
     @Autowired
-    private TagBrowseFacetResourceAssembler tagResourceAssembler;
+    private TagBrowseFacetModelAssembler tagResourceAssembler;
     
 	@PostMapping("/Tag/Facet/{locale}/{currency}/Category/Code/{categoryCode}")
-    public ResponseEntity<CollectionModel<TagBrowseFacetResource>> getTags(@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<TagBrowseFacetModel>> getTags(@PathVariable String locale, 
     																@PathVariable String currency, 
     																@PathVariable String categoryCode,
     																@RequestBody Set<IFacet> selectedFacets) {

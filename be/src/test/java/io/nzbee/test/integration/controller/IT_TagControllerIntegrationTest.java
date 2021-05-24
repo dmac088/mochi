@@ -33,8 +33,8 @@ import io.nzbee.entity.tag.view.facet.TagFacetDTODaoImpl;
 import io.nzbee.entity.tag.view.facet.TagFacetDTOMapperImpl;
 import io.nzbee.entity.tag.view.facet.TagFacetDTOServiceImpl;
 import io.nzbee.resources.tag.browse.facet.TagBrowseFacetMapperImpl;
-import io.nzbee.resources.tag.browse.facet.TagBrowseFacetResourceAssembler;
-import io.nzbee.resources.tag.search.facet.TagSearchFacetResourceAssembler;
+import io.nzbee.resources.tag.browse.facet.TagBrowseFacetModelAssembler;
+import io.nzbee.resources.tag.search.facet.TagSearchFacetModelAssembler;
 import io.nzbee.resources.controllers.TagController;
 import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.OAuth2ResourceServerConfig;
@@ -58,8 +58,8 @@ import io.nzbee.view.product.tag.facet.TagFacetViewServiceImpl;
 							     WebMvcConfig.class,
 							     UserService.class,
 							     Globals.class,
-							     TagBrowseFacetResourceAssembler.class,
-							     TagSearchFacetResourceAssembler.class,
+							     TagBrowseFacetModelAssembler.class,
+							     TagSearchFacetModelAssembler.class,
 							     SecurityBeanConfiguration.class,
 							     JavaMailSender.class,
 							     DataSourceBeanMochi.class,

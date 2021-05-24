@@ -9,22 +9,22 @@ import io.nzbee.resources.controllers.TagController;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 
 @Component
-public class TagBrowseFacetResourceAssembler extends RepresentationModelAssemblerSupport<TagFacetView, TagBrowseFacetResource> {
+public class TagBrowseFacetModelAssembler extends RepresentationModelAssemblerSupport<TagFacetView, TagBrowseFacetModel> {
 
-	public TagBrowseFacetResourceAssembler() {
-		super(TagController.class, TagBrowseFacetResource.class);
+	public TagBrowseFacetModelAssembler() {
+		super(TagController.class, TagBrowseFacetModel.class);
 	}
 
 	@Override
-	public TagBrowseFacetResource toModel(TagFacetView t) {
-		TagBrowseFacetResource tr = new TagBrowseFacetResource(t);
+	public TagBrowseFacetModel toModel(TagFacetView t) {
+		TagBrowseFacetModel tr = new TagBrowseFacetModel(t);
 		return tr;
 	}
 	
     @Override
-    public CollectionModel<TagBrowseFacetResource> toCollectionModel(Iterable<? extends TagFacetView> views) 
+    public CollectionModel<TagBrowseFacetModel> toCollectionModel(Iterable<? extends TagFacetView> views) 
     {
-        CollectionModel<TagBrowseFacetResource> tags = super.toCollectionModel(views);
+        CollectionModel<TagBrowseFacetModel> tags = super.toCollectionModel(views);
          
         tags.add(linkTo(methodOn(TagController.class).getTags(null, null, null, null)).withSelfRel());
          

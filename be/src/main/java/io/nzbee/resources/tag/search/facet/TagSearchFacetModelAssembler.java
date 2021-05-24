@@ -7,15 +7,15 @@ import io.nzbee.search.facet.EntityFacet;
 
 @Component
 @Relation(collectionRelation="tags", itemRelation="tag")
-public class TagSearchFacetResourceAssembler extends RepresentationModelAssemblerSupport<EntityFacet, TagSearchFacetResource> {
+public class TagSearchFacetModelAssembler extends RepresentationModelAssemblerSupport<EntityFacet, TagSearchFacetModel> {
 
-	public TagSearchFacetResourceAssembler() {
-		super(CategoryController.class, TagSearchFacetResource.class);
+	public TagSearchFacetModelAssembler() {
+		super(CategoryController.class, TagSearchFacetModel.class);
 	}
 	
 	@Override
-	public TagSearchFacetResource toModel(EntityFacet tag) {
-		return new TagSearchFacetResource(tag);
+	public TagSearchFacetModel toModel(EntityFacet tag) {
+		return new TagSearchFacetModel(tag);
 	}
     
 }

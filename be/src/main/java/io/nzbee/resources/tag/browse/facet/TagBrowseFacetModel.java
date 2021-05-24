@@ -7,11 +7,11 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 
 @Relation(collectionRelation="tags", itemRelation="tag")
-public class TagBrowseFacetResource  extends RepresentationModel<TagBrowseFacetResource> {
+public class TagBrowseFacetModel  extends RepresentationModel<TagBrowseFacetModel> {
 	private final TagFacetView data;
 	
 	@JsonCreator
-	public TagBrowseFacetResource(@JsonProperty("tag") TagFacetView tag) {
+	public TagBrowseFacetModel(@JsonProperty("tag") TagFacetView tag) {
 		this.data = tag;
 	}
 	
