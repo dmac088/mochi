@@ -34,7 +34,7 @@ import io.nzbee.entity.brand.view.facet.BrandFacetDTOMapperImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
 import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetModelAssembler;
 import io.nzbee.resources.brand.browse.facet.BrandBrowseFacetModelMapperImpl;
-import io.nzbee.resources.brand.search.facet.BrandSearchFacetModelAssembler;
+import io.nzbee.resources.brand.facet.BrandFacetModelAssembler;
 import io.nzbee.resources.controllers.BrandController;
 import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.OAuth2ResourceServerConfig;
@@ -59,7 +59,7 @@ import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 							     UserService.class,
 							     Globals.class,
 							     BrandBrowseFacetModelAssembler.class,
-							     BrandSearchFacetModelAssembler.class,
+							     BrandFacetModelAssembler.class,
 							     SecurityBeanConfiguration.class,
 							     JavaMailSender.class,
 							     DataSourceBeanMochi.class,

@@ -15,12 +15,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import io.nzbee.Constants;
-import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetModel;
-import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetModelAssembler;
-import io.nzbee.resources.category.search.facet.CategorySearchFacetModel;
-import io.nzbee.resources.category.search.facet.CategorySearchFacetModelAssembler;
+import io.nzbee.resources.category.facet.CategoryFacetModel;
+import io.nzbee.resources.category.facet.CategoryFacetModelAssembler;
 import io.nzbee.resources.product.PriceFacetResource;
 import io.nzbee.resources.product.PriceFacetResourceAssembler;
 import io.nzbee.search.facet.EntityFacet;
@@ -39,13 +36,13 @@ public class CategoryController {
 	private IFacetMapper<Double> priceFacetMapper;
 
 	@Autowired 
-	private IFacetMapper<ProductCategoryView> categoryFacetMapper; 
+	private IFacetMapper<ProductCategoryView> facetMapper; 
 	
 	@Autowired
-	private CategoryBrowseFacetModelAssembler categoryResourceAssember;
+	private CategoryFacetModelAssembler categoryResourceAssember;
 	
 	@Autowired
-	private CategorySearchFacetModelAssembler categoryFacetResourceAssembler;
+	private CategoryFacetModelAssembler categoryFacetResourceAssembler;
 	
 	@Autowired
 	private PriceFacetResourceAssembler priceFacetResourceAssembler;
@@ -58,15 +55,16 @@ public class CategoryController {
 	}
 
 	@GetMapping("/Category/Product/{locale}/{currency}")
-	public ResponseEntity<CollectionModel<CategoryBrowseFacetModel>> getProductCategories(@PathVariable String locale) {
+	public ResponseEntity<CollectionModel<CategoryFacetModel>> getProductCategories(@PathVariable String locale) {
 		LOGGER.debug("Fetching product categories for parameters : {}, {}", locale);
-		final List<ProductCategoryView> collection = categoryService.findAll(locale, Constants.primaryProductRootCategoryCode);
+		List<EntityFacet> collection = categoryService.findAll(locale, Constants.primaryProductRootCategoryCode)
+				.stream().map(c -> facetMapper.toEntityFacet(c)).collect(Collectors.toList());
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	}
 
 
 	@PostMapping("/Category/Product/{locale}/{currency}/Code/{code}")
-	public ResponseEntity<CollectionModel<CategoryBrowseFacetModel>> getChildCategories(@PathVariable String locale,
+	public ResponseEntity<CollectionModel<CategoryFacetModel>> getChildCategories(@PathVariable String locale,
 			@PathVariable String currency, @PathVariable String code,
 			@RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency, code);
@@ -78,20 +76,21 @@ public class CategoryController {
     	}
  
 		
-		final List<ProductCategoryView> collection = categoryService.findAll(locale, 
-																			 currency, 
-																			 code,
-																 			 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
-																 			 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
-																 			 selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
-																 			 maxPrice);
+		List<EntityFacet> collection = categoryService.findAll( locale, 
+																currency, 
+																code,
+																selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
+																maxPrice)
+													.stream().map(c -> facetMapper.toEntityFacet(c)).collect(Collectors.toList());
 		
 		
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	} 
 	
 	@PostMapping("/Category/Facet/{locale}/{currency}/Code/{code}")
-	public ResponseEntity<CollectionModel<CategorySearchFacetModel>> getChildCategoryFacets(@PathVariable String locale,
+	public ResponseEntity<CollectionModel<CategoryFacetModel>> getChildCategoryFacets(@PathVariable String locale,
 																						 @PathVariable String currency, 
 																						 @PathVariable String code,
 																						 @RequestBody Set<IFacet> selectedFacets) {
@@ -103,14 +102,14 @@ public class CategoryController {
     		maxPrice =  Double.valueOf(oMaxPrice.get());
     	}
 		
-		Set<EntityFacet> collection = categoryService.findAll(locale, 
+		List<EntityFacet> collection = categoryService.findAll(locale, 
 															  currency, 
 															  code,
 															  selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
 															  selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
 															  selectedFacets.stream().filter(f -> f.getFacetingName().equals("tag")).map(f -> f.getValue()).collect(Collectors.toSet()),
 															  maxPrice)
-															.stream().map(c -> categoryFacetMapper.toEntityFacet(c)).collect(Collectors.toSet());
+															.stream().map(c -> facetMapper.toEntityFacet(c)).collect(Collectors.toList());
 		
 		return ResponseEntity.ok(categoryFacetResourceAssembler.toCollectionModel(collection));
 	}

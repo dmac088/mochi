@@ -1,14 +1,14 @@
-package io.nzbee.resources.tag.search.facet;
+package io.nzbee.resources.tag.facet;
 import org.springframework.hateoas.RepresentationModel;
 import org.springframework.hateoas.server.core.Relation;
 import io.nzbee.search.facet.EntityFacet;
 
 @Relation(collectionRelation="tags", itemRelation="tag")
-public class TagSearchFacetModel extends RepresentationModel<TagSearchFacetModel>  {
+public class TagFacetModel extends RepresentationModel<TagFacetModel>  {
 	
 	private final EntityFacet data;
 	
-	public TagSearchFacetModel(EntityFacet tag) {
+	public TagFacetModel(EntityFacet tag) {
 		this.data = tag;
 	}
 

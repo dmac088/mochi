@@ -1,4 +1,4 @@
-package io.nzbee.resources.category.browse.facet;
+package io.nzbee.resources.category.facet;
 
 import org.springframework.stereotype.Component;
 import io.nzbee.search.facet.EntityFacet;
@@ -6,7 +6,7 @@ import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.category.product.ProductCategoryView;
 
 @Component
-public class CategoryBrowseFacetMapper implements IFacetMapper<ProductCategoryView> {
+public class CategoryFacetMapper implements IFacetMapper<ProductCategoryView> {
 
 	public EntityFacet toEntityFacet(ProductCategoryView category) {
 		EntityFacet ef = new EntityFacet();

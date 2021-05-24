@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import io.nzbee.resources.tag.browse.facet.TagBrowseFacetModel;
-import io.nzbee.resources.tag.browse.facet.TagBrowseFacetModelAssembler;
+import io.nzbee.resources.tag.facet.TagFacetModel;
+import io.nzbee.resources.tag.facet.TagFacetModelAssembler;
+import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacet;
+import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.tag.facet.ITagFacetViewService;
 import io.nzbee.view.product.tag.facet.TagFacetView;
 
@@ -31,10 +33,13 @@ public class TagController {
     private ITagFacetViewService tagService;
     
     @Autowired
-    private TagBrowseFacetModelAssembler tagResourceAssembler;
+    private TagFacetModelAssembler tagFacetResourceAssembler;
+    
+    @Autowired
+    private IFacetMapper<TagFacetView> facetMapper;
     
 	@PostMapping("/Tag/Facet/{locale}/{currency}/Category/Code/{categoryCode}")
-    public ResponseEntity<CollectionModel<TagBrowseFacetModel>> getTags(@PathVariable String locale, 
+    public ResponseEntity<CollectionModel<TagFacetModel>> getTags(@PathVariable String locale, 
     																@PathVariable String currency, 
     																@PathVariable String categoryCode,
     																@RequestBody Set<IFacet> selectedFacets) {
@@ -47,16 +52,16 @@ public class TagController {
     		maxPrice = Double.valueOf(oMaxPrice.get());
     	}
     	
-    	final List<TagFacetView> collection =
+    	final List<EntityFacet> collection =
     			tagService.findAll(	 locale, 
     								 currency, 
     								 categoryCode,
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("category")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 selectedFacets.stream().filter(f -> f.getFacetingName().equals("brand")).map(f -> f.getValue()).collect(Collectors.toSet()),
     								 maxPrice    							  
-    			);
+    			).stream().map(b -> facetMapper.toEntityFacet(b)).collect(Collectors.toList());
     	
-    	return ResponseEntity.ok(tagResourceAssembler.toCollectionModel(collection));
+    	return ResponseEntity.ok(tagFacetResourceAssembler.toCollectionModel(collection));
     }
 	
 

@@ -37,7 +37,7 @@ import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOMapper
 import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOServiceImpl;
 import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetMapper;
 import io.nzbee.resources.category.browse.facet.CategoryBrowseFacetModelAssembler;
-import io.nzbee.resources.category.search.facet.CategorySearchFacetModelAssembler;
+import io.nzbee.resources.category.facet.CategoryFacetModelAssembler;
 import io.nzbee.resources.controllers.CategoryController;
 import io.nzbee.resources.product.PriceFacetMapper;
 import io.nzbee.resources.product.PriceFacetResourceAssembler;
@@ -60,7 +60,7 @@ import io.nzbee.view.category.product.ProductCategoryViewServiceImpl;
 							     CategoryBrandDaoImpl.class,
 							     CategoryBrowseFacetModelAssembler.class,  
 							     CategoryBrowseFacetMapper.class,
-							     CategorySearchFacetModelAssembler.class,
+							     CategoryFacetModelAssembler.class,
 							     ProductCategoryFacetDTODaoImpl.class,
 							     ProductCategoryFacetDTOMapperImpl.class,
 							     PriceFacetMapper.class,
