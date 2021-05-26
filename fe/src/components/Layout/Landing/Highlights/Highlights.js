@@ -33,7 +33,6 @@ function Highlights(props) {
 
   const renderCategoryTabHeaders = (categories) => {
     if(!categories) { return null; }
-    console.log(categories);
     return categories.filter(c => categoryMaster.includes(c.data.id)).map((c, index) => {
       const isActive = (c.data.id === stateObject.selectedCategoryCode);
         return (
