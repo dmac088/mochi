@@ -34,7 +34,6 @@ function CategorySidebar(props) {
                                                                 : [])
                 .then((response) => {
                     if (isSubscribed) {
-                        console.log(currentCategory);
                         setObjectState((prevState) => ({
                             ...prevState,
                             categoryFacets: (response.data._embedded)

@@ -99,9 +99,7 @@ function Products(props) {
         let isSubscribed = true;
         const currentCategory = findByCode(categories.list, categoryCode);
         const rootNode = findRootNode(categories.list);
-
-        console.log(rootNode);
-
+        
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||
             categoriesLoading !== prevCategoriesLoading ||
