@@ -12,7 +12,7 @@ function BrandSidebar(props) {
     const { categoryCode } = props.match.params;
 
     const [stateObject, setObjectState] = useState({
-        brandFacets: [],
+        brands: [],
     });
 
     const prevCategoryCode = usePrevious(categoryCode);
@@ -30,14 +30,14 @@ function BrandSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.brandFacets.href, (type === 'browse')
+            axios.post(currentCategory._links.brands.href, (type === 'browse')
                                                                 ? selectedFacets.map(f => f.data)
                                                                 : [])
                 .then((response) => {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            brandFacets: (response.data._embedded)
+                            brands: (response.data._embedded)
                                 ? response.data._embedded.brands
                                 : [],
                         }));
@@ -54,7 +54,7 @@ function BrandSidebar(props) {
                 : <ListSidebar
                     filterType={"brand"}
                     heading={"filter by brand"}
-                    items={(type === 'browse') ? stateObject.brandFacets.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
+                    items={(type === 'browse') ? stateObject.brands.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
                     modFacet={addFacet} />}
         </React.Fragment>
     )

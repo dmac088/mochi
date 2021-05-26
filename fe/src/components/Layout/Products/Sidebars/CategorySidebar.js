@@ -13,7 +13,7 @@ function CategorySidebar(props) {
     const prevCategoryCode = usePrevious(categoryCode);
 
     const [stateObject, setObjectState] = useState({
-        categoryFacets: [],
+        categories: [],
     });
 
     function usePrevious(value) {
@@ -36,7 +36,7 @@ function CategorySidebar(props) {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            categoryFacets: (response.data._embedded)
+                            categories: (response.data._embedded)
                                 ? response.data._embedded.categories
                                 : [],
                             loading: false,
@@ -56,7 +56,7 @@ function CategorySidebar(props) {
                     filterType={"category"}
                     heading={"filter by category"}
                     items={ (type === 'browse') 
-                            ? stateObject.categoryFacets
+                            ? stateObject.categories
                             .filter(c => c.data.count > 0)
                             .filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) 
                             : facets}

@@ -35,6 +35,9 @@ public class CategoryFacetModelAssembler extends RepresentationModelAssemblerSup
 		cfm.add(linkTo(methodOn(BrandController.class).getBrands(null, null, category.getId(), null))
 				.withRel("brands"));
 		
+		cfm.add(linkTo(methodOn(CategoryController.class).getMaxPriceFacet(null, null, category.getId(), null))
+				.withRel("maxprice"));
+		
 		return cfm;
 	}
     

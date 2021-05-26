@@ -11,7 +11,7 @@ function TagSidebar(props) {
     const { categoryCode } = props.match.params;
 
     const [stateObject, setObjectState] = useState({
-        tagFacets: [],
+        tags: [],
     });
 
     const prevCategoryCode = usePrevious(categoryCode);
@@ -29,7 +29,7 @@ function TagSidebar(props) {
         if (categoryCode !== prevCategoryCode || !categories.loading || loading) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.tagFacets.href, (type === 'browse')
+            axios.post(currentCategory._links.tags.href, (type === 'browse')
                                                               ? selectedFacets.map(f => f.data)
                                                               : [])
                 .then((response) => {
@@ -38,7 +38,7 @@ function TagSidebar(props) {
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
-                            tagFacets: (payload)
+                            tags: (payload)
                                 ? payload.tags
                                 : [],
                         }));
@@ -55,7 +55,7 @@ function TagSidebar(props) {
                 : <ButtonSidebar
                     filterType={"tag"}
                     heading={"filter by tag"}
-                    items={(type === 'browse') ? stateObject.tagFacets.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
+                    items={(type === 'browse') ? stateObject.tags.filter(({ data }) => !selectedFacets.some(x => x.data.id === data.id)) : facets}
                     modFacet={addFacet} />}
         </React.Fragment>
     )
