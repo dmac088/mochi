@@ -65,9 +65,10 @@ public class CategoryController {
 
 
 	@PostMapping("/Category/Product/{locale}/{currency}/Code/{code}")
-	public ResponseEntity<CollectionModel<CategoryFacetModel>> getChildCategories(@PathVariable String locale,
-			@PathVariable String currency, @PathVariable String code,
-			@RequestBody Set<IFacet> selectedFacets) {
+	public ResponseEntity<CollectionModel<CategoryFacetModel>> getChildCategories(	@PathVariable String locale,
+																					@PathVariable String currency, 
+																					@PathVariable String code,
+																					@RequestBody Set<IFacet> selectedFacets) {
 		LOGGER.debug("call CategoryController.getChildCategories with parameters : {}, {}, {}", locale, currency, code);
 		
 		Optional<String> oMaxPrice = selectedFacets.stream().filter(p -> p.getFacetingName().equals("price")).map(p -> p.getValue()).findFirst();
@@ -90,8 +91,8 @@ public class CategoryController {
 		return ResponseEntity.ok(categoryResourceAssember.toCollectionModel(collection));
 	} 
 	
-	@PostMapping("/Category/Facet/{locale}/{currency}/Code/{code}")
-	public ResponseEntity<CollectionModel<CategoryFacetModel>> getChildCategoryFacets(@PathVariable String locale,
+	@PostMapping("/Category/Product/Facet/{locale}/{currency}/Code/{code}")
+	public ResponseEntity<CollectionModel<CategoryFacetModel>> getChildCategoryFacets(	 @PathVariable String locale,
 																						 @PathVariable String currency, 
 																						 @PathVariable String code,
 																						 @RequestBody Set<IFacet> selectedFacets) {

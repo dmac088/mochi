@@ -23,7 +23,7 @@ public class CategoryFacetModelAssembler extends RepresentationModelAssemblerSup
 		
 		CategoryFacetModel cfm = new CategoryFacetModel(category);
 		
-		cfm.add(linkTo(methodOn(CategoryController.class).getChildCategories(null, category.getId(), null, null))
+		cfm.add(linkTo(methodOn(CategoryController.class).getChildCategoryFacets(null, null, category.getId(), null))
 				.withRel("children"));
 		
 		cfm.add(linkTo(methodOn(ProductController.class).getProducts(null, null, category.getId(), null, null, null, null))
