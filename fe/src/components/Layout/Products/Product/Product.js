@@ -74,7 +74,6 @@ function Product(props) {
     const { product } = stateObject;
     const { primaryCategory } = product;
     
-    console.log(discovery);
     return (
         (stateObject.loading) ?
             <Spinner />

@@ -15,7 +15,7 @@ function Product(props) {
   return (
     <div className="gf-product tab-slider-sub-product">
       <div className="image">
-        <Link to={`${getCategoryProductPath(match, product.data.productUPC, category.data.categoryCode)}`}>
+        <Link to={`${getCategoryProductPath(match, product.data.productUPC, category.data.id)}`}>
           {/* <span className="onsale">Sale!</span> */}
           <img src={product._links.defaultImage.href} alt="Image not found" className="img-fluid" />
         </Link>

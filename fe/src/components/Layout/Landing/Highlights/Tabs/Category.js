@@ -74,13 +74,15 @@ function Category(props) {
   
   useEffect(() => {
     let isSubscribed = true;
-    console.log(category);
     axios.post(category._links.products.href, [])
       .then((response) => {
+        return response.data;
+      })
+      .then((payload) => {
         if (isSubscribed) {
           setObjectState((prevState) => ({
             ...prevState,
-            products: (response.data.searchResults.data) ? response.data.searchResults.data._embedded.products
+            products: (payload.searchResults) ? payload.searchResults._embedded.products
               : [],
           }));
         }
