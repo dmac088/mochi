@@ -29,7 +29,7 @@ function CategorySidebar(props) {
         if (type === 'browse' && (categoryCode !== prevCategoryCode || !categories.loading || loading)) {
             const currentCategory = findByCode(categories.list, categoryCode);
             if (!currentCategory) { return; }
-            axios.post(currentCategory._links.childFacets.href, (type === 'browse')
+            axios.post(currentCategory._links.children.href, (type === 'browse')
                                                                 ? selectedFacets.map(f => f.data)
                                                                 : [])
                 .then((response) => {

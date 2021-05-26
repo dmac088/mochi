@@ -129,12 +129,22 @@ public class IT_CategoryControllerIntegrationTest {
         		.andExpect(jsonPath("$._embedded.categories[0].data.count").value("2"))
         		.andExpect(jsonPath("$._embedded.categories[0].data.childCount").value("0"))
         		
+        		.andExpect(jsonPath("$._embedded.categories[0]._links.products").exists())
+        		.andExpect(jsonPath("$._embedded.categories[0]._links.tags").exists())
+        		.andExpect(jsonPath("$._embedded.categories[0]._links.brands").exists())
+        		.andExpect(jsonPath("$._embedded.categories[0]._links.children").exists())
+        		
         		//check the last child category
         		.andExpect(jsonPath("$._embedded.categories[6].data.id").value("TRO01"))
         		.andExpect(jsonPath("$._embedded.categories[6].data.parentId").value("FRT01"))
         		.andExpect(jsonPath("$._embedded.categories[6].data.desc").value("Tropical"))
         		.andExpect(jsonPath("$._embedded.categories[6].data.count").value("2"))
-        		.andExpect(jsonPath("$._embedded.categories[6].data.childCount").value("0"));
+        		.andExpect(jsonPath("$._embedded.categories[6].data.childCount").value("0"))
+        		
+        		.andExpect(jsonPath("$._embedded.categories[6]._links.products").exists())
+        		.andExpect(jsonPath("$._embedded.categories[6]._links.tags").exists())
+        		.andExpect(jsonPath("$._embedded.categories[6]._links.brands").exists())
+        		.andExpect(jsonPath("$._embedded.categories[6]._links.children").exists());
     }
     
 

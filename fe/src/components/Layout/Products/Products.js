@@ -42,6 +42,7 @@ function Products(props) {
     const categories = useSelector(state => state.categories);
     const categoriesLoading = categories.loading;
 
+
     //capture previous states
     const prevCategoryCode = usePrevious(categoryCode);
     const prevCategoriesLoading = usePrevious(categoriesLoading);
@@ -97,9 +98,16 @@ function Products(props) {
 
     useEffect(() => {
         let isSubscribed = true;
+
+        console.log(categories.list);
+        console.log(categoryCode);
+
         const currentCategory = findByCode(categories.list, categoryCode);
         const rootNode = findRootNode(categories.list);
         
+        console.log(currentCategory);
+
+
         if (currentCategory && (
             categoryCode !== prevCategoryCode ||
             categoriesLoading !== prevCategoriesLoading ||
