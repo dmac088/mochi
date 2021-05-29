@@ -12,14 +12,8 @@ public class TagFacetView  {
 	
 	private int productCount;
 
-	public TagFacetView(String tagCode,
-						String tagDesc,
-						int productCount,
-						String locale) {
-		this.tagCode = tagCode;
-		this.tagDesc = tagDesc;
-		this.productCount = productCount;
-		this.locale = locale;
+	public TagFacetView() {
+		
 	}
 	
 	public String getTagCode() {

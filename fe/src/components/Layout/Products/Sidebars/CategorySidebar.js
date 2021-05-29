@@ -33,7 +33,6 @@ function CategorySidebar(props) {
                                                                 ? selectedFacets.map(f => f.data)
                                                                 : [])
                 .then((response) => {
-                    console.log(currentCategory._links.children.href);
                     if (isSubscribed) {
                         setObjectState((prevState) => ({
                             ...prevState,
