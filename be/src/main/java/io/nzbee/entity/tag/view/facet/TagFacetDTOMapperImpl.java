@@ -10,13 +10,11 @@ public class TagFacetDTOMapperImpl implements ITagFacetMapper {
 
 	@Override
 	public TagFacetView DTOToDo(TagFacetDTO dto) {
-		TagFacetView to = 
-				new TagFacetView(
-						dto.getTagCode(),
-						dto.getTagDesc(),
-						dto.getCount().intValue(),
-						dto.getLocale()
-						);
+		TagFacetView to = new TagFacetView();
+		to.setTagCode(dto.getTagCode());
+		to.setTagDesc(dto.getTagDesc());
+		to.setProductCount(dto.getCount().intValue());
+		to.setLocale(dto.getLocale());
 		return to;
 	}
 
