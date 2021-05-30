@@ -7,7 +7,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,35 +24,105 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.context.WebApplicationContext;
-
 import io.nzbee.Constants;
 import io.nzbee.Globals;
 import io.nzbee.WebMvcConfig;
+import io.nzbee.domain.bag.BagServiceImpl;
+import io.nzbee.entity.promotion.PromotionServiceImpl;
 import io.nzbee.entity.DataSourceBeanMochi;
+import io.nzbee.entity.adapters.domain.BagAdapter;
+import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
+import io.nzbee.entity.bag.BagDaoPostgresImpl;
+import io.nzbee.entity.bag.BagMapperImpl;
+import io.nzbee.entity.bag.item.BagItemMapperImpl;
+import io.nzbee.entity.bag.status.BagItemStatusServiceImpl;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTODaoImpl;
+import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
+import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTODaoImpl;
+import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTOServiceImpl;
+import io.nzbee.entity.party.person.CustomerMapperImpl;
+import io.nzbee.entity.party.person.PersonDaoImpl;
+import io.nzbee.entity.party.person.PersonServiceImpl;
+import io.nzbee.entity.product.ProductDaoPostgresImpl;
+import io.nzbee.entity.product.ProductMapperImpl;
+import io.nzbee.entity.product.ProductServiceImpl;
+import io.nzbee.entity.product.physical.PhysicalProductDomainObjectMapperImpl;
+import io.nzbee.entity.product.physical.light.PhysicalProductLightDaoImpl;
+import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
+import io.nzbee.entity.product.physical.light.PhysicalProductLightServiceImpl;
+import io.nzbee.entity.product.shipping.ShippingProductMapperImpl;
+import io.nzbee.entity.promotion.PromotionDaoPostgresImpl;
+import io.nzbee.entity.promotion.PromotionMapperImpl;
+import io.nzbee.entity.promotion.order.PromotionOrderMapperImpl;
+import io.nzbee.entity.promotion.product.PromotionProductMapperImpl;
+import io.nzbee.entity.tag.view.facet.TagFacetDTODaoImpl;
+import io.nzbee.entity.tag.view.facet.TagFacetDTOServiceImpl;
 import io.nzbee.resources.controllers.ProductController;
+import io.nzbee.resources.product.physical.light.PhysicalProductLightModelAssembler;
+import io.nzbee.search.FacetServicesImpl;
+import io.nzbee.search.SearchServiceImpl;
 import io.nzbee.security.DataSourceBeanSecurity;
 import io.nzbee.security.OAuth2ResourceServerConfig;
 import io.nzbee.security.SecurityBeanConfiguration;
 import io.nzbee.security.WebSecurityConfig;
 import io.nzbee.security.user.IUserRepository;
 import io.nzbee.security.user.UserService;
+import io.nzbee.view.product.physical.full.PhysicalProductFullServiceImpl;
+import io.nzbee.view.product.physical.light.PhysicalProductLightViewServiceImpl;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc()
-@ContextConfiguration(classes = { ProductController.class, 
-								  DataSourceBeanMochi.class, 
-								  DataSourceBeanSecurity.class,
-								  WebMvcConfig.class, 
-								  UserService.class, 
-								  Globals.class, 
-								  SecurityBeanConfiguration.class, 
-								  JavaMailSender.class,
-								  DataSourceBeanMochi.class, 	
-								  DataSourceBeanSecurity.class, 
-								  WebMvcConfig.class, 
-								  UserService.class,
-								  IUserRepository.class, 
-								  OAuth2ResourceServerConfig.class })
+@ContextConfiguration(classes = {ProductController.class,
+								 PhysicalProductLightViewServiceImpl.class,
+								 PhysicalProductLightAdapterImpl.class,
+								 PhysicalProductLightServiceImpl.class,
+								 PhysicalProductFullServiceImpl.class,
+								 PhysicalProductLightDaoImpl.class,
+								 PhysicalProductLightMapperImpl.class,
+								 SearchServiceImpl.class,
+								 DataSourceBeanMochi.class,
+							     DataSourceBeanSecurity.class,
+							     WebMvcConfig.class,
+							     UserService.class,
+							     Globals.class,
+							     PhysicalProductLightModelAssembler.class,
+							     SecurityBeanConfiguration.class,
+							     JavaMailSender.class,
+							     DataSourceBeanMochi.class,
+							     DataSourceBeanSecurity.class,
+							     WebMvcConfig.class,
+							     UserService.class,
+							     IUserRepository.class,
+							     OAuth2ResourceServerConfig.class,
+							     ProductCategoryFacetDTOServiceImpl.class,
+							     BrandFacetDTOServiceImpl.class,
+							     TagFacetDTOServiceImpl.class,
+							     FacetServicesImpl.class,
+							     ProductCategoryFacetDTODaoImpl.class,
+							     BrandFacetDTODaoImpl.class,
+							     TagFacetDTODaoImpl.class,
+							     BagServiceImpl.class,
+							     BagAdapter.class,
+							     BagServiceImpl.class,
+							     io.nzbee.entity.bag.BagServiceImpl.class,
+							     BagDaoPostgresImpl.class,
+							     BagMapperImpl.class,
+							     CustomerMapperImpl.class,
+							     BagItemMapperImpl.class,
+							     ProductMapperImpl.class,
+							     ShippingProductMapperImpl.class,
+							     PromotionMapperImpl.class,
+							     PromotionOrderMapperImpl.class,
+							     PromotionProductMapperImpl.class,
+							     PhysicalProductDomainObjectMapperImpl.class,
+							     ProductServiceImpl.class,
+							     ProductDaoPostgresImpl.class,
+							     BagItemStatusServiceImpl.class,
+							     PersonServiceImpl.class,
+							     PersonDaoImpl.class,
+							     PromotionServiceImpl.class,
+							     PromotionDaoPostgresImpl.class
+							     })
 @WebMvcTest(ProductController.class)
 @Import(WebSecurityConfig.class)
 @ActiveProfiles(profiles = "it")
@@ -72,7 +141,7 @@ public class IT_ProductControllerIntegrationTest {
 
 	@Test
 	@Transactional
-	public void testFindAllTagFacets() throws Exception {
+	public void testFindAllProducts() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))

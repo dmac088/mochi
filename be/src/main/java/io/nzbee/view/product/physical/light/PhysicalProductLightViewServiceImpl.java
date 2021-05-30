@@ -6,7 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import io.nzbee.view.ports.IPhysicalProductLightPortService;
 
-public class PhysicalProductLightServiceImpl implements IPhysicalProductLightService {
+public class PhysicalProductLightViewServiceImpl implements IPhysicalProductLightViewService {
 
 	@Autowired
 	private IPhysicalProductLightPortService physicalProductLightPortService;  

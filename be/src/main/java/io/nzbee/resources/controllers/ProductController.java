@@ -46,7 +46,7 @@ import io.nzbee.view.product.brand.BrandView;
 import io.nzbee.view.product.brand.IBrandViewService;
 import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
 import io.nzbee.view.product.physical.full.PhysicalProductFullView;
-import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
+import io.nzbee.view.product.physical.light.IPhysicalProductLightViewService;
 import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 import io.nzbee.view.product.shipping.destination.ShippingDestinationView;
 import io.nzbee.view.product.shipping.type.ShippingTypeView;
@@ -61,7 +61,7 @@ public class ProductController {
 	private IPhysicalProductFullService physicalProductFullService;
 
 	@Autowired
-	private IPhysicalProductLightService physicalProductLightService;
+	private IPhysicalProductLightViewService physicalProductLightService;
 
 	@Autowired
 	private IBagService bagService;

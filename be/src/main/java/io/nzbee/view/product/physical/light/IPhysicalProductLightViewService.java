@@ -5,7 +5,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import io.nzbee.view.IViewService;
 
-public interface IPhysicalProductLightService extends IViewService<PhysicalProductLightView> {
+public interface IPhysicalProductLightViewService extends IViewService<PhysicalProductLightView> {
 
 	Page<PhysicalProductLightView> findAll(String locale, String currency, String categoryCode,
 			Set<String> categoryCodes, Set<String> brandCodes,

@@ -45,8 +45,8 @@ import io.nzbee.view.product.brand.facet.BrandFacetViewServiceImpl;
 import io.nzbee.view.product.brand.facet.IBrandFacetViewService;
 import io.nzbee.view.product.physical.full.IPhysicalProductFullService;
 import io.nzbee.view.product.physical.full.PhysicalProductFullServiceImpl;
-import io.nzbee.view.product.physical.light.IPhysicalProductLightService;
-import io.nzbee.view.product.physical.light.PhysicalProductLightServiceImpl;
+import io.nzbee.view.product.physical.light.IPhysicalProductLightViewService;
+import io.nzbee.view.product.physical.light.PhysicalProductLightViewServiceImpl;
 import io.nzbee.view.product.tag.facet.ITagFacetViewService;
 import io.nzbee.view.product.tag.facet.TagFacetViewServiceImpl;
 
@@ -54,7 +54,6 @@ import io.nzbee.view.product.tag.facet.TagFacetViewServiceImpl;
 @Configuration
 @Profile("it")
 public class BeanConfigurationIT {
-
 	
 	@Bean
 	public IBrandFacetDTOService brandFAcetDTOService() {
@@ -97,8 +96,8 @@ public class BeanConfigurationIT {
 	}
 	
 	@Bean
-	public IPhysicalProductLightService physicalProductLightService() {
-		return new PhysicalProductLightServiceImpl();
+	public IPhysicalProductLightViewService physicalProductLightService() {
+		return new PhysicalProductLightViewServiceImpl();
 	}
 	
 	@Bean
