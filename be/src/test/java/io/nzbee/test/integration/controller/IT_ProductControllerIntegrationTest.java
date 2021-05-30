@@ -27,15 +27,22 @@ import org.springframework.web.context.WebApplicationContext;
 import io.nzbee.Constants;
 import io.nzbee.Globals;
 import io.nzbee.WebMvcConfig;
+import io.nzbee.domain.bag.BagConfiguration;
 import io.nzbee.domain.bag.BagServiceImpl;
+import io.nzbee.domain.product.shipping.ShippingProductServiceImpl;
 import io.nzbee.entity.promotion.PromotionServiceImpl;
 import io.nzbee.entity.DataSourceBeanMochi;
 import io.nzbee.entity.adapters.domain.BagAdapter;
+import io.nzbee.entity.adapters.domain.ProductAdapter;
+import io.nzbee.entity.adapters.view.BrandAdapterImpl;
 import io.nzbee.entity.adapters.view.PhysicalProductLightAdapterImpl;
+import io.nzbee.entity.adapters.view.ShippingProductAdapterImpl;
 import io.nzbee.entity.bag.BagDaoPostgresImpl;
 import io.nzbee.entity.bag.BagMapperImpl;
 import io.nzbee.entity.bag.item.BagItemMapperImpl;
 import io.nzbee.entity.bag.status.BagItemStatusServiceImpl;
+import io.nzbee.entity.brand.view.BrandDTOMapperImpl;
+import io.nzbee.entity.brand.view.BrandDTOServiceImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTODaoImpl;
 import io.nzbee.entity.brand.view.facet.BrandFacetDTOServiceImpl;
 import io.nzbee.entity.category.product.view.facet.ProductCategoryFacetDTODaoImpl;
@@ -46,19 +53,35 @@ import io.nzbee.entity.party.person.PersonServiceImpl;
 import io.nzbee.entity.product.ProductDaoPostgresImpl;
 import io.nzbee.entity.product.ProductMapperImpl;
 import io.nzbee.entity.product.ProductServiceImpl;
+import io.nzbee.entity.product.attribute.ProductAttributeServiceImpl;
+import io.nzbee.entity.product.currency.CurrencyServiceImpl;
 import io.nzbee.entity.product.physical.PhysicalProductDomainObjectMapperImpl;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightDaoImpl;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightMapperImpl;
 import io.nzbee.entity.product.physical.light.PhysicalProductLightServiceImpl;
+import io.nzbee.entity.product.price.ProductPriceServiceImpl;
+import io.nzbee.entity.product.price.ProductPriceTypeService;
+import io.nzbee.entity.product.shipping.ShippingProductDTOServiceImpl;
 import io.nzbee.entity.product.shipping.ShippingProductMapperImpl;
+import io.nzbee.entity.product.shipping.ShippingProductViewMapperImpl;
+import io.nzbee.entity.product.shipping.destination.ShippingDestinationDaoImpl;
+import io.nzbee.entity.product.shipping.destination.ShippingDestinationServiceImpl;
+import io.nzbee.entity.product.shipping.destination.ShippingDestinationViewMapperImpl;
+import io.nzbee.entity.product.shipping.type.ShippingTypeServiceImpl;
+import io.nzbee.entity.product.shipping.type.ShippingTypeViewMapperImpl;
 import io.nzbee.entity.promotion.PromotionDaoPostgresImpl;
 import io.nzbee.entity.promotion.PromotionMapperImpl;
 import io.nzbee.entity.promotion.order.PromotionOrderMapperImpl;
 import io.nzbee.entity.promotion.product.PromotionProductMapperImpl;
 import io.nzbee.entity.tag.view.facet.TagFacetDTODaoImpl;
 import io.nzbee.entity.tag.view.facet.TagFacetDTOServiceImpl;
+import io.nzbee.resources.brand.BrandViewModelAssembler;
 import io.nzbee.resources.controllers.ProductController;
+import io.nzbee.resources.product.physical.full.PhysicalProductFullResourceAssembler;
 import io.nzbee.resources.product.physical.light.PhysicalProductLightModelAssembler;
+import io.nzbee.resources.product.shipping.ShippingProductResourceAssembler;
+import io.nzbee.resources.product.shipping.destination.ShippingDestinationResourceAssembler;
+import io.nzbee.resources.product.shipping.type.ShippingTypeResourceAssembler;
 import io.nzbee.search.FacetServicesImpl;
 import io.nzbee.search.SearchServiceImpl;
 import io.nzbee.security.DataSourceBeanSecurity;
@@ -67,6 +90,7 @@ import io.nzbee.security.SecurityBeanConfiguration;
 import io.nzbee.security.WebSecurityConfig;
 import io.nzbee.security.user.IUserRepository;
 import io.nzbee.security.user.UserService;
+import io.nzbee.view.product.brand.BrandViewServiceImpl;
 import io.nzbee.view.product.physical.full.PhysicalProductFullServiceImpl;
 import io.nzbee.view.product.physical.light.PhysicalProductLightViewServiceImpl;
 
@@ -121,7 +145,32 @@ import io.nzbee.view.product.physical.light.PhysicalProductLightViewServiceImpl;
 							     PersonServiceImpl.class,
 							     PersonDaoImpl.class,
 							     PromotionServiceImpl.class,
-							     PromotionDaoPostgresImpl.class
+							     PromotionDaoPostgresImpl.class,
+							     BagConfiguration.class,
+							     BrandViewServiceImpl.class,
+							     BrandAdapterImpl.class,
+							     BrandViewServiceImpl.class,
+							     BrandDTOServiceImpl.class,
+							     BrandDTOMapperImpl.class,
+							     ShippingProductAdapterImpl.class,
+							     ShippingProductServiceImpl.class,
+							     ShippingProductDTOServiceImpl.class,
+							     ShippingDestinationServiceImpl.class,
+							     ShippingDestinationDaoImpl.class,
+							     ShippingTypeServiceImpl.class,
+							     ShippingDestinationViewMapperImpl.class,
+							     ShippingTypeViewMapperImpl.class,
+							     ShippingProductViewMapperImpl.class,
+							     ShippingDestinationResourceAssembler.class,
+							     ShippingTypeResourceAssembler.class,
+							     ShippingProductResourceAssembler.class,
+							     BrandViewModelAssembler.class,
+							     PhysicalProductFullResourceAssembler.class,
+							     ProductAdapter.class,
+							     ProductAttributeServiceImpl.class,
+							     ProductPriceServiceImpl.class,
+							     CurrencyServiceImpl.class,
+							     ProductPriceTypeService.class
 							     })
 @WebMvcTest(ProductController.class)
 @Import(WebSecurityConfig.class)
@@ -146,7 +195,7 @@ public class IT_ProductControllerIntegrationTest {
 				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
-				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(2)));
+				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)));
 	}
 
 }

@@ -8,7 +8,7 @@ import io.nzbee.entity.StringCollectionWrapper;
 import io.nzbee.entity.product.IProductDao;
 
 @Service
-public class ShippingProductServiceImpl implements IShippingProductService {
+public class ShippingProductDTOServiceImpl implements IShippingProductService {
 	
 	@Autowired
 	private IProductDao productDAO;
