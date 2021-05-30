@@ -65,7 +65,6 @@ public class IT_ProductUploadDownloadRestControllerTest {
         is = controller.getClass().getClassLoader().getResourceAsStream("food_master.txt");
     }
     
-    
     @SuppressWarnings("deprecation")
 	@Test
     public void testUploadFile() throws Exception {
