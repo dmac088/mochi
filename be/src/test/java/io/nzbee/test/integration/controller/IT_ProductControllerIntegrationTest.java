@@ -77,15 +77,7 @@ public class IT_ProductControllerIntegrationTest {
 				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
-				.andExpect(jsonPath("$._embedded.tags.length()", is(2)))
-
-				.andExpect(jsonPath("$._embedded.tags[0].data.id").value("GFR01"))
-				.andExpect(jsonPath("$._embedded.tags[0].data.desc").value("GLUTEN FREE"))
-				.andExpect(jsonPath("$._embedded.tags[0].data.count").value("1"))
-
-				.andExpect(jsonPath("$._embedded.tags[1].data.id").value("ORG01"))
-				.andExpect(jsonPath("$._embedded.tags[1].data.desc").value("ORGANIC"))
-				.andExpect(jsonPath("$._embedded.tags[1].data.count").value("1"));
+				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(2)));
 	}
 
 }
