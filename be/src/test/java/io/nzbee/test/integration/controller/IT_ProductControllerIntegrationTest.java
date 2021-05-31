@@ -197,6 +197,8 @@ public class IT_ProductControllerIntegrationTest {
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
 				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)))
 				
+				.andExpect(jsonPath("$.searchResults._embedded.products").exists())
+				
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productUPC").value("18911676"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productDesc").value("Apple"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productRetail").value("72"))
@@ -211,9 +213,13 @@ public class IT_ProductControllerIntegrationTest {
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productMarkdown").value("162.0"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Shine"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
-				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("strawberry.jpg"));
-		
-			
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("strawberry.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults.page").exists())
+				.andExpect(jsonPath("$.searchResults.page.size").value("10"))
+				.andExpect(jsonPath("$.searchResults.page.totalElements").value("12"))
+				.andExpect(jsonPath("$.searchResults.page.totalPages").value("2"))
+				.andExpect(jsonPath("$.searchResults.page.number").value("0"));
 	}
 
 }
