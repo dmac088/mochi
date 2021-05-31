@@ -195,9 +195,9 @@ public class IT_ProductControllerIntegrationTest {
 				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
-				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)))
 				
 				.andExpect(jsonPath("$.searchResults._embedded.products").exists())
+				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)))
 				
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productUPC").value("18911676"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productDesc").value("Apple"))
@@ -214,6 +214,40 @@ public class IT_ProductControllerIntegrationTest {
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Shine"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("strawberry.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults.page").exists())
+				.andExpect(jsonPath("$.searchResults.page.size").value("10"))
+				.andExpect(jsonPath("$.searchResults.page.totalElements").value("12"))
+				.andExpect(jsonPath("$.searchResults.page.totalPages").value("2"))
+				.andExpect(jsonPath("$.searchResults.page.number").value("0"));
+	}
+	
+	@Test
+	@Transactional
+	public void testBrowseAllProductsForFruitCategoryWithPaginationAndOrderOfNameDescending() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
+				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products").exists())
+				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productUPC").value("15483827"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productDesc").value("Water Melon"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productRetail").value("28"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productMarkdown").value("25.20"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.brandDesc").value("Driscolls"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productImage").value("water-melon.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productUPC").value("10760430"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productDesc").value("Grapes"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productRetail").value("60"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productMarkdown").value("54.0"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Enza"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("grapes.jpg"))
 				
 				.andExpect(jsonPath("$.searchResults.page").exists())
 				.andExpect(jsonPath("$.searchResults.page.size").value("10"))
