@@ -190,7 +190,7 @@ public class IT_ProductControllerIntegrationTest {
 
 	@Test
 	@Transactional
-	public void testFindAllProducts() throws Exception {
+	public void testBrowseAllProductsForFruitCategoryWithPaginationAndOrderOfNameAscending() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
 				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
