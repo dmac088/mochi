@@ -195,7 +195,25 @@ public class IT_ProductControllerIntegrationTest {
 				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
-				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)));
+				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productUPC").value("18911676"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productDesc").value("Apple"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productRetail").value("72"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productMarkdown").value("64.8"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.brandDesc").value("Planters"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productImage").value("apple.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productUPC").value("19037164"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productDesc").value("Strawberry"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productRetail").value("180"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productMarkdown").value("162.00"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Shine"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("strawberry.jpg"));
+		
+			
 	}
 
 }
