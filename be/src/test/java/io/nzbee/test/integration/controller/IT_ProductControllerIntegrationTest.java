@@ -208,7 +208,7 @@ public class IT_ProductControllerIntegrationTest {
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productUPC").value("19037164"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productDesc").value("Strawberry"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productRetail").value("180"))
-				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productMarkdown").value("162.00"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productMarkdown").value("162.0"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Shine"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("strawberry.jpg"));
