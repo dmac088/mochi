@@ -226,7 +226,7 @@ public class IT_ProductControllerIntegrationTest {
 	@Transactional
 	public void testBrowseAllProductsForFruitCategoryWithPaginationAndOrderOfNameDescending() throws Exception {
 		mockMvc.perform(MockMvcRequestBuilders
-				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameAsc")
+				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=nameDesc")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
 				
@@ -236,7 +236,7 @@ public class IT_ProductControllerIntegrationTest {
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productUPC").value("15483827"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productDesc").value("Water Melon"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productRetail").value("28"))
-				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productMarkdown").value("25.20"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productMarkdown").value("25.2"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.brandDesc").value("Driscolls"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.inStock").value("true"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productImage").value("water-melon.jpg"))
@@ -248,6 +248,75 @@ public class IT_ProductControllerIntegrationTest {
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Enza"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
 				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("grapes.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults.page").exists())
+				.andExpect(jsonPath("$.searchResults.page.size").value("10"))
+				.andExpect(jsonPath("$.searchResults.page.totalElements").value("12"))
+				.andExpect(jsonPath("$.searchResults.page.totalPages").value("2"))
+				.andExpect(jsonPath("$.searchResults.page.number").value("0"));
+	}
+	
+	@Test
+	@Transactional
+	public void testBrowseAllProductsForFruitCategoryWithPaginationAndOrderOfPriceAscending() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=priceAsc")
+				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products").exists())
+				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productUPC").value("25556789"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productDesc").value("tomato"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productRetail").value("16"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productMarkdown").value("14.4"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.brandDesc").value("Shine"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productImage").value("tomato.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productUPC").value("17235347"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productDesc").value("Pomegranate"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productRetail").value("95"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productMarkdown").value("85.5"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Adora"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("pomegranate.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults.page").exists())
+				.andExpect(jsonPath("$.searchResults.page.size").value("10"))
+				.andExpect(jsonPath("$.searchResults.page.totalElements").value("12"))
+				.andExpect(jsonPath("$.searchResults.page.totalPages").value("2"))
+				.andExpect(jsonPath("$.searchResults.page.number").value("0"));
+	}
+	
+	
+	@Test
+	@Transactional
+	public void testBrowseAllProductsForFruitCategoryWithPaginationAndOrderOfPriceDescending() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.post("/api/Product/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Category/Code/FRT01?page=0&size=10&sort=priceDesc")
+				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products").exists())
+				.andExpect(jsonPath("$.searchResults._embedded.products.length()", is(10)))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productUPC").value("19037164"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productDesc").value("Strawberry"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productRetail").value("180"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productMarkdown").value("162.0"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.brandDesc").value("Shine"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[0].data.productImage").value("strawberry.jpg"))
+				
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productUPC").value("10688155"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productDesc").value("Musk Melon"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productRetail").value("36"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productMarkdown").value("32.4"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.brandDesc").value("Planters"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.inStock").value("true"))
+				.andExpect(jsonPath("$.searchResults._embedded.products[9].data.productImage").value("musk-melon.jpg"))
 				
 				.andExpect(jsonPath("$.searchResults.page").exists())
 				.andExpect(jsonPath("$.searchResults.page.size").value("10"))
