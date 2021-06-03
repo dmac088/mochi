@@ -35,7 +35,7 @@ import io.nzbee.util.FileController;
 @AutoConfigureMockMvc(/*addFilters = false*/)
 @WebMvcTest(FileController.class)
 @Import(WebSecurityConfig.class)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_ProductUploadDownloadRestControllerTest {
 
 	private InputStream is;
