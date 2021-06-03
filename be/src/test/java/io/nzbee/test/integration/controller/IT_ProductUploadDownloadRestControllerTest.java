@@ -30,7 +30,6 @@ import io.nzbee.domain.product.IProductService;
 import io.nzbee.security.WebSecurityConfig;
 import io.nzbee.util.FileController;
 
-
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc(/*addFilters = false*/)
 @WebMvcTest(FileController.class)

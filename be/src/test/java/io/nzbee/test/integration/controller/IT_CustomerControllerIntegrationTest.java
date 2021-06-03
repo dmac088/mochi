@@ -43,7 +43,7 @@ import io.nzbee.view.customer.CustomerDTOIn;
 @RunWith(SpringRunner.class)
 @DataJpaTest
 @AutoConfigureTestDatabase(replace = Replace.NONE)
-@ActiveProfiles(profiles = "tst")
+@ActiveProfiles(profiles = "it")
 public class IT_CustomerControllerIntegrationTest {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
