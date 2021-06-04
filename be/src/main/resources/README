@@ -1,0 +1,3 @@
+when using genkeys use password = "password"
+
+when importing the certificate use password = "changeit"
