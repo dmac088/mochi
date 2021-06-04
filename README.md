@@ -16,4 +16,4 @@ BE:
 		
 
 FE:
-	npm run dev
+	npm start
