@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import io.nzbee.domain.bag.Bag;
 import io.nzbee.domain.bag.IBagService;
-import io.nzbee.enums.FacetTypeEnum;
+import io.nzbee.enums.FacetNameEnum;
 import io.nzbee.resources.brand.BrandViewModel;
 import io.nzbee.resources.brand.BrandViewModelAssembler;
 import io.nzbee.resources.dto.BrowseProductResultDto;
@@ -140,11 +140,11 @@ public class ProductController {
 		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(locale,
 																				currency,
 																				code,
-																				selectedFacets.stream().filter(c -> FacetTypeEnum.valueOf(c.getFacetingName().toUpperCase()).equals(FacetTypeEnum.CATEGORY))
+																				selectedFacets.stream().filter(c -> FacetNameEnum.valueOf(c.getFacetingName()).equals(FacetNameEnum.category))
 																					.map(c -> c.getValue()).collect(Collectors.toSet()),
-																				selectedFacets.stream().filter(c -> FacetTypeEnum.valueOf(c.getFacetingName().toUpperCase()).equals(FacetTypeEnum.BRAND))
+																				selectedFacets.stream().filter(c -> FacetNameEnum.valueOf(c.getFacetingName()).equals(FacetNameEnum.brand))
 																					.map(c -> c.getValue()).collect(Collectors.toSet()),
-																				selectedFacets.stream().filter(c -> FacetTypeEnum.valueOf(c.getFacetingName().toUpperCase()).equals(FacetTypeEnum.TAG))
+																				selectedFacets.stream().filter(c -> FacetNameEnum.valueOf(c.getFacetingName()).equals(FacetNameEnum.tag))
 																					.map(c -> c.getValue()).collect(Collectors.toSet()),
 																				maxPrice, 
 																				page, 

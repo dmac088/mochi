@@ -2,6 +2,8 @@ package io.nzbee.search.facet;
 
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
+import io.nzbee.enums.FacetNameEnum;
+
 @JsonTypeName("EntityFacet")
 public class EntityFacet implements IFacet {
 
@@ -9,7 +11,7 @@ public class EntityFacet implements IFacet {
 	
 	private String desc;
 	
-	private String facetingName;
+	private FacetNameEnum facetingName;
 	
 	private String objectType;
 	
@@ -68,7 +70,7 @@ public class EntityFacet implements IFacet {
 
 	@Override
 	public String getFacetingName() {
-		return this.facetingName;
+		return this.facetingName.toString();
 	}
 	
 	public void setId(String id) {
@@ -87,8 +89,8 @@ public class EntityFacet implements IFacet {
 		this.isHierarchical = isHierarchical;
 	}
 	
-	public void setFacetingName(String name) {
-		this.facetingName = name.toLowerCase();
+	public void setFacetingName(FacetNameEnum name) {
+		this.facetingName = name;
 	}
 
 }

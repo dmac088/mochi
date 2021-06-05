@@ -1,6 +1,7 @@
 package io.nzbee.resources.category.facet;
 
 import org.springframework.stereotype.Component;
+import io.nzbee.enums.FacetNameEnum;
 import io.nzbee.search.facet.EntityFacetHierarchical;
 import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.category.product.ProductCategoryView;
@@ -10,7 +11,7 @@ public class CategoryFacetMapper implements IFacetMapper<ProductCategoryView, En
 
 	public EntityFacetHierarchical toEntityFacet(ProductCategoryView category) {
 		EntityFacetHierarchical ef = new EntityFacetHierarchical();
-		ef.setFacetingName("category");
+		ef.setFacetingName(FacetNameEnum.category.toString());
 		ef.setObjectType(category.getClass().getSimpleName());
 		ef.setId(category.getCategoryCode());
 		ef.setDesc(category.getCategoryDesc());
