@@ -1,5 +1,7 @@
 package io.nzbee.search.facet;
 
+import io.nzbee.enums.FacetNameEnum;
+
 public class EntityFacetHierarchical implements IFacetHierarchical {
 
 	private String Id;
@@ -8,7 +10,7 @@ public class EntityFacetHierarchical implements IFacetHierarchical {
 	
 	private String desc;
 	
-	private String facetingName;
+	private FacetNameEnum facetingName;
 	
 	private String objectType;
 	
@@ -54,7 +56,7 @@ public class EntityFacetHierarchical implements IFacetHierarchical {
 
 	@Override
 	public String getFacetingName() {
-		return this.facetingName;
+		return this.facetingName.toString();
 	}
 
 	@Override
@@ -89,8 +91,8 @@ public class EntityFacetHierarchical implements IFacetHierarchical {
 		this.desc = desc;
 	}
 
-	public void setFacetingName(String facetingName) {
-		this.facetingName = facetingName;
+	public void setFacetingName(FacetNameEnum category) {
+		this.facetingName = category;
 	}
 
 	public void setObjectType(String objectType) {

@@ -42,6 +42,7 @@ import io.nzbee.view.ports.IPhysicalProductLightPortService;
 import io.nzbee.view.product.physical.light.PhysicalProductLightView;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
+import io.nzbee.enums.FacetNameEnum;
 import io.nzbee.Constants;
 import io.nzbee.entity.PageableUtil;
 import io.nzbee.entity.StringCollectionWrapper;
@@ -115,7 +116,7 @@ public class SearchServiceImpl implements ISearchService {
 									   ss);
 
 			});
-			sfh.setFacetingName(s);
+			sfh.setFacetingName(FacetNameEnum.valueOf(s));
 			sfh.setCodes(ss);
 			sfh.setType(SIMPLE_FACET);
 			setSearchFacetHelper.add(sfh);
@@ -125,7 +126,7 @@ public class SearchServiceImpl implements ISearchService {
 		lf.stream().filter(f -> f.getType().equals(RANGE_FACET)).forEach(f -> {
 			SearchFacetHelper sfh = new SearchFacetHelper();
 			sfh.setCodes(null);
-			sfh.setFacetingName(f.getFacetingName());
+			sfh.setFacetingName(FacetNameEnum.valueOf(f.getFacetingName()));
 			sfh.setType(f.getType());
 			setSearchFacetHelper.add(sfh);
 		});
@@ -142,7 +143,7 @@ public class SearchServiceImpl implements ISearchService {
 					});
 
 			SearchFacetHelper nsfh = new SearchFacetHelper();
-			nsfh.setFacetingName(f);
+			nsfh.setFacetingName(FacetNameEnum.valueOf(f));
 			nsfh.setCodes(sstr);
 			nsfh.setType(type);
 			newLsfh.add(nsfh);
@@ -153,7 +154,7 @@ public class SearchServiceImpl implements ISearchService {
 	private Set<SearchFacetHelper> initializeFacetHelpers(Set<SearchFacetHelper> lsfh, Set<Facet> facets) {
 		facets.stream().forEach(f -> {
 			SearchFacetHelper sfh = new SearchFacetHelper();
-			sfh.setFacetingName(f.getFacetingName());
+			sfh.setFacetingName(FacetNameEnum.valueOf(f.getFacetingName()));
 			sfh.setType(f.getClass().getSimpleName());
 			lsfh.add(sfh);
 		});

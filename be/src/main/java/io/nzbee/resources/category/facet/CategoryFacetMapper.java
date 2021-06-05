@@ -11,7 +11,7 @@ public class CategoryFacetMapper implements IFacetMapper<ProductCategoryView, En
 
 	public EntityFacetHierarchical toEntityFacet(ProductCategoryView category) {
 		EntityFacetHierarchical ef = new EntityFacetHierarchical();
-		ef.setFacetingName(FacetNameEnum.category.toString());
+		ef.setFacetingName(FacetNameEnum.category);
 		ef.setObjectType(category.getClass().getSimpleName());
 		ef.setId(category.getCategoryCode());
 		ef.setDesc(category.getCategoryDesc());

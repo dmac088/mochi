@@ -4,21 +4,23 @@ import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.springframework.context.ApplicationContext;
+
+import io.nzbee.enums.FacetNameEnum;
 import io.nzbee.search.ISearchDimensionService;
 
 public class SearchFacetHelper {
 
-	private String facetingName;
+	private FacetNameEnum facetingName;
 	
 	private String type;
 	
 	private Set<String> codes = new HashSet<String>();
 
 	public String getFacetingName() {
-		return facetingName;
+		return facetingName.toString();
 	}
 
-	public void setFacetingName(String facetingName) {
+	public void setFacetingName(FacetNameEnum facetingName) {
 		this.facetingName = facetingName;
 	}
 
