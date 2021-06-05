@@ -1,7 +1,7 @@
 package io.nzbee.resources.tag.facet;
 
 import org.springframework.stereotype.Component;
-
+import io.nzbee.enums.FacetNameEnum;
 import io.nzbee.search.facet.EntityFacet;
 import io.nzbee.search.facet.IFacetMapper;
 import io.nzbee.view.product.tag.facet.TagFacetView;
@@ -12,7 +12,7 @@ public class TagFacetMapperImpl implements IFacetMapper<TagFacetView, EntityFace
 	public EntityFacet toEntityFacet(TagFacetView tag) {
 		EntityFacet ef = new EntityFacet();
 		
-		ef.setFacetingName("Tag");
+		ef.setFacetingName(FacetNameEnum.tag);
 		ef.setObjectType(tag.getClass().getSimpleName());
 		ef.setId(tag.getTagCode());
 		ef.setDesc(tag.getTagDesc());
