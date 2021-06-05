@@ -136,15 +136,19 @@ public class ProductController {
 			maxPrice = Double.valueOf(oMaxPrice.get());
 		}
 
-		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(locale, currency,
-				code,
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("category"))
-						.map(c -> c.getValue()).collect(Collectors.toSet()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("brand"))
-						.map(c -> c.getValue()).collect(Collectors.toSet()),
-				selectedFacets.stream().filter(c -> c.getFacetingName().equals("tag"))
-						.map(c -> c.getValue()).collect(Collectors.toSet()),
-				maxPrice, page, size, sort);
+		Page<PhysicalProductLightView> sp = physicalProductLightService.findAll(locale,
+																				currency,
+																				code,
+																				selectedFacets.stream().filter(c -> FacetType.valueOf(c.getFacetingName().toUpperCase()).equals(FacetType.CATEGORY))
+																					.map(c -> c.getValue()).collect(Collectors.toSet()),
+																				selectedFacets.stream().filter(c -> FacetType.valueOf(c.getFacetingName().toUpperCase()).equals(FacetType.BRAND))
+																					.map(c -> c.getValue()).collect(Collectors.toSet()),
+																				selectedFacets.stream().filter(c -> FacetType.valueOf(c.getFacetingName().toUpperCase()).equals(FacetType.TAG))
+																					.map(c -> c.getValue()).collect(Collectors.toSet()),
+																				maxPrice, 
+																				page, 
+																				size, 
+																				sort);
 
 		Page<PhysicalProductLightModel> pages = sp.map(p -> prodLightResourceAssembler.toModel(p));
 
