@@ -332,7 +332,11 @@ public class IT_ProductControllerIntegrationTest {
 				.get("/api/Product/Shipping/Provider/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Code/AIR_PAR_1")
 				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
 				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
-				.andExpect(jsonPath("$.data").exists());
+				.andExpect(jsonPath("$.data").exists())
+				.andExpect(jsonPath("$.data.shippingTypeCode").exists())
+				.andExpect(jsonPath("$.data.shippingTypeDesc").exists())
+				.andExpect(jsonPath("$.data.shippingTypeCode").value("AIR_PAR_1"))
+				.andExpect(jsonPath("$.data.shippingTypeDesc").value("Air Parcel"));
 		
 		
 	}
