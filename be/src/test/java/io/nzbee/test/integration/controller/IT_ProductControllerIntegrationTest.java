@@ -324,5 +324,35 @@ public class IT_ProductControllerIntegrationTest {
 				.andExpect(jsonPath("$.searchResults.page.totalPages").value("2"))
 				.andExpect(jsonPath("$.searchResults.page.number").value("0"));
 	}
+	
+	@Test
+	@Transactional
+	public void testGetAllShippingProvidersByTypeCode() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/api/Product/Shipping/Provider/" + Constants.localeENGB + "/" + Constants.currencyHKD + "/Code/AIR_PAR_1")
+				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
+				.andExpect(jsonPath("$.data").exists());
+		
+		
+	}
+	
+
+	@Test
+	@Transactional
+	public void testGetAllShippingProviders() throws Exception {
+		mockMvc.perform(MockMvcRequestBuilders
+				.get("/api/Product/Shipping/Provider/" + Constants.localeENGB + "/" + Constants.currencyHKD)
+				.with(csrf()).contentType(MediaType.APPLICATION_JSON).content("[]").accept(MediaType.ALL))
+				.andDo(print()).andExpect(status().isOk()).andExpect(content().contentType("application/hal+json"))
+				.andExpect(jsonPath("$._embedded").exists())
+				.andExpect(jsonPath("$._embedded.brands").exists())
+				.andExpect(jsonPath("$._embedded.brands[0].data").exists())
+				.andExpect(jsonPath("$._embedded.brands[0].data.brandCode").exists())
+				.andExpect(jsonPath("$._embedded.brands[0].data.brandCode").value("HKP01"));
+				
+		
+	}			
+	
 
 }
