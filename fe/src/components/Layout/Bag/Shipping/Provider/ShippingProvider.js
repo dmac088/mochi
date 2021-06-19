@@ -32,7 +32,7 @@ function ShippingProvider() {
         :
             <div className="col-md-6 col-12 mb-25">
                 <select className="nice-select">
-                    {renderProviders(shippingProviders._embedded.brandViewResources)}
+                    {renderProviders(shippingProviders._embedded.brands)}
                 </select>
             </div>
     );
