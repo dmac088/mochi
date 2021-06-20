@@ -18,10 +18,12 @@ public interface IProductBaseRepository<P extends ProductEntity>  extends CrudRe
 	+ " LEFT JOIN FETCH p.department d  "
 	+ " LEFT JOIN FETCH p.productStatus s "
 	+ " LEFT JOIN FETCH p.categories c "
-	+ " WHERE pa.lclCd = :locale "
-	+ " AND p.productUPC = :productCode "
+	+ " LEFT JOIN FETCH p.prices prc "
+	+ " LEFT JOIN FETCH prc.currency curr "
+	+ " LEFT JOIN FETCH prc.type prct "
+	+ " WHERE p.productUPC = :productCode "
 	)
-	Optional<P> findByCode(String productCode, String locale);
+	Optional<P> findByCode(String productCode);
 	
 	List<P> findAll();
 	

@@ -39,9 +39,9 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
-	public Optional<ProductEntity> findByCode(String productUPC, String locale) {
-		LOGGER.debug("call ProductServiceImpl.findByCode parameters : {}, {}", productUPC, locale);
-		return productRepository.findByCode(productUPC, locale);
+	public Optional<ProductEntity> findEntityByCode(String productUPC) {
+		LOGGER.debug("call ProductServiceImpl.findByCode parameters : {}, {}, {}", productUPC);
+		return productRepository.findByCode(productUPC);
 	}
 	
 	@Override

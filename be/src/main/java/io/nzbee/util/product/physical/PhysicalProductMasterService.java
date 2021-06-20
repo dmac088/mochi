@@ -15,15 +15,18 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
+import io.nzbee.entity.brand.IBrandService;
+import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
+import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
+import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
-import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.price.ProductPriceType;
@@ -40,12 +43,24 @@ public class PhysicalProductMasterService {
 	
 	@Autowired
 	private IProductService productService;
+	
+	@Autowired
+	private IProductAttributeService productAttributeService;
+	
+	@Autowired
+	private ICategoryService categoryService;
 
 	@Autowired
 	private ITagService tagService;
 	
 	@Autowired
 	private IProductStatusRepository productStatusService;
+	
+	@Autowired
+	private IBrandService brandService;
+	
+	@Autowired 
+	private IDepartmentService departmentService;
 	
 	@Autowired
 	private ICurrencyService currencyService;
@@ -55,11 +70,8 @@ public class PhysicalProductMasterService {
 	
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
-    
-	@Autowired
-	private IProductPriceService productPriceService;
 	
-	@Transactional
+	//@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
@@ -160,30 +172,41 @@ public class PhysicalProductMasterService {
 						 ) {
 		logger.debug("called map() ");
 		
-		Optional<ProductEntity> op = productService.findByCode(upcCode);
+		Optional<ProductEntity> op = productService.findEntityByCode(upcCode);
 		
-		PhysicalProductEntity pe = (op.isPresent()) 
-				 ? (PhysicalProductEntity) op.get()
-				 : new PhysicalProductEntity();
+		PhysicalProductEntity pe = 	 (op.isPresent()) 
+									 ? (PhysicalProductEntity) op.get()
+									 : new PhysicalProductEntity();
 		
-		Optional<BrandEntity> ob = Optional.ofNullable(pe.getBrand());
+		Optional<BrandEntity> ob = (op.isPresent()) 
+									? Optional.ofNullable(pe.getBrand())
+									: brandService.findByCode(brandCode);
 		
-		Optional<DepartmentEntity> od = Optional.ofNullable(pe.getDepartment());
+		Optional<DepartmentEntity> od = (op.isPresent()) 
+										? Optional.ofNullable(pe.getDepartment())
+										: departmentService.findByCode(templateCode);
 		
-		Optional<ProductStatusEntity> ops = Optional.ofNullable(pe.getProductStatus());
-		
-		Optional<ProductAttributeEntity> opa = pe.getAttributes().stream().findAny();
+		Optional<ProductStatusEntity> ops = (op.isPresent()) 
+											? Optional.ofNullable(pe.getProductStatus())
+											: productStatusService.findByProductStatusCode(Constants.activeSKUCode);
 		
 		Optional<CategoryProductEntity> opc = pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny();
-				
 		
-		ProductAttributeEntity pa = (opa.isPresent()) 
-		? opa.get()
-		: (new ProductAttributeEntity());
+		CategoryProductEntity pc = (opc.isPresent())
+									? opc.get()
+									: categoryService.findByCode(categoryCode).isPresent()
+										? (CategoryProductEntity) categoryService.findByCode(categoryCode).get()
+										: new CategoryProductEntity();
+				
+		ProductAttributeEntity pa = (op.isPresent()) 
+				 					? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny().isPresent()
+				 						? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny().get()
+				 						: (new ProductAttributeEntity())
+				 				    : 	productAttributeService.findByCode(locale, upcCode).isPresent()
+				 				    	? productAttributeService.findByCode(locale, upcCode).get()
+				 				    	: (new ProductAttributeEntity());
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-			
-					  
 					  
 		pe.setBrand(ob.get());
 		pe.setDepartment(od.get());
@@ -191,7 +214,7 @@ public class PhysicalProductMasterService {
 		pe.setProductCreateDt(createdDate);
 		pe.setProductStatus(ops.get());
 		pe.getCategories();
-		pe.addCategory((CategoryProductEntity) opc.get());
+		pe.addCategory(pc);
 		
 		pe.setWidthDimension(Integer.parseInt(width));
 		pe.setHeightDimension(Integer.parseInt(height));
@@ -205,41 +228,45 @@ public class PhysicalProductMasterService {
 		pa.setProduct(pe);
 		pe.addProductAttribute(pa);
 		
-		Currency curr = currencyService.findByCode(currency).get();
-		ProductPriceType ptr = productPriceTypeService.findByCode(Constants.retailPriceCode).get();
-		ProductPriceType ptm = productPriceTypeService.findByCode(Constants.markdownPriceCode).get();
+		Optional<Currency> ocurr = currencyService.findByCode(currency);
+		
+		Optional<ProductPriceType> ptr = (op.isPresent()) 
+											? pe.getPrices().stream().filter(p -> p.getType().getCode().equals(Constants.retailPriceCode)).findAny().isPresent()
+												? Optional.ofNullable(pe.getPrices().stream().filter(p -> p.getType().getCode().equals(Constants.retailPriceCode)).findAny().get().getType())
+											    : Optional.ofNullable(new ProductPriceType())
+											: productPriceTypeService.findByCode(Constants.retailPriceCode);
+		
+		Optional<ProductPriceType> ptm = (op.isPresent()) 
+											? Optional.ofNullable(pe.getPrices().stream().filter(p -> p.getType().getCode().equals(Constants.markdownPriceCode)).findAny().get().getType())
+											: productPriceTypeService.findByCode(Constants.markdownPriceCode);
 
-		ProductStatusEntity ps = productStatusService.findByProductStatusCode(Constants.activeSKUCode).get();
+		
 
-		Optional<ProductPriceEntity> oprcr = 
-				productPriceService.findByProductCode(upcCode, 
-											Constants.retailPriceCode, 
-											currency);
+		Optional<ProductPriceEntity> oprcr = pe.getPrices().stream()
+												.filter(p -> p.getType().getCode().equals(Constants.retailPriceCode) && p.getCurrency().getCode().equals(currency)).findAny();
 
 		//retail price
 		ProductPriceEntity prcr = (	oprcr.isPresent()) 
 									? oprcr.get()
 									: new ProductPriceEntity();
 
-		prcr.setType(ptr);
-		prcr.setCurrency(curr);
+		prcr.setType(ptr.get());
+		prcr.setCurrency(ocurr.get());
 		prcr.setPriceValue(retailPrice);
 
-		Optional<ProductPriceEntity> oprcm = 
-				productPriceService.findByProductCode(upcCode, 
-											Constants.markdownPriceCode, 
-											currency);
+		Optional<ProductPriceEntity> oprcm = pe.getPrices().stream()
+												.filter(p -> p.getType().getCode().equals(Constants.markdownPriceCode) && p.getCurrency().getCode().equals(currency)).findAny();
 
 		//markdown price
 		ProductPriceEntity prcm = (oprcm.isPresent()) 
 							? oprcm.get()
 							: new ProductPriceEntity();
 
-		prcm.setType(ptm);
-		prcm.setCurrency(curr);
+		prcm.setType(ptm.get());
+		prcm.setCurrency(ocurr.get());
 		prcm.setPriceValue(markdownPrice);
 		
-		pe.setProductStatus(ps);
+		pe.setProductStatus(ops.get());
 		pe.addProductPrice(prcr);
 		pe.addProductPrice(prcm);
 		
