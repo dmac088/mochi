@@ -71,7 +71,7 @@ public class PhysicalProductMasterService {
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
-	@Transactional
+	//@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
@@ -286,7 +286,9 @@ public class PhysicalProductMasterService {
 			Optional<TagEntity> ot = !(p.getTags().isEmpty())
 									 ? p.getTags().stream().filter(t -> t.getTagCode().equals(tagCode.toUpperCase())).findAny()
 									 : tagService.findByCode(tagCode.toUpperCase());
-			p.addTag(ot.get());
+			if(ot.isPresent()) {
+				p.addTag(ot.get());
+			}
 		}
 	}
 	
