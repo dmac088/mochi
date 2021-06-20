@@ -4,6 +4,8 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
@@ -71,6 +73,10 @@ public class PhysicalProductMasterService {
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
+    private List<BrandEntity> cachedBrandList = new ArrayList<BrandEntity>();
+    
+    private List<DepartmentEntity> cachedDepartmentList = new ArrayList<DepartmentEntity>();
+    
 	@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
@@ -83,8 +89,12 @@ public class PhysicalProductMasterService {
 	    				.withQuoteChar('"');
 	    	
 	        CsvMapper mapper = new CsvMapper();
+	        
 	        MappingIterator<PhysicalProductMasterSchema> readValues =
 	        	mapper.readerFor(PhysicalProductMasterSchema.class).with(bootstrapSchema).readValues(file);
+	        
+	        cachedBrandList.addAll(brandService.findAll());
+	        cachedDepartmentList.addAll(departmentService.findAll());
 	        
 	        readValues.readAll().stream().forEach(p -> {
 	        	this.persistProductMaster(p);
@@ -180,11 +190,11 @@ public class PhysicalProductMasterService {
 		
 		Optional<BrandEntity> ob = (op.isPresent()) 
 									? Optional.ofNullable(pe.getBrand())
-									: brandService.findByCode(brandCode);
+									: cachedBrandList.stream().filter(b -> b.getBrandCode().equals(brandCode)).findAny();
 		
 		Optional<DepartmentEntity> od = (op.isPresent()) 
 										? Optional.ofNullable(pe.getDepartment())
-										: departmentService.findByCode(templateCode);
+										: cachedDepartmentList.stream().filter(d -> d.getDepartmentCode().equals(templateCode)).findAny();
 		
 		Optional<ProductStatusEntity> ops = (op.isPresent()) 
 											? Optional.ofNullable(pe.getProductStatus())

@@ -76,4 +76,9 @@ public class DepartmentServiceImpl implements IDepartmentService{
 		return null;
 	}
 
+	@Override
+	public List<DepartmentEntity> findAll() {
+		return departmentRepository.findAll();
+	}
+
 }

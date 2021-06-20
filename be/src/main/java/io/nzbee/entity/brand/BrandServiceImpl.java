@@ -1,5 +1,6 @@
 package io.nzbee.entity.brand;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,14 +36,18 @@ public class BrandServiceImpl implements IBrandService {
 
 	@Override
 	public void update(BrandEntity t) {
-		// TODO Auto-generated method stub
-		
+		brandRepository.save(t);
 	}
 
 	@Override
 	public void delete(BrandEntity t) {
-		// TODO Auto-generated method stub
+		brandRepository.delete(t);
 		
+	}
+
+	@Override
+	public List<BrandEntity> findAll() {
+		return brandRepository.findAll();
 	}
 
 }
