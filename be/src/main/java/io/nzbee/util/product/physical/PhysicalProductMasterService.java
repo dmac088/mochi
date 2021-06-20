@@ -271,21 +271,21 @@ public class PhysicalProductMasterService {
 		pe.addProductPrice(prcm);
 		
 		//add the tags to the domain object
-		addTagToProduct(locale, tagCodeA, pe);
-		addTagToProduct(locale, tagCodeB, pe);
-		addTagToProduct(locale, tagCodeC, pe);
-		addTagToProduct(locale, tagCodeD, pe);
-		addTagToProduct(locale, tagCodeE, pe);
+		addTagToProduct(tagCodeA, pe);
+		addTagToProduct(tagCodeB, pe);
+		addTagToProduct(tagCodeC, pe);
+		addTagToProduct(tagCodeD, pe);
+		addTagToProduct(tagCodeE, pe);
 		
 		return pe;
 	}
 	
-	private void addTagToProduct(String locale, String tagCode, ProductEntity p) {
+	private void addTagToProduct(String tagCode, ProductEntity p) {
 		if (tagCode == null) return;
 		if(tagCode.length() == 5) {
-			Optional<TagEntity> ot = p.getTags().stream().filter(t -> t.getTagCode().equals(tagCode) && t.getLocale().equals(locale)).findAny().isPresent()
-						  			 ? Optional.ofNullable(p.getTags().stream().filter(t -> t.getTagCode().equals(tagCode) && t.getLocale().equals(locale)).findAny().get())
-						  			 : tagService.findByCode(tagCode.toUpperCase());
+			Optional<TagEntity> ot = !(p.getTags().isEmpty())
+									 ? p.getTags().stream().filter(t -> t.getTagCode().equals(tagCode.toUpperCase())).findAny()
+									 : tagService.findByCode(tagCode.toUpperCase());
 			p.addTag(ot.get());
 		}
 	}
