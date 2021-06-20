@@ -71,7 +71,7 @@ public class PhysicalProductMasterService {
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
-	//@Transactional
+	@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
