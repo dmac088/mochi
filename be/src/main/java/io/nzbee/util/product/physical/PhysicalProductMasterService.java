@@ -73,9 +73,14 @@ public class PhysicalProductMasterService {
     @Autowired
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
+    //cached lists for performance improvement
     private List<BrandEntity> cachedBrandList = new ArrayList<BrandEntity>();
     
     private List<DepartmentEntity> cachedDepartmentList = new ArrayList<DepartmentEntity>();
+    
+    private List<ProductStatusEntity> cachedProductStatusList = new ArrayList<ProductStatusEntity>();
+    
+    
     
 	@Transactional
 	public void writeProductMaster(String fileName) {
@@ -95,6 +100,8 @@ public class PhysicalProductMasterService {
 	        
 	        cachedBrandList.addAll(brandService.findAll());
 	        cachedDepartmentList.addAll(departmentService.findAll());
+	        cachedProductStatusList.addAll(productStatusService.findAll());
+	        
 	        
 	        readValues.readAll().stream().forEach(p -> {
 	        	this.persistProductMaster(p);
@@ -184,21 +191,21 @@ public class PhysicalProductMasterService {
 		
 		Optional<ProductEntity> op = productService.findEntityByCode(upcCode);
 		
-		PhysicalProductEntity pe = 	 (op.isPresent()) 
-									 ? (PhysicalProductEntity) op.get()
-									 : new PhysicalProductEntity();
+		PhysicalProductEntity pe = 	 		(op.isPresent()) 
+									 		? (PhysicalProductEntity) op.get()
+									 		: new PhysicalProductEntity();
 		
-		Optional<BrandEntity> ob = (op.isPresent()) 
-									? Optional.ofNullable(pe.getBrand())
-									: cachedBrandList.stream().filter(b -> b.getBrandCode().equals(brandCode)).findAny();
+		Optional<BrandEntity> ob = 			(op.isPresent()) 
+											? Optional.ofNullable(pe.getBrand())
+											: cachedBrandList.stream().filter(b -> b.getBrandCode().equals(brandCode)).findAny();
 		
-		Optional<DepartmentEntity> od = (op.isPresent()) 
-										? Optional.ofNullable(pe.getDepartment())
-										: cachedDepartmentList.stream().filter(d -> d.getDepartmentCode().equals(templateCode)).findAny();
+		Optional<DepartmentEntity> od = 	(op.isPresent()) 
+											? Optional.ofNullable(pe.getDepartment())
+											: cachedDepartmentList.stream().filter(d -> d.getDepartmentCode().equals(templateCode)).findAny();
 		
 		Optional<ProductStatusEntity> ops = (op.isPresent()) 
 											? Optional.ofNullable(pe.getProductStatus())
-											: productStatusService.findByProductStatusCode(Constants.activeSKUCode);
+											: cachedProductStatusList.stream().filter(ps -> ps.getCode().equals(Constants.activeSKUCode)).findAny();
 		
 		Optional<CategoryProductEntity> opc = pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny();
 		
