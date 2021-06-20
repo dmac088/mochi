@@ -24,6 +24,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SqlResultSetMapping;
+import javax.persistence.SqlResultSetMappings;
+import javax.persistence.EntityResult;
+import javax.persistence.ColumnResult;
+import javax.persistence.FieldResult;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import org.apache.lucene.analysis.cjk.CJKBigramFilterFactory;
@@ -56,9 +61,13 @@ import org.hibernate.search.annotations.TokenFilterDef;
 import org.hibernate.search.annotations.TokenizerDef;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
+import io.nzbee.entity.brand.attribute.BrandAttributeEntity;
+import io.nzbee.entity.category.attribute.CategoryAttributeEntity;
 import io.nzbee.entity.category.product.CategoryProductEntity;
+import io.nzbee.entity.category.type.CategoryType;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.department.DepartmentEntity;
+import io.nzbee.entity.product.department.attribute.DepartmentAttribute;
 import io.nzbee.entity.product.price.ProductPriceEntity;
 import io.nzbee.entity.product.status.ProductStatusEntity;
 import io.nzbee.entity.promotion.product.PromotionProductEntity;
@@ -154,7 +163,125 @@ filters = {
 			@TokenFilterDef(factory = ASCIIFoldingFilterFactory.class), // To handle diacritics such as "é"
 			@TokenFilterDef(factory = LowerCaseFilterFactory.class)
 		}
-)
+) 
+@SqlResultSetMappings({
+	@SqlResultSetMapping(
+    name = "ProductMapping",
+    columns = {
+    		@ColumnResult(name = "retail_price"),
+    		@ColumnResult(name = "markdown_price"),
+    		@ColumnResult(name = "prd_img_pth"),
+    		@ColumnResult(name = "cat_prnt_cd"),
+    },		
+    entities = {
+            @EntityResult(
+                    entityClass = ProductEntity.class,
+                    		discriminatorColumn="dept_id",
+                    fields = {
+                        @FieldResult(name = "productId", 			column = "prd_id"),
+                        @FieldResult(name = "productUPC", 			column = "upc_cd"),
+                        @FieldResult(name = "productCreateDt", 		column = "prd_crtd_dt"),
+                        @FieldResult(name = "brand", 				column = "bnd_id"),
+                        @FieldResult(name = "productStatus", 		column = "prd_sts_id"),
+                        @FieldResult(name = "department", 			column = "dept_id"),	      
+                        @FieldResult(name = "countryOfOrigin",  	column = "ctry_of_orig"),
+                        @FieldResult(name = "expiryDate",  			column = "exp_dt"),
+                        @FieldResult(name = "locale",  				column = "lcl_cd"),
+                        @FieldResult(name = "currency",  			column = "ccy_cd"),
+                        @FieldResult(name = "primaryCategory", 		column = "prm_cat_id"),
+                        @FieldResult(name = "primaryCategoryIndex", column = "prm_cat_id")
+                    }),
+            @EntityResult(
+	                entityClass = ProductStatusEntity.class,
+	                fields = {
+	                	@FieldResult(name = "productStatusId", 		column = "prd_sts_id"),
+	                    @FieldResult(name = "productStatusCode", 	column = "prd_sts_cd"),
+	                    @FieldResult(name = "productStatusDesc", 	column = "prd_sts_desc")
+            }),
+            @EntityResult(
+            		entityClass = ProductAttributeEntity.class,
+	                fields = {
+	                    @FieldResult(name = "Id", 				column = "prd_lcl_id"),
+	                    @FieldResult(name = "productId", 		column = "prd_id"),
+	                    @FieldResult(name = "productDesc", 		column = "prd_desc"),
+	                    @FieldResult(name = "ProductImage", 	column = "prd_img_pth"),
+	                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+	                    @FieldResult(name = "product", 			column = "prd_id")
+	        }),	            
+            @EntityResult(
+                    entityClass = BrandEntity.class,
+                    fields = {
+                    	@FieldResult(name = "brandId", 			column = "bnd_id"),
+	                    @FieldResult(name = "brandCode", 		column = "bnd_cd"),
+	                    @FieldResult(name = "brandAttribute", 	column = "bnd_lcl_id"),
+	                    @FieldResult(name = "brandAttributes", 	column = "bnd_lcl_id"),
+	                    @FieldResult(name = "products", 		column = "prd_id")
+                    }),
+            @EntityResult(
+                    entityClass = BrandAttributeEntity.class,
+                    fields = {
+                    	@FieldResult(name = "Id", 				column = "bnd_lcl_id"),
+	                    @FieldResult(name = "brandId", 			column = "bnd_id"),
+	                    @FieldResult(name = "brandDesc", 		column = "bnd_desc"),
+	                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+	                    @FieldResult(name = "brand", 			column = "bnd_id")
+                    }),
+            @EntityResult(
+                    entityClass = DepartmentEntity.class,
+                    fields = {
+                    	@FieldResult(name = "departmentId", 	column = "dept_id"),
+	                    @FieldResult(name = "departmentCode", 	column = "dept_cd"),
+	                    @FieldResult(name = "departmentClass", 	column = "dept_class")
+                    }),
+            @EntityResult(
+                    entityClass = DepartmentAttribute.class,
+                    fields = {
+                    	@FieldResult(name = "Id", 				column = "dept_lcl_id"),
+	                    @FieldResult(name = "departmentDesc", 	column = "dept_desc"),
+	                    @FieldResult(name = "lclCd", 			column = "lcl_cd"),
+	                    @FieldResult(name = "department", 		column = "dept_id")
+                    }),
+            @EntityResult(
+            		entityClass = CategoryProductEntity.class,
+	                fields = {
+	                    @FieldResult(name = "categoryId", 					column = "prm_cat_id"),
+	                    @FieldResult(name = "categoryCode", 				column = "cat_cd"),
+	                    @FieldResult(name = "categoryLevel", 				column = "cat_lvl"),	
+	                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
+	                    @FieldResult(name = "parent", 						column = "cat_prnt_id")
+	                }),
+            @EntityResult(
+                    entityClass = CategoryAttributeEntity.class,
+                    fields = {
+                        @FieldResult(name = "categoryAttributeId", 			column = "cat_lcl_id"),
+                        @FieldResult(name = "categoryId", 					column = "prm_cat_id"),
+                        @FieldResult(name = "lclCd", 						column = "lcl_cd"),
+                        @FieldResult(name = "categoryDesc", 				column = "cat_desc"),
+                        @FieldResult(name = "category", 					column = "prm_cat_id")
+                    }),
+            @EntityResult(
+                    entityClass = CategoryType.class,
+	                fields = {
+	                    @FieldResult(name = "categoryTypeId",				column = "cat_typ_id"),
+	                    @FieldResult(name = "categoryTypeCode", 			column = "cat_typ_cd"),
+	                    @FieldResult(name = "categoryTypeDesc", 			column = "cat_typ_desc")
+	                }),
+            @EntityResult(
+            		entityClass = CategoryProductEntity.class,
+	                fields = {
+	                    @FieldResult(name = "categoryId", 					column = "cat_prnt_id"),
+	                    @FieldResult(name = "categoryCode", 				column = "cat_prnt_cd"),
+	                    @FieldResult(name = "categoryLevel", 				column = "cat_prnt_lvl"),
+	                    @FieldResult(name = "categoryType", 				column = "cat_typ_id"),
+	                    @FieldResult(name = "parent", 						column = "cat_prnt_prnt_id")
+	                }),
+    }),
+	@SqlResultSetMapping(
+		    name = "ProductMapping.count",
+		    columns = {
+		    	@ColumnResult(name = "product_count")
+		    })
+})
 public abstract class ProductEntity implements Serializable { 
 	
 	private static final long serialVersionUID = 8330041694804054992L;
