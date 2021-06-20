@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 public class CategoryServiceImpl implements ICategoryService {
 
 	@Autowired
-	private ICategoryRepository categoryRepository;
+	private ICategoryRepository<CategoryEntity> categoryRepository;
 	
 	@Override
 	public void save(CategoryEntity t) {

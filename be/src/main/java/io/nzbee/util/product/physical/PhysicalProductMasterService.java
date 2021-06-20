@@ -18,8 +18,8 @@ import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
 import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
+import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
 import io.nzbee.entity.product.attribute.IProductAttributeService;
@@ -50,7 +50,7 @@ public class PhysicalProductMasterService {
 	private IProductAttributeService productAttributeService;
 	
 	@Autowired
-	private ICategoryService categoryService;
+	private ICategoryProductService categoryService;
 
 	@Autowired
 	private ITagService tagService;
@@ -80,7 +80,7 @@ public class PhysicalProductMasterService {
     
     private List<ProductStatusEntity> cachedProductStatusList = new ArrayList<ProductStatusEntity>();
     
-    
+    private List<CategoryProductEntity> cachedProductCategoryList = new ArrayList<CategoryProductEntity>();
     
 	@Transactional
 	public void writeProductMaster(String fileName) {
@@ -101,7 +101,7 @@ public class PhysicalProductMasterService {
 	        cachedBrandList.addAll(brandService.findAll());
 	        cachedDepartmentList.addAll(departmentService.findAll());
 	        cachedProductStatusList.addAll(productStatusService.findAll());
-	        
+	        cachedProductCategoryList.addAll(categoryService.findAll());
 	        
 	        readValues.readAll().stream().forEach(p -> {
 	        	this.persistProductMaster(p);
@@ -207,13 +207,9 @@ public class PhysicalProductMasterService {
 												? Optional.ofNullable(pe.getProductStatus())
 												: cachedProductStatusList.stream().filter(ps -> ps.getCode().equals(Constants.activeSKUCode)).findAny();
 		
-		Optional<CategoryProductEntity> opc = 	pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny();
-		
-		CategoryProductEntity pc = (opc.isPresent())
-									? opc.get()
-									: categoryService.findByCode(categoryCode).isPresent()
-										? (CategoryProductEntity) categoryService.findByCode(categoryCode).get()
-										: new CategoryProductEntity();
+		Optional<CategoryProductEntity> opc = 	(op.isPresent()) 
+												? pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny()
+												: cachedProductCategoryList.stream().filter(pc -> pc.getCategoryCode().equals(categoryCode)).findAny();
 				
 		ProductAttributeEntity pa = (op.isPresent()) 
 				 					? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny().isPresent()
@@ -231,7 +227,7 @@ public class PhysicalProductMasterService {
 		pe.setProductCreateDt(createdDate);
 		pe.setProductStatus(ops.get());
 		pe.getCategories();
-		pe.addCategory(pc);
+		pe.addCategory(opc.get());
 		
 		pe.setWidthDimension(Integer.parseInt(width));
 		pe.setHeightDimension(Integer.parseInt(height));

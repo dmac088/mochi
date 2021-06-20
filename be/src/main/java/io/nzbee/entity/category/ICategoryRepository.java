@@ -2,17 +2,18 @@ package io.nzbee.entity.category;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.data.repository.CrudRepository;
 
-public interface ICategoryRepository extends CrudRepository<CategoryEntity, Long>  {
-	
-	List<CategoryEntity> findAll();
 
-	Optional<CategoryEntity> findByCategoryId(Long Id);
+
+public interface ICategoryRepository<T extends CategoryEntity> extends CrudRepository<T, Long>  {
 	
-	Optional<CategoryEntity> findByCategoryCode(String code);
+	List<T> findAll();
+
+	Optional<T> findByCategoryId(Long Id);
 	
-	Optional<CategoryEntity> findByAttributesLclCdAndAttributesCategoryDesc(String locale, String desc);
+	Optional<T> findByCategoryCode(String code);
+	
+	Optional<T> findByAttributesLclCdAndAttributesCategoryDesc(String locale, String desc);
 	
 }
