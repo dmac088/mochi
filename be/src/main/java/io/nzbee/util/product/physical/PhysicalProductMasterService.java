@@ -15,18 +15,13 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import io.nzbee.Constants;
 import io.nzbee.entity.brand.BrandEntity;
-import io.nzbee.entity.brand.IBrandService;
-import io.nzbee.entity.category.CategoryEntity;
-import io.nzbee.entity.category.ICategoryService;
 import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
 import io.nzbee.entity.product.department.DepartmentEntity;
-import io.nzbee.entity.product.department.IDepartmentService;
 import io.nzbee.entity.product.physical.PhysicalProductEntity;
 import io.nzbee.entity.product.price.IProductPriceService;
 import io.nzbee.entity.product.price.IProductPriceTypeService;
@@ -45,19 +40,10 @@ public class PhysicalProductMasterService {
 	
 	@Autowired
 	private IProductService productService;
-	
-	@Autowired
-	private IProductAttributeService productAttributeService;
 
-	@Autowired
-	private IBrandService brandService; 
-	
 	@Autowired
 	private ITagService tagService;
 	
-	@Autowired
-	private IDepartmentService departmentService; 
-
 	@Autowired
 	private IProductStatusRepository productStatusService;
 	
@@ -72,9 +58,6 @@ public class PhysicalProductMasterService {
     
 	@Autowired
 	private IProductPriceService productPriceService;
-
-	@Autowired 
-	private ICategoryService categoryService;
 	
 	@Transactional
 	public void writeProductMaster(String fileName) {
@@ -179,15 +162,20 @@ public class PhysicalProductMasterService {
 		
 		Optional<ProductEntity> op = productService.findByCode(upcCode);
 		
-		Optional<BrandEntity> ob = brandService.findByCode(brandCode);
+		PhysicalProductEntity pe = (op.isPresent()) 
+				 ? (PhysicalProductEntity) op.get()
+				 : new PhysicalProductEntity();
 		
-		Optional<DepartmentEntity> od = departmentService.findByCode(templateCode);
+		Optional<BrandEntity> ob = Optional.ofNullable(pe.getBrand());
 		
-		Optional<ProductStatusEntity> ops = productStatusService.findByProductStatusCode(Constants.activeSKUCode);
+		Optional<DepartmentEntity> od = Optional.ofNullable(pe.getDepartment());
 		
-		Optional<ProductAttributeEntity> opa = productAttributeService.findByCode(locale, upcCode);
+		Optional<ProductStatusEntity> ops = Optional.ofNullable(pe.getProductStatus());
 		
-		Optional<CategoryEntity> opc = categoryService.findByCode(categoryCode);
+		Optional<ProductAttributeEntity> opa = pe.getAttributes().stream().findAny();
+		
+		Optional<CategoryProductEntity> opc = pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny();
+				
 		
 		ProductAttributeEntity pa = (opa.isPresent()) 
 		? opa.get()
@@ -195,9 +183,7 @@ public class PhysicalProductMasterService {
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 			
-		PhysicalProductEntity pe = (op.isPresent()) 
-						 ? (PhysicalProductEntity) op.get()
-						 : new PhysicalProductEntity();			  
+					  
 					  
 		pe.setBrand(ob.get());
 		pe.setDepartment(od.get());
