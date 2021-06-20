@@ -16,7 +16,7 @@ public interface IProductBaseRepository<P extends ProductEntity>  extends CrudRe
 	+ " LEFT JOIN FETCH p.attributes pa "
 	+ " LEFT JOIN FETCH p.brand b "
 	+ " LEFT JOIN FETCH p.department d  "
-	+ " LEFT JOIN FETCH p.status s "
+	+ " LEFT JOIN FETCH p.productStatus s "
 	+ " LEFT JOIN FETCH p.categories c "
 	+ " WHERE pa.lclCd = :locale "
 	+ " AND p.productUPC = :productCode "
