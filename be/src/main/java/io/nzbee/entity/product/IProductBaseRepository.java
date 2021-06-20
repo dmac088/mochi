@@ -10,10 +10,11 @@ import org.springframework.data.repository.NoRepositoryBean;
 public interface IProductBaseRepository<P extends ProductEntity>  extends CrudRepository<P, Long> {
 
 	@Query(
-	"SELECT p,"
+	" SELECT p,"
 	+ "		pa"
-	+ "FROM ProductEntity p "
-	+ " JOIN FETCH ProductAttributeEntity pa "		
+	+ " FROM ProductEntity p "
+	+ " INNER JOIN FETCH p.attributes pa "
+	+ " WHERE pa.lclCd = :locale "
 	)
 	Optional<P> find(String productCode);
 	
