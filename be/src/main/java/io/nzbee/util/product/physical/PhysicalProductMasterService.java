@@ -191,23 +191,23 @@ public class PhysicalProductMasterService {
 		
 		Optional<ProductEntity> op = productService.findEntityByCode(upcCode);
 		
-		PhysicalProductEntity pe = 	 		(op.isPresent()) 
-									 		? (PhysicalProductEntity) op.get()
-									 		: new PhysicalProductEntity();
+		PhysicalProductEntity pe = 	 			(op.isPresent()) 
+									 			? (PhysicalProductEntity) op.get()
+									 			: new PhysicalProductEntity();
 		
-		Optional<BrandEntity> ob = 			(op.isPresent()) 
-											? Optional.ofNullable(pe.getBrand())
-											: cachedBrandList.stream().filter(b -> b.getBrandCode().equals(brandCode)).findAny();
+		Optional<BrandEntity> ob = 				(op.isPresent()) 
+												? Optional.ofNullable(pe.getBrand())
+												: cachedBrandList.stream().filter(b -> b.getBrandCode().equals(brandCode)).findAny();
 		
-		Optional<DepartmentEntity> od = 	(op.isPresent()) 
-											? Optional.ofNullable(pe.getDepartment())
-											: cachedDepartmentList.stream().filter(d -> d.getDepartmentCode().equals(templateCode)).findAny();
+		Optional<DepartmentEntity> od = 		(op.isPresent()) 
+												? Optional.ofNullable(pe.getDepartment())
+												: cachedDepartmentList.stream().filter(d -> d.getDepartmentCode().equals(templateCode)).findAny();
 		
-		Optional<ProductStatusEntity> ops = (op.isPresent()) 
-											? Optional.ofNullable(pe.getProductStatus())
-											: cachedProductStatusList.stream().filter(ps -> ps.getCode().equals(Constants.activeSKUCode)).findAny();
+		Optional<ProductStatusEntity> ops = 	(op.isPresent()) 
+												? Optional.ofNullable(pe.getProductStatus())
+												: cachedProductStatusList.stream().filter(ps -> ps.getCode().equals(Constants.activeSKUCode)).findAny();
 		
-		Optional<CategoryProductEntity> opc = pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny();
+		Optional<CategoryProductEntity> opc = 	pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny();
 		
 		CategoryProductEntity pc = (opc.isPresent())
 									? opc.get()
