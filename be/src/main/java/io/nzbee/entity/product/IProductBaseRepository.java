@@ -21,6 +21,7 @@ public interface IProductBaseRepository<P extends ProductEntity>  extends CrudRe
 	+ " LEFT JOIN FETCH p.prices prc "
 	+ " LEFT JOIN FETCH prc.currency curr "
 	+ " LEFT JOIN FETCH prc.type prct "
+	+ " LEFT JOIN FETCH p.tags "
 	+ " WHERE p.productUPC = :productCode "
 	)
 	Optional<P> findByCode(String productCode);

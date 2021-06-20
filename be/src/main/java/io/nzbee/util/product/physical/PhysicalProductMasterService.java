@@ -283,8 +283,10 @@ public class PhysicalProductMasterService {
 	private void addTagToProduct(String locale, String tagCode, ProductEntity p) {
 		if (tagCode == null) return;
 		if(tagCode.length() == 5) {
-			TagEntity t = tagService.findByCode(tagCode.toUpperCase()).get();
-			p.addTag(t);
+			Optional<TagEntity> ot = p.getTags().stream().filter(t -> t.getTagCode().equals(tagCode) && t.getLocale().equals(locale)).findAny().isPresent()
+						  			 ? Optional.ofNullable(p.getTags().stream().filter(t -> t.getTagCode().equals(tagCode) && t.getLocale().equals(locale)).findAny().get())
+						  			 : tagService.findByCode(tagCode.toUpperCase());
+			p.addTag(ot.get());
 		}
 	}
 	
