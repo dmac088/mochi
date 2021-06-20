@@ -23,4 +23,6 @@ public interface IProductService extends IService<ProductEntity> {
 
 	Optional<ProductEntity> findById(Long id);
 
+	Optional<ProductEntity> findByCode(String productUPC, String locale);
+
 }

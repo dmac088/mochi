@@ -39,6 +39,12 @@ public class ProductServiceImpl implements IProductService {
 	}
 	
 	@Override
+	public Optional<ProductEntity> findByCode(String productUPC, String locale) {
+		LOGGER.debug("call ProductServiceImpl.findByCode parameters : {}, {}", productUPC, locale);
+		return productRepository.findByCode(productUPC, locale);
+	}
+	
+	@Override
 	@Cacheable(cacheNames = CACHE_NAME, key = "#locale + \", \" + #currency + \", \" + #productId.toString()")
 	public Optional<ProductDTO> findById(String locale, String currency, Long productId) {
 		LOGGER.debug("call ProductServiceImpl.findById parameters : {}, {}, {}", locale, currency, productId);
