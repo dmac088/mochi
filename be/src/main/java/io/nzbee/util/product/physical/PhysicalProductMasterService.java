@@ -84,7 +84,7 @@ public class PhysicalProductMasterService {
     
     private List<TagEntity> cachedTags = new ArrayList<TagEntity>();
     
-	@Transactional
+	//@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
@@ -208,9 +208,11 @@ public class PhysicalProductMasterService {
 		
 		Optional<CategoryProductEntity> opc 	= cachedProductCategoryList.stream().filter(pc -> pc.getCategoryCode().equals(categoryCode)).findAny();
 				
-		Optional<ProductAttributeEntity> opa 	= (op.isPresent()) 
-				 								? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny()
-				 								: Optional.ofNullable(new ProductAttributeEntity());
+		Optional<ProductAttributeEntity> opa 	= 	(op.isPresent()) 
+				 									? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny().isPresent()
+				 									  ? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny()
+				 									  : Optional.ofNullable(new ProductAttributeEntity())
+				 									: Optional.ofNullable(new ProductAttributeEntity());
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 					  
