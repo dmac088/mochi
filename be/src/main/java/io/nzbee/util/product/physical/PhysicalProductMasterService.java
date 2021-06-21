@@ -22,7 +22,6 @@ import io.nzbee.entity.category.product.CategoryProductEntity;
 import io.nzbee.entity.category.product.ICategoryProductService;
 import io.nzbee.entity.product.IProductService;
 import io.nzbee.entity.product.ProductEntity;
-import io.nzbee.entity.product.attribute.IProductAttributeService;
 import io.nzbee.entity.product.attribute.ProductAttributeEntity;
 import io.nzbee.entity.product.currency.Currency;
 import io.nzbee.entity.product.currency.ICurrencyService;
@@ -45,9 +44,6 @@ public class PhysicalProductMasterService {
 	
 	@Autowired
 	private IProductService productService;
-	
-	@Autowired
-	private IProductAttributeService productAttributeService;
 	
 	@Autowired
 	private ICategoryProductService categoryService;
@@ -82,6 +78,12 @@ public class PhysicalProductMasterService {
     
     private List<CategoryProductEntity> cachedProductCategoryList = new ArrayList<CategoryProductEntity>();
     
+    private List<ProductPriceType> cachedPriceTypes = new ArrayList<ProductPriceType>();
+    
+    private List<Currency> cachedCurrencies  = new ArrayList<Currency>();
+    
+    private List<TagEntity> cachedTags = new ArrayList<TagEntity>();
+    
 	@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
@@ -102,6 +104,9 @@ public class PhysicalProductMasterService {
 	        cachedDepartmentList.addAll(departmentService.findAll());
 	        cachedProductStatusList.addAll(productStatusService.findAll());
 	        cachedProductCategoryList.addAll(categoryService.findAll());
+	        cachedCurrencies.addAll(currencyService.findAll());
+	        cachedPriceTypes.addAll(productPriceTypeService.findAll());
+	        cachedTags.addAll(tagService.findAll());
 	        
 	        readValues.readAll().stream().forEach(p -> {
 	        	this.persistProductMaster(p);
@@ -189,35 +194,23 @@ public class PhysicalProductMasterService {
 						 ) {
 		logger.debug("called map() ");
 		
-		Optional<ProductEntity> op = productService.findEntityByCode(upcCode);
+		Optional<ProductEntity> op 				= productService.findEntityByCode(upcCode);
 		
-		PhysicalProductEntity pe = 	 			(op.isPresent()) 
+		PhysicalProductEntity pe 				= (op.isPresent()) 
 									 			? (PhysicalProductEntity) op.get()
 									 			: new PhysicalProductEntity();
 		
-		Optional<BrandEntity> ob = 				(op.isPresent()) 
-												? Optional.ofNullable(pe.getBrand())
-												: cachedBrandList.stream().filter(b -> b.getBrandCode().equals(brandCode)).findAny();
+		Optional<BrandEntity> ob 				= cachedBrandList.stream().filter(b -> b.getBrandCode().equals(brandCode)).findAny();
 		
-		Optional<DepartmentEntity> od = 		(op.isPresent()) 
-												? Optional.ofNullable(pe.getDepartment())
-												: cachedDepartmentList.stream().filter(d -> d.getDepartmentCode().equals(templateCode)).findAny();
+		Optional<DepartmentEntity> od 			= cachedDepartmentList.stream().filter(d -> d.getDepartmentCode().equals(templateCode)).findAny();
 		
-		Optional<ProductStatusEntity> ops = 	(op.isPresent()) 
-												? Optional.ofNullable(pe.getProductStatus())
-												: cachedProductStatusList.stream().filter(ps -> ps.getCode().equals(Constants.activeSKUCode)).findAny();
+		Optional<ProductStatusEntity> ops 		= cachedProductStatusList.stream().filter(ps -> ps.getCode().equals(Constants.activeSKUCode)).findAny();
 		
-		Optional<CategoryProductEntity> opc = 	(op.isPresent()) 
-												? pe.getCategories().stream().filter(c -> c.getCategoryCode().equals(categoryCode)).findAny()
-												: cachedProductCategoryList.stream().filter(pc -> pc.getCategoryCode().equals(categoryCode)).findAny();
+		Optional<CategoryProductEntity> opc 	= cachedProductCategoryList.stream().filter(pc -> pc.getCategoryCode().equals(categoryCode)).findAny();
 				
-		ProductAttributeEntity pa = (op.isPresent()) 
-				 					? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny().isPresent()
-				 						? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny().get()
-				 						: (new ProductAttributeEntity())
-				 				    : 	productAttributeService.findByCode(locale, upcCode).isPresent()
-				 				    	? productAttributeService.findByCode(locale, upcCode).get()
-				 				    	: (new ProductAttributeEntity());
+		Optional<ProductAttributeEntity> opa 	= (op.isPresent()) 
+				 								? op.get().getAttributes().stream().filter(a -> a.getLclCd().equals(locale)).findAny()
+				 								: Optional.ofNullable(new ProductAttributeEntity());
 		
 		LocalDateTime createdDate = LocalDateTime.parse(productCreateDate, DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
 					  
@@ -234,26 +227,18 @@ public class PhysicalProductMasterService {
 		pe.setLengthDimension(Integer.parseInt(length));
 		pe.setWeightDimension(Double.parseDouble(weight));
 
-		pa.setProductDesc(productDesc);
-		pa.setProductLongDesc(productLongDesc);
-		pa.setLclCd(locale);
+		opa.get().setProductDesc(productDesc);
+		opa.get().setProductLongDesc(productLongDesc);
+		opa.get().setLclCd(locale);
 		
-		pa.setProduct(pe);
-		pe.addProductAttribute(pa);
+		opa.get().setProduct(pe);
+		pe.addProductAttribute(opa.get());
 		
-		Optional<Currency> ocurr = currencyService.findByCode(currency);
+		Optional<Currency> ocurr 		= cachedCurrencies.stream().filter(c -> c.getCode().equals(currency)).findAny();
 		
-		Optional<ProductPriceType> ptr = (op.isPresent()) 
-											? pe.getPrices().stream().filter(p -> p.getType().getCode().equals(Constants.retailPriceCode)).findAny().isPresent()
-												? Optional.ofNullable(pe.getPrices().stream().filter(p -> p.getType().getCode().equals(Constants.retailPriceCode)).findAny().get().getType())
-											    : Optional.ofNullable(new ProductPriceType())
-											: productPriceTypeService.findByCode(Constants.retailPriceCode);
+		Optional<ProductPriceType> ptr 	= cachedPriceTypes.stream().filter(pt -> pt.getCode().equals(Constants.retailPriceCode)).findAny();
 		
-		Optional<ProductPriceType> ptm = (op.isPresent()) 
-											? Optional.ofNullable(pe.getPrices().stream().filter(p -> p.getType().getCode().equals(Constants.markdownPriceCode)).findAny().get().getType())
-											: productPriceTypeService.findByCode(Constants.markdownPriceCode);
-
-		
+		Optional<ProductPriceType> ptm 	= cachedPriceTypes.stream().filter(pt -> pt.getCode().equals(Constants.markdownPriceCode)).findAny();
 
 		Optional<ProductPriceEntity> oprcr = pe.getPrices().stream()
 												.filter(p -> p.getType().getCode().equals(Constants.retailPriceCode) && p.getCurrency().getCode().equals(currency)).findAny();
@@ -296,9 +281,7 @@ public class PhysicalProductMasterService {
 	private void addTagToProduct(String tagCode, ProductEntity p) {
 		if (tagCode == null) return;
 		if(tagCode.length() == 5) {
-			Optional<TagEntity> ot = !(p.getTags().isEmpty())
-									 ? p.getTags().stream().filter(t -> t.getTagCode().equals(tagCode.toUpperCase())).findAny()
-									 : tagService.findByCode(tagCode.toUpperCase());
+			Optional<TagEntity> ot = cachedTags.stream().filter(t -> t.getTagCode().equals(tagCode)).findAny();
 			if(ot.isPresent()) {
 				p.addTag(ot.get());
 			}
