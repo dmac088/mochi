@@ -84,7 +84,7 @@ public class PhysicalProductMasterService {
     
     private List<TagEntity> cachedTags = new ArrayList<TagEntity>();
     
-	//@Transactional
+	@Transactional
 	public void writeProductMaster(String fileName) {
 		logger.debug("called writeProductMaster with parameter {} ", fileName);
 		try {
