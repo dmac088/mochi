@@ -7,6 +7,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import javax.annotation.PostConstruct;
 import javax.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -70,19 +72,30 @@ public class PhysicalProductMasterService {
     private FileStorageServiceUpload fileStorageServiceUpload;
 	
     //cached lists for performance improvement
-    private List<BrandEntity> cachedBrandList = new ArrayList<BrandEntity>();
+    private List<BrandEntity> cachedBrandList;
     
-    private List<DepartmentEntity> cachedDepartmentList = new ArrayList<DepartmentEntity>();
+    private List<DepartmentEntity> cachedDepartmentList;
     
-    private List<ProductStatusEntity> cachedProductStatusList = new ArrayList<ProductStatusEntity>();
+    private List<ProductStatusEntity> cachedProductStatusList;
     
-    private List<CategoryProductEntity> cachedProductCategoryList = new ArrayList<CategoryProductEntity>();
+    private List<CategoryProductEntity> cachedProductCategoryList;
     
-    private List<ProductPriceType> cachedPriceTypes = new ArrayList<ProductPriceType>();
+    private List<ProductPriceType> cachedPriceTypes;
     
-    private List<Currency> cachedCurrencies  = new ArrayList<Currency>();
+    private List<Currency> cachedCurrencies;
     
-    private List<TagEntity> cachedTags = new ArrayList<TagEntity>();
+    private List<TagEntity> cachedTags;
+    
+    @PostConstruct
+    private void initEntities() {
+    	cachedBrandList  = new ArrayList<BrandEntity>();
+    	cachedDepartmentList = new ArrayList<DepartmentEntity>();
+    	cachedProductStatusList = new ArrayList<ProductStatusEntity>();
+    	cachedProductCategoryList = new ArrayList<CategoryProductEntity>();
+    	cachedPriceTypes = new ArrayList<ProductPriceType>();
+    	cachedCurrencies  = new ArrayList<Currency>();
+    	cachedTags = new ArrayList<TagEntity>();
+    }
     
 	@Transactional
 	public void writeProductMaster(String fileName) {
